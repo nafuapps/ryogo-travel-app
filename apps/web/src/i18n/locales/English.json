@@ -1012,8 +1012,6 @@
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "Form": {
-        "Km": " Km",
-        "Days": " {count, plural, =1 {day} other {days}}",
         "StepTripDetails": {
           "Title": "Trip details",
           "Subtitle": "STEP {current} OF {total}",
@@ -1550,7 +1548,6 @@
       "Tile": {
         "Score": "RyoGo Score",
         "CurrentlyAssigned": "Assigned",
-        "Seats": " {count, plural, =1 {seat} other {seats}}",
         "AC": "AC",
         "Booked": "Booked",
         "RepairScheduled": "Servicing",
@@ -1963,8 +1960,6 @@
       "AddRepair": "Add Repair",
       "Cost": "₹{cost}",
       "Days": "{days, plural, =1 {1 day} other {# days}}",
-      "Completed": "COMPLETED",
-      "Pending": "PENDING",
       "Edit": "Edit",
       "OnTrip": "Cannot start repair during ongoing trip!",
       "AlreadyInRepair": "Vehicle is already in repair!",
@@ -2276,12 +2271,9 @@
       "Title": "DRIVER LEAVES",
       "AddLeave": "Add Leave",
       "Days": "{days, plural, =1 {1 day} other {# days}}",
-      "Completed": "COMPLETED",
-      "Pending": "PENDING",
       "Edit": "Edit",
       "OnTrip": "Cannot start leave during ongoing trip!",
       "AlreadyOnLeave": "Driver is already on leave!",
-      "StatusFilter": "Status Filter",
       "NoLeaves": "No driver leaves found.. try changing the filter"
     },
     "NewDriverLeave": {
@@ -2299,8 +2291,7 @@
         "Placeholder": "Select a date"
       },
       "Field3": {
-        "Title": "Leave status",
-        "Error1": "Leave status is required"
+        "Title": "Leave status"
       },
       "Field4": {
         "Title": "Remarks (optional)",
@@ -2324,10 +2315,6 @@
         "Error2": "End date cannot be before start date",
         "Title": "Leave End Date",
         "Placeholder": "Select a date"
-      },
-      "Field3": {
-        "Title": "Leave status",
-        "Error1": "Leave status is required"
       },
       "Field4": {
         "Title": "Remarks (optional)",
@@ -5407,7 +5394,6 @@
       "Allowance": "Default Allowance",
       "PerDay": "₹{allowance} per day",
       "Rating": "Customer Rating",
-      "RatingCount": "{count,plural, =1 {(1 Rating)} other {(# Ratings)}}",
       "ChangeUserPhoto": {
         "Title": "Change Photo",
         "Subtitle": "Upload your profile picture"
@@ -6641,12 +6627,18 @@
       "Menu": {
         "Title": "Browse Features",
         "M1": "Agency Management",
+        "M1Subtitle": "Manage your entire travel business operations with ease",
         "M2": "Booking Scheduling",
+        "M2Subtitle": "Create and manage bookings with the help of smart suggestions",
         "M3": "Trip Communication",
+        "M3Subtitle": "Keep communication flowing between drivers, agents, and customers",
         "M4": "Analytics & Reports",
+        "M4Subtitle": "Make decisions based on real data, not guesswork",
         "M5": "Alerts & Notifications",
+        "M5Subtitle": "Run a tight ship without any last minute blockers",
         "M6": "Security & Privacy",
-        "LearnMore": "Explore More"
+        "M6Subtitle": "Keep your data safe, private, and secure",
+        "LearnMore": "Learn More"
       },
       "Management": {
         "Title": "Manage agency like a pro",
@@ -6887,10 +6879,10 @@
         "CompareCTA": "Compare plans"
       },
       "Social": {
-        "Title": "Trusted by 100+ travel agencies and tour operators countrywide",
+        "Title": "Trusted by 40+ travel agencies and tour operators countrywide",
         "Testimonial": "\"RyoGo is easy enough for new users, and powerful enough to meet the needs of large travel agencies\"",
         "Author": "- Priyank Kumar",
-        "Role": "(Owner, NorthEast Tours)"
+        "Role": "(OWNER, NORTHEAST TOURS)"
       },
       "Comparision": {
         "Title": "Compare our plans",
@@ -7339,9 +7331,9 @@
           "Title": "Our Mission",
           "Desc": "To enable small scale travel businesses in India to manage their daily operations efficiently, by providing an easy-to-use, all-in-one digital platform.",
           "Subtitle": "\"We want to help agency owners and fleet operators in running and collaborating across their businesses, ensuring growth and a seamless customer experience.\"",
-          "Quote": "- Founder, RyoGo Travel App",
+          "Quote": "- Founder of RyoGo Travel App",
           "M1": {
-            "Value": "100+",
+            "Value": "40+",
             "Label": "Companies use RyoGo"
           },
           "M2": {
@@ -7349,7 +7341,7 @@
             "Label": "Man hours saved per month"
           },
           "M3": {
-            "Value": "40%",
+            "Value": "30%",
             "Label": "Revenue increase"
           }
         },

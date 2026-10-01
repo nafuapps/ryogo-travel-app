@@ -1,5 +1,5 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption, RyogoH1, RyogoP } from "@/components/typography"
+import { RyogoSmall, RyogoH1, RyogoP } from "@/components/typography"
 import { SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { Check } from "lucide-react"
@@ -60,7 +60,7 @@ function PropItem({ label }: { label: string }) {
   return (
     <div className="flex gap-0.5 md:gap-1 items-center">
       <RyogoIcon icon={Check} size="sm" color="white" thick />
-      <RyogoCaption color="white">{label}</RyogoCaption>
+      <RyogoSmall color="white">{label}</RyogoSmall>
     </div>
   )
 }

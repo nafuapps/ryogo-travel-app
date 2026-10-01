@@ -19,20 +19,22 @@ import {
   PREMIUM_BOOKINGS_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 export default async function PricingComparisionSection() {
   const t = await getTranslations("Landing.Pricing.Comparision")
   return (
-    <LandingSectionWrapper
-      id="comparision"
-      className="bg-white dark:bg-slate-800"
-    >
+    <LandingSectionWrapper id="comparision">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
         <ComparisionRow
-          title={<RyogoH4 weight="font-bold">{t("Header")}</RyogoH4>}
+          title={
+            <RyogoH4 color="slate" weight="font-bold">
+              {t("Header")}
+            </RyogoH4>
+          }
           basicItem={<RyogoP weight="font-bold">{t("Basic")}</RyogoP>}
           premiumItem={
             <RyogoP weight="font-bold" color="brand">
@@ -249,14 +251,12 @@ function ComparisionGroup({
   children: React.ReactNode
 }) {
   return (
-    <div className="w-full flex flex-col divide-y border-b">
-      <div className="w-full px-1 lg:px-2 py-3 lg:py-4 flex items-center">
-        <RyogoP color="light" weight="font-bold">
-          {title}
-        </RyogoP>
-      </div>
+    <SectionColWrapper small className="w-full">
+      <RyogoP color="light" weight="font-bold">
+        {title}
+      </RyogoP>
       {children}
-    </div>
+    </SectionColWrapper>
   )
 }
 
@@ -270,14 +270,14 @@ function ComparisionRow({
   premiumItem: React.ReactNode
 }) {
   return (
-    <div className="w-full grid grid-cols-4 md:grid-cols-5 gap-2">
-      <div className="col-span-2 md:col-span-3 px-1 lg:px-2 py-3 lg:py-4 bg-white dark:bg-slate-800 flex items-center">
+    <div className="w-full grid grid-cols-4 md:grid-cols-5 gap-1.5 md:gap-2">
+      <div className="col-span-2 md:col-span-3 py-3 md:py-4 flex items-center">
         {title}
       </div>
-      <div className="col-span-1 px-1 lg:px-2 py-3 lg:py-4 bg-slate-50 dark:bg-slate-900 flex items-center justify-center">
+      <div className="col-span-1 rounded px-1 md:px-1.5 py-3 md:py-4 bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
         {basicItem}
       </div>
-      <div className="col-span-1 px-1 lg:px-2 py-3 lg:py-4 bg-sky-100 dark:bg-sky-900 flex items-center justify-center">
+      <div className="col-span-1 rounded px-1 md:px-1.5 py-3 md:py-4 bg-sky-100 dark:bg-sky-900 flex items-center justify-center">
         {premiumItem}
       </div>
     </div>

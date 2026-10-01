@@ -21,10 +21,7 @@ import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 export default async function HomeTestimonialsSection() {
   const t = await getTranslations("Landing.Home.Testimonials")
   return (
-    <LandingSectionWrapper
-      id="testimonials"
-      className="bg-white dark:bg-slate-800"
-    >
+    <LandingSectionWrapper id="testimonials">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

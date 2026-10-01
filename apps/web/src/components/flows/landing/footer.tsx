@@ -17,7 +17,7 @@ import Link from "next/link"
 export default async function Footer() {
   const t = await getTranslations("Landing.Footer")
   return (
-    <footer className="bg-sky-950 dark:bg-slate-50">
+    <footer className="bg-sky-950 dark:bg-white">
       <div className="max-w-6xl mx-auto px-5 md:px-6 lg:px-8 py-8 md:py-12">
         {/* Main footer content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
@@ -105,7 +105,7 @@ function FooterLink({
   return (
     <Link
       href={href}
-      className="hover:opacity-70 transition"
+      className="self-start hover:opacity-70 transition"
       target={otherTab ? "_blank" : "_self"}
     >
       <RyogoSmall color="white">{label}</RyogoSmall>

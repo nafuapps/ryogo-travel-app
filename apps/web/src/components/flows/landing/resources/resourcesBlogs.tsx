@@ -40,7 +40,7 @@ export default async function ResourcesBlogsSection() {
   ]
 
   return (
-    <LandingSectionWrapper id="blogs" className="bg-white dark:bg-slate-800">
+    <LandingSectionWrapper id="blogs">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

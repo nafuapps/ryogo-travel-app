@@ -287,9 +287,17 @@ export function StickyActionWrapper({
   )
 }
 
-export function TileGridWrapper({ children }: { children: React.ReactNode }) {
+export function TileGridWrapper({
+  children,
+  doubleMd,
+}: {
+  children: React.ReactNode
+  doubleMd?: boolean
+}) {
   return (
-    <div className="empty:hidden grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5 w-full">
+    <div
+      className={`empty:hidden grid grid-cols-1 ${doubleMd ? "md:grid-cols-2" : "lg:grid-cols-2"} gap-4 lg:gap-5 w-full`}
+    >
       {children}
     </div>
   )

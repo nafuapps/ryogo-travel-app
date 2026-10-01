@@ -181,7 +181,7 @@ function PlanSelectionCard({
       className={`flex border rounded-lg justify-between items-center p-3 lg:p-4 gap-2 lg:gap-3 w-full ${
         selected
           ? "bg-sky-100 dark:bg-sky-800 border-sky-200 dark:border-sky-700"
-          : "border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 "
+          : "border-slate-100 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700"
       }`}
     >
       <SectionColWrapper>

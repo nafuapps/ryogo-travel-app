@@ -56,10 +56,7 @@ export default function HowItWorksCustomersSection() {
   ]
 
   return (
-    <LandingSectionWrapper
-      id="customers"
-      className=" bg-white dark:bg-slate-800"
-    >
+    <LandingSectionWrapper id="customers">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

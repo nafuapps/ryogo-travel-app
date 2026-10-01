@@ -63,7 +63,7 @@ export default function HowItWorksEntitiesSection() {
   ]
 
   return (
-    <LandingSectionWrapper id="entities" className="bg-white dark:bg-slate-800">
+    <LandingSectionWrapper id="entities">
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}

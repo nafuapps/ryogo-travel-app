@@ -83,7 +83,7 @@ export default function QueryForm() {
   }
 
   return (
-    <div className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 md:gap-5 w-full shadow-md bg-white dark:bg-sky-950/70">
+    <div className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 md:gap-5 w-full shadow-md bg-white dark:bg-sky-950">
       <FormWrapper
         form={form}
         id={"queryForm"}

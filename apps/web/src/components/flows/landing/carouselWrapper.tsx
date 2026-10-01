@@ -22,7 +22,7 @@ export function VideoCarouselItem({
     <CarouselItem className="flex flex-col p-3 md:p-4 rounded-xl border gap-2 md:gap-3 basis-full md:basis-1/2 lg:basis-1/3">
       <RyogoVideo src={src} className="w-full aspect-video rounded-md" />
       <div className="flex gap-1.5 md:gap-2 items-center">
-        <div className="flex items-center justify-center bg-slate-50 dark:bg-slate-900 rounded-lg size-8 lg:size-10 shrink-0">
+        <div className="flex items-center justify-center bg-slate-100 dark:bg-slate-700 rounded-lg size-8 lg:size-10 shrink-0">
           <RyogoP color="slate" weight="font-bold">
             {index}
           </RyogoP>
@@ -51,7 +51,7 @@ export function BlogCarouselItem({
         href={`/resources/blog/${blogId}`}
         className="flex flex-col gap-2 md:gap-3"
       >
-        <div className="w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
+        <div className="border-8 md:border-10 border-slate-100/50 dark:border-slate-700/50 w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
           <Image
             src={imageSrc}
             className="object-cover md:transition-transform md:duration-300 md:group-hover:scale-105"

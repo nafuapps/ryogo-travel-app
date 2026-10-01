@@ -6,7 +6,6 @@ import { Metadata } from "next"
 import { getLocale } from "next-intl/server"
 import { cookies } from "next/headers"
 import { DARK_MODE_COOKIE_NAME } from "@ryogo-travel-app/api/apiConfig"
-import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 import { getLang } from "@/lib/utils"
 
 const notoSans = Noto_Sans({

@@ -42,7 +42,7 @@ type RyogoTextType = {
 export function RyogoH1(props: RyogoTextType) {
   return (
     <h1
-      className={`text-4xl lg:text-5xl ${props.weight ?? ""} ${getTextColor(props.color)} ${props.className ?? ""}`}
+      className={`text-4xl lg:text-5xl/13 ${props.weight ?? ""} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
     </h1>

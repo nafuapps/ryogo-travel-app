@@ -36,6 +36,9 @@ export default function TrackBookingPageComponent() {
   //Form init
   const form = useForm<TrackBookingType>({
     resolver: zodResolver(trackBookingSchema),
+    defaultValues: {
+      enteredId: "",
+    },
   })
 
   //Form submit
@@ -81,7 +84,7 @@ export default function TrackBookingPageComponent() {
             label={t("Clear")}
             type="button"
             onClick={() => form.reset()}
-            disabled={form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting || !form.formState.isDirty}
           />
         </StickyActionWrapper>
       </FormWrapper>

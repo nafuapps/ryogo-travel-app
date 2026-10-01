@@ -13,6 +13,7 @@ import {
   RyogoBrandButton,
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 export default async function HomeHeroSection() {
   const t = await getTranslations("Landing.Home.Hero")
@@ -20,18 +21,18 @@ export default async function HomeHeroSection() {
     <LandingSectionWrapper id="hero" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 sm:px-8 md:px-10 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-sky-400 dark:from-sky-600 to-sky-50 dark:to-sky-950"
+        className="h-full px-5 sm:px-8 md:px-10 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-sky-400 dark:from-sky-500 to-sky-50 dark:to-sky-950"
       >
-        <div className="flex flex-col items-center gap-1 lg:gap-2">
+        <SectionColWrapper small className="items-center">
           <RyogoH1 weight="font-bold" className="text-center">
             {t("Title1")}
           </RyogoH1>
           <RyogoH1 color="white" weight="font-bold" className="text-center">
             {t("Title2")}
           </RyogoH1>
-        </div>
+        </SectionColWrapper>
         <RyogoP
-          color="brand"
+          color="slate"
           weight="font-medium"
           className="max-w-4xl text-center"
         >

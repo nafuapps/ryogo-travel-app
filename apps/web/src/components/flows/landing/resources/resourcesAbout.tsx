@@ -1,6 +1,7 @@
 import {
   RyogoP,
   RyogoH1,
+  RyogoH2,
   RyogoSmall,
   RyogoH4,
   RyogoCaption,
@@ -18,7 +19,10 @@ import { RyogoImage } from "@/components/images/ryogoImage"
 export default async function ResourcesAboutSection() {
   const t = await getTranslations("Landing.Resources.About")
   return (
-    <LandingSectionWrapper id="about" className="bg-slate-50 dark:bg-slate-900">
+    <LandingSectionWrapper
+      id="about"
+      className="bg-slate-100 dark:bg-slate-900"
+    >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
           {t("Title")}
@@ -26,7 +30,7 @@ export default async function ResourcesAboutSection() {
         <RyogoP color="light" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
-        <div className="bg-white dark:bg-sky-950/70 relative shadow w-full max-w-4xl rounded-lg p-6 md:p-8 my-3 md:my-4 flex flex-col items-center gap-4 md:gap-6 overflow-hidden">
+        <div className="bg-white dark:bg-sky-950 relative shadow w-full max-w-4xl rounded-lg p-6 md:p-8 my-3 md:my-4 flex flex-col items-center gap-4 md:gap-6 overflow-hidden">
           <div className="bg-linear-to-b from-sky-900 dark:from-sky-50 to-sky-700 dark:to-sky-200 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -top-10 md:-left-14 md:-top-14 lg:-left-16 lg:-top-16"></div>
           <div className="bg-linear-to-b from-sky-900 dark:from-sky-50 to-sky-700 dark:to-sky-200 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -top-10 md:-right-14 md:-top-14 lg:-right-16 lg:-top-16"></div>
           <div className="bg-linear-to-b from-sky-700 dark:from-sky-200 to-sky-500 dark:to-sky-400 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -bottom-10 md:-left-14 md:-bottom-14 lg:-left-16 lg:-bottom-16"></div>
@@ -86,11 +90,15 @@ export default async function ResourcesAboutSection() {
             />
           </div>
         </div>
-        <div className="flex flex-col gap-2 lg:gap-3 p-4 md:p-6 my-3 md:my-4  bg-linear-to-b from-slate-950 dark:from-white to-slate-700 dark:to-slate-300 shadow w-full max-w-4xl rounded-lg">
-          <RyogoP color="white" className="text-center">
+        <div className="flex flex-col gap-2 lg:gap-3 p-4 md:p-6 my-3 md:my-4 bg-white dark:bg-slate-700 shadow w-full max-w-4xl rounded-lg">
+          <RyogoP color="slate" className="text-center">
             {t("Mission.Subtitle")}
           </RyogoP>
-          <RyogoSmall weight="font-bold" color="light" className="text-center">
+          <RyogoSmall
+            weight="font-medium"
+            color="light"
+            className="text-center"
+          >
             {t("Mission.Quote")}
           </RyogoSmall>
         </div>
@@ -102,7 +110,7 @@ export default async function ResourcesAboutSection() {
 function MissionSuccess({ value, label }: { value: string; label: string }) {
   return (
     <div className="w-full flex flex-col gap-2 md:gap-3 items-center border rounded-lg p-4 md:p-5 lg:p-6">
-      <RyogoH1 weight="font-bold">{value}</RyogoH1>
+      <RyogoH2 weight="font-bold">{value}</RyogoH2>
       <RyogoSmall color="slate" className="text-center">
         {label}
       </RyogoSmall>
@@ -122,7 +130,7 @@ function CompanyLogo({
   return (
     <SectionRowWrapper
       small
-      className="items-center justify-center border p-1.5 md:p-2 rounded"
+      className="items-center justify-center border py-1.5 md:py-2 px-2 md:px-3 rounded-md"
     >
       <RyogoImage src={src} alt={alt} imageSize="xs" />
       <RyogoCaption color="light">{name}</RyogoCaption>

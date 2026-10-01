@@ -33,6 +33,7 @@ import SupportRelatedArticleLinkButton, {
   SupportRelatedArticleType,
 } from "@/components/flows/support/supportRelatedArticleType"
 import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 
 /*
   - Overview
@@ -175,6 +176,10 @@ async function OverviewContent() {
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/rider/myLeaves"}
+          label={t("KnowLeave.CTA")}
         />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("LeaveDetails.Title")}>

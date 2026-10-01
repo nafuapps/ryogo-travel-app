@@ -31,7 +31,7 @@ export default async function ResourcesHeroSection() {
           >
             {t("Title")}
           </RyogoH1>
-          <RyogoP color="light" className="max-w-4xl text-center lg:text-left">
+          <RyogoP color="white" className="max-w-4xl text-center lg:text-left">
             {t("Subtitle")}
           </RyogoP>
           <div className="flex gap-4 flex-col sm:flex-row items-center justify-center lg:justify-start">

@@ -30,7 +30,7 @@ export default async function ResourcesSupportSection() {
   return (
     <LandingSectionWrapper
       id="support"
-      className="bg-slate-50 dark:bg-slate-900"
+      className="bg-slate-100 dark:bg-slate-900"
     >
       <LandingContentWrapper>
         <RyogoH1 weight="font-bold" className="text-center">
@@ -51,7 +51,7 @@ export default async function ResourcesSupportSection() {
 async function HelpBlock() {
   const t = await getTranslations("Landing.Resources.Support.HelpBlock")
   return (
-    <div className="flex flex-col gap-4 md:gap-5 w-full bg-linear-to-b from-slate-950 dark:from-white to-slate-700 dark:to-slate-300 p-6 lg:p-8 rounded-lg">
+    <div className="flex flex-col gap-4 md:gap-5 w-full bg-linear-to-b from-slate-950 dark:from-white to-slate-800 dark:to-slate-200 p-6 lg:p-8 rounded-lg">
       <RyogoH4 color="white" weight="font-bold">
         {t("Title")}
       </RyogoH4>
@@ -90,7 +90,7 @@ async function HelpBlock() {
           <RyogoIcon icon={MessageSquare} size="sm" color="white" thick />
         </RyogoOutlineButton>
       </Link>
-      <Separator className="bg-slate-500 dark:bg-slate-500" />
+      <Separator className="bg-slate-500 dark:bg-slate-400" />
       <RyogoCaption color="light" className="text-center">
         {t("Disclaimer")}
       </RyogoCaption>

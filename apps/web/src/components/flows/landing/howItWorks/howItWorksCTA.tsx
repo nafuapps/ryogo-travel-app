@@ -16,12 +16,8 @@ import {
 export default async function HowItWorksCTASection() {
   const t = await getTranslations("Landing.HowItWorks.CTA")
   return (
-    <LandingSectionWrapper
-      id="cta"
-      shrink
-      className="bg-linear-to-b from-sky-600 dark:from-sky-300 to-sky-900 dark:to-sky-50"
-    >
-      <LandingContentWrapper>
+    <LandingSectionWrapper id="cta">
+      <LandingContentWrapper className="rounded-lg px-5 md:px-10 lg:px-16 py-12 md:py-18 bg-linear-to-b from-sky-600 dark:from-sky-400 to-sky-900 dark:to-sky-100">
         <RyogoH1 color="white" weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>

@@ -9,7 +9,7 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronDown } from "lucide-react"
 import Image from "next/image"
 import {
-  RyogoBrandButton,
+  RyogoDefaultButton,
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
 
@@ -19,9 +19,9 @@ export default async function FeaturesHeroSection() {
     <LandingSectionWrapper id="hero" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 sm:px-8 md:px-10 lg:px-16 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-slate-300 dark:from-slate-600 to-slate-50 dark:to-slate-900"
+        className="h-full px-5 sm:px-8 md:px-10 lg:px-16 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-slate-100 dark:from-slate-700 to-slate-700 dark:to-slate-100"
       >
-        <RyogoH1 weight="font-bold" color="brand" className="text-center">
+        <RyogoH1 weight="font-bold" color="dark" className="text-center">
           {t("Title")}
         </RyogoH1>
         <RyogoP color="slate" className="max-w-4xl text-center">
@@ -29,19 +29,19 @@ export default async function FeaturesHeroSection() {
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center lg:mb-4">
           <Link href="#menu">
-            <RyogoBrandButton
+            <RyogoDefaultButton
               size="lg"
               label={t("PrimaryCTA")}
               className="w-full md:w-auto"
             >
               <RyogoIcon icon={ChevronDown} color="white" size="sm" thick />
-            </RyogoBrandButton>
+            </RyogoDefaultButton>
           </Link>
           <Link href="/auth/signup">
             <RyogoWhiteButton
               size="lg"
               label={t("SecondaryCTA")}
-              labelColor="brand"
+              labelColor="slate"
               className="w-full gap-1 lg:gap-2 md:w-auto"
             />
           </Link>

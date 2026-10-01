@@ -20,18 +20,22 @@ export function AuthMainWrapper({
           <div className="absolute inset-0 bg-white/70 dark:bg-slate-800/70 md:hidden" />
         </>
       ) : null}
-      <div className="z-10 flex w-full h-full flex-col items-center gap-10 md:gap-12">
+      <div className="z-10 flex w-full h-full flex-col items-center gap-6 md:gap-8 mt-24 md:mt-28">
+        {children}
         <Link href="/">
           <RyoGoLogo />
         </Link>
-        {children}
       </div>
     </div>
   )
 }
 
-export function AuthSideWrapper({ children }: { children: React.ReactNode }) {
-  return <div className="relative hidden md:flex md:w-1/2">{children}</div>
+export function AuthSideWrapper({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative hidden md:flex md:w-1/2">
+      <AuthImage src={src} alt={alt} />
+    </div>
+  )
 }
 
 export function AuthPageWrapper({ children }: { children: React.ReactNode }) {
@@ -58,7 +62,7 @@ export function AuthAccountsWrapper({
   )
 }
 
-export function AuthImage({ src, alt }: { src: string; alt: string }) {
+function AuthImage({ src, alt }: { src: string; alt: string }) {
   return (
     <Image
       loading="eager"

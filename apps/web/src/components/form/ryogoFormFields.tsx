@@ -26,7 +26,7 @@ import {
 import { CalendarIcon, Star, ThumbsDown, ThumbsUp } from "lucide-react"
 import React, { Dispatch, SetStateAction } from "react"
 import { UseFormRegisterReturn } from "react-hook-form"
-import { cn } from "@/lib/utils"
+import { cn, getLangDisplay } from "@/lib/utils"
 import { format } from "date-fns"
 import { Switch } from "@/components/ui/switch"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -47,6 +47,7 @@ import {
 } from "@/components/ui/input-otp"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 
 export function RyogoInput({
   name,
@@ -219,6 +220,7 @@ export function RyogoSelect({
   description,
   register,
   resetField,
+  translateLang,
 }: {
   name: string
   title?: string
@@ -227,7 +229,9 @@ export function RyogoSelect({
   description?: string
   register: UseFormRegisterReturn<string>
   resetField?: () => void
+  translateLang?: boolean
 }) {
+  console.log(array)
   return (
     <FormField
       name={name}
@@ -254,7 +258,11 @@ export function RyogoSelect({
             <SelectContent>
               {array.map((item) => (
                 <SelectItem key={item} value={item}>
-                  {item}
+                  <RyogoCaption color="slate">
+                    {translateLang
+                      ? getLangDisplay(item as UserLangEnum)
+                      : item}
+                  </RyogoCaption>
                 </SelectItem>
               ))}
             </SelectContent>

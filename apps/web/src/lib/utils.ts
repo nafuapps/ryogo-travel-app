@@ -35,6 +35,17 @@ export function getLang(locale: UserLangEnum) {
   }
 }
 
+export function getLangDisplay(locale: UserLangEnum) {
+  switch (locale) {
+    case UserLangEnum.HINDI:
+      return "हिंदी"
+    case UserLangEnum.ASSAMESE:
+      return "অসমীয়া"
+    case UserLangEnum.ENGLISH:
+      return "English"
+  }
+}
+
 export function getOnlineStatus(time?: Date | null) {
   if (!time) return "Offline"
   const minutes = differenceInMinutes(new Date(), time)

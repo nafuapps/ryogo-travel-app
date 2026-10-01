@@ -22,6 +22,7 @@ import {
   RyogoOutlineButton,
   RyogoBrandButton,
 } from "@/components/buttons/ryogoButtons"
+import { getLangDisplay } from "@/lib/utils"
 
 type NavbarItemType =
   | "home"
@@ -164,7 +165,7 @@ function LanguageSelector({ locale }: { locale: UserLangEnum }) {
             value={lang}
             className="focus:bg-gray-50 dark:focus:bg-slate-900 text-gray-700 dark:text-gray-200"
           >
-            <RyogoCaption color="slate">{lang}</RyogoCaption>
+            <RyogoCaption color="slate">{getLangDisplay(lang)}</RyogoCaption>
           </SelectItem>
         ))}
       </SelectContent>

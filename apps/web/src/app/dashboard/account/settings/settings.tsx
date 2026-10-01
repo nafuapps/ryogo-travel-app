@@ -55,6 +55,7 @@ export default function AccountSettingsPageComponent({
     )
     if (updatedUser) {
       toast.success(t("Success"))
+      router.refresh()
     } else {
       toast.error(t("Error"))
     }
@@ -76,6 +77,7 @@ export default function AccountSettingsPageComponent({
             array={languages}
             title={t("Field2.Title")}
             placeholder={t("Field2.Title")}
+            translateLang
           />
         </FormContentWrapper>
         <StickyActionWrapper>

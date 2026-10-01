@@ -1,34 +1,17 @@
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
-  AuthImage,
   AuthMainWrapper,
   AuthSideWrapper,
 } from "@/components/flows/auth/authWrappers"
-import { LayoutWrapper } from "@/components/layout/layoutWrappers"
 
 export default async function SignupLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const currentUser = await getCurrentUser()
-
-  // Redirect to private route if the user is already authenticated
-  if (currentUser) {
-    if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider/home", RedirectType.replace)
-    }
-    redirect("/dashboard/home", RedirectType.replace)
-  }
-
   return (
-    <LayoutWrapper id="SignupLayout">
+    <>
       <AuthMainWrapper src={"/signupBG.png"}>{children}</AuthMainWrapper>
-      <AuthSideWrapper>
-        <AuthImage src={"/signupBG.png"} alt="Signup Page Cover Image" />
-      </AuthSideWrapper>
-    </LayoutWrapper>
+      <AuthSideWrapper src={"/signupBG.png"} alt="Signup Page Cover Image" />
+    </>
   )
 }

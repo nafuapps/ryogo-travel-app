@@ -55,12 +55,14 @@ export default function MyProfileSettingsPageComponent({
     )
     if (updatedUser) {
       toast.success(t("Success"))
+      router.refresh()
     } else {
       toast.error(t("Error"))
     }
   }
 
   const languages = Object.values(UserLangEnum)
+
   return (
     <PageWrapper id="RiderAccountSettingsPage">
       <FormWrapper<SchemaType>
@@ -76,6 +78,7 @@ export default function MyProfileSettingsPageComponent({
             array={languages}
             title={t("Field2.Title")}
             placeholder={t("Field2.Title")}
+            translateLang
           />
         </FormContentWrapper>
         <StickyActionWrapper>

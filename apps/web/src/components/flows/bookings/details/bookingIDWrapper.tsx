@@ -12,8 +12,8 @@ export default function BookingIDWrapper({
 }) {
   return (
     <SectionRowWrapper className="items-center w-full justify-between">
-      <BookingStatusPill status={status} size="lg" />
       <IdCopyPill id={id} />
+      <BookingStatusPill status={status} size="lg" />
     </SectionRowWrapper>
   )
 }

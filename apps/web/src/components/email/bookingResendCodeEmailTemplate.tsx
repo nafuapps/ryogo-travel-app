@@ -11,10 +11,9 @@ export function BookingResendCodeEmailTemplate({
 }) {
   return (
     <div>
-      <h1>Hello, {name}!</h1>
+      <h2>Hello, {name}!</h2>
       <p>Your secret code for providing booking feedback is:</p>
       <h3>{code}</h3>
-      <br />
       <p>
         You can provide your feedback rating for this booking here: {trackUrl}
       </p>

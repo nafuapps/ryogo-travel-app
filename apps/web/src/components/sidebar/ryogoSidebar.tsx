@@ -32,7 +32,7 @@ export default function RyogoSidebar({
   isOwner,
 }: {
   contentItems: MenuItemType[]
-  footerItems: MenuItemType[]
+  footerItems?: MenuItemType[]
   isOwner: boolean
 }) {
   const { isMobile, open, openMobile } = useSidebar()
@@ -63,16 +63,18 @@ export default function RyogoSidebar({
             ),
         )}
       </SidebarContent>
-      <SidebarFooter className="mb-3">
-        {footerItems.map((item) => (
-          <MenuButton
-            key={item.title}
-            {...item}
-            open={sidebarOpen}
-            active={pathname.includes(item.url as string)}
-          />
-        ))}
-      </SidebarFooter>
+      {footerItems && (
+        <SidebarFooter className="mb-3">
+          {footerItems.map((item) => (
+            <MenuButton
+              key={item.title}
+              {...item}
+              open={sidebarOpen}
+              active={pathname.includes(item.url as string)}
+            />
+          ))}
+        </SidebarFooter>
+      )}
     </Sidebar>
   )
 }
@@ -107,7 +109,7 @@ function MenuButton({
             />
             <RyogoSmall
               color={active ? "white" : "slate"}
-              className={`transition ${open ? "" : "hidden"}`}
+              className={`text-nowrap transition ${open ? "" : "hidden"}`}
             >
               {title}
             </RyogoSmall>

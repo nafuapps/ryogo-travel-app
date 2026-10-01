@@ -20,8 +20,10 @@ import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
+  SectionColWrapper,
   SectionRowWrapper,
   StickyActionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { useRouter } from "next/navigation"
@@ -65,11 +67,21 @@ export default function NewBookingStepTripDetails({
   const stepTripDetailsSchema = z
     .object({
       //Trip
-      sourceState: z.string().nonoptional(t("Field1.Error1")),
-      sourceCity: z.string(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
-      destinationState: z.string().nonoptional(t("Field3.Error1")),
+      sourceState: z
+        .string()
+        .min(2, t("Field1.Error1"))
+        .nonoptional(t("Field1.Error1")),
+      sourceCity: z
+        .string(t("Field2.Error1"))
+        .min(2, t("Field2.Error1"))
+        .nonoptional(t("Field2.Error1")),
+      destinationState: z
+        .string()
+        .min(2, t("Field3.Error1"))
+        .nonoptional(t("Field3.Error1")),
       destinationCity: z
         .string(t("Field4.Error1"))
+        .min(2, t("Field4.Error1"))
         .nonoptional(t("Field4.Error1")),
       startDate: z.date(t("Field5.Error1")).nonoptional(t("Field5.Error1")),
       endDate: z.date(t("Field6.Error1")),
@@ -219,39 +231,45 @@ export default function NewBookingStepTripDetails({
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormContentWrapper>
-          <RyogoCombobox
-            name="sourceState"
-            title={t("Field1.Title")}
-            array={Object.keys(stateCityData)}
-            register={form.register("sourceState")}
-            placeholder={t("Field1.Placeholder")}
-            resetField={() => {
-              form.setValue("sourceCity", "")
-            }}
-          />
-          <RyogoCombobox
-            name="sourceCity"
-            array={sourceCityOptions}
-            register={form.register("sourceCity")}
-            placeholder={t("Field2.Placeholder")}
-          />
-          <Separator />
-          <RyogoCombobox
-            name="destinationState"
-            title={t("Field3.Title")}
-            array={Object.keys(stateCityData)}
-            register={form.register("destinationState")}
-            placeholder={t("Field3.Placeholder")}
-            resetField={() => {
-              form.setValue("destinationCity", "")
-            }}
-          />
-          <RyogoCombobox
-            name="destinationCity"
-            array={destinationCityOptions}
-            register={form.register("destinationCity")}
-            placeholder={t("Field4.Placeholder")}
-          />
+          <TileGridWrapper>
+            <SectionColWrapper>
+              <RyogoCombobox
+                name="sourceState"
+                title={t("Field1.Title")}
+                array={Object.keys(stateCityData)}
+                register={form.register("sourceState")}
+                placeholder={t("Field1.Placeholder")}
+                resetField={() => {
+                  form.setValue("sourceCity", "")
+                }}
+              />
+              <RyogoCombobox
+                name="sourceCity"
+                array={sourceCityOptions}
+                register={form.register("sourceCity")}
+                placeholder={t("Field2.Placeholder")}
+              />
+            </SectionColWrapper>
+            {/* <Separator /> */}
+            <SectionColWrapper>
+              <RyogoCombobox
+                name="destinationState"
+                title={t("Field3.Title")}
+                array={Object.keys(stateCityData)}
+                register={form.register("destinationState")}
+                placeholder={t("Field3.Placeholder")}
+                resetField={() => {
+                  form.setValue("destinationCity", "")
+                }}
+              />
+              <RyogoCombobox
+                name="destinationCity"
+                array={destinationCityOptions}
+                register={form.register("destinationCity")}
+                placeholder={t("Field4.Placeholder")}
+              />
+            </SectionColWrapper>
+          </TileGridWrapper>
         </FormContentWrapper>
         <FormContentWrapper>
           <RyogoSmall weight="font-bold">{t("Field8.Title")}</RyogoSmall>
@@ -286,17 +304,19 @@ export default function NewBookingStepTripDetails({
           </div>
         </FormContentWrapper>
         <FormContentWrapper>
-          <RyogoDatePicker
-            name="startDate"
-            label={t("Field5.Title")}
-            placeholder={t("Field5.Placeholder")}
-          />
-          <RyogoDatePicker
-            name="endDate"
-            label={t("Field6.Title")}
-            placeholder={t("Field6.Placeholder")}
-            disabled={selectedTripType === BookingTypeEnum.OneWay}
-          />
+          <TileGridWrapper>
+            <RyogoDatePicker
+              name="startDate"
+              label={t("Field5.Title")}
+              placeholder={t("Field5.Placeholder")}
+            />
+            <RyogoDatePicker
+              name="endDate"
+              label={t("Field6.Title")}
+              placeholder={t("Field6.Placeholder")}
+              disabled={selectedTripType === BookingTypeEnum.OneWay}
+            />
+          </TileGridWrapper>
         </FormContentWrapper>
         <FormContentWrapper>
           <RyogoInput
@@ -367,7 +387,7 @@ function TripTypeSelectionCard({
           thick
         />
       </SectionRowWrapper>
-      <RyogoTiny color={selected ? "white" : "slate"}>{desc}</RyogoTiny>
+      <RyogoTiny color={selected ? "white" : "light"}>{desc}</RyogoTiny>
     </div>
   )
 }

@@ -5,7 +5,7 @@ import BookingAssignedUserCard from "@/components/flows/bookings/details/booking
 import BookingCustomerCard from "@/components/flows/bookings/details/bookingCustomerCard"
 import BookingDropAddressCard from "@/components/flows/bookings/details/bookingDropAddressCard"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
-import BookingIDWrapper from "@/components/flows/bookings/details/BookingIDWrapper"
+import BookingIDWrapper from "@/components/flows/bookings/details/bookingIDWrapper"
 import BookingPickupAddressCard from "@/components/flows/bookings/details/bookingPickupAddressCard"
 import BookingPriceItem from "@/components/flows/bookings/details/bookingPriceItem"
 import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
@@ -43,6 +43,9 @@ import {
 import { Separator } from "@/components/ui/separator"
 import BookingDriverCard from "@/components/flows/bookings/details/bookingDriverCard"
 import RateBookingByCustomerDialog from "@/components/flows/bookings/track/rateBookingByCustomerDialog"
+import BookingAgencyCard from "@/components/flows/bookings/details/bookingAgencyCard"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import Link from "next/link"
 
 // A page to display booking details for tracking by customer
 export default async function TrackBookingDetailsPageComponent({
@@ -93,7 +96,7 @@ export default async function TrackBookingDetailsPageComponent({
   const pendingAmount = totalAmount - receivedAmount
 
   return (
-    <PageWrapper id="BookingDetailsPage">
+    <PageWrapper id="TrackBookingDetailsPage">
       <BookingGrid>
         <BookingSection
           sectionTitle={t("BookingInfo")}
@@ -103,29 +106,13 @@ export default async function TrackBookingDetailsPageComponent({
             id={bookingDetails.id}
             status={bookingDetails.status}
           />
+          <BookingAgencyCard agency={bookingDetails.agency} />
           {isCompleted && (
             <BookingRatingWrapper
               ratingByCustomer={bookingDetails.ratingByCustomer}
               ratingByDriver={bookingDetails.ratingByDriver}
             />
           )}
-        </BookingSection>
-        <BookingSection sectionTitle={t("AssignedUserInfo")} icon={UserKey}>
-          <BookingAssignedUserCard user={bookingDetails.assignedUser} />
-          <BookingActionWrapper>
-            <RyogoPhoneButton
-              label={t("CallAssignedUser")}
-              phone={bookingDetails.assignedUser.phone}
-            />
-            <RyogoChatButton
-              label={t("ChatAssignedUser.Title")}
-              phone={bookingDetails.assignedUser.phone}
-              subtitle={t("ChatAssignedUser.Subtitle")}
-            />
-          </BookingActionWrapper>
-        </BookingSection>
-        <BookingSection sectionTitle={t("CustomerInfo")} icon={Contact}>
-          <BookingCustomerCard customer={bookingDetails.customer} />
         </BookingSection>
         <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
           <BookingTripCard {...bookingDetails} />
@@ -171,6 +158,23 @@ export default async function TrackBookingDetailsPageComponent({
               />
             </BookingSection>
           )}
+        <BookingSection sectionTitle={t("AssignedUserInfo")} icon={UserKey}>
+          <BookingAssignedUserCard user={bookingDetails.assignedUser} />
+          <BookingActionWrapper>
+            <RyogoPhoneButton
+              label={t("CallAssignedUser")}
+              phone={bookingDetails.assignedUser.phone}
+            />
+            <RyogoChatButton
+              label={t("ChatAssignedUser.Title")}
+              phone={bookingDetails.assignedUser.phone}
+              subtitle={t("ChatAssignedUser.Subtitle")}
+            />
+          </BookingActionWrapper>
+        </BookingSection>
+        <BookingSection sectionTitle={t("CustomerInfo")} icon={Contact}>
+          <BookingCustomerCard customer={bookingDetails.customer} />
+        </BookingSection>
         <BookingSection sectionTitle={t("PriceInfo")} icon={ReceiptIndianRupee}>
           <BookingPriceItem
             title={t("VehicleCharge")}
@@ -260,6 +264,13 @@ export default async function TrackBookingDetailsPageComponent({
               codeSentOn={bookingDetails.codeSentOn}
             />
           )}
+        <Link href="/track/booking">
+          <RyogoOutlineButton
+            label={t("TrackAnother")}
+            labelColor="light"
+            className="w-full"
+          />
+        </Link>
       </StickyActionWrapper>
     </PageWrapper>
   )

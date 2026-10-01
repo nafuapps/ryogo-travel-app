@@ -1,7 +1,7 @@
 "use server"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
-import { UserRolesEnum, BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 
 export async function rateBookingByCustomerAction(
@@ -20,13 +20,6 @@ export async function rateBookingByCustomerAction(
       RedirectType.replace,
     )
   }
-  const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
-  if (
-    !bookingDetails ||
-    bookingDetails.status !== BookingStatusEnum.COMPLETED ||
-    bookingDetails.ratingByCustomer
-  )
-    return
 
   const updatedBooking = await bookingServices.changeBookingRatingByCustomer(
     bookingId,
@@ -35,5 +28,8 @@ export async function rateBookingByCustomerAction(
     bookingRatingByCustomer,
     driverRatingByCustomer,
   )
+  if (!updatedBooking) {
+    return
+  }
   return updatedBooking
 }

@@ -21,7 +21,7 @@ export function ConfirmBookingEmailTemplate({
 }) {
   return (
     <div>
-      <h1>Hello, {name}!</h1>
+      <h2>Hello, {name}!</h2>
       <p>Your booking has been confirmed.</p>
       <p>Here are the details of your booking:</p>
       <ul>

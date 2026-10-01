@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
-//To check if the form was submitted within 2s
-const CHECK_BOT_MILLISECONDS = 2000
+//To check if the form was submitted within 1.5s
+const CHECK_BOT_MILLISECONDS = 1500
 
 export const useBotDetection = () => {
   const [isBot, setIsBot] = useState(false)

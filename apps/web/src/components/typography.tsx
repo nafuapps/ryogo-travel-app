@@ -45,7 +45,7 @@ export function RyogoH1(props: RyogoTextType) {
       className={`text-4xl lg:text-5xl ${props.weight ?? ""} ${getTextColor(props.color)} ${props.className ?? ""}`}
     >
       {props.children}
-    </h1>
+    </h2>
   )
 }
 

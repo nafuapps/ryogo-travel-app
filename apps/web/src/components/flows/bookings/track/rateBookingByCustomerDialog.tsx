@@ -15,7 +15,7 @@ import {
   FormContentWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoH3, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { DialogHeader } from "@/components/ui/dialog"
 import { useRefreshPage } from "@/hooks/useRefreshPage"
 import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
@@ -28,6 +28,7 @@ import { toast } from "sonner"
 import z from "zod"
 import { useRouter } from "next/navigation"
 import { rateBookingByCustomerAction } from "@/app/actions/bookings/rateBookingByCustomerAction"
+import { useBotDetection } from "@/hooks/useBotDetection"
 
 export default function RateBookingByCustomerDialog({
   bookingId,
@@ -39,9 +40,12 @@ export default function RateBookingByCustomerDialog({
   codeSentOn: Date | null
 }) {
   const t = useTranslations("Track.RateBookingByCustomer")
+
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const { checkBotActivity, isBot } = useBotDetection()
+
   const [bookingRating, setBookingRating] = useState<number>(0)
   const [driverRating, setDriverRating] = useState<number>(0)
 
@@ -64,6 +68,20 @@ export default function RateBookingByCustomerDialog({
 
   //Submit action
   const onSubmit = async (data: RatingType) => {
+    if (checkBotActivity()) {
+      toast.error(t("BotError"))
+      return
+    }
+    if (bookingRating === 0) {
+      formData.setError("root", {
+        type: "manual",
+        message: t("SubmitError"),
+      })
+      setTimeout(() => {
+        formData.clearErrors("root")
+      }, 3000) //Clear the error after 3s
+      return
+    }
     startTransition(async () => {
       const result = await rateBookingByCustomerAction(
         bookingId,
@@ -72,6 +90,7 @@ export default function RateBookingByCustomerDialog({
         bookingRating,
         driverRating,
       )
+      console.log("Result:", result) // Debugging line
       if (result) {
         if ("id" in result) {
           toast.success(t("Success"))
@@ -81,23 +100,24 @@ export default function RateBookingByCustomerDialog({
             type: "manual",
             message: t("APIError"),
           })
+          setTimeout(() => {
+            formData.setValue("userEnteredcode", "")
+            formData.clearErrors("userEnteredcode")
+          }, 3000) //Clear the field after 3s
         }
       } else {
         setOpen(false)
         toast.error(t("Error"))
       }
-      setTimeout(() => {
-        formData.setValue("userEnteredcode", "")
-        formData.clearErrors("userEnteredcode")
-      }, 3000) //Clear the field after 3s
     })
   }
 
   //Resend code action
   const resendCode = async () => {
-    setTimeout(() => {
-      formData.setValue("userEnteredcode", "")
-    }, 1000) //Clear the field after 1s
+    if (checkBotActivity()) {
+      toast.error(t("BotError"))
+      return
+    }
     startTransition(async () => {
       const result = await resendBookingSecretCodeAction(bookingId)
       if (result) {
@@ -106,6 +126,9 @@ export default function RateBookingByCustomerDialog({
         toast.error(t("ResendError"))
       }
     })
+    setTimeout(() => {
+      formData.setValue("userEnteredcode", "")
+    }, 1000) //Clear the field after 1s
   }
 
   return (
@@ -113,7 +136,7 @@ export default function RateBookingByCustomerDialog({
       <DialogTrigger asChild>
         <RyogoDefaultButton label={t("Title")} />
       </DialogTrigger>
-      <DialogContent className="size-5/6 overflow-hidden">
+      <DialogContent>
         <DialogHeader>
           <RyogoH3 weight="font-bold">{t("Title")}</RyogoH3>
           <RyogoSmall color="light">{t("Subtitle")}</RyogoSmall>
@@ -144,11 +167,16 @@ export default function RateBookingByCustomerDialog({
               description={t("Field3.Description")}
             />
           </FormContentWrapper>
+          {formData.formState.errors.root && (
+            <RyogoCaption className="error-message" color="red">
+              {formData.formState.errors.root.message}
+            </RyogoCaption>
+          )}
         </FormWrapper>
         <StickyActionWrapper bgTransparent>
           <RyogoDefaultButton
             type="submit"
-            disabled={formData.formState.isSubmitting || bookingRating === 0}
+            disabled={formData.formState.isSubmitting || isBot}
             showSpinner={formData.formState.isSubmitting}
             form="ratingByCustomer"
             label={
@@ -158,7 +186,7 @@ export default function RateBookingByCustomerDialog({
           <RyogoOutlineButton
             type="button"
             onClick={resendCode}
-            disabled={isPending || !canSend}
+            disabled={isPending || !canSend || isBot}
             label={
               isPending
                 ? t("Sending")

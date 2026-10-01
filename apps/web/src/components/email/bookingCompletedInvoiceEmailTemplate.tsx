@@ -17,7 +17,7 @@ export function BookingCompletedInvoiceEmailTemplate({
 }) {
   return (
     <div>
-      <h1>Hello, {name}!</h1>
+      <h2>Hello, {name}!</h2>
       <p>
         Your booking has been completed and invoice for the trip has been
         generated.
@@ -39,7 +39,6 @@ export function BookingCompletedInvoiceEmailTemplate({
         <p>Your secret code is:</p>
         <h3>{code}</h3>
       </div>
-      <br />
       <EmailFooter />
     </div>
   )

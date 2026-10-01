@@ -9,5 +9,5 @@ export default async function TrackHeader({ pathName }: { pathName: string }) {
   >[0]
   const title = t(titleKey)
 
-  return <RyogoHeader title={title} withoutSidebar />
+  return <RyogoHeader title={title} />
 }

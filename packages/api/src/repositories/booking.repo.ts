@@ -1871,7 +1871,20 @@ export const bookingRepository = {
     })
   },
 
-  async updateSecretCodeSentOn(id: string) {
+  async updateSecretCode(id: string, secretCode: string) {
+    return await db
+      .update(bookings)
+      .set({
+        secretCode,
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        secretCode: bookings.secretCode,
+      })
+  },
+
+  async updateCodeSentOn(id: string) {
     return await db
       .update(bookings)
       .set({

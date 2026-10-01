@@ -13,7 +13,7 @@ export function CancelBookingEmailTemplate({
 }) {
   return (
     <div>
-      <h1>Hello, {name}!</h1>
+      <h2>Hello, {name}!</h2>
       <p>Your booking has been cancelled.</p>
       <ul>
         <li>

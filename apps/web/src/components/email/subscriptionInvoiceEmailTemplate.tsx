@@ -17,7 +17,7 @@ export function SubscriptionInvoiceEmailTemplate({
 }) {
   return (
     <div>
-      <h1>Hello, {name}!</h1>
+      <h2>Hello, {name}!</h2>
       <h5>
         Thank you for purchasing <b>{orderType}</b> RyoGo subscription for your
         agency <b>{agencyName}</b>. You are now subscribed to our

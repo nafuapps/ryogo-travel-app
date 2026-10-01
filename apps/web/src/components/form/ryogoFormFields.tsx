@@ -1,4 +1,4 @@
-import { RyogoSmall, RyogoCaption } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   FormControl,
@@ -55,7 +55,6 @@ export function RyogoInput({
   description,
   type,
   disabled,
-  fadeLabel,
 }: {
   name: string
   label: string
@@ -63,7 +62,6 @@ export function RyogoInput({
   description?: string
   type: React.HTMLInputTypeAttribute | undefined
   disabled?: boolean
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -71,12 +69,12 @@ export function RyogoInput({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall
+            <RyogoCaption
               weight="font-bold"
-              color={disabled || fadeLabel ? "light" : "dark"}
+              color={disabled ? "light" : "dark"}
             >
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <FormControl>
             <Input
@@ -103,13 +101,11 @@ export function RyogoOTPInput({
   label,
   description,
   disabled,
-  fadeLabel,
 }: {
   name: string
   label: string
   description?: string
   disabled?: boolean
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -117,12 +113,12 @@ export function RyogoOTPInput({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall
+            <RyogoCaption
               weight="font-bold"
-              color={disabled || fadeLabel ? "light" : "dark"}
+              color={disabled ? "light" : "dark"}
             >
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <FormControl>
             <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS} {...field}>
@@ -154,14 +150,12 @@ export function RyogoFileInput({
   placeholder,
   description,
   register,
-  fadeLabel,
 }: {
   name: string
   label: string
   placeholder: string
   description?: string
   register: UseFormRegisterReturn<string>
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -169,9 +163,9 @@ export function RyogoFileInput({
       render={() => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+            <RyogoCaption weight="font-bold" color={"dark"}>
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <FormControl>
             <Input {...register} type="file" placeholder={placeholder} />
@@ -192,12 +186,10 @@ export function RyogoTextarea({
   name,
   label,
   placeholder,
-  fadeLabel,
 }: {
   name: string
   label: string
   placeholder: string
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -205,9 +197,9 @@ export function RyogoTextarea({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+            <RyogoCaption weight="font-bold" color={"dark"}>
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <FormControl>
             <Textarea placeholder={placeholder} {...field} />
@@ -227,7 +219,6 @@ export function RyogoSelect({
   description,
   register,
   resetField,
-  fadeLabel,
 }: {
   name: string
   title?: string
@@ -236,7 +227,6 @@ export function RyogoSelect({
   description?: string
   register: UseFormRegisterReturn<string>
   resetField?: () => void
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -244,9 +234,9 @@ export function RyogoSelect({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+            <RyogoCaption weight="font-bold" color={"dark"}>
               {title}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <Select
             {...register}
@@ -288,7 +278,6 @@ export function RyogoCombobox({
   placeholder,
   register,
   resetField,
-  fadeLabel,
 }: {
   name: string
   title?: string
@@ -296,7 +285,6 @@ export function RyogoCombobox({
   placeholder: string
   register: UseFormRegisterReturn<string>
   resetField?: () => void
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -305,9 +293,9 @@ export function RyogoCombobox({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+            <RyogoCaption weight="font-bold" color={"dark"}>
               {title}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <Combobox
             items={array}
@@ -345,7 +333,6 @@ export function RyogoRadio({
   register,
   defaultValue,
   description,
-  fadeLabel,
 }: {
   name: string
   title?: string
@@ -353,7 +340,6 @@ export function RyogoRadio({
   register: UseFormRegisterReturn<string>
   defaultValue: string
   description?: string
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -361,9 +347,9 @@ export function RyogoRadio({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+            <RyogoCaption weight="font-bold" color={"dark"}>
               {title}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <RadioGroup
             {...register}
@@ -390,11 +376,9 @@ export function RyogoRadio({
 export function RyogoCheckbox({
   name,
   label,
-  fadeLabel,
 }: {
   name: string
   label: string
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -409,12 +393,9 @@ export function RyogoCheckbox({
               />
             </FormControl>
             <FormLabel>
-              <RyogoSmall
-                weight="font-bold"
-                color={fadeLabel ? "light" : "dark"}
-              >
+              <RyogoCaption weight="font-bold" color={"dark"}>
                 {label}
-              </RyogoSmall>
+              </RyogoCaption>
             </FormLabel>
           </FormItem>
         )
@@ -427,22 +408,20 @@ export function RyogoMultipleCheckbox({
   name,
   label,
   array,
-  fadeLabel,
 }: {
   name: string
   label: string
   array: string[]
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
       name={name}
       render={() => (
         <FormItem className="flex flex-col gap-2 lg:gap-3 w-full">
-          <FormLabel className="text-base">
-            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+          <FormLabel>
+            <RyogoCaption weight="font-bold" color={"dark"}>
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           {array.map((item) => (
             <FormField
@@ -468,7 +447,7 @@ export function RyogoMultipleCheckbox({
                         }}
                       />
                     </FormControl>
-                    <FormLabel className="text-sm font-normal">
+                    <FormLabel>
                       <RyogoCaption color="slate">{item}</RyogoCaption>
                     </FormLabel>
                   </FormItem>
@@ -490,7 +469,6 @@ export function RyogoDatePicker({
   description,
   disabled,
   pastAllowed,
-  fadeLabel,
 }: {
   name: string
   label: string
@@ -498,7 +476,6 @@ export function RyogoDatePicker({
   description?: string
   disabled?: boolean
   pastAllowed?: boolean
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -506,21 +483,17 @@ export function RyogoDatePicker({
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1.5 lg:gap-2 w-full">
           <FormLabel>
-            <RyogoSmall
+            <RyogoCaption
               weight="font-bold"
-              color={disabled || fadeLabel ? "light" : "dark"}
+              color={disabled ? "light" : "dark"}
             >
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <Popover>
             <PopoverTrigger asChild disabled={disabled}>
               <FormControl>
                 <RyogoOutlineButton
-                  className={cn(
-                    "w-full pl-3 text-left font-normal",
-                    !field.value && "text-muted-foreground",
-                  )}
                   label={field.value ? format(field.value, "PPP") : placeholder}
                 >
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
@@ -557,24 +530,16 @@ export function RyogoDatePicker({
   )
 }
 
-export function RyogoSwitch({
-  name,
-  label,
-  fadeLabel,
-}: {
-  name: string
-  label: string
-  fadeLabel?: boolean
-}) {
+export function RyogoSwitch({ name, label }: { name: string; label: string }) {
   return (
     <FormField
       name={name}
       render={({ field }) => (
         <FormItem className="flex flex-row items-center justify-between gap-2 lg:gap-3 w-full py-1.5 lg:py-2">
           <FormLabel>
-            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+            <RyogoCaption weight="font-bold" color={"dark"}>
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <FormControl>
             <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -589,12 +554,10 @@ export function RyogoTimePicker({
   name,
   label,
   description,
-  fadeLabel,
 }: {
   name: string
   label: string
   description?: string
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -602,9 +565,9 @@ export function RyogoTimePicker({
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
           <FormLabel>
-            <RyogoSmall weight="font-bold" color={fadeLabel ? "light" : "dark"}>
+            <RyogoCaption weight="font-bold" color={"dark"}>
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <Input
             type="time"
@@ -629,7 +592,6 @@ export function RyogoRatingInput({
   setSelectedStars,
   totalStars,
   disabled,
-  fadeLabel,
 }: {
   name: string
   label: string
@@ -637,7 +599,6 @@ export function RyogoRatingInput({
   setSelectedStars: Dispatch<SetStateAction<number>>
   totalStars: number
   disabled?: boolean
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -646,12 +607,12 @@ export function RyogoRatingInput({
       render={({}) => (
         <FormItem className="flex flex-row justify-between items-center gap-1 lg:gap-1.5 w-full">
           <FormLabel>
-            <RyogoSmall
+            <RyogoCaption
               weight="font-bold"
-              color={disabled || fadeLabel ? "light" : "dark"}
+              color={disabled ? "light" : "dark"}
             >
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <div className="flex flex-row gap-2 lg:gap-3 items-center">
             {Array.from({ length: totalStars }).map((_, index) => {
@@ -683,14 +644,12 @@ export function RyogoThumbsInput({
   isLiked,
   setIsLiked,
   disabled,
-  fadeLabel,
 }: {
   name: string
   label: string
   isLiked: boolean | null
   setIsLiked: Dispatch<SetStateAction<boolean | null>>
   disabled?: boolean
-  fadeLabel?: boolean
 }) {
   return (
     <FormField
@@ -699,13 +658,13 @@ export function RyogoThumbsInput({
       render={({}) => (
         <FormItem className="flex flex-col justify-between items-center gap-2 lg:gap-3 w-full my-3 lg:my-4">
           <FormLabel>
-            <RyogoSmall
+            <RyogoCaption
               weight="font-bold"
-              color={disabled || fadeLabel ? "light" : "dark"}
+              color={disabled ? "light" : "dark"}
               className="text-center"
             >
               {label}
-            </RyogoSmall>
+            </RyogoCaption>
           </FormLabel>
           <div className="flex flex-row gap-2 lg:gap-3 items-center justify-center">
             <RyogoIcon
@@ -714,7 +673,7 @@ export function RyogoThumbsInput({
               color={`${isLiked === false ? "red" : "slate"}`}
               onClick={() => setIsLiked(isLiked === false ? null : false)}
               thick={isLiked === false}
-              className="mt-1"
+              className="mt-2 lg:mt-3"
             />
             <RyogoIcon
               icon={ThumbsUp}

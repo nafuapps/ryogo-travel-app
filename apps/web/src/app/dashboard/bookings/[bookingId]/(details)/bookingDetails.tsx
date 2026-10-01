@@ -47,7 +47,7 @@ import BookingPickupAddressCard from "@/components/flows/bookings/details/bookin
 import BookingRemarksCard from "@/components/flows/bookings/details/bookingRemarksCard"
 import BookingCreationInfoCard from "@/components/flows/bookings/details/bookingInfoCard"
 import BookingReconcileCard from "@/components/flows/bookings/details/bookingReconcileCard"
-import BookingIDWrapper from "@/components/flows/bookings/details/BookingIDWrapper"
+import BookingIDWrapper from "@/components/flows/bookings/details/bookingIDWrapper"
 import SendQuoteAlertButton from "@/components/buttons/alert/sendQuoteAlertButton"
 import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
 import BookingViewInvoiceButton from "@/components/flows/bookings/details/bookingViewInvoiceButton"
@@ -183,60 +183,6 @@ export default async function BookingDetailsPageComponent({
             )}
           </BookingActionWrapper>
         </BookingSection>
-        <BookingSection sectionTitle={t("AssignedUserInfo")} icon={UserKey}>
-          <BookingAssignedUserCard
-            user={bookingDetails.assignedUser}
-            withLink={isOwner}
-          />
-          {canAssignUser && (
-            <BookingActionWrapper>
-              {!isAssignedUser && (
-                <>
-                  <RyogoPhoneButton
-                    label={t("CallAssignedUser")}
-                    phone={bookingDetails.assignedUser.phone}
-                  />
-                  <RyogoChatButton
-                    label={t("ChatAssignedUser.Title")}
-                    phone={bookingDetails.assignedUser.phone}
-                    subtitle={t("ChatAssignedUser.Subtitle")}
-                  />
-                </>
-              )}
-              <Link
-                href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
-              >
-                <RyogoDetailedIconButton
-                  label={t("AssignAgent.Title")}
-                  icon={Replace}
-                  subtitle={t("AssignAgent.Subtitle")}
-                />
-              </Link>
-            </BookingActionWrapper>
-          )}
-        </BookingSection>
-        <BookingSection sectionTitle={t("CustomerInfo")} icon={Contact}>
-          <BookingCustomerCard customer={bookingDetails.customer} withLink />
-          {canCommunicateWithCustomer && (
-            <BookingActionWrapper>
-              <RyogoPhoneButton
-                label={t("CallCustomer")}
-                phone={bookingDetails.customer.phone}
-              />
-              <RyogoChatButton
-                label={t("ChatCustomer.Title")}
-                phone={bookingDetails.customer.phone}
-                subtitle={t("ChatCustomer.Subtitle")}
-              />
-              <ShareTrackBookingLinkButton
-                bookingId={bookingDetails.id}
-                phone={bookingDetails.customer.phone}
-                label={t("ShareTrackingLink.Title")}
-                subtitle={t("ShareTrackingLink.Subtitle")}
-              />
-            </BookingActionWrapper>
-          )}
-        </BookingSection>
         <BookingSection sectionTitle={t("TripInfo")} icon={Route}>
           <BookingTripCard {...bookingDetails} />
           {canSeeTripDetails && (
@@ -284,6 +230,28 @@ export default async function BookingDetailsPageComponent({
               />
             </BookingSection>
           )}
+        <BookingSection sectionTitle={t("CustomerInfo")} icon={Contact}>
+          <BookingCustomerCard customer={bookingDetails.customer} withLink />
+          {canCommunicateWithCustomer && (
+            <BookingActionWrapper>
+              <RyogoPhoneButton
+                label={t("CallCustomer")}
+                phone={bookingDetails.customer.phone}
+              />
+              <RyogoChatButton
+                label={t("ChatCustomer.Title")}
+                phone={bookingDetails.customer.phone}
+                subtitle={t("ChatCustomer.Subtitle")}
+              />
+              <ShareTrackBookingLinkButton
+                bookingId={bookingDetails.id}
+                phone={bookingDetails.customer.phone}
+                label={t("ShareTrackingLink.Title")}
+                subtitle={t("ShareTrackingLink.Subtitle")}
+              />
+            </BookingActionWrapper>
+          )}
+        </BookingSection>
         <BookingSection sectionTitle={t("PriceInfo")} icon={ReceiptIndianRupee}>
           <BookingPriceItem
             title={t("VehicleCharge")}
@@ -381,6 +349,38 @@ export default async function BookingDetailsPageComponent({
                   quoteSentOn={bookingDetails.quoteSentOn}
                 />
               )}
+            </BookingActionWrapper>
+          )}
+        </BookingSection>
+        <BookingSection sectionTitle={t("AssignedUserInfo")} icon={UserKey}>
+          <BookingAssignedUserCard
+            user={bookingDetails.assignedUser}
+            withLink={isOwner}
+          />
+          {canAssignUser && (
+            <BookingActionWrapper>
+              {!isAssignedUser && (
+                <>
+                  <RyogoPhoneButton
+                    label={t("CallAssignedUser")}
+                    phone={bookingDetails.assignedUser.phone}
+                  />
+                  <RyogoChatButton
+                    label={t("ChatAssignedUser.Title")}
+                    phone={bookingDetails.assignedUser.phone}
+                    subtitle={t("ChatAssignedUser.Subtitle")}
+                  />
+                </>
+              )}
+              <Link
+                href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
+              >
+                <RyogoDetailedIconButton
+                  label={t("AssignAgent.Title")}
+                  icon={Replace}
+                  subtitle={t("AssignAgent.Subtitle")}
+                />
+              </Link>
             </BookingActionWrapper>
           )}
         </BookingSection>

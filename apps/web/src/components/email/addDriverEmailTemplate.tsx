@@ -11,7 +11,7 @@ export function AddDriverEmailTemplate({
 }) {
   return (
     <div>
-      <h1>Welcome, {name}!</h1>
+      <h2>Welcome, {name}!</h2>
       <p>
         You have been added as a driver on RyoGo. We are excited to have you on
         board!

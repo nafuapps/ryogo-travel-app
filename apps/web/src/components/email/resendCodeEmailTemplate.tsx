@@ -9,7 +9,7 @@ export function resendCodeEmailTemplate({
 }) {
   return (
     <div>
-      <h1>Hello, {name}!</h1>
+      <h2>Hello, {name}!</h2>
       <p>Your new verification code is:</p>
       <h3>{code}</h3>
       <EmailFooter />

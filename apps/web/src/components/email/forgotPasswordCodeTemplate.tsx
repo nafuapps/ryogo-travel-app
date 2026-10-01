@@ -11,10 +11,9 @@ export function ForgotPasswordCodeTemplate({
 }) {
   return (
     <div>
-      <h1>Hello, {name}!</h1>
+      <h2>Hello, {name}!</h2>
       <p>Your have asked for resetting your password. Your code is:</p>
       <h3>{code}</h3>
-      <br />
       <p>Use this code to reset your password here: {link}</p>
       <EmailFooter />
     </div>

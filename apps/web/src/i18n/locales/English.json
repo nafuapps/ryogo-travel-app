@@ -1306,7 +1306,8 @@
       "ShareTrackingLink": {
         "Title": "Share Tracking Link",
         "Subtitle": "Send a link to the customer on Whatsapp to track their trip"
-      }
+      },
+      "TrackAnother": "Track another booking"
     },
     "BookingTransactions": {
       "TotalTxnAmount": "Total Transactions",
@@ -6385,6 +6386,7 @@
         "Error2": "Remarks must be less than 300 characters"
       },
       "Submit": "Submit Feedback",
+      "Error": "Please provide a rating or feedback before submitting.",
       "Loading": "Loading..",
       "Skip": "Skip",
       "Success": "Feedback submitted successfully!"
@@ -7370,8 +7372,27 @@
   "Track": {
     "Header": {
       "Title": {
+        "/track/booking": "Track Booking",
         "/track/booking/[id]": "Track Booking Details"
       }
+    },
+    "Sidebar": {
+      "Home": "Home",
+      "Track": "Track Booking"
+    },
+    "TrackBooking": {
+      "Title": "Track Booking",
+      "Subtitle": "Provide booking ID to track the trip status without any login or account",
+      "Field1": {
+        "Title": "Enter Booking ID",
+        "Placeholder": "B0000001",
+        "Error1": "Booking ID is required and must be 8 characters long",
+        "Error2": "Invalid booking ID"
+      },
+      "PrimaryCTA": "Track Booking",
+      "Loading": "Loading",
+      "Clear": "Clear",
+      "APIError": "No trip found with this Booking ID. Please check and try again."
     },
     "RateBookingByCustomer": {
       "Title": "Rate Booking",
@@ -7388,6 +7409,7 @@
         "Error1": "Secret code must be 6 digits long"
       },
       "APIError": "Secret code does not match",
+      "SubmitError": "Provide a rating before submitting feedback",
       "Loading": "Loading",
       "PrimaryCTA": "Confirm and Submit",
       "SecondaryCTA": "Resend Code",
@@ -7397,7 +7419,8 @@
       "ResendError": "Cannot resend code.. try again later",
       "ResendSuccess": "New verification code has been sent to your email",
       "Success": "Thank you for your feedback!",
-      "Error": "Cannot submit feedback now.. Try again later!"
+      "Error": "Cannot submit feedback now.. Try again later!",
+      "BotError": "Bot activity detected."
     }
   }
 }

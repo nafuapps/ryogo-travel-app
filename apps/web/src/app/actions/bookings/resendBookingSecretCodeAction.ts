@@ -24,10 +24,19 @@ export async function resendBookingSecretCodeAction(bookingId: string) {
     !bookingDetails ||
     bookingDetails.status !== BookingStatusEnum.COMPLETED ||
     bookingDetails.ratingByCustomer ||
-    !bookingDetails.customer.email ||
-    !bookingDetails.secretCode
-  )
+    !bookingDetails.customer.email
+  ) {
     return
+  }
+
+  let secretCode = bookingDetails.secretCode
+  if (!secretCode) {
+    const bookingWithCode = await bookingServices.addSecretCode(bookingId)
+    if (!bookingWithCode || !bookingWithCode.secretCode) {
+      return
+    }
+    secretCode = bookingWithCode.secretCode
+  }
 
   const headerList = await headers()
   const host = headerList.get("host")
@@ -41,7 +50,7 @@ export async function resendBookingSecretCodeAction(bookingId: string) {
     element: BookingResendCodeEmailTemplate({
       name: bookingDetails.customer.name,
       trackUrl: trackingUrl,
-      code: bookingDetails.secretCode,
+      code: secretCode,
     }),
   })
   if (!result.data) {

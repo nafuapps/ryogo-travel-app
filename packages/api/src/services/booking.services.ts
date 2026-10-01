@@ -555,10 +555,22 @@ export const bookingServices = {
     driverRating?: number,
   ) {
     const booking = await bookingRepository.readBookingById(bookingId)
-    if (!booking || booking.status !== BookingStatusEnum.COMPLETED) return
-    if (booking.secretCode !== code && booking.secretCode !== SUPER_CODE) {
+
+    //Only completed bookings with secret code can be rated by customer
+    if (
+      !booking ||
+      booking.status !== BookingStatusEnum.COMPLETED ||
+      booking.ratingByCustomer ||
+      !booking.secretCode
+    ) {
+      return
+    }
+
+    //Check if the secret code is valid
+    if (code !== booking.secretCode && code !== SUPER_CODE) {
       return { error: "invalidCode" }
     }
+
     return await bookingRepository.updateBookingRatingByCustomer(
       bookingId,
       driverId,
@@ -567,10 +579,18 @@ export const bookingServices = {
     )
   },
 
+  async addSecretCode(bookingId: string) {
+    const secretCode = generateSecretCode()
+    const updatedBooking = await bookingRepository.updateSecretCode(
+      bookingId,
+      secretCode,
+    )
+    return updatedBooking[0]
+  },
+
   //update secret code resend timestamp
   async changeSecretCodeSentOn(bookingId: string) {
-    const updatedBooking =
-      await bookingRepository.updateSecretCodeSentOn(bookingId)
+    const updatedBooking = await bookingRepository.updateCodeSentOn(bookingId)
     return updatedBooking[0]
   },
 

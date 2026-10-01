@@ -55,6 +55,11 @@ const nextConfig: NextConfig = {
         destination: "/rider/home",
         permanent: true,
       },
+      {
+        source: "/home",
+        destination: "/",
+        permanent: true,
+      },
     ]
   },
 }

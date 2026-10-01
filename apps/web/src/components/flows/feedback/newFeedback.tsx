@@ -15,7 +15,7 @@ import {
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoH3 } from "@/components/typography"
+import { RyogoSmall, RyogoH3, RyogoCaption } from "@/components/typography"
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import {
   MAX_FIELD_DESC_LENGTH,
@@ -70,6 +70,16 @@ export default function NewFeedbackComponent({
   })
 
   const onSubmit = async (data: SchemaType) => {
+    if (isLiked === null && rating === 0) {
+      form.setError("root", {
+        type: "manual",
+        message: t("Error"),
+      })
+      setTimeout(() => {
+        form.clearErrors("root")
+      }, 3000) //Clear the error after 3s
+      return
+    }
     const feedback: InsertProductFeedbackType = {
       rating: rating === 0 ? null : rating,
       liked: isLiked,
@@ -119,6 +129,11 @@ export default function NewFeedbackComponent({
               placeholder={t("Field3.Placeholder")}
             />
           </FormContentWrapper>
+          {form.formState.errors.root && (
+            <RyogoCaption className="error-message" color="red">
+              {form.formState.errors.root.message}
+            </RyogoCaption>
+          )}
         </FormWrapper>
         <StickyActionWrapper bgTransparent>
           <RyogoDefaultButton

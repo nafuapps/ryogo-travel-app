@@ -15,7 +15,7 @@ export function LeadBookingEmailTemplate({
 }) {
   return (
     <div>
-      <h1>Hello, {name}!</h1>
+      <h2>Hello, {name}!</h2>
       <p>Your booking quotation has been created.</p>
       <p>Here are the details of your booking:</p>
       <ul>

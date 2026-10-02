@@ -4,7 +4,6 @@ import {
   verifyWebSessionInDB,
   getSessionPayloadFromCookie,
 } from "./session"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { cache } from "react"
 
 //Get current user session from cookie - for optimistic checks before DB reads
@@ -22,22 +21,8 @@ export const verifyCurrentUser = cache(async () => {
 
 // Login user - Create session and update login time in DB
 export async function login(userId: string, password: string) {
-  //1. Check user credentials in DB
-  const userData = await userServices.checkUserCredentialsInDB(userId, password)
-  if (userData.error) {
-    return userData
-  }
-
-  //Credentials are valid
-  if (userData.data) {
-    //2. create session
-    const token = await createWebSession(userData.data)
-    if (!token) return { error: "sessionNotCreated" }
-
-    //3. Return login success if token created
-    return userData
-  }
-  return { ...userData, error: "unknown" }
+  const user = await createWebSession(userId, password)
+  return user
 }
 
 // Logout user - Delete session and log last logout time in DB

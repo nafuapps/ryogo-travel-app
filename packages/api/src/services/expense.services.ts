@@ -19,30 +19,31 @@ export const expenseServices = {
       type: data.type,
       amount: data.amount,
       remarks: data.remarks,
+      isApproved: data.isApproved,
       agencyId: data.agencyId,
     }
-    const addedExpense = await expenseRepository.createExpense(newExpenseData)
-    return addedExpense[0]
+    const [addedExpense] = await expenseRepository.createExpense(newExpenseData)
+    return addedExpense
   },
 
   //Modify an expense's details
   async modifyExpense(data: UpdateExpenseRequestType) {
-    const updatedExpense = await expenseRepository.updateExpenseDetails(
+    const [updatedExpense] = await expenseRepository.updateExpenseDetails(
       data.expenseId,
       data.amount,
       data.type,
       data.remarks,
     )
-    return updatedExpense[0]
+    return updatedExpense
   },
 
   //Modify an expense approval status
   async modifyExpenseApprovalStatus(expenseId: string, status: boolean) {
-    const expense = await expenseRepository.updateExpenseApprovalStatus(
+    const [expense] = await expenseRepository.updateExpenseApprovalStatus(
       expenseId,
       status,
     )
-    return expense[0]
+    return expense
   },
 
   //update expense photo url
@@ -52,8 +53,8 @@ export const expenseServices = {
 
   //Delete a expense
   async removeExpense(expenseId: string) {
-    const expenses = await expenseRepository.deleteExpense(expenseId)
-    return expenses[0]
+    const [deletedExpense] = await expenseRepository.deleteExpense(expenseId)
+    return deletedExpense
   },
 }
 

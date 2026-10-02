@@ -1038,6 +1038,7 @@ export const bookings = pgTable(
       .notNull()
       .default(0), // in currency (estimated at the time of booking creation)
     actualTotalAmount: integer("actual_total_amount"), // in currency (updated at the end of the trip)
+    actualExpensesAmount: integer("actual_expenses_amount"), // in currency (updated at the end of the trip)
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
     ratingByCustomer: integer("rating_by_customer"), // 1 to 5
     reconciledAt: timestamp("reconciled_at", {

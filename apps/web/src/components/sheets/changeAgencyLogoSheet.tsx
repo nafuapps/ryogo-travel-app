@@ -17,13 +17,13 @@ import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeAgencyLogoAction } from "@/app/actions/agencies/changeAgencyLogoAction"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export default function ChangeAgencyLogoSheet({
   agencyId,
@@ -42,9 +42,9 @@ export default function ChangeAgencyLogoSheet({
 
   const schema = z.object({
     logo: FileRegex.refine((file) => {
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+      return checkImageFileSize(file)
     }, t("Error1")).refine((file) => {
-      return file[0] && SupportedImageFormats.includes(file[0].type)
+      return checkImageFileType(file)
     }, t("Error2")),
   })
 

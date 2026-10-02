@@ -44,16 +44,17 @@ export const transactionServices = {
       otherParty: data.otherParty,
       remarks: data.remarks,
       agencyId: data.agencyId,
+      isApproved: data.isApproved,
     }
-    const addedTransaction =
+    const [addedTransaction] =
       await transactionRepository.createTransaction(newTransactionData)
 
-    return addedTransaction[0]
+    return addedTransaction
   },
 
   //Modify a transaction's details
   async modifyTransaction(data: UpdateTransactionRequestType) {
-    const updatedTransaction =
+    const [updatedTransaction] =
       await transactionRepository.updateTransactionDetails(
         data.transactionId,
         data.amount,
@@ -62,7 +63,7 @@ export const transactionServices = {
         data.otherParty,
         data.remarks,
       )
-    return updatedTransaction[0]
+    return updatedTransaction
   },
 
   //Modify a transaction approval status
@@ -70,28 +71,28 @@ export const transactionServices = {
     transactionId: string,
     status: boolean,
   ) {
-    const transaction =
+    const [transaction] =
       await transactionRepository.updateTransactionApprovalStatus(
         transactionId,
         status,
       )
-    return transaction[0]
+    return transaction
   },
 
   //Upload transaction photo
   async changeTransactionPhotoUrl(transactionId: string, url: string) {
-    const transaction = await transactionRepository.updateTransactionPhotoUrl(
+    const [transaction] = await transactionRepository.updateTransactionPhotoUrl(
       transactionId,
       url,
     )
-    return transaction[0]
+    return transaction
   },
 
   //Delete a transaction
   async removeTransaction(transactionId: string) {
-    const transaction =
+    const [transaction] =
       await transactionRepository.deleteTransaction(transactionId)
-    return transaction[0]
+    return transaction
   },
 }
 

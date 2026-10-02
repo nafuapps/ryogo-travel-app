@@ -22,7 +22,7 @@ import RyogoTag from "@/components/tags/ryogoTag"
 export default function TripLogItem({
   tripLog,
 }: {
-  tripLog: NonNullable<FindBookingTripLogsByIdType>[0]
+  tripLog: NonNullable<FindBookingTripLogsByIdType>[number]
 }) {
   const t = useTranslations("Dashboard.BookingTripLogs")
   const [open, setOpen] = useState(false)

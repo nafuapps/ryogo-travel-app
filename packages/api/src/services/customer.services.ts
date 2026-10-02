@@ -81,9 +81,9 @@ export const customerServices = {
       remarks: data.remarks,
       status: CustomerStatusEnum.ACTIVE,
     }
-    const newCustomer = await customerRepository.createCustomer(newCustomerData)
-    if (!newCustomer[0]) return
-    return newCustomer[0]
+    const [newCustomer] =
+      await customerRepository.createCustomer(newCustomerData)
+    return newCustomer
   },
 
   async modifyCustomer(data: ModifyCustomerRequestType) {
@@ -95,7 +95,7 @@ export const customerServices = {
     if (!location) {
       return
     }
-    const customer = await customerRepository.updateCustomer(
+    const [customer] = await customerRepository.updateCustomer(
       data.customerId,
       location.id,
       data.name,
@@ -103,33 +103,33 @@ export const customerServices = {
       data.address,
       data.remarks,
     )
-    return customer[0]
+    return customer
   },
   //Update customer photo url
   async updateCustomerPhoto(customerId: string, url: string) {
-    const updatedCustomer = await customerRepository.updatePhotoUrl(
+    const [updatedCustomer] = await customerRepository.updatePhotoUrl(
       customerId,
       url,
     )
-    return updatedCustomer[0]
+    return updatedCustomer
   },
 
   //Activate Customer
   async activateCustomer(customerId: string) {
-    const customer = await customerRepository.updateStatus(
+    const [updatedCustomer] = await customerRepository.updateStatus(
       customerId,
       CustomerStatusEnum.ACTIVE,
     )
-    return customer[0]
+    return updatedCustomer
   },
 
   //Inctivate Customer
   async inactivateCustomer(customerId: string) {
-    const customer = await customerRepository.updateStatus(
+    const [updatedCustomer] = await customerRepository.updateStatus(
       customerId,
       CustomerStatusEnum.INACTIVE,
     )
-    return customer[0]
+    return updatedCustomer
   },
 }
 

@@ -362,8 +362,8 @@ export const bookingServices = {
     }
 
     //Step5: Create a new booking
-    const newBooking = await bookingRepository.createBooking(newBookingData)
-    return newBooking[0]
+    const [newBooking] = await bookingRepository.createBooking(newBookingData)
+    return newBooking
   },
 
   //Confirm a booking
@@ -378,13 +378,13 @@ export const bookingServices = {
     if (updateCustomerAddress && pickupAddress && customerId) {
       await customerRepository.updateCustomerAddress(customerId, pickupAddress)
     }
-    const updatedBooking = await bookingRepository.updateBookingToConfirmed(
+    const [updatedBooking] = await bookingRepository.updateBookingToConfirmed(
       bookingId,
       startTime,
       pickupAddress,
       dropAddress,
     )
-    return updatedBooking[0]
+    return updatedBooking
   },
 
   //Start booking to mark it in progress
@@ -581,17 +581,17 @@ export const bookingServices = {
 
   async addSecretCode(bookingId: string) {
     const secretCode = generateSecretCode()
-    const updatedBooking = await bookingRepository.updateSecretCode(
+    const [updatedBooking] = await bookingRepository.updateSecretCode(
       bookingId,
       secretCode,
     )
-    return updatedBooking[0]
+    return updatedBooking
   },
 
   //update secret code resend timestamp
   async changeSecretCodeSentOn(bookingId: string) {
-    const updatedBooking = await bookingRepository.updateCodeSentOn(bookingId)
-    return updatedBooking[0]
+    const [updatedBooking] = await bookingRepository.updateCodeSentOn(bookingId)
+    return updatedBooking
   },
 
   //Cancel a booking
@@ -608,9 +608,9 @@ export const bookingServices = {
     }
 
     //remove assigned vehicle and driver also
-    const updatedBooking =
+    const [updatedBooking] =
       await bookingRepository.updateBookingToCancel(bookingId)
-    return updatedBooking[0]
+    return updatedBooking
   },
 
   //Assign driver to booking
@@ -627,12 +627,12 @@ export const bookingServices = {
     )
       return
 
-    const updatedBooking = await bookingRepository.updateAssignedDriver(
+    const [updatedBooking] = await bookingRepository.updateAssignedDriver(
       bookingId,
       driverId,
     )
     return {
-      ...updatedBooking[0],
+      ...updatedBooking,
       driverUserId: driver.userId,
       driverName: driver.name,
       startDate: booking.startDate,
@@ -653,13 +653,13 @@ export const bookingServices = {
     )
       return
 
-    const updatedBooking = await bookingRepository.updateAssignedVehicle(
+    const [updatedBooking] = await bookingRepository.updateAssignedVehicle(
       bookingId,
       vehicleId,
     )
 
     return {
-      ...updatedBooking[0],
+      ...updatedBooking,
       vehicleNumber: vehicle.vehicleNumber,
       driverUserId: booking.assignedDriver?.userId,
     }
@@ -673,23 +673,32 @@ export const bookingServices = {
     const booking = await bookingRepository.readBookingById(bookingId)
     if (!booking) return
 
-    const updatedBooking = await bookingRepository.updateAssignedUser(
+    const [updatedBooking] = await bookingRepository.updateAssignedUser(
       bookingId,
       userId,
     )
     return {
-      ...updatedBooking[0],
+      ...updatedBooking,
       assignedUserName: user.name,
       startDate: booking.startDate,
     }
   },
 
   async changeReviewedByAgency(bookingId: string) {
-    //TODO: Update total amount with added expenses as well
+    // Update total amount with added expenses as well
+    const expenses = await expenseRepository.readExpensesByBookingId(bookingId)
+    const approvedExpensesTotal = expenses.reduce((acc, curr) => {
+      if (curr.isApproved) {
+        return acc + curr.amount
+      }
+      return acc
+    }, 0)
 
-    const updatedBooking =
-      await bookingRepository.updateReviewCompletedAt(bookingId)
-    return updatedBooking[0]
+    const [updatedBooking] = await bookingRepository.updateReviewCompletedAt(
+      bookingId,
+      approvedExpensesTotal,
+    )
+    return updatedBooking
   },
 
   async addQuoteUrl(bookingId: string, url: string) {

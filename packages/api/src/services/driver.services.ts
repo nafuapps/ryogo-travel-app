@@ -122,19 +122,19 @@ export const driverServices = {
       defaultAllowancePerDay: data.defaultAllowancePerDay,
       canDriveVehicleTypes: data.canDriveVehicleTypes,
     }
-    const newDriver = await driverRepository.createDriver(newDriverData)
-    return newDriver[0]
+    const [newDriver] = await driverRepository.createDriver(newDriverData)
+    return newDriver
   },
 
   //Modify driver details
   async modifyDriver(data: ModifyDriverRequestType) {
-    const driver = await driverRepository.updateDriverDetails(
+    const [driver] = await driverRepository.updateDriverDetails(
       data.driverId,
       data.canDriveVehicleTypes,
       data.address,
       data.defaultAllowancePerDay,
     )
-    return driver[0]
+    return driver
   },
 
   //Change driver license details
@@ -142,13 +142,13 @@ export const driverServices = {
     data: ChangeDriverLicenseRequestType,
     licensePhotoUrl?: string,
   ) {
-    const driver = await driverRepository.updateDriverLicenseDetails(
+    const [driver] = await driverRepository.updateDriverLicenseDetails(
       data.driverId,
       data.licenseNumber,
       data.licenseExpiresOn,
       licensePhotoUrl,
     )
-    return driver[0]
+    return driver
   },
 
   //Add driver leave
@@ -158,30 +158,30 @@ export const driverServices = {
       return
     }
 
-    const leave = await driverLeaveRepository.createLeave(data)
-    if (!leave[0]) return
+    const [leave] = await driverLeaveRepository.createLeave(data)
+    if (!leave) return
 
-    return { ...leave[0], driverName: driver.name }
+    return { ...leave, driverName: driver.name }
   },
 
   //Modify driver leave
   async modifyDriverLeave(data: ModifyDriverLeaveRequestType) {
-    const leave = await driverLeaveRepository.updateLeave(
+    const [leave] = await driverLeaveRepository.updateLeave(
       data.leaveId,
       data.startDate,
       data.endDate,
       data.remarks ?? undefined,
     )
-    if (!leave[0]) return
-    const driver = await driverRepository.readDriverById(leave[0].driverId)
+    if (!leave) return
+    const driver = await driverRepository.readDriverById(leave.driverId)
     if (!driver) return
-    return { ...leave[0], driverName: driver?.name }
+    return { ...leave, driverName: driver?.name }
   },
 
   //Remove driver leave
   async removeDriverLeave(leaveId: string) {
-    const deletedLeave = await driverLeaveRepository.deleteLeave(leaveId)
-    return deletedLeave[0]
+    const [deletedLeave] = await driverLeaveRepository.deleteLeave(leaveId)
+    return deletedLeave
   },
 
   //Start driver leave
@@ -195,8 +195,8 @@ export const driverServices = {
     )
     if (!updatedDriver) return
 
-    const leave = await driverLeaveRepository.updateLeaveToStarted(leaveId)
-    return leave[0]
+    const [leave] = await driverLeaveRepository.updateLeaveToStarted(leaveId)
+    return leave
   },
 
   //End driver leave
@@ -210,8 +210,8 @@ export const driverServices = {
     )
     if (!updatedDriver) return
 
-    const leave = await driverLeaveRepository.updateLeaveToEnded(leaveId)
-    return leave[0]
+    const [leave] = await driverLeaveRepository.updateLeaveToEnded(leaveId)
+    return leave
   },
 
   //Upload driver license photo
@@ -226,20 +226,20 @@ export const driverServices = {
     if (!user || user.status === UserStatusEnum.INACTIVE) {
       return
     }
-    const driver = await driverRepository.updateStatus(
+    const [driver] = await driverRepository.updateStatus(
       driverId,
       DriverStatusEnum.AVAILABLE,
     )
-    return driver[0]
+    return driver
   },
 
   //Inactivate Driver
   async inactivateDriver(driverId: string) {
-    const driver = await driverRepository.updateStatus(
+    const [driver] = await driverRepository.updateStatus(
       driverId,
       DriverStatusEnum.INACTIVE,
     )
-    return driver[0]
+    return driver
   },
 }
 

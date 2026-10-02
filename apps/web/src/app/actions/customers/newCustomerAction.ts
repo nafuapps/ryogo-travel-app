@@ -28,11 +28,12 @@ export async function newCustomerAction(data: NewCustomerRequestType) {
   const customer = await customerServices.addNewCustomer(data)
   if (!customer) return
 
-  if (data.photo && data.photo[0]) {
-    const photo = data.photo[0]
+  //Upload customer photo if attached
+  const [file] = data.photo || []
+  if (file) {
     const uploadedPhoto = await uploadFile(
-      photo,
-      generateCustomerPhotoPathName(customer.id, photo),
+      file,
+      generateCustomerPhotoPathName(customer.id, file),
     )
     await customerServices.updateCustomerPhoto(customer.id, uploadedPhoto.path)
   }

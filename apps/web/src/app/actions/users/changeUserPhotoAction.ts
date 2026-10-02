@@ -16,7 +16,6 @@ export async function changeUserPhotoAction(
   if (
     !currentUser ||
     currentUser.agencyId !== agencyId ||
-    !photo[0] ||
     (![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) &&
@@ -29,7 +28,8 @@ export async function changeUserPhotoAction(
     return
   }
 
-  const file = photo[0]
+  const [file] = photo
+  if (!file) return
   const uploadedPhoto = await uploadFile(
     file,
     generateUserPhotoPathName(userId, file),

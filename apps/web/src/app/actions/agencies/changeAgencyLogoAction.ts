@@ -21,12 +21,14 @@ export async function changeAgencyLogoAction(agencyId: string, logo: FileList) {
     return
   }
 
-  if (!logo[0]) {
+  const [logoFile] = logo
+
+  if (!logoFile) {
     return
   }
   const uploadedFile = await uploadFile(
-    logo[0],
-    generateAgencyLogoPathName(agencyId, logo[0]),
+    logoFile,
+    generateAgencyLogoPathName(agencyId, logoFile),
   )
   const updatedAgency = await agencyServices.updateAgencyLogo(
     agencyId,

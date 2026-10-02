@@ -386,13 +386,11 @@ export const userRepository = {
 
   //Update last seen
   async updateLastSeen(userId: string) {
-    return (
-      await db
-        .update(users)
-        .set({ lastSeen: new Date() })
-        .where(eq(users.id, userId))
-        .returning()
-    )[0]
+    return await db
+      .update(users)
+      .set({ lastSeen: new Date() })
+      .where(eq(users.id, userId))
+      .returning()
   },
 
   //Update user location

@@ -35,11 +35,12 @@ export async function addOwnerAction(
   const addedOwner = await userServices.addOwnerUser(data, currentUser.userId)
   if (!addedOwner) return
 
-  if (addedOwner.id && data.data.photos && data.data.photos[0]) {
-    const photo = data.data.photos[0]
+  //Upload user photo if attached
+  const [photoFile] = data.data.photos || []
+  if (photoFile) {
     const uploadedPhoto = await uploadFile(
-      photo,
-      generateUserPhotoPathName(addedOwner.id, photo),
+      photoFile,
+      generateUserPhotoPathName(addedOwner.id, photoFile),
     )
     await userServices.updateUserPhoto(addedOwner.id, uploadedPhoto.path)
   }

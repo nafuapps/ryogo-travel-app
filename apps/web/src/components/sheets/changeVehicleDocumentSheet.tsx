@@ -19,12 +19,12 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 import { changeVehicleDocumentAction } from "@/app/actions/vehicles/changeVehicleDocumentAction"
 
@@ -58,11 +58,11 @@ export default function ChangeVehiclePhotoSheet({
       .nonoptional(t("Field1.Error1")),
     documentPhoto: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+      return checkImageFileSize(file)
     }, t("Field2.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && SupportedImageFormats.includes(file[0].type)
+        return checkImageFileType(file)
       }, t("Field2.Error3"))
       .optional(),
   })

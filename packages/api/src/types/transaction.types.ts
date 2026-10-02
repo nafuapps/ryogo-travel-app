@@ -13,6 +13,7 @@ export type AddTransactionRequestType = {
   amount: number
   mode: TransactionModesEnum
   otherParty: TransactionPartiesEnum
+  isApproved?: boolean
   remarks?: string | undefined
   txnPhoto?: FileList | undefined
 }

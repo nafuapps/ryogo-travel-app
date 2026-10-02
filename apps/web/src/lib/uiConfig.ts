@@ -8,7 +8,7 @@ export const MIN_NAME_LENGTH = 3
 export const MAX_NAME_LENGTH = 30
 export const PHONE_LENGTH = 10
 export const MAX_EMAIL_LENGTH = 60
-export const MAX_FILE_UPLOAD_SIZE = 500000 //File must be less than 500kB
+export const MAX_FILE_UPLOAD_SIZE = 200000 //File must be less than 200kB
 export const MIN_AMOUNT_LIMIT = 0 //Minimum amount user can enter (in Rs)
 export const MAX_AMOUNT_LIMIT = 1000000 //Maximum amount user can enter (in Rs)
 export const MIN_LICENSE_LENGTH = 10 //Minimum license number length
@@ -82,7 +82,7 @@ export const LEGAL_PHONE = "9840774089"
 export const RyogoLogoSrc =
   "https://uxlvdjfgmmorufabopzd.supabase.co/storage/v1/object/public/ryogoDocs/ryogo/logo/logo.png"
 
-//TODO: Social Media
+//TODO: Social Media Links
 export const YT_LINK = "https://www.youtube.com/@ryogoapp"
 export const IG_LINK = "https://www.instagram.com/ryogoapp/"
 export const FB_LINK = "https://www.facebook.com/ryogoapp/"

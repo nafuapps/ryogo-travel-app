@@ -23,19 +23,19 @@ import { useRouter } from "next/navigation"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
 import { midTripAction } from "@/app/actions/bookings/midTripAction"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
   MAX_FIELD_DESC_LENGTH,
-  MAX_FILE_UPLOAD_SIZE,
   MAX_ODOMETER_LIMIT,
   MIN_ODOMETER_LIMIT,
 } from "@/lib/uiConfig"
 import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export default function MidTripSheet({
   booking,
@@ -70,11 +70,11 @@ export default function MidTripSheet({
       .nonoptional(t("Field1.Error1")),
     tripLogPhoto: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+      return checkImageFileSize(file)
     }, t("Field2.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && SupportedImageFormats.includes(file[0].type)
+        return checkImageFileType(file)
       }, t("Field2.Error2"))
       .optional(),
     remarks: z

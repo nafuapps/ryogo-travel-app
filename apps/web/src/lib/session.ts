@@ -1,13 +1,7 @@
 import { cookies, headers } from "next/headers"
 import { jwtVerify, SignJWT } from "jose"
-import { sessionRepository } from "@ryogo-travel-app/api/repositories/session.repo"
-import { userRepository } from "@ryogo-travel-app/api/repositories/user.repo"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import {
-  SelectUserType,
-  UserRolesEnum,
-  UserStatusEnum,
-} from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   DARK_MODE_COOKIE_NAME,
   LOCALE_COOKIE_NAME,
@@ -55,7 +49,7 @@ export async function decrypt(session: string = "") {
 
 //Get session from DB by token
 export async function verifyWebSessionInDB(token: string, userId: string) {
-  const sessionDB = await sessionRepository.readSessionByToken(token)
+  const sessionDB = await userServices.getUserSessionByToken(token)
 
   //Check if session exists in DB, is not expired and is of the same user
   if (
@@ -67,14 +61,21 @@ export async function verifyWebSessionInDB(token: string, userId: string) {
   }
 
   //Check if current user exists in DB and is not suspended
-  const user = await userRepository.readUserById(userId)
+  const user = await userServices.findUserDetailsById(userId)
   if (!user || user.status === UserStatusEnum.SUSPENDED) return
 
   return sessionDB
 }
 
 //Create session both in cookie and database
-export async function createWebSession(user: SelectUserType) {
+export async function createWebSession(userId: string, password: string) {
+  //1. Check user credentials in DB
+  const user = await userServices.checkUserCredentialsInDB(userId, password)
+  const userData = user.data
+  if (!userData || user.error) {
+    return user
+  }
+
   const expiresAt = createNewExpiryDate()
   const token = crypto.randomUUID()
 
@@ -84,37 +85,39 @@ export async function createWebSession(user: SelectUserType) {
   const userAgent = headerList.get("user-agent")
 
   // 1. Create a session in the database
-  const sessionData = await sessionRepository.createSession({
-    userId: user.id,
+  const [sessionData] = await userServices.addUserSession({
+    userId: userData.id,
     token,
     expiresAt,
     ipAddress,
     userAgent,
   })
 
-  if (!sessionData[0]) return
+  if (!sessionData) {
+    return { error: "sessionNotCreated" }
+  }
 
   // 2. Encrypt the session data
   const newPayload: SessionPayloadType = {
-    sessionId: sessionData[0].id,
-    token: sessionData[0].token,
-    userId: sessionData[0].userId,
-    agencyId: user.agencyId,
-    isAdmin: user.isAdmin,
-    isVerified: user.isVerified,
-    userRole: user.userRole,
-    name: user.name,
-    phone: user.phone,
-    status: user.status,
-    locatedAt: user.locatedAt,
+    sessionId: sessionData.id,
+    token: sessionData.token,
+    userId: sessionData.userId,
+    agencyId: userData.agencyId,
+    isAdmin: userData.isAdmin,
+    isVerified: userData.isVerified,
+    userRole: userData.userRole,
+    name: userData.name,
+    phone: userData.phone,
+    status: userData.status,
+    locatedAt: userData.locatedAt,
     updatedAt: new Date(),
     expiresAt,
   }
-  const session = await encrypt(newPayload)
+  const encryptedSession = await encrypt(newPayload)
 
   // 3. Store the session data in cookies for optimistic auth checks
   const cookieStore = await cookies()
-  cookieStore.set(SESSION_COOKIE_NAME, session, {
+  cookieStore.set(SESSION_COOKIE_NAME, encryptedSession, {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
@@ -122,7 +125,7 @@ export async function createWebSession(user: SelectUserType) {
   })
 
   //4. Also set locale cookie
-  cookieStore.set(LOCALE_COOKIE_NAME, user.languagePref, {
+  cookieStore.set(LOCALE_COOKIE_NAME, userData.languagePref, {
     maxAge: 315360000, // 10 years
     httpOnly: true,
     secure: true,
@@ -132,7 +135,7 @@ export async function createWebSession(user: SelectUserType) {
   //5. Also set dark mode cookie
   cookieStore.set(
     DARK_MODE_COOKIE_NAME,
-    user.prefersDarkTheme ? "true" : "false",
+    userData.prefersDarkTheme ? "true" : "false",
     {
       maxAge: 315360000, // 10 years
       httpOnly: true,
@@ -141,12 +144,12 @@ export async function createWebSession(user: SelectUserType) {
     },
   )
 
-  return token
+  return user
 }
 
 //Update session from DB
 export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
-  const user = await userRepository.updateLastSeen(payload.userId)
+  const user = await userServices.changeUserLastSeen(payload.userId)
   if (!user) return
 
   const updatedPayload: SessionPayloadType = {
@@ -300,7 +303,7 @@ export async function deleteWebSession() {
 
 async function updateSessionExpiryInDB(sessionId: string) {
   const newExpiresAt = createNewExpiryDate()
-  await sessionRepository.updateSessionExpiringTime(sessionId, newExpiresAt)
+  await userServices.changeUserSessionExpiry(sessionId, newExpiresAt)
   return newExpiresAt
 }
 

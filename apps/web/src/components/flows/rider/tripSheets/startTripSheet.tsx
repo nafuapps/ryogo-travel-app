@@ -24,18 +24,18 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
 import { startTripAction } from "@/app/actions/bookings/startTripAction"
 import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
   MAX_FIELD_DESC_LENGTH,
-  MAX_FILE_UPLOAD_SIZE,
   MAX_ODOMETER_LIMIT,
   MIN_ODOMETER_LIMIT,
 } from "@/lib/uiConfig"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export default function StartTripSheet({
   booking,
@@ -63,10 +63,10 @@ export default function StartTripSheet({
       return file.length > 0
     }, t("Field2.Error3"))
       .refine((file) => {
-        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+        return checkImageFileSize(file)
       }, t("Field2.Error1"))
       .refine((file) => {
-        return file[0] && SupportedImageFormats.includes(file[0].type)
+        return checkImageFileType(file)
       }, t("Field2.Error2"))
       .nonoptional(t("Field2.Error3")),
     remarks: z

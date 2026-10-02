@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -31,11 +31,11 @@ import {
   MAX_ENTITY_ID_LENGTH,
   MAX_FIELD_DESC_LENGTH,
   MAX_FIELD_TITLE_LENGTH,
-  MAX_FILE_UPLOAD_SIZE,
   MIN_ENTITY_ID_LENGTH,
   MIN_FIELD_DESC_LENGTH,
   MIN_FIELD_TITLE_LENGTH,
 } from "@/lib/uiConfig"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export default function AddSupportTicketPageComponent({
   userId,
@@ -68,11 +68,11 @@ export default function AddSupportTicketPageComponent({
         .optional(),
       photo: FileRegex.refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+        return checkImageFileSize(file)
       }, t("Field5.Error1"))
         .refine((file) => {
           if (file.length < 1) return true
-          return file[0] && SupportedImageFormats.includes(file[0].type)
+          return checkImageFileType(file)
         }, t("Field5.Error2"))
         .optional(),
     })

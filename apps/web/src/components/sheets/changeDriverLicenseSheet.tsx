@@ -21,19 +21,16 @@ import z from "zod"
 import { changeDriverLicenseAction } from "@/app/actions/drivers/changeDriverLicenseAction"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import {
-  MAX_FILE_UPLOAD_SIZE,
-  MIN_LICENSE_LENGTH,
-  MAX_LICENSE_LENGTH,
-} from "@/lib/uiConfig"
+import { MIN_LICENSE_LENGTH, MAX_LICENSE_LENGTH } from "@/lib/uiConfig"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 import { IdCard } from "lucide-react"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export default function ChangeDriverPhotoSheet({
   driverId,
@@ -65,11 +62,11 @@ export default function ChangeDriverPhotoSheet({
       .nonoptional(t("Field2.Error1")),
     licensePhotos: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+      return checkImageFileSize(file)
     }, t("Field3.Error2"))
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && SupportedImageFormats.includes(file[0].type)
+        return checkImageFileType(file)
       }, t("Field3.Error3"))
       .optional(),
   })

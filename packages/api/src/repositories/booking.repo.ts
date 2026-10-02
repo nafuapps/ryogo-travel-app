@@ -1897,19 +1897,6 @@ export const bookingRepository = {
       })
   },
 
-  async updateStatus(id: string, status: BookingStatusEnum) {
-    return await db
-      .update(bookings)
-      .set({
-        status,
-      })
-      .where(eq(bookings.id, id))
-      .returning({
-        id: bookings.id,
-        status: bookings.status,
-      })
-  },
-
   async updateBookingToCancel(id: string) {
     return await db
       .update(bookings)
@@ -2104,19 +2091,25 @@ export const bookingRepository = {
       })
   },
 
-  async updateReviewCompletedAt(id: string) {
+  //Mark booking as review completed and update actual expenses amount and add it to total amount
+  async updateReviewCompletedAt(id: string, actualExpensesAmount: number) {
     return await db
       .update(bookings)
       .set({
         reviewCompletedByAgencyAt: new Date(),
+        actualExpensesAmount,
+        actualTotalAmount: sql`${bookings.actualTotalAmount} + ${bookings.actualExpensesAmount}`,
       })
       .where(eq(bookings.id, id))
       .returning({
         id: bookings.id,
         reviewCompletedByAgencyAt: bookings.reviewCompletedByAgencyAt,
+        actualExpensesAmount: bookings.actualExpensesAmount,
+        actualTotalAmount: bookings.actualTotalAmount,
       })
   },
 
+  //Update actual values at the end of trip
   async updateBookingTotals(
     bookingId: string,
     startDate: Date,

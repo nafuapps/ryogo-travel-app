@@ -10,17 +10,17 @@ import {
   RyogoFileInput,
 } from "@/components/form/ryogoFormFields"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export function AddVehicleStep3({
   onNext,
@@ -44,11 +44,11 @@ export function AddVehicleStep3({
     }, t("Field2.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
-        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+        return checkImageFileSize(file)
       }, t("Field2.Error2"))
       .refine((file) => {
         if (file.length < 1) return false
-        return file[0] && SupportedImageFormats.includes(file[0].type)
+        return checkImageFileType(file)
       }, t("Field2.Error3")),
     pucExpiresOn: z
       .date(t("Field3.Error1"))
@@ -59,11 +59,11 @@ export function AddVehicleStep3({
     }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return false
-        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+        return checkImageFileSize(file)
       }, t("Field4.Error2"))
       .refine((file) => {
         if (file.length < 1) return false
-        return file[0] && SupportedImageFormats.includes(file[0].type)
+        return checkImageFileType(file)
       }, t("Field4.Error3")),
   })
   type Step3Type = z.infer<typeof step3Schema>

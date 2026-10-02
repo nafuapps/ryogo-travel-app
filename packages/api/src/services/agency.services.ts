@@ -157,78 +157,79 @@ export const agencyServices = {
     }
 
     //Step2: Update agency details
-    const updatedAgency = await agencyRepository.updateAgencyDetails(
+    const [updatedAgency] = await agencyRepository.updateAgencyDetails(
       data.agencyId,
       data.businessName,
       data.businessAddress,
       data.defaultCommissionRate,
       locationId,
     )
-    return updatedAgency[0]
+    return updatedAgency
   },
 
   //Activate an agency
   async activateAgency(agencyId: string, updateSubscriptionExpiry?: boolean) {
-    const updatedAgency = await agencyRepository.updateAgencyStatus(
+    const [updatedAgency] = await agencyRepository.updateAgencyStatus(
       agencyId,
       AgencyStatusEnum.ACTIVE,
       updateSubscriptionExpiry ? getSubscriptionExpirationDate() : undefined,
     )
-    return updatedAgency[0]
+    return updatedAgency
   },
 
   //Inactivate an agency
   async inactivateAgency(agencyId: string) {
-    const updatedAgency = await agencyRepository.updateAgencyStatus(
+    const [updatedAgency] = await agencyRepository.updateAgencyStatus(
       agencyId,
       AgencyStatusEnum.INACTIVE,
     )
-    return updatedAgency[0]
+    return updatedAgency
   },
 
   async updateAgencyLogo(agencyId: string, url: string) {
-    const agency = await agencyRepository.updateAgencyLogoUrl(agencyId, url)
-    return agency[0]
+    const [agency] = await agencyRepository.updateAgencyLogoUrl(agencyId, url)
+    return agency
   },
 
   async updateAgencyQRCode(agencyId: string, url: string) {
-    const agency = await agencyRepository.updateAgencyQRCodeUrl(agencyId, url)
-    return agency[0]
+    const [agency] = await agencyRepository.updateAgencyQRCodeUrl(agencyId, url)
+    return agency
   },
 
   //Change agency phone
   async changeAgencyPhone(agencyId: string, newPhone: string) {
-    const updatedAgency = await agencyRepository.updateAgencyPhone(
+    const [updatedAgency] = await agencyRepository.updateAgencyPhone(
       agencyId,
       newPhone,
     )
-    return updatedAgency[0]
+    return updatedAgency
   },
 
   //Change agency email
   async changeAgencyEmail(agencyId: string, newEmail: string) {
-    const updatedAgency = await agencyRepository.updateAgencyEmail(
+    const [updatedAgency] = await agencyRepository.updateAgencyEmail(
       agencyId,
       newEmail,
     )
-    return updatedAgency[0]
+    return updatedAgency
   },
 
   async downgradeAgencyToBasic(agencyId: string) {
-    const updatedAgency = await agencyRepository.updateAgencySubscriptionPlan(
+    const [updatedAgency] = await agencyRepository.updateAgencySubscriptionPlan(
       agencyId,
       SubscriptionPlanEnum.BASIC,
     )
-    return updatedAgency[0]
+    return updatedAgency
   },
 
   async tryPremium(agencyId: string) {
-    const updatedAgency = await agencyRepository.updateAgencyTrialSubscription(
-      agencyId,
-      SubscriptionPlanEnum.PREMIUM,
-      getSubscriptionExpirationDate(),
-    )
-    return updatedAgency[0]
+    const [updatedAgency] =
+      await agencyRepository.updateAgencyTrialSubscription(
+        agencyId,
+        SubscriptionPlanEnum.PREMIUM,
+        getSubscriptionExpirationDate(),
+      )
+    return updatedAgency
   },
 }
 

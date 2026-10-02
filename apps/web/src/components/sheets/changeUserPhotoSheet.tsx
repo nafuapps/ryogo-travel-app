@@ -17,12 +17,12 @@ import z from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { changeUserPhotoAction } from "@/app/actions/users/changeUserPhotoAction"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { MAX_FILE_UPLOAD_SIZE } from "@/lib/uiConfig"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function ChangeUserPhotoSheet({
@@ -44,9 +44,9 @@ export default function ChangeUserPhotoSheet({
 
   const schema = z.object({
     accountPhotos: FileRegex.refine((file) => {
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+      return checkImageFileSize(file)
     }, t("Error1")).refine((file) => {
-      return file[0] && SupportedImageFormats.includes(file[0].type)
+      return checkImageFileType(file)
     }, t("Error2")),
   })
 

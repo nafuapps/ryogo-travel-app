@@ -47,12 +47,12 @@ export const routeServices = {
     }
 
     //Create new route with this distance
-    const newRoute = await routeRepository.createRoute(
+    const [newRoute] = await routeRepository.createRoute(
       source.id,
       destination.id,
       newDistance,
     )
-    return newRoute[0]
+    return newRoute
   },
 
   async addNewRouteWithDistance(
@@ -95,12 +95,12 @@ export const routeServices = {
       }
     }
 
-    const newRoute = await routeRepository.createRoute(
+    const [newRoute] = await routeRepository.createRoute(
       sourceId,
       destinationId,
       newDistance,
     )
-    return newRoute[0]
+    return newRoute
   },
 }
 

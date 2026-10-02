@@ -18,8 +18,7 @@ export async function changeVehiclePhotoAction(
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
-    currentUser.agencyId !== agencyId ||
-    !photo[0]
+    currentUser.agencyId !== agencyId
   ) {
     return
   }
@@ -28,7 +27,9 @@ export async function changeVehiclePhotoAction(
     return
   }
 
-  const file = photo[0]
+  const [file] = photo || []
+  if (!file) return
+
   const uploadedPhoto = await uploadFile(
     file,
     generateVehiclePhotoPathName(vehicleId, file),

@@ -35,12 +35,12 @@ export const missionServices = {
         mission.titleKey,
       )
     }
-    const newMission = await missionRepository.createMission(mission)
-    return newMission[0]
+    const [newMission] = await missionRepository.createMission(mission)
+    return newMission
   },
 
   async modifyMission(data: ModifyMissionRequestType) {
-    const updatedMission = await missionRepository.updateMission(
+    const [updatedMission] = await missionRepository.updateMission(
       data.missionId,
       data.entityId ? data.entityType : EntityTypeEnum.USER, //If no entity id, default to type User with userId
       data.entityId ?? data.userId,
@@ -49,12 +49,13 @@ export const missionServices = {
       data.isCritical,
       data.messageKey,
     )
-    return updatedMission[0]
+    return updatedMission
   },
 
   async removeMissionById(missionId: string) {
-    const mission = await missionRepository.deleteMissionById(missionId)
-    return mission[0]
+    const [deletedMission] =
+      await missionRepository.deleteMissionById(missionId)
+    return deletedMission
   },
 
   async removePreviousMissionsByEntityTitleKey(
@@ -80,13 +81,19 @@ export const missionServices = {
   },
 
   async markReadMission(missionId: string) {
-    const result = await missionRepository.updateReadStatus(missionId, true)
-    return result[0]
+    const [updatedMission] = await missionRepository.updateReadStatus(
+      missionId,
+      true,
+    )
+    return updatedMission
   },
 
   async markUnReadMission(missionId: string) {
-    const result = await missionRepository.updateReadStatus(missionId, false)
-    return result[0]
+    const [updatedMission] = await missionRepository.updateReadStatus(
+      missionId,
+      false,
+    )
+    return updatedMission
   },
 }
 

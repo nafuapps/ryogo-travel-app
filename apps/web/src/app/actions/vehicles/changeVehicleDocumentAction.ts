@@ -30,8 +30,9 @@ export async function changeVehicleDocumentAction(
   }
 
   let fileUrl
-  if (data.photo && data.photo[0]) {
-    const file = data.photo[0]
+
+  const [file] = data.photo || []
+  if (file) {
     const pathName =
       data.type === "rc"
         ? generateRCPhotoPathName(data.vehicleId, file)

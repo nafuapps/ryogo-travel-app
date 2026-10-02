@@ -17,8 +17,10 @@ import { twMerge } from "tailwind-merge"
 import {
   DASHBOARD_USER_AWAY_MINUTES,
   DASHBOARD_USER_ONLINE_MINUTES,
+  MAX_FILE_UPLOAD_SIZE,
 } from "./uiConfig"
 import moment from "moment"
+import { SupportedImageFormats } from "./regex"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -44,6 +46,14 @@ export function getLangDisplay(locale: UserLangEnum) {
     case UserLangEnum.ENGLISH:
       return "English"
   }
+}
+
+export function checkImageFileSize(file: FileList) {
+  return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+}
+
+export function checkImageFileType(file: FileList) {
+  return file[0] && SupportedImageFormats.includes(file[0].type)
 }
 
 export function getOnlineStatus(time?: Date | null) {

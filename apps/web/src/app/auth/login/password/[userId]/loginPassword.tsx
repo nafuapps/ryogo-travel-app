@@ -71,7 +71,7 @@ export default function LoginPasswordPageComponent({
         message: t("APIError3"),
       })
     } else if (!loginResponse.data) {
-      //unknown error
+      // Unknown error
       toast.error(t("APIError4"))
     } else {
       //SUCCESS: Login user

@@ -34,21 +34,21 @@ export async function createOwnerAccountAction(
   if (!user) return
 
   // Upload agency logo to storage
-  if (data.agency.logo && data.agency.logo[0]) {
-    const logo = data.agency.logo[0]
+  const [logoFile] = data.agency.logo || []
+  if (logoFile) {
     const uploadLogoData = await uploadFile(
-      logo,
-      generateAgencyLogoPathName(user.agencyId, logo),
+      logoFile,
+      generateAgencyLogoPathName(user.agencyId, logoFile),
     )
     await agencyServices.updateAgencyLogo(user.agencyId, uploadLogoData.path)
   }
 
   // Upload agency qrCode to storage
-  if (data.agency.qrCode && data.agency.qrCode[0]) {
-    const qrCode = data.agency.qrCode[0]
+  const [qrCodeFile] = data.agency.qrCode || []
+  if (qrCodeFile) {
     const uploadQRCodeData = await uploadFile(
-      qrCode,
-      generateAgencyQRCodePathName(user.agencyId, qrCode),
+      qrCodeFile,
+      generateAgencyQRCodePathName(user.agencyId, qrCodeFile),
     )
     await agencyServices.updateAgencyQRCode(
       user.agencyId,
@@ -57,11 +57,11 @@ export async function createOwnerAccountAction(
   }
 
   // Upload owner photo to storage
-  if (data.owner.photos && data.owner.photos[0]) {
-    const photo = data.owner.photos[0]
+  const [photoFile] = data.owner.photos || []
+  if (photoFile) {
     const uploadedPhoto = await uploadFile(
-      photo,
-      generateUserPhotoPathName(user.userId, photo),
+      photoFile,
+      generateUserPhotoPathName(user.userId, photoFile),
     )
     await userServices.updateUserPhoto(user.userId, uploadedPhoto.path)
   }

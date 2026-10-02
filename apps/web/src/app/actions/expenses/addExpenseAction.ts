@@ -32,8 +32,8 @@ export async function addExpenseAction(
   if (!addedExpense) return
 
   //If there is an expense photo, upload it to cloud storage
-  if (data.expensePhoto && data.expensePhoto[0]) {
-    const file = data.expensePhoto[0]
+  const [file] = data.expensePhoto || []
+  if (file) {
     const uploadResult = await uploadFile(
       file,
       generateExpensePhotoPathName(data.bookingId, addedExpense.id, file),

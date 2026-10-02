@@ -21,7 +21,7 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -29,11 +29,11 @@ import {
 import {
   MAX_AMOUNT_LIMIT,
   MAX_FIELD_DESC_LENGTH,
-  MAX_FILE_UPLOAD_SIZE,
   MIN_AMOUNT_LIMIT,
 } from "@/lib/uiConfig"
 import { RyogoH3, RyogoCaption } from "@/components/typography"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export default function NewExpensePageComponent({
   bookingId,
@@ -65,11 +65,11 @@ export default function NewExpensePageComponent({
       .optional(),
     expensePhoto: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+      return checkImageFileSize(file)
     }, t("Field4.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && SupportedImageFormats.includes(file[0].type)
+        return checkImageFileType(file)
       }, t("Field4.Error2"))
       .optional(),
   })
@@ -91,6 +91,7 @@ export default function NewExpensePageComponent({
         userId,
         agencyId,
         assignedUserId,
+        isApproved: !isRider,
         ...values,
       },
       isRider,

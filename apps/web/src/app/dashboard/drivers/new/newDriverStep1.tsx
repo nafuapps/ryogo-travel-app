@@ -9,12 +9,11 @@ import { RyogoFileInput, RyogoInput } from "@/components/form/ryogoFormFields"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
   AddDriverTotalSteps,
   MAX_EMAIL_LENGTH,
-  MAX_FILE_UPLOAD_SIZE,
   MAX_NAME_LENGTH,
   MIN_NAME_LENGTH,
   PHONE_LENGTH,
@@ -26,6 +25,7 @@ import {
   FormWrapper,
 } from "@/components/page/pageWrappers"
 import FormStepHeader from "@/components/form/formStepHeader"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export function NewDriverStep1({
   onNext,
@@ -64,11 +64,11 @@ export function NewDriverStep1({
         .max(MAX_EMAIL_LENGTH, t("Field3.Error2")),
       driverPhotos: FileRegex.refine((file) => {
         if (file.length < 1) return true
-        return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+        return checkImageFileSize(file)
       }, t("Field4.Error1"))
         .refine((file) => {
           if (file.length < 1) return true
-          return file[0] && SupportedImageFormats.includes(file[0].type)
+          return checkImageFileType(file)
         }, t("Field4.Error2"))
         .optional(),
     })

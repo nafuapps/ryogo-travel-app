@@ -47,14 +47,16 @@ export async function addSupportTicketAction(
   if (!supportTicket) {
     return
   }
-  if (data.photo && data.photo[0]) {
-    const ticketPhoto = data.photo[0]
+
+  //If there is a ticket photo, upload it
+  const [ticketPhotoFile] = data.photo || []
+  if (ticketPhotoFile) {
     const uploadedTicketPhoto = await uploadFile(
-      ticketPhoto,
+      ticketPhotoFile,
       generateUserSupportTicketPhotoPathName(
         currentUser.userId,
         supportTicket.id,
-        ticketPhoto,
+        ticketPhotoFile,
       ),
     )
     await supportServices.updateSupportTicketPhoto(

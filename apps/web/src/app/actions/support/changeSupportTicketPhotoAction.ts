@@ -11,7 +11,7 @@ export async function changeSupportTicketPhotoAction(
   photo: FileList,
 ) {
   const currentUser = await getCurrentUser()
-  if (!currentUser || currentUser.userId !== userId || !photo[0]) {
+  if (!currentUser || currentUser.userId !== userId) {
     return
   }
 
@@ -19,7 +19,8 @@ export async function changeSupportTicketPhotoAction(
     return
   }
 
-  const file = photo[0]
+  const [file] = photo
+  if (!file) return
   const uploadedPhoto = await uploadFile(
     file,
     generateUserSupportTicketPhotoPathName(userId, ticketId, file),

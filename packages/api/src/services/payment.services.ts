@@ -18,20 +18,19 @@ export const paymentServices = {
   },
 
   async addPayment(newPayment: InsertPaymentType) {
-    const addedPayment = await paymentRepository.createPayment(newPayment)
-    if (!addedPayment || addedPayment.length < 1) return
-    return addedPayment[0]
+    const [addedPayment] = await paymentRepository.createPayment(newPayment)
+    return addedPayment
   },
 
   async changePaymentDetailsByRPId(
     rpPaymentId: string,
     data: UpdatePaymentDetailsType,
   ) {
-    const updatedPayment = await paymentRepository.updatePaymentDetailsByRpId(
+    const [updatedPayment] = await paymentRepository.updatePaymentDetailsByRpId(
       rpPaymentId,
       data,
     )
-    return updatedPayment[0]
+    return updatedPayment
   },
 }
 

@@ -12,21 +12,18 @@ import {
 } from "@/components/form/ryogoFormFields"
 import stateCityData from "@/lib/states_cities.json"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { FileRegex, SupportedImageFormats } from "@/lib/regex"
+import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import {
-  MAX_COMMISSION_RATE,
-  MAX_FILE_UPLOAD_SIZE,
-  MIN_COMMISSION_RATE,
-} from "@/lib/uiConfig"
+import { MAX_COMMISSION_RATE, MIN_COMMISSION_RATE } from "@/lib/uiConfig"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export function CreateAccountStep3({
   onNext,
@@ -43,11 +40,11 @@ export function CreateAccountStep3({
   const step3Schema = z.object({
     agencyLogo: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+      return checkImageFileSize(file)
     }, t("Field1.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && SupportedImageFormats.includes(file[0].type)
+        return checkImageFileType(file)
       }, t("Field1.Error2"))
       .optional(),
     commissionRate: z.coerce
@@ -69,11 +66,11 @@ export function CreateAccountStep3({
       .nonoptional(t("Field4.Error1")),
     qrCode: FileRegex.refine((file) => {
       if (file.length < 1) return true
-      return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
+      return checkImageFileSize(file)
     }, t("Field5.Error1"))
       .refine((file) => {
         if (file.length < 1) return true
-        return file[0] && SupportedImageFormats.includes(file[0].type)
+        return checkImageFileType(file)
       }, t("Field5.Error2"))
       .optional(),
   })

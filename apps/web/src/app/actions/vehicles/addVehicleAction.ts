@@ -38,35 +38,38 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   let vehiclePhotoUrl
 
   // Upload files to Supabase Storage
-  if (data.data.rcPhotos && data.data.rcPhotos[0]) {
-    const rc = data.data.rcPhotos[0]
+  const [rcFile] = data.data.rcPhotos || []
+  if (rcFile) {
     const uploadedFile = await uploadFile(
-      rc,
-      generateRCPhotoPathName(vehicle.id, rc),
+      rcFile,
+      generateRCPhotoPathName(vehicle.id, rcFile),
     )
     rcUrl = uploadedFile.path
   }
-  if (data.data.pucPhotos && data.data.pucPhotos[0]) {
-    const puc = data.data.pucPhotos[0]
+
+  const [pucFile] = data.data.pucPhotos || []
+  if (pucFile) {
     const uploadedFile = await uploadFile(
-      puc,
-      generatePUCPhotoPathName(vehicle.id, puc),
+      pucFile,
+      generatePUCPhotoPathName(vehicle.id, pucFile),
     )
     pucUrl = uploadedFile.path
   }
-  if (data.data.insurancePhotos && data.data.insurancePhotos[0]) {
-    const insurance = data.data.insurancePhotos[0]
+
+  const [insuranceFile] = data.data.insurancePhotos || []
+  if (insuranceFile) {
     const uploadedFile = await uploadFile(
-      insurance,
-      generateInsurancePhotoPathName(vehicle.id, insurance),
+      insuranceFile,
+      generateInsurancePhotoPathName(vehicle.id, insuranceFile),
     )
     insuranceUrl = uploadedFile.path
   }
-  if (data.data.vehiclePhotos && data.data.vehiclePhotos[0]) {
-    const vehiclePhoto = data.data.vehiclePhotos[0]
+
+  const [vehiclePhotoFile] = data.data.vehiclePhotos || []
+  if (vehiclePhotoFile) {
     const uploadedFile = await uploadFile(
-      vehiclePhoto,
-      generateVehiclePhotoPathName(vehicle.id, vehiclePhoto),
+      vehiclePhotoFile,
+      generateVehiclePhotoPathName(vehicle.id, vehiclePhotoFile),
     )
     vehiclePhotoUrl = uploadedFile.path
   }

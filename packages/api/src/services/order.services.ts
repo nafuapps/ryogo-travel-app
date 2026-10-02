@@ -48,25 +48,23 @@ export const orderServices = {
   },
 
   async addOrder(data: InsertOrderType) {
-    const order = await orderRepository.createOrder({
+    const [order] = await orderRepository.createOrder({
       agencyId: data.agencyId,
       userId: data.userId,
       amount: data.amount,
       rpOrderId: data.rpOrderId,
       status: OrderStatusEnum.CREATED,
     })
-    if (!order || order.length < 1) return
-    return order[0]
+    return order
   },
 
   async changeOrderToAttempted(rpOrderId: string) {
-    const order = await orderRepository.updateOrderStatusbyRPId(
+    const [order] = await orderRepository.updateOrderStatusbyRPId(
       rpOrderId,
       OrderStatusEnum.ATTEMPTED,
       false,
     )
-    //Future: Give grace period for attempt
-    return order[0]
+    return order
   },
 
   async changeOrderToPaid(
@@ -89,20 +87,20 @@ export const orderServices = {
       return
 
     //Update order in DB
-    const updatedOrder = await orderRepository.updateOrderStatusbyRPId(
+    const [updatedOrder] = await orderRepository.updateOrderStatusbyRPId(
       rpOrderId,
       OrderStatusEnum.PAID,
       isWebhookConfirmed,
       attempts,
     )
     // If for some reason, order update failed, should we proceed with subscription upgrade? -> NO
-    if (!updatedOrder[0]) return
+    if (!updatedOrder) return
 
     //If it was already paid, return now
     if (orderDetails.status === OrderStatusEnum.PAID) return
 
     //Trigger subscription upgrade
-    const orderSubscriptionDays = getSubscriptionDays(updatedOrder[0].orderType)
+    const orderSubscriptionDays = getSubscriptionDays(updatedOrder.orderType)
 
     //For basic to premium upgrade, subscription starts today.
     //For premium renewal, if plan has not expired yet, add on the current expiry date
@@ -118,13 +116,13 @@ export const orderServices = {
     )
 
     await agencyRepository.updateAgencySubscriptionWithOrder(
-      updatedOrder[0].agencyId,
+      updatedOrder.agencyId,
       SubscriptionPlanEnum.PREMIUM,
       newSubscriptionExpiryDate,
-      updatedOrder[0].id,
+      updatedOrder.id,
     )
 
-    return updatedOrder[0]
+    return updatedOrder
   },
 
   async confirmOrderWebhookStatus(orderId: string) {

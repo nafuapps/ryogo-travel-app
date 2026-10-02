@@ -7,6 +7,7 @@ export type AddExpenseRequestType = {
   assignedUserId: string
   type: ExpenseTypesEnum
   amount: number
+  isApproved?: boolean
   remarks?: string | undefined
   expensePhoto?: FileList | undefined
 }

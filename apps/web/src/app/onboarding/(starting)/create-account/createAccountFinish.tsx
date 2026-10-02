@@ -12,6 +12,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { Check } from "lucide-react"
+import { toast } from "sonner"
 
 export function CreateAccountFinish({
   password,
@@ -31,9 +32,10 @@ export function CreateAccountFinish({
     }
     //Login the user and take to verification step
     const loginResult = await loginAction(id, password)
-    if (loginResult.data?.id) {
+    if (loginResult.data) {
       router.replace("/onboarding/verify-account")
     } else {
+      toast.error(t("APIError"))
       router.replace("/auth/login")
     }
   }

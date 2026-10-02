@@ -207,6 +207,13 @@ export default async function TrackBookingDetailsPageComponent({
               rate: bookingDetails.commissionRate,
             })}
           />
+          {bookingDetails.actualExpensesAmount &&
+            bookingDetails.reviewCompletedByAgencyAt && (
+              <BookingPriceItem
+                title={t("ActualExpenses")}
+                value={"₹" + bookingDetails.actualExpensesAmount}
+              />
+            )}
           <Separator />
           <BookingPriceItem
             title={t("TotalAmount")}

@@ -53,6 +53,7 @@ export default async function NewTransactionPage({
         userId={currentUser.userId}
         agencyId={currentUser.agencyId}
         assignedUserId={booking.assignedUserId}
+        isOwner={currentUser.userRole === UserRolesEnum.OWNER}
       />
     </MainWrapper>
   )

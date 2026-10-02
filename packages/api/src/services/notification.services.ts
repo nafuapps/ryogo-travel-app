@@ -35,9 +35,9 @@ export const notificationServices = {
   // },
 
   async addNotification(notification: InsertNotificationType) {
-    const newNotification =
+    const [newNotification] =
       await notificationRepository.createNotification(notification)
-    return newNotification[0]
+    return newNotification
   },
 }
 

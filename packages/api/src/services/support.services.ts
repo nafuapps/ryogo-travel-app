@@ -8,13 +8,14 @@ import { supportTicketRepository } from "../repositories/supportTicket.repo"
 
 export const supportServices = {
   async addSupportQuery(query: InsertSupportQueryType) {
-    const newQuery = await supportQueryRepository.createSupportQuery(query)
-    return newQuery[0]
+    const [newQuery] = await supportQueryRepository.createSupportQuery(query)
+    return newQuery
   },
 
   async addSupportTicket(ticket: InsertSupportTicketType) {
-    const newTicket = await supportTicketRepository.createSupportTicket(ticket)
-    return newTicket[0]
+    const [newTicket] =
+      await supportTicketRepository.createSupportTicket(ticket)
+    return newTicket
   },
 
   async findSupportTicketById(ticketId: string) {
@@ -35,29 +36,35 @@ export const supportServices = {
   },
 
   async updateSupportTicketPhoto(ticketId: string, photoUrl: string) {
-    return (await supportTicketRepository.updatePhotoUrl(ticketId, photoUrl))[0]
+    const [updatedTicket] = await supportTicketRepository.updatePhotoUrl(
+      ticketId,
+      photoUrl,
+    )
+    return updatedTicket
   },
 
   async closeTicketWithRating(ticketId: string, rating?: number) {
-    return (
+    const [closedTicket] =
       await supportTicketRepository.updateTicketStatusWithRating(
         ticketId,
         TicketStatusEnum.CLOSED,
         rating,
       )
-    )[0]
+    return closedTicket
   },
   async addSupportTicketUserComment(ticketId: string, comment: string) {
-    return (
+    const [updatedTicket] =
       await supportTicketRepository.updateTicketCommentsByUser(
         ticketId,
         comment,
       )
-    )[0]
+    return updatedTicket
   },
 
   async removeTicket(ticketId: string) {
-    return (await supportTicketRepository.deleteSupportTicket(ticketId))[0]
+    const [removedTicket] =
+      await supportTicketRepository.deleteSupportTicket(ticketId)
+    return removedTicket
   },
 }
 

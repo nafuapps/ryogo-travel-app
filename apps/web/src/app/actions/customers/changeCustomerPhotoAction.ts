@@ -23,15 +23,13 @@ export async function changeCustomerPhotoAction(
     return
   }
 
-  if (!photo[0]) {
-    return
-  }
-
   if (!(await verifyCurrentUser())) {
     return
   }
 
-  const file = photo[0]
+  const [file] = photo
+  if (!file) return
+
   const uploadedPhoto = await uploadFile(
     file,
     generateCustomerPhotoPathName(customerId, file),

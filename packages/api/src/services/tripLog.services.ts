@@ -33,7 +33,7 @@ export const tripLogServices = {
       latLong: latLong,
       geolocation: geolocation,
     }
-    const tripLog = await tripLogRepository.createTripLog(startTripLog)
+    const [tripLog] = await tripLogRepository.createTripLog(startTripLog)
 
     //Update vehicle odometer reading if provided
     if (data.odometerReading) {
@@ -50,7 +50,7 @@ export const tripLogServices = {
       )
       await driverRepository.updateLocation(data.driverId, latLong, geolocation)
     }
-    return tripLog[0]
+    return tripLog
   },
 
   //Update trip log photo url

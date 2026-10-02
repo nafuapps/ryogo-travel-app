@@ -29,7 +29,7 @@ import { getDisplayTime } from "@/lib/utils"
 import { EditInfoWrapper } from "@/components/page/pageWrappers"
 import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
 
-export default async function RiderMybooking({
+export default async function RiderMyBooking({
   booking,
   canCommunicateWithCustomer,
 }: {

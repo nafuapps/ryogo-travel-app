@@ -110,7 +110,6 @@ export default async function TrackBookingDetailsPageComponent({
           {isCompleted && (
             <BookingRatingWrapper
               ratingByCustomer={bookingDetails.ratingByCustomer}
-              ratingByDriver={bookingDetails.ratingByDriver}
             />
           )}
         </BookingSection>

@@ -91,9 +91,19 @@ export default async function BookingDetailsPageComponent({
   const canSeeTripDetails = isConfirmed || isInProgress
   const canEditTripDetails = canEditBooking && isConfirmed
 
-  const canViewQuote = canEditBooking && isCompleted
-  const canViewConfirmation = canEditBooking && isConfirmed
-  const canViewInvoice = canEditBooking && isCompleted
+  const canViewQuote = canEditBooking && isLead && bookingDetails.quoteUrl
+  const canViewConfirmation =
+    canEditBooking && isConfirmed && bookingDetails.confirmationUrl
+  const canViewInvoice =
+    canEditBooking && isCompleted && bookingDetails.invoiceUrl
+
+  const canSendQuote = canEditBooking && isLead
+  const canSendConfirmation = canEditBooking && isConfirmed
+  const canSendInvoice =
+    canEditBooking && isCompleted && bookingDetails.reviewCompletedByAgencyAt
+
+  const canCloseBooking =
+    canEditBooking && isCompleted && !bookingDetails.reviewCompletedByAgencyAt
 
   const canReconcileBooking =
     isOwner && isCompleted && bookingDetails.reviewCompletedByAgencyAt
@@ -311,53 +321,41 @@ export default async function BookingDetailsPageComponent({
             <RyogoP color="yellow">{"₹" + pendingAmount}</RyogoP>
           </SectionRowWrapper>
 
-          {canViewQuote && bookingDetails.quoteUrl && (
+          {canViewQuote && (
             <BookingViewQuoteButton bookingDetails={bookingDetails} />
           )}
-          {canViewConfirmation && bookingDetails.confirmationUrl && (
+          {canViewConfirmation && (
             <BookingViewConfirmationButton bookingDetails={bookingDetails} />
           )}
-          {canViewInvoice && bookingDetails.invoiceUrl && (
+          {canViewInvoice && (
             <BookingViewInvoiceButton bookingDetails={bookingDetails} />
           )}
-          {canEditBooking && (
-            <BookingActionWrapper>
-              {isCompleted && (
-                <>
-                  {bookingDetails.reviewCompletedByAgencyAt ? (
-                    <SendInvoiceAlertButton
-                      bookingId={bookingDetails.id}
-                      agencyId={bookingDetails.agencyId}
-                      assignedUserId={bookingDetails.assignedUserId}
-                      invoiceSentOn={bookingDetails.invoiceSentOn}
-                    />
-                  ) : (
-                    <ReviewCompletedBookingAlertButton
-                      bookingId={bookingDetails.id}
-                      agencyId={bookingDetails.agencyId}
-                      assignedUserId={bookingDetails.assignedUserId}
-                    />
-                  )}
-                </>
-              )}
-              {isConfirmed && (
-                <SendConfirmationAlertButton
-                  bookingId={bookingDetails.id}
-                  agencyId={bookingDetails.agencyId}
-                  assignedUserId={bookingDetails.assignedUserId}
-                  confirmationSentOn={bookingDetails.confirmationSentOn}
-                />
-              )}
-              {isLead && (
-                <SendQuoteAlertButton
-                  bookingId={bookingDetails.id}
-                  agencyId={bookingDetails.agencyId}
-                  assignedUserId={bookingDetails.assignedUserId}
-                  quoteSentOn={bookingDetails.quoteSentOn}
-                />
-              )}
-            </BookingActionWrapper>
-          )}
+          <BookingActionWrapper>
+            {canSendInvoice && (
+              <SendInvoiceAlertButton
+                bookingId={bookingDetails.id}
+                agencyId={bookingDetails.agencyId}
+                assignedUserId={bookingDetails.assignedUserId}
+                invoiceSentOn={bookingDetails.invoiceSentOn}
+              />
+            )}
+            {canSendConfirmation && (
+              <SendConfirmationAlertButton
+                bookingId={bookingDetails.id}
+                agencyId={bookingDetails.agencyId}
+                assignedUserId={bookingDetails.assignedUserId}
+                confirmationSentOn={bookingDetails.confirmationSentOn}
+              />
+            )}
+            {canSendQuote && (
+              <SendQuoteAlertButton
+                bookingId={bookingDetails.id}
+                agencyId={bookingDetails.agencyId}
+                assignedUserId={bookingDetails.assignedUserId}
+                quoteSentOn={bookingDetails.quoteSentOn}
+              />
+            )}
+          </BookingActionWrapper>
         </BookingSection>
         <BookingSection sectionTitle={t("AssignedUserInfo")} icon={UserKey}>
           <BookingAssignedUserCard
@@ -486,6 +484,13 @@ export default async function BookingDetailsPageComponent({
               />
             </Link>
           ) : null)}
+        {canCloseBooking && (
+          <ReviewCompletedBookingAlertButton
+            bookingId={bookingDetails.id}
+            agencyId={bookingDetails.agencyId}
+            assignedUserId={bookingDetails.assignedUserId}
+          />
+        )}
         <HelpIconButton
           href={"/dashboard/support/help-bookings"}
           showLabelSmall

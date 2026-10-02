@@ -6,7 +6,7 @@ import {
   BookingStatusEnum,
   DriverStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import RiderMyOngoingBookingPageComponent from "./currentBooking"
+import RiderMyOngoingBookingPageComponent from "@/components/flows/rider/currentBooking"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
 import {
@@ -16,11 +16,10 @@ import {
 } from "@/components/page/pageWrappers"
 import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
 import RiderMyBookingDetails from "@/components/flows/rider/riderMyBookingDetails"
-import Link from "next/link"
 import { getTranslations } from "next-intl/server"
-import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import RiderMyCompletedBookingPageComponent from "@/components/flows/rider/completedBooking"
+import RiderMyUpcomingBookingPageComponent from "@/components/flows/rider/upcomingBooking"
 
 export const metadata: Metadata = {
   title: `My Booking Details - ${pageTitle}`,
@@ -74,13 +73,14 @@ export default async function MyBookingPage({
           {bookingDetails.status === BookingStatusEnum.IN_PROGRESS ? (
             <RiderMyOngoingBookingPageComponent booking={bookingDetails} />
           ) : bookingDetails.status === BookingStatusEnum.CONFIRMED ? (
-            canStartTrip ? (
-              <StartTripSheet booking={bookingDetails} />
-            ) : null
+            <RiderMyUpcomingBookingPageComponent
+              bookingDetails={bookingDetails}
+              canStartTrip={canStartTrip}
+            />
           ) : (
-            <Link href="/rider/myBookings">
-              <RyogoDefaultButton label={t("Back")} className="w-full" />
-            </Link>
+            <RiderMyCompletedBookingPageComponent
+              bookingDetails={bookingDetails}
+            />
           )}
           <HelpIconButton
             href={"/rider/mySupport/help-bookings"}

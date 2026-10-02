@@ -178,6 +178,7 @@ export const vehicleRepository = {
             customer: {
               columns: {
                 name: true,
+                phone: true,
                 photoUrl: true,
               },
             },

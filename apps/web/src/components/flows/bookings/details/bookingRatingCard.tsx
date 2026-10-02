@@ -14,7 +14,7 @@ export default async function BookingRatingWrapper({
   ratingByDriver,
 }: {
   ratingByCustomer: number | null
-  ratingByDriver: number | null
+  ratingByDriver?: number | null
 }) {
   const t = await getTranslations("Dashboard.BookingDetails")
   return (

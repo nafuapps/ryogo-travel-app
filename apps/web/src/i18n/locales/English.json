@@ -5235,6 +5235,10 @@
       "Start": "Start Trip"
     },
     "MyBookings": {
+      "Ongoing": {
+        "Title": "ONGOING BOOKING",
+        "Continue": "Continue Trip"
+      },
       "Upcoming": {
         "Title": "UPCOMING BOOKINGS",
         "NoTrips": "No upcoming trips",
@@ -5341,7 +5345,11 @@
         "Error": "Cannot end trip now.. please try again later"
       },
       "MidTrip": {
-        "Title": "{type, select, Arrived {Reached Customer Address} Pickup {Pickup Customer} Drop {Drop Customer} other {Drop Customer}}",
+        "Title": {
+          "Arrived": "Reached pickup address",
+          "PickedUp": "Picked up customer",
+          "Dropped": "Dropped customer"
+        },
         "Field1": {
           "Title": "Enter odometer reading (Km)",
           "Placeholder": "10000",
@@ -5364,7 +5372,11 @@
           "Placeholder": "Enter any remarks regarding this trip",
           "Error1": "Remarks must be less than 300 characters"
         },
-        "Mid": "{type, select, Arrived {Confirm Arrival} Pickup {Confirm Pickup} Drop {Confirm Drop} other {Confirm Drop}}",
+        "Confirm": {
+          "Arrived": "Confirm Arrival",
+          "PickedUp": "Confirm Pickup",
+          "Dropped": "Confirm Drop"
+        },
         "Close": "Cancel",
         "Loading": "Loading",
         "Error": "Cannot mark {type} now.. please try again later"
@@ -5372,6 +5384,22 @@
       "TripLog": {
         "TripLogs": "Trip Logs",
         "NoTriplogs": "No trip logs found"
+      },
+      "RateBookingByDriver": {
+        "Title": "Rate Booking",
+        "Subtitle": "Provide your rating for the completed booking",
+        "Field1": {
+          "Title": "Booking experience"
+        },
+        "Field2": {
+          "Title": "Customer rating (optional)"
+        },
+        "SubmitError": "Provide a rating before submitting feedback",
+        "Loading": "Loading",
+        "PrimaryCTA": "Confirm and Submit",
+        "Back": "Back",
+        "Success": "Rating submitted successfully!",
+        "Error": "Cannot submit rating now.. Try again later!"
       }
     },
     "MyBookingExpenses": {

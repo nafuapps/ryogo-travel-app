@@ -186,6 +186,8 @@ export const driverRepository = {
             customer: {
               columns: {
                 name: true,
+                phone: true,
+                photoUrl: true,
               },
             },
             source: {

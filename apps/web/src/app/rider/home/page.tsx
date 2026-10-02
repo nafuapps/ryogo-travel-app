@@ -8,6 +8,7 @@ import { getCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 
 export const metadata: Metadata = {
   title: `Rider Home - ${pageTitle}`,
@@ -29,11 +30,21 @@ export default async function RiderHomePage() {
     driver.id,
   )
 
+  const driverLeaves = await driverServices.findAllDriverLeavesByDriverId(
+    driver.id,
+  )
+
+  const driverActivities = await notificationServices.findNotificationsByUserId(
+    driver.userId,
+  )
+
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/home"} />
       <RiderHomePageComponent
         assignedBookings={assignedBookings}
+        driverLeaves={driverLeaves}
+        driverActivities={driverActivities}
         driver={driver}
       />
     </MainWrapper>

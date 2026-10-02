@@ -26,7 +26,7 @@ import {
 import { CalendarIcon, Star, ThumbsDown, ThumbsUp } from "lucide-react"
 import React, { Dispatch, SetStateAction } from "react"
 import { UseFormRegisterReturn } from "react-hook-form"
-import { cn, getLangDisplay } from "@/lib/utils"
+import { getLangDisplay } from "@/lib/utils"
 import { format } from "date-fns"
 import { Switch } from "@/components/ui/switch"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -231,7 +231,6 @@ export function RyogoSelect({
   resetField?: () => void
   translateLang?: boolean
 }) {
-  console.log(array)
   return (
     <FormField
       name={name}

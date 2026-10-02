@@ -40,23 +40,16 @@ import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 export default function MidTripSheet({
   booking,
   latLong,
-  tripType,
+  nextStep,
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
   latLong: LatLongType
-  tripType: TripLogTypesEnum
+  nextStep: TripLogTypesEnum
 }) {
   const t = useTranslations("Rider.MyBooking.MidTrip")
   const router = useRouter()
 
   const [open, setOpen] = useState(false)
-
-  const type: string =
-    tripType === TripLogTypesEnum.ARRIVED
-      ? "Arrived"
-      : tripType === TripLogTypesEnum.PICKED_UP
-        ? "Pickup"
-        : "Drop"
 
   const minOdo = booking.assignedVehicle?.odometerReading ?? MIN_ODOMETER_LIMIT
 
@@ -104,7 +97,7 @@ export default function MidTripSheet({
       driverId: driverId,
       vehicleId: vehicleId,
       odometerReading: data.odometerReading,
-      type: tripType,
+      type: nextStep,
       remarks: data.remarks,
       tripLogPhoto: data.tripLogPhoto,
       lat: latLong.latitude,
@@ -115,19 +108,33 @@ export default function MidTripSheet({
       router.refresh()
       setOpen(false)
     } else {
-      toast.error(t("Error", { type: type }))
+      toast.error(t("Error", { type: nextStep }))
       router.replace("/rider/myBookings")
     }
   }
 
+  const title =
+    nextStep === TripLogTypesEnum.ARRIVED
+      ? t("Title.Arrived")
+      : nextStep === TripLogTypesEnum.PICKED_UP
+        ? t("Title.PickedUp")
+        : t("Title.Dropped")
+
+  const confirm =
+    nextStep === TripLogTypesEnum.ARRIVED
+      ? t("Confirm.Arrived")
+      : nextStep === TripLogTypesEnum.PICKED_UP
+        ? t("Confirm.PickedUp")
+        : t("Confirm.Dropped")
+
   return (
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
       <SheetTrigger asChild>
-        <RyogoDefaultButton label={t("Title", { type: type })} size="lg" />
+        <RyogoDefaultButton label={title} size="lg" />
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
-          <SheetTitle>{t("Title", { type: type })}</SheetTitle>
+          <SheetTitle>{title}</SheetTitle>
         </SheetHeader>
         <FormWrapper<SchemaType>
           id="midTrip"
@@ -148,7 +155,7 @@ export default function MidTripSheet({
               register={form.register("tripLogPhoto")}
               label={t("Field2.Title")}
               placeholder={t("Field2.Placeholder")}
-              description={t("Field2.Description", { type: type })}
+              description={t("Field2.Description", { type: nextStep })}
             />
             <RyogoTextarea
               name="remarks"
@@ -163,11 +170,7 @@ export default function MidTripSheet({
             disabled={form.formState.isSubmitting}
             showSpinner={form.formState.isSubmitting}
             form="midTrip"
-            label={
-              form.formState.isSubmitting
-                ? t("Loading")
-                : t("Mid", { type: type })
-            }
+            label={form.formState.isSubmitting ? t("Loading") : confirm}
           />
           <RyogoOutlineButton
             label={t("Close")}

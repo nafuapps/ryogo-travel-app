@@ -546,6 +546,34 @@ export const bookingServices = {
     }
   },
 
+  //Update booking rating by driver
+  async changeBookingRatingByDriver(
+    bookingId: string,
+    customerId: string,
+    userId: string,
+    bookingRating: number,
+    customerRating?: number,
+  ) {
+    const booking = await bookingRepository.readBookingById(bookingId)
+
+    //Only completed bookings can be rated by driver
+    if (
+      !booking ||
+      booking.status !== BookingStatusEnum.COMPLETED ||
+      !booking.assignedDriver ||
+      booking.assignedDriver.userId !== userId ||
+      booking.ratingByDriver
+    ) {
+      return
+    }
+    return await bookingRepository.updateBookingRatingByDriver(
+      bookingId,
+      customerId,
+      bookingRating,
+      customerRating,
+    )
+  },
+
   //Update booking rating by customer
   async changeBookingRatingByCustomer(
     bookingId: string,

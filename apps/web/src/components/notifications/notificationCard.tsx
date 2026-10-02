@@ -7,15 +7,17 @@ import {
 import { ChevronRight } from "lucide-react"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { useTranslations } from "next-intl"
-import { RyogoCaption } from "@/components/typography"
+import { RyogoCaption, RyogoTiny } from "@/components/typography"
 import Link from "next/link"
 import moment from "moment"
 import getEntityIcon from "@/components/icons/entityIcon"
 
 export default function NotificationCard({
   notification,
+  hideLink,
 }: {
   notification: FindFeedNotificationsByAgencyIdType[number]
+  hideLink?: boolean
 }) {
   const t = useTranslations("Dashboard.Feed.Notifications")
   return (
@@ -35,21 +37,17 @@ export default function NotificationCard({
               notification.textObject as Record<string, string | number | Date>,
             )}
           </RyogoCaption>
-          <RyogoCaption color="light">
+          <RyogoTiny color="light">
             {moment(notification.createdAt).fromNow()}
-          </RyogoCaption>
+          </RyogoTiny>
         </SectionColWrapper>
-        {notification.link && (
+        {notification.link && !hideLink && (
           <Link
             href={
               notification.link as React.ComponentProps<typeof Link>["href"]
             }
           >
-            <RyogoEnclosedIcon
-              icon={ChevronRight}
-              size="sm"
-              color="slate"
-            />
+            <RyogoEnclosedIcon icon={ChevronRight} size="sm" color="slate" />
           </Link>
         )}
       </SectionRowWrapper>

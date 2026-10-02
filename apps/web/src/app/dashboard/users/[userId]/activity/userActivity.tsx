@@ -1,6 +1,5 @@
 import {
   PageWrapper,
-  SectionWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { FindNotificationsByUserIdType } from "@ryogo-travel-app/api/services/notification.services"
@@ -19,16 +18,14 @@ export default async function UserActivityPageComponent({
   return (
     <PageWrapper id="UserActivityPage">
       {activities.length > 0 ? (
-        <SectionWrapper id="NotificationActivityList">
-          {activities.map((notification) => {
-            return (
-              <NotificationCard
-                key={notification.id}
-                notification={notification}
-              />
-            )
-          })}
-        </SectionWrapper>
+        activities.map((notification) => {
+          return (
+            <NotificationCard
+              key={notification.id}
+              notification={notification}
+            />
+          )
+        })
       ) : (
         <EmptyStateIcon icon={TagX} label={t("NoActivities")} />
       )}

@@ -301,6 +301,7 @@ export const bookingRepository = {
           columns: {
             name: true,
             phone: true,
+            photoUrl: true,
           },
         },
       },
@@ -374,6 +375,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -455,6 +457,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -521,6 +524,8 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
+            photoUrl: true,
           },
         },
         source: {
@@ -590,6 +595,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -653,6 +659,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -719,6 +726,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -785,6 +793,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -849,6 +858,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -922,6 +932,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -1003,6 +1014,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -1096,6 +1108,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -1176,6 +1189,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -1254,6 +1268,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -1335,6 +1350,7 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -1387,6 +1403,7 @@ export const bookingRepository = {
           columns: {
             id: true,
             name: true,
+            phone: true,
             photoUrl: true,
           },
         },
@@ -1448,6 +1465,8 @@ export const bookingRepository = {
         customer: {
           columns: {
             name: true,
+            phone: true,
+            photoUrl: true,
           },
         },
         source: {
@@ -1527,6 +1546,7 @@ export const bookingRepository = {
             name: true,
             remarks: true,
             phone: true,
+            photoUrl: true,
             address: true,
             email: true,
           },
@@ -1660,9 +1680,9 @@ export const bookingRepository = {
             name: true,
             remarks: true,
             phone: true,
+            photoUrl: true,
             address: true,
             email: true,
-            photoUrl: true,
           },
           with: {
             location: {
@@ -1865,6 +1885,37 @@ export const bookingRepository = {
         columns: {
           id: true,
           ratingByCustomer: true,
+        },
+        where: eq(bookings.id, bookingId),
+      })
+    })
+  },
+
+  async updateBookingRatingByDriver(
+    bookingId: string,
+    customerId: string,
+    bookingRatingByDriver: number,
+    customerRatingByDriver?: number,
+  ) {
+    return await db.transaction(async (tx) => {
+      await tx
+        .update(bookings)
+        .set({
+          ratingByDriver: bookingRatingByDriver,
+        })
+        .where(eq(bookings.id, bookingId))
+      if (customerRatingByDriver) {
+        await tx
+          .update(customers)
+          .set({
+            driverRatings: sql`array_append(${customers.driverRatings}, ${customerRatingByDriver})`,
+          })
+          .where(eq(customers.id, customerId))
+      }
+      return await tx.query.bookings.findFirst({
+        columns: {
+          id: true,
+          ratingByDriver: true,
         },
         where: eq(bookings.id, bookingId),
       })

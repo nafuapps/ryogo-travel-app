@@ -92,7 +92,7 @@ export default function RiderMyOngoingBookingPageComponent({
       ) : nextStep === TripLogTypesEnum.ENDED ? (
         <EndTripSheet booking={booking} latLong={latLong} />
       ) : (
-        <MidTripSheet booking={booking} latLong={latLong} tripType={nextStep} />
+        <MidTripSheet booking={booking} latLong={latLong} nextStep={nextStep} />
       )}
       {showNavigation(
         nextStep,
@@ -171,17 +171,16 @@ function getNextStep(
     return TripLogTypesEnum.STARTED
   }
 
+  // Round trip Logic: Started -> Arrived -> Picked Up -> Dropped -> Arrived -> Picked Up -> Dropped -> Ended
   if (bookingType === BookingTypeEnum.Round) {
-    if (droppedCount > 1) return TripLogTypesEnum.ENDED
-    if (pickedUpCount > arrivedCount) return TripLogTypesEnum.DROPPED
-    if (arrivedCount > pickedUpCount) return TripLogTypesEnum.PICKED_UP
-    if (droppedCount === 1 || startedCount === 1)
-      return TripLogTypesEnum.ARRIVED
-    if (pickedUpCount === 1) return TripLogTypesEnum.DROPPED
-    if (arrivedCount === 1) return TripLogTypesEnum.PICKED_UP
-    return TripLogTypesEnum.STARTED
+    if (startedCount === 0) return TripLogTypesEnum.STARTED
+    if (droppedCount >= 2) return TripLogTypesEnum.ENDED
+    if (arrivedCount <= droppedCount) return TripLogTypesEnum.ARRIVED
+    if (pickedUpCount < arrivedCount) return TripLogTypesEnum.PICKED_UP
+    return TripLogTypesEnum.DROPPED
   }
 
+  // Multi day trip Logic: Started -> (Arrived -> Picked Up -> Dropped) -> Ended
   //For multi day trip, end the trip when, either trip days are completed or end date has passed by trip days
   if (droppedCount === arrivedCount) {
     if (

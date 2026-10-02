@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 import { ListCheck } from "lucide-react"
 import { reviewCompletedBookingAction } from "@/app/actions/bookings/reviewCompletedBookingAction"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function SendInvoiceAlertButton({
   bookingId,
@@ -47,11 +47,9 @@ export default function SendInvoiceAlertButton({
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <RyogoDetailedIconButton
-          label={t("Label")}
-          icon={ListCheck}
-          subtitle={t("Subtitle")}
-        />
+        <RyogoDefaultButton label={t("Label")}>
+          <RyogoIcon icon={ListCheck} color="white" size={"sm"} />
+        </RyogoDefaultButton>
       }
     >
       <RyogoDefaultButton

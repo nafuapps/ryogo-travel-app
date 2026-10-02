@@ -1,8 +1,14 @@
 import {
   SectionColWrapper,
   SectionRowWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
+import {
+  RyogoCaption,
+  RyogoH4,
+  RyogoSmall,
+  RyogoP,
+} from "@/components/typography"
 import moment from "moment"
 import Link from "next/link"
 import {
@@ -35,6 +41,7 @@ import {
   ClockPlus,
   IdCard,
   MapPin,
+  User,
 } from "lucide-react"
 import {
   FindBookingHistoryLastDaysType,
@@ -55,17 +62,19 @@ import {
 import { useTranslations } from "next-intl"
 import RyogoTag from "@/components/tags/ryogoTag"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
 
 function BookingCardWrapper({
   bookingId,
   isRider,
-  cta,
+  customCta,
   children,
   className,
 }: {
   bookingId: string
   isRider?: boolean
-  cta?: React.ReactNode
+  customCta?: React.ReactNode
   children: React.ReactNode
   className?: string
 }) {
@@ -83,7 +92,7 @@ function BookingCardWrapper({
               : `/dashboard/bookings/${bookingId}`
           }
         >
-          {cta ?? (
+          {customCta ?? (
             <RyogoOutlineButton
               label={t("ViewDetails")}
               labelColor="light"
@@ -238,6 +247,7 @@ export function OngoingBookingCard({
   booking,
   rider,
   startLabel,
+  asCTA,
 }: {
   booking:
     | FindCustomerUpcomingBookingsByIdType[number]
@@ -251,12 +261,49 @@ export function OngoingBookingCard({
     | FindVehiclesScheduleNextDaysType[number]["assignedBookings"][number]
   rider?: boolean
   startLabel?: string
+  asCTA?: boolean
 }) {
+  if (asCTA && rider) {
+    const customerUrl = booking.customer.photoUrl
+    const customerName = booking.customer.name
+    const tripLog = booking.tripLogs[0]
+    return (
+      <Link href={`/rider/myBookings/${booking.id}`}>
+        <SectionWrapper id="OngoingBookingCard">
+          <SectionRowWrapper className="items-center justify-between">
+            {customerUrl ? (
+              <RyogoImage
+                src={getFileUrl(customerUrl)}
+                alt={customerName}
+                imageSize="sm"
+              />
+            ) : (
+              <RyogoEnclosedIcon icon={User} size="md" />
+            )}
+            <SectionColWrapper small className="w-full">
+              <RyogoP weight="font-bold">{booking.destination.city}</RyogoP>
+              <RyogoCaption color="light">{booking.type}</RyogoCaption>
+            </SectionColWrapper>
+            {tripLog && <TripLogStatusPill status={tripLog.type} />}
+            <RyogoEnclosedIcon
+              icon={ChevronRight}
+              size="sm"
+              color="white"
+              bgColor="black"
+              thick
+              circular
+            />
+          </SectionRowWrapper>
+        </SectionWrapper>
+      </Link>
+    )
+  }
+
   return (
     <BookingCardWrapper
       isRider={rider}
       bookingId={booking.id}
-      cta={
+      customCta={
         rider && startLabel ? <BookingStartButton label={startLabel} /> : null
       }
     >
@@ -316,7 +363,7 @@ export function UpcomingBookingCard({
     <BookingCardWrapper
       isRider={rider}
       bookingId={booking.id}
-      cta={
+      customCta={
         rider && canStart && startLabel ? (
           <BookingStartButton label={startLabel} />
         ) : null

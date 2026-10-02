@@ -11,7 +11,6 @@ import {
 } from "@/components/page/pageWrappers"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import MyBookingsHeaderTabs from "@/components/header/detailHeaderTabs/myBookingsHeaderTabs"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import MyUpcomingBookingsComponent from "@/components/flows/rider/bookings/myUpcomingBookingsComponent"
 
 export const metadata: Metadata = {
@@ -30,9 +29,9 @@ export default async function MyBookingsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const upcomingBookings = (
-    await driverServices.findDriverAssignedBookingsById(driver.id)
-  ).filter((booking) => booking.status === BookingStatusEnum.CONFIRMED)
+  const assignedBookings = await driverServices.findDriverAssignedBookingsById(
+    driver.id,
+  )
 
   return (
     <MainWrapper>
@@ -40,7 +39,7 @@ export default async function MyBookingsPage() {
       <MyBookingsHeaderTabs selectedTab={"Upcoming"} />
       <PageWrapper id="RiderMyBookingsPage">
         <MyUpcomingBookingsComponent
-          upcomingBookings={upcomingBookings}
+          assignedBookings={assignedBookings}
           driverStatus={driver.status}
         />
         <StickyActionWrapper>

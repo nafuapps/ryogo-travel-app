@@ -56,7 +56,8 @@ export default async function ModifyExpensePage({
       booking.status,
     ) ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== booking.assignedUserId)
+      currentUser.userId !== booking.assignedUserId) ||
+    booking.closedAt
   ) {
     redirect(`/dashboard/bookings/${bookingId}/expenses`, RedirectType.replace)
   }

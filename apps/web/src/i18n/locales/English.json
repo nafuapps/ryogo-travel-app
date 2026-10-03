@@ -1301,7 +1301,7 @@
       "ReconciledAt": "Reconciled at",
       "Reconcile": {
         "Title": "Reconcile Booking",
-        "Subtitle": "Review the booking transactions and expenses and reconcile the final amount"
+        "Subtitle": "Review the booking transactions and expenses and make sure everything is correct"
       },
       "ShareTrackingLink": {
         "Title": "Share Tracking Link",
@@ -1331,6 +1331,7 @@
       "RejectError": "Could not remove approval.. try again later"
     },
     "BookingExpenses": {
+      "Closed": "Booking closed.. no expense changes allowed",
       "TotalAmount": "Total Expenses",
       "ApprovedAmount": "Approved Expenses",
       "TypeFilter": "Type Filter",
@@ -4688,7 +4689,7 @@
       },
       "Field3": {
         "Title": "Title",
-        "Placeholder": "Review booking when completed",
+        "Placeholder": "Call customer when booking is completed",
         "Description": "What should we call this reminder?",
         "Error1": "Title must be atleast 3 characters",
         "Error2": "Title must be less than 100 characters"
@@ -4736,7 +4737,7 @@
       },
       "Field3": {
         "Title": "Title",
-        "Placeholder": "Review booking when completed",
+        "Placeholder": "Call customer when booking is completed",
         "Description": "What should we call this reminder?",
         "Error1": "Title must be atleast 3 characters",
         "Error2": "Title must be less than 100 characters"
@@ -4821,7 +4822,7 @@
         "PickupAddressChanged": "Booking #{bookingId} pickup address has been changed by {userName}",
         "DropAddressChanged": "Booking #{bookingId} drop address has been changed by {userName}",
         "BookingRemarksChanged": "Booking #{bookingId} remarks have been changed by {userName}",
-        "BookingReviewed": "Booking #{bookingId} has been reviewd and closed by {userName}",
+        "BookingClosed": "Booking #{bookingId} has been reviewd and closed by {userName}",
         "ExpenseAdded": "New expense #{expenseId} has been added for booking #{bookingId} by {userName}",
         "ExpenseApproved": "Expense #{expenseId} has been approved for booking #{bookingId} by {userName}",
         "ExpenseRejected": "Expense #{expenseId} has been rejected  for booking #{bookingId} by {userName}",
@@ -4881,16 +4882,27 @@
         "Loading": "Loading..",
         "YesCTA": "Yes, Add Driver without details"
       },
-      "ReviewCompletedBooking": {
+      "CloseBooking": {
         "Label": "Close booking and generate invoice",
-        "Subtitle": "You have reviewed that this booking has been completed",
-        "Title": "Are you sure you want to review this booking as completed and generate an invoice?",
-        "Desc": "Make sure the booking has actually been completed with the customer and review all the transactions and expenses. This action will close this booking and no further changes can be done.",
+        "Title": "Are you sure you want to close this booking and generate an invoice?",
+        "Desc": "Make sure the booking has actually been completed. Review all the transactions and expenses. Only the approved expenses will be added to the invoice. This action will close the booking and no further expense changes can be done.",
         "NoCTA": "No",
-        "Success": "Invoice generated!",
-        "Error": "Cannot generate invoice.. Try again later!",
+        "Success": "Booking closed and invoice generated!",
+        "Error": "Cannot close booking now.. Try again later!",
         "Loading": "Loading..",
-        "YesCTA": "Yes, Review and Generate Invoice"
+        "Review": "Review Expenses",
+        "YesCTA": "Yes, Close and Generate Invoice"
+      },
+      "ReopenBooking": {
+        "Label": "Re-open booking",
+        "Subtitle": "Open booking for changes again and delete previously generated invoice",
+        "Title": "Are you sure you want to open this booking again?",
+        "Desc": "This action will remove the closed status of the booking and allow further changes. (The previously generated invoice will also be deleted)",
+        "NoCTA": "No",
+        "Success": "Booking reopened!",
+        "Error": "Cannot reopen booking now.. Try again later!",
+        "Loading": "Loading..",
+        "YesCTA": "Yes, Reopen booking"
       },
       "SendInvoice": {
         "Label": "Share invoice with Customer",

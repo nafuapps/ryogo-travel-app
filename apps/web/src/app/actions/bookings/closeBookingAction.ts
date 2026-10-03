@@ -8,11 +8,15 @@ import { generateBookingInvoicePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  EntityTypeEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { headers } from "next/headers"
 
-export async function reviewCompletedBookingAction(
+export async function closeBookingAction(
   bookingId: string,
   agencyId: string,
   userId: string,
@@ -33,9 +37,14 @@ export async function reviewCompletedBookingAction(
   }
 
   const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
-  if (!bookingDetails) return
+  if (
+    !bookingDetails ||
+    bookingDetails.status !== BookingStatusEnum.COMPLETED ||
+    bookingDetails.closedAt
+  )
+    return
 
-  const updatedBooking = await bookingServices.changeReviewedByAgency(bookingId)
+  const updatedBooking = await bookingServices.closeBooking(bookingId)
   if (!updatedBooking) {
     return
   }
@@ -83,7 +92,7 @@ export async function reviewCompletedBookingAction(
     entityType: EntityTypeEnum.BOOKING,
     entityId: bookingDetails.id,
     isFeed: true,
-    textKey: "BookingReviewed",
+    textKey: "BookingClosed",
     textObject: {
       bookingId: bookingDetails.id,
       userName: currentUser.name,

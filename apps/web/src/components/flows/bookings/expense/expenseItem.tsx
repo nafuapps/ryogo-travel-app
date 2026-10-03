@@ -90,6 +90,7 @@ export default function ExpenseItem({
             expId={expense.id}
             isApproved={expense.isApproved}
             agencyId={expense.agencyId}
+            canEditExpense={canEditExpense}
             isRider={isRider}
           />
           {canEditExpense && (

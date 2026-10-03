@@ -1041,9 +1041,6 @@ export const bookings = pgTable(
     actualExpensesAmount: integer("actual_expenses_amount"), // in currency (updated at the end of the trip)
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
     ratingByCustomer: integer("rating_by_customer"), // 1 to 5
-    reconciledAt: timestamp("reconciled_at", {
-      withTimezone: true,
-    }), //reconciled by owner
     quoteSentOn: timestamp("quote_sent_on", { withTimezone: true }),
     quoteUrl: text("quote_url"),
     confirmationSentOn: timestamp("confirmation_sent_on", {
@@ -1053,17 +1050,31 @@ export const bookings = pgTable(
     invoiceSentOn: timestamp("invoice_sent_on", { withTimezone: true }),
     invoiceUrl: text("invoice_url"),
     status: bookingStatus().notNull().default(BookingStatusEnum.LEAD),
+    confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
     startedAt: timestamp("started_at", { withTimezone: true }),
     completedAt: timestamp("completed_at", { withTimezone: true }),
     cancelledAt: timestamp("cancelled_at", { withTimezone: true }),
-    reviewCompletedByAgencyAt: timestamp("review_completed_by_agency_at", {
+    closedAt: timestamp("closed_at", {
       withTimezone: true,
     }),
+    reconciledAt: timestamp("reconciled_at", {
+      withTimezone: true,
+    }), //reconciled by owner
     secretCode: varchar("secret_code", { length: 6 }),
     codeSentOn: timestamp("code_sent_at", { withTimezone: true }),
     ...timestamps,
   },
   (t) => [
+    check(
+      "actual end date >= actual start date",
+      sql`${t.actualEndDate} >= ${t.actualStartDate}`,
+    ),
+    check("confirmed after creation", sql`${t.confirmedAt} >= ${t.createdAt}`),
+    check("started after confirmed", sql`${t.startedAt} >= ${t.confirmedAt}`),
+    check("completed after started", sql`${t.completedAt} >= ${t.startedAt}`),
+    check("cancelled after creation", sql`${t.cancelledAt} >= ${t.createdAt}`),
+    check("closed after completed", sql`${t.closedAt} >= ${t.completedAt}`),
+    check("reconciled after closed", sql`${t.reconciledAt} >= ${t.closedAt}`),
     check(
       "commission_rate >= 0 and <= 100",
       sql`${t.commissionRate} >= 0 AND ${t.commissionRate} <= 100`,

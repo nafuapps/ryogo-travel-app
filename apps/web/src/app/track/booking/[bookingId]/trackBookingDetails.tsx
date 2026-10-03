@@ -46,6 +46,8 @@ import RateBookingByCustomerDialog from "@/components/flows/bookings/track/rateB
 import BookingAgencyCard from "@/components/flows/bookings/details/bookingAgencyCard"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import Link from "next/link"
+import { differenceInDays } from "date-fns"
+import { BOOKING_RATING_LIMIT_DAYS } from "@ryogo-travel-app/api/apiConfig"
 
 // A page to display booking details for tracking by customer
 export default async function TrackBookingDetailsPageComponent({
@@ -206,13 +208,12 @@ export default async function TrackBookingDetailsPageComponent({
               rate: bookingDetails.commissionRate,
             })}
           />
-          {bookingDetails.actualExpensesAmount &&
-            bookingDetails.reviewCompletedByAgencyAt && (
-              <BookingPriceItem
-                title={t("ActualExpenses")}
-                value={"₹" + bookingDetails.actualExpensesAmount}
-              />
-            )}
+          {bookingDetails.actualExpensesAmount && bookingDetails.closedAt && (
+            <BookingPriceItem
+              title={t("ActualExpenses")}
+              value={"₹" + bookingDetails.actualExpensesAmount}
+            />
+          )}
           <Separator />
           <BookingPriceItem
             title={t("TotalAmount")}
@@ -264,7 +265,10 @@ export default async function TrackBookingDetailsPageComponent({
           bookingDetails.customer.email &&
           bookingDetails.assignedDriver &&
           bookingDetails.assignedVehicle &&
-          !bookingDetails.ratingByCustomer && (
+          !bookingDetails.ratingByCustomer &&
+          bookingDetails.completedAt &&
+          differenceInDays(new Date(), bookingDetails.completedAt) <=
+            BOOKING_RATING_LIMIT_DAYS && (
             <RateBookingByCustomerDialog
               bookingId={bookingDetails.id}
               driverId={bookingDetails.assignedDriver.id}

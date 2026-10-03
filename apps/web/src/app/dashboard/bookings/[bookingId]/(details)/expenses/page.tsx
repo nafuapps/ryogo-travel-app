@@ -14,7 +14,10 @@ import {
 import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import Link from "next/link"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 import { getTranslations } from "next-intl/server"
 
 export const metadata: Metadata = {
@@ -40,6 +43,7 @@ export default async function BookingExpensesPage({
   }
 
   const t = await getTranslations("Dashboard.BookingExpenses")
+
   //Expense can be created for in-progress or completed bookings only
   //Only owner or assigned user can create expenses
   const canEditExpense =
@@ -47,7 +51,8 @@ export default async function BookingExpensesPage({
       currentUser.userId === booking.assignedUserId) &&
     [BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
       booking.status,
-    )
+    ) &&
+    !booking.closedAt
 
   const bookingExpenses =
     await bookingServices.findBookingExpensesById(bookingId)
@@ -70,6 +75,9 @@ export default async function BookingExpensesPage({
                 className="w-full"
               />
             </Link>
+          )}
+          {booking.closedAt && (
+            <RyogoGhostButton label={t("Closed")} className="w-full" disabled />
           )}
           <HelpIconButton
             href={"/dashboard/support/help-bookings#expenses"}

@@ -16,11 +16,13 @@ export function ExpenseApprovalButton({
   expId,
   isApproved,
   agencyId,
+  canEditExpense,
   isRider,
 }: {
   expId: string
   isApproved: boolean
   agencyId: string
+  canEditExpense: boolean
   isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.BookingExpenses")
@@ -50,7 +52,7 @@ export function ExpenseApprovalButton({
   }
 
   if (!isApproved) {
-    if (isRider) return null
+    if (isRider || !canEditExpense) return null
     return (
       <RyogoOutlineButton
         label={t("Approve")}
@@ -69,7 +71,7 @@ export function ExpenseApprovalButton({
       label={t("Approved")}
       labelColor={"green"}
       onClick={rejectExpense}
-      disabled={isPending || isRider}
+      disabled={isPending || isRider || !canEditExpense}
       className="grow border"
     >
       <RyogoIcon icon={CheckCheck} size="xs" color={"green"} thick />

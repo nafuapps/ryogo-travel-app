@@ -39,6 +39,18 @@ export const notificationServices = {
       await notificationRepository.createNotification(notification)
     return newNotification
   },
+
+  async removeNotificationByEntityAndKey(
+    agencyId: string,
+    entityId: string,
+    textKey: string,
+  ) {
+    return await notificationRepository.deleteNotificationByEntityAndKey(
+      agencyId,
+      entityId,
+      textKey,
+    )
+  },
 }
 
 export type FindFeedNotificationsByAgencyIdType = Awaited<

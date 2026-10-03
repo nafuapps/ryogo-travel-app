@@ -33,4 +33,20 @@ export const notificationRepository = {
   async createNotification(notification: InsertNotificationType) {
     return await db.insert(notifications).values(notification).returning()
   },
+
+  async deleteNotificationByEntityAndKey(
+    agencyId: string,
+    entityId: string,
+    textKey: string,
+  ) {
+    return await db
+      .delete(notifications)
+      .where(
+        and(
+          eq(notifications.agencyId, agencyId),
+          eq(notifications.entityId, entityId),
+          eq(notifications.textKey, textKey),
+        ),
+      )
+  },
 }

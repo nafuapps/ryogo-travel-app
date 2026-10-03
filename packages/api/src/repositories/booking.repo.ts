@@ -157,7 +157,7 @@ export const bookingRepository = {
           eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
           and(
             eq(bookings.status, BookingStatusEnum.COMPLETED),
-            isNull(bookings.reviewCompletedByAgencyAt),
+            isNull(bookings.closedAt),
           ),
         ),
       ),
@@ -1594,6 +1594,7 @@ export const bookingRepository = {
         type: true,
         sourceId: true,
         destinationId: true,
+        closedAt: true,
       },
     })
     return booking
@@ -1755,6 +1756,7 @@ export const bookingRepository = {
       .update(bookings)
       .set({
         status: BookingStatusEnum.CONFIRMED,
+        confirmedAt: new Date(),
         startTime: startTime,
         pickupAddress: pickupAddress,
         dropAddress: dropAddress,
@@ -2152,19 +2154,39 @@ export const bookingRepository = {
       })
   },
 
-  //Mark booking as review completed and update actual expenses amount and add it to total amount
-  async updateReviewCompletedAt(id: string, actualExpensesAmount: number) {
+  //Close booking and update actual expenses amount and add it to total amount
+  async updateClosedAt(id: string, actualExpensesAmount: number) {
     return await db
       .update(bookings)
       .set({
-        reviewCompletedByAgencyAt: new Date(),
+        closedAt: new Date(),
+        actualTotalAmount: sql`${bookings.actualTotalAmount} + ${actualExpensesAmount}`,
         actualExpensesAmount,
-        actualTotalAmount: sql`${bookings.actualTotalAmount} + ${bookings.actualExpensesAmount}`,
       })
       .where(eq(bookings.id, id))
       .returning({
         id: bookings.id,
-        reviewCompletedByAgencyAt: bookings.reviewCompletedByAgencyAt,
+        closedAt: bookings.closedAt,
+        actualExpensesAmount: bookings.actualExpensesAmount,
+        actualTotalAmount: bookings.actualTotalAmount,
+      })
+  },
+
+  //Reopen booking (only by owner) and delete invoice and readjust actual total
+  async deleteClosedAt(id: string) {
+    return await db
+      .update(bookings)
+      .set({
+        invoiceSentOn: null,
+        invoiceUrl: null,
+        closedAt: null,
+        actualTotalAmount: sql`${bookings.actualTotalAmount} - ${bookings.actualExpensesAmount}`,
+        actualExpensesAmount: null,
+      })
+      .where(eq(bookings.id, id))
+      .returning({
+        id: bookings.id,
+        closedAt: bookings.closedAt,
         actualExpensesAmount: bookings.actualExpensesAmount,
         actualTotalAmount: bookings.actualTotalAmount,
       })

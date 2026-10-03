@@ -20,7 +20,7 @@ export async function locateUserAction(
   }
 
   const result = await userServices.locateUser(userId, lat, long)
-  if (!result || result.locatedAt === null) return
+  if (!result || !result.locatedAt) return
 
   await updateUserLocatedAtInWebSession(result.locatedAt)
 }

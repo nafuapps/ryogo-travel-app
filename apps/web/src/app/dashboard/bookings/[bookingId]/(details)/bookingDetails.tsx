@@ -33,7 +33,7 @@ import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import ShareTrackBookingLinkButton from "@/components/buttons/track/shareTrackBookingLinkButton"
-import ReviewCompletedBookingAlertButton from "@/components/buttons/alert/reviewCompletedBookingAlertButton"
+import CloseBookingAlertButton from "@/components/buttons/alert/closeBookingAlertButton"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import BookingVehicleCard from "@/components/flows/bookings/details/bookingVehicleCard"
 import BookingDriverCard from "@/components/flows/bookings/details/bookingDriverCard"
@@ -58,6 +58,7 @@ import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { Separator } from "@/components/ui/separator"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import ReopenBookingAlertButton from "@/components/buttons/alert/reopenBookingAlertButton"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -100,13 +101,22 @@ export default async function BookingDetailsPageComponent({
   const canSendQuote = canEditBooking && isLead
   const canSendConfirmation = canEditBooking && isConfirmed
   const canSendInvoice =
-    canEditBooking && isCompleted && bookingDetails.reviewCompletedByAgencyAt
+    canEditBooking && isCompleted && bookingDetails.closedAt
 
   const canCloseBooking =
-    canEditBooking && isCompleted && !bookingDetails.reviewCompletedByAgencyAt
+    canEditBooking && isCompleted && !bookingDetails.closedAt
+
+  const canReopenBooking =
+    isOwner &&
+    isCompleted &&
+    bookingDetails.closedAt &&
+    !bookingDetails.reconciledAt
 
   const canReconcileBooking =
-    isOwner && isCompleted && bookingDetails.reviewCompletedByAgencyAt
+    isOwner &&
+    isCompleted &&
+    bookingDetails.closedAt &&
+    !bookingDetails.reconciledAt
 
   const totalDistance =
     isCompleted && bookingDetails.actualTotalDistance
@@ -144,6 +154,7 @@ export default async function BookingDetailsPageComponent({
     }, 0)
   const pendingAmount = totalAmount - receivedAmount
 
+  //TODO: Add booking status timeline
   return (
     <PageWrapper id="BookingDetailsPage">
       <BookingGrid>
@@ -294,13 +305,12 @@ export default async function BookingDetailsPageComponent({
               rate: bookingDetails.commissionRate,
             })}
           />
-          {bookingDetails.actualExpensesAmount &&
-            bookingDetails.reviewCompletedByAgencyAt && (
-              <BookingPriceItem
-                title={t("ActualExpenses")}
-                value={"₹" + bookingDetails.actualExpensesAmount}
-              />
-            )}
+          {bookingDetails.actualExpensesAmount && bookingDetails.closedAt && (
+            <BookingPriceItem
+              title={t("ActualExpenses")}
+              value={"₹" + bookingDetails.actualExpensesAmount}
+            />
+          )}
           <Separator />
           <BookingPriceItem
             title={t("TotalAmount")}
@@ -337,6 +347,12 @@ export default async function BookingDetailsPageComponent({
                 agencyId={bookingDetails.agencyId}
                 assignedUserId={bookingDetails.assignedUserId}
                 invoiceSentOn={bookingDetails.invoiceSentOn}
+              />
+            )}
+            {canReopenBooking && (
+              <ReopenBookingAlertButton
+                bookingId={bookingDetails.id}
+                agencyId={bookingDetails.agencyId}
               />
             )}
             {canSendConfirmation && (
@@ -485,7 +501,7 @@ export default async function BookingDetailsPageComponent({
             </Link>
           ) : null)}
         {canCloseBooking && (
-          <ReviewCompletedBookingAlertButton
+          <CloseBookingAlertButton
             bookingId={bookingDetails.id}
             agencyId={bookingDetails.agencyId}
             assignedUserId={bookingDetails.assignedUserId}

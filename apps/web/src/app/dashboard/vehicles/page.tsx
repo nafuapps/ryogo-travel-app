@@ -40,6 +40,7 @@ export default async function AllVehiclesPage() {
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
 
   const t = await getTranslations("Dashboard.Vehicles.All")
 
@@ -57,7 +58,11 @@ export default async function AllVehiclesPage() {
         {ongoingTrips.length > 0 && (
           <OnTripVehiclesComponent ongoingTrips={ongoingTrips} />
         )}
-        <AllVehiclesListComponent allVehicles={allVehicles} />
+        <AllVehiclesListComponent
+          allVehicles={allVehicles}
+          isBasic={isBasic}
+          hasTriedSubscription={agency.hasTriedSubscription}
+        />
         <VehiclesScheduleChartComponent
           vehicleSchedule14Days={vehicleSchedule14Days}
           userId={currentUser.userId}
@@ -65,8 +70,7 @@ export default async function AllVehiclesPage() {
         />
       </PageWrapper>
       <StickyActionWrapper>
-        {(agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC ||
-          allVehicles.length < BASIC_PLAN_VEHICLE_LIMIT) && (
+        {(!isBasic || allVehicles.length < BASIC_PLAN_VEHICLE_LIMIT) && (
           <Link href={`/dashboard/vehicles/new`} className="w-full">
             <RyogoDefaultButton
               size="lg"

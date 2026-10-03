@@ -10,7 +10,10 @@ import {
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { bookingRepository } from "../repositories/booking.repo"
-import { NewBookingRequestDataType } from "../types/booking.types"
+import {
+  NewBookingRequestDataType,
+  RateBookingByCustomerType,
+} from "../types/booking.types"
 import { locationRepository } from "../repositories/location.repo"
 import { routeServices } from "./route.services"
 import { customerRepository } from "../repositories/customer.repo"
@@ -575,14 +578,8 @@ export const bookingServices = {
   },
 
   //Update booking rating by customer
-  async changeBookingRatingByCustomer(
-    bookingId: string,
-    driverId: string,
-    code: string,
-    bookingRating: number,
-    driverRating?: number,
-  ) {
-    const booking = await bookingRepository.readBookingById(bookingId)
+  async changeBookingRatingByCustomer(data: RateBookingByCustomerType) {
+    const booking = await bookingRepository.readBookingById(data.bookingId)
 
     //Only completed bookings with secret code can be rated by customer
     if (
@@ -595,15 +592,17 @@ export const bookingServices = {
     }
 
     //Check if the secret code is valid
-    if (code !== booking.secretCode && code !== SUPER_CODE) {
+    if (data.code !== booking.secretCode && data.code !== SUPER_CODE) {
       return { error: "invalidCode" }
     }
 
     return await bookingRepository.updateBookingRatingByCustomer(
-      bookingId,
-      driverId,
-      bookingRating,
-      driverRating,
+      data.bookingId,
+      data.driverId,
+      data.vehicleId,
+      data.bookingRatingByCustomer,
+      data.driverRatingByCustomer,
+      data.vehicleRatingByCustomer,
     )
   },
 

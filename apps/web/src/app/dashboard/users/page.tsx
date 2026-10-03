@@ -36,6 +36,7 @@ export default async function AllUsersPage() {
       <UsersPageComponent
         allUsers={allUsers}
         isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        hasTriedSubscription={agency.hasTriedSubscription}
       />
     </MainWrapper>
   )

@@ -42,26 +42,6 @@ export const vehicleRepository = {
   //Get all vehicles data for a new booking in an agency
   async readAllVehiclesDataByAgencyId(agencyId: string) {
     return await db.query.vehicles.findMany({
-      columns: {
-        id: true,
-        status: true,
-        brand: true,
-        model: true,
-        color: true,
-        vehicleNumber: true,
-        type: true,
-        capacity: true,
-        insuranceExpiresOn: true,
-        odometerReading: true,
-        pucExpiresOn: true,
-        rcExpiresOn: true,
-        defaultAcChargePerDay: true,
-        defaultRatePerKm: true,
-        hasAC: true,
-        vehiclePhotoUrl: true,
-        customerRatings: true,
-        createdAt: true,
-      },
       where: and(
         eq(vehicles.agencyId, agencyId),
         notInArray(vehicles.status, [VehicleStatusEnum.SUSPENDED]),

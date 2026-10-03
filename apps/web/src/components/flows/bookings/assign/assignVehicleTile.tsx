@@ -1,4 +1,4 @@
-import { RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import {
   Armchair,
   AirVent,
@@ -7,13 +7,13 @@ import {
   Wrench,
   Check,
   TicketX,
+  Star,
+  CircleGauge,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
 import {
   AssignTileWrapper,
-  AssignTileContentWrapper,
-  AssignTileScoreWrapper,
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
@@ -32,8 +32,8 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
 import { RyogoTagWithoutBG } from "@/components/tags/ryogoTag"
+import { getAverageRating } from "@/lib/utils"
 
 export default function AssignVehicleTile({
   vehicleData,
@@ -44,6 +44,7 @@ export default function AssignVehicleTile({
   bookingPassengers,
   bookingNeedsAC,
   bookingId,
+  bookingSourceId,
   isCurrentlyAssigned,
 }: {
   vehicleData: FindVehiclesByAgencyType[number]
@@ -54,6 +55,7 @@ export default function AssignVehicleTile({
   bookingPassengers: number
   bookingNeedsAC: boolean
   bookingId?: string
+  bookingSourceId?: string
   isCurrentlyAssigned?: boolean
 }) {
   const t = useTranslations("Dashboard.AssignVehicle.Tile")
@@ -114,10 +116,18 @@ export default function AssignVehicleTile({
 
   const ratePerKmScore = getRatePerKmScore(vehicleData.defaultRatePerKm)
 
-  const acScore = vehicleData.hasAC === bookingNeedsAC ? 4 : 1
+  const acScore =
+    bookingNeedsAC === vehicleData.hasAC ? 100 : vehicleData.hasAC ? 50 : 0
+
   const customerRatingScore = getCustomerRatingScore(
     vehicleData.customerRatings,
   )
+
+  const locationScore =
+    vehicleData.visitingLocationId &&
+    vehicleData.visitingLocationId === bookingSourceId
+      ? 100
+      : 0
 
   const totalScore = getVehicleTotalScore({
     bookingScore,
@@ -131,72 +141,77 @@ export default function AssignVehicleTile({
     odometerScore,
     ratePerKmScore,
     customerRatingScore,
+    locationScore,
   })
 
   return (
     <AssignTileWrapper selected={selected} onClick={onClick}>
-      <AssignTileContentWrapper>
-        <SectionRowWrapper className="items-center">
-          {vehicleData.vehiclePhotoUrl ? (
-            <RyogoImage
-              src={getFileUrl(vehicleData.vehiclePhotoUrl)}
-              alt={vehicleData.vehicleNumber}
-              imageSize="md"
-            />
-          ) : (
-            <GetVehicleEnclosedIcon vehicleType={vehicleData.type} size="lg" />
-          )}
-          <SectionColWrapper small className="w-full">
-            <RyogoP weight="font-bold"> {vehicleData.vehicleNumber}</RyogoP>
-            <RyogoCaption color="light" weight="font-bold">
+      <SectionRowWrapper className="items-center">
+        {vehicleData.vehiclePhotoUrl ? (
+          <RyogoImage
+            src={getFileUrl(vehicleData.vehiclePhotoUrl)}
+            alt={vehicleData.vehicleNumber}
+            imageSize="md"
+          />
+        ) : (
+          <GetVehicleEnclosedIcon vehicleType={vehicleData.type} size="lg" />
+        )}
+        <SectionColWrapper small className="w-full">
+          <RyogoSmall weight="font-bold">
+            {vehicleData.vehicleNumber}
+          </RyogoSmall>
+          <SectionRowWrapper className="items-center">
+            <RyogoCaption color="light" weight="font-medium">
               {vehicleData.brand + " " + vehicleData.model}
             </RyogoCaption>
-            <SectionRowWrapper small className="items-center">
-              <RyogoCaption color="light">
-                {vehicleData.odometerReading + " Km"}
-              </RyogoCaption>
-              <VehicleColorBox color={vehicleData.color} />
-            </SectionRowWrapper>
-          </SectionColWrapper>
-        </SectionRowWrapper>
-        <SectionRowWrapper className="items-center">
-          <RyogoTagWithoutBG
-            label={vehicleData.defaultRatePerKm.toString() + t("PerKm")}
-            icon={BadgeIndianRupee}
-          />
-
-          <RyogoTagWithoutBG
-            icon={Armchair}
-            label={vehicleData.capacity.toString()}
-          />
-          {vehicleData.hasAC && (
-            <RyogoTagWithoutBG icon={AirVent} label={t("AC")} />
-          )}
-        </SectionRowWrapper>
-      </AssignTileContentWrapper>
-      <AssignTileScoreWrapper>
+          </SectionRowWrapper>
+        </SectionColWrapper>
         <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
-        <AssignTileStatusWrapper selected={selected}>
-          {isCurrentlyAssigned ? (
-            <RyogoIcon color="brand" icon={CheckCheck} size="xs" thick />
-          ) : isBooked ? (
-            <RyogoIcon color="red" icon={TicketX} size="xs" thick />
-          ) : isRepairScheduled ? (
-            <RyogoIcon color="yellow" icon={Wrench} size="xs" thick />
-          ) : (
-            <RyogoIcon color="green" icon={Check} size="xs" thick />
+      </SectionRowWrapper>
+      <SectionRowWrapper className="items-center justify-between">
+        <RyogoTagWithoutBG
+          label={vehicleData.defaultRatePerKm.toString() + t("PerKm")}
+          icon={BadgeIndianRupee}
+        />
+        <RyogoTagWithoutBG
+          icon={Armchair}
+          label={vehicleData.capacity.toString()}
+        />
+        <RyogoTagWithoutBG
+          label={vehicleData.odometerReading + t("Km")}
+          icon={CircleGauge}
+        />
+        {vehicleData.hasAC && (
+          <RyogoTagWithoutBG icon={AirVent} label={t("AC")} />
+        )}
+        {vehicleData.customerRatings &&
+          vehicleData.customerRatings.length > 0 && (
+            <RyogoTagWithoutBG
+              label={getAverageRating(vehicleData.customerRatings)}
+              icon={Star}
+            />
           )}
-          <RyogoCaption color="slate">
-            {isCurrentlyAssigned
-              ? t("CurrentlyAssigned")
-              : isBooked
-                ? t("Booked")
-                : isRepairScheduled
-                  ? t("RepairScheduled")
-                  : t("Available")}
-          </RyogoCaption>
-        </AssignTileStatusWrapper>
-      </AssignTileScoreWrapper>
+      </SectionRowWrapper>
+      <AssignTileStatusWrapper selected={selected}>
+        {isCurrentlyAssigned ? (
+          <RyogoIcon color="brand" icon={CheckCheck} size="xs" thick />
+        ) : isBooked ? (
+          <RyogoIcon color="red" icon={TicketX} size="xs" thick />
+        ) : isRepairScheduled ? (
+          <RyogoIcon color="yellow" icon={Wrench} size="xs" thick />
+        ) : (
+          <RyogoIcon color="green" icon={Check} size="xs" thick />
+        )}
+        <RyogoCaption color="slate">
+          {isCurrentlyAssigned
+            ? t("CurrentlyAssigned")
+            : isBooked
+              ? t("Booked")
+              : isRepairScheduled
+                ? t("RepairScheduled")
+                : t("Available")}
+        </RyogoCaption>
+      </AssignTileStatusWrapper>
     </AssignTileWrapper>
   )
 }
@@ -284,7 +299,7 @@ function getCapacityScore(capacity: number, passengers: number): number {
 
 const VehicleWeightage_Booking = 0.25
 const VehicleWeightage_Repair = 0.15
-const VehicleWeightage_Capacity = 0.2
+const VehicleWeightage_Capacity = 0.15
 const VehicleWeightage_Status = 0.05
 const VehicleWeightage_AC = 0.05
 const VehicleWeightage_Insurance = 0.05
@@ -293,6 +308,7 @@ const VehicleWeightage_RC = 0.05
 const VehicleWeightage_Odometer = 0.05
 const VehicleWeightage_Rate = 0.05
 const VehicleWeightage_CustomerRating = 0.05
+const VehicleWeigtage_Location = 0.05
 const getVehicleTotalScore = (data: {
   bookingScore: number
   repairScore: number
@@ -305,6 +321,7 @@ const getVehicleTotalScore = (data: {
   odometerScore: number
   ratePerKmScore: number
   customerRatingScore: number
+  locationScore: number
 }) => {
   return (
     data.bookingScore * VehicleWeightage_Booking +
@@ -317,6 +334,7 @@ const getVehicleTotalScore = (data: {
     data.rcScore * VehicleWeightage_RC +
     data.odometerScore * VehicleWeightage_Odometer +
     data.ratePerKmScore * VehicleWeightage_Rate +
-    data.customerRatingScore * VehicleWeightage_CustomerRating
+    data.customerRatingScore * VehicleWeightage_CustomerRating +
+    data.locationScore * VehicleWeigtage_Location
   )
 }

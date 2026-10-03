@@ -56,9 +56,9 @@ export const NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY = 500
 //Subscription
 export const APP_TRIAL_MODE = false //If this is true, all Premium features are unlocked for every user
 
-export const BASIC_PLAN_DRIVER_LIMIT = 4
-export const BASIC_PLAN_AGENT_LIMIT = 4
-export const BASIC_PLAN_VEHICLE_LIMIT = 4
+export const BASIC_PLAN_DRIVER_LIMIT = 3
+export const BASIC_PLAN_AGENT_LIMIT = 3
+export const BASIC_PLAN_VEHICLE_LIMIT = 3
 export const BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT = 20
 export const BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS = 7
 

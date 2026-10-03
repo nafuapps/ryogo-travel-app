@@ -94,6 +94,7 @@ export default function AssignDriverPageComponent({
             bookingEndDate={booking.endDate}
             bookingPassengers={booking.passengers}
             bookingId={booking.id}
+            bookingSourceId={booking.sourceId}
             isCurrentlyAssigned={booking.assignedDriverId === driver.id}
             selected={selectedDriverId === driver.id}
             onClick={() =>

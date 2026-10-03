@@ -230,15 +230,18 @@ export function SectionRowWrapper({
 export function SectionColWrapper({
   children,
   small,
+  onClick,
   className,
 }: {
   children: React.ReactNode
   small?: boolean
+  onClick?: () => void
   className?: string
 }) {
   return (
     <div
       className={`empty:hidden flex flex-col ${small ? "gap-1.5 lg:gap-2" : "gap-2.5 lg:gap-3"} ${className ?? ""}`}
+      onClick={onClick}
     >
       {children}
     </div>

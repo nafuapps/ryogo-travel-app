@@ -1526,7 +1526,7 @@
       "RenewCTA": "Renew Subscription",
       "Title": "Select a driver to assign for this booking",
       "Tile": {
-        "Score": "RyoGo Score",
+        "Score": "Score",
         "CurrentlyAssigned": "Assigned",
         "Booked": "Booked",
         "Leave": "Leave",
@@ -1548,13 +1548,14 @@
       "RenewCTA": "Renew Subscription",
       "Title": "Select a vehicle to assign for this booking",
       "Tile": {
-        "Score": "RyoGo Score",
+        "Score": "Score",
         "CurrentlyAssigned": "Assigned",
         "AC": "AC",
         "Booked": "Booked",
         "RepairScheduled": "Servicing",
         "Available": "Available",
-        "PerKm": "/Km"
+        "PerKm": "/Km",
+        "Km": " Km"
       },
       "PrimaryCTA": "Assign Vehicle",
       "Loading": "Loading..",
@@ -1571,7 +1572,7 @@
       "RenewCTA": "Renew Subscription",
       "Title": "Select a user to assign for this booking",
       "Tile": {
-        "Score": "RyoGo Score",
+        "Score": "Score",
         "CurrentlyAssigned": "Assigned",
         "Booked": "Booked",
         "Available": "Available"
@@ -1587,8 +1588,12 @@
       "All": {
         "Title": "ALL VEHICLES",
         "Km": " Km",
-        "RatePerKm": "₹{rate}/Km",
-        "AddVehicle": "Add Vehicle"
+        "RatePerKm": "{rate}/Km",
+        "AC": "AC",
+        "AddVehicle": "Add Vehicle",
+        "Warning": "You have reached the vehicle limit for basic plan. Subscribe to add and assign more vehicles!",
+        "TryCTA": "Try Premium",
+        "BuyCTA": "Buy Premium"
       },
       "OngoingTrips": "ONGOING TRIPS",
       "Schedule": "VEHICLE SCHEDULE"
@@ -2038,8 +2043,11 @@
     "Drivers": {
       "All": {
         "Title": "ALL DRIVERS",
-        "AllowancePerDay": "₹{allowance}/day",
-        "AddDriver": "Add Driver"
+        "AllowancePerDay": "{allowance}/day",
+        "AddDriver": "Add Driver",
+        "Warning": "You have reached the driver limit for basic plan. Subscribe to add and assign more drivers!",
+        "TryCTA": "Try Premium",
+        "BuyCTA": "Buy Premium"
       },
       "OngoingTrips": "ONGOING TRIPS",
       "Schedule": "DRIVER SCHEDULE"
@@ -4394,7 +4402,10 @@
       "Drivers": {
         "Title": "DRIVERS",
         "AddDriver": "Add Driver"
-      }
+      },
+      "Warning": "You have reached the user limit for basic plan. Subscribe to add more users!",
+      "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium"
     },
     "UserDetails": {
       "UserOnlineStatus": {
@@ -7420,12 +7431,15 @@
       "Title": "Rate Booking",
       "Subtitle": "Provide your valuable feedback about the recently completed booking",
       "Field1": {
-        "Title": "Rate booking experience"
+        "Title": "Overall booking experience"
       },
       "Field2": {
         "Title": "Rate driver (optional)"
       },
       "Field3": {
+        "Title": "Rate vehicle (optional)"
+      },
+      "Field4": {
         "Title": "Enter booking secret code",
         "Description": "Provide the secret code sent to your email",
         "Error1": "Secret code must be 6 digits long"

@@ -153,15 +153,7 @@ export const userRepository = {
   async readAllDashboardUsersDataByAgencyId(agencyId: string) {
     return await db.query.users.findMany({
       columns: {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        userRole: true,
-        status: true,
-        photoUrl: true,
-        languagePref: true,
-        createdAt: true,
+        password: false,
       },
       where: and(
         eq(users.agencyId, agencyId),

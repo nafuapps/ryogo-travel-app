@@ -3,13 +3,10 @@ import { getCurrentUser } from "@/lib/auth"
 import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { RateBookingByCustomerType } from "@ryogo-travel-app/api/types/booking.types"
 
 export async function rateBookingByCustomerAction(
-  bookingId: string,
-  driverId: string,
-  code: string,
-  bookingRatingByCustomer: number,
-  driverRatingByCustomer?: number,
+  data: RateBookingByCustomerType,
 ) {
   const currentUser = await getCurrentUser()
   if (currentUser) {
@@ -21,13 +18,8 @@ export async function rateBookingByCustomerAction(
     )
   }
 
-  const updatedBooking = await bookingServices.changeBookingRatingByCustomer(
-    bookingId,
-    driverId,
-    code,
-    bookingRatingByCustomer,
-    driverRatingByCustomer,
-  )
+  const updatedBooking =
+    await bookingServices.changeBookingRatingByCustomer(data)
   if (!updatedBooking) {
     return
   }

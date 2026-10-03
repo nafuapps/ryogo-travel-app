@@ -33,10 +33,12 @@ import { useBotDetection } from "@/hooks/useBotDetection"
 export default function RateBookingByCustomerDialog({
   bookingId,
   driverId,
+  vehicleId,
   codeSentOn,
 }: {
   bookingId: string
   driverId: string
+  vehicleId: string
   codeSentOn: Date | null
 }) {
   const t = useTranslations("Track.RateBookingByCustomer")
@@ -48,6 +50,7 @@ export default function RateBookingByCustomerDialog({
 
   const [bookingRating, setBookingRating] = useState<number>(0)
   const [driverRating, setDriverRating] = useState<number>(0)
+  const [vehicleRating, setVehicleRating] = useState<number>(0)
 
   //Can resend code if either not sent before or sent more than X minutes ago
   const { canSend, refreshMinutes } = useRefreshPage(codeSentOn)
@@ -55,8 +58,8 @@ export default function RateBookingByCustomerDialog({
   const ratingSchema = z.object({
     userEnteredcode: z
       .string()
-      .length(6, t("Field3.Error1"))
-      .nonoptional(t("Field3.Error1")),
+      .length(6, t("Field4.Error1"))
+      .nonoptional(t("Field4.Error1")),
   })
   type RatingType = z.infer<typeof ratingSchema>
   const formData = useForm<RatingType>({
@@ -83,13 +86,15 @@ export default function RateBookingByCustomerDialog({
       return
     }
     startTransition(async () => {
-      const result = await rateBookingByCustomerAction(
+      const result = await rateBookingByCustomerAction({
         bookingId,
         driverId,
-        data.userEnteredcode,
-        bookingRating,
-        driverRating,
-      )
+        vehicleId,
+        code: data.userEnteredcode,
+        bookingRatingByCustomer: bookingRating,
+        driverRatingByCustomer: driverRating,
+        vehicleRatingByCustomer: vehicleRating,
+      })
       if (result) {
         if ("id" in result) {
           toast.success(t("Success"))
@@ -160,10 +165,17 @@ export default function RateBookingByCustomerDialog({
               setSelectedStars={setDriverRating}
               totalStars={TOTAL_RATING_STARS}
             />
+            <RyogoRatingInput
+              name="vehicleRating"
+              label={t("Field3.Title")}
+              selectedStars={vehicleRating}
+              setSelectedStars={setVehicleRating}
+              totalStars={TOTAL_RATING_STARS}
+            />
             <RyogoOTPInput
               name={"userEnteredcode"}
-              label={t("Field3.Title")}
-              description={t("Field3.Description")}
+              label={t("Field4.Title")}
+              description={t("Field4.Description")}
             />
           </FormContentWrapper>
           {formData.formState.errors.root && (

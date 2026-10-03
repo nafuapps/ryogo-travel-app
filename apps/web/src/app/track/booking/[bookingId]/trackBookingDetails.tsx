@@ -263,10 +263,12 @@ export default async function TrackBookingDetailsPageComponent({
         {isCompleted &&
           bookingDetails.customer.email &&
           bookingDetails.assignedDriver &&
+          bookingDetails.assignedVehicle &&
           !bookingDetails.ratingByCustomer && (
             <RateBookingByCustomerDialog
               bookingId={bookingDetails.id}
               driverId={bookingDetails.assignedDriver.id}
+              vehicleId={bookingDetails.assignedVehicle.id}
               codeSentOn={bookingDetails.codeSentOn}
             />
           )}

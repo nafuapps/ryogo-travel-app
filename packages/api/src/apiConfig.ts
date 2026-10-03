@@ -32,11 +32,13 @@ export const QUARTERLY_SUBSCRIPTION_DAYS = 90
 export const ANNUAL_SUBSCRIPTION_DAYS = 365
 
 //Billing
-export const MONTHLY_SUBSCRIPTION_MRP = 499 //MRP (to show with discount)
+//MRP just for display (before discount)
+export const MONTHLY_SUBSCRIPTION_MRP = 499
 export const QUARTERLY_SUBSCRIPTION_MRP = MONTHLY_SUBSCRIPTION_MRP * 3
 export const ANNUAL_SUBSCRIPTION_MRP = MONTHLY_SUBSCRIPTION_MRP * 12
 
-export const MONTHLY_SUBSCRIPTION_FINAL_PRICE = 499 //Final prices actually used for payment
+//Final prices used for payment (after discount)
+export const MONTHLY_SUBSCRIPTION_FINAL_PRICE = 499
 export const QUARTERLY_SUBSCRIPTION_FINAL_PRICE = 1299
 export const ANNUAL_SUBSCRIPTION_FINAL_PRICE = 3999
 

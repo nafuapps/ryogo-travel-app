@@ -1,12 +1,10 @@
 import { FindOwnerAndAgentsByAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
 import { FindBookingStatusByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import { Check, CheckCheck, TriangleAlertIcon, User } from "lucide-react"
 import {
   AssignTileWrapper,
-  AssignTileContentWrapper,
-  AssignTileScoreWrapper,
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
@@ -16,7 +14,6 @@ import {
   getOverlapScore,
   NoOverlapScore,
 } from "@/components/flows/bookings/assign/getBookingScore"
-import { UserRolePill } from "@/components/pills/ryogoPills"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import {
@@ -74,55 +71,48 @@ export default function AssignUserTile({
 
   return (
     <AssignTileWrapper selected={selected} onClick={onClick}>
-      <AssignTileContentWrapper>
-        <SectionRowWrapper className="items-center">
-          {userData.photoUrl ? (
-            <RyogoImage
-              src={getFileUrl(userData.photoUrl)}
-              alt={userData.name}
-              imageSize="md"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={User} size="lg" />
-          )}
-          <SectionColWrapper small className="w-full">
-            <RyogoP weight="font-bold"> {userData.name}</RyogoP>
-            <RyogoCaption color="slate">{userData.phone}</RyogoCaption>
-          </SectionColWrapper>
-        </SectionRowWrapper>
-        <UserRolePill role={userData.userRole} className="self-start" />
-      </AssignTileContentWrapper>
-      <AssignTileScoreWrapper>
-        <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
-        <AssignTileStatusWrapper selected={selected}>
-          {isCurrentlyAssigned ? (
-            <RyogoIcon color="brand" icon={CheckCheck} size="xs" thick />
-          ) : isBooked ? (
-            <RyogoIcon
-              color="yellow"
-              icon={TriangleAlertIcon}
-              size="xs"
-              thick
-            />
-          ) : (
-            <RyogoIcon color="green" icon={Check} size="xs" thick />
-          )}
-          <RyogoCaption color="slate">
-            {isCurrentlyAssigned
-              ? t("CurrentlyAssigned")
-              : isBooked
-                ? t("Booked")
-                : t("Available")}
+      <SectionRowWrapper className="items-center">
+        {userData.photoUrl ? (
+          <RyogoImage
+            src={getFileUrl(userData.photoUrl)}
+            alt={userData.name}
+            imageSize="md"
+          />
+        ) : (
+          <RyogoEnclosedIcon icon={User} size="lg" />
+        )}
+        <SectionColWrapper small className="w-full">
+          <RyogoSmall weight="font-bold"> {userData.name}</RyogoSmall>
+          <RyogoCaption color="light" weight="font-medium">
+            {userData.phone}
           </RyogoCaption>
-        </AssignTileStatusWrapper>
-      </AssignTileScoreWrapper>
+          <RyogoCaption color="light">{userData.userRole}</RyogoCaption>
+        </SectionColWrapper>
+        <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
+      </SectionRowWrapper>
+      <AssignTileStatusWrapper selected={selected}>
+        {isCurrentlyAssigned ? (
+          <RyogoIcon color="brand" icon={CheckCheck} size="xs" thick />
+        ) : isBooked ? (
+          <RyogoIcon color="yellow" icon={TriangleAlertIcon} size="xs" thick />
+        ) : (
+          <RyogoIcon color="green" icon={Check} size="xs" thick />
+        )}
+        <RyogoCaption color="slate">
+          {isCurrentlyAssigned
+            ? t("CurrentlyAssigned")
+            : isBooked
+              ? t("Booked")
+              : t("Available")}
+        </RyogoCaption>
+      </AssignTileStatusWrapper>
     </AssignTileWrapper>
   )
 }
 
 const InactiveScore = 10
 const NewUserScore = 50
-const AvailableScore = 100
+const ActiveScore = 100
 function getUserStatusScore(status: UserStatusEnum): number {
   if (status === UserStatusEnum.INACTIVE) {
     return InactiveScore
@@ -130,7 +120,7 @@ function getUserStatusScore(status: UserStatusEnum): number {
   if (status === UserStatusEnum.NEW) {
     return NewUserScore
   }
-  return AvailableScore
+  return ActiveScore
 }
 
 const OwnerRoleScore = 100

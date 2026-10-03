@@ -26,3 +26,13 @@ export type NewBookingRequestDataType = {
   selectedAllowancePerDay: number
   selectedCommissionRate: number
 }
+
+export type RateBookingByCustomerType = {
+  bookingId: string
+  driverId: string
+  vehicleId: string
+  code: string
+  bookingRatingByCustomer: number
+  driverRatingByCustomer?: number
+  vehicleRatingByCustomer?: number
+}

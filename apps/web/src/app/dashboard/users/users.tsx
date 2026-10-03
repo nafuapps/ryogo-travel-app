@@ -28,13 +28,16 @@ import UserOnlineStatusComponent from "@/components/flows/account/userOnlineStat
 import { BASIC_PLAN_AGENT_LIMIT, BASIC_PLAN_DRIVER_LIMIT } from "@/lib/uiConfig"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
 
 export default async function UsersPageComponent({
   allUsers,
   isPremium,
+  hasTriedSubscription,
 }: {
   allUsers: FindAllUsersInAgencyType
   isPremium: boolean
+  hasTriedSubscription: boolean
 }) {
   const t = await getTranslations("Dashboard.Users")
 
@@ -42,8 +45,19 @@ export default async function UsersPageComponent({
   const agents = allUsers.filter((u) => u.userRole === UserRolesEnum.AGENT)
   const drivers = allUsers.filter((u) => u.userRole === UserRolesEnum.DRIVER)
 
+  const limitReached =
+    owners.length > 1 ||
+    agents.length >= BASIC_PLAN_AGENT_LIMIT ||
+    drivers.length >= BASIC_PLAN_DRIVER_LIMIT
+
   return (
     <PageWrapper id="UsersPage">
+      {!isPremium && limitReached && (
+        <SubscriptionReminderButton
+          warningText={t("Warning")}
+          ctaText={hasTriedSubscription ? t("BuyCTA") : t("TryCTA")}
+        />
+      )}
       <SectionWrapper id="OwnersSection">
         <SectionHeaderWrapper
           icon={UserKey}
@@ -137,9 +151,9 @@ async function UserItemComponent({
         ) : (
           <RyogoEnclosedIcon icon={User} size="lg" />
         )}
-        <SectionColWrapper className="w-full">
+        <SectionColWrapper small className="w-full">
           <RyogoP weight="font-bold"> {user.name}</RyogoP>
-          <RyogoCaption color="light" weight="font-bold">
+          <RyogoCaption color="light" weight="font-medium">
             {user.phone}
           </RyogoCaption>
           <SectionRowWrapper small className="items-center">
@@ -147,7 +161,7 @@ async function UserItemComponent({
             <UserOnlineStatusComponent lastSeen={user.lastSeen} onlyIcon />
           </SectionRowWrapper>
         </SectionColWrapper>
-        <SectionColWrapper className="items-end">
+        <SectionColWrapper className="items-end justify-around h-full">
           <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
           <UserStatusPill status={user.status} />
         </SectionColWrapper>

@@ -9,6 +9,7 @@ import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle
 import AssignVehicleTile from "@/components/flows/bookings/assign/assignVehicleTile"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
+  BASIC_PLAN_VEHICLE_LIMIT,
   NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
   NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
   NewBookingTotalSteps,
@@ -104,7 +105,7 @@ export default function NewBookingStepVehicle({
         description={t("Description")}
         href={"/dashboard/support/help-bookings#creation"}
       />
-      {limited && (
+      {limited && vehicles.length >= BASIC_PLAN_VEHICLE_LIMIT && (
         <SubscriptionReminderButton
           warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
           ctaText={
@@ -141,6 +142,7 @@ export default function NewBookingStepVehicle({
                   bookingEndDate={newBookingFormData.endDate}
                   bookingPassengers={newBookingFormData.passengers}
                   bookingNeedsAC={newBookingFormData.needsAc}
+                  bookingSourceId={newBookingFormData.sourceId}
                 />
               ))}
           </TileGridWrapper>

@@ -94,6 +94,7 @@ export default function AssignVehiclePageComponent({
             bookingEndDate={booking.endDate}
             bookingPassengers={booking.passengers}
             bookingId={booking.id}
+            bookingSourceId={booking.sourceId}
             bookingNeedsAC={booking.needsAc}
             isCurrentlyAssigned={booking.assignedVehicleId === vehicle.id}
             selected={selectedVehicleId === vehicle.id}

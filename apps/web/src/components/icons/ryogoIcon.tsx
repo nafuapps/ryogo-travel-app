@@ -23,14 +23,14 @@ function getIconColor(color?: RyogoIconColorType) {
     case "brand":
       return "text-sky-700 dark:text-sky-300"
     case "black":
-      return "text-slate-950 dark:text-white"
+      return "text-slate-950 dark:text-slate-50"
     case "white":
       return "text-white dark:text-slate-950"
     case "light":
-      return "text-slate-500 dark:text-slate-500"
+      return "text-slate-500 dark:text-slate-400"
     case "slate":
     default:
-      return "text-slate-700 dark:text-slate-300"
+      return "text-slate-700 dark:text-slate-200"
   }
 }
 

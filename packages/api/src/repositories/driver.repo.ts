@@ -54,18 +54,6 @@ export const driverRepository = {
   //Get all drivers data for a new booking in an agency
   async readAllDriversDataByAgencyId(agencyId: string) {
     return await db.query.drivers.findMany({
-      columns: {
-        id: true,
-        status: true,
-        name: true,
-        licenseExpiresOn: true,
-        phone: true,
-        canDriveVehicleTypes: true,
-        defaultAllowancePerDay: true,
-        address: true,
-        createdAt: true,
-        customerRatings: true,
-      },
       where: and(
         eq(drivers.agencyId, agencyId),
         notInArray(drivers.status, [DriverStatusEnum.SUSPENDED]),

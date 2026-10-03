@@ -16,7 +16,7 @@ export default function SubscriptionReminderButton({
   return (
     <SectionWrapper id="SubscribeAction" className="py-3 lg:py-4">
       <SectionRowWrapper className="items-center justify-between">
-        <RyogoCaption color="light">{warningText}</RyogoCaption>
+        <RyogoCaption color="yellow">{warningText}</RyogoCaption>
         <Link href="/dashboard/account/subscription">
           <RyogoOutlineButton label={ctaText} />
         </Link>

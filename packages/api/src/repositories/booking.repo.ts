@@ -1863,8 +1863,10 @@ export const bookingRepository = {
   async updateBookingRatingByCustomer(
     bookingId: string,
     driverId: string,
+    vehicleId: string,
     bookingRatingByCustomer: number,
     driverRatingByCustomer?: number,
+    vehicleRatingByCustomer?: number,
   ) {
     return await db.transaction(async (tx) => {
       await tx
@@ -1880,6 +1882,14 @@ export const bookingRepository = {
             customerRatings: sql`array_append(${drivers.customerRatings}, ${driverRatingByCustomer})`,
           })
           .where(eq(drivers.id, driverId))
+      }
+      if (vehicleRatingByCustomer) {
+        await tx
+          .update(vehicles)
+          .set({
+            customerRatings: sql`array_append(${vehicles.customerRatings}, ${vehicleRatingByCustomer})`,
+          })
+          .where(eq(vehicles.id, vehicleId))
       }
       return await tx.query.bookings.findFirst({
         columns: {

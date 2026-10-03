@@ -1,6 +1,6 @@
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { useTranslations } from "next-intl"
-import { RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoSmall, RyogoCaption } from "@/components/typography"
 import {
   BadgeIndianRupee,
   TicketX,
@@ -21,8 +21,6 @@ import {
 } from "@/components/flows/bookings/assign/getBookingScore"
 import {
   AssignTileWrapper,
-  AssignTileContentWrapper,
-  AssignTileScoreWrapper,
   RyoGoScoreWrapper,
   AssignTileStatusWrapper,
 } from "@/components/flows/bookings/assign/assignWrappers"
@@ -43,6 +41,7 @@ export default function AssignDriverTile({
   bookingEndDate,
   bookingPassengers,
   bookingId,
+  bookingSourceId,
   isCurrentlyAssigned,
 }: {
   driverData: FindDriversByAgencyType[number]
@@ -52,6 +51,7 @@ export default function AssignDriverTile({
   bookingEndDate: Date
   bookingPassengers: number
   bookingId?: string
+  bookingSourceId?: string
   isCurrentlyAssigned?: boolean
 }) {
   const t = useTranslations("Dashboard.AssignDriver.Tile")
@@ -110,6 +110,12 @@ export default function AssignDriverTile({
 
   const customerRatingScore = getCustomerRatingScore(driverData.customerRatings)
 
+  const locationScore =
+    driverData.visitingLocationId &&
+    driverData.visitingLocationId === bookingSourceId
+      ? 100
+      : 0
+
   const totalScore = getDriverTotalScore({
     bookingScore,
     leaveScore,
@@ -118,66 +124,63 @@ export default function AssignDriverTile({
     allowanceScore,
     canDriveScore,
     customerRatingScore,
+    locationScore,
   })
 
   return (
     <AssignTileWrapper selected={selected} onClick={onClick}>
-      <AssignTileContentWrapper>
-        <SectionRowWrapper className="items-center">
-          {driverData.user.photoUrl ? (
-            <RyogoImage
-              src={getFileUrl(driverData.user.photoUrl)}
-              alt={driverData.name}
-              imageSize="md"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={User} size="lg" />
-          )}
-          <SectionColWrapper small className="w-full">
-            <RyogoP weight="font-bold"> {driverData.name}</RyogoP>
-            <RyogoCaption color="light" weight="font-bold">
-              {driverData.phone}
-            </RyogoCaption>
-            <GetCanDriveIcons canDrive={driverData.canDriveVehicleTypes} />
-          </SectionColWrapper>
-        </SectionRowWrapper>
-        <SectionRowWrapper className="items-center">
-          <RyogoTagWithoutBG
-            icon={BadgeIndianRupee}
-            label={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
+      <SectionRowWrapper className="items-center">
+        {driverData.user.photoUrl ? (
+          <RyogoImage
+            src={getFileUrl(driverData.user.photoUrl)}
+            alt={driverData.name}
+            imageSize="md"
           />
-          {driverData.customerRatings &&
-            driverData.customerRatings.length > 0 && (
-              <RyogoTagWithoutBG
-                icon={Star}
-                label={getAverageRating(driverData.customerRatings)}
-              />
-            )}
-        </SectionRowWrapper>
-      </AssignTileContentWrapper>
-      <AssignTileScoreWrapper>
-        <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
-        <AssignTileStatusWrapper selected={selected}>
-          {isCurrentlyAssigned ? (
-            <RyogoIcon icon={CheckCheck} size="xs" color="brand" thick />
-          ) : isBooked ? (
-            <RyogoIcon icon={TicketX} size="xs" color="red" thick />
-          ) : isOnLeave ? (
-            <RyogoIcon icon={CalendarX} size="xs" color="yellow" thick />
-          ) : (
-            <RyogoIcon icon={Check} size="xs" color="green" thick />
-          )}
-          <RyogoCaption color="slate">
-            {isCurrentlyAssigned
-              ? t("CurrentlyAssigned")
-              : isBooked
-                ? t("Booked")
-                : isOnLeave
-                  ? t("Leave")
-                  : t("Available")}
+        ) : (
+          <RyogoEnclosedIcon icon={User} size="lg" />
+        )}
+        <SectionColWrapper small className="w-full">
+          <RyogoSmall weight="font-bold"> {driverData.name}</RyogoSmall>
+          <RyogoCaption color="light" weight="font-medium">
+            {driverData.phone}
           </RyogoCaption>
-        </AssignTileStatusWrapper>
-      </AssignTileScoreWrapper>
+        </SectionColWrapper>
+        <RyoGoScoreWrapper totalScore={totalScore} label={t("Score")} />
+      </SectionRowWrapper>
+      <SectionRowWrapper className="items-center justify-between">
+        <RyogoTagWithoutBG
+          icon={BadgeIndianRupee}
+          label={driverData.defaultAllowancePerDay.toString() + t("PerDay")}
+        />
+        {driverData.customerRatings &&
+          driverData.customerRatings.length > 0 && (
+            <RyogoTagWithoutBG
+              icon={Star}
+              label={getAverageRating(driverData.customerRatings)}
+            />
+          )}
+        <GetCanDriveIcons canDrive={driverData.canDriveVehicleTypes} />
+      </SectionRowWrapper>
+      <AssignTileStatusWrapper selected={selected}>
+        {isCurrentlyAssigned ? (
+          <RyogoIcon icon={CheckCheck} size="xs" color="brand" thick />
+        ) : isBooked ? (
+          <RyogoIcon icon={TicketX} size="xs" color="red" thick />
+        ) : isOnLeave ? (
+          <RyogoIcon icon={CalendarX} size="xs" color="yellow" thick />
+        ) : (
+          <RyogoIcon icon={Check} size="xs" color="green" thick />
+        )}
+        <RyogoCaption color="slate">
+          {isCurrentlyAssigned
+            ? t("CurrentlyAssigned")
+            : isBooked
+              ? t("Booked")
+              : isOnLeave
+                ? t("Leave")
+                : t("Available")}
+        </RyogoCaption>
+      </AssignTileStatusWrapper>
     </AssignTileWrapper>
   )
 }
@@ -251,12 +254,13 @@ function getCanDriveScore(
 }
 
 const DriverWeightage_Booking = 0.35
-const DriverWeightage_Leave = 0.2
+const DriverWeightage_Leave = 0.15
 const DriverWeightage_Status = 0.05
 const DriverWeightage_License = 0.1
 const DriverWeightage_Allowance = 0.1
 const DriverWeightage_CanDrive = 0.1
 const DriverWeightage_CustomerRating = 0.1
+const DriverWeightage_Location = 0.05
 const getDriverTotalScore = (data: {
   bookingScore: number
   leaveScore: number
@@ -265,6 +269,7 @@ const getDriverTotalScore = (data: {
   allowanceScore: number
   canDriveScore: number
   customerRatingScore: number
+  locationScore: number
 }) => {
   return (
     data.bookingScore * DriverWeightage_Booking +
@@ -273,6 +278,7 @@ const getDriverTotalScore = (data: {
     data.licenseScore * DriverWeightage_License +
     data.allowanceScore * DriverWeightage_Allowance +
     data.canDriveScore * DriverWeightage_CanDrive +
-    data.customerRatingScore * DriverWeightage_CustomerRating
+    data.customerRatingScore * DriverWeightage_CustomerRating +
+    data.locationScore * DriverWeightage_Location
   )
 }

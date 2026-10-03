@@ -9,6 +9,7 @@ import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.s
 import AssignDriverTile from "@/components/flows/bookings/assign/assignDriverTile"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
+  BASIC_PLAN_DRIVER_LIMIT,
   NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
   NewBookingTotalSteps,
 } from "@/lib/uiConfig"
@@ -100,7 +101,7 @@ export default function NewBookingStepDriver({
         description={t("Description")}
         href={"/dashboard/support/help-bookings#creation"}
       />
-      {limited && (
+      {limited && drivers.length >= BASIC_PLAN_DRIVER_LIMIT && (
         <SubscriptionReminderButton
           warningText={isSubscribed ? t("ExpiredWarning") : t("TrialWarning")}
           ctaText={
@@ -126,6 +127,7 @@ export default function NewBookingStepDriver({
                 bookingStartDate={newBookingFormData.startDate}
                 bookingEndDate={newBookingFormData.endDate}
                 bookingPassengers={newBookingFormData.passengers}
+                bookingSourceId={newBookingFormData.sourceId}
                 selected={assignedDriverId === driver.id}
                 onClick={() =>
                   onSelectDriver(

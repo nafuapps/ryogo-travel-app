@@ -41,6 +41,8 @@ export default async function AllDriversPage() {
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+
   const t = await getTranslations("Dashboard.Drivers.All")
 
   const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)
@@ -57,15 +59,18 @@ export default async function AllDriversPage() {
         {ongoingTrips.length > 0 && (
           <OnTripDriversComponent ongoingTrips={ongoingTrips} />
         )}
-        <AllDriversListComponent allDrivers={allDrivers} />
+        <AllDriversListComponent
+          allDrivers={allDrivers}
+          isBasic={isBasic}
+          hasTriedSubscription={agency.hasTriedSubscription}
+        />
         <DriversScheduleChartComponent
           driverSchedule14Days={driverSchedule14Days}
           isOwner={currentUser.userRole === UserRolesEnum.OWNER}
           userId={currentUser.userId}
         />
         <StickyActionWrapper>
-          {(agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC ||
-            allDrivers.length < BASIC_PLAN_DRIVER_LIMIT) && (
+          {(!isBasic || allDrivers.length < BASIC_PLAN_DRIVER_LIMIT) && (
             <Link href={`/dashboard/drivers/new`} className="w-full">
               <RyogoDefaultButton
                 size="lg"

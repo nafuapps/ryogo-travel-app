@@ -10,6 +10,7 @@ import {
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
+//TODO: Add product images
 export default async function HomeFeaturesSection() {
   const t = await getTranslations("Landing.Home.Features")
   return (
@@ -25,22 +26,26 @@ export default async function HomeFeaturesSection() {
           <FeatureCard
             title={t("F1.Title")}
             description={t("F1.Description")}
-            imageSrc="/images/homeF1.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/images/homeF1.png"
           />
           <FeatureCard
             title={t("F2.Title")}
             description={t("F2.Description")}
-            imageSrc="/images/homeF2.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/images/homeF2.png"
           />
           <FeatureCard
             title={t("F3.Title")}
             description={t("F3.Description")}
-            imageSrc="/images/homeF3.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/images/homeF3.png"
           />
           <FeatureCard
             title={t("F4.Title")}
             description={t("F4.Description")}
-            imageSrc="/images/homeF4.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/images/homeF4.png"
           />
         </div>
         <Link href="/features">
@@ -72,10 +77,8 @@ function FeatureCard({
         <Image
           className="object-cover w-full"
           loading="eager"
-          //TODO: Add product images
-          // src={imageSrc}
-          src={"/logoPWA.png"}
-          alt=""
+          src={imageSrc}
+          alt={title}
           fill
           sizes="768px"
         />

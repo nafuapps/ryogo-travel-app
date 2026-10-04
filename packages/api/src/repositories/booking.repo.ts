@@ -1727,6 +1727,7 @@ export const bookingRepository = {
             isApproved: true,
             type: true,
             remarks: true,
+            expenseDate: true,
             createdAt: true,
           },
         },
@@ -1736,6 +1737,8 @@ export const bookingRepository = {
             type: true,
             otherParty: true,
             amount: true,
+            mode: true,
+            transactionDate: true,
           },
         },
       },
@@ -2155,7 +2158,7 @@ export const bookingRepository = {
   },
 
   //Close booking and update actual expenses amount and add it to total amount
-  async updateClosedAt(id: string, actualExpensesAmount: number) {
+  async addClosedAt(id: string, actualExpensesAmount: number) {
     return await db
       .update(bookings)
       .set({

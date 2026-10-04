@@ -28,14 +28,12 @@ import {
 import { RyogoCaption } from "@/components/typography"
 
 export function NewDriverConfirm({
-  onNext,
   onPrev,
   newDriverFormData,
   agencyId,
   userId,
   agencyName,
 }: {
-  onNext: () => void
   onPrev: () => void
   newDriverFormData: AddDriverRequestType
   agencyId: string

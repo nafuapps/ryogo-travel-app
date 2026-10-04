@@ -1221,6 +1221,7 @@ export const expenses = pgTable(
     type: expenseTypes().notNull().default(ExpenseTypesEnum.OTHER),
     amount: integer("amount").notNull(), // in currency units
     remarks: text("remarks"),
+    expenseDate: date("expense_date", { mode: "date" }).notNull().defaultNow(),
     expensePhotoUrl: text("expense_photo_url"),
     isApproved: boolean("is_approved").notNull().default(false),
     ...timestamps,
@@ -1396,6 +1397,9 @@ export const transactions = pgTable(
     type: transactionTypes().notNull().default(TransactionTypesEnum.CREDIT),
     mode: transactionModes().notNull().default(TransactionModesEnum.CASH),
     remarks: text("remarks"),
+    transactionDate: timestamp("transaction_date", { mode: "date" })
+      .notNull()
+      .defaultNow(),
     transactionPhotoUrl: text("transaction_photo_url"),
     isApproved: boolean("is_approved").notNull().default(false),
     ...timestamps,

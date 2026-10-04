@@ -500,7 +500,6 @@ function DriverSearchResultItem({
 }: {
   driver: SearchDataType["drivers"][number]
 }) {
-  const t = useTranslations("Dashboard.Drivers.All")
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
       <HoverGridWrapper>
@@ -538,8 +537,6 @@ function CustomerSearchResultItem({
 }: {
   customer: SearchDataType["customers"][number]
 }) {
-  const t = useTranslations("Dashboard.Customers.All")
-
   return (
     <Link href={`/dashboard/customers/${customer.id}`}>
       <HoverGridWrapper>
@@ -579,8 +576,6 @@ function VehicleSearchResultItem({
 }: {
   vehicle: SearchDataType["vehicles"][number]
 }) {
-  const t = useTranslations("Dashboard.Vehicles.All")
-
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
       <HoverGridWrapper>

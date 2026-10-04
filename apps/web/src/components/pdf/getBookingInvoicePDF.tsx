@@ -12,6 +12,11 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
 import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
 import { getBookingTrackingLink } from "@/lib/utils"
+import {
+  TransactionPartiesEnum,
+  TransactionTypesEnum,
+} from "@ryogo-travel-app/db/schema"
+import moment from "moment"
 
 export function BookingInvoiceDocument({
   booking,
@@ -21,14 +26,28 @@ export function BookingInvoiceDocument({
   const agencyLogoUrl = booking.agency.logoUrl
   const bookingLink = getBookingTrackingLink(booking.id)
 
-  //TODO: Show approved expenses in a table
-  const expensesAmount = booking.expenses
-    .filter((exp) => exp.isApproved)
-    .reduce((acc, expense) => acc + expense.amount, 0)
+  const finalAmount = booking.actualTotalAmount ?? booking.estimatedTotalAmount
 
-  //Calculate final total amount for the invoice
-  const totalAmount =
-    (booking.actualTotalAmount ?? booking.estimatedTotalAmount) + expensesAmount
+  //Show approved expenses in a table
+  const approvedExpenses = booking.expenses.filter(
+    (expense) => expense.isApproved,
+  )
+  const totalApprovedExpensesAmount = approvedExpenses.reduce(
+    (total, expense) => total + expense.amount,
+    0,
+  )
+
+  //Show customer transactions in a table
+  const customerTransactions = booking.transactions.filter(
+    (txn) => txn.otherParty === TransactionPartiesEnum.CUSTOMER,
+  )
+  const totalTransactionAmount = customerTransactions.reduce(
+    (total, txn) =>
+      txn.type === TransactionTypesEnum.CREDIT
+        ? total + txn.amount
+        : total - txn.amount,
+    0,
+  )
 
   return (
     <Document>
@@ -57,7 +76,9 @@ export function BookingInvoiceDocument({
           <View id="Date" style={styles.detailsSection}>
             <Text style={styles.pBold}>Invoice Date: </Text>
             <Text style={styles.p}>
-              {booking.updatedAt.toLocaleDateString()}
+              {moment(
+                booking.closedAt ?? booking.completedAt ?? booking.updatedAt,
+              ).format("DD MMM YYYY")}
             </Text>
           </View>
           <View id="BookingID" style={styles.detailsSection}>
@@ -114,7 +135,7 @@ export function BookingInvoiceDocument({
               <Text style={styles.p}>{booking.source.state}</Text>
             </View>
             <Text style={styles.captionLight}>
-              -- {booking.actualTotalDistance} Km --
+              -- {booking.citydistance} Km --
             </Text>
             <View id="To" style={styles.tripDestination}>
               <Text style={styles.h2}>{booking.destination.city}</Text>
@@ -123,17 +144,23 @@ export function BookingInvoiceDocument({
           </View>
           <View id="TripFooter" style={styles.tripFooter}>
             <Text style={styles.p}>
-              {booking.startDate.toLocaleDateString()}
+              {moment(booking.actualStartDate ?? booking.startDate).format(
+                "DD MMM YYYY",
+              )}
             </Text>
             <Text style={styles.caption}>{booking.type}</Text>
             <Text style={styles.caption}>
               {booking.passengers.toString() + " pax"}
             </Text>
-            <Text style={styles.p}>{booking.endDate.toLocaleDateString()}</Text>
+            <Text style={styles.p}>
+              {moment(booking.actualEndDate ?? booking.endDate).format(
+                "DD MMM YYYY",
+              )}
+            </Text>
           </View>
         </View>
         <View id="pricingTable" style={styles.pricingTable}>
-          <View id="tableHeader" style={styles.tableHeader}>
+          <View id="pricingTableHeader" style={styles.tableHeader}>
             <Text style={styles.pBold}>Description</Text>
             <Text style={styles.pBold}>Price</Text>
           </View>
@@ -172,14 +199,71 @@ export function BookingInvoiceDocument({
               ).toFixed(2)}
             </Text>
           </View>
-          <View id="ExpensesRow" style={styles.tableRow}>
-            <Text style={styles.p}>Trip Expenses</Text>
-            <Text style={styles.p}>{expensesAmount.toFixed(2)}</Text>
-          </View>
+          {booking.actualExpensesAmount && (
+            <View id="ExpensesRow" style={styles.tableRow}>
+              <Text style={styles.p}>Added Trip Expenses</Text>
+              <Text style={styles.p}>
+                {booking.actualExpensesAmount.toFixed(2)}
+              </Text>
+            </View>
+          )}
           <View id="tableFooter" style={styles.tableFooter}>
             <Text style={styles.pBold}>Final Amount</Text>
-            <Text style={styles.pBold}>{totalAmount.toFixed(2)}</Text>
+            <Text style={styles.pBold}>{finalAmount.toFixed(2)}</Text>
           </View>
+        </View>
+        {approvedExpenses.length > 0 && (
+          <View id="expensesTable" style={styles.pricingTable}>
+            <View id="expenseTableHeader" style={styles.tableHeader}>
+              <Text style={styles.pBold}>Expense Item</Text>
+              <Text style={styles.pBold}>Value</Text>
+            </View>
+            {approvedExpenses.map((expense) => (
+              <View id={expense.id} key={expense.id} style={styles.tableRow}>
+                <Text style={styles.p}>
+                  {moment(expense.expenseDate).format("DD MMM - ")}
+                  {expense.type}
+                  {expense.remarks ? " (" + expense.remarks + ")" : ""}
+                </Text>
+                <Text style={styles.p}>{expense.amount.toFixed(2)}</Text>
+              </View>
+            ))}
+            <View id="expenseTableFooter" style={styles.tableFooter}>
+              <Text style={styles.pBold}>Total Expenses</Text>
+              <Text style={styles.pBold}>
+                {totalApprovedExpensesAmount.toFixed(2)}
+              </Text>
+            </View>
+          </View>
+        )}
+        {customerTransactions.length > 0 && (
+          <View id="transactionsTable" style={styles.pricingTable}>
+            <View id="trransactionTableHeader" style={styles.tableHeader}>
+              <Text style={styles.pBold}>Transaction</Text>
+              <Text style={styles.pBold}>Value</Text>
+            </View>
+            {customerTransactions.map((txn) => (
+              <View id={txn.id} key={txn.id} style={styles.tableRow}>
+                <Text style={styles.p}>
+                  {moment(txn.transactionDate).format("DD MMM - ")}
+                  {(txn.type ? "Received " : "Sent ") + txn.mode}
+                </Text>
+                <Text style={styles.p}>{txn.amount.toFixed(2)}</Text>
+              </View>
+            ))}
+            <View id="transactionTableFooter" style={styles.tableFooter}>
+              <Text style={styles.pBold}>Amount received</Text>
+              <Text style={styles.pBold}>
+                {totalTransactionAmount.toFixed(2)}
+              </Text>
+            </View>
+          </View>
+        )}
+        <View id="PendingAmount" style={styles.detailsSection}>
+          <Text style={styles.pBold}>Pending Amount: </Text>
+          <Text style={styles.p}>
+            {(finalAmount - totalTransactionAmount).toFixed(2)}
+          </Text>
         </View>
         <View id="footer" style={styles.footer}>
           {booking.agency.qrCodeUrl && (

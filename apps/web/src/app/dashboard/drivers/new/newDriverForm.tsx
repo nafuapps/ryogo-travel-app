@@ -73,7 +73,6 @@ export default function NewDriverForm({
     />,
     <NewDriverConfirm
       key={3}
-      onNext={nextStepHandler}
       onPrev={prevStepHandler}
       newDriverFormData={newDriverFormData}
       agencyId={agencyId}

@@ -1,10 +1,4 @@
-import {
-  RyogoCaption,
-  RyogoH1,
-  RyogoH4,
-  RyogoP,
-  RyogoSmall,
-} from "@/components/typography"
+import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {

@@ -34,7 +34,6 @@ import {
   NEW_BOOKING_DEFAULT_DISTANCE,
   NewBookingTotalSteps,
 } from "@/lib/uiConfig"
-import { Separator } from "@/components/ui/separator"
 import { differenceInDays } from "date-fns"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 import {

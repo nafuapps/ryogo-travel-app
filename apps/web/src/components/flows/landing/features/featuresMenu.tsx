@@ -18,6 +18,7 @@ import {
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
 
+//TODO: Add product images
 export default async function FeaturesMenuSection() {
   const t = await getTranslations("Landing.Features.Menu")
   return (
@@ -29,37 +30,43 @@ export default async function FeaturesMenuSection() {
             title={t("M1")}
             subtitle={t("M1Subtitle")}
             href="#management"
-            imageSrc="/featureMenu1.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/featureMenu1.png"
           />
           <FeaturesMenuItem
             title={t("M2")}
             subtitle={t("M2Subtitle")}
             href="#scheduling"
-            imageSrc="/featureMenu2.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/featureMenu2.png"
           />
           <FeaturesMenuItem
             title={t("M3")}
             subtitle={t("M3Subtitle")}
             href="#communication"
-            imageSrc="/featureMenu3.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/featureMenu3.png"
           />
           <FeaturesMenuItem
             title={t("M4")}
             subtitle={t("M4Subtitle")}
             href="#analytics"
-            imageSrc="/featureMenu4.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/featureMenu4.png"
           />
           <FeaturesMenuItem
             title={t("M5")}
             subtitle={t("M5Subtitle")}
             href="#alerts"
-            imageSrc="/featureMenu5.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/featureMenu5.png"
           />
           <FeaturesMenuItem
             title={t("M6")}
             subtitle={t("M6Subtitle")}
             href="#security"
-            imageSrc="/featureMenu6.png"
+            imageSrc="/logoPWA.png"
+            // imageSrc="/featureMenu6.png"
           />
         </TileGridWrapper>
       </LandingContentWrapper>
@@ -94,10 +101,8 @@ async function FeaturesMenuItem({
         <Image
           className="object-cover"
           loading="eager"
-          //TODO: Add product images
-          //   src={imageSrc}
-          src="/forgotPasswordBG.png"
-          alt=""
+          src={imageSrc}
+          alt={title}
           fill
           sizes="768px"
         />

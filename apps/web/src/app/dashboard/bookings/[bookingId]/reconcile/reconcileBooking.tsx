@@ -1,6 +1,6 @@
 import { PageWrapper } from "@/components/page/pageWrappers"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { getTranslations } from "next-intl/server"
+// import { getTranslations } from "next-intl/server"
 
 /**
  //TODO: Reconcile page
@@ -14,11 +14,11 @@ export default async function ReconcileBookingPageComponent({
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
-  const t = await getTranslations("Dashboard.ReconcileBooking")
+  // const t = await getTranslations("Dashboard.ReconcileBooking")
 
   return (
     <PageWrapper id="ReconcileBookingPage">
-      <></>
+      <div>{booking.id}</div>
     </PageWrapper>
   )
 }

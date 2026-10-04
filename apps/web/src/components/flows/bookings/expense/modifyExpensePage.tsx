@@ -5,6 +5,7 @@ import {
   RyogoSelect,
   RyogoTextarea,
   RyogoFileInput,
+  RyogoDatePicker,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
@@ -70,6 +71,7 @@ export default function ModifyExpensePageComponent({
         return checkImageFileType(file)
       }, t("Field4.Error2"))
       .optional(),
+    expenseDate: z.date(),
   })
 
   type ModifyExpenseType = z.infer<typeof modifyExpenseSchema>
@@ -81,6 +83,7 @@ export default function ModifyExpensePageComponent({
       type: expenseDetails.type,
       amount: expenseDetails.amount,
       remarks: expenseDetails.remarks ?? undefined,
+      expenseDate: expenseDetails.expenseDate,
     },
   })
 
@@ -145,11 +148,18 @@ export default function ModifyExpensePageComponent({
             placeholder={t("Field3.Placeholder")}
           />
           <RyogoFileInput
-            name={"expensePhoto"}
+            name="expensePhoto"
             register={form.register("expensePhoto")}
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
+          />
+          <RyogoDatePicker
+            name="expenseDate"
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
+            description={t("Field5.Placeholder")}
+            pastAllowed
           />
         </FormContentWrapper>
         <StickyActionWrapper>

@@ -13,6 +13,7 @@ export type AddTransactionRequestType = {
   amount: number
   mode: TransactionModesEnum
   otherParty: TransactionPartiesEnum
+  transactionDate: Date
   isApproved?: boolean
   remarks?: string | undefined
   txnPhoto?: FileList | undefined
@@ -25,6 +26,7 @@ export type UpdateTransactionRequestType = {
   amount: number
   mode: TransactionModesEnum
   otherParty: TransactionPartiesEnum
+  transactionDate: Date
   remarks?: string | undefined
   txnPhoto?: FileList | undefined
 }

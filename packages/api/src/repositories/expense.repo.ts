@@ -49,6 +49,7 @@ export const expenseRepository = {
     expenseId: string,
     amount: number,
     type: ExpenseTypesEnum,
+    expenseDate: Date,
     remarks?: string,
   ) {
     return await db
@@ -56,6 +57,7 @@ export const expenseRepository = {
       .set({
         amount,
         type,
+        expenseDate,
         remarks,
       })
       .where(eq(expenses.id, expenseId))

@@ -7,10 +7,8 @@ import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export default function DashboardDriverChipComponent({
   driver,
-  type,
 }: {
   driver: FindDashboardDriversType[number]
-  type: "available" | "onTrip" | "leave" | "inactive"
 }) {
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>

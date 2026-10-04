@@ -2,10 +2,9 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoH4, RyogoP } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDashboardPendingPaymentsType } from "@ryogo-travel-app/api/services/booking.services"
 import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
-import moment from "moment"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
@@ -23,7 +22,7 @@ export default async function DashboardPendingPaymentComponent({
   const highlight = isOwner && trip.assignedUser.id === userId
   const customerImageUrl = trip.customer.photoUrl
 
-  const dueDate = trip.actualEndDate ?? trip.endDate
+  // const dueDate = trip.actualEndDate ?? trip.endDate
   const totalAmount = trip.actualTotalAmount ?? trip.estimatedTotalAmount
   const pendingAmount = totalAmount - trip.customerPaidAmount
 

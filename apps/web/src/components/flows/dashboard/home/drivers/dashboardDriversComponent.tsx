@@ -45,11 +45,7 @@ export default async function DashboardDriversComponent({
             count={availableDrivers.length}
           />
           {availableDrivers.map((driver) => (
-            <DashboardDriverChipComponent
-              key={driver.id}
-              driver={driver}
-              type="available"
-            />
+            <DashboardDriverChipComponent key={driver.id} driver={driver} />
           ))}
         </DashboardRow>
       )}
@@ -60,11 +56,7 @@ export default async function DashboardDriversComponent({
             count={onTripDrivers.length}
           />
           {onTripDrivers.map((driver) => (
-            <DashboardDriverChipComponent
-              key={driver.id}
-              driver={driver}
-              type="onTrip"
-            />
+            <DashboardDriverChipComponent key={driver.id} driver={driver} />
           ))}
         </DashboardRow>
       )}
@@ -72,11 +64,7 @@ export default async function DashboardDriversComponent({
         <DashboardRow>
           <DashboardRowHeader title={t("Leave")} count={leaveDrivers.length} />
           {leaveDrivers.map((driver) => (
-            <DashboardDriverChipComponent
-              key={driver.id}
-              driver={driver}
-              type="leave"
-            />
+            <DashboardDriverChipComponent key={driver.id} driver={driver} />
           ))}
         </DashboardRow>
       )}
@@ -87,11 +75,7 @@ export default async function DashboardDriversComponent({
             count={inactiveDrivers.length}
           />
           {inactiveDrivers.map((driver) => (
-            <DashboardDriverChipComponent
-              key={driver.id}
-              driver={driver}
-              type="inactive"
-            />
+            <DashboardDriverChipComponent key={driver.id} driver={driver} />
           ))}
         </DashboardRow>
       )}

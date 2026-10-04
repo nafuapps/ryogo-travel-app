@@ -16,7 +16,6 @@ import {
 } from "@/components/page/pageWrappers"
 import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
 import RiderMyBookingDetails from "@/components/flows/rider/riderMyBookingDetails"
-import { getTranslations } from "next-intl/server"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import RiderMyCompletedBookingPageComponent from "@/components/flows/rider/completedBooking"
 import RiderMyUpcomingBookingPageComponent from "@/components/flows/rider/upcomingBooking"
@@ -44,8 +43,6 @@ export default async function MyBookingPage({
   if (!driver) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
-
-  const t = await getTranslations("Rider.MyBooking")
 
   const canStartTrip =
     bookingDetails.status === BookingStatusEnum.CONFIRMED &&

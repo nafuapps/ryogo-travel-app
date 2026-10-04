@@ -1,17 +1,19 @@
+"use client"
+
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import BookingInvoicePDFViewer from "@/components/pdf/bookingInvoicePDFViewer"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { Eye } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
 
-export default async function BookingViewInvoiceButton({
+export default function BookingViewInvoiceButton({
   bookingDetails,
 }: {
   bookingDetails: NonNullable<FindBookingDetailsByIdType>
 }) {
-  const t = await getTranslations("Dashboard.BookingDetails")
+  const t = useTranslations("Dashboard.BookingDetails")
   return (
     <Dialog>
       <DialogTrigger asChild>

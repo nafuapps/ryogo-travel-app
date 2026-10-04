@@ -16,6 +16,7 @@ import { BanknoteX } from "lucide-react"
 import { Route } from "next"
 import ExpensesFiltersCard from "@/components/filter/expensesFiltersCard"
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import { PaginationControls } from "@/components/pagination/paginationControls"
 
 const EXPENSES_PER_PAGE = 5
 
@@ -33,14 +34,12 @@ export default function MyBookingExpensesPageComponent({
   const searchParams = useSearchParams()
   const type = searchParams.get("type")
   const role = searchParams.get("role")
-  // const party = searchParams.get("party")
   const approved = searchParams.get("approved")
 
   const filteredExpenses = bookingExpenses.filter((expense) => {
     return (
       (!type || expense.type === (type as ExpenseTypesEnum)) &&
       (!role || expense.addedByUser.userRole === (role as UserRolesEnum)) &&
-      // (!party || expense.otherParty === (party as TransactionPartiesEnum)) &&
       (approved === null || expense.isApproved === (approved === "True"))
     )
   })
@@ -75,6 +74,11 @@ export default function MyBookingExpensesPageComponent({
               />
             )
           })}
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </SectionColWrapper>
       ) : (
         <EmptyStateIcon icon={BanknoteX} label={t("NoExpenses")} />

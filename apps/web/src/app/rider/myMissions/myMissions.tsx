@@ -5,10 +5,8 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
-import { differenceInDays } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { EXPIRATION_ALERT_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 

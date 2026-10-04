@@ -6,6 +6,7 @@ import {
   RyogoSelect,
   RyogoTextarea,
   RyogoFileInput,
+  RyogoDatePicker,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -75,6 +76,7 @@ export default function ModifyTransactionPageComponent({
         return checkImageFileType(file)
       }, t("Field6.Error2"))
       .optional(),
+    transactionDate: z.date(),
   })
 
   type ModifyTransactionType = z.infer<typeof modifyTransactionSchema>
@@ -88,6 +90,7 @@ export default function ModifyTransactionPageComponent({
       otherParty: transactionDetails.otherParty,
       amount: transactionDetails.amount,
       remarks: transactionDetails.remarks ?? undefined,
+      transactionDate: transactionDetails.transactionDate,
     },
   })
 
@@ -163,6 +166,13 @@ export default function ModifyTransactionPageComponent({
             label={t("Field6.Title")}
             placeholder={t("Field6.Placeholder")}
             description={t("Field6.Description")}
+          />
+          <RyogoDatePicker
+            name="transactionDate"
+            label={t("Field7.Title")}
+            placeholder={t("Field7.Placeholder")}
+            description={t("Field7.Placeholder")}
+            pastAllowed
           />
         </FormContentWrapper>
         <StickyActionWrapper>

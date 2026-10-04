@@ -45,11 +45,7 @@ export default async function DashboardVehiclesComponent({
             count={availableVehicles.length}
           />
           {availableVehicles.map((vehicle) => (
-            <DashboardVehicleChipComponent
-              key={vehicle.id}
-              vehicle={vehicle}
-              type="available"
-            />
+            <DashboardVehicleChipComponent key={vehicle.id} vehicle={vehicle} />
           ))}
         </DashboardRow>
       )}
@@ -60,11 +56,7 @@ export default async function DashboardVehiclesComponent({
             count={onTripVehicles.length}
           />
           {onTripVehicles.map((vehicle) => (
-            <DashboardVehicleChipComponent
-              key={vehicle.id}
-              vehicle={vehicle}
-              type="onTrip"
-            />
+            <DashboardVehicleChipComponent key={vehicle.id} vehicle={vehicle} />
           ))}
         </DashboardRow>
       )}
@@ -75,11 +67,7 @@ export default async function DashboardVehiclesComponent({
             count={repairVehicles.length}
           />
           {repairVehicles.map((vehicle) => (
-            <DashboardVehicleChipComponent
-              key={vehicle.id}
-              vehicle={vehicle}
-              type="repair"
-            />
+            <DashboardVehicleChipComponent key={vehicle.id} vehicle={vehicle} />
           ))}
         </DashboardRow>
       )}
@@ -90,11 +78,7 @@ export default async function DashboardVehiclesComponent({
             count={inactiveVehicles.length}
           />
           {inactiveVehicles.map((vehicle) => (
-            <DashboardVehicleChipComponent
-              key={vehicle.id}
-              vehicle={vehicle}
-              type="inactive"
-            />
+            <DashboardVehicleChipComponent key={vehicle.id} vehicle={vehicle} />
           ))}
         </DashboardRow>
       )}

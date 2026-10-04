@@ -7,10 +7,8 @@ import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export default function DashboardVehicleChipComponent({
   vehicle,
-  type,
 }: {
   vehicle: FindDashboardVehiclesType[number]
-  type: "available" | "onTrip" | "repair" | "inactive"
 }) {
   const vehicleImageUrl = vehicle.vehiclePhotoUrl
 

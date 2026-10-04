@@ -711,8 +711,8 @@ export const bookingServices = {
     }
   },
 
+  //Close a booking after review, add expenses and update total amount
   async closeBooking(bookingId: string) {
-    // Update total amount with added expenses as well
     const expenses = await expenseRepository.readExpensesByBookingId(bookingId)
     const approvedExpensesTotal = expenses.reduce((acc, curr) => {
       if (curr.isApproved) {
@@ -721,13 +721,14 @@ export const bookingServices = {
       return acc
     }, 0)
 
-    const [updatedBooking] = await bookingRepository.updateClosedAt(
+    const [updatedBooking] = await bookingRepository.addClosedAt(
       bookingId,
       approvedExpensesTotal,
     )
     return updatedBooking
   },
 
+  //Reopen a closed booking for review, remove expenses and adjust total amount
   async reopenBooking(bookingId: string) {
     const bookingDetails =
       await bookingServices.findBookingDetailsById(bookingId)

@@ -85,35 +85,33 @@ export default function RateBookingByCustomerDialog({
       }, 3000) //Clear the error after 3s
       return
     }
-    startTransition(async () => {
-      const result = await rateBookingByCustomerAction({
-        bookingId,
-        driverId,
-        vehicleId,
-        code: data.userEnteredcode,
-        bookingRatingByCustomer: bookingRating,
-        driverRatingByCustomer: driverRating,
-        vehicleRatingByCustomer: vehicleRating,
-      })
-      if (result) {
-        if ("id" in result) {
-          toast.success(t("Success"))
-          router.refresh()
-        } else {
-          formData.setError("userEnteredcode", {
-            type: "manual",
-            message: t("APIError"),
-          })
-          setTimeout(() => {
-            formData.setValue("userEnteredcode", "")
-            formData.clearErrors("userEnteredcode")
-          }, 3000) //Clear the field after 3s
-        }
-      } else {
-        setOpen(false)
-        toast.error(t("Error"))
-      }
+    const result = await rateBookingByCustomerAction({
+      bookingId,
+      driverId,
+      vehicleId,
+      code: data.userEnteredcode,
+      bookingRatingByCustomer: bookingRating,
+      driverRatingByCustomer: driverRating,
+      vehicleRatingByCustomer: vehicleRating,
     })
+    if (result) {
+      if ("id" in result) {
+        toast.success(t("Success"))
+        router.refresh()
+      } else {
+        formData.setError("userEnteredcode", {
+          type: "manual",
+          message: t("APIError"),
+        })
+        setTimeout(() => {
+          formData.setValue("userEnteredcode", "")
+          formData.clearErrors("userEnteredcode")
+        }, 3000) //Clear the field after 3s
+      }
+    } else {
+      setOpen(false)
+      toast.error(t("Error"))
+    }
   }
 
   //Resend code action
@@ -187,7 +185,7 @@ export default function RateBookingByCustomerDialog({
         <StickyActionWrapper bgTransparent>
           <RyogoDefaultButton
             type="submit"
-            disabled={formData.formState.isSubmitting || isBot}
+            disabled={formData.formState.isSubmitting || isPending || isBot}
             showSpinner={formData.formState.isSubmitting}
             form="ratingByCustomer"
             label={
@@ -212,7 +210,7 @@ export default function RateBookingByCustomerDialog({
             label={t("Back")}
             type="button"
             labelColor="light"
-            disabled={formData.formState.isSubmitting}
+            disabled={formData.formState.isSubmitting || isPending}
             onClick={() => setOpen(false)}
           />
         </StickyActionWrapper>

@@ -1400,6 +1400,10 @@
         "Error1": "Image file size should be less than 200kb",
         "Error2": "Only image files are allowed"
       },
+      "Field7": {
+        "Title": "Date",
+        "Placeholder": "Select transaction date"
+      },
       "PrimaryCTA": "Create Transaction",
       "Loading": "Loading..",
       "CancelCTA": "Cancel",
@@ -1444,6 +1448,10 @@
         "Error1": "Image file size should be less than 200kb",
         "Error2": "Only image files are allowed"
       },
+      "Field7": {
+        "Title": "Date",
+        "Placeholder": "Select transaction date"
+      },
       "PrimaryCTA": "Save changes",
       "Loading": "Loading..",
       "CancelCTA": "Cancel",
@@ -1479,6 +1487,10 @@
         "Error1": "Image file size should be less than 200kb",
         "Error2": "Only image files are allowed"
       },
+      "Field5": {
+        "Title": "Date",
+        "Placeholder": "Select expense date"
+      },
       "PrimaryCTA": "Create Expense",
       "Loading": "Loading..",
       "CancelCTA": "Cancel",
@@ -1512,6 +1524,10 @@
         "Description": "Upload the expense document photo",
         "Error1": "Image file size should be less than 200kb",
         "Error2": "Only image files are allowed"
+      },
+      "Field5": {
+        "Title": "Date",
+        "Placeholder": "Select expense date"
       },
       "PrimaryCTA": "Save changes",
       "Loading": "Loading..",
@@ -4897,7 +4913,7 @@
         "Label": "Re-open booking",
         "Subtitle": "Open booking for changes again and delete previously generated invoice",
         "Title": "Are you sure you want to open this booking again?",
-        "Desc": "This action will remove the closed status of the booking and allow further changes. (The previously generated invoice will also be deleted)",
+        "Desc": "This action will re-open the booking and allow further changes to expenses. (The previously generated invoice will also be deleted)",
         "NoCTA": "No",
         "Success": "Booking reopened!",
         "Error": "Cannot reopen booking now.. Try again later!",

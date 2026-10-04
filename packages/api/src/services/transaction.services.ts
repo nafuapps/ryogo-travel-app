@@ -43,6 +43,7 @@ export const transactionServices = {
       mode: data.mode,
       otherParty: data.otherParty,
       remarks: data.remarks,
+      transactionDate: data.transactionDate,
       agencyId: data.agencyId,
       isApproved: data.isApproved,
     }
@@ -61,6 +62,7 @@ export const transactionServices = {
         data.type,
         data.mode,
         data.otherParty,
+        data.transactionDate,
         data.remarks,
       )
     return updatedTransaction

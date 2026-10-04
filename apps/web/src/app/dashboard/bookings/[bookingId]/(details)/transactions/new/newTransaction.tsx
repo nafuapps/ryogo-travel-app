@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  RyogoDatePicker,
   RyogoFileInput,
   RyogoInput,
   RyogoRadio,
@@ -79,6 +80,7 @@ export default function NewTransactionPageComponent({
         return checkImageFileType(file)
       }, t("Field6.Error2"))
       .optional(),
+    transactionDate: z.date(),
   })
   type NewTransactionType = z.infer<typeof newTransactionSchema>
 
@@ -89,6 +91,7 @@ export default function NewTransactionPageComponent({
       type: TransactionTypesEnum.CREDIT,
       mode: TransactionModesEnum.CASH,
       otherParty: TransactionPartiesEnum.CUSTOMER,
+      transactionDate: new Date(),
     },
   })
 
@@ -162,6 +165,13 @@ export default function NewTransactionPageComponent({
             label={t("Field6.Title")}
             placeholder={t("Field6.Placeholder")}
             description={t("Field6.Description")}
+          />
+          <RyogoDatePicker
+            name="transactionDate"
+            label={t("Field7.Title")}
+            placeholder={t("Field7.Placeholder")}
+            description={t("Field7.Placeholder")}
+            pastAllowed
           />
         </FormContentWrapper>
         <StickyActionWrapper>

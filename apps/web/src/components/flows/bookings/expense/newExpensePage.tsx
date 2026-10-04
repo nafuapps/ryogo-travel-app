@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  RyogoDatePicker,
   RyogoFileInput,
   RyogoInput,
   RyogoSelect,
@@ -72,6 +73,7 @@ export default function NewExpensePageComponent({
         return checkImageFileType(file)
       }, t("Field4.Error2"))
       .optional(),
+    expenseDate: z.date(),
   })
   type NewExpenseType = z.infer<typeof newExpenseSchema>
 
@@ -80,6 +82,7 @@ export default function NewExpensePageComponent({
     resolver: zodResolver(newExpenseSchema),
     defaultValues: {
       type: ExpenseTypesEnum.FUEL,
+      expenseDate: new Date(),
     },
   })
 
@@ -146,11 +149,18 @@ export default function NewExpensePageComponent({
             placeholder={t("Field3.Placeholder")}
           />
           <RyogoFileInput
-            name={"expensePhoto"}
+            name="expensePhoto"
             register={form.register("expensePhoto")}
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
+          />
+          <RyogoDatePicker
+            name="expenseDate"
+            label={t("Field5.Title")}
+            placeholder={t("Field5.Placeholder")}
+            description={t("Field5.Placeholder")}
+            pastAllowed
           />
         </FormContentWrapper>
         <StickyActionWrapper>

@@ -7,6 +7,7 @@ export type AddExpenseRequestType = {
   assignedUserId: string
   type: ExpenseTypesEnum
   amount: number
+  expenseDate: Date
   isApproved?: boolean
   remarks?: string | undefined
   expensePhoto?: FileList | undefined
@@ -17,6 +18,7 @@ export type UpdateExpenseRequestType = {
   bookingId: string
   type: ExpenseTypesEnum
   amount: number
+  expenseDate: Date
   remarks?: string | undefined
   expensePhoto?: FileList | undefined
 }

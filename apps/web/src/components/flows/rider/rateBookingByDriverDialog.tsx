@@ -3,12 +3,8 @@
 import {
   RyogoDefaultButton,
   RyogoGhostButton,
-  RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import {
-  RyogoRatingInput,
-  RyogoOTPInput,
-} from "@/components/form/ryogoFormFields"
+import { RyogoRatingInput } from "@/components/form/ryogoFormFields"
 import {
   FormWrapper,
   FormContentWrapper,
@@ -19,7 +15,7 @@ import { DialogHeader } from "@/components/ui/dialog"
 import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog"
 import { useTranslations } from "next-intl"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -38,7 +34,6 @@ export default function RateBookingByDriverDialog({
 
   const router = useRouter()
   const [open, setOpen] = useState(false)
-  const [isPending, startTransition] = useTransition()
 
   const [bookingRating, setBookingRating] = useState<number>(0)
   const [customerRating, setCustomerRating] = useState<number>(0)
@@ -58,22 +53,20 @@ export default function RateBookingByDriverDialog({
       return
     }
 
-    startTransition(async () => {
-      const result = await rateBookingByDriverAction(
-        bookingId,
-        customerId,
-        agencyId,
-        bookingRating,
-        customerRating,
-      )
-      if (result) {
-        toast.success(t("Success"))
-        router.refresh()
-      } else {
-        setOpen(false)
-        toast.error(t("Error"))
-      }
-    })
+    const result = await rateBookingByDriverAction(
+      bookingId,
+      customerId,
+      agencyId,
+      bookingRating,
+      customerRating,
+    )
+    if (result) {
+      toast.success(t("Success"))
+      router.refresh()
+    } else {
+      setOpen(false)
+      toast.error(t("Error"))
+    }
   }
 
   return (

@@ -65,14 +65,14 @@ export async function endTripAction(
   }
 
   //Change Booking, Driver and vehicle status to Completed
-  const bookingChanged = await bookingServices.changeBookingToCompleted(
-    data.bookingId,
-    data.driverId,
-    data.vehicleId,
+  const bookingChanged = await bookingServices.changeBookingToCompleted({
+    bookingId: data.bookingId,
+    driverId: data.driverId,
+    vehicleId: data.vehicleId,
     customerId,
-    customerRatingData,
-    bookingRatingData,
-  )
+    customerRatingByDriver: customerRatingData,
+    bookingRatingByDriver: bookingRatingData,
+  })
   if (!bookingChanged) return
 
   //Update actual total price and other values based on trip logs

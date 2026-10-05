@@ -50,7 +50,13 @@ export const agencyRepository = {
   },
 
   //Get agency by phone and email
-  async readAgencyByPhoneEmail(businessPhone: string, businessEmail: string) {
+  async readAgencyByPhoneEmail({
+    businessPhone,
+    businessEmail,
+  }: {
+    businessPhone: string
+    businessEmail: string
+  }) {
     return await db.query.agencies.findFirst({
       columns: {
         id: true,
@@ -68,13 +74,19 @@ export const agencyRepository = {
   },
 
   //Update agency details by Id
-  async updateAgencyDetails(
-    id: string,
-    businessName?: string,
-    businessAddress?: string,
-    defaultCommissionRate?: number,
-    locationId?: string,
-  ) {
+  async updateAgencyDetails({
+    id,
+    businessName,
+    businessAddress,
+    defaultCommissionRate,
+    locationId,
+  }: {
+    id: string
+    businessName?: string
+    businessAddress?: string
+    defaultCommissionRate?: number
+    locationId?: string
+  }) {
     return await db
       .update(agencies)
       .set({
@@ -94,11 +106,15 @@ export const agencyRepository = {
   },
 
   //Update agency status by Id
-  async updateAgencyStatus(
-    id: string,
-    status: AgencyStatusEnum,
-    subscriptionExpiresOn?: Date,
-  ) {
+  async updateAgencyStatus({
+    id,
+    status,
+    subscriptionExpiresOn,
+  }: {
+    id: string
+    status: AgencyStatusEnum
+    subscriptionExpiresOn?: Date
+  }) {
     return await db
       .update(agencies)
       .set({ status, subscriptionExpiresOn })
@@ -111,18 +127,23 @@ export const agencyRepository = {
   },
 
   //Update agency subscription plan, expiry and lastest order id
-  async updateAgencySubscriptionWithOrder(
-    id: string,
-    plan: SubscriptionPlanEnum,
-    expiryTime: Date,
-    orderId: string,
-  ) {
+  async updateAgencySubscriptionWithOrder({
+    id,
+    subscriptionPlan,
+    subscriptionExpiresOn,
+    latestPaidOrderId,
+  }: {
+    id: string
+    subscriptionPlan: SubscriptionPlanEnum
+    subscriptionExpiresOn: Date
+    latestPaidOrderId: string
+  }) {
     return await db
       .update(agencies)
       .set({
-        subscriptionPlan: plan,
-        subscriptionExpiresOn: expiryTime,
-        latestPaidOrderId: orderId,
+        subscriptionPlan,
+        subscriptionExpiresOn,
+        latestPaidOrderId,
         hasTriedSubscription: true,
       })
       .where(eq(agencies.id, id))
@@ -135,34 +156,21 @@ export const agencyRepository = {
       })
   },
 
-  //Update agency subscription plan only
-  async updateAgencySubscriptionPlan(
-    id: string,
-    subscriptionPlan: SubscriptionPlanEnum,
-  ) {
+  //Update agency subscription plan with expiry date
+  async updateAgencySubscriptionPlan({
+    id,
+    subscriptionPlan,
+    subscriptionExpiresOn,
+  }: {
+    id: string
+    subscriptionPlan: SubscriptionPlanEnum
+    subscriptionExpiresOn: Date
+  }) {
     return await db
       .update(agencies)
       .set({
         subscriptionPlan,
-      })
-      .where(eq(agencies.id, id))
-      .returning({
-        id: agencies.id,
-        subscriptionPlan: agencies.subscriptionPlan,
-      })
-  },
-
-  //Update agency subscription plan with expiry date and trial
-  async updateAgencyTrialSubscription(
-    id: string,
-    plan: SubscriptionPlanEnum,
-    expiryTime: Date,
-  ) {
-    return await db
-      .update(agencies)
-      .set({
-        subscriptionPlan: plan,
-        subscriptionExpiresOn: expiryTime,
+        subscriptionExpiresOn,
         hasTriedSubscription: true,
       })
       .where(eq(agencies.id, id))
@@ -175,7 +183,13 @@ export const agencyRepository = {
   },
 
   //Update agency phone by Id
-  async updateAgencyPhone(id: string, businessPhone: string) {
+  async updateAgencyPhone({
+    id,
+    businessPhone,
+  }: {
+    id: string
+    businessPhone: string
+  }) {
     return await db
       .update(agencies)
       .set({ businessPhone })
@@ -187,7 +201,13 @@ export const agencyRepository = {
   },
 
   //Update agency email by Id
-  async updateAgencyEmail(id: string, businessEmail: string) {
+  async updateAgencyEmail({
+    id,
+    businessEmail,
+  }: {
+    id: string
+    businessEmail: string
+  }) {
     return await db
       .update(agencies)
       .set({ businessEmail })
@@ -199,7 +219,7 @@ export const agencyRepository = {
   },
 
   //Update logo URL by Id
-  async updateAgencyLogoUrl(id: string, logoUrl: string) {
+  async updateAgencyLogoUrl({ id, logoUrl }: { id: string; logoUrl: string }) {
     return await db
       .update(agencies)
       .set({ logoUrl })
@@ -208,7 +228,13 @@ export const agencyRepository = {
   },
 
   //Update QR Code URL by Id
-  async updateAgencyQRCodeUrl(id: string, qrCodeUrl: string) {
+  async updateAgencyQRCodeUrl({
+    id,
+    qrCodeUrl,
+  }: {
+    id: string
+    qrCodeUrl: string
+  }) {
     return await db
       .update(agencies)
       .set({ qrCodeUrl })

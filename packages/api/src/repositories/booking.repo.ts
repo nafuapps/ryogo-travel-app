@@ -308,12 +308,17 @@ export const bookingRepository = {
     })
   },
 
-  async readCreatedBookingsByStatusDateRange(
-    agencyId: string,
-    queryStartDate: Date,
-    queryEndDate: Date,
-    status: BookingStatusEnum[],
-  ) {
+  async readCreatedBookingsByStatusDateRange({
+    agencyId,
+    queryStartDate,
+    queryEndDate,
+    status,
+  }: {
+    agencyId: string
+    queryStartDate: Date
+    queryEndDate: Date
+    status: BookingStatusEnum[]
+  }) {
     return await db.query.bookings.findMany({
       columns: {
         id: true,
@@ -401,11 +406,15 @@ export const bookingRepository = {
     })
   },
 
-  async readCompletedBookingsData(
-    agencyId: string,
-    queryStartDate: Date,
-    queryEndDate: Date,
-  ) {
+  async readCompletedBookingsData({
+    agencyId,
+    queryStartDate,
+    queryEndDate,
+  }: {
+    agencyId: string
+    queryStartDate: Date
+    queryEndDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { desc }) => [
         desc(bookings.completedAt ?? bookings.updatedAt),
@@ -475,11 +484,15 @@ export const bookingRepository = {
     })
   },
 
-  async readCancelledBookingsData(
-    agencyId: string,
-    queryStartDate: Date,
-    queryEndDate: Date,
-  ) {
+  async readCancelledBookingsData({
+    agencyId,
+    queryStartDate,
+    queryEndDate,
+  }: {
+    agencyId: string
+    queryStartDate: Date
+    queryEndDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { desc }) => [
         desc(bookings.cancelledAt ?? bookings.updatedAt),
@@ -550,7 +563,13 @@ export const bookingRepository = {
   },
 
   //Read Completed bookings by driver id
-  async readCompletedBookingsByDriverId(driverId: string, queryEndDate: Date) {
+  async readCompletedBookingsByDriverId({
+    driverId,
+    queryStartDate,
+  }: {
+    driverId: string
+    queryStartDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
@@ -558,7 +577,7 @@ export const bookingRepository = {
         eq(bookings.status, BookingStatusEnum.COMPLETED),
         gte(
           bookings.completedAt ?? bookings.actualEndDate ?? bookings.endDate,
-          queryEndDate,
+          queryStartDate,
         ),
       ),
       columns: {
@@ -614,7 +633,13 @@ export const bookingRepository = {
   },
 
   //Read Completed bookings by user id
-  async readCompletedBookingsByUserId(userId: string, queryStartDate: Date) {
+  async readCompletedBookingsByUserId({
+    userId,
+    queryStartDate,
+  }: {
+    userId: string
+    queryStartDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
@@ -678,10 +703,13 @@ export const bookingRepository = {
   },
 
   //Read Completed bookings by vehicle id
-  async readCompletedBookingsByVehicleId(
-    vehicleId: string,
-    queryStartDate: Date,
-  ) {
+  async readCompletedBookingsByVehicleId({
+    vehicleId,
+    queryStartDate,
+  }: {
+    vehicleId: string
+    queryStartDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { desc }) => [desc(bookings.completedAt)],
       where: and(
@@ -745,10 +773,13 @@ export const bookingRepository = {
   },
 
   //Read Completed bookings by customer id
-  async readCompletedBookingsByCustomerId(
-    customerId: string,
-    queryStartDate: Date,
-  ) {
+  async readCompletedBookingsByCustomerId({
+    customerId,
+    queryStartDate,
+  }: {
+    customerId: string
+    queryStartDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { desc }) => [desc(bookings.startDate)],
       where: and(
@@ -811,7 +842,13 @@ export const bookingRepository = {
     })
   },
 
-  async readUpcomingBookingsData(agencyId: string, queryEndDate: Date) {
+  async readUpcomingBookingsData({
+    agencyId,
+    queryEndDate,
+  }: {
+    agencyId: string
+    queryEndDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -877,10 +914,13 @@ export const bookingRepository = {
   },
 
   //Read Assigned bookings by vehicle id
-  async readAllAssignedBookingsByVehicleId(
-    vehicleId: string,
-    queryEndDate: Date,
-  ) {
+  async readAllAssignedBookingsByVehicleId({
+    vehicleId,
+    queryEndDate,
+  }: {
+    vehicleId: string
+    queryEndDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -959,10 +999,13 @@ export const bookingRepository = {
   },
 
   //Read Assigned bookings by driver id
-  async readAllAssignedBookingsByDriverId(
-    driverId: string,
-    queryEndDate: Date,
-  ) {
+  async readAllAssignedBookingsByDriverId({
+    driverId,
+    queryEndDate,
+  }: {
+    driverId: string
+    queryEndDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -1063,7 +1106,13 @@ export const bookingRepository = {
   },
 
   //Read Assigned bookings by user id
-  async readAssignedBookingsByUserId(userId: string, queryEndDate: Date) {
+  async readAssignedBookingsByUserId({
+    userId,
+    queryEndDate,
+  }: {
+    userId: string
+    queryEndDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -1135,10 +1184,13 @@ export const bookingRepository = {
   },
 
   //Read Upcoming bookings by customer id
-  async readUpcomingBookingsByCustomerId(
-    customerId: string,
-    queryEndDate: Date,
-  ) {
+  async readUpcomingBookingsByCustomerId({
+    customerId,
+    queryEndDate,
+  }: {
+    customerId: string
+    queryEndDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -1215,7 +1267,13 @@ export const bookingRepository = {
     })
   },
 
-  async readBookingsScheduleData(agencyId: string, queryStartDate: Date) {
+  async readBookingsScheduleData({
+    agencyId,
+    queryEndDate,
+  }: {
+    agencyId: string
+    queryEndDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -1223,7 +1281,7 @@ export const bookingRepository = {
         or(
           and(
             eq(bookings.status, BookingStatusEnum.CONFIRMED),
-            lte(bookings.startDate, queryStartDate),
+            lte(bookings.startDate, queryEndDate),
           ),
           eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
         ),
@@ -1294,7 +1352,13 @@ export const bookingRepository = {
     })
   },
 
-  async readBookingsHistoryData(agencyId: string, queryStartDate: Date) {
+  async readBookingsHistoryData({
+    agencyId,
+    queryStartDate,
+  }: {
+    agencyId: string
+    queryStartDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -1376,11 +1440,15 @@ export const bookingRepository = {
     })
   },
 
-  async readLeadBookingsData(
-    agencyId: string,
-    queryStartDate: Date,
-    queryEndDate: Date,
-  ) {
+  async readLeadBookingsData({
+    agencyId,
+    queryStartDate,
+    queryEndDate,
+  }: {
+    agencyId: string
+    queryStartDate: Date
+    queryEndDate: Date
+  }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { asc }) => [asc(bookings.startDate)],
       where: and(
@@ -1750,12 +1818,17 @@ export const bookingRepository = {
     return await db.insert(bookings).values(data).returning()
   },
 
-  async updateBookingToConfirmed(
-    id: string,
-    startTime: string,
-    pickupAddress: string,
-    dropAddress?: string,
-  ) {
+  async updateBookingToConfirmed({
+    id,
+    startTime,
+    pickupAddress,
+    dropAddress,
+  }: {
+    id: string
+    startTime: string
+    pickupAddress: string
+    dropAddress?: string
+  }) {
     return await db
       .update(bookings)
       .set({
@@ -1775,11 +1848,15 @@ export const bookingRepository = {
       })
   },
 
-  async startBookingAtomicTransaction(
-    bookingId: string,
-    driverId: string,
-    vehicleId: string,
-  ) {
+  async startBookingAtomicTransaction({
+    bookingId,
+    driverId,
+    vehicleId,
+  }: {
+    bookingId: string
+    driverId: string
+    vehicleId: string
+  }) {
     return await db.transaction(async (tx) => {
       await tx
         .update(bookings)
@@ -1812,16 +1889,25 @@ export const bookingRepository = {
     })
   },
 
-  async completeBookingAtomicTransaction(
-    bookingId: string,
-    driverId: string,
-    vehicleId: string,
-    customerId: string,
-    visitingLocationId: string,
-    secretCode: string,
-    customerRatingByDriver?: number,
-    bookingRatingByDriver?: number,
-  ) {
+  async completeBookingAtomicTransaction({
+    bookingId,
+    driverId,
+    vehicleId,
+    customerId,
+    visitingLocationId,
+    secretCode,
+    customerRatingByDriver,
+    bookingRatingByDriver,
+  }: {
+    bookingId: string
+    driverId: string
+    vehicleId: string
+    customerId: string
+    visitingLocationId: string
+    secretCode: string
+    customerRatingByDriver?: number
+    bookingRatingByDriver?: number
+  }) {
     return await db.transaction(async (tx) => {
       await tx
         .update(bookings)
@@ -1866,14 +1952,21 @@ export const bookingRepository = {
     })
   },
 
-  async updateBookingRatingByCustomer(
-    bookingId: string,
-    driverId: string,
-    vehicleId: string,
-    bookingRatingByCustomer: number,
-    driverRatingByCustomer?: number,
-    vehicleRatingByCustomer?: number,
-  ) {
+  async updateBookingRatingByCustomer({
+    bookingId,
+    driverId,
+    vehicleId,
+    bookingRatingByCustomer,
+    driverRatingByCustomer,
+    vehicleRatingByCustomer,
+  }: {
+    bookingId: string
+    driverId: string
+    vehicleId: string
+    bookingRatingByCustomer: number
+    driverRatingByCustomer?: number
+    vehicleRatingByCustomer?: number
+  }) {
     return await db.transaction(async (tx) => {
       await tx
         .update(bookings)
@@ -1907,12 +2000,17 @@ export const bookingRepository = {
     })
   },
 
-  async updateBookingRatingByDriver(
-    bookingId: string,
-    customerId: string,
-    bookingRatingByDriver: number,
-    customerRatingByDriver?: number,
-  ) {
+  async updateBookingRatingByDriver({
+    bookingId,
+    customerId,
+    bookingRatingByDriver,
+    customerRatingByDriver,
+  }: {
+    bookingId: string
+    customerId: string
+    bookingRatingByDriver: number
+    customerRatingByDriver?: number
+  }) {
     return await db.transaction(async (tx) => {
       await tx
         .update(bookings)
@@ -1938,7 +2036,13 @@ export const bookingRepository = {
     })
   },
 
-  async updateSecretCode(id: string, secretCode: string) {
+  async updateSecretCode({
+    id,
+    secretCode,
+  }: {
+    id: string
+    secretCode: string
+  }) {
     return await db
       .update(bookings)
       .set({
@@ -1983,11 +2087,17 @@ export const bookingRepository = {
       })
   },
 
-  async updateAssignedDriver(bookingId: string, driverId: string) {
+  async updateAssignedDriver({
+    bookingId,
+    assignedDriverId,
+  }: {
+    bookingId: string
+    assignedDriverId: string
+  }) {
     return await db
       .update(bookings)
       .set({
-        assignedDriverId: driverId,
+        assignedDriverId,
       })
       .where(eq(bookings.id, bookingId))
       .returning({
@@ -1996,11 +2106,17 @@ export const bookingRepository = {
       })
   },
 
-  async updateAssignedVehicle(bookingId: string, vehicleId: string) {
+  async updateAssignedVehicle({
+    bookingId,
+    assignedVehicleId,
+  }: {
+    bookingId: string
+    assignedVehicleId: string
+  }) {
     return await db
       .update(bookings)
       .set({
-        assignedVehicleId: vehicleId,
+        assignedVehicleId,
       })
       .where(eq(bookings.id, bookingId))
       .returning({
@@ -2012,22 +2128,28 @@ export const bookingRepository = {
       })
   },
 
-  async updateAssignedUser(bookingId: string, userId: string) {
+  async updateAssignedUser({
+    bookingId,
+    assignedUserId,
+  }: {
+    bookingId: string
+    assignedUserId: string
+  }) {
     return await db
       .update(bookings)
       .set({
-        assignedUserId: userId,
+        assignedUserId,
       })
       .where(eq(bookings.id, bookingId))
       .returning({ id: bookings.id, assignedUserId: bookings.assignedUserId })
   },
 
-  async updateQuoteUrl(id: string, url: string) {
+  async updateQuoteUrl({ id, quoteUrl }: { id: string; quoteUrl: string }) {
     return await db
       .update(bookings)
       .set({
         quoteSentOn: new Date(),
-        quoteUrl: url,
+        quoteUrl,
       })
       .where(eq(bookings.id, id))
       .returning({
@@ -2050,12 +2172,18 @@ export const bookingRepository = {
       })
   },
 
-  async updateConfirmationUrl(id: string, url: string) {
+  async updateConfirmationUrl({
+    id,
+    confirmationUrl,
+  }: {
+    id: string
+    confirmationUrl: string
+  }) {
     return await db
       .update(bookings)
       .set({
         confirmationSentOn: new Date(),
-        confirmationUrl: url,
+        confirmationUrl,
       })
       .where(eq(bookings.id, id))
       .returning({
@@ -2078,12 +2206,18 @@ export const bookingRepository = {
       })
   },
 
-  async updateInvoiceUrl(id: string, url: string) {
+  async updateInvoiceUrl({
+    id,
+    invoiceUrl,
+  }: {
+    id: string
+    invoiceUrl: string
+  }) {
     return await db
       .update(bookings)
       .set({
         invoiceSentOn: new Date(),
-        invoiceUrl: url,
+        invoiceUrl,
       })
       .where(eq(bookings.id, id))
       .returning({
@@ -2106,7 +2240,7 @@ export const bookingRepository = {
       })
   },
 
-  async updateStartTime(id: string, startTime: string) {
+  async updateStartTime({ id, startTime }: { id: string; startTime: string }) {
     return await db
       .update(bookings)
       .set({
@@ -2119,7 +2253,7 @@ export const bookingRepository = {
       })
   },
 
-  async updateRemarks(id: string, remarks: string) {
+  async updateRemarks({ id, remarks }: { id: string; remarks: string }) {
     return await db
       .update(bookings)
       .set({
@@ -2132,7 +2266,13 @@ export const bookingRepository = {
       })
   },
 
-  async updatePickupAddress(id: string, pickupAddress: string) {
+  async updatePickupAddress({
+    id,
+    pickupAddress,
+  }: {
+    id: string
+    pickupAddress: string
+  }) {
     return await db
       .update(bookings)
       .set({
@@ -2145,7 +2285,13 @@ export const bookingRepository = {
       })
   },
 
-  async updateDropAddress(id: string, dropAddress: string) {
+  async updateDropAddress({
+    id,
+    dropAddress,
+  }: {
+    id: string
+    dropAddress: string
+  }) {
     return await db
       .update(bookings)
       .set({
@@ -2159,7 +2305,13 @@ export const bookingRepository = {
   },
 
   //Close booking and update actual expenses amount and add it to total amount
-  async addClosedAt(id: string, actualExpensesAmount: number) {
+  async addClosedAt({
+    id,
+    actualExpensesAmount,
+  }: {
+    id: string
+    actualExpensesAmount: number
+  }) {
     return await db
       .update(bookings)
       .set({
@@ -2197,22 +2349,32 @@ export const bookingRepository = {
   },
 
   //Update actual values at the end of trip
-  async updateBookingTotals(
-    bookingId: string,
-    startDate: Date,
-    endDate: Date,
-    actualTotalDistance: number,
-    actualTotalVehicleRate: number,
-    actualTotalAcCharge: number,
-    actualTotalDriverAllowance: number,
-    actualCommissionAmount: number,
-    actualTotalAmount: number,
-  ) {
+  async updateBookingTotals({
+    bookingId,
+    actualStartDate,
+    actualEndDate,
+    actualTotalDistance,
+    actualTotalVehicleRate,
+    actualTotalAcCharge,
+    actualTotalDriverAllowance,
+    actualCommissionAmount,
+    actualTotalAmount,
+  }: {
+    bookingId: string
+    actualStartDate: Date
+    actualEndDate: Date
+    actualTotalDistance: number
+    actualTotalVehicleRate: number
+    actualTotalAcCharge: number
+    actualTotalDriverAllowance: number
+    actualCommissionAmount: number
+    actualTotalAmount: number
+  }) {
     return await db
       .update(bookings)
       .set({
-        startDate,
-        endDate,
+        actualStartDate,
+        actualEndDate,
         actualTotalDistance,
         actualTotalVehicleRate,
         actualTotalAcCharge,

@@ -115,12 +115,12 @@ export const orderServices = {
       orderSubscriptionDays,
     )
 
-    await agencyRepository.updateAgencySubscriptionWithOrder(
-      updatedOrder.agencyId,
-      SubscriptionPlanEnum.PREMIUM,
-      newSubscriptionExpiryDate,
-      updatedOrder.id,
-    )
+    await agencyRepository.updateAgencySubscriptionWithOrder({
+      id: updatedOrder.agencyId,
+      subscriptionPlan: SubscriptionPlanEnum.PREMIUM,
+      subscriptionExpiresOn: newSubscriptionExpiryDate,
+      latestPaidOrderId: updatedOrder.id,
+    })
 
     return updatedOrder
   },

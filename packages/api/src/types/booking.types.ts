@@ -1,6 +1,9 @@
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export type NewBookingRequestDataType = {
+  agencyId: string
+  customerId: string
+  userId: string
   source: {
     city: string
     state: string
@@ -25,6 +28,15 @@ export type NewBookingRequestDataType = {
   selectedAcChargePerDay: number
   selectedAllowancePerDay: number
   selectedCommissionRate: number
+}
+
+export type ConfirmBookingRequestType = {
+  id: string
+  startTime: string
+  pickupAddress: string
+  dropAddress?: string
+  updateCustomerAddress?: boolean
+  customerId?: string
 }
 
 export type RateBookingByCustomerType = {

@@ -24,6 +24,7 @@ import { RyogoH3, RyogoCaption } from "@/components/typography"
 import { MAX_FIELD_DESC_LENGTH, MIN_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { ConfirmBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
@@ -68,16 +69,19 @@ export default function ConfirmBookingPageComponent({
 
   //Confirm booking
   async function submit(values: ConfirmBookingType) {
-    const confirmedBookingMessage = await confirmBookingAction(
-      booking.id,
-      booking.agencyId,
-      booking.assignedUserId,
-      values.startTime,
-      values.pickupAddress,
-      values.dropAddress,
-      booking.customer.address ? false : true,
-      booking.customer.id,
-    )
+    const confirmBookingData: ConfirmBookingRequestType = {
+      id: booking.id,
+      startTime: values.startTime,
+      pickupAddress: values.pickupAddress,
+      dropAddress: values.dropAddress,
+      updateCustomerAddress: booking.customer.address ? false : true,
+      customerId: booking.customer.id,
+    }
+    const confirmedBookingMessage = await confirmBookingAction({
+      agencyId: booking.agencyId,
+      assignedUserId: booking.assignedUserId,
+      data: confirmBookingData,
+    })
     if (confirmedBookingMessage) {
       toast.success(t("ConfirmSuccess"))
       window.open(confirmedBookingMessage, "_blank", "noopener,noreferrer")

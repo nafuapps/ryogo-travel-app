@@ -11,6 +11,7 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { bookingRepository } from "../repositories/booking.repo"
 import {
+  ConfirmBookingRequestType,
   NewBookingRequestDataType,
   RateBookingByCustomerType,
 } from "../types/booking.types"
@@ -24,6 +25,8 @@ import { driverRepository } from "../repositories/driver.repo"
 import { vehicleRepository } from "../repositories/vehicle.repo"
 import {
   BASIC_SEARCH_LIMIT_DAYS,
+  BOOKING_SCHEDULE_DEFAULT_DAYS,
+  DASHBOARD_FETCH_DAYS,
   UPDATE_PRICE_DISTANCE_FACTOR,
 } from "../apiConfig"
 import { getEstimatedTotalPrice, getActualTotalPrice } from "@/lib/utils"
@@ -47,7 +50,10 @@ export const bookingServices = {
     return bookings
   },
 
-  async findDashboardLeads(agencyId: string, days: number = 7) {
+  async findDashboardLeads(
+    agencyId: string,
+    days: number = DASHBOARD_FETCH_DAYS,
+  ) {
     const bookings = await bookingRepository.readDashboardLeadsByAgencyId(
       agencyId,
       days,
@@ -84,20 +90,23 @@ export const bookingServices = {
     const queryStartDate = subDays(queryEndDate, days)
 
     const bookings =
-      await bookingRepository.readCreatedBookingsByStatusDateRange(
+      await bookingRepository.readCreatedBookingsByStatusDateRange({
         agencyId,
         queryStartDate,
         queryEndDate,
-        [
+        status: [
           BookingStatusEnum.CONFIRMED,
           BookingStatusEnum.IN_PROGRESS,
           BookingStatusEnum.COMPLETED,
         ],
-      )
+      })
     return bookings
   },
 
-  async findDashboardScheduleConflicts(agencyId: string, days: number = 7) {
+  async findDashboardScheduleConflicts(
+    agencyId: string,
+    days: number = DASHBOARD_FETCH_DAYS,
+  ) {
     const queryDate = addDays(new Date(), days)
     const bookings = await bookingRepository.readUpcomingBookingsSchedule(
       agencyId,
@@ -179,11 +188,11 @@ export const bookingServices = {
     const queryEndDate = new Date()
     const queryStartDate = subDays(queryEndDate, days)
 
-    const bookings = await bookingRepository.readCompletedBookingsData(
+    const bookings = await bookingRepository.readCompletedBookingsData({
       agencyId,
       queryStartDate,
       queryEndDate,
-    )
+    })
     return bookings
   },
 
@@ -194,11 +203,11 @@ export const bookingServices = {
     const queryEndDate = new Date()
     const queryStartDate = subDays(queryEndDate, days)
 
-    const bookings = await bookingRepository.readCancelledBookingsData(
+    const bookings = await bookingRepository.readCancelledBookingsData({
       agencyId,
       queryStartDate,
       queryEndDate,
-    )
+    })
     return bookings
   },
 
@@ -208,30 +217,36 @@ export const bookingServices = {
   ) {
     const queryEndDate = addDays(new Date(), days)
 
-    const bookings = await bookingRepository.readUpcomingBookingsData(
+    const bookings = await bookingRepository.readUpcomingBookingsData({
       agencyId,
       queryEndDate,
-    )
+    })
     return bookings
   },
 
-  async findBookingsScheduleNextDays(agencyId: string, days: number = 7) {
-    const queryDate = addDays(new Date(), days)
+  async findBookingsScheduleNextDays(
+    agencyId: string,
+    days: number = BOOKING_SCHEDULE_DEFAULT_DAYS,
+  ) {
+    const queryEndDate = addDays(new Date(), days)
 
-    const bookings = await bookingRepository.readBookingsScheduleData(
+    const bookings = await bookingRepository.readBookingsScheduleData({
       agencyId,
-      queryDate,
-    )
+      queryEndDate,
+    })
     return bookings
   },
 
-  async findBookingsHistoryLastDays(agencyId: string, days: number = 7) {
+  async findBookingsHistoryLastDays(
+    agencyId: string,
+    days: number = BOOKING_SCHEDULE_DEFAULT_DAYS,
+  ) {
     const queryStartDate = subDays(new Date(), days)
 
-    const bookings = await bookingRepository.readBookingsHistoryData(
+    const bookings = await bookingRepository.readBookingsHistoryData({
       agencyId,
       queryStartDate,
-    )
+    })
     return bookings
   },
 
@@ -242,11 +257,11 @@ export const bookingServices = {
     const queryStartDate = new Date()
     const queryEndDate = addDays(queryStartDate, days)
 
-    const bookings = await bookingRepository.readLeadBookingsData(
+    const bookings = await bookingRepository.readLeadBookingsData({
       agencyId,
       queryStartDate,
       queryEndDate,
-    )
+    })
     return bookings
   },
 
@@ -291,12 +306,7 @@ export const bookingServices = {
   },
 
   //Create a new Booking
-  async addNewBooking(
-    agencyId: string,
-    userId: string,
-    customerId: string,
-    data: NewBookingRequestDataType,
-  ) {
+  async addNewBooking(data: NewBookingRequestDataType) {
     //Step1: Get trip sourceId and destinationId from city & state
     let sourceId = data.sourceId
     if (!sourceId) {
@@ -335,10 +345,10 @@ export const bookingServices = {
 
     //Step4: Prepare data
     const newBookingData: InsertBookingType = {
-      agencyId: agencyId,
-      customerId: customerId,
-      bookedByUserId: userId,
-      assignedUserId: userId,
+      agencyId: data.agencyId,
+      customerId: data.customerId,
+      bookedByUserId: data.userId,
+      assignedUserId: data.userId,
       sourceId: sourceId,
       destinationId: destinationId,
       routeId: routeId,
@@ -370,32 +380,39 @@ export const bookingServices = {
   },
 
   //Confirm a booking
-  async confirmBooking(
-    bookingId: string,
-    startTime: string,
-    pickupAddress: string,
-    dropAddress?: string,
-    updateCustomerAddress?: boolean,
-    customerId?: string,
-  ) {
+  async confirmBooking({
+    id,
+    startTime,
+    pickupAddress,
+    dropAddress,
+    updateCustomerAddress,
+    customerId,
+  }: ConfirmBookingRequestType) {
     if (updateCustomerAddress && pickupAddress && customerId) {
-      await customerRepository.updateCustomerAddress(customerId, pickupAddress)
+      await customerRepository.updateCustomerAddress({
+        customerId,
+        address: pickupAddress,
+      })
     }
-    const [updatedBooking] = await bookingRepository.updateBookingToConfirmed(
-      bookingId,
+    const [updatedBooking] = await bookingRepository.updateBookingToConfirmed({
+      id,
       startTime,
       pickupAddress,
       dropAddress,
-    )
+    })
     return updatedBooking
   },
 
   //Start booking to mark it in progress
-  async changeBookingToInProgress(
-    bookingId: string,
-    driverId: string,
-    vehicleId: string,
-  ) {
+  async changeBookingToInProgress({
+    bookingId,
+    driverId,
+    vehicleId,
+  }: {
+    bookingId: string
+    driverId: string
+    vehicleId: string
+  }) {
     //Check if the booking is confirmed
     const bookingStatus = await this.findBookingStatusById(bookingId)
     if (
@@ -419,11 +436,11 @@ export const bookingServices = {
     }
 
     //Atomic transaction to change booking to in progress and driver, vehicle to on trip
-    const booking = await bookingRepository.startBookingAtomicTransaction(
+    const booking = await bookingRepository.startBookingAtomicTransaction({
       bookingId,
       driverId,
       vehicleId,
-    )
+    })
 
     if (!booking || booking.status !== BookingStatusEnum.IN_PROGRESS) {
       return
@@ -476,28 +493,35 @@ export const bookingServices = {
     )
 
     //Update actuals in DB
-    await bookingRepository.updateBookingTotals(
+    await bookingRepository.updateBookingTotals({
       bookingId,
       actualStartDate,
       actualEndDate,
       actualTotalDistance,
-      actualTotals.totalVehiclePrice,
-      actualTotals.totalACPrice,
-      actualTotals.totalDriverAllowance,
-      actualTotals.totalCommission,
-      actualTotals.totalAmount,
-    )
+      actualTotalVehicleRate: actualTotals.totalVehiclePrice,
+      actualTotalAcCharge: actualTotals.totalACPrice,
+      actualTotalDriverAllowance: actualTotals.totalDriverAllowance,
+      actualCommissionAmount: actualTotals.totalCommission,
+      actualTotalAmount: actualTotals.totalAmount,
+    })
   },
 
   //End booking to mark it completed
-  async changeBookingToCompleted(
-    bookingId: string,
-    driverId: string,
-    vehicleId: string,
-    customerId: string,
-    customerRating?: number,
-    bookingRating?: number,
-  ) {
+  async changeBookingToCompleted({
+    bookingId,
+    driverId,
+    vehicleId,
+    customerId,
+    customerRatingByDriver,
+    bookingRatingByDriver,
+  }: {
+    bookingId: string
+    driverId: string
+    vehicleId: string
+    customerId: string
+    customerRatingByDriver?: number
+    bookingRatingByDriver?: number
+  }) {
     //Check if the booking is in progress
     const bookingStatus = await this.findBookingStatusById(bookingId)
     if (
@@ -525,16 +549,16 @@ export const bookingServices = {
 
     //Atomic transaction to change booking to completed and driver, vehicle to available
     const completedBooking =
-      await bookingRepository.completeBookingAtomicTransaction(
+      await bookingRepository.completeBookingAtomicTransaction({
         bookingId,
         driverId,
         vehicleId,
         customerId,
         visitingLocationId,
         secretCode,
-        customerRating,
-        bookingRating,
-      )
+        customerRatingByDriver,
+        bookingRatingByDriver,
+      })
     if (
       !completedBooking ||
       completedBooking.status !== BookingStatusEnum.COMPLETED
@@ -550,13 +574,19 @@ export const bookingServices = {
   },
 
   //Update booking rating by driver
-  async changeBookingRatingByDriver(
-    bookingId: string,
-    customerId: string,
-    userId: string,
-    bookingRating: number,
-    customerRating?: number,
-  ) {
+  async changeBookingRatingByDriver({
+    bookingId,
+    customerId,
+    userId,
+    bookingRatingByDriver,
+    customerRatingByDriver,
+  }: {
+    bookingId: string
+    customerId: string
+    userId: string
+    bookingRatingByDriver: number
+    customerRatingByDriver?: number
+  }) {
     const booking = await bookingRepository.readBookingById(bookingId)
 
     //Only completed bookings can be rated by driver
@@ -569,17 +599,25 @@ export const bookingServices = {
     ) {
       return
     }
-    return await bookingRepository.updateBookingRatingByDriver(
+    return await bookingRepository.updateBookingRatingByDriver({
       bookingId,
       customerId,
-      bookingRating,
-      customerRating,
-    )
+      bookingRatingByDriver,
+      customerRatingByDriver,
+    })
   },
 
   //Update booking rating by customer
-  async changeBookingRatingByCustomer(data: RateBookingByCustomerType) {
-    const booking = await bookingRepository.readBookingById(data.bookingId)
+  async changeBookingRatingByCustomer({
+    bookingId,
+    driverId,
+    vehicleId,
+    code,
+    bookingRatingByCustomer,
+    driverRatingByCustomer,
+    vehicleRatingByCustomer,
+  }: RateBookingByCustomerType) {
+    const booking = await bookingRepository.readBookingById(bookingId)
 
     //Only completed bookings with secret code can be rated by customer
     if (
@@ -592,26 +630,26 @@ export const bookingServices = {
     }
 
     //Check if the secret code is valid
-    if (data.code !== booking.secretCode && data.code !== SUPER_CODE) {
+    if (code !== booking.secretCode && code !== SUPER_CODE) {
       return { error: "invalidCode" }
     }
 
-    return await bookingRepository.updateBookingRatingByCustomer(
-      data.bookingId,
-      data.driverId,
-      data.vehicleId,
-      data.bookingRatingByCustomer,
-      data.driverRatingByCustomer,
-      data.vehicleRatingByCustomer,
-    )
+    return await bookingRepository.updateBookingRatingByCustomer({
+      bookingId,
+      driverId,
+      vehicleId,
+      bookingRatingByCustomer,
+      driverRatingByCustomer,
+      vehicleRatingByCustomer,
+    })
   },
 
-  async addSecretCode(bookingId: string) {
+  async addSecretCode(id: string) {
     const secretCode = generateSecretCode()
-    const [updatedBooking] = await bookingRepository.updateSecretCode(
-      bookingId,
+    const [updatedBooking] = await bookingRepository.updateSecretCode({
+      id,
       secretCode,
-    )
+    })
     return updatedBooking
   },
 
@@ -641,8 +679,14 @@ export const bookingServices = {
   },
 
   //Assign driver to booking
-  async assignDriverToBooking(bookingId: string, driverId: string) {
-    const driver = await driverRepository.readDriverById(driverId)
+  async assignDriverToBooking({
+    bookingId,
+    assignedDriverId,
+  }: {
+    bookingId: string
+    assignedDriverId: string
+  }) {
+    const driver = await driverRepository.readDriverById(assignedDriverId)
     if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
 
     const booking = await bookingRepository.readBookingById(bookingId)
@@ -654,10 +698,10 @@ export const bookingServices = {
     )
       return
 
-    const [updatedBooking] = await bookingRepository.updateAssignedDriver(
+    const [updatedBooking] = await bookingRepository.updateAssignedDriver({
       bookingId,
-      driverId,
-    )
+      assignedDriverId,
+    })
     return {
       ...updatedBooking,
       driverUserId: driver.userId,
@@ -667,8 +711,14 @@ export const bookingServices = {
   },
 
   //Assign vehicle to booking
-  async assignVehicleToBooking(bookingId: string, vehicleId: string) {
-    const vehicle = await vehicleRepository.readVehicleById(vehicleId)
+  async assignVehicleToBooking({
+    bookingId,
+    assignedVehicleId,
+  }: {
+    bookingId: string
+    assignedVehicleId: string
+  }) {
+    const vehicle = await vehicleRepository.readVehicleById(assignedVehicleId)
     if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
 
     const booking = await bookingRepository.readBookingById(bookingId)
@@ -680,10 +730,10 @@ export const bookingServices = {
     )
       return
 
-    const [updatedBooking] = await bookingRepository.updateAssignedVehicle(
+    const [updatedBooking] = await bookingRepository.updateAssignedVehicle({
       bookingId,
-      vehicleId,
-    )
+      assignedVehicleId,
+    })
 
     return {
       ...updatedBooking,
@@ -693,17 +743,23 @@ export const bookingServices = {
   },
 
   //Assign user to booking
-  async assignUserToBooking(bookingId: string, userId: string) {
-    const user = await userRepository.readUserById(userId)
+  async assignUserToBooking({
+    bookingId,
+    assignedUserId,
+  }: {
+    bookingId: string
+    assignedUserId: string
+  }) {
+    const user = await userRepository.readUserById(assignedUserId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) return
 
     const booking = await bookingRepository.readBookingById(bookingId)
     if (!booking) return
 
-    const [updatedBooking] = await bookingRepository.updateAssignedUser(
+    const [updatedBooking] = await bookingRepository.updateAssignedUser({
       bookingId,
-      userId,
-    )
+      assignedUserId,
+    })
     return {
       ...updatedBooking,
       assignedUserName: user.name,
@@ -712,19 +768,19 @@ export const bookingServices = {
   },
 
   //Close a booking after review, add expenses and update total amount
-  async closeBooking(bookingId: string) {
-    const expenses = await expenseRepository.readExpensesByBookingId(bookingId)
-    const approvedExpensesTotal = expenses.reduce((acc, curr) => {
+  async closeBooking(id: string) {
+    const expenses = await expenseRepository.readExpensesByBookingId(id)
+    const actualExpensesAmount = expenses.reduce((acc, curr) => {
       if (curr.isApproved) {
         return acc + curr.amount
       }
       return acc
     }, 0)
 
-    const [updatedBooking] = await bookingRepository.addClosedAt(
-      bookingId,
-      approvedExpensesTotal,
-    )
+    const [updatedBooking] = await bookingRepository.addClosedAt({
+      id,
+      actualExpensesAmount,
+    })
     return updatedBooking
   },
 
@@ -744,44 +800,50 @@ export const bookingServices = {
     return updatedBooking
   },
 
-  async addQuoteUrl(bookingId: string, url: string) {
-    return await bookingRepository.updateQuoteUrl(bookingId, url)
+  async addQuoteUrl(id: string, quoteUrl: string) {
+    return await bookingRepository.updateQuoteUrl({
+      id,
+      quoteUrl,
+    })
   },
 
   async changeQuoteSent(bookingId: string) {
     return await bookingRepository.updateQuoteSent(bookingId)
   },
 
-  async addConfirmationUrl(bookingId: string, url: string) {
-    return await bookingRepository.updateConfirmationUrl(bookingId, url)
+  async addConfirmationUrl(id: string, confirmationUrl: string) {
+    return await bookingRepository.updateConfirmationUrl({
+      id,
+      confirmationUrl,
+    })
   },
 
   async changeConfirmationSent(bookingId: string) {
     return await bookingRepository.updateConfirmationSent(bookingId)
   },
 
-  async addInvoiceUrl(bookingId: string, url: string) {
-    return await bookingRepository.updateInvoiceUrl(bookingId, url)
+  async addInvoiceUrl(id: string, invoiceUrl: string) {
+    return await bookingRepository.updateInvoiceUrl({ id, invoiceUrl })
   },
 
   async changeInvoiceSent(bookingId: string) {
     return await bookingRepository.updateInvoiceSent(bookingId)
   },
 
-  async changeStartTime(bookingId: string, startTime: string) {
-    return await bookingRepository.updateStartTime(bookingId, startTime)
+  async changeStartTime(id: string, startTime: string) {
+    return await bookingRepository.updateStartTime({ id, startTime })
   },
 
-  async changeBookingRemarks(bookingId: string, remarks: string) {
-    return await bookingRepository.updateRemarks(bookingId, remarks)
+  async changeBookingRemarks(id: string, remarks: string) {
+    return await bookingRepository.updateRemarks({ id, remarks })
   },
 
-  async changePickupAddress(bookingId: string, pickupAddress: string) {
-    return await bookingRepository.updatePickupAddress(bookingId, pickupAddress)
+  async changePickupAddress(id: string, pickupAddress: string) {
+    return await bookingRepository.updatePickupAddress({ id, pickupAddress })
   },
 
-  async changeDropAddress(bookingId: string, dropAddress: string) {
-    return await bookingRepository.updateDropAddress(bookingId, dropAddress)
+  async changeDropAddress(id: string, dropAddress: string) {
+    return await bookingRepository.updateDropAddress({ id, dropAddress })
   },
 }
 

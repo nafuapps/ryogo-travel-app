@@ -8,12 +8,17 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 
-export async function assignDriverAction(
-  bookingId: string,
-  selectedDriverId: string,
-  agencyId: string,
-  assignedUserId: string,
-) {
+export async function assignDriverAction({
+  bookingId,
+  selectedDriverId,
+  agencyId,
+  assignedUserId,
+}: {
+  bookingId: string
+  selectedDriverId: string
+  agencyId: string
+  assignedUserId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -27,10 +32,10 @@ export async function assignDriverAction(
     return
   }
 
-  const assignedDriverBooking = await bookingServices.assignDriverToBooking(
+  const assignedDriverBooking = await bookingServices.assignDriverToBooking({
     bookingId,
-    selectedDriverId,
-  )
+    assignedDriverId: selectedDriverId,
+  })
   if (!assignedDriverBooking || !assignedDriverBooking.assignedDriverId) {
     return
   }

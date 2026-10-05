@@ -8,11 +8,15 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 
-export async function assignUserAction(
-  bookingId: string,
-  selectedUserId: string,
-  agencyId: string,
-) {
+export async function assignUserAction({
+  bookingId,
+  selectedUserId,
+  agencyId,
+}: {
+  bookingId: string
+  selectedUserId: string
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -26,10 +30,10 @@ export async function assignUserAction(
     return
   }
 
-  const assignedUserBooking = await bookingServices.assignUserToBooking(
+  const assignedUserBooking = await bookingServices.assignUserToBooking({
     bookingId,
-    selectedUserId,
-  )
+    assignedUserId: selectedUserId,
+  })
   if (!assignedUserBooking || !assignedUserBooking.assignedUserId) {
     return
   }

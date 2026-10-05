@@ -31,15 +31,9 @@ import { Separator } from "@/components/ui/separator"
 export default function NewBookingFinal({
   onPrev,
   newBookingFormData,
-  userId,
-  agencyId,
-  customerId,
 }: {
   onPrev: () => void
   newBookingFormData: NewBookingRequestDataType
-  userId: string
-  agencyId: string
-  customerId: string
 }) {
   const t = useTranslations("Dashboard.NewBookingWithCustomer.Form.Final")
   const router = useRouter()
@@ -51,30 +45,8 @@ export default function NewBookingFinal({
 
   //Final form submit to create a new booking
   const onSubmit = async () => {
-    const newBookingData: NewBookingRequestDataType = {
-      source: newBookingFormData.source,
-      destination: newBookingFormData.destination,
-      routeId: newBookingFormData.routeId,
-      sourceId: newBookingFormData.sourceId,
-      destinationId: newBookingFormData.destinationId,
-      type: newBookingFormData.type,
-      startDate: newBookingFormData.startDate,
-      endDate: newBookingFormData.endDate,
-      passengers: newBookingFormData.passengers,
-      needsAc: newBookingFormData.needsAc,
-      assignedDriverId: newBookingFormData.assignedDriverId,
-      assignedVehicleId: newBookingFormData.assignedVehicleId,
-      selectedRatePerKm: newBookingFormData.selectedRatePerKm,
-      citydistance: newBookingFormData.citydistance,
-      selectedAcChargePerDay: newBookingFormData.selectedAcChargePerDay,
-      selectedAllowancePerDay: newBookingFormData.selectedAllowancePerDay,
-      selectedCommissionRate: newBookingFormData.selectedCommissionRate,
-    }
     const createdBooking = await newBookingAction({
-      agencyId: agencyId,
-      userId: userId,
-      customerId: customerId,
-      data: newBookingData,
+      data: newBookingFormData,
     })
     if (createdBooking) {
       router.replace(`/dashboard/bookings/${createdBooking.id}?feedback=true`)

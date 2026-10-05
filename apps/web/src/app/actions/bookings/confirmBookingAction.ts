@@ -9,22 +9,22 @@ import { generateBookingConfirmationPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { ConfirmBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
-export async function confirmBookingAction(
-  id: string,
-  agencyId: string,
-  assignedUserId: string,
-  startTime: string,
-  pickupAddress: string,
-  dropAddress?: string,
-  updateCustomerAddress?: boolean,
-  customerId?: string,
-) {
+export async function confirmBookingAction({
+  data,
+  agencyId,
+  assignedUserId,
+}: {
+  data: ConfirmBookingRequestType
+  agencyId: string
+  assignedUserId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -39,18 +39,11 @@ export async function confirmBookingAction(
     return
   }
 
-  const confirmedBooking = await bookingServices.confirmBooking(
-    id,
-    startTime,
-    pickupAddress,
-    dropAddress,
-    updateCustomerAddress,
-    customerId,
-  )
+  const confirmedBooking = await bookingServices.confirmBooking(data)
   if (!confirmedBooking) return
 
   //Get booking details
-  const bookingDetails = await bookingServices.findBookingDetailsById(id)
+  const bookingDetails = await bookingServices.findBookingDetailsById(data.id)
   if (!bookingDetails || !bookingDetails.startTime) {
     return
   }
@@ -95,11 +88,14 @@ export async function confirmBookingAction(
 
   //Upload file and get storage url
   const confirmationUrl = (
-    await uploadFile(confirmationFile, generateBookingConfirmationPathName(id))
+    await uploadFile(
+      confirmationFile,
+      generateBookingConfirmationPathName(bookingDetails.id),
+    )
   ).path
 
   //Update confirmation url in DB
-  await bookingServices.addConfirmationUrl(id, confirmationUrl)
+  await bookingServices.addConfirmationUrl(bookingDetails.id, confirmationUrl)
 
   //Share confirmation over email to customer
   if (bookingDetails.customer.email) {

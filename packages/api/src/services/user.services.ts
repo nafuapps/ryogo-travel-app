@@ -111,10 +111,10 @@ export const userServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryEndDate = addDays(new Date(), days)
-    const bookings = await bookingRepository.readAssignedBookingsByUserId(
+    const bookings = await bookingRepository.readAssignedBookingsByUserId({
       userId,
       queryEndDate,
-    )
+    })
 
     return bookings
   },
@@ -125,10 +125,10 @@ export const userServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryStartDate = subDays(new Date(), days)
-    const bookings = await bookingRepository.readCompletedBookingsByUserId(
+    const bookings = await bookingRepository.readCompletedBookingsByUserId({
       userId,
       queryStartDate,
-    )
+    })
 
     return bookings
   },
@@ -174,10 +174,10 @@ export const userServices = {
     }
 
     //Step2: Check if another agency exists with same phone and email
-    const existingAgencies = await agencyRepository.readAgencyByPhoneEmail(
-      data.agency.businessPhone,
-      data.agency.businessEmail,
-    )
+    const existingAgencies = await agencyRepository.readAgencyByPhoneEmail({
+      businessPhone: data.agency.businessPhone,
+      businessEmail: data.agency.businessEmail,
+    })
     if (existingAgencies) {
       return
     }

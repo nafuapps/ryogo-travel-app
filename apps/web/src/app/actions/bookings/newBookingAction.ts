@@ -14,24 +14,18 @@ import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 
 export async function newBookingAction({
-  agencyId,
-  userId,
-  customerId,
   data,
 }: {
-  agencyId: string
-  userId: string
-  customerId: string
   data: NewBookingRequestDataType
 }) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    currentUser.userId !== userId ||
+    currentUser.userId !== data.userId ||
     ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
       currentUser.userRole,
     ) ||
-    currentUser.agencyId !== agencyId
+    currentUser.agencyId !== data.agencyId
   ) {
     return
   }
@@ -40,12 +34,7 @@ export async function newBookingAction({
     return
   }
 
-  const booking = await bookingServices.addNewBooking(
-    agencyId,
-    userId,
-    customerId,
-    data,
-  )
+  const booking = await bookingServices.addNewBooking(data)
   if (!booking) return
 
   const leadBooking = await bookingServices.findBookingDetailsById(booking.id)
@@ -79,7 +68,7 @@ export async function newBookingAction({
 
   //Add mission to confirm this new booking
   await missionServices.addMission({
-    agencyId: agencyId,
+    agencyId: data.agencyId,
     userId: booking.assignedUserId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: booking.id,
@@ -93,7 +82,7 @@ export async function newBookingAction({
 
   //Add notification
   await notificationServices.addNotification({
-    agencyId: agencyId,
+    agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: booking.id,

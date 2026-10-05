@@ -12,12 +12,17 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 
-export async function assignVehicleAction(
-  bookingId: string,
-  selectedVehicleId: string,
-  agencyId: string,
-  assignedUserId: string,
-) {
+export async function assignVehicleAction({
+  bookingId,
+  selectedVehicleId,
+  agencyId,
+  assignedUserId,
+}: {
+  bookingId: string
+  selectedVehicleId: string
+  agencyId: string
+  assignedUserId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -32,10 +37,10 @@ export async function assignVehicleAction(
     return
   }
 
-  const assignedVehicleBooking = await bookingServices.assignVehicleToBooking(
+  const assignedVehicleBooking = await bookingServices.assignVehicleToBooking({
     bookingId,
-    selectedVehicleId,
-  )
+    assignedVehicleId: selectedVehicleId,
+  })
   if (!assignedVehicleBooking || !assignedVehicleBooking.assignedVehicleId) {
     return
   }

@@ -30,10 +30,10 @@ export const customerServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryEndDate = addDays(new Date(), days)
-    const bookings = await bookingRepository.readUpcomingBookingsByCustomerId(
+    const bookings = await bookingRepository.readUpcomingBookingsByCustomerId({
       customerId,
       queryEndDate,
-    )
+    })
 
     return bookings
   },
@@ -44,10 +44,10 @@ export const customerServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryStartDate = subDays(new Date(), days)
-    const bookings = await bookingRepository.readCompletedBookingsByCustomerId(
+    const bookings = await bookingRepository.readCompletedBookingsByCustomerId({
       customerId,
       queryStartDate,
-    )
+    })
 
     return bookings
   },
@@ -55,10 +55,10 @@ export const customerServices = {
   async addNewCustomer(data: NewCustomerRequestType) {
     //Check if a customer with same phone already exists in this agency
     const existingCustomer =
-      await customerRepository.readCustomerByPhoneInAgency(
-        data.phone,
-        data.agencyId,
-      )
+      await customerRepository.readCustomerByPhoneInAgency({
+        phone: data.phone,
+        agencyId: data.agencyId,
+      })
     if (existingCustomer.length > 0) {
       return
     }
@@ -95,40 +95,36 @@ export const customerServices = {
     if (!location) {
       return
     }
-    const [customer] = await customerRepository.updateCustomer(
-      data.customerId,
-      location.id,
-      data.name,
-      data.email,
-      data.address,
-      data.remarks,
-    )
+    const [customer] = await customerRepository.updateCustomer({
+      ...data,
+      locationId: location.id,
+    })
     return customer
   },
   //Update customer photo url
-  async updateCustomerPhoto(customerId: string, url: string) {
-    const [updatedCustomer] = await customerRepository.updatePhotoUrl(
+  async updateCustomerPhoto(customerId: string, photoUrl: string) {
+    const [updatedCustomer] = await customerRepository.updatePhotoUrl({
       customerId,
-      url,
-    )
+      photoUrl,
+    })
     return updatedCustomer
   },
 
   //Activate Customer
   async activateCustomer(customerId: string) {
-    const [updatedCustomer] = await customerRepository.updateStatus(
+    const [updatedCustomer] = await customerRepository.updateStatus({
       customerId,
-      CustomerStatusEnum.ACTIVE,
-    )
+      status: CustomerStatusEnum.ACTIVE,
+    })
     return updatedCustomer
   },
 
   //Inctivate Customer
   async inactivateCustomer(customerId: string) {
-    const [updatedCustomer] = await customerRepository.updateStatus(
+    const [updatedCustomer] = await customerRepository.updateStatus({
       customerId,
-      CustomerStatusEnum.INACTIVE,
-    )
+      status: CustomerStatusEnum.INACTIVE,
+    })
     return updatedCustomer
   },
 }

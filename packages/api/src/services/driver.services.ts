@@ -53,10 +53,10 @@ export const driverServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryEndDate = addDays(new Date(), days)
-    const bookings = await bookingRepository.readAllAssignedBookingsByDriverId(
+    const bookings = await bookingRepository.readAllAssignedBookingsByDriverId({
       driverId,
       queryEndDate,
-    )
+    })
 
     return bookings
   },
@@ -67,10 +67,10 @@ export const driverServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryStartDate = subDays(new Date(), days)
-    const bookings = await bookingRepository.readCompletedBookingsByDriverId(
+    const bookings = await bookingRepository.readCompletedBookingsByDriverId({
       driverId,
       queryStartDate,
-    )
+    })
 
     return bookings
   },

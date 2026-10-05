@@ -20,10 +20,10 @@ export default async function ExpiryAlertsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const expiryAlerts = await agencyServices.findAgencyExpiryAlerts(
-    currentUser.agencyId,
-    currentUser.userId,
-  )
+  const expiryAlerts = await agencyServices.findAgencyExpiryAlerts({
+    agencyId: currentUser.agencyId,
+    userId: currentUser.userId,
+  })
 
   return (
     <MainWrapper>

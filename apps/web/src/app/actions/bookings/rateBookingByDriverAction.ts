@@ -24,13 +24,13 @@ export async function rateBookingByDriverAction(
     return
   }
 
-  const updatedBooking = await bookingServices.changeBookingRatingByDriver(
+  const updatedBooking = await bookingServices.changeBookingRatingByDriver({
     bookingId,
     customerId,
-    currentUser.userId,
+    userId: currentUser.userId,
     bookingRatingByDriver,
     customerRatingByDriver,
-  )
+  })
   if (!updatedBooking) {
     return
   }

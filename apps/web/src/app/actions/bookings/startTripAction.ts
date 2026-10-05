@@ -28,11 +28,11 @@ export async function startTripAction(data: AddTripLogRequestType) {
   }
 
   //Change Booking, Driver and vehicle status to In trip
-  const bookingChanged = await bookingServices.changeBookingToInProgress(
-    data.bookingId,
-    data.driverId,
-    data.vehicleId,
-  )
+  const bookingChanged = await bookingServices.changeBookingToInProgress({
+    bookingId: data.bookingId,
+    driverId: data.driverId,
+    vehicleId: data.vehicleId,
+  })
   if (!bookingChanged) return
 
   // Create Start Trip Log

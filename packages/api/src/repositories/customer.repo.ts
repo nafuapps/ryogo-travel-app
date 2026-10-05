@@ -42,7 +42,13 @@ export const customerRepository = {
       },
     })
   },
-  async readCustomerByPhoneInAgency(phone: string, agencyId: string) {
+  async readCustomerByPhoneInAgency({
+    phone,
+    agencyId,
+  }: {
+    phone: string
+    agencyId: string
+  }) {
     return await db.query.customers.findMany({
       where: and(eq(customers.phone, phone), eq(customers.agencyId, agencyId)),
     })
@@ -77,14 +83,21 @@ export const customerRepository = {
     return await db.insert(customers).values(data).returning()
   },
 
-  async updateCustomer(
-    customerId: string,
-    locationId: string,
-    name?: string,
-    email?: string,
-    address?: string,
-    remarks?: string,
-  ) {
+  async updateCustomer({
+    customerId,
+    locationId,
+    name,
+    email,
+    address,
+    remarks,
+  }: {
+    customerId: string
+    locationId: string
+    name?: string
+    email?: string
+    address?: string
+    remarks?: string
+  }) {
     return await db
       .update(customers)
       .set({
@@ -105,10 +118,16 @@ export const customerRepository = {
       })
   },
 
-  async updateCustomerAddress(customerId: string, address: string) {
+  async updateCustomerAddress({
+    customerId,
+    address,
+  }: {
+    customerId: string
+    address: string
+  }) {
     return await db
       .update(customers)
-      .set({ address: address })
+      .set({ address })
       .where(eq(customers.id, customerId))
       .returning({
         id: customers.id,
@@ -117,10 +136,16 @@ export const customerRepository = {
   },
 
   //Update customer photo url
-  async updatePhotoUrl(customerId: string, photoUrl: string) {
+  async updatePhotoUrl({
+    customerId,
+    photoUrl,
+  }: {
+    customerId: string
+    photoUrl: string
+  }) {
     return await db
       .update(customers)
-      .set({ photoUrl: photoUrl })
+      .set({ photoUrl })
       .where(eq(customers.id, customerId))
       .returning({
         id: customers.id,
@@ -130,10 +155,16 @@ export const customerRepository = {
   },
 
   //Update customer status
-  async updateStatus(customerId: string, status: CustomerStatusEnum) {
+  async updateStatus({
+    customerId,
+    status,
+  }: {
+    customerId: string
+    status: CustomerStatusEnum
+  }) {
     return await db
       .update(customers)
-      .set({ status: status })
+      .set({ status })
       .where(eq(customers.id, customerId))
       .returning({
         id: customers.id,

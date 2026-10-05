@@ -20,9 +20,10 @@ export const MULTI_DAY_TRIP_INTERMEDIATE_DAYS_DISTANCE = 50 //Km
 export const OTHER_TRIP_LOG_INTERVAL_MINUTES = 15 //Minutes
 
 export const BOOKING_RATING_LIMIT_DAYS = 30
+export const BOOKING_SCHEDULE_DEFAULT_DAYS = 7
 
 //Orders
-export const EXISTING_ORDER_SEARCH_HOURS = 24
+export const EXISTING_ORDER_SEARCH_HOURS = 24 //Look for an existing created subscription order in past 24hrs, else create a new order
 
 //Subscription
 export const PREMIUM_TRIAL_DAYS = 30
@@ -55,3 +56,6 @@ export const EXPIRATION_ALERT_WINDOW_DAYS = 15
 
 //Users
 export const LOCATE_USER_MINUTES = 15
+
+//Dashboard
+export const DASHBOARD_FETCH_DAYS = 7

@@ -12,7 +12,11 @@ import { driverRepository } from "../repositories/driver.repo"
 import { userRepository } from "../repositories/user.repo"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
-import { EXPIRATION_ALERT_WINDOW_DAYS, PREMIUM_TRIAL_DAYS } from "../apiConfig"
+import {
+  BASIC_SEARCH_LIMIT_DAYS,
+  EXPIRATION_ALERT_WINDOW_DAYS,
+  PREMIUM_TRIAL_DAYS,
+} from "../apiConfig"
 import { ModifyAgencyRequestType } from "../types/agency.types"
 import { addDays, differenceInDays, subDays } from "date-fns"
 import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
@@ -64,7 +68,10 @@ export const agencyServices = {
     }
   },
 
-  async findAgencySearchData(agencyId: string, searchDays: number) {
+  async findAgencySearchData(
+    agencyId: string,
+    searchDays: number = BASIC_SEARCH_LIMIT_DAYS,
+  ) {
     const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
     const drivers = await driverRepository.readDriversByAgencyId(agencyId)
     const bookings = await bookingRepository.readBookingsSearchData(
@@ -87,7 +94,13 @@ export const agencyServices = {
   3. Driver leave
   4. Vehicle repair
   */
-  async findAgencyExpiryAlerts(agencyId: string, userId: string) {
+  async findAgencyExpiryAlerts({
+    agencyId,
+    userId,
+  }: {
+    agencyId: string
+    userId: string
+  }) {
     const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
     const rcExpiring = vehicles.filter(
       (vehicle) =>
@@ -157,78 +170,90 @@ export const agencyServices = {
     }
 
     //Step2: Update agency details
-    const [updatedAgency] = await agencyRepository.updateAgencyDetails(
-      data.agencyId,
-      data.businessName,
-      data.businessAddress,
-      data.defaultCommissionRate,
-      locationId,
-    )
+    const [updatedAgency] = await agencyRepository.updateAgencyDetails({
+      id: data.agencyId,
+      businessName: data.businessName,
+      businessAddress: data.businessAddress,
+      defaultCommissionRate: data.defaultCommissionRate,
+      locationId: locationId,
+    })
     return updatedAgency
   },
 
   //Activate an agency
   async activateAgency(agencyId: string, updateSubscriptionExpiry?: boolean) {
-    const [updatedAgency] = await agencyRepository.updateAgencyStatus(
-      agencyId,
-      AgencyStatusEnum.ACTIVE,
-      updateSubscriptionExpiry ? getSubscriptionExpirationDate() : undefined,
-    )
+    const [updatedAgency] = await agencyRepository.updateAgencyStatus({
+      id: agencyId,
+      status: AgencyStatusEnum.ACTIVE,
+      subscriptionExpiresOn: updateSubscriptionExpiry
+        ? getSubscriptionExpirationDate()
+        : undefined,
+    })
     return updatedAgency
   },
 
   //Inactivate an agency
   async inactivateAgency(agencyId: string) {
-    const [updatedAgency] = await agencyRepository.updateAgencyStatus(
-      agencyId,
-      AgencyStatusEnum.INACTIVE,
-    )
+    const [updatedAgency] = await agencyRepository.updateAgencyStatus({
+      id: agencyId,
+      status: AgencyStatusEnum.INACTIVE,
+    })
     return updatedAgency
   },
 
   async updateAgencyLogo(agencyId: string, url: string) {
-    const [agency] = await agencyRepository.updateAgencyLogoUrl(agencyId, url)
+    const [agency] = await agencyRepository.updateAgencyLogoUrl({
+      id: agencyId,
+      logoUrl: url,
+    })
     return agency
   },
 
   async updateAgencyQRCode(agencyId: string, url: string) {
-    const [agency] = await agencyRepository.updateAgencyQRCodeUrl(agencyId, url)
+    const [agency] = await agencyRepository.updateAgencyQRCodeUrl({
+      id: agencyId,
+      qrCodeUrl: url,
+    })
     return agency
   },
 
   //Change agency phone
   async changeAgencyPhone(agencyId: string, newPhone: string) {
-    const [updatedAgency] = await agencyRepository.updateAgencyPhone(
-      agencyId,
-      newPhone,
-    )
+    const [updatedAgency] = await agencyRepository.updateAgencyPhone({
+      id: agencyId,
+      businessPhone: newPhone,
+    })
     return updatedAgency
   },
 
   //Change agency email
   async changeAgencyEmail(agencyId: string, newEmail: string) {
-    const [updatedAgency] = await agencyRepository.updateAgencyEmail(
-      agencyId,
-      newEmail,
-    )
+    const [updatedAgency] = await agencyRepository.updateAgencyEmail({
+      id: agencyId,
+      businessEmail: newEmail,
+    })
     return updatedAgency
   },
 
   async downgradeAgencyToBasic(agencyId: string) {
     const [updatedAgency] = await agencyRepository.updateAgencySubscriptionPlan(
-      agencyId,
-      SubscriptionPlanEnum.BASIC,
+      {
+        id: agencyId,
+        subscriptionPlan: SubscriptionPlanEnum.BASIC,
+        subscriptionExpiresOn: getSubscriptionExpirationDate(),
+      },
     )
     return updatedAgency
   },
 
   async tryPremium(agencyId: string) {
-    const [updatedAgency] =
-      await agencyRepository.updateAgencyTrialSubscription(
-        agencyId,
-        SubscriptionPlanEnum.PREMIUM,
-        getSubscriptionExpirationDate(),
-      )
+    const [updatedAgency] = await agencyRepository.updateAgencySubscriptionPlan(
+      {
+        id: agencyId,
+        subscriptionPlan: SubscriptionPlanEnum.PREMIUM,
+        subscriptionExpiresOn: getSubscriptionExpirationDate(),
+      },
+    )
     return updatedAgency
   },
 }

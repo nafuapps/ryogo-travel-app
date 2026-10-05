@@ -46,6 +46,9 @@ export default function NewBookingForm({
 
   const [newBookingFormData, setNewBookingFormData] =
     useState<NewBookingRequestDataType>({
+      agencyId: agency.id,
+      customerId: customerId,
+      userId: userId,
       startDate: today,
       endDate: today,
       source: agency.location,
@@ -111,9 +114,6 @@ export default function NewBookingForm({
       key={4}
       onPrev={prevStepHandler}
       newBookingFormData={newBookingFormData}
-      customerId={customerId}
-      userId={userId}
-      agencyId={agency.id}
     />,
   ])
 

@@ -58,8 +58,10 @@ export const vehicleServices = {
   ) {
     const queryEndDate = addDays(new Date(), days)
     const bookings = await bookingRepository.readAllAssignedBookingsByVehicleId(
-      vehicleId,
-      queryEndDate,
+      {
+        vehicleId,
+        queryEndDate,
+      },
     )
 
     return bookings
@@ -71,10 +73,10 @@ export const vehicleServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryStartDate = subDays(new Date(), days)
-    const bookings = await bookingRepository.readCompletedBookingsByVehicleId(
+    const bookings = await bookingRepository.readCompletedBookingsByVehicleId({
       vehicleId,
       queryStartDate,
-    )
+    })
 
     return bookings
   },

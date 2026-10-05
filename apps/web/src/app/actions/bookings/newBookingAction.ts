@@ -11,6 +11,7 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
+import { format } from "date-fns"
 
 export async function newBookingAction({
   agencyId,
@@ -71,7 +72,7 @@ export async function newBookingAction({
         bookingId: leadBooking.id,
         downloadUrl: getFileUrl(quoteUrl),
         route: `${leadBooking.source.city} - ${leadBooking.destination.city}`,
-        date: leadBooking.startDate.toLocaleDateString(),
+        date: format(leadBooking.startDate, "dd MMM"),
       }),
     })
   }

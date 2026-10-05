@@ -7,6 +7,7 @@ import { generateBookingInvoicePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
+import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 
 export async function sendInvoiceAction(
@@ -58,7 +59,7 @@ export async function sendInvoiceAction(
     bookingId: bookingDetails.id,
     source: bookingDetails.source.city,
     destination: bookingDetails.destination.city,
-    startDate: bookingDetails.startDate.toLocaleDateString(),
+    startDate: format(bookingDetails.startDate, "dd MMM"),
     agencyPhone: bookingDetails.assignedUser.phone,
     invoiceLink: getFileUrl(invoiceUrl),
   })

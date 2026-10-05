@@ -48,7 +48,7 @@ export default function ExpenseItem({
             {expense.type}
           </RyogoSmall>
           <RyogoTiny color="light">
-            {format(expense.createdAt, "dd MMM - hh:mm aaa")}
+            {format(expense.expenseDate, "dd MMM")}
           </RyogoTiny>
         </SectionColWrapper>
         <RyogoH3 color={expense.isApproved ? "green" : "slate"}>

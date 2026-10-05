@@ -16,7 +16,7 @@ import {
   TransactionPartiesEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import moment from "moment"
+import { format } from "date-fns"
 
 export function BookingInvoiceDocument({
   booking,
@@ -76,9 +76,10 @@ export function BookingInvoiceDocument({
           <View id="Date" style={styles.detailsSection}>
             <Text style={styles.pBold}>Invoice Date: </Text>
             <Text style={styles.p}>
-              {moment(
+              {format(
                 booking.closedAt ?? booking.completedAt ?? booking.updatedAt,
-              ).format("DD MMM YYYY")}
+                "dd MMM yyyy",
+              )}
             </Text>
           </View>
           <View id="BookingID" style={styles.detailsSection}>
@@ -144,8 +145,9 @@ export function BookingInvoiceDocument({
           </View>
           <View id="TripFooter" style={styles.tripFooter}>
             <Text style={styles.p}>
-              {moment(booking.actualStartDate ?? booking.startDate).format(
-                "DD MMM YYYY",
+              {format(
+                booking.actualStartDate ?? booking.startDate,
+                "dd MMM yyyy",
               )}
             </Text>
             <Text style={styles.caption}>{booking.type}</Text>
@@ -153,9 +155,7 @@ export function BookingInvoiceDocument({
               {booking.passengers.toString() + " pax"}
             </Text>
             <Text style={styles.p}>
-              {moment(booking.actualEndDate ?? booking.endDate).format(
-                "DD MMM YYYY",
-              )}
+              {format(booking.actualEndDate ?? booking.endDate, "dd MMM yyyy")}
             </Text>
           </View>
         </View>
@@ -221,7 +221,7 @@ export function BookingInvoiceDocument({
             {approvedExpenses.map((expense) => (
               <View id={expense.id} key={expense.id} style={styles.tableRow}>
                 <Text style={styles.p}>
-                  {moment(expense.expenseDate).format("DD MMM - ")}
+                  {format(expense.expenseDate, "dd MMM") + " - "}
                   {expense.type}
                   {expense.remarks ? " (" + expense.remarks + ")" : ""}
                 </Text>
@@ -245,7 +245,7 @@ export function BookingInvoiceDocument({
             {customerTransactions.map((txn) => (
               <View id={txn.id} key={txn.id} style={styles.tableRow}>
                 <Text style={styles.p}>
-                  {moment(txn.transactionDate).format("DD MMM - ")}
+                  {format(txn.transactionDate, "dd MMM") + " - "}
                   {(txn.type ? "Received " : "Sent ") + txn.mode}
                 </Text>
                 <Text style={styles.p}>{txn.amount.toFixed(2)}</Text>

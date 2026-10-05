@@ -5,6 +5,7 @@ import { FindDashboardLeadsType } from "@ryogo-travel-app/api/services/booking.s
 import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 import Link from "next/link"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import { format } from "date-fns"
 
 export default async function DashboardLeadItemComponent({
   trip,
@@ -27,7 +28,7 @@ export default async function DashboardLeadItemComponent({
             {trip.id}
           </RyogoCaption>
           <RyogoCaption color={isLate ? "red" : "slate"}>
-            {trip.startDate.toLocaleDateString()}
+            {format(trip.startDate, "dd MMM")}
           </RyogoCaption>
         </SectionRowWrapper>
         <SectionRowWrapper small className="items-center justify-between">

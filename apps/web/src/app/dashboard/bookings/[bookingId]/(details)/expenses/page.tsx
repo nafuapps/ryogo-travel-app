@@ -45,7 +45,7 @@ export default async function BookingExpensesPage({
   const t = await getTranslations("Dashboard.BookingExpenses")
 
   //Expense can be created for in-progress or completed bookings only
-  //Only owner or assigned user can create expenses
+  //Only owner or assigned user can create expenses (for bookings that are not closed yet)
   const canEditExpense =
     (currentUser.userRole === UserRolesEnum.OWNER ||
       currentUser.userId === booking.assignedUserId) &&

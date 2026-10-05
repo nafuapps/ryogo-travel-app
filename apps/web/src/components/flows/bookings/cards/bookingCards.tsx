@@ -237,6 +237,7 @@ export function CompletedBookingCard({
         <RyogoTag
           label={moment(booking.completedAt ?? booking.updatedAt).format("lll")}
           icon={CheckCheck}
+          className="w-full justify-center"
         />
       </BookingCardLineWrapper>
     </BookingCardWrapper>
@@ -443,6 +444,7 @@ export function CancelledBookingCard({
         <RyogoTag
           label={moment(booking.cancelledAt).format("lll")}
           icon={Ban}
+          className="w-full justify-center"
         />
       </BookingCardLineWrapper>
     </BookingCardWrapper>

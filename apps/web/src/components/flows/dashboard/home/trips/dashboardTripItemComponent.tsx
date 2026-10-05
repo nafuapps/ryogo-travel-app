@@ -7,6 +7,7 @@ import { IdCard } from "lucide-react"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 import Link from "next/link"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import { format } from "date-fns"
 
 export default async function DashboardTripItemComponent({
   trip,
@@ -34,7 +35,7 @@ export default async function DashboardTripItemComponent({
           <RyogoCaption color={isLate ? "red" : "slate"}>
             {type === "starting"
               ? trip.startTime
-              : trip.endDate.toLocaleDateString()}
+              : format(trip.endDate, "dd MMM")}
           </RyogoCaption>
         </SectionRowWrapper>
         <SectionRowWrapper small className="items-center justify-between">

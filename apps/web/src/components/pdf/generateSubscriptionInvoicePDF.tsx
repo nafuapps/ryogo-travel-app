@@ -15,6 +15,7 @@ import {
   FindAllOrdersByAgencyIdType,
   FindOrderByRPIdType,
 } from "@ryogo-travel-app/api/services/order.services"
+import { format } from "date-fns"
 // import { GST_PERCENTAGE } from "@ryogo-travel-app/api/apiConfig"
 
 export function SubscriptionInvoiceDocument({
@@ -49,7 +50,9 @@ export function SubscriptionInvoiceDocument({
         <View id="buyerDetails" style={styles.bookingDetails}>
           <View id="Date" style={styles.detailsSection}>
             <Text style={styles.pBold}>Invoice Date: </Text>
-            <Text style={styles.p}>{order.createdAt.toLocaleDateString()}</Text>
+            <Text style={styles.p}>
+              {format(order.createdAt, "dd MMM yyyy")}
+            </Text>
           </View>
           <View id="BookingID" style={styles.detailsSection}>
             <Text style={styles.pBold}>Invoice ID: </Text>

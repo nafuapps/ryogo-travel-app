@@ -1595,6 +1595,7 @@ export const bookingRepository = {
         sourceId: true,
         destinationId: true,
         closedAt: true,
+        reconciledAt: true,
       },
     })
     return booking

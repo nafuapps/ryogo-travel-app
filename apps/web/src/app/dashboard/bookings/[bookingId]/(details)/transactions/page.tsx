@@ -13,7 +13,10 @@ import {
 } from "@/components/page/pageWrappers"
 import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
@@ -41,13 +44,14 @@ export default async function BookingTransactionsPage({
   const t = await getTranslations("Dashboard.BookingTransactions")
 
   //Txn can be created for in-progress or completed bookings only
-  //Only owner or assigned user can create transactions
+  //Only owner or assigned user can create  (for bookings that are not reconciled yet)
   const canCreateTransaction =
     (currentUser.userRole === UserRolesEnum.OWNER ||
       currentUser.userId === booking.assignedUserId) &&
     [BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
       booking.status,
-    )
+    ) &&
+    !booking.reconciledAt
 
   const bookingTransactions =
     await bookingServices.findBookingTransactionsById(bookingId)
@@ -71,6 +75,13 @@ export default async function BookingTransactionsPage({
                 className="w-full"
               />
             </Link>
+          )}
+          {booking.reconciledAt && (
+            <RyogoGhostButton
+              label={t("Reconciled")}
+              className="w-full"
+              disabled
+            />
           )}
           <HelpIconButton
             href={"/dashboard/support/help-bookings#transactions"}

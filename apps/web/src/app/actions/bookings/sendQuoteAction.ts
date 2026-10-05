@@ -7,6 +7,7 @@ import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
+import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 
 export async function sendQuoteAction(
@@ -57,7 +58,7 @@ export async function sendQuoteAction(
     bookingId: bookingDetails.id,
     source: bookingDetails.source.city,
     destination: bookingDetails.destination.city,
-    startDate: bookingDetails.startDate.toLocaleDateString(),
+    startDate: format(bookingDetails.startDate, "dd MMM"),
     amount: bookingDetails.estimatedTotalAmount.toString(),
     agencyPhone: bookingDetails.assignedUser.phone,
     quoteLink: getFileUrl(quoteUrl),

@@ -12,6 +12,7 @@ import {
   EntityTypeEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
+import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
 
@@ -71,7 +72,7 @@ export async function cancelBookingAction(
             name: bookingDetails.customer.name,
             bookingId: bookingDetails.id,
             route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
-            date: bookingDetails.startDate.toLocaleDateString(),
+            date: format(bookingDetails.startDate, "dd MMM"),
           }),
         })
       }
@@ -83,7 +84,7 @@ export async function cancelBookingAction(
         bookingId: bookingDetails.id,
         source: bookingDetails.source.city,
         destination: bookingDetails.destination.city,
-        startDate: bookingDetails.startDate.toLocaleDateString(),
+        startDate: format(bookingDetails.startDate, "dd MMM"),
         agencyPhone: bookingDetails.assignedUser.phone,
       })
       const cancelMessage = getWhatsappMessageLink(

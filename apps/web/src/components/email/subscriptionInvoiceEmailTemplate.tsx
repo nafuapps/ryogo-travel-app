@@ -1,3 +1,4 @@
+import { format } from "date-fns"
 import EmailFooter from "./emailFooter"
 
 export function SubscriptionInvoiceEmailTemplate({
@@ -22,7 +23,7 @@ export function SubscriptionInvoiceEmailTemplate({
         Thank you for purchasing <b>{orderType}</b> RyoGo subscription for your
         agency <b>{agencyName}</b>. You are now subscribed to our
         <b>{subscriptionPlan}</b> plan which will be valid till
-        <b>{expiryTime.toLocaleDateString()}</b>.
+        <b>{format(expiryTime, "dd MMM yyyy")}</b>.
       </h5>
       <p>
         Please find the detailed invoice attached with this email. Or you can

@@ -57,13 +57,14 @@ export default async function ModifyTransactionPage({
   }
 
   //Txn can be modified for in-progress or completed bookings only
-  //Only owner or booking assigned user can modify transactions
+  //Only owner or booking assigned user can modify transactions (for bookings that are not reconciled yet)
   if (
     ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
       booking.status,
     ) ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== booking.assignedUserId)
+      currentUser.userId !== booking.assignedUserId) ||
+    booking.reconciledAt
   ) {
     redirect(
       `/dashboard/bookings/${bookingId}/transactions`,

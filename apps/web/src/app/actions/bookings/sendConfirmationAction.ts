@@ -7,6 +7,7 @@ import { generateBookingConfirmationPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
+import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 
 export async function sendConfirmationAction(
@@ -61,7 +62,7 @@ export async function sendConfirmationAction(
     bookingId: bookingDetails.id,
     source: bookingDetails.source.city,
     destination: bookingDetails.destination.city,
-    startDate: bookingDetails.startDate.toLocaleDateString(),
+    startDate: format(bookingDetails.startDate, "dd MMM"),
     startTime: bookingDetails.startTime,
     agencyPhone: bookingDetails.assignedUser.phone,
     confirmationLink: getFileUrl(confirmationUrl),

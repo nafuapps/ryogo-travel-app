@@ -11,6 +11,7 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
+import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
@@ -116,7 +117,7 @@ export async function confirmBookingAction(
         downloadUrl: getFileUrl(confirmationUrl),
         trackingUrl: trackingUrl,
         route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
-        date: bookingDetails.startDate.toLocaleDateString(),
+        date: format(bookingDetails.startDate, "dd MMM"),
         assignedDriver: bookingDetails.assignedDriver?.name,
         assignedVehicle: bookingDetails.assignedVehicle?.vehicleNumber,
       }),
@@ -131,7 +132,7 @@ export async function confirmBookingAction(
     bookingId: bookingDetails.id,
     source: bookingDetails.source.city,
     destination: bookingDetails.destination.city,
-    startDate: bookingDetails.startDate.toLocaleDateString(),
+    startDate: format(bookingDetails.startDate, "dd MMM"),
     startTime: bookingDetails.startTime,
     agencyPhone: bookingDetails.assignedUser.phone,
     confirmationLink: getFileUrl(confirmationUrl),

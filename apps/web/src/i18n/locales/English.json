@@ -1310,6 +1310,7 @@
       "TrackAnother": "Track another booking"
     },
     "BookingTransactions": {
+      "Reconciled": "Booking reconciled.. no transactions changes allowed",
       "TotalTxnAmount": "Total Transactions",
       "ApprovedTxnAmount": "Approved Transactions",
       "TypeFilter": "Type Filter",

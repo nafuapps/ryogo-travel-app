@@ -57,7 +57,7 @@ export default function TransactionItem({
               transaction.otherParty}
           </RyogoCaption>
           <RyogoTiny color="light">
-            {format(transaction.createdAt, "dd MMM - hh:mm aaa")}
+            {format(transaction.transactionDate, "dd MMM")}
           </RyogoTiny>
         </SectionColWrapper>
         <RyogoH3 color={transaction.isApproved ? "green" : "slate"}>

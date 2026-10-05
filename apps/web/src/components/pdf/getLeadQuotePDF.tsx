@@ -12,6 +12,7 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
 import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
 import { getBookingTrackingLink } from "@/lib/utils"
+import { format } from "date-fns"
 
 export function LeadQuoteDocument({
   booking,
@@ -48,7 +49,7 @@ export function LeadQuoteDocument({
           <View id="Date" style={styles.detailsSection}>
             <Text style={styles.pBold}>Quote Date: </Text>
             <Text style={styles.p}>
-              {booking.createdAt.toLocaleDateString()}
+              {format(booking.createdAt, "dd MMM yyy")}
             </Text>
           </View>
           <View id="BookingID" style={styles.detailsSection}>
@@ -120,13 +121,15 @@ export function LeadQuoteDocument({
           </View>
           <View id="TripFooter" style={styles.tripFooter}>
             <Text style={styles.p}>
-              {booking.startDate.toLocaleDateString()}
+              {format(booking.startDate, "dd MMM yyyy")}
             </Text>
             <Text style={styles.caption}>{booking.type}</Text>
             <Text style={styles.caption}>
               {booking.passengers.toString() + " pax"}
             </Text>
-            <Text style={styles.p}>{booking.endDate.toLocaleDateString()}</Text>
+            <Text style={styles.p}>
+              {format(booking.endDate, "dd MMM yyyy")}
+            </Text>
           </View>
         </View>
         <View id="pricingTable" style={styles.pricingTable}>

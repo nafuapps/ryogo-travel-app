@@ -31,13 +31,14 @@ export default async function NewTransactionPage({
   }
 
   //Txn can be added for in-progress or completed bookings only
-  //Only owner or assigned user can add transactions
+  //Only owner or assigned user can add transactions (for bookings that are not reconciled yet)
   if (
     ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
       booking.status,
     ) ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== booking.assignedUserId)
+      currentUser.userId !== booking.assignedUserId) ||
+    booking.reconciledAt
   ) {
     redirect(
       `/dashboard/bookings/${bookingId}/transactions`,

@@ -639,7 +639,7 @@ export const userServices = {
   async changeName(userId: string, name: string, role: UserRolesEnum) {
     const [updatedUser] = await userRepository.updateName(userId, name)
     if (role === UserRolesEnum.DRIVER) {
-      await driverRepository.updateNameByUserId(userId, name)
+      await driverRepository.updateNameByUserId({ userId, name })
     }
     return updatedUser
   },
@@ -688,14 +688,10 @@ export const userServices = {
   },
 
   //change user's phone (by owner)
-  async changeUserPhone(
-    userId: string,
-    newPhone: string,
-    role?: UserRolesEnum,
-  ) {
-    const [updatedUser] = await userRepository.updatePhone(userId, newPhone)
+  async changeUserPhone(userId: string, phone: string, role?: UserRolesEnum) {
+    const [updatedUser] = await userRepository.updatePhone(userId, phone)
     if (role === UserRolesEnum.DRIVER) {
-      await driverRepository.updatePhoneByUserId(userId, newPhone)
+      await driverRepository.updatePhoneByUserId({ userId, phone })
     }
     return updatedUser
   },
@@ -707,10 +703,10 @@ export const userServices = {
       UserStatusEnum.ACTIVE,
     )
     if (role === UserRolesEnum.DRIVER) {
-      await driverRepository.updateStatusByUserId(
+      await driverRepository.updateStatusByUserId({
         userId,
-        DriverStatusEnum.AVAILABLE,
-      )
+        status: DriverStatusEnum.AVAILABLE,
+      })
     }
     return user
   },
@@ -722,10 +718,10 @@ export const userServices = {
       UserStatusEnum.INACTIVE,
     )
     if (role === UserRolesEnum.DRIVER) {
-      await driverRepository.updateStatusByUserId(
+      await driverRepository.updateStatusByUserId({
         userId,
-        DriverStatusEnum.INACTIVE,
-      )
+        status: DriverStatusEnum.INACTIVE,
+      })
     }
     return user
   },

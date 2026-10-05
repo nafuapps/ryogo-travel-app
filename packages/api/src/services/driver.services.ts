@@ -31,12 +31,12 @@ export const driverServices = {
 
   //Get drivers schedule
   async findDriversScheduleNextDays(agencyId: string, days: number = 7) {
-    const endDate = addDays(new Date(), days)
+    const queryEndDate = addDays(new Date(), days)
 
-    const driversScheduleData = await driverRepository.readDriversScheduleData(
+    const driversScheduleData = await driverRepository.readDriversScheduleData({
       agencyId,
-      endDate,
-    )
+      queryEndDate,
+    })
 
     return driversScheduleData
   },
@@ -128,12 +128,7 @@ export const driverServices = {
 
   //Modify driver details
   async modifyDriver(data: ModifyDriverRequestType) {
-    const [driver] = await driverRepository.updateDriverDetails(
-      data.driverId,
-      data.canDriveVehicleTypes,
-      data.address,
-      data.defaultAllowancePerDay,
-    )
+    const [driver] = await driverRepository.updateDriverDetails(data)
     return driver
   },
 
@@ -142,12 +137,10 @@ export const driverServices = {
     data: ChangeDriverLicenseRequestType,
     licensePhotoUrl?: string,
   ) {
-    const [driver] = await driverRepository.updateDriverLicenseDetails(
-      data.driverId,
-      data.licenseNumber,
-      data.licenseExpiresOn,
+    const [driver] = await driverRepository.updateDriverLicenseDetails({
+      ...data,
       licensePhotoUrl,
-    )
+    })
     return driver
   },
 
@@ -189,10 +182,10 @@ export const driverServices = {
     const driver = await driverRepository.readDriverById(driverId)
     if (!driver || driver.status !== DriverStatusEnum.AVAILABLE) return
 
-    const updatedDriver = await driverRepository.updateStatus(
+    const updatedDriver = await driverRepository.updateStatus({
       driverId,
-      DriverStatusEnum.LEAVE,
-    )
+      status: DriverStatusEnum.LEAVE,
+    })
     if (!updatedDriver) return
 
     const [leave] = await driverLeaveRepository.updateLeaveToStarted(leaveId)
@@ -204,10 +197,10 @@ export const driverServices = {
     const driver = await driverRepository.readDriverById(driverId)
     if (!driver || driver.status !== DriverStatusEnum.LEAVE) return
 
-    const updatedDriver = await driverRepository.updateStatus(
+    const updatedDriver = await driverRepository.updateStatus({
       driverId,
-      DriverStatusEnum.AVAILABLE,
-    )
+      status: DriverStatusEnum.AVAILABLE,
+    })
     if (!updatedDriver) return
 
     const [leave] = await driverLeaveRepository.updateLeaveToEnded(leaveId)
@@ -215,8 +208,14 @@ export const driverServices = {
   },
 
   //Upload driver license photo
-  async updateDriverLicensePhoto(driverId: string, licenseUrl: string) {
-    await driverRepository.updateDriverLicenseUrl(driverId, licenseUrl)
+  async updateDriverLicensePhoto({
+    driverId,
+    licensePhotoUrl,
+  }: {
+    driverId: string
+    licensePhotoUrl: string
+  }) {
+    await driverRepository.updateDriverLicenseUrl({ driverId, licensePhotoUrl })
   },
 
   //Activate Driver
@@ -226,19 +225,19 @@ export const driverServices = {
     if (!user || user.status === UserStatusEnum.INACTIVE) {
       return
     }
-    const [driver] = await driverRepository.updateStatus(
+    const [driver] = await driverRepository.updateStatus({
       driverId,
-      DriverStatusEnum.AVAILABLE,
-    )
+      status: DriverStatusEnum.AVAILABLE,
+    })
     return driver
   },
 
   //Inactivate Driver
   async inactivateDriver(driverId: string) {
-    const [driver] = await driverRepository.updateStatus(
+    const [driver] = await driverRepository.updateStatus({
       driverId,
-      DriverStatusEnum.INACTIVE,
-    )
+      status: DriverStatusEnum.INACTIVE,
+    })
     return driver
   },
 }

@@ -7,9 +7,9 @@ import {
   InsertDriverType,
   tripLogs,
   TripLogTypesEnum,
-  VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, notInArray, or, lte, not, gte } from "drizzle-orm"
+import { ModifyDriverRequestType } from "../types/driver.types"
 
 export const driverRepository = {
   //Get driver by id
@@ -111,7 +111,13 @@ export const driverRepository = {
   },
 
   //Get driver schedule data
-  async readDriversScheduleData(agencyId: string, queryEndDate: Date) {
+  async readDriversScheduleData({
+    agencyId,
+    queryEndDate,
+  }: {
+    agencyId: string
+    queryEndDate: Date
+  }) {
     return await db.query.drivers.findMany({
       columns: {
         id: true,
@@ -250,12 +256,12 @@ export const driverRepository = {
   },
 
   //Update driver
-  async updateDriverDetails(
-    id: string,
-    canDriveVehicleTypes?: VehicleTypesEnum[],
-    address?: string,
-    defaultAllowancePerDay?: number,
-  ) {
+  async updateDriverDetails({
+    id,
+    canDriveVehicleTypes,
+    address,
+    defaultAllowancePerDay,
+  }: ModifyDriverRequestType) {
     return await db
       .update(drivers)
       .set({
@@ -274,12 +280,17 @@ export const driverRepository = {
       })
   },
 
-  async updateDriverLicenseDetails(
-    id: string,
-    licenseNumber?: string,
-    licenseExpiresOn?: Date,
-    licensePhotoUrl?: string,
-  ) {
+  async updateDriverLicenseDetails({
+    id,
+    licenseNumber,
+    licenseExpiresOn,
+    licensePhotoUrl,
+  }: {
+    id: string
+    licenseNumber?: string
+    licenseExpiresOn?: Date
+    licensePhotoUrl?: string
+  }) {
     return await db
       .update(drivers)
       .set({
@@ -299,18 +310,30 @@ export const driverRepository = {
   },
 
   //Update driver license URL by Id
-  async updateDriverLicenseUrl(driverId: string, licenseUrl: string) {
+  async updateDriverLicenseUrl({
+    driverId,
+    licensePhotoUrl,
+  }: {
+    driverId: string
+    licensePhotoUrl: string
+  }) {
     return await db
       .update(drivers)
-      .set({ licensePhotoUrl: licenseUrl })
+      .set({ licensePhotoUrl })
       .where(eq(drivers.id, driverId))
   },
 
   //Update driver status
-  async updateStatus(driverId: string, status: DriverStatusEnum) {
+  async updateStatus({
+    driverId,
+    status,
+  }: {
+    driverId: string
+    status: DriverStatusEnum
+  }) {
     return await db
       .update(drivers)
-      .set({ status: status })
+      .set({ status })
       .where(eq(drivers.id, driverId))
       .returning({
         id: drivers.id,
@@ -321,10 +344,16 @@ export const driverRepository = {
   },
 
   //Update driver status by userId
-  async updateStatusByUserId(userId: string, status: DriverStatusEnum) {
+  async updateStatusByUserId({
+    userId,
+    status,
+  }: {
+    userId: string
+    status: DriverStatusEnum
+  }) {
     return await db
       .update(drivers)
-      .set({ status: status })
+      .set({ status })
       .where(eq(drivers.userId, userId))
       .returning({
         id: drivers.id,
@@ -334,7 +363,7 @@ export const driverRepository = {
   },
 
   //Update driver name by userId
-  async updateNameByUserId(userId: string, name: string) {
+  async updateNameByUserId({ userId, name }: { userId: string; name: string }) {
     return await db
       .update(drivers)
       .set({ name })
@@ -347,7 +376,13 @@ export const driverRepository = {
   },
 
   //Update driver phone by userId
-  async updatePhoneByUserId(userId: string, phone: string) {
+  async updatePhoneByUserId({
+    userId,
+    phone,
+  }: {
+    userId: string
+    phone: string
+  }) {
     return await db
       .update(drivers)
       .set({ phone })
@@ -360,22 +395,26 @@ export const driverRepository = {
   },
 
   //Update driver location
-  async updateLocation(
-    driverId: string,
-    latLong: string,
+  async updateLocation({
+    driverId,
+    geolocation,
+    latLong,
+  }: {
+    driverId: string
+    latLong: string
     geolocation:
       | {
           x: number
           y: number
         }
-      | undefined,
-  ) {
+      | undefined
+  }) {
     return await db
       .update(drivers)
       .set({
         locatedAt: new Date(),
-        latLong: latLong,
-        geolocation: geolocation,
+        latLong,
+        geolocation,
       })
       .where(eq(drivers.id, driverId))
       .returning({

@@ -6453,6 +6453,11 @@
     },
     "Help": {
       "Title": "Need Help"
+    },
+    "MobilePDFViewer": {
+      "Generating": "Generating ...",
+      "Error": "Error generating preview",
+      "Open": "Open PDF in new tab"
     }
   },
   "TermsAndConditions": {

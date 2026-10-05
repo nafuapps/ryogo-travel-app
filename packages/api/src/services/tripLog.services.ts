@@ -48,7 +48,11 @@ export const tripLogServices = {
         latLong,
         geolocation,
       )
-      await driverRepository.updateLocation(data.driverId, latLong, geolocation)
+      await driverRepository.updateLocation({
+        driverId: data.driverId,
+        latLong,
+        geolocation,
+      })
     }
     return tripLog
   },

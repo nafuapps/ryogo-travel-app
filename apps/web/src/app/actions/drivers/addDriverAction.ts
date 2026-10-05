@@ -48,10 +48,10 @@ export async function addDriverAction(
         licenseFile,
         generateLicensePhotoPathName(driver.id, licenseFile),
       )
-      await driverServices.updateDriverLicensePhoto(
-        driver.id,
-        uploadedLicense.path,
-      )
+      await driverServices.updateDriverLicensePhoto({
+        driverId: driver.id,
+        licensePhotoUrl: uploadedLicense.path,
+      })
     }
 
     const [userPhotoFile] = data.data.userPhotos || []

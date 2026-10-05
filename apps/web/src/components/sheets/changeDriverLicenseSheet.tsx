@@ -84,7 +84,7 @@ export default function ChangeDriverPhotoSheet({
   const onSubmit = async (data: ChangeDriverLicenseType) => {
     setOpen(false)
     const updatedDriver = await changeDriverLicenseAction({
-      driverId,
+      id: driverId,
       agencyId,
       addedByUserId,
       licenseNumber: data.licenseNumber,

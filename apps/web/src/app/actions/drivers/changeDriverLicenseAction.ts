@@ -32,7 +32,7 @@ export async function changeDriverLicenseAction(
   if (licenseFile) {
     const uploadedFile = await uploadFile(
       licenseFile,
-      generateLicensePhotoPathName(data.driverId, licenseFile),
+      generateLicensePhotoPathName(data.id, licenseFile),
     )
     licenseUrl = uploadedFile.path
   }

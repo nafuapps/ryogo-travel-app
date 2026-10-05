@@ -73,7 +73,7 @@ export default function ModifyDriverPageComponent({
   //Submit actions
   async function onSubmit(data: ModifyDriverType) {
     const modifyDriverData: ModifyDriverRequestType = {
-      driverId: driver.id,
+      id: driver.id,
       agencyId: driver.agencyId,
       addedByUserId: driver.addedByUserId,
       address: data.address,

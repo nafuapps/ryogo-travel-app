@@ -101,12 +101,12 @@ export async function closeBookingAction(
   })
 
   //Remove trip ended mission
-  await missionServices.removePreviousMissionsByEntityTitleKey(
+  await missionServices.removePreviousMissionsByEntityTitleKey({
     agencyId,
-    EntityTypeEnum.BOOKING,
-    updatedBooking.id,
-    "TripEnded.Title",
-  )
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: updatedBooking.id,
+    titleKey: "TripEnded.Title",
+  })
 
   return updatedBooking
 }

@@ -87,10 +87,10 @@ export const driverServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryStartDate = subDays(new Date(), days)
-    const leaves = await driverLeaveRepository.readDriverLeavesByDriverId(
+    const leaves = await driverLeaveRepository.readDriverLeavesByDriverId({
       driverId,
       queryStartDate,
-    )
+    })
     return leaves
   },
 
@@ -159,12 +159,7 @@ export const driverServices = {
 
   //Modify driver leave
   async modifyDriverLeave(data: ModifyDriverLeaveRequestType) {
-    const [leave] = await driverLeaveRepository.updateLeave(
-      data.leaveId,
-      data.startDate,
-      data.endDate,
-      data.remarks ?? undefined,
-    )
+    const [leave] = await driverLeaveRepository.updateLeave(data)
     if (!leave) return
     const driver = await driverRepository.readDriverById(leave.driverId)
     if (!driver) return
@@ -178,7 +173,13 @@ export const driverServices = {
   },
 
   //Start driver leave
-  async startDriverLeave(leaveId: string, driverId: string) {
+  async startDriverLeave({
+    leaveId,
+    driverId,
+  }: {
+    leaveId: string
+    driverId: string
+  }) {
     const driver = await driverRepository.readDriverById(driverId)
     if (!driver || driver.status !== DriverStatusEnum.AVAILABLE) return
 
@@ -193,7 +194,13 @@ export const driverServices = {
   },
 
   //End driver leave
-  async endDriverLeave(leaveId: string, driverId: string) {
+  async endDriverLeave({
+    leaveId,
+    driverId,
+  }: {
+    leaveId: string
+    driverId: string
+  }) {
     const driver = await driverRepository.readDriverById(driverId)
     if (!driver || driver.status !== DriverStatusEnum.LEAVE) return
 
@@ -219,7 +226,13 @@ export const driverServices = {
   },
 
   //Activate Driver
-  async activateDriver(driverId: string, userId: string) {
+  async activateDriver({
+    driverId,
+    userId,
+  }: {
+    driverId: string
+    userId: string
+  }) {
     //Cannot activate if the corresponding user is inactive
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.INACTIVE) {

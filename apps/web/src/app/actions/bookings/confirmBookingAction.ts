@@ -63,12 +63,12 @@ export async function confirmBookingAction({
   })
 
   //Remove lead mission for this booking
-  await missionServices.removePreviousMissionsByEntityTitleKey(
+  await missionServices.removePreviousMissionsByEntityTitleKey({
     agencyId,
-    EntityTypeEnum.BOOKING,
-    bookingDetails.id,
-    "LeadBooking.Title",
-  )
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: bookingDetails.id,
+    titleKey: "LeadBooking.Title",
+  })
 
   if (bookingDetails.assignedDriver) {
     await missionServices.addMission({

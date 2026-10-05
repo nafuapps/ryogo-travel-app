@@ -51,13 +51,13 @@ export default function AddSupportTicketCommentSheet({
   })
 
   const onSubmit = async (data: SchemaType) => {
-    const addedComment = await addUserCommentInSupportTicketAction(
+    const addedComment = await addUserCommentInSupportTicketAction({
       ticketId,
       userId,
       agencyId,
       status,
-      data.comment,
-    )
+      comment: data.comment,
+    })
     if (addedComment) {
       setOpen(false)
     } else {

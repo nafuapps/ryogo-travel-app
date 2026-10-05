@@ -44,7 +44,10 @@ export async function cancelBookingAction(
   if (!canceledBooking) return
 
   //Remove any missions for this booking
-  await missionServices.removePreviousMissionsByEntityId(agencyId, bookingId)
+  await missionServices.removePreviousMissionsByEntityId({
+    agencyId,
+    entityId: bookingId,
+  })
 
   if (isCancelledByUser) {
     //Add a notification feed

@@ -24,7 +24,7 @@ export async function startDriverLeaveAction(
     return
   }
 
-  const leave = await driverServices.startDriverLeave(leaveId, driverId)
+  const leave = await driverServices.startDriverLeave({ leaveId, driverId })
   if (!leave) return
 
   return leave

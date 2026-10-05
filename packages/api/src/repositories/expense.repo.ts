@@ -1,10 +1,7 @@
 import { db } from "@ryogo-travel-app/db"
-import {
-  expenses,
-  ExpenseTypesEnum,
-  InsertExpenseType,
-} from "@ryogo-travel-app/db/schema"
+import { expenses, InsertExpenseType } from "@ryogo-travel-app/db/schema"
 import { eq } from "drizzle-orm"
+import { UpdateExpenseRequestType } from "../types/expense.types"
 
 export const expenseRepository = {
   //Get expenses by booking id
@@ -37,21 +34,27 @@ export const expenseRepository = {
   },
 
   //Update expense photo URL
-  async updateExpensePhotoUrl(expenseId: string, photoUrl: string) {
+  async updateExpensePhotoUrl({
+    expenseId,
+    expensePhotoUrl,
+  }: {
+    expenseId: string
+    expensePhotoUrl: string
+  }) {
     return await db
       .update(expenses)
-      .set({ expensePhotoUrl: photoUrl })
+      .set({ expensePhotoUrl })
       .where(eq(expenses.id, expenseId))
   },
 
   //Update expense details
-  async updateExpenseDetails(
-    expenseId: string,
-    amount: number,
-    type: ExpenseTypesEnum,
-    expenseDate: Date,
-    remarks?: string,
-  ) {
+  async updateExpenseDetails({
+    expenseId,
+    amount,
+    type,
+    expenseDate,
+    remarks,
+  }: UpdateExpenseRequestType) {
     return await db
       .update(expenses)
       .set({
@@ -65,10 +68,16 @@ export const expenseRepository = {
   },
 
   //Update expense's approval status
-  async updateExpenseApprovalStatus(expenseId: string, status: boolean) {
+  async updateExpenseApprovalStatus({
+    expenseId,
+    isApproved,
+  }: {
+    expenseId: string
+    isApproved: boolean
+  }) {
     return await db
       .update(expenses)
-      .set({ isApproved: status })
+      .set({ isApproved })
       .where(eq(expenses.id, expenseId))
       .returning()
   },

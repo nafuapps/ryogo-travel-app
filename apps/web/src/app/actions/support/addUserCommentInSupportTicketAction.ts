@@ -4,13 +4,19 @@ import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
 
-export async function addUserCommentInSupportTicketAction(
-  ticketId: string,
-  userId: string,
-  agencyId: string,
-  status: TicketStatusEnum,
-  comment: string,
-) {
+export async function addUserCommentInSupportTicketAction({
+  ticketId,
+  userId,
+  agencyId,
+  status,
+  comment,
+}: {
+  ticketId: string
+  userId: string
+  agencyId: string
+  status: TicketStatusEnum
+  comment: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -25,10 +31,10 @@ export async function addUserCommentInSupportTicketAction(
     return
   }
 
-  const ticket = await supportServices.addSupportTicketUserComment(
+  const ticket = await supportServices.addSupportTicketUserComment({
     ticketId,
     comment,
-  )
+  })
 
   return ticket
 }

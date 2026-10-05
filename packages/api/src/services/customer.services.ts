@@ -63,10 +63,10 @@ export const customerServices = {
       return
     }
 
-    const location = await locationRepository.readLocationByCityState(
-      data.city,
-      data.state,
-    )
+    const location = await locationRepository.readLocationByCityState({
+      city: data.city,
+      state: data.state,
+    })
     if (!location) {
       return
     }
@@ -88,10 +88,10 @@ export const customerServices = {
 
   async modifyCustomer(data: ModifyCustomerRequestType) {
     //Find location
-    const location = await locationRepository.readLocationByCityState(
-      data.city,
-      data.state,
-    )
+    const location = await locationRepository.readLocationByCityState({
+      city: data.city,
+      state: data.state,
+    })
     if (!location) {
       return
     }

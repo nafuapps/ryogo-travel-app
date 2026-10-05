@@ -28,27 +28,23 @@ export const missionServices = {
     deletePreviousMissions: boolean = true,
   ) {
     if (deletePreviousMissions) {
-      await missionRepository.deleteMissionsByEntityTitleKey(
-        mission.agencyId,
-        mission.entityType,
-        mission.entityId,
-        mission.titleKey,
-      )
+      await missionRepository.deleteMissionsByEntityTitleKey({
+        agencyId: mission.agencyId,
+        entityType: mission.entityType,
+        entityId: mission.entityId,
+        titleKey: mission.titleKey,
+      })
     }
     const [newMission] = await missionRepository.createMission(mission)
     return newMission
   },
 
   async modifyMission(data: ModifyMissionRequestType) {
-    const [updatedMission] = await missionRepository.updateMission(
-      data.missionId,
-      data.entityId ? data.entityType : EntityTypeEnum.USER, //If no entity id, default to type User with userId
-      data.entityId ?? data.userId,
-      data.titleKey,
-      data.dueDate,
-      data.isCritical,
-      data.messageKey,
-    )
+    const [updatedMission] = await missionRepository.updateMission({
+      ...data,
+      entityType: data.entityId ? data.entityType : EntityTypeEnum.USER, //If no entity id, default to type User with userId
+      entityId: data.entityId ?? data.userId,
+    })
     return updatedMission
   },
 
@@ -58,41 +54,58 @@ export const missionServices = {
     return deletedMission
   },
 
-  async removePreviousMissionsByEntityTitleKey(
-    agencyId: string,
-    entityType: EntityTypeEnum,
-    entityId: string,
-    titleKey: string,
-  ) {
-    await missionRepository.deleteMissionsByEntityTitleKey(
+  async removePreviousMissionsByEntityTitleKey({
+    agencyId,
+    entityId,
+    entityType,
+    titleKey,
+  }: {
+    agencyId: string
+    entityType: EntityTypeEnum
+    entityId: string
+    titleKey: string
+  }) {
+    await missionRepository.deleteMissionsByEntityTitleKey({
       agencyId,
       entityType,
       entityId,
       titleKey,
-    )
+    })
   },
 
-  async removePreviousMissionsByTitleKey(agencyId: string, titleKey: string) {
-    await missionRepository.deleteMissionsByTitleKey(agencyId, titleKey)
+  async removePreviousMissionsByTitleKey({
+    agencyId,
+    titleKey,
+  }: {
+    agencyId: string
+    titleKey: string
+  }) {
+    await missionRepository.deleteMissionsByTitleKey({ agencyId, titleKey })
   },
 
-  async removePreviousMissionsByEntityId(agencyId: string, entityId: string) {
-    await missionRepository.deleteMissionsByEntityId(agencyId, entityId)
+  async removePreviousMissionsByEntityId({
+    agencyId,
+    entityId,
+  }: {
+    agencyId: string
+    entityId: string
+  }) {
+    await missionRepository.deleteMissionsByEntityId({ agencyId, entityId })
   },
 
   async markReadMission(missionId: string) {
-    const [updatedMission] = await missionRepository.updateReadStatus(
+    const [updatedMission] = await missionRepository.updateReadStatus({
       missionId,
-      true,
-    )
+      isRead: true,
+    })
     return updatedMission
   },
 
   async markUnReadMission(missionId: string) {
-    const [updatedMission] = await missionRepository.updateReadStatus(
+    const [updatedMission] = await missionRepository.updateReadStatus({
       missionId,
-      false,
-    )
+      isRead: false,
+    })
     return updatedMission
   },
 }

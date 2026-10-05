@@ -25,11 +25,11 @@ export async function reopenBookingAction(bookingId: string, agencyId: string) {
   }
 
   //Remove previous notification
-  await notificationServices.removeNotificationByEntityAndKey(
+  await notificationServices.removeNotificationByEntityAndKey({
     agencyId,
-    updatedBooking.id,
-    "BookingClosed",
-  )
+    entityId: updatedBooking.id,
+    textKey: "BookingClosed",
+  })
 
   return updatedBooking
 }

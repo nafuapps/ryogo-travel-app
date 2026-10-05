@@ -25,7 +25,7 @@ export default function ActivateDriverAlertButton({
 
   async function activate() {
     startTransition(async () => {
-      if (await activateDriverAction(driverId, userId, agencyId)) {
+      if (await activateDriverAction({ driverId, userId, agencyId })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

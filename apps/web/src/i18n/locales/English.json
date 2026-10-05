@@ -6457,7 +6457,8 @@
     "MobilePDFViewer": {
       "Generating": "Generating ...",
       "Error": "Error generating preview",
-      "Open": "Open PDF in new tab"
+      "Open": "Open PDF in new tab",
+      "Download": "Download PDF"
     }
   },
   "TermsAndConditions": {

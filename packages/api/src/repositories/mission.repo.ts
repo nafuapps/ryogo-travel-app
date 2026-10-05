@@ -6,6 +6,7 @@ import {
   missions,
 } from "@ryogo-travel-app/db/schema"
 import { subDays } from "date-fns"
+import { ModifyMissionRequestType } from "../types/mission.types"
 
 export const missionRepository = {
   async readMissionsByUserId(userId: string, days: number) {
@@ -44,15 +45,15 @@ export const missionRepository = {
     return await db.insert(missions).values(mission).returning()
   },
 
-  async updateMission(
-    id: string,
-    entityType: EntityTypeEnum,
-    entityId: string,
-    titleKey: string,
-    dueDate: Date,
-    isCritical: boolean,
-    messageKey?: string,
-  ) {
+  async updateMission({
+    missionId,
+    entityType,
+    entityId,
+    dueDate,
+    isCritical,
+    titleKey,
+    messageKey,
+  }: ModifyMissionRequestType) {
     return await db
       .update(missions)
       .set({
@@ -63,11 +64,17 @@ export const missionRepository = {
         isCritical,
         messageKey,
       })
-      .where(eq(missions.id, id))
+      .where(eq(missions.id, missionId))
       .returning()
   },
 
-  async updateReadStatus(missionId: string, isRead: boolean) {
+  async updateReadStatus({
+    missionId,
+    isRead,
+  }: {
+    missionId: string
+    isRead: boolean
+  }) {
     return await db
       .update(missions)
       .set({ isRead })
@@ -82,12 +89,17 @@ export const missionRepository = {
       .returning({ id: missions.id })
   },
 
-  async deleteMissionsByEntityTitleKey(
-    agencyId: string,
-    entityType: EntityTypeEnum,
-    entityId: string,
-    titleKey: string,
-  ) {
+  async deleteMissionsByEntityTitleKey({
+    agencyId,
+    entityId,
+    entityType,
+    titleKey,
+  }: {
+    agencyId: string
+    entityType: EntityTypeEnum
+    entityId: string
+    titleKey: string
+  }) {
     return await db
       .delete(missions)
       .where(
@@ -100,7 +112,13 @@ export const missionRepository = {
       )
   },
 
-  async deleteMissionsByTitleKey(agencyId: string, titleKey: string) {
+  async deleteMissionsByTitleKey({
+    agencyId,
+    titleKey,
+  }: {
+    agencyId: string
+    titleKey: string
+  }) {
     return await db
       .delete(missions)
       .where(
@@ -108,7 +126,13 @@ export const missionRepository = {
       )
   },
 
-  async deleteMissionsByEntityId(agencyId: string, entityId: string) {
+  async deleteMissionsByEntityId({
+    agencyId,
+    entityId,
+  }: {
+    agencyId: string
+    entityId: string
+  }) {
     return await db
       .delete(missions)
       .where(

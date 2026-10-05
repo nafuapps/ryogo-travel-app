@@ -23,7 +23,13 @@ export const sessionRepository = {
   },
 
   //Update session expiring time
-  async updateSessionExpiringTime(sessionId: string, expiresAt: Date) {
+  async updateSessionExpiringTime({
+    sessionId,
+    expiresAt,
+  }: {
+    sessionId: string
+    expiresAt: Date
+  }) {
     return await db
       .update(sessions)
       .set({ expiresAt })

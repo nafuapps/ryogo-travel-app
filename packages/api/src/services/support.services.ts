@@ -35,29 +35,48 @@ export const supportServices = {
     return tickets
   },
 
-  async updateSupportTicketPhoto(ticketId: string, photoUrl: string) {
-    const [updatedTicket] = await supportTicketRepository.updatePhotoUrl(
+  async updateSupportTicketPhoto({
+    ticketId,
+    photoUrl,
+  }: {
+    ticketId: string
+    photoUrl: string
+  }) {
+    const [updatedTicket] = await supportTicketRepository.updatePhotoUrl({
       ticketId,
       photoUrl,
-    )
+    })
     return updatedTicket
   },
 
-  async closeTicketWithRating(ticketId: string, rating?: number) {
+  async closeTicketWithRating({
+    ticketId,
+    resolutionRating,
+  }: {
+    ticketId: string
+    resolutionRating?: number
+  }) {
     const [closedTicket] =
-      await supportTicketRepository.updateTicketStatusWithRating(
+      await supportTicketRepository.updateTicketStatusWithRating({
         ticketId,
-        TicketStatusEnum.CLOSED,
-        rating,
-      )
+        status: TicketStatusEnum.CLOSED,
+        resolutionRating,
+      })
     return closedTicket
   },
-  async addSupportTicketUserComment(ticketId: string, comment: string) {
+
+  async addSupportTicketUserComment({
+    ticketId,
+    comment,
+  }: {
+    ticketId: string
+    comment: string
+  }) {
     const [updatedTicket] =
-      await supportTicketRepository.updateTicketCommentsByUser(
+      await supportTicketRepository.updateTicketCommentsByUser({
         ticketId,
         comment,
-      )
+      })
     return updatedTicket
   },
 

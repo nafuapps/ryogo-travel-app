@@ -39,20 +39,18 @@ export default function CloseSupportTicketSheet({
 
   const [open, setOpen] = useState(false)
 
-  const [resolutionRating, setResolutionRating] = useState(0)
+  const [rating, setRating] = useState(0)
 
   const onSubmit = async () => {
-    const resolutionRatingData =
-      resolutionRating > 0 && resolutionRating <= TOTAL_RATING_STARS
-        ? resolutionRating
-        : undefined
-    const closedTicket = await closeSupportTicketAction(
+    const resolutionRating =
+      rating > 0 && rating <= TOTAL_RATING_STARS ? rating : undefined
+    const closedTicket = await closeSupportTicketAction({
       ticketId,
       userId,
       agencyId,
       status,
-      resolutionRatingData,
-    )
+      resolutionRating,
+    })
     if (closedTicket) {
       setOpen(false)
       toast.success(t("Success"))
@@ -81,10 +79,10 @@ export default function CloseSupportTicketSheet({
         >
           <FormContentWrapper asCard={false} className="px-4 lg:px-5">
             <RyogoRatingInput
-              name="resolutionRating"
+              name="rating"
               label={t("RatingLabel")}
-              selectedStars={resolutionRating}
-              setSelectedStars={setResolutionRating}
+              selectedStars={rating}
+              setSelectedStars={setRating}
               totalStars={TOTAL_RATING_STARS}
             />
           </FormContentWrapper>

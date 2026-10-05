@@ -5,10 +5,17 @@ import {
   InsertDriverLeaveType,
 } from "@ryogo-travel-app/db/schema"
 import { and, eq, gte, lte, or } from "drizzle-orm"
+import { ModifyDriverLeaveRequestType } from "../types/driverLeave.types"
 
 export const driverLeaveRepository = {
   //Read all driver leaves by driver id
-  async readDriverLeavesByDriverId(driverId: string, queryStartDate: Date) {
+  async readDriverLeavesByDriverId({
+    driverId,
+    queryStartDate,
+  }: {
+    driverId: string
+    queryStartDate: Date
+  }) {
     return await db.query.driverLeaves.findMany({
       orderBy: (driverLeaves, { desc }) => [desc(driverLeaves.startDate)],
       where: and(
@@ -27,7 +34,13 @@ export const driverLeaveRepository = {
     })
   },
 
-  async readUpcomingDriverLeavesSchedule(agencyId: string, queryDate: Date) {
+  async readUpcomingDriverLeavesSchedule({
+    agencyId,
+    queryEndDate,
+  }: {
+    agencyId: string
+    queryEndDate: Date
+  }) {
     return await db.query.driverLeaves.findMany({
       columns: {
         id: true,
@@ -54,16 +67,16 @@ export const driverLeaveRepository = {
         eq(driverLeaves.agencyId, agencyId),
         or(
           and(
-            lte(driverLeaves.startDate, queryDate),
             gte(driverLeaves.startDate, new Date()),
+            lte(driverLeaves.startDate, queryEndDate),
           ),
           and(
-            lte(driverLeaves.endDate, queryDate),
             gte(driverLeaves.endDate, new Date()),
+            lte(driverLeaves.endDate, queryEndDate),
           ),
           and(
             lte(driverLeaves.startDate, new Date()),
-            gte(driverLeaves.endDate, queryDate),
+            gte(driverLeaves.endDate, queryEndDate),
           ),
         ),
       ),
@@ -98,12 +111,12 @@ export const driverLeaveRepository = {
   },
 
   //Update a driver leave
-  async updateLeave(
-    id: string,
-    startDate?: Date,
-    endDate?: Date,
-    remarks?: string,
-  ) {
+  async updateLeave({
+    leaveId,
+    startDate,
+    endDate,
+    remarks,
+  }: ModifyDriverLeaveRequestType) {
     return await db
       .update(driverLeaves)
       .set({
@@ -111,7 +124,7 @@ export const driverLeaveRepository = {
         endDate,
         remarks,
       })
-      .where(eq(driverLeaves.id, id))
+      .where(eq(driverLeaves.id, leaveId))
       .returning()
   },
 

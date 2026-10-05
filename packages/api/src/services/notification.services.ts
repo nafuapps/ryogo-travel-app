@@ -9,10 +9,10 @@ export const notificationServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryStartDate = subDays(new Date(), days)
-    return await notificationRepository.readFeedNotificationsByAgencyId(
+    return await notificationRepository.readFeedNotificationsByAgencyId({
       agencyId,
       queryStartDate,
-    )
+    })
   },
 
   async findNotificationsByUserId(
@@ -20,17 +20,17 @@ export const notificationServices = {
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
     const queryStartDate = subDays(new Date(), days)
-    return await notificationRepository.readNotificationsByUserId(
+    return await notificationRepository.readNotificationsByUserId({
       userId,
       queryStartDate,
-    )
+    })
   },
 
   //Show 5 most recent feed notifications
   // async findDashboardActivity(agencyId: string, days:) {
-  //   return await notificationRepository.readFeedNotificationsByAgencyId(
+  //   return await notificationRepository.readFeedNotificationsByAgencyId({
   //     agencyId,
-  //     queryStartDate
+  //     queryStartDate}
   //   )
   // },
 
@@ -40,16 +40,20 @@ export const notificationServices = {
     return newNotification
   },
 
-  async removeNotificationByEntityAndKey(
-    agencyId: string,
-    entityId: string,
-    textKey: string,
-  ) {
-    return await notificationRepository.deleteNotificationByEntityAndKey(
+  async removeNotificationByEntityAndKey({
+    agencyId,
+    entityId,
+    textKey,
+  }: {
+    agencyId: string
+    entityId: string
+    textKey: string
+  }) {
+    return await notificationRepository.deleteNotificationByEntityAndKey({
       agencyId,
       entityId,
       textKey,
-    )
+    })
   },
 }
 

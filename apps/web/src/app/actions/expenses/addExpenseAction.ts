@@ -38,10 +38,10 @@ export async function addExpenseAction(
       file,
       generateExpensePhotoPathName(data.bookingId, addedExpense.id, file),
     )
-    await expenseServices.changeExpensePhotoUrl(
-      addedExpense.id,
-      uploadResult.path,
-    )
+    await expenseServices.changeExpensePhotoUrl({
+      expenseId: addedExpense.id,
+      expensePhotoUrl: uploadResult.path,
+    })
   }
 
   await notificationServices.addNotification({

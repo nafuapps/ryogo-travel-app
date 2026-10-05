@@ -27,23 +27,27 @@ export const orderServices = {
   },
 
   async findLastPaidOrder(agencyId: string) {
-    return await orderRepository.readAgencyLatestOrderByStatus(
+    return await orderRepository.readAgencyLatestOrderByStatus({
       agencyId,
-      OrderStatusEnum.PAID,
-    )
+      status: OrderStatusEnum.PAID,
+    })
   },
 
-  async findExistingCreatedOrder(
-    agencyId: string,
-    userId: string,
-    plan: OrderTypeEnum,
-  ) {
-    const existingOrder = await orderRepository.readOrderCreatedRange(
+  async findExistingCreatedOrder({
+    agencyId,
+    userId,
+    orderType,
+  }: {
+    agencyId: string
+    userId: string
+    orderType: OrderTypeEnum
+  }) {
+    const existingOrder = await orderRepository.readOrderCreatedRange({
       agencyId,
       userId,
-      plan,
-      EXISTING_ORDER_SEARCH_HOURS,
-    )
+      orderType,
+      hours: EXISTING_ORDER_SEARCH_HOURS,
+    })
     return existingOrder
   },
 
@@ -59,19 +63,23 @@ export const orderServices = {
   },
 
   async changeOrderToAttempted(rpOrderId: string) {
-    const [order] = await orderRepository.updateOrderStatusbyRPId(
+    const [order] = await orderRepository.updateOrderStatusbyRPId({
       rpOrderId,
-      OrderStatusEnum.ATTEMPTED,
-      false,
-    )
+      status: OrderStatusEnum.ATTEMPTED,
+      isWebhookConfirmed: false,
+    })
     return order
   },
 
-  async changeOrderToPaid(
-    rpOrderId: string,
-    isWebhookConfirmed: boolean,
-    attempts?: number,
-  ) {
+  async changeOrderToPaid({
+    rpOrderId,
+    isWebhookConfirmed,
+    attempts,
+  }: {
+    rpOrderId: string
+    isWebhookConfirmed: boolean
+    attempts?: number
+  }) {
     const orderDetails = await orderRepository.readOrderByRPId(rpOrderId)
     if (!orderDetails) return
     const agencyDetails = await agencyRepository.readAgencyById(
@@ -87,12 +95,12 @@ export const orderServices = {
       return
 
     //Update order in DB
-    const [updatedOrder] = await orderRepository.updateOrderStatusbyRPId(
+    const [updatedOrder] = await orderRepository.updateOrderStatusbyRPId({
       rpOrderId,
-      OrderStatusEnum.PAID,
+      status: OrderStatusEnum.PAID,
       isWebhookConfirmed,
       attempts,
-    )
+    })
     // If for some reason, order update failed, should we proceed with subscription upgrade? -> NO
     if (!updatedOrder) return
 
@@ -126,19 +134,23 @@ export const orderServices = {
   },
 
   async confirmOrderWebhookStatus(orderId: string) {
-    return await orderRepository.updateOrderWebhookConfirmed(orderId, true)
+    return await orderRepository.updateOrderWebhookConfirmed(orderId)
   },
 
-  async addInvoiceUrlAndEmailSentTime(
-    orderId: string,
-    invoiceUrl: string,
-    emailSentAt: Date | null,
-  ) {
-    await orderRepository.updateInvoiceUrlAndEmailSentTime(
+  async addInvoiceUrlAndEmailSentTime({
+    orderId,
+    orderInvoiceUrl,
+    orderEmailSentAt,
+  }: {
+    orderId: string
+    orderInvoiceUrl: string
+    orderEmailSentAt: Date | null
+  }) {
+    await orderRepository.updateInvoiceUrlAndEmailSentTime({
       orderId,
-      invoiceUrl,
-      emailSentAt,
-    )
+      orderInvoiceUrl,
+      orderEmailSentAt,
+    })
   },
 }
 

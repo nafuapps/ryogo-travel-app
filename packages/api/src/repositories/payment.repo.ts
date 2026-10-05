@@ -39,16 +39,13 @@ export const paymentRepository = {
     return await db.insert(payments).values(payment).returning()
   },
 
-  async updatePaymentDetailsByRpId(
-    rpPaymentId: string,
-    paymentDetails: UpdatePaymentDetailsType,
-  ) {
+  async updatePaymentDetailsByRpId(paymentDetails: UpdatePaymentDetailsType) {
     return await db
       .update(payments)
       .set({
         ...paymentDetails,
       })
-      .where(eq(payments.rpPaymentId, rpPaymentId))
+      .where(eq(payments.rpPaymentId, paymentDetails.rpPaymentId))
       .returning()
   },
 }

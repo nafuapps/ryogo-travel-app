@@ -159,10 +159,10 @@ export const agencyServices = {
     //Step1: Get location id from city, state (if provided)
     let locationId: string | undefined = undefined
     if (data.agencyCity && data.agencyState) {
-      const location = await locationRepository.readLocationByCityState(
-        data.agencyCity,
-        data.agencyState,
-      )
+      const location = await locationRepository.readLocationByCityState({
+        city: data.agencyCity,
+        state: data.agencyState,
+      })
       if (!location) {
         return
       }

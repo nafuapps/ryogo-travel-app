@@ -22,14 +22,9 @@ export const paymentServices = {
     return addedPayment
   },
 
-  async changePaymentDetailsByRPId(
-    rpPaymentId: string,
-    data: UpdatePaymentDetailsType,
-  ) {
-    const [updatedPayment] = await paymentRepository.updatePaymentDetailsByRpId(
-      rpPaymentId,
-      data,
-    )
+  async changePaymentDetailsByRPId(data: UpdatePaymentDetailsType) {
+    const [updatedPayment] =
+      await paymentRepository.updatePaymentDetailsByRpId(data)
     return updatedPayment
   },
 }

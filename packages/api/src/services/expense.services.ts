@@ -29,28 +29,37 @@ export const expenseServices = {
 
   //Modify an expense's details
   async modifyExpense(data: UpdateExpenseRequestType) {
-    const [updatedExpense] = await expenseRepository.updateExpenseDetails(
-      data.expenseId,
-      data.amount,
-      data.type,
-      data.expenseDate,
-      data.remarks,
-    )
+    const [updatedExpense] = await expenseRepository.updateExpenseDetails(data)
     return updatedExpense
   },
 
   //Modify an expense approval status
-  async modifyExpenseApprovalStatus(expenseId: string, status: boolean) {
-    const [expense] = await expenseRepository.updateExpenseApprovalStatus(
+  async modifyExpenseApprovalStatus({
+    expenseId,
+    isApproved,
+  }: {
+    expenseId: string
+    isApproved: boolean
+  }) {
+    const [expense] = await expenseRepository.updateExpenseApprovalStatus({
       expenseId,
-      status,
-    )
+      isApproved,
+    })
     return expense
   },
 
   //update expense photo url
-  async changeExpensePhotoUrl(expenseId: string, url: string) {
-    await expenseRepository.updateExpensePhotoUrl(expenseId, url)
+  async changeExpensePhotoUrl({
+    expenseId,
+    expensePhotoUrl,
+  }: {
+    expenseId: string
+    expensePhotoUrl: string
+  }) {
+    await expenseRepository.updateExpensePhotoUrl({
+      expenseId,
+      expensePhotoUrl,
+    })
   },
 
   //Delete a expense

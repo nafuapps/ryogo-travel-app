@@ -6,10 +6,13 @@ import {
 } from "@ryogo-travel-app/db/schema"
 
 export const notificationRepository = {
-  async readFeedNotificationsByAgencyId(
-    agencyId: string,
-    queryStartDate: Date,
-  ) {
+  async readFeedNotificationsByAgencyId({
+    agencyId,
+    queryStartDate,
+  }: {
+    agencyId: string
+    queryStartDate: Date
+  }) {
     return await db.query.notifications.findMany({
       orderBy: (notifications, { desc }) => [desc(notifications.createdAt)],
       where: and(
@@ -20,7 +23,13 @@ export const notificationRepository = {
     })
   },
 
-  async readNotificationsByUserId(userId: string, queryStartDate: Date) {
+  async readNotificationsByUserId({
+    userId,
+    queryStartDate,
+  }: {
+    userId: string
+    queryStartDate: Date
+  }) {
     return await db.query.notifications.findMany({
       orderBy: (notifications, { desc }) => [desc(notifications.createdAt)],
       where: and(
@@ -34,11 +43,15 @@ export const notificationRepository = {
     return await db.insert(notifications).values(notification).returning()
   },
 
-  async deleteNotificationByEntityAndKey(
-    agencyId: string,
-    entityId: string,
-    textKey: string,
-  ) {
+  async deleteNotificationByEntityAndKey({
+    agencyId,
+    entityId,
+    textKey,
+  }: {
+    agencyId: string
+    entityId: string
+    textKey: string
+  }) {
     return await db
       .delete(notifications)
       .where(

@@ -37,10 +37,10 @@ export async function modifyExpenseAction(
       file,
       generateExpensePhotoPathName(data.bookingId, data.expenseId, file),
     )
-    await expenseServices.changeExpensePhotoUrl(
-      data.expenseId,
-      uploadResult.path,
-    )
+    await expenseServices.changeExpensePhotoUrl({
+      expenseId: data.expenseId,
+      expensePhotoUrl: uploadResult.path,
+    })
   }
 
   const updatedExpense = await expenseServices.modifyExpense(data)
@@ -61,10 +61,10 @@ export async function modifyExpenseAction(
   })
 
   if (isRider) {
-    await missionServices.removePreviousMissionsByEntityId(
+    await missionServices.removePreviousMissionsByEntityId({
       agencyId,
-      updatedExpense.id,
-    )
+      entityId: updatedExpense.id,
+    })
     await missionServices.addMission({
       agencyId: agencyId,
       userId: assignedUserId,

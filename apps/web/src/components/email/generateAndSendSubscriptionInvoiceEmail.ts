@@ -45,9 +45,9 @@ export default async function generateAndSendSubscriptionInvoiceEmail(
     attachments: [{ filename: invoiceName, path: invoicePublicUrl }],
   })
 
-  await orderServices.addInvoiceUrlAndEmailSentTime(
-    orderDetails.id,
-    invoiceUrl,
-    emailSent.data ? new Date() : null,
-  )
+  await orderServices.addInvoiceUrlAndEmailSentTime({
+    orderId: orderDetails.id,
+    orderInvoiceUrl: invoiceUrl,
+    orderEmailSentAt: emailSent.data ? new Date() : null,
+  })
 }

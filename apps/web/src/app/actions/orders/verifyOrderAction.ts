@@ -55,7 +55,10 @@ export async function verifyOrderAction({
   }
 
   // 3. Update the Database
-  const updatedRecord = await orderServices.changeOrderToPaid(rpOrderId, false)
+  const updatedRecord = await orderServices.changeOrderToPaid({
+    rpOrderId,
+    isWebhookConfirmed: false,
+  })
   if (!updatedRecord) return //Handle failed DB update on the client
 
   //Add feed for subscription purchase
@@ -74,10 +77,10 @@ export async function verifyOrderAction({
   })
 
   //Remove any subscription payment failed missions for this agency
-  await missionServices.removePreviousMissionsByTitleKey(
+  await missionServices.removePreviousMissionsByTitleKey({
     agencyId,
-    "SubscriptionPaymentFailed.Title",
-  )
+    titleKey: "SubscriptionPaymentFailed.Title",
+  })
 
   // 4. Send invoice to user
   await generateAndSendSubscriptionInvoiceEmail(rpOrderId, agencyId, userId)

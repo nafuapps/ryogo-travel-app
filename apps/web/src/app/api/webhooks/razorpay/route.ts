@@ -99,7 +99,8 @@ export async function POST(req: NextRequest) {
     })
   } else {
     //Else update it
-    await paymentServices.changePaymentDetailsByRPId(paymentEntity.id, {
+    await paymentServices.changePaymentDetailsByRPId({
+      rpPaymentId: paymentEntity.id,
       amount: paymentEntity.amount / 100, //Store amount in Rs
       status: getPaymentStatus(event.event),
       method: getPaymentMethod(paymentEntity.method),
@@ -129,13 +130,12 @@ export async function POST(req: NextRequest) {
 
   //If order event is 'paid'
   if (event.event === "order.paid") {
-    const attempts = event.payload.order.entity.attempts
     //Mark order as paid in DB - this will trigger subscription upgrade
-    const updatedOrder = await orderServices.changeOrderToPaid(
-      paymentEntity.order_id,
-      true,
-      attempts,
-    )
+    const updatedOrder = await orderServices.changeOrderToPaid({
+      rpOrderId: paymentEntity.order_id,
+      isWebhookConfirmed: true,
+      attempts: event.payload.order.entity.attempts,
+    })
     if (updatedOrder) {
       const userName = event.payload.order.entity.notes.userName
       await notificationServices.addNotification({
@@ -153,10 +153,10 @@ export async function POST(req: NextRequest) {
       })
 
       //Remove any subscription payment failed missions for this agency
-      await missionServices.removePreviousMissionsByTitleKey(
-        updatedOrder.agencyId,
-        "SubscriptionPaymentFailed.Title",
-      )
+      await missionServices.removePreviousMissionsByTitleKey({
+        agencyId: updatedOrder.agencyId,
+        titleKey: "SubscriptionPaymentFailed.Title",
+      })
 
       await generateAndSendSubscriptionInvoiceEmail(
         paymentEntity.order_id,

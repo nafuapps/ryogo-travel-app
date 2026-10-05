@@ -20,7 +20,7 @@ const razorpay = new Razorpay({
 export async function createOrderAction(
   agencyId: string,
   userId: string,
-  plan: OrderTypeEnum,
+  orderType: OrderTypeEnum,
 ) {
   const currentUser = await getCurrentUser()
   if (
@@ -36,14 +36,14 @@ export async function createOrderAction(
     return
   }
 
-  const amountInRs = getSubscriptionPlanPrice(plan)
+  const amountInRs = getSubscriptionPlanPrice(orderType)
 
-  //If an order already exists by this user for this plan in last X hours, use it for payment
-  const existingOrder = await orderServices.findExistingCreatedOrder(
+  //If an order already exists by this user for this orderType in last X hours, use it for payment
+  const existingOrder = await orderServices.findExistingCreatedOrder({
     agencyId,
     userId,
-    plan,
-  )
+    orderType,
+  })
   if (existingOrder) {
     return existingOrder
   }
@@ -55,7 +55,7 @@ export async function createOrderAction(
     receipt: `ryogo_receipt_${Date.now()}`,
     notes: {
       agencyId: agencyId,
-      plan: plan,
+      plan: orderType,
       userId: userId,
       userName: currentUser.name,
     },

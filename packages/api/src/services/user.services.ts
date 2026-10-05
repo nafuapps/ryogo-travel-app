@@ -183,10 +183,10 @@ export const userServices = {
     }
 
     //Step3: Get location id from city, state
-    const location = await locationRepository.readLocationByCityState(
-      data.agency.agencyCity,
-      data.agency.agencyState,
-    )
+    const location = await locationRepository.readLocationByCityState({
+      city: data.agency.agencyCity,
+      state: data.agency.agencyState,
+    })
     if (!location) {
       return
     }
@@ -507,8 +507,14 @@ export const userServices = {
   },
 
   //Update user session expiry
-  async changeUserSessionExpiry(sessionId: string, expiresAt: Date) {
-    await sessionRepository.updateSessionExpiringTime(sessionId, expiresAt)
+  async changeUserSessionExpiry({
+    sessionId,
+    expiresAt,
+  }: {
+    sessionId: string
+    expiresAt: Date
+  }) {
+    await sessionRepository.updateSessionExpiringTime({ sessionId, expiresAt })
   },
 
   //Update user last seen

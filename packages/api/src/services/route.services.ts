@@ -7,77 +7,87 @@ import { locationRepository } from "../repositories/location.repo"
 import { routeRepository } from "../repositories/route.repo"
 
 export const routeServices = {
-  async findOrCreateRouteByLocations(
-    sourceCity: string,
-    sourceState: string,
-    destinationCity: string,
-    destinationState: string,
-  ) {
+  async findOrCreateRouteByLocations({
+    sourceCity,
+    sourceState,
+    destinationCity,
+    destinationState,
+  }: {
+    sourceCity: string
+    sourceState: string
+    destinationCity: string
+    destinationState: string
+  }) {
     if (sourceCity === destinationCity && sourceState === destinationState) {
       return
     }
-    const source = await locationRepository.readLocationByCityState(
-      sourceCity,
-      sourceState,
-    )
-    const destination = await locationRepository.readLocationByCityState(
-      destinationCity,
-      destinationState,
-    )
+    const source = await locationRepository.readLocationByCityState({
+      city: sourceCity,
+      state: sourceState,
+    })
+    const destination = await locationRepository.readLocationByCityState({
+      city: destinationCity,
+      state: destinationState,
+    })
 
     if (!source || !destination) {
       return
     }
 
-    const route = await routeRepository.readRouteByLocations(
-      source.id,
-      destination.id,
-    )
+    const route = await routeRepository.readRouteByLocations({
+      sourceId: source.id,
+      destinationId: destination.id,
+    })
     if (route) {
       return route
     }
     //No route found, create a new one
     // Get postgis distance
-    const newDistance = await locationRepository.readDistanceBetweenLocations(
-      source.id,
-      destination.id,
-    )
+    const newDistance = await locationRepository.readDistanceBetweenLocations({
+      sourceId: source.id,
+      destinationId: destination.id,
+    })
     if (!newDistance || newDistance < 1) {
       return
     }
 
     //Create new route with this distance
-    const [newRoute] = await routeRepository.createRoute(
-      source.id,
-      destination.id,
-      newDistance,
-    )
+    const [newRoute] = await routeRepository.createRoute({
+      sourceId: source.id,
+      destinationId: destination.id,
+      distance: newDistance,
+      estimatedTime: newDistance,
+    })
     return newRoute
   },
 
-  async addNewRouteWithDistance(
-    sourceId: string,
-    destinationId: string,
-    distance: number,
-  ) {
+  async addNewRouteWithDistance({
+    sourceId,
+    destinationId,
+    distance,
+  }: {
+    sourceId: string
+    destinationId: string
+    distance: number
+  }) {
     if (sourceId === destinationId) {
       return
     }
 
     //Check if a route already exists for these locations
-    const route = await routeRepository.readRouteByLocations(
+    const route = await routeRepository.readRouteByLocations({
       sourceId,
       destinationId,
-    )
+    })
     if (route) {
       return route
     }
 
     // Get postgis distance
-    const dbDistance = await locationRepository.readDistanceBetweenLocations(
+    const dbDistance = await locationRepository.readDistanceBetweenLocations({
       sourceId,
       destinationId,
-    )
+    })
 
     let newDistance: number
 
@@ -95,11 +105,12 @@ export const routeServices = {
       }
     }
 
-    const [newRoute] = await routeRepository.createRoute(
+    const [newRoute] = await routeRepository.createRoute({
       sourceId,
       destinationId,
-      newDistance,
-    )
+      distance: newDistance,
+      estimatedTime: newDistance,
+    })
     return newRoute
   },
 }

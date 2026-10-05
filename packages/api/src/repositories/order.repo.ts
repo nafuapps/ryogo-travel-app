@@ -55,10 +55,13 @@ export const orderRepository = {
   },
 
   //Find latest order by status for an agency
-  async readAgencyLatestOrderByStatus(
-    agencyId: string,
-    status: OrderStatusEnum,
-  ) {
+  async readAgencyLatestOrderByStatus({
+    agencyId,
+    status,
+  }: {
+    agencyId: string
+    status: OrderStatusEnum
+  }) {
     return await db.query.orders.findFirst({
       orderBy: (orders, { desc }) => [desc(orders.updatedAt)],
       where: and(eq(orders.status, status), eq(orders.agencyId, agencyId)),
@@ -66,16 +69,21 @@ export const orderRepository = {
   },
 
   //Find order created in last X hours
-  async readOrderCreatedRange(
-    agencyId: string,
-    userId: string,
-    plan: OrderTypeEnum,
-    hours: number,
-  ) {
+  async readOrderCreatedRange({
+    agencyId,
+    userId,
+    orderType,
+    hours,
+  }: {
+    agencyId: string
+    userId: string
+    orderType: OrderTypeEnum
+    hours: number
+  }) {
     return await db.query.orders.findFirst({
       where: and(
         eq(orders.status, OrderStatusEnum.CREATED),
-        eq(orders.orderType, plan),
+        eq(orders.orderType, orderType),
         eq(orders.agencyId, agencyId),
         eq(orders.userId, userId),
         gt(orders.createdAt, new Date(Date.now() - hours * 60 * 60 * 1000)),
@@ -87,12 +95,17 @@ export const orderRepository = {
     return await db.insert(orders).values(order).returning()
   },
 
-  async updateOrderStatusbyRPId(
-    rpOrderId: string,
-    status: OrderStatusEnum,
-    isWebhookConfirmed: boolean,
-    attempts?: number,
-  ) {
+  async updateOrderStatusbyRPId({
+    rpOrderId,
+    status,
+    isWebhookConfirmed,
+    attempts,
+  }: {
+    rpOrderId: string
+    status: OrderStatusEnum
+    isWebhookConfirmed: boolean
+    attempts?: number
+  }) {
     return await db
       .update(orders)
       .set({ status, attempts, isWebhookConfirmed })
@@ -100,23 +113,27 @@ export const orderRepository = {
       .returning()
   },
 
-  async updateOrderWebhookConfirmed(id: string, isWebhookConfirmed: boolean) {
+  async updateOrderWebhookConfirmed(id: string) {
     return await db
       .update(orders)
-      .set({ isWebhookConfirmed })
+      .set({ isWebhookConfirmed: true })
       .where(eq(orders.id, id))
       .returning()
   },
 
-  async updateInvoiceUrlAndEmailSentTime(
-    id: string,
-    orderInvoiceUrl: string,
-    orderEmailSentAt: Date | null,
-  ) {
+  async updateInvoiceUrlAndEmailSentTime({
+    orderId,
+    orderInvoiceUrl,
+    orderEmailSentAt,
+  }: {
+    orderId: string
+    orderInvoiceUrl: string
+    orderEmailSentAt: Date | null
+  }) {
     return await db
       .update(orders)
       .set({ orderInvoiceUrl, orderEmailSentAt })
-      .where(eq(orders.id, id))
+      .where(eq(orders.id, orderId))
       .returning()
   },
 }

@@ -25,8 +25,11 @@ export async function changeSupportTicketPhotoAction(
     file,
     generateUserSupportTicketPhotoPathName(userId, ticketId, file),
   )
-  const url = uploadedPhoto.path
-  const ticket = await supportServices.updateSupportTicketPhoto(ticketId, url)
+  const photoUrl = uploadedPhoto.path
+  const ticket = await supportServices.updateSupportTicketPhoto({
+    ticketId,
+    photoUrl,
+  })
 
   return ticket
 }

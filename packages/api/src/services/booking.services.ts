@@ -107,20 +107,22 @@ export const bookingServices = {
     agencyId: string,
     days: number = DASHBOARD_FETCH_DAYS,
   ) {
-    const queryDate = addDays(new Date(), days)
+    const queryEndDate = addDays(new Date(), days)
     const bookings = await bookingRepository.readUpcomingBookingsSchedule(
       agencyId,
-      queryDate,
+      queryEndDate,
     )
 
     const leaves = await driverLeaveRepository.readUpcomingDriverLeavesSchedule(
-      agencyId,
-      queryDate,
+      {
+        agencyId,
+        queryEndDate,
+      },
     )
     const repairs =
       await vehicleRepairRepository.readUpcomingVehicleRepairsSchedule(
         agencyId,
-        queryDate,
+        queryEndDate,
       )
 
     const bookingsSchedule = bookings.map((item) => {
@@ -310,19 +312,19 @@ export const bookingServices = {
     //Step1: Get trip sourceId and destinationId from city & state
     let sourceId = data.sourceId
     if (!sourceId) {
-      const source = await locationRepository.readLocationByCityState(
-        data.source.city,
-        data.source.state,
-      )
+      const source = await locationRepository.readLocationByCityState({
+        city: data.source.city,
+        state: data.source.state,
+      })
       if (!source) return
       sourceId = source.id
     }
     let destinationId = data.destinationId
     if (!destinationId) {
-      const destination = await locationRepository.readLocationByCityState(
-        data.destination.city,
-        data.destination.state,
-      )
+      const destination = await locationRepository.readLocationByCityState({
+        city: data.destination.city,
+        state: data.destination.state,
+      })
       if (!destination) return
       destinationId = destination.id
     }
@@ -330,11 +332,11 @@ export const bookingServices = {
     //Step3: Check if a route exists.. if not create a new one
     let routeId = data.routeId
     if (!routeId) {
-      const newRoute = await routeServices.addNewRouteWithDistance(
+      const newRoute = await routeServices.addNewRouteWithDistance({
         sourceId,
         destinationId,
-        data.citydistance,
-      )
+        distance: data.citydistance,
+      })
       if (!newRoute) {
         return
       }

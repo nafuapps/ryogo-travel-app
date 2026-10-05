@@ -5,13 +5,19 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { EntityTypeEnum, TicketStatusEnum } from "@ryogo-travel-app/db/schema"
 
-export async function closeSupportTicketAction(
-  ticketId: string,
-  userId: string,
-  agencyId: string,
-  status: TicketStatusEnum,
-  rating?: number,
-) {
+export async function closeSupportTicketAction({
+  ticketId,
+  userId,
+  agencyId,
+  status,
+  resolutionRating,
+}: {
+  ticketId: string
+  userId: string
+  agencyId: string
+  status: TicketStatusEnum
+  resolutionRating?: number
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -26,7 +32,10 @@ export async function closeSupportTicketAction(
     return
   }
 
-  const ticket = await supportServices.closeTicketWithRating(ticketId, rating)
+  const ticket = await supportServices.closeTicketWithRating({
+    ticketId,
+    resolutionRating,
+  })
 
   if (!ticket) return
 

@@ -99,28 +99,28 @@ export async function startTripAction(data: AddTripLogRequestType) {
   })
 
   //Remove confirmed booking mission for the agent
-  await missionServices.removePreviousMissionsByEntityTitleKey(
-    data.agencyId,
-    EntityTypeEnum.BOOKING,
-    bookingChanged.id,
-    "ConfirmedBooking.Title",
-  )
+  await missionServices.removePreviousMissionsByEntityTitleKey({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: bookingChanged.id,
+    titleKey: "ConfirmedBooking.Title",
+  })
 
   //Remove assigned driver mission for the driver
-  await missionServices.removePreviousMissionsByEntityTitleKey(
-    data.agencyId,
-    EntityTypeEnum.BOOKING,
-    bookingChanged.id,
-    "AssignedDriver.Title",
-  )
+  await missionServices.removePreviousMissionsByEntityTitleKey({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: bookingChanged.id,
+    titleKey: "AssignedDriver.Title",
+  })
 
   //Remove assigned vehicle mission for the driver
-  await missionServices.removePreviousMissionsByEntityTitleKey(
-    data.agencyId,
-    EntityTypeEnum.BOOKING,
-    bookingChanged.id,
-    "AssignedVehicle.Title",
-  )
+  await missionServices.removePreviousMissionsByEntityTitleKey({
+    agencyId: data.agencyId,
+    entityType: EntityTypeEnum.BOOKING,
+    entityId: bookingChanged.id,
+    titleKey: "AssignedVehicle.Title",
+  })
 
   return newTripLog
 }

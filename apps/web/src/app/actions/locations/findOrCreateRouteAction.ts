@@ -22,11 +22,11 @@ export async function findOrCreateRouteAction(
     return
   }
 
-  const route = await routeServices.findOrCreateRouteByLocations(
+  const route = await routeServices.findOrCreateRouteByLocations({
     sourceCity,
     sourceState,
     destinationCity,
     destinationState,
-  )
+  })
   return route
 }

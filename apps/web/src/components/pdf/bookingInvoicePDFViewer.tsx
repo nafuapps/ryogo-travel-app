@@ -16,6 +16,7 @@ export default function BookingInvoicePDFViewer({
     return (
       <MobilePDFViewer
         document={<BookingInvoiceDocument booking={booking} />}
+        name={`${booking.id}-invoice.pdf`}
       />
     )
   }

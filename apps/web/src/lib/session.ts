@@ -302,9 +302,9 @@ export async function deleteWebSession() {
 }
 
 async function updateSessionExpiryInDB(sessionId: string) {
-  const newExpiresAt = createNewExpiryDate()
-  await userServices.changeUserSessionExpiry(sessionId, newExpiresAt)
-  return newExpiresAt
+  const expiresAt = createNewExpiryDate()
+  await userServices.changeUserSessionExpiry({ sessionId, expiresAt })
+  return expiresAt
 }
 
 //Expiry date is X days from now

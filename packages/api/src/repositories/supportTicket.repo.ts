@@ -39,19 +39,29 @@ export const supportTicketRepository = {
     })
   },
 
-  async updatePhotoUrl(ticketId: string, photoUrl: string) {
+  async updatePhotoUrl({
+    ticketId,
+    photoUrl,
+  }: {
+    ticketId: string
+    photoUrl: string
+  }) {
     return await db
       .update(supportTickets)
-      .set({ photoUrl: photoUrl })
+      .set({ photoUrl })
       .where(eq(supportTickets.id, ticketId))
       .returning({ id: supportTickets.id, photoUrl: supportTickets.photoUrl })
   },
 
-  async updateTicketStatusWithRating(
-    ticketId: string,
-    status: TicketStatusEnum,
-    resolutionRating?: number,
-  ) {
+  async updateTicketStatusWithRating({
+    ticketId,
+    status,
+    resolutionRating,
+  }: {
+    ticketId: string
+    status: TicketStatusEnum
+    resolutionRating?: number
+  }) {
     return await db
       .update(supportTickets)
       .set({ status, resolutionRating })
@@ -63,7 +73,13 @@ export const supportTicketRepository = {
       })
   },
 
-  async updateTicketCommentsByUser(ticketId: string, comment: string) {
+  async updateTicketCommentsByUser({
+    ticketId,
+    comment,
+  }: {
+    ticketId: string
+    comment: string
+  }) {
     return await db
       .update(supportTickets)
       .set({

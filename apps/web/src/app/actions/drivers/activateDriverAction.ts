@@ -6,11 +6,15 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function activateDriverAction(
-  driverId: string,
-  driverUserId: string,
-  agencyId: string,
-) {
+export async function activateDriverAction({
+  agencyId,
+  driverId,
+  userId,
+}: {
+  driverId: string
+  userId: string
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -26,7 +30,7 @@ export async function activateDriverAction(
     return
   }
 
-  const driver = await driverServices.activateDriver(driverId, driverUserId)
+  const driver = await driverServices.activateDriver({ driverId, userId })
   if (!driver) return
 
   await notificationServices.addNotification({
@@ -43,12 +47,12 @@ export async function activateDriverAction(
     link: `/dashboard/drivers/${driver.id}`,
   })
 
-  await missionServices.removePreviousMissionsByEntityTitleKey(
+  await missionServices.removePreviousMissionsByEntityTitleKey({
     agencyId,
-    EntityTypeEnum.USER,
-    driver.userId,
-    "UserInactivated.Title",
-  )
+    entityType: EntityTypeEnum.USER,
+    entityId: driver.userId,
+    titleKey: "UserInactivated.Title",
+  })
   await missionServices.addMission({
     agencyId: agencyId,
     userId: driver.userId,

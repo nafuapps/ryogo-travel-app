@@ -6,8 +6,8 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function changeExpenseApprovalAction(
-  expId: string,
-  status: boolean,
+  expenseId: string,
+  isApproved: boolean,
   agencyId: string,
 ) {
   const currentUser = await getCurrentUser()
@@ -23,10 +23,10 @@ export async function changeExpenseApprovalAction(
     return
   }
 
-  const updatedExpense = await expenseServices.modifyExpenseApprovalStatus(
-    expId,
-    status,
-  )
+  const updatedExpense = await expenseServices.modifyExpenseApprovalStatus({
+    expenseId,
+    isApproved,
+  })
   if (!updatedExpense) return
 
   await notificationServices.addNotification({
@@ -34,7 +34,7 @@ export async function changeExpenseApprovalAction(
     userId: currentUser.userId,
     entityType: EntityTypeEnum.EXPENSE,
     entityId: updatedExpense.id,
-    textKey: status ? "ExpenseApproved" : "ExpenseRejected",
+    textKey: isApproved ? "ExpenseApproved" : "ExpenseRejected",
     textObject: {
       expenseId: updatedExpense.id,
       bookingId: updatedExpense.bookingId,

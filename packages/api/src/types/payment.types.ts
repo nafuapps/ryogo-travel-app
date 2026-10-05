@@ -4,6 +4,7 @@ import {
 } from "@ryogo-travel-app/db/schema"
 
 export type UpdatePaymentDetailsType = {
+  rpPaymentId: string
   amount?: number
   status?: PaymentStatusEnum
   method?: PaymentMethodEnum

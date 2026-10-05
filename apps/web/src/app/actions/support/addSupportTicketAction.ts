@@ -59,10 +59,10 @@ export async function addSupportTicketAction(
         ticketPhotoFile,
       ),
     )
-    await supportServices.updateSupportTicketPhoto(
-      supportTicket.id,
-      uploadedTicketPhoto.path,
-    )
+    await supportServices.updateSupportTicketPhoto({
+      ticketId: supportTicket.id,
+      photoUrl: uploadedTicketPhoto.path,
+    })
   }
 
   //Send ticket creation email to support only

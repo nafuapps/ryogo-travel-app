@@ -45,10 +45,10 @@ export async function deleteExpenseAction(
   })
 
   if (byDriver) {
-    await missionServices.removePreviousMissionsByEntityId(
+    await missionServices.removePreviousMissionsByEntityId({
       agencyId,
-      deletedExpense.id,
-    )
+      entityId: deletedExpense.id,
+    })
     await missionServices.addMission({
       agencyId: agencyId,
       userId: bookingAssignedUserId,

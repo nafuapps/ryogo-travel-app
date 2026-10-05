@@ -40,12 +40,12 @@ export async function activateUserAction(
     link: `/dashboard/users/${id}`,
   })
 
-  await missionServices.removePreviousMissionsByEntityTitleKey(
+  await missionServices.removePreviousMissionsByEntityTitleKey({
     agencyId,
-    EntityTypeEnum.DRIVER,
-    user.id,
-    "UserInactivated.Title",
-  )
+    entityType: EntityTypeEnum.DRIVER,
+    entityId: user.id,
+    titleKey: "UserInactivated.Title",
+  })
   await missionServices.addMission({
     agencyId: agencyId,
     userId: user.id,

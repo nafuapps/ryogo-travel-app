@@ -31,7 +31,10 @@ export default async function AccountPage() {
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account"} />
       <AccountDetailHeaderTabs selectedTab="Account" />
-      <AccountPageComponent account={userDetails} />
+      <AccountPageComponent
+        account={userDetails}
+        sessionLoginAt={currentUser.createdAt}
+      />
     </MainWrapper>
   )
 }

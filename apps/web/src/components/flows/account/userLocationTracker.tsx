@@ -25,12 +25,12 @@ export default function UserLocationTracker({
         (!locatedAt ||
           differenceInMinutes(new Date(), locatedAt) > LOCATE_USER_MINUTES)
       ) {
-        await locateUserAction(
+        await locateUserAction({
           userId,
           agencyId,
-          location.latitude,
-          location.longitude,
-        )
+          lat: location.latitude,
+          long: location.longitude,
+        })
       }
     }
     updateLocation()

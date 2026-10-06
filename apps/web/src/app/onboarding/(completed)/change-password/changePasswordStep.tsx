@@ -51,11 +51,11 @@ export function ChangePasswordStepComponent({
 
   //Submit actions
   const onSubmit = async (data: Step1Type) => {
-    const result = await newUserSetPasswordAction(
+    const result = await newUserSetPasswordAction({
       userId,
       agencyId,
-      data.newPassword,
-    )
+      newPassword: data.newPassword,
+    })
     if (result) {
       //If success, redirect
       toast.success(t("Success"))

@@ -7,25 +7,23 @@ import {
 export type AddVehicleRequestType = {
   agencyId: string
   addedByUserId: string
-  data: {
-    vehicleNumber: string
-    type: VehicleTypesEnum
-    brand: VehicleBrandEnum
-    color: VehicleColorEnum
-    model: string
-    capacity?: number
-    odometerReading?: number
-    insuranceExpiresOn?: Date
-    pucExpiresOn?: Date
-    rcExpiresOn?: Date
-    hasAC?: boolean
-    defaultRatePerKm?: number
-    defaultAcChargePerDay?: number
-    rcPhotos?: FileList
-    vehiclePhotos?: FileList
-    insurancePhotos?: FileList
-    pucPhotos?: FileList
-  }
+  vehicleNumber: string
+  type: VehicleTypesEnum
+  brand: VehicleBrandEnum
+  color: VehicleColorEnum
+  model: string
+  capacity?: number
+  odometerReading?: number
+  insuranceExpiresOn?: Date
+  pucExpiresOn?: Date
+  rcExpiresOn?: Date
+  hasAC?: boolean
+  defaultRatePerKm?: number
+  defaultAcChargePerDay?: number
+  rcPhotos?: FileList
+  vehiclePhotos?: FileList
+  insurancePhotos?: FileList
+  pucPhotos?: FileList
 }
 
 export type ModifyVehicleRequestType = {

@@ -4,7 +4,13 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 
-export async function loginAction(userId: string, password: string) {
+export async function loginAction({
+  userId,
+  password,
+}: {
+  userId: string
+  password: string
+}) {
   const currentUser = await getCurrentUser()
   if (currentUser) {
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
@@ -12,7 +18,7 @@ export async function loginAction(userId: string, password: string) {
     }
     redirect("/dashboard/home", RedirectType.replace)
   }
-  const loginResult = await login(userId, password)
+  const loginResult = await login({ userId, password })
   if (loginResult.error) {
     return loginResult
   }

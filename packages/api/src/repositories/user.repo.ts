@@ -90,11 +90,15 @@ export const userRepository = {
   },
 
   //Get unique user by phone, roles and agency id
-  async readUserByPhoneRolesAgencyId(
-    phone: string,
-    roles: UserRolesEnum[],
-    agencyId: string,
-  ) {
+  async readUserByPhoneRolesAgencyId({
+    phone,
+    roles,
+    agencyId,
+  }: {
+    phone: string
+    roles: UserRolesEnum[]
+    agencyId: string
+  }) {
     return await db.query.users.findFirst({
       columns: {
         id: true,
@@ -108,11 +112,15 @@ export const userRepository = {
   },
 
   //Get unique user by phone, role and email
-  async readUserByPhoneRoleEmail(
-    phone: string,
-    roles: UserRolesEnum[],
-    email: string,
-  ) {
+  async readUserByPhoneRoleEmail({
+    phone,
+    roles,
+    email,
+  }: {
+    phone: string
+    roles: UserRolesEnum[]
+    email: string
+  }) {
     return await db.query.users.findFirst({
       columns: {
         id: true,
@@ -126,7 +134,13 @@ export const userRepository = {
   },
 
   //Get users by phone and role
-  async readUserAccountsByPhoneRole(phone: string, role: UserRolesEnum) {
+  async readUserAccountsByPhoneRole({
+    phone,
+    role,
+  }: {
+    phone: string
+    role: UserRolesEnum
+  }) {
     return await db.query.users.findMany({
       columns: {
         password: false,
@@ -136,7 +150,13 @@ export const userRepository = {
   },
 
   //Get user by roles in an agency
-  async readUserByRolesAgencyId(agencyId: string, userRoles: UserRolesEnum[]) {
+  async readUserByRolesAgencyId({
+    agencyId,
+    userRoles,
+  }: {
+    agencyId: string
+    userRoles: UserRolesEnum[]
+  }) {
     return await db.query.users.findMany({
       columns: {
         id: true,
@@ -234,20 +254,24 @@ export const userRepository = {
   },
 
   // Update user's last logout time
-  async updateLastLogout(userId: string, lastLogout: Date) {
+  async updateLastLogout(userId: string) {
     return await db
       .update(users)
-      .set({ lastLogout: lastLogout })
+      .set({ lastLogout: new Date() })
       .where(eq(users.id, userId))
       .returning()
   },
 
   //Update password
-  async updatePassword(
-    userId: string,
-    passwordHash: string,
-    status?: UserStatusEnum,
-  ) {
+  async updatePassword({
+    userId,
+    passwordHash,
+    status,
+  }: {
+    userId: string
+    passwordHash: string
+    status?: UserStatusEnum
+  }) {
     return await db
       .update(users)
       .set({ password: passwordHash, isVerified: true, status: status })
@@ -261,16 +285,22 @@ export const userRepository = {
   },
 
   //Update user photo url
-  async updatePhotoUrl(userId: string, photoUrl: string) {
+  async updatePhotoUrl({
+    userId,
+    photoUrl,
+  }: {
+    userId: string
+    photoUrl: string
+  }) {
     return await db
       .update(users)
-      .set({ photoUrl: photoUrl })
+      .set({ photoUrl })
       .where(eq(users.id, userId))
       .returning({ id: users.id, photoUrl: users.photoUrl, name: users.name })
   },
 
   //Update user name
-  async updateName(userId: string, name: string) {
+  async updateName({ userId, name }: { userId: string; name: string }) {
     return await db
       .update(users)
       .set({ name })
@@ -279,11 +309,15 @@ export const userRepository = {
   },
 
   //Update user preferences
-  async updateUserPreferences(
-    userId: string,
-    prefersDarkTheme?: boolean,
-    languagePref?: UserLangEnum,
-  ) {
+  async updateUserPreferences({
+    userId,
+    prefersDarkTheme,
+    languagePref,
+  }: {
+    userId: string
+    prefersDarkTheme?: boolean
+    languagePref?: UserLangEnum
+  }) {
     return await db
       .update(users)
       .set({ prefersDarkTheme, languagePref })
@@ -296,7 +330,7 @@ export const userRepository = {
   },
 
   //Update user email
-  async updateEmail(userId: string, email: string) {
+  async updateEmail({ userId, email }: { userId: string; email: string }) {
     return await db
       .update(users)
       .set({ email })
@@ -305,7 +339,7 @@ export const userRepository = {
   },
 
   //Update user phone
-  async updatePhone(userId: string, phone: string) {
+  async updatePhone({ userId, phone }: { userId: string; phone: string }) {
     return await db
       .update(users)
       .set({ phone })
@@ -314,7 +348,13 @@ export const userRepository = {
   },
 
   //Update user status
-  async updateUserStatus(userId: string, status: UserStatusEnum) {
+  async updateUserStatus({
+    userId,
+    status,
+  }: {
+    userId: string
+    status: UserStatusEnum
+  }) {
     return await db
       .update(users)
       .set({ status: status })
@@ -332,15 +372,20 @@ export const userRepository = {
   },
 
   //Update user verification status
-  async updatePasswordVerificationAndStatus(
-    userId: string,
-    passwordHash: string,
-    status: UserStatusEnum,
-    isVerified: boolean,
-  ) {
+  async updatePasswordVerificationAndStatus({
+    userId,
+    passwordHash,
+  }: {
+    userId: string
+    passwordHash: string
+  }) {
     return await db
       .update(users)
-      .set({ password: passwordHash, status: status, isVerified: isVerified })
+      .set({
+        password: passwordHash,
+        status: UserStatusEnum.ACTIVE,
+        isVerified: true,
+      })
       .where(eq(users.id, userId))
       .returning({
         id: users.id,
@@ -350,10 +395,16 @@ export const userRepository = {
   },
 
   //Update user verification code
-  async updateVerificationCode(userId: string, code: string) {
+  async updateVerificationCode({
+    userId,
+    verificationCode,
+  }: {
+    userId: string
+    verificationCode: string
+  }) {
     return await db
       .update(users)
-      .set({ verificationCode: code, codeSentAt: new Date() })
+      .set({ verificationCode, codeSentAt: new Date() })
       .where(eq(users.id, userId))
       .returning({
         id: users.id,
@@ -364,7 +415,7 @@ export const userRepository = {
   },
 
   //Update admin
-  async updateAdmin(userId: string, isAdmin: boolean) {
+  async updateAdmin({ userId, isAdmin }: { userId: string; isAdmin: boolean }) {
     return await db
       .update(users)
       .set({ isAdmin })
@@ -386,16 +437,25 @@ export const userRepository = {
   },
 
   //Update user location
-  async updateLocation(userId: string, lat: number, long: number) {
+  async updateLocation({
+    userId,
+    lat,
+    long,
+  }: {
+    userId: string
+    lat: number
+    long: number
+  }) {
     const geolocation = sql.raw(
       `ST_SetSRID(ST_MakePoint(${long}, ${lat}), 4326)`,
     )
+    const latLong = `${lat.toFixed(4)},${long.toFixed(4)}`
     return await db
       .update(users)
       .set({
         locatedAt: new Date(),
-        geolocation: geolocation,
-        latLong: `${lat},${long}`,
+        geolocation,
+        latLong,
       })
       .where(eq(users.id, userId))
       .returning({

@@ -74,11 +74,11 @@ export default function ChangeAgencyEmailPageComponent({
         message: t("Field1.Error4"),
       })
     } else {
-      const updatedAgency = await changeAgencyEmailAction(
-        agency.id,
+      const updatedAgency = await changeAgencyEmailAction({
         userId,
-        data.newEmail,
-      )
+        agencyId: agency.id,
+        email: data.newEmail,
+      })
       if (updatedAgency) {
         router.replace("/dashboard/account/agency")
         toast.success(t("Success"))

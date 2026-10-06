@@ -31,7 +31,12 @@ export default function FinishVehicleRepairAlertButton({
   async function finishRepair() {
     finishCancelTransition(async () => {
       if (
-        await finishVehicleRepairAction(userId, vehicleId, repairId, agencyId)
+        await finishVehicleRepairAction({
+          userId,
+          vehicleId,
+          repairId,
+          agencyId,
+        })
       ) {
         toast.success(t("Success"))
         router.refresh()

@@ -8,14 +8,14 @@ import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import { generateUserPhotoPathName } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
 export async function addAgentAction(
-  data: AddAgentRequestType,
+  data: AddUserRequestType,
   agencyName?: string,
 ) {
   const currentUser = await getCurrentUser()
@@ -35,13 +35,16 @@ export async function addAgentAction(
   if (!agent) return
 
   //Upload agent photo if attached
-  const [photoFile] = data.data.photos || []
+  const [photoFile] = data.photos || []
   if (photoFile) {
     const uploadedPhoto = await uploadFile(
       photoFile,
       generateUserPhotoPathName(agent.id, photoFile),
     )
-    await userServices.updateUserPhoto(agent.id, uploadedPhoto.path)
+    await userServices.updateUserPhoto({
+      userId: agent.id,
+      photoUrl: uploadedPhoto.path,
+    })
   }
 
   await notificationServices.addNotification({
@@ -79,12 +82,12 @@ export async function addAgentAction(
   if (agencyName) {
     const t = await getTranslations("Dashboard.Whatsapp")
     const message = t("AgentInvite", {
-      agentName: data.data.name,
+      agentName: data.name,
       agencyName: agencyName,
-      emailId: data.data.email,
+      emailId: data.email,
       inviteLink: absoluteUrl,
     })
-    whatsappInviteLink = getWhatsappMessageLink(data.data.phone, message)
+    whatsappInviteLink = getWhatsappMessageLink(data.phone, message)
   }
 
   return { ...agent, whatsappInviteLink: whatsappInviteLink }

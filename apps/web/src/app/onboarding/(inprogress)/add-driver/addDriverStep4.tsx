@@ -41,18 +41,16 @@ export function AddDriverConfirm({
     const newDriverData: AddDriverRequestType = {
       agencyId: finalData.agencyId,
       addedByUserId: finalData.addedByUserId,
-      data: {
-        name: finalData.data.name,
-        email: finalData.data.email,
-        phone: finalData.data.phone,
-        address: finalData.data.address,
-        canDriveVehicleTypes: finalData.data.canDriveVehicleTypes,
-        defaultAllowancePerDay: finalData.data.defaultAllowancePerDay,
-        licenseNumber: finalData.data.licenseNumber,
-        licenseExpiresOn: finalData.data.licenseExpiresOn,
-        licensePhotos: finalData.data.licensePhotos,
-        userPhotos: finalData.data.userPhotos,
-      },
+      name: finalData.name,
+      email: finalData.email,
+      phone: finalData.phone,
+      address: finalData.address,
+      canDriveVehicleTypes: finalData.canDriveVehicleTypes,
+      defaultAllowancePerDay: finalData.defaultAllowancePerDay,
+      licenseNumber: finalData.licenseNumber,
+      licenseExpiresOn: finalData.licenseExpiresOn,
+      licensePhotos: finalData.licensePhotos,
+      userPhotos: finalData.userPhotos,
     }
     const addedDriver = await addDriverAction(newDriverData)
     if (addedDriver) {
@@ -77,22 +75,13 @@ export function AddDriverConfirm({
             <RyogoCaption color="light">{t("UserDetails")}</RyogoCaption>
           </DetailsHeaderWrapper>
           <DetailsContentWrapper>
-            <DetailsLineItem
-              label={t("DriverName")}
-              value={finalData.data.name}
-            />
-            <DetailsLineItem
-              label={t("DriverPhone")}
-              value={finalData.data.phone}
-            />
-            <DetailsLineItem
-              label={t("DriverEmail")}
-              value={finalData.data.email}
-            />
-            {finalData.data.address && (
+            <DetailsLineItem label={t("DriverName")} value={finalData.name} />
+            <DetailsLineItem label={t("DriverPhone")} value={finalData.phone} />
+            <DetailsLineItem label={t("DriverEmail")} value={finalData.email} />
+            {finalData.address && (
               <DetailsLineItem
                 label={t("DriverAddress")}
-                value={finalData.data.address}
+                value={finalData.address}
               />
             )}
           </DetailsContentWrapper>
@@ -102,16 +91,16 @@ export function AddDriverConfirm({
             <RyogoCaption color="light">{t("LicenseDetails")}</RyogoCaption>
           </DetailsHeaderWrapper>
           <DetailsContentWrapper>
-            {finalData.data.licenseNumber && (
+            {finalData.licenseNumber && (
               <DetailsLineItem
                 label={t("LicenseNumber")}
-                value={finalData.data.licenseNumber}
+                value={finalData.licenseNumber}
               />
             )}
-            {finalData.data.licenseExpiresOn && (
+            {finalData.licenseExpiresOn && (
               <DetailsLineItem
                 label={t("LicenseExpiresOn")}
-                value={finalData.data.licenseExpiresOn.toDateString()}
+                value={finalData.licenseExpiresOn.toDateString()}
               />
             )}
           </DetailsContentWrapper>
@@ -121,16 +110,16 @@ export function AddDriverConfirm({
             <RyogoCaption color="light">{t("AgencyDetails")}</RyogoCaption>
           </DetailsHeaderWrapper>
           <DetailsContentWrapper>
-            {finalData.data.canDriveVehicleTypes &&
-              finalData.data.canDriveVehicleTypes.length > 0 && (
+            {finalData.canDriveVehicleTypes &&
+              finalData.canDriveVehicleTypes.length > 0 && (
                 <DetailsLineItem
                   label={t("CanDriveVehicleTypes")}
-                  value={finalData.data.canDriveVehicleTypes.join(", ")}
+                  value={finalData.canDriveVehicleTypes.join(", ")}
                 />
               )}
             <DetailsLineItem
               label={t("DefaultAllowancePerDay")}
-              value={`${finalData.data.defaultAllowancePerDay ?? NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY}`}
+              value={`${finalData.defaultAllowancePerDay ?? NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY}`}
             />
           </DetailsContentWrapper>
         </DetailsBorderWrapper>

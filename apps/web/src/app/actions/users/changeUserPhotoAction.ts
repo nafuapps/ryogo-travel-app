@@ -34,8 +34,10 @@ export async function changeUserPhotoAction(
     file,
     generateUserPhotoPathName(userId, file),
   )
-  const url = uploadedPhoto.path
-  const user = await userServices.updateUserPhoto(userId, url)
+  const user = await userServices.updateUserPhoto({
+    userId,
+    photoUrl: uploadedPhoto.path,
+  })
   if (!user) return
 
   await notificationServices.addNotification({

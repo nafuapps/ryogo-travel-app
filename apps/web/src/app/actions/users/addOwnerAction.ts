@@ -8,14 +8,14 @@ import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import { generateUserPhotoPathName } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { AddOwnerRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
 export async function addOwnerAction(
-  data: AddOwnerRequestType,
+  data: AddUserRequestType,
   agencyName?: string,
 ) {
   const currentUser = await getCurrentUser()
@@ -32,17 +32,23 @@ export async function addOwnerAction(
     return
   }
 
-  const addedOwner = await userServices.addOwnerUser(data, currentUser.userId)
+  const addedOwner = await userServices.addOwnerUser({
+    data,
+    currentUserId: currentUser.userId,
+  })
   if (!addedOwner) return
 
   //Upload user photo if attached
-  const [photoFile] = data.data.photos || []
+  const [photoFile] = data.photos || []
   if (photoFile) {
     const uploadedPhoto = await uploadFile(
       photoFile,
       generateUserPhotoPathName(addedOwner.id, photoFile),
     )
-    await userServices.updateUserPhoto(addedOwner.id, uploadedPhoto.path)
+    await userServices.updateUserPhoto({
+      userId: addedOwner.id,
+      photoUrl: uploadedPhoto.path,
+    })
   }
 
   await notificationServices.addNotification({
@@ -85,7 +91,7 @@ export async function addOwnerAction(
       emailId: addedOwner.email,
       inviteLink: absoluteUrl,
     })
-    whatsappInviteLink = getWhatsappMessageLink(data.data.phone, message)
+    whatsappInviteLink = getWhatsappMessageLink(data.phone, message)
   }
 
   return { ...addedOwner, whatsappInviteLink: whatsappInviteLink }

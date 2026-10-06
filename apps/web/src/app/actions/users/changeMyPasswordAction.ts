@@ -5,12 +5,17 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
-export async function changeMyPasswordAction(
-  userId: string,
-  agencyId: string,
-  oldPassword: string,
-  newPassword: string,
-) {
+export async function changeMyPasswordAction({
+  userId,
+  agencyId,
+  oldPassword,
+  newPassword,
+}: {
+  userId: string
+  agencyId: string
+  oldPassword: string
+  newPassword: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -24,11 +29,11 @@ export async function changeMyPasswordAction(
     return
   }
 
-  const user = await userServices.changeMyPassword(
+  const user = await userServices.changeMyPassword({
     userId,
     oldPassword,
     newPassword,
-  )
+  })
   if (!user) return
 
   await notificationServices.addNotification({

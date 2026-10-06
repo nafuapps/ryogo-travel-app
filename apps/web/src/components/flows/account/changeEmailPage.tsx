@@ -80,12 +80,12 @@ export default function ChangeEmailPageComponent({
         message: t("Field2.Error4"),
       })
     } else {
-      const result = await changeMyEmailAction(
+      const result = await changeMyEmailAction({
         userId,
-        data.password,
-        data.newEmail,
         agencyId,
-      )
+        password: data.password,
+        email: data.newEmail,
+      })
       if (result) {
         //If success, redirect
         toast.success(t("Success"))

@@ -34,10 +34,10 @@ export async function changeVehiclePhotoAction(
     file,
     generateVehiclePhotoPathName(vehicleId, file),
   )
-  const updatedVehicle = await vehicleServices.renewVehiclePhotoURL(
+  const updatedVehicle = await vehicleServices.renewVehiclePhotoURL({
     vehicleId,
-    uploadedPhoto.path,
-  )
+    vehiclePhotoUrl: uploadedPhoto.path,
+  })
   if (!updatedVehicle) return
 
   await notificationServices.addNotification({

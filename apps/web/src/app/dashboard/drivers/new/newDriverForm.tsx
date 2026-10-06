@@ -25,18 +25,16 @@ export default function NewDriverForm({
     useState<AddDriverRequestType>({
       agencyId: agencyId,
       addedByUserId: userId,
-      data: {
-        name: "",
-        phone: "",
-        email: "",
-        userPhotos: undefined,
-        licenseNumber: undefined,
-        licenseExpiresOn: undefined,
-        licensePhotos: undefined,
-        address: "",
-        canDriveVehicleTypes: [],
-        defaultAllowancePerDay: undefined,
-      },
+      name: "",
+      phone: "",
+      email: "",
+      userPhotos: undefined,
+      licenseNumber: undefined,
+      licenseExpiresOn: undefined,
+      licensePhotos: undefined,
+      address: "",
+      canDriveVehicleTypes: [],
+      defaultAllowancePerDay: undefined,
     })
 
   const nextStepHandler = () => {

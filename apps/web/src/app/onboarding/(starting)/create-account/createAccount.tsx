@@ -99,7 +99,7 @@ export default function CreateAccountPageComponent({
       />,
       <CreateAccountFinish
         key={5}
-        id={finalData.owner.id}
+        userId={finalData.owner.id}
         password={finalData.owner.password}
       />,
     ])

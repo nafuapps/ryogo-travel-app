@@ -48,25 +48,23 @@ export function NewVehicleConfirm({
     const newVehicleData: AddVehicleRequestType = {
       agencyId: agencyId,
       addedByUserId: userId,
-      data: {
-        vehicleNumber: newVehicleFormData.data.vehicleNumber,
-        type: newVehicleFormData.data.type,
-        brand: newVehicleFormData.data.brand,
-        color: newVehicleFormData.data.color,
-        model: newVehicleFormData.data.model,
-        capacity: newVehicleFormData.data.capacity,
-        odometerReading: newVehicleFormData.data.odometerReading,
-        insuranceExpiresOn: newVehicleFormData.data.insuranceExpiresOn,
-        pucExpiresOn: newVehicleFormData.data.pucExpiresOn,
-        rcExpiresOn: newVehicleFormData.data.rcExpiresOn,
-        hasAC: newVehicleFormData.data.hasAC,
-        defaultRatePerKm: newVehicleFormData.data.defaultRatePerKm,
-        defaultAcChargePerDay: newVehicleFormData.data.defaultAcChargePerDay,
-        insurancePhotos: newVehicleFormData.data.insurancePhotos,
-        pucPhotos: newVehicleFormData.data.pucPhotos,
-        rcPhotos: newVehicleFormData.data.rcPhotos,
-        vehiclePhotos: newVehicleFormData.data.vehiclePhotos,
-      },
+      vehicleNumber: newVehicleFormData.vehicleNumber,
+      type: newVehicleFormData.type,
+      brand: newVehicleFormData.brand,
+      color: newVehicleFormData.color,
+      model: newVehicleFormData.model,
+      capacity: newVehicleFormData.capacity,
+      odometerReading: newVehicleFormData.odometerReading,
+      insuranceExpiresOn: newVehicleFormData.insuranceExpiresOn,
+      pucExpiresOn: newVehicleFormData.pucExpiresOn,
+      rcExpiresOn: newVehicleFormData.rcExpiresOn,
+      hasAC: newVehicleFormData.hasAC,
+      defaultRatePerKm: newVehicleFormData.defaultRatePerKm,
+      defaultAcChargePerDay: newVehicleFormData.defaultAcChargePerDay,
+      insurancePhotos: newVehicleFormData.insurancePhotos,
+      pucPhotos: newVehicleFormData.pucPhotos,
+      rcPhotos: newVehicleFormData.rcPhotos,
+      vehiclePhotos: newVehicleFormData.vehiclePhotos,
     }
     const addedVehicle = await addVehicleAction(newVehicleData)
 
@@ -104,39 +102,39 @@ export function NewVehicleConfirm({
             <DetailsContentWrapper>
               <DetailsLineItem
                 label={t("VehicleNumber")}
-                value={newVehicleFormData.data.vehicleNumber}
+                value={newVehicleFormData.vehicleNumber}
               />
               <DetailsLineItem
                 label={t("Type")}
-                value={newVehicleFormData.data.type}
+                value={newVehicleFormData.type}
               />
               <DetailsLineItem
                 label={t("Brand")}
-                value={newVehicleFormData.data.brand}
+                value={newVehicleFormData.brand}
               />
               <DetailsLineItem
                 label={t("Model")}
-                value={newVehicleFormData.data.model}
+                value={newVehicleFormData.model}
               />
               <DetailsLineItem
                 label={t("Color")}
-                value={newVehicleFormData.data.color}
+                value={newVehicleFormData.color}
               />
-              {newVehicleFormData.data.capacity && (
+              {newVehicleFormData.capacity && (
                 <DetailsLineItem
                   label={t("Capacity")}
-                  value={`${newVehicleFormData.data.capacity}`}
+                  value={`${newVehicleFormData.capacity}`}
                 />
               )}
-              {newVehicleFormData.data.odometerReading && (
+              {newVehicleFormData.odometerReading && (
                 <DetailsLineItem
                   label={t("OdometerReading")}
-                  value={`${newVehicleFormData.data.odometerReading}`}
+                  value={`${newVehicleFormData.odometerReading}`}
                 />
               )}
               <DetailsLineItem
                 label={t("HasAC")}
-                value={newVehicleFormData.data.hasAC ? "Yes" : "No"}
+                value={newVehicleFormData.hasAC ? "Yes" : "No"}
               />
             </DetailsContentWrapper>
           </DetailsBorderWrapper>
@@ -145,26 +143,26 @@ export function NewVehicleConfirm({
               <RyogoCaption color="light">{t("PolicyDetails")}</RyogoCaption>
             </DetailsHeaderWrapper>
             <DetailsContentWrapper>
-              {newVehicleFormData.data.rcExpiresOn && (
+              {newVehicleFormData.rcExpiresOn && (
                 <DetailsLineItem
                   label={t("RCExpiresOn")}
-                  value={moment(newVehicleFormData.data.rcExpiresOn).format(
+                  value={moment(newVehicleFormData.rcExpiresOn).format(
                     "DD MMM YYYY",
                   )}
                 />
               )}
-              {newVehicleFormData.data.insuranceExpiresOn && (
+              {newVehicleFormData.insuranceExpiresOn && (
                 <DetailsLineItem
                   label={t("InsuranceExpiresOn")}
-                  value={moment(
-                    newVehicleFormData.data.insuranceExpiresOn,
-                  ).format("DD MMM YYYY")}
+                  value={moment(newVehicleFormData.insuranceExpiresOn).format(
+                    "DD MMM YYYY",
+                  )}
                 />
               )}
-              {newVehicleFormData.data.pucExpiresOn && (
+              {newVehicleFormData.pucExpiresOn && (
                 <DetailsLineItem
                   label={t("PUCExpiresOn")}
-                  value={moment(newVehicleFormData.data.pucExpiresOn).format(
+                  value={moment(newVehicleFormData.pucExpiresOn).format(
                     "DD MMM YYYY",
                   )}
                 />
@@ -179,14 +177,14 @@ export function NewVehicleConfirm({
               <DetailsLineItem
                 label={t("RatePerKm")}
                 value={(
-                  newVehicleFormData.data.defaultRatePerKm ??
+                  newVehicleFormData.defaultRatePerKm ??
                   NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM
                 ).toString()}
               />
-              {newVehicleFormData.data.hasAC && (
+              {newVehicleFormData.hasAC && (
                 <DetailsLineItem
                   label={t("ACChagePerDay")}
-                  value={`${newVehicleFormData.data.defaultAcChargePerDay ?? NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY}`}
+                  value={`${newVehicleFormData.defaultAcChargePerDay ?? NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY}`}
                 />
               )}
             </DetailsContentWrapper>

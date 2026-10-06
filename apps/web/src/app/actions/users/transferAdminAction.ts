@@ -7,11 +7,15 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function transferAdminAction(
-  currentUserId: string,
-  otherUserId: string,
-  agencyId: string,
-) {
+export async function transferAdminAction({
+  currentUserId,
+  otherUserId,
+  agencyId,
+}: {
+  currentUserId: string
+  otherUserId: string
+  agencyId: string
+}) {
   if (currentUserId === otherUserId) return
 
   const currentUser = await getCurrentUser()
@@ -29,11 +33,11 @@ export async function transferAdminAction(
     return
   }
 
-  const updatedUser = await userServices.transferAdmin(
+  const updatedUser = await userServices.transferAdmin({
     currentUserId,
     otherUserId,
     agencyId,
-  )
+  })
   if (!updatedUser) {
     return
   }

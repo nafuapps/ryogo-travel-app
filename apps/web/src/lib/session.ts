@@ -25,6 +25,7 @@ export type SessionPayloadType = {
   isAdmin: boolean
   isVerified: boolean
   status: UserStatusEnum
+  createdAt: Date
   updatedAt: Date
   expiresAt: Date
   locatedAt: Date | null
@@ -68,9 +69,15 @@ export async function verifyWebSessionInDB(token: string, userId: string) {
 }
 
 //Create session both in cookie and database
-export async function createWebSession(userId: string, password: string) {
+export async function createWebSession({
+  userId,
+  password,
+}: {
+  userId: string
+  password: string
+}) {
   //1. Check user credentials in DB
-  const user = await userServices.checkUserCredentialsInDB(userId, password)
+  const user = await userServices.checkUserCredentialsInDB({ userId, password })
   const userData = user.data
   if (!userData || user.error) {
     return user
@@ -102,6 +109,7 @@ export async function createWebSession(userId: string, password: string) {
     sessionId: sessionData.id,
     token: sessionData.token,
     userId: sessionData.userId,
+    createdAt: sessionData.createdAt,
     agencyId: userData.agencyId,
     isAdmin: userData.isAdmin,
     isVerified: userData.isVerified,
@@ -157,6 +165,7 @@ export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
     userId: payload.userId,
     token: payload.token,
     expiresAt: payload.expiresAt,
+    createdAt: payload.createdAt,
     agencyId: user.agencyId,
     isAdmin: user.isAdmin,
     isVerified: user.isVerified,
@@ -290,7 +299,9 @@ export async function deleteWebSession() {
   if (!payload) return
 
   // 2. Delete session from database
-  const user = await userServices.logOutInDB(payload.userId, payload.sessionId)
+  const user = await userServices.logOutInDB({
+    sessionId: payload.sessionId,
+  })
 
   if (!user) return
 

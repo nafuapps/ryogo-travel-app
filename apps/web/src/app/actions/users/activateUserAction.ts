@@ -6,11 +6,15 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function activateUserAction(
-  id: string,
-  agencyId: string,
-  role: UserRolesEnum,
-) {
+export async function activateUserAction({
+  userId,
+  agencyId,
+  role,
+}: {
+  userId: string
+  agencyId: string
+  role: UserRolesEnum
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -24,20 +28,20 @@ export async function activateUserAction(
     return
   }
 
-  const user = await userServices.activateUser(id, role)
+  const user = await userServices.activateUser({ userId, role })
   if (!user) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.USER,
-    entityId: id,
+    entityId: userId,
     textKey: "UserActivated",
     textObject: {
       userName: user.name,
       adminName: currentUser.name,
     },
-    link: `/dashboard/users/${id}`,
+    link: `/dashboard/users/${userId}`,
   })
 
   await missionServices.removePreviousMissionsByEntityTitleKey({

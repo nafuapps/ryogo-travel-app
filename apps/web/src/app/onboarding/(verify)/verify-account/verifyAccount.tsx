@@ -11,8 +11,10 @@ import { VerifyAccountTotalSteps } from "@/lib/uiConfig"
 import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export default function VerifyAccountPageComponent({
+  userId,
   codeSentAt,
 }: {
+  userId: string
   codeSentAt: Date | null
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage")
@@ -25,6 +27,7 @@ export default function VerifyAccountPageComponent({
     <VerifyAccountStep1
       key={0}
       onNext={nextStepHandler}
+      userId={userId}
       codeSentAt={codeSentAt}
     />,
     <VerifyAccountFinish key={1} />,

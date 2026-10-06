@@ -5,11 +5,15 @@ import { expenseServices } from "@ryogo-travel-app/api/services/expense.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function changeExpenseApprovalAction(
-  expenseId: string,
-  isApproved: boolean,
-  agencyId: string,
-) {
+export async function changeExpenseApprovalAction({
+  expenseId,
+  isApproved,
+  agencyId,
+}: {
+  expenseId: string
+  isApproved: boolean
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

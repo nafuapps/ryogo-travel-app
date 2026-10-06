@@ -120,10 +120,10 @@ export const bookingServices = {
       },
     )
     const repairs =
-      await vehicleRepairRepository.readUpcomingVehicleRepairsSchedule(
+      await vehicleRepairRepository.readUpcomingVehicleRepairsSchedule({
         agencyId,
         queryEndDate,
-      )
+      })
 
     const bookingsSchedule = bookings.map((item) => {
       return {

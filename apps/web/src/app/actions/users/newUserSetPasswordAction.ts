@@ -7,11 +7,15 @@ import {
 } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
-export async function newUserSetPasswordAction(
-  userId: string,
-  agencyId: string,
-  newPassword: string,
-) {
+export async function newUserSetPasswordAction({
+  userId,
+  agencyId,
+  newPassword,
+}: {
+  userId: string
+  agencyId: string
+  newPassword: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -25,7 +29,7 @@ export async function newUserSetPasswordAction(
     return
   }
 
-  const user = await userServices.setNewPassword(userId, newPassword)
+  const user = await userServices.setNewPassword({ userId, newPassword })
   if (!user) return
 
   // Update user status to active in cookies

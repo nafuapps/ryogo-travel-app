@@ -7,7 +7,13 @@ import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect } from "next/navigation"
 
 //Forgot password reset flow
-export async function setNewPasswordAction(userId: string, password: string) {
+export async function setNewPasswordAction({
+  userId,
+  newPassword,
+}: {
+  userId: string
+  newPassword: string
+}) {
   const currentUser = await getCurrentUser()
   if (currentUser) {
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
@@ -17,10 +23,13 @@ export async function setNewPasswordAction(userId: string, password: string) {
     }
   }
 
-  const user = await userServices.changeNewPassword(userId, password)
+  const user = await userServices.changeNewPassword({
+    userId,
+    newPassword,
+  })
   if (!user) return
 
-  const loginResult = await login(user.id, password)
+  const loginResult = await login({ userId: user.id, password: newPassword })
   if (!loginResult.data) return
 
   await notificationServices.addNotification({

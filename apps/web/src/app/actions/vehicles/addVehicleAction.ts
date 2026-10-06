@@ -32,40 +32,40 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   const vehicle = await vehicleServices.addVehicle(data)
   if (!vehicle) return
 
-  let rcUrl
-  let pucUrl
-  let insuranceUrl
+  let rcPhotoUrl
+  let pucPhotoUrl
+  let insurancePhotoUrl
   let vehiclePhotoUrl
 
   // Upload files to Supabase Storage
-  const [rcFile] = data.data.rcPhotos || []
+  const [rcFile] = data.rcPhotos || []
   if (rcFile) {
     const uploadedFile = await uploadFile(
       rcFile,
       generateRCPhotoPathName(vehicle.id, rcFile),
     )
-    rcUrl = uploadedFile.path
+    rcPhotoUrl = uploadedFile.path
   }
 
-  const [pucFile] = data.data.pucPhotos || []
+  const [pucFile] = data.pucPhotos || []
   if (pucFile) {
     const uploadedFile = await uploadFile(
       pucFile,
       generatePUCPhotoPathName(vehicle.id, pucFile),
     )
-    pucUrl = uploadedFile.path
+    pucPhotoUrl = uploadedFile.path
   }
 
-  const [insuranceFile] = data.data.insurancePhotos || []
+  const [insuranceFile] = data.insurancePhotos || []
   if (insuranceFile) {
     const uploadedFile = await uploadFile(
       insuranceFile,
       generateInsurancePhotoPathName(vehicle.id, insuranceFile),
     )
-    insuranceUrl = uploadedFile.path
+    insurancePhotoUrl = uploadedFile.path
   }
 
-  const [vehiclePhotoFile] = data.data.vehiclePhotos || []
+  const [vehiclePhotoFile] = data.vehiclePhotos || []
   if (vehiclePhotoFile) {
     const uploadedFile = await uploadFile(
       vehiclePhotoFile,
@@ -74,14 +74,14 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
     vehiclePhotoUrl = uploadedFile.path
   }
 
-  if (rcUrl || pucUrl || insuranceUrl || vehiclePhotoUrl) {
-    await vehicleServices.renewVehicleDocURLs(
-      vehicle.id,
-      rcUrl,
-      pucUrl,
-      insuranceUrl,
+  if (rcPhotoUrl || pucPhotoUrl || insurancePhotoUrl || vehiclePhotoUrl) {
+    await vehicleServices.renewVehicleDocURLs({
+      vehicleId: vehicle.id,
+      rcPhotoUrl,
+      pucPhotoUrl,
+      insurancePhotoUrl,
       vehiclePhotoUrl,
-    )
+    })
   }
 
   await notificationServices.addNotification({

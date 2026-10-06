@@ -75,7 +75,10 @@ export default function ResetWithCodePageComponent({
       return
     }
     startTransition(async () => {
-      const result = await checkVerificationCodeAction(code, user.id)
+      const result = await checkVerificationCodeAction({
+        code,
+        userId: user.id,
+      })
       if (result === true) {
         setCodeSuccess(true)
       } else {
@@ -98,7 +101,10 @@ export default function ResetWithCodePageComponent({
       toast.error(t("BotError"))
       return
     }
-    const updatedUser = await setNewPasswordAction(user.id, data.password)
+    const updatedUser = await setNewPasswordAction({
+      userId: user.id,
+      newPassword: data.password,
+    })
     if (updatedUser) {
       toast.success(t("Success"))
     } else {

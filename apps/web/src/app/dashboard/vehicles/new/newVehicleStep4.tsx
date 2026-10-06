@@ -59,9 +59,9 @@ export function NewVehicleStep4({
   const formData = useForm<Step4Type>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      defaultRatePerKm: newVehicleFormData.data.defaultRatePerKm,
-      hasAC: newVehicleFormData.data.hasAC,
-      defaultAcChargePerDay: newVehicleFormData.data.defaultAcChargePerDay,
+      defaultRatePerKm: newVehicleFormData.defaultRatePerKm,
+      hasAC: newVehicleFormData.hasAC,
+      defaultAcChargePerDay: newVehicleFormData.defaultAcChargePerDay,
     },
   })
 
@@ -74,12 +74,9 @@ export function NewVehicleStep4({
   const onSubmit = (data: Step4Type) => {
     setNewVehicleFormData({
       ...newVehicleFormData,
-      data: {
-        ...newVehicleFormData.data,
-        defaultRatePerKm: data.defaultRatePerKm,
-        hasAC: data.hasAC,
-        defaultAcChargePerDay: data.defaultAcChargePerDay,
-      },
+      defaultRatePerKm: data.defaultRatePerKm,
+      hasAC: data.hasAC,
+      defaultAcChargePerDay: data.defaultAcChargePerDay,
     })
     onNext()
   }

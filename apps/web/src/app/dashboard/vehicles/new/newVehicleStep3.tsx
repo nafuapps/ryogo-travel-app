@@ -73,10 +73,10 @@ export function NewVehicleStep3({
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      insuranceExpiresOn: newVehicleFormData.data.insuranceExpiresOn,
-      insurancePhotos: newVehicleFormData.data.insurancePhotos,
-      pucExpiresOn: newVehicleFormData.data.pucExpiresOn,
-      pucPhotos: newVehicleFormData.data.pucPhotos,
+      insuranceExpiresOn: newVehicleFormData.insuranceExpiresOn,
+      insurancePhotos: newVehicleFormData.insurancePhotos,
+      pucExpiresOn: newVehicleFormData.pucExpiresOn,
+      pucPhotos: newVehicleFormData.pucPhotos,
     },
   })
 
@@ -84,13 +84,10 @@ export function NewVehicleStep3({
   const onSubmit = (data: Step3Type) => {
     setNewVehicleFormData({
       ...newVehicleFormData,
-      data: {
-        ...newVehicleFormData.data,
-        insuranceExpiresOn: data.insuranceExpiresOn,
-        insurancePhotos: data.insurancePhotos,
-        pucExpiresOn: data.pucExpiresOn,
-        pucPhotos: data.pucPhotos,
-      },
+      insuranceExpiresOn: data.insuranceExpiresOn,
+      insurancePhotos: data.insurancePhotos,
+      pucExpiresOn: data.pucExpiresOn,
+      pucPhotos: data.pucPhotos,
     })
     onNext()
   }

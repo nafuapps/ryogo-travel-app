@@ -37,10 +37,13 @@ export const vehicleServices = {
 
   //Get vehicles schedule
   async findVehiclesScheduleNextDays(agencyId: string, days: number = 7) {
-    const queryDate = addDays(new Date(), days)
+    const queryEndDate = addDays(new Date(), days)
 
     const vehiclesScheduleData =
-      await vehicleRepository.readVehiclesScheduleData(agencyId, queryDate)
+      await vehicleRepository.readVehiclesScheduleData({
+        agencyId,
+        queryEndDate,
+      })
 
     return vehiclesScheduleData
   },
@@ -105,8 +108,10 @@ export const vehicleServices = {
   ) {
     const queryStartDate = subDays(new Date(), days)
     const repairs = await vehicleRepairRepository.readVehicleRepairsByVehicleId(
-      vehicleId,
-      queryStartDate,
+      {
+        vehicleId,
+        queryStartDate,
+      },
     )
     return repairs
   },
@@ -117,20 +122,20 @@ export const vehicleServices = {
   },
 
   //Add vehicle to agency
-  async addVehicle({ data, agencyId, addedByUserId }: AddVehicleRequestType) {
+  async addVehicle(data: AddVehicleRequestType) {
     //Step1: Check if the vehicle already exists in this agency
     const existingVehicleInAgency =
-      await vehicleRepository.readVehicleByNumberInAgency(
-        data.vehicleNumber.toUpperCase(),
-        agencyId,
-      )
+      await vehicleRepository.readVehicleByNumberInAgency({
+        agencyId: data.agencyId,
+        vehicleNumber: data.vehicleNumber.toUpperCase(),
+      })
     if (existingVehicleInAgency) {
       return
     }
 
     const newVehicleData: InsertVehicleType = {
-      agencyId: agencyId,
-      addedByUserId: addedByUserId,
+      agencyId: data.agencyId,
+      addedByUserId: data.addedByUserId,
       vehicleNumber: data.vehicleNumber.toUpperCase(),
       type: data.type,
       brand: data.brand,
@@ -164,13 +169,7 @@ export const vehicleServices = {
 
   //Modify vehicle repair
   async modifyVehicleRepair(data: ModifyVehicleRepairRequestType) {
-    const [repair] = await vehicleRepairRepository.updateRepair(
-      data.repairId,
-      data.startDate,
-      data.endDate,
-      data.remarks ?? undefined,
-      data.cost ?? undefined,
-    )
+    const [repair] = await vehicleRepairRepository.updateRepairDetails(data)
     if (!repair) return
 
     const vehicle = await vehicleRepository.readVehicleById(repair.vehicleId)
@@ -186,14 +185,20 @@ export const vehicleServices = {
   },
 
   //Start vehicle repair
-  async startVehicleRepair(repairId: string, vehicleId: string) {
+  async startVehicleRepair({
+    repairId,
+    vehicleId,
+  }: {
+    repairId: string
+    vehicleId: string
+  }) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
     if (!vehicle || vehicle.status !== VehicleStatusEnum.AVAILABLE) return
 
-    const updatedVehicle = await vehicleRepository.updateStatus(
+    const updatedVehicle = await vehicleRepository.updateStatus({
       vehicleId,
-      VehicleStatusEnum.REPAIR,
-    )
+      status: VehicleStatusEnum.REPAIR,
+    })
     if (!updatedVehicle) return
 
     const [repair] =
@@ -202,14 +207,20 @@ export const vehicleServices = {
   },
 
   //End vehicle repair
-  async endVehicleRepair(repairId: string, vehicleId: string) {
+  async endVehicleRepair({
+    repairId,
+    vehicleId,
+  }: {
+    repairId: string
+    vehicleId: string
+  }) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
     if (!vehicle || vehicle.status !== VehicleStatusEnum.REPAIR) return
 
-    const updatedVehicle = await vehicleRepository.updateStatus(
+    const updatedVehicle = await vehicleRepository.updateStatus({
       vehicleId,
-      VehicleStatusEnum.AVAILABLE,
-    )
+      status: VehicleStatusEnum.AVAILABLE,
+    })
     if (!updatedVehicle) return
 
     const [repair] = await vehicleRepairRepository.updateRepairToEnded(repairId)
@@ -217,46 +228,47 @@ export const vehicleServices = {
   },
 
   //Change vehicle number
-  async changeVehicleNumber(vehicleId: string, vehicleNumber: string) {
-    const [vehicle] = await vehicleRepository.updateVehicleNumber(
+  async changeVehicleNumber({
+    vehicleId,
+    vehicleNumber,
+  }: {
+    vehicleId: string
+    vehicleNumber: string
+  }) {
+    const [vehicle] = await vehicleRepository.updateVehicleNumber({
       vehicleId,
       vehicleNumber,
-    )
+    })
     return vehicle
   },
 
   //Modify vehicle details
   async modifyVehicle(data: ModifyVehicleRequestType) {
-    const [vehicle] = await vehicleRepository.updateVehicleDetails(
-      data.vehicleId,
-      data.type,
-      data.brand,
-      data.color,
-      data.model,
-      data.capacity,
-      data.odometerReading,
-      data.hasAC,
-      data.defaultRatePerKm,
-      data.defaultAcChargePerDay,
-    )
+    const [vehicle] = await vehicleRepository.updateVehicleDetails(data)
     return vehicle
   },
 
   //Update Vehicle doc URL
-  async renewVehicleDocURLs(
-    vehicleId: string,
-    rcUrl?: string,
-    pucUrl?: string,
-    insuranceURL?: string,
-    vehiclePhotoUrl?: string,
-  ) {
-    await vehicleRepository.updateDocUrls(
+  async renewVehicleDocURLs({
+    vehicleId,
+    rcPhotoUrl,
+    pucPhotoUrl,
+    insurancePhotoUrl,
+    vehiclePhotoUrl,
+  }: {
+    vehicleId: string
+    rcPhotoUrl?: string
+    pucPhotoUrl?: string
+    insurancePhotoUrl?: string
+    vehiclePhotoUrl?: string
+  }) {
+    await vehicleRepository.updateDocUrls({
       vehicleId,
-      rcUrl,
-      pucUrl,
-      insuranceURL,
+      rcPhotoUrl,
+      pucPhotoUrl,
+      insurancePhotoUrl,
       vehiclePhotoUrl,
-    )
+    })
   },
 
   async changeVehicleDocument(
@@ -264,53 +276,59 @@ export const vehicleServices = {
     photoUrl?: string,
   ) {
     if (data.type === "rc") {
-      const [updatedVehicle] = await vehicleRepository.updateRCDetails(
-        data.vehicleId,
-        data.expiresOn,
-        photoUrl,
-      )
+      const [updatedVehicle] = await vehicleRepository.updateRCDetails({
+        vehicleId: data.vehicleId,
+        rcExpiresOn: data.expiresOn,
+        rcPhotoUrl: photoUrl,
+      })
       return updatedVehicle
     }
     if (data.type === "puc") {
-      const [updatedVehicle] = await vehicleRepository.updatePUCDetails(
-        data.vehicleId,
-        data.expiresOn,
-        photoUrl,
-      )
+      const [updatedVehicle] = await vehicleRepository.updatePUCDetails({
+        vehicleId: data.vehicleId,
+        pucExpiresOn: data.expiresOn,
+        pucPhotoUrl: photoUrl,
+      })
       return updatedVehicle
     }
-    const [updatedVehicle] = await vehicleRepository.updateInsuranceDetails(
-      data.vehicleId,
-      data.expiresOn,
-      photoUrl,
-    )
+    const [updatedVehicle] = await vehicleRepository.updateInsuranceDetails({
+      vehicleId: data.vehicleId,
+      insuranceExpiresOn: data.expiresOn,
+      insurancePhotoUrl: photoUrl,
+    })
     return updatedVehicle
   },
 
   //Update Vehicle photo URL
-  async renewVehiclePhotoURL(vehicleId: string, url: string) {
-    const [updatedVehicle] = await vehicleRepository.updateVehiclePhotoUrl(
+  async renewVehiclePhotoURL({
+    vehicleId,
+    vehiclePhotoUrl,
+  }: {
+    vehicleId: string
+    vehiclePhotoUrl: string
+  }) {
+    const [updatedVehicle] = await vehicleRepository.updateVehiclePhotoUrl({
       vehicleId,
-      url,
-    )
+      vehiclePhotoUrl,
+    })
     return updatedVehicle
   },
 
   //Activate Vehicle
   async activateVehicle(vehicleId: string) {
-    const [vehicle] = await vehicleRepository.updateStatus(
+    const [vehicle] = await vehicleRepository.updateStatus({
       vehicleId,
-      VehicleStatusEnum.AVAILABLE,
-    )
+      status: VehicleStatusEnum.AVAILABLE,
+    })
     return vehicle
   },
 
   //Inctivate Vehicle
   async inactivateVehicle(vehicleId: string) {
-    const [vehicle] = await vehicleRepository.updateStatus(
+    const [vehicle] = await vehicleRepository.updateStatus({
       vehicleId,
-      VehicleStatusEnum.INACTIVE,
-    )
+      status: VehicleStatusEnum.INACTIVE,
+    })
     return vehicle
   },
 }

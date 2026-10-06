@@ -63,7 +63,10 @@ export async function createOwnerAccountAction(
       photoFile,
       generateUserPhotoPathName(user.userId, photoFile),
     )
-    await userServices.updateUserPhoto(user.userId, uploadedPhoto.path)
+    await userServices.updateUserPhoto({
+      userId: user.userId,
+      photoUrl: uploadedPhoto.path,
+    })
   }
 
   await notificationServices.addNotification({

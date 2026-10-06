@@ -6,11 +6,15 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function inactivateUserAction(
-  id: string,
-  agencyId: string,
-  role: UserRolesEnum,
-) {
+export async function inactivateUserAction({
+  userId,
+  agencyId,
+  role,
+}: {
+  userId: string
+  agencyId: string
+  role: UserRolesEnum
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -24,20 +28,20 @@ export async function inactivateUserAction(
     return
   }
 
-  const user = await userServices.inactivateUser(id, role)
+  const user = await userServices.inactivateUser({ userId, role })
   if (!user) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.USER,
-    entityId: id,
+    entityId: userId,
     textKey: "UserInactivated",
     textObject: {
       userName: user.name,
       adminName: currentUser.name,
     },
-    link: `/dashboard/users/${id}`,
+    link: `/dashboard/users/${userId}`,
   })
 
   await missionServices.removePreviousMissionsByEntityTitleKey({

@@ -55,11 +55,11 @@ export function AddVehicleStep1({
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      vehicleNumber: finalData.data.vehicleNumber,
-      type: finalData.data.type,
-      brand: finalData.data.brand,
-      color: finalData.data.color,
-      model: finalData.data.model,
+      vehicleNumber: finalData.vehicleNumber,
+      type: finalData.type,
+      brand: finalData.brand,
+      color: finalData.color,
+      model: finalData.model,
     },
   })
 
@@ -67,14 +67,11 @@ export function AddVehicleStep1({
   const onSubmit = async (data: Step1Type) => {
     updateFinalData({
       ...finalData,
-      data: {
-        ...finalData.data,
-        vehicleNumber: data.vehicleNumber,
-        type: data.type,
-        brand: data.brand,
-        color: data.color,
-        model: data.model,
-      },
+      vehicleNumber: data.vehicleNumber,
+      type: data.type,
+      brand: data.brand,
+      color: data.color,
+      model: data.model,
     })
     onNext()
   }

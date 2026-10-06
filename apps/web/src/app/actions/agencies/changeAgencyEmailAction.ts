@@ -5,11 +5,15 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function changeAgencyEmailAction(
-  agencyId: string,
-  userId: string,
-  email: string,
-) {
+export async function changeAgencyEmailAction({
+  agencyId,
+  userId,
+  email,
+}: {
+  agencyId: string
+  userId: string
+  email: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

@@ -51,7 +51,10 @@ export default function LoginPasswordPageComponent({
       toast.error(t("BotError"))
       return
     }
-    const loginResponse = await loginAction(user.id, data.password)
+    const loginResponse = await loginAction({
+      userId: user.id,
+      password: data.password,
+    })
     if (loginResponse.error === "invalidPassword") {
       // Show password mismatch error
       form.setError("password", {

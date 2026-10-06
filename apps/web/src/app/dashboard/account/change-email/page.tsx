@@ -19,10 +19,10 @@ export default async function ChangeEmailAccountPage() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const usersWithPhoneRole = await userServices.findUserAccountsByPhoneRole(
-    currentUser.phone,
-    currentUser.userRole,
-  )
+  const usersWithPhoneRole = await userServices.findUserAccountsByPhoneRole({
+    phone: currentUser.phone,
+    role: currentUser.userRole,
+  })
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/change-email"} />

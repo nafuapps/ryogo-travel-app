@@ -58,10 +58,10 @@ export async function endTripAction(
         tripLogPhotoFile,
       ),
     )
-    await tripLogServices.changeTripLogPhotoUrl(
-      newTripLog.id,
-      uploadedFile.path,
-    )
+    await tripLogServices.changeTripLogPhotoUrl({
+      tripLogId: newTripLog.id,
+      tripLogPhotoUrl: uploadedFile.path,
+    })
   }
 
   //Change Booking, Driver and vehicle status to Completed

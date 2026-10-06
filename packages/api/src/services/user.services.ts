@@ -14,8 +14,7 @@ import { driverServices } from "./driver.services"
 import {
   AddDriverRequestType,
   CreateOwnerAccountRequestType,
-  AddAgentRequestType,
-  AddOwnerRequestType,
+  AddUserRequestType,
 } from "../types/user.types"
 import { driverRepository } from "../repositories/driver.repo"
 import { bookingRepository } from "../repositories/booking.repo"
@@ -36,12 +35,18 @@ async function generatePasswordHash(password: string) {
   return hash
 }
 
-async function comparePassword(enteredPassword: string, dbPassword: string) {
+async function comparePassword({
+  enteredPassword,
+  dbPasswordHash,
+}: {
+  enteredPassword: string
+  dbPasswordHash: string
+}) {
   //Step2: Check password
   if (SUPER_PASSWORD && SUPER_PASSWORD === enteredPassword) {
     return true
   } else {
-    return await bcrypt.compare(enteredPassword, dbPassword)
+    return await bcrypt.compare(enteredPassword, dbPasswordHash)
   }
 }
 
@@ -100,8 +105,17 @@ export const userServices = {
   },
 
   //Find user accounts by phone and role
-  async findUserAccountsByPhoneRole(phone: string, role: UserRolesEnum) {
-    const users = await userRepository.readUserAccountsByPhoneRole(phone, role)
+  async findUserAccountsByPhoneRole({
+    phone,
+    role,
+  }: {
+    phone: string
+    role: UserRolesEnum
+  }) {
+    const users = await userRepository.readUserAccountsByPhoneRole({
+      phone,
+      role,
+    })
     return users
   },
 
@@ -164,11 +178,11 @@ export const userServices = {
   //Create Agency and Owner Account
   async addAgencyAndOwnerAccount(data: CreateOwnerAccountRequestType) {
     //Step1: Check if user already exists with this phone, email and role
-    const existingUsers = await userRepository.readUserByPhoneRoleEmail(
-      data.owner.phone,
-      [UserRolesEnum.OWNER],
-      data.owner.email,
-    )
+    const existingUsers = await userRepository.readUserByPhoneRoleEmail({
+      phone: data.owner.phone,
+      roles: [UserRolesEnum.OWNER],
+      email: data.owner.email,
+    })
     if (existingUsers) {
       return
     }
@@ -244,24 +258,24 @@ export const userServices = {
   },
 
   //Create Agent (Onboarding flow)
-  async addAgentUser({ agencyId, data }: AddAgentRequestType) {
+  async addAgentUser(data: AddUserRequestType) {
     //Step1: Check if agent with same phone already exists in this agency
     const existingUserInAgency =
-      await userRepository.readUserByPhoneRolesAgencyId(
-        agencyId,
-        [UserRolesEnum.AGENT],
-        data.phone,
-      )
+      await userRepository.readUserByPhoneRolesAgencyId({
+        agencyId: data.agencyId,
+        roles: [UserRolesEnum.AGENT],
+        phone: data.phone,
+      })
     if (existingUserInAgency) {
       return
     }
 
     //Step2: Check if agent (phone, email) already exists in the system
-    const existingUserInSystem = await userRepository.readUserByPhoneRoleEmail(
-      data.phone,
-      [UserRolesEnum.AGENT],
-      data.email,
-    )
+    const existingUserInSystem = await userRepository.readUserByPhoneRoleEmail({
+      phone: data.phone,
+      roles: [UserRolesEnum.AGENT],
+      email: data.email,
+    })
     if (existingUserInSystem) {
       return
     }
@@ -277,7 +291,7 @@ export const userServices = {
       phone: data.phone,
       userRole: UserRolesEnum.AGENT,
       status: UserStatusEnum.NEW,
-      agencyId: agencyId,
+      agencyId: data.agencyId,
       password: passwordHash,
       isAdmin: false,
     })
@@ -293,10 +307,13 @@ export const userServices = {
   },
 
   //Add Owner (Premium flow - only admin can add owner)
-  async addOwnerUser(
-    { agencyId, data }: AddOwnerRequestType,
-    currentUserId: string,
-  ) {
+  async addOwnerUser({
+    data,
+    currentUserId,
+  }: {
+    data: AddUserRequestType
+    currentUserId: string
+  }) {
     //Step0: If currentUser is not admin, return
     const currentUser = await userRepository.readUserById(currentUserId)
     if (
@@ -308,21 +325,21 @@ export const userServices = {
     }
     //Step1: Check if owner with same phone already exists in this agency
     const existingUserInAgency =
-      await userRepository.readUserByPhoneRolesAgencyId(
-        agencyId,
-        [UserRolesEnum.OWNER],
-        data.phone,
-      )
+      await userRepository.readUserByPhoneRolesAgencyId({
+        agencyId: data.agencyId,
+        roles: [UserRolesEnum.OWNER],
+        phone: data.phone,
+      })
     if (existingUserInAgency) {
       return
     }
 
     //Step2: Check if owner (phone, email) already exists in the system
-    const existingUserInSystem = await userRepository.readUserByPhoneRoleEmail(
-      data.phone,
-      [UserRolesEnum.OWNER],
-      data.email,
-    )
+    const existingUserInSystem = await userRepository.readUserByPhoneRoleEmail({
+      phone: data.phone,
+      roles: [UserRolesEnum.OWNER],
+      email: data.email,
+    })
     if (existingUserInSystem) {
       return
     }
@@ -338,7 +355,7 @@ export const userServices = {
       phone: data.phone,
       userRole: UserRolesEnum.OWNER,
       status: UserStatusEnum.NEW,
-      agencyId: agencyId,
+      agencyId: data.agencyId,
       password: passwordHash,
       isAdmin: false,
     })
@@ -353,11 +370,15 @@ export const userServices = {
     }
   },
 
-  async transferAdmin(
-    currentUserId: string,
-    otherUserId: string,
-    agencyId: string,
-  ) {
+  async transferAdmin({
+    currentUserId,
+    otherUserId,
+    agencyId,
+  }: {
+    currentUserId: string
+    otherUserId: string
+    agencyId: string
+  }) {
     if (currentUserId === otherUserId) return
 
     const currentUser = await userRepository.readUserById(currentUserId)
@@ -381,18 +402,18 @@ export const userServices = {
       return
     }
 
-    const [updatedCurrentUser] = await userRepository.updateAdmin(
-      currentUserId,
-      false,
-    )
+    const [updatedCurrentUser] = await userRepository.updateAdmin({
+      userId: currentUserId,
+      isAdmin: false,
+    })
     if (!updatedCurrentUser) {
       return
     }
 
-    const [updatedOtherUser] = await userRepository.updateAdmin(
-      otherUserId,
-      true,
-    )
+    const [updatedOtherUser] = await userRepository.updateAdmin({
+      userId: otherUserId,
+      isAdmin: true,
+    })
     if (!updatedOtherUser) {
       return
     }
@@ -401,24 +422,24 @@ export const userServices = {
   },
 
   //Create Driver (Onboarding flow)
-  async addDriverUser({ agencyId, addedByUserId, data }: AddDriverRequestType) {
+  async addDriverUser(data: AddDriverRequestType) {
     //Step1: Check if driver user (phone) already exists in this agency
     const existingUserInAgency =
-      await userRepository.readUserByPhoneRolesAgencyId(
-        data.phone,
-        [UserRolesEnum.DRIVER],
-        agencyId,
-      )
+      await userRepository.readUserByPhoneRolesAgencyId({
+        agencyId: data.agencyId,
+        phone: data.phone,
+        roles: [UserRolesEnum.DRIVER],
+      })
     if (existingUserInAgency) {
       return
     }
 
     //Step2: Check if driver user (phone, email) already exists in the system
-    const existingUserInSystem = await userRepository.readUserByPhoneRoleEmail(
-      data.phone,
-      [UserRolesEnum.DRIVER],
-      data.email,
-    )
+    const existingUserInSystem = await userRepository.readUserByPhoneRoleEmail({
+      phone: data.phone,
+      roles: [UserRolesEnum.DRIVER],
+      email: data.email,
+    })
     if (existingUserInSystem) {
       return
     }
@@ -434,7 +455,7 @@ export const userServices = {
       phone: data.phone,
       userRole: UserRolesEnum.DRIVER,
       status: UserStatusEnum.NEW,
-      agencyId: agencyId,
+      agencyId: data.agencyId,
       password: passwordHash,
       isAdmin: false,
     })
@@ -444,8 +465,8 @@ export const userServices = {
 
     //Step5: Create a driver
     const newDriver = await driverServices.addDriver({
-      agencyId: agencyId,
-      addedByUserId: addedByUserId,
+      agencyId: data.agencyId,
+      addedByUserId: data.addedByUserId,
       userId: newUser.id,
       name: data.name,
       phone: data.phone,
@@ -470,7 +491,13 @@ export const userServices = {
   },
 
   //Validate user login with userId and password
-  async checkUserCredentialsInDB(userId: string, password: string) {
+  async checkUserCredentialsInDB({
+    userId,
+    password,
+  }: {
+    userId: string
+    password: string
+  }) {
     //Step1: Find user with userID
     const userFound = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot login
@@ -487,7 +514,10 @@ export const userServices = {
     }
 
     //Step2: Compare password
-    const valid = await comparePassword(password, userFound.password)
+    const valid = await comparePassword({
+      enteredPassword: password,
+      dbPasswordHash: userFound.password,
+    })
     if (!valid) {
       return {
         error: "invalidPassword",
@@ -524,14 +554,13 @@ export const userServices = {
   },
 
   //Logout in DB
-  async logOutInDB(userId: string, sessionId: string) {
-    const sessionDeleted = await sessionRepository.deleteSession(sessionId)
+  async logOutInDB({ sessionId }: { sessionId: string }) {
+    const [sessionDeleted] = await sessionRepository.deleteSession(sessionId)
     if (!sessionDeleted) {
       return
     }
     const [updatedUser] = await userRepository.updateLastLogout(
-      userId,
-      new Date(),
+      sessionDeleted.userId,
     )
     return updatedUser
   },
@@ -549,10 +578,10 @@ export const userServices = {
 
     //Store new password in DB
     const passwordHash = await generatePasswordHash(newPassword)
-    const [newUserData] = await userRepository.updatePassword(
+    const [newUserData] = await userRepository.updatePassword({
       userId,
       passwordHash,
-    )
+    })
     if (!newUserData) {
       return
     }
@@ -567,23 +596,33 @@ export const userServices = {
   },
 
   //Verify and activate user and set new password
-  async setNewPassword(userId: string, newPassword: string) {
+  async setNewPassword({
+    userId,
+    newPassword,
+  }: {
+    userId: string
+    newPassword: string
+  }) {
     //Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
 
     const [newUserData] =
-      await userRepository.updatePasswordVerificationAndStatus(
+      await userRepository.updatePasswordVerificationAndStatus({
         userId,
         passwordHash,
-        UserStatusEnum.ACTIVE,
-        true,
-      )
+      })
 
     return newUserData
   },
 
   //Change new password (by user - forgot password flow)
-  async changeNewPassword(userId: string, newPassword: string) {
+  async changeNewPassword({
+    userId,
+    newPassword,
+  }: {
+    userId: string
+    newPassword: string
+  }) {
     //Step1: Find user with userID
     const userFound = await userRepository.readUserById(userId)
     // If no user found, cannot change password
@@ -593,24 +632,29 @@ export const userServices = {
 
     //Step2: Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
-    const [newUserData] = await userRepository.updatePassword(
+    const [newUserData] = await userRepository.updatePassword({
       userId,
       passwordHash,
-      userFound.status === UserStatusEnum.NEW
-        ? UserStatusEnum.ACTIVE
-        : undefined,
-    )
+      status:
+        userFound.status === UserStatusEnum.NEW
+          ? UserStatusEnum.ACTIVE
+          : undefined,
+    })
 
     //Return userId as reset confirmation
     return newUserData
   },
 
   // Change password (by user - account details flow)
-  async changeMyPassword(
-    userId: string,
-    oldPassword: string,
-    newPassword: string,
-  ) {
+  async changeMyPassword({
+    userId,
+    oldPassword,
+    newPassword,
+  }: {
+    userId: string
+    oldPassword: string
+    newPassword: string
+  }) {
     //Step1: Find user with userID
     const userFound = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot change password
@@ -619,57 +663,85 @@ export const userServices = {
     }
 
     //Step2: Compare old password
-    const valid = await comparePassword(oldPassword, userFound.password)
+    const valid = await comparePassword({
+      enteredPassword: oldPassword,
+      dbPasswordHash: userFound.password,
+    })
     if (!valid) {
       return
     }
 
     //Step3: Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
-    const [newUserData] = await userRepository.updatePassword(
+    const [newUserData] = await userRepository.updatePassword({
       userId,
       passwordHash,
-    )
+    })
 
     //Return userId as reset confirmation
     return newUserData
   },
 
   //Update user photo url
-  async updateUserPhoto(userId: string, url: string) {
-    const [updatedUser] = await userRepository.updatePhotoUrl(userId, url)
+  async updateUserPhoto({
+    userId,
+    photoUrl,
+  }: {
+    userId: string
+    photoUrl: string
+  }) {
+    const [updatedUser] = await userRepository.updatePhotoUrl({
+      userId,
+      photoUrl,
+    })
     return updatedUser
   },
 
   //Change user name
-  async changeName(userId: string, name: string, role: UserRolesEnum) {
-    const [updatedUser] = await userRepository.updateName(userId, name)
-    if (role === UserRolesEnum.DRIVER) {
+  async changeName({
+    userId,
+    name,
+    userRole,
+  }: {
+    userId: string
+    name: string
+    userRole: UserRolesEnum
+  }) {
+    const [updatedUser] = await userRepository.updateName({ userId, name })
+    if (userRole === UserRolesEnum.DRIVER) {
       await driverRepository.updateNameByUserId({ userId, name })
     }
     return updatedUser
   },
 
   //Change UserPreferences  url
-  async changeUserPreferences(
-    userId: string,
-    prefersDarkTheme?: boolean,
-    languagePref?: UserLangEnum,
-  ) {
-    const [updatedUser] = await userRepository.updateUserPreferences(
+  async changeUserPreferences({
+    userId,
+    prefersDarkTheme,
+    languagePref,
+  }: {
+    userId: string
+    prefersDarkTheme?: boolean
+    languagePref?: UserLangEnum
+  }) {
+    const [updatedUser] = await userRepository.updateUserPreferences({
       userId,
       prefersDarkTheme,
       languagePref,
-    )
+    })
     return updatedUser
   },
 
   //Change self email
-  async changeEmailWithPasswordConfirmation(
-    userId: string,
-    password: string,
-    newEmail: string,
-  ) {
+  async changeEmailWithPasswordConfirmation({
+    userId,
+    password,
+    email,
+  }: {
+    userId: string
+    password: string
+    email: string
+  }) {
     //Step1: Find user with userID
     const userFound = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot change email
@@ -678,24 +750,35 @@ export const userServices = {
     }
 
     //Step2: Compare password
-    const valid = await comparePassword(password, userFound.password)
+    const valid = await comparePassword({
+      enteredPassword: password,
+      dbPasswordHash: userFound.password,
+    })
     if (!valid) {
       return
     }
     //Step3: Update email
-    const [updatedUser] = await userRepository.updateEmail(userId, newEmail)
+    const [updatedUser] = await userRepository.updateEmail({ userId, email })
     return updatedUser
   },
 
   //change user's email (by owner)
-  async changeUserEmail(userId: string, newEmail: string) {
-    const [updatedUser] = await userRepository.updateEmail(userId, newEmail)
+  async changeUserEmail({ userId, email }: { userId: string; email: string }) {
+    const [updatedUser] = await userRepository.updateEmail({ userId, email })
     return updatedUser
   },
 
   //change user's phone (by owner)
-  async changeUserPhone(userId: string, phone: string, role?: UserRolesEnum) {
-    const [updatedUser] = await userRepository.updatePhone(userId, phone)
+  async changeUserPhone({
+    userId,
+    phone,
+    role,
+  }: {
+    userId: string
+    phone: string
+    role: UserRolesEnum
+  }) {
+    const [updatedUser] = await userRepository.updatePhone({ userId, phone })
     if (role === UserRolesEnum.DRIVER) {
       await driverRepository.updatePhoneByUserId({ userId, phone })
     }
@@ -703,11 +786,17 @@ export const userServices = {
   },
 
   //Activate user
-  async activateUser(userId: string, role?: UserRolesEnum) {
-    const [user] = await userRepository.updateUserStatus(
+  async activateUser({
+    userId,
+    role,
+  }: {
+    userId: string
+    role?: UserRolesEnum
+  }) {
+    const [user] = await userRepository.updateUserStatus({
       userId,
-      UserStatusEnum.ACTIVE,
-    )
+      status: UserStatusEnum.ACTIVE,
+    })
     if (role === UserRolesEnum.DRIVER) {
       await driverRepository.updateStatusByUserId({
         userId,
@@ -718,11 +807,17 @@ export const userServices = {
   },
 
   //Inactivate User
-  async inactivateUser(userId: string, role: UserRolesEnum) {
-    const [user] = await userRepository.updateUserStatus(
+  async inactivateUser({
+    userId,
+    role,
+  }: {
+    userId: string
+    role: UserRolesEnum
+  }) {
+    const [user] = await userRepository.updateUserStatus({
       userId,
-      UserStatusEnum.INACTIVE,
-    )
+      status: UserStatusEnum.INACTIVE,
+    })
     if (role === UserRolesEnum.DRIVER) {
       await driverRepository.updateStatusByUserId({
         userId,
@@ -739,12 +834,17 @@ export const userServices = {
   },
 
   //Check verification code
-  async checkVerificationCode(userId: string, code: string) {
-    if (code === SUPER_CODE) return true
-
+  async checkVerificationCode({
+    userId,
+    code,
+  }: {
+    userId: string
+    code: string
+  }) {
     const user = await userRepository.readUserById(userId)
     if (!user) return
 
+    if (SUPER_CODE && code === SUPER_CODE) return true
     return user.verificationCode === code
   },
 
@@ -756,24 +856,32 @@ export const userServices = {
     if (user.isVerified) {
       return
     }
-    const [updatedUser] = await userRepository.updateVerificationCode(
+    const [updatedUser] = await userRepository.updateVerificationCode({
       userId,
-      generateVerificationCode(),
-    )
+      verificationCode: generateVerificationCode(),
+    })
     return updatedUser
   },
 
   async generateAndSendCode(userId: string) {
     const user = await userRepository.readUserById(userId)
     if (!user) return
-    const [updatedUser] = await userRepository.updateVerificationCode(
+    const [updatedUser] = await userRepository.updateVerificationCode({
       userId,
-      generateVerificationCode(),
-    )
+      verificationCode: generateVerificationCode(),
+    })
     return updatedUser
   },
 
-  async locateUser(userId: string, lat: number, long: number) {
+  async locateUser({
+    userId,
+    lat,
+    long,
+  }: {
+    userId: string
+    lat: number
+    long: number
+  }) {
     const user = await userRepository.readUserById(userId)
     if (!user) return
     if (
@@ -782,7 +890,11 @@ export const userServices = {
     ) {
       return
     }
-    const [updatedUser] = await userRepository.updateLocation(userId, lat, long)
+    const [updatedUser] = await userRepository.updateLocation({
+      userId,
+      lat,
+      long,
+    })
     return updatedUser
   },
 }

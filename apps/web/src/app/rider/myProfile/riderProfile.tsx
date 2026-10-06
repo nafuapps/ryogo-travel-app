@@ -20,8 +20,10 @@ import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function RiderProfilePageComponent({
   account,
+  sessionLoginAt,
 }: {
   account: NonNullable<FindUserDetailsWithDriverByIdType>
+  sessionLoginAt: Date
 }) {
   const t = await getTranslations("Rider.MyProfile")
 
@@ -94,9 +96,7 @@ export default async function RiderProfilePageComponent({
         </Link>
         <LogoutAlertButton />
       </GridWrapper>
-      {account.lastLogin && (
-        <UserLoginTimeComponent lastLoginTime={account.lastLogin} />
-      )}
+      <UserLoginTimeComponent sessionLoginAt={sessionLoginAt} />
       <StickyActionWrapper>
         <HelpIconButton href={"/rider/mySupport/help-account"} showLabelSmall />
       </StickyActionWrapper>

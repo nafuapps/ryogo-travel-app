@@ -27,10 +27,10 @@ export async function changeVehicleNumberAction(
     return
   }
 
-  const vehicle = await vehicleServices.changeVehicleNumber(
+  const vehicle = await vehicleServices.changeVehicleNumber({
     vehicleId,
-    newVehicleNumber,
-  )
+    vehicleNumber: newVehicleNumber,
+  })
   if (!vehicle) return
 
   await notificationServices.addNotification({

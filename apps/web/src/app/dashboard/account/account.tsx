@@ -20,8 +20,10 @@ import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function AccountPageComponent({
   account,
+  sessionLoginAt,
 }: {
   account: NonNullable<FindUserDetailsByIdType>
+  sessionLoginAt: Date
 }) {
   const t = await getTranslations("Dashboard.Account")
 
@@ -93,9 +95,7 @@ export default async function AccountPageComponent({
         </Link>
         <LogoutAlertButton />
       </GridWrapper>
-      {account.lastLogin && (
-        <UserLoginTimeComponent lastLoginTime={account.lastLogin} />
-      )}
+      <UserLoginTimeComponent sessionLoginAt={sessionLoginAt} />
       <StickyActionWrapper>
         <HelpIconButton
           href={"/dashboard/support/help-account"}

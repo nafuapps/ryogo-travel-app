@@ -9,15 +9,15 @@ import { subDays } from "date-fns"
 export const transactionServices = {
   //Get previous N days transactions
   async findTransactionsPreviousDays(agencyId: string, days: number = 1) {
-    const endDate = new Date()
-    const startDate = subDays(endDate, days)
+    const queryEndDate = new Date()
+    const queryStartDate = subDays(queryEndDate, days)
 
     const transactions =
-      await transactionRepository.readTransactionsByCreatedRange(
+      await transactionRepository.readTransactionsByCreatedRange({
         agencyId,
-        startDate,
-        endDate,
-      )
+        queryStartDate,
+        queryEndDate,
+      })
     return transactions.map((transaction) => {
       return {
         id: transaction.id,
@@ -56,36 +56,39 @@ export const transactionServices = {
   //Modify a transaction's details
   async modifyTransaction(data: UpdateTransactionRequestType) {
     const [updatedTransaction] =
-      await transactionRepository.updateTransactionDetails(
-        data.transactionId,
-        data.amount,
-        data.type,
-        data.mode,
-        data.otherParty,
-        data.transactionDate,
-        data.remarks,
-      )
+      await transactionRepository.updateTransactionDetails(data)
     return updatedTransaction
   },
 
   //Modify a transaction approval status
-  async modifyTransactionApprovalStatus(
-    transactionId: string,
-    status: boolean,
-  ) {
+  async modifyTransactionApprovalStatus({
+    transactionId,
+    isApproved,
+  }: {
+    transactionId: string
+    isApproved: boolean
+  }) {
     const [transaction] =
-      await transactionRepository.updateTransactionApprovalStatus(
+      await transactionRepository.updateTransactionApprovalStatus({
         transactionId,
-        status,
-      )
+        isApproved,
+      })
     return transaction
   },
 
   //Upload transaction photo
-  async changeTransactionPhotoUrl(transactionId: string, url: string) {
+  async changeTransactionPhotoUrl({
+    transactionId,
+    transactionPhotoUrl,
+  }: {
+    transactionId: string
+    transactionPhotoUrl: string
+  }) {
     const [transaction] = await transactionRepository.updateTransactionPhotoUrl(
-      transactionId,
-      url,
+      {
+        transactionId,
+        transactionPhotoUrl,
+      },
     )
     return transaction
   },

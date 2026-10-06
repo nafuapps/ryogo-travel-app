@@ -45,25 +45,23 @@ export function AddVehicleConfirm({
     const newVehicleData: AddVehicleRequestType = {
       agencyId: finalData.agencyId,
       addedByUserId: finalData.addedByUserId,
-      data: {
-        vehicleNumber: finalData.data.vehicleNumber,
-        type: finalData.data.type,
-        brand: finalData.data.brand,
-        color: finalData.data.color,
-        model: finalData.data.model,
-        capacity: finalData.data.capacity,
-        odometerReading: finalData.data.odometerReading,
-        insuranceExpiresOn: finalData.data.insuranceExpiresOn,
-        pucExpiresOn: finalData.data.pucExpiresOn,
-        rcExpiresOn: finalData.data.rcExpiresOn,
-        hasAC: finalData.data.hasAC,
-        defaultRatePerKm: finalData.data.defaultRatePerKm,
-        defaultAcChargePerDay: finalData.data.defaultAcChargePerDay,
-        rcPhotos: finalData.data.rcPhotos,
-        pucPhotos: finalData.data.pucPhotos,
-        insurancePhotos: finalData.data.insurancePhotos,
-        vehiclePhotos: finalData.data.vehiclePhotos,
-      },
+      vehicleNumber: finalData.vehicleNumber,
+      type: finalData.type,
+      brand: finalData.brand,
+      color: finalData.color,
+      model: finalData.model,
+      capacity: finalData.capacity,
+      odometerReading: finalData.odometerReading,
+      insuranceExpiresOn: finalData.insuranceExpiresOn,
+      pucExpiresOn: finalData.pucExpiresOn,
+      rcExpiresOn: finalData.rcExpiresOn,
+      hasAC: finalData.hasAC,
+      defaultRatePerKm: finalData.defaultRatePerKm,
+      defaultAcChargePerDay: finalData.defaultAcChargePerDay,
+      rcPhotos: finalData.rcPhotos,
+      pucPhotos: finalData.pucPhotos,
+      insurancePhotos: finalData.insurancePhotos,
+      vehiclePhotos: finalData.vehiclePhotos,
     }
     if (await addVehicleAction(newVehicleData)) {
       onNext()
@@ -89,26 +87,26 @@ export function AddVehicleConfirm({
           <DetailsContentWrapper>
             <DetailsLineItem
               label={t("VehicleNumber")}
-              value={finalData.data.vehicleNumber.toUpperCase()}
+              value={finalData.vehicleNumber.toUpperCase()}
             />
-            <DetailsLineItem label={t("Type")} value={finalData.data.type} />
-            <DetailsLineItem label={t("Brand")} value={finalData.data.brand} />
-            <DetailsLineItem label={t("Model")} value={finalData.data.model} />
-            <DetailsLineItem label={t("Color")} value={finalData.data.color} />
+            <DetailsLineItem label={t("Type")} value={finalData.type} />
+            <DetailsLineItem label={t("Brand")} value={finalData.brand} />
+            <DetailsLineItem label={t("Model")} value={finalData.model} />
+            <DetailsLineItem label={t("Color")} value={finalData.color} />
             <DetailsLineItem
               label={t("HasAC")}
-              value={finalData.data.hasAC ? "Yes" : "No"}
+              value={finalData.hasAC ? "Yes" : "No"}
             />
-            {finalData.data.capacity && (
+            {finalData.capacity && (
               <DetailsLineItem
                 label={t("Capacity")}
-                value={`${finalData.data.capacity}`}
+                value={`${finalData.capacity}`}
               />
             )}
-            {finalData.data.odometerReading && (
+            {finalData.odometerReading && (
               <DetailsLineItem
                 label={t("OdometerReading")}
-                value={`${finalData.data.odometerReading}`}
+                value={`${finalData.odometerReading}`}
               />
             )}
           </DetailsContentWrapper>
@@ -118,26 +116,24 @@ export function AddVehicleConfirm({
             <RyogoCaption color="light">{t("PolicyDetails")}</RyogoCaption>
           </DetailsHeaderWrapper>
           <DetailsContentWrapper>
-            {finalData.data.rcExpiresOn && (
+            {finalData.rcExpiresOn && (
               <DetailsLineItem
                 label={t("RCExpiresOn")}
-                value={moment(finalData.data.rcExpiresOn).format("DD MMM YYYY")}
+                value={moment(finalData.rcExpiresOn).format("DD MMM YYYY")}
               />
             )}
-            {finalData.data.insuranceExpiresOn && (
+            {finalData.insuranceExpiresOn && (
               <DetailsLineItem
                 label={t("InsuranceExpiresOn")}
-                value={moment(finalData.data.insuranceExpiresOn).format(
+                value={moment(finalData.insuranceExpiresOn).format(
                   "DD MMM YYYY",
                 )}
               />
             )}
-            {finalData.data.pucExpiresOn && (
+            {finalData.pucExpiresOn && (
               <DetailsLineItem
                 label={t("PUCExpiresOn")}
-                value={moment(finalData.data.pucExpiresOn).format(
-                  "DD MMM YYYY",
-                )}
+                value={moment(finalData.pucExpiresOn).format("DD MMM YYYY")}
               />
             )}
           </DetailsContentWrapper>
@@ -149,12 +145,12 @@ export function AddVehicleConfirm({
           <DetailsContentWrapper>
             <DetailsLineItem
               label={t("RatePerKm")}
-              value={`${finalData.data.defaultRatePerKm ?? NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM}`}
+              value={`${finalData.defaultRatePerKm ?? NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM}`}
             />
-            {finalData.data.hasAC && (
+            {finalData.hasAC && (
               <DetailsLineItem
                 label={t("ACChagePerDay")}
-                value={`${finalData.data.defaultAcChargePerDay ?? NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY}`}
+                value={`${finalData.defaultAcChargePerDay ?? NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY}`}
               />
             )}
           </DetailsContentWrapper>

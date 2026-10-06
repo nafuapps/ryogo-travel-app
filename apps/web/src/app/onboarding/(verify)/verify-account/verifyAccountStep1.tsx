@@ -23,9 +23,11 @@ import { useRefreshPage } from "@/hooks/useRefreshPage"
 
 export function VerifyAccountStep1({
   onNext,
+  userId,
   codeSentAt,
 }: {
   onNext: () => void
+  userId: string
   codeSentAt: Date | null
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage.Step1")
@@ -50,7 +52,11 @@ export function VerifyAccountStep1({
 
   //Submit action
   const onSubmit = async (data: Step1Type) => {
-    const result = await checkVerificationCodeAction(data.userEnteredcode)
+    const result = await checkVerificationCodeAction({
+      userId,
+      code: data.userEnteredcode,
+      loggedIn: true,
+    })
     if (result) {
       onNext()
     } else {

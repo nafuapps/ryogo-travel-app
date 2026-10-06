@@ -16,22 +16,22 @@ import { toast } from "sonner"
 
 export function CreateAccountFinish({
   password,
-  id,
+  userId,
 }: {
   password: string
-  id?: string
+  userId?: string
 }) {
   const t = useTranslations("Onboarding.CreateAccountPage.Finish")
   const router = useRouter()
   const form = useForm()
 
   const onSubmit = async () => {
-    if (!id || !PasswordRegex.safeParse(password).success) {
+    if (!userId || !PasswordRegex.safeParse(password).success) {
       router.replace("/onboarding")
       return
     }
     //Login the user and take to verification step
-    const loginResult = await loginAction(id, password)
+    const loginResult = await loginAction({ userId, password })
     if (loginResult.data) {
       router.replace("/onboarding/verify-account")
     } else {

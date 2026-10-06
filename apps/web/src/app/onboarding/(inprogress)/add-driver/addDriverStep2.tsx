@@ -62,9 +62,9 @@ export function AddDriverStep2({
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      licenseNumber: finalData.data.licenseNumber,
-      licenseExpiresOn: finalData.data.licenseExpiresOn,
-      licensePhotos: finalData.data.licensePhotos,
+      licenseNumber: finalData.licenseNumber,
+      licenseExpiresOn: finalData.licenseExpiresOn,
+      licensePhotos: finalData.licensePhotos,
     },
   })
 
@@ -72,12 +72,9 @@ export function AddDriverStep2({
   const onSubmit = (data: Step2Type) => {
     updateFinalData({
       ...finalData,
-      data: {
-        ...finalData.data,
-        licenseNumber: data.licenseNumber,
-        licenseExpiresOn: data.licenseExpiresOn,
-        licensePhotos: data.licensePhotos,
-      },
+      licenseNumber: data.licenseNumber,
+      licenseExpiresOn: data.licenseExpiresOn,
+      licensePhotos: data.licensePhotos,
     })
     onNext()
   }

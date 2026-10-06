@@ -32,18 +32,16 @@ export default function AddDriverPageComponent({
   const [finalData, setFinalData] = useState<AddDriverRequestType>({
     agencyId: agencyId,
     addedByUserId: userId,
-    data: {
-      name: "",
-      phone: "",
-      email: "",
-      licenseNumber: "",
-      licenseExpiresOn: undefined,
-      address: "",
-      canDriveVehicleTypes: [],
-      defaultAllowancePerDay: undefined,
-      licensePhotos: undefined,
-      userPhotos: undefined,
-    },
+    name: "",
+    phone: "",
+    email: "",
+    licenseNumber: "",
+    licenseExpiresOn: undefined,
+    address: "",
+    canDriveVehicleTypes: [],
+    defaultAllowancePerDay: undefined,
+    licensePhotos: undefined,
+    userPhotos: undefined,
   })
 
   const nextStepHandler = () => {

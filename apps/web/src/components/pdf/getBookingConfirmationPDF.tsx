@@ -25,7 +25,7 @@ export function BookingConfirmationDocument({
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View id="header" style={styles.header}>
+        <View id="header" style={styles.header} wrap={false}>
           {agencyLogoUrl && (
             <Image src={getFileUrl(agencyLogoUrl)} style={styles.agencyLogo} />
           )}
@@ -45,7 +45,7 @@ export function BookingConfirmationDocument({
             <Text style={styles.h1}>CONFIRMATION</Text>
           </View>
         </View>
-        <View id="bookingDetails" style={styles.bookingDetails}>
+        <View id="bookingDetails" style={styles.bookingDetails} wrap={false}>
           <View id="Date" style={styles.detailsSection}>
             <Text style={styles.pBold}>Booking Date: </Text>
             <Text style={styles.p}>
@@ -108,7 +108,7 @@ export function BookingConfirmationDocument({
         <Text style={styles.p}>
           Congratulations! Your booking has been confirmed.
         </Text>
-        <View id="TripDetails" style={styles.tripDetails}>
+        <View id="TripDetails" style={styles.tripDetails} wrap={false}>
           <View id="TripHeader" style={styles.tripLocation}>
             <View id="From" style={styles.tripSource}>
               <Text style={styles.h2}>{booking.source.city}</Text>
@@ -135,7 +135,7 @@ export function BookingConfirmationDocument({
             </Text>
           </View>
         </View>
-        <View id="pricingTable" style={styles.pricingTable}>
+        <View id="pricingTable" style={styles.pricingTable} wrap={false}>
           <View id="tableHeader" style={styles.tableHeader}>
             <Text style={styles.pBold}>Description</Text>
             <Text style={styles.pBold}>Price</Text>
@@ -171,7 +171,7 @@ export function BookingConfirmationDocument({
             </Text>
           </View>
         </View>
-        <View id="footer" style={styles.footer}>
+        <View id="footer" style={styles.footer} wrap={false}>
           {booking.agency.qrCodeUrl && (
             <View id="QRCode" style={styles.qrCode}>
               <Text style={styles.caption}>Pay Agency</Text>
@@ -188,7 +188,7 @@ export function BookingConfirmationDocument({
           </View>
         </View>
         <View style={styles.divider} />
-        <View id="bottom" style={styles.bottom}>
+        <View id="bottom" style={styles.bottom} wrap={false}>
           <View id="terms" style={styles.terms}>
             <Text style={styles.pBold}>Terms and Conditions:</Text>
             <Text style={styles.caption}>

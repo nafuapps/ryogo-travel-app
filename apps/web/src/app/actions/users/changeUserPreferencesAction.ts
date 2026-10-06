@@ -9,11 +9,17 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
 import { cookies } from "next/headers"
 
-export async function changeUserPreferencesAction(
-  userId: string,
-  agencyId: string,
-  data: { prefersDarkTheme: boolean; languagePref: UserLangEnum },
-) {
+export async function changeUserPreferencesAction({
+  userId,
+  agencyId,
+  prefersDarkTheme,
+  languagePref,
+}: {
+  userId: string
+  agencyId: string
+  prefersDarkTheme: boolean
+  languagePref: UserLangEnum
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -27,14 +33,14 @@ export async function changeUserPreferencesAction(
     return
   }
 
-  const user = await userServices.changeUserPreferences(
+  const user = await userServices.changeUserPreferences({
     userId,
-    data.prefersDarkTheme,
-    data.languagePref,
-  )
+    prefersDarkTheme,
+    languagePref,
+  })
   if (!user) return
   const store = await cookies()
-  store.set(LOCALE_COOKIE_NAME, data.languagePref)
-  store.set(DARK_MODE_COOKIE_NAME, data.prefersDarkTheme ? "true" : "false")
+  store.set(LOCALE_COOKIE_NAME, languagePref)
+  store.set(DARK_MODE_COOKIE_NAME, prefersDarkTheme ? "true" : "false")
   return user
 }

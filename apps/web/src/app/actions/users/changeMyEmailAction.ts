@@ -5,12 +5,17 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
-export async function changeMyEmailAction(
-  userId: string,
-  password: string,
-  newEmail: string,
-  agencyId: string,
-) {
+export async function changeMyEmailAction({
+  userId,
+  password,
+  email,
+  agencyId,
+}: {
+  userId: string
+  password: string
+  email: string
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -24,11 +29,11 @@ export async function changeMyEmailAction(
     return
   }
 
-  const user = await userServices.changeEmailWithPasswordConfirmation(
+  const user = await userServices.changeEmailWithPasswordConfirmation({
     userId,
     password,
-    newEmail,
-  )
+    email,
+  })
 
   if (!user) return
 
@@ -39,7 +44,7 @@ export async function changeMyEmailAction(
     entityId: userId,
     textKey: "ChangedEmail",
     textObject: {
-      newEmail: newEmail,
+      newEmail: email,
       userName: currentUser.name,
     },
     link: `/dashboard/users/${userId}`,

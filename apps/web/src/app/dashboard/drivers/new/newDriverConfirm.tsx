@@ -49,18 +49,16 @@ export function NewDriverConfirm({
     const newDriverData: AddDriverRequestType = {
       agencyId: agencyId,
       addedByUserId: userId,
-      data: {
-        name: newDriverFormData.data.name,
-        email: newDriverFormData.data.email,
-        phone: newDriverFormData.data.phone,
-        address: newDriverFormData.data.address,
-        canDriveVehicleTypes: newDriverFormData.data.canDriveVehicleTypes,
-        defaultAllowancePerDay: newDriverFormData.data.defaultAllowancePerDay,
-        licenseNumber: newDriverFormData.data.licenseNumber,
-        licenseExpiresOn: newDriverFormData.data.licenseExpiresOn,
-        licensePhotos: newDriverFormData.data.licensePhotos,
-        userPhotos: newDriverFormData.data.userPhotos,
-      },
+      name: newDriverFormData.name,
+      email: newDriverFormData.email,
+      phone: newDriverFormData.phone,
+      address: newDriverFormData.address,
+      canDriveVehicleTypes: newDriverFormData.canDriveVehicleTypes,
+      defaultAllowancePerDay: newDriverFormData.defaultAllowancePerDay,
+      licenseNumber: newDriverFormData.licenseNumber,
+      licenseExpiresOn: newDriverFormData.licenseExpiresOn,
+      licensePhotos: newDriverFormData.licensePhotos,
+      userPhotos: newDriverFormData.userPhotos,
     }
     const addedDriver = await addDriverAction(newDriverData, agencyName)
     if (addedDriver) {
@@ -101,20 +99,20 @@ export function NewDriverConfirm({
             <DetailsContentWrapper>
               <DetailsLineItem
                 label={t("DriverName")}
-                value={newDriverFormData.data.name}
+                value={newDriverFormData.name}
               />
               <DetailsLineItem
                 label={t("DriverPhone")}
-                value={newDriverFormData.data.phone}
+                value={newDriverFormData.phone}
               />
               <DetailsLineItem
                 label={t("DriverEmail")}
-                value={newDriverFormData.data.email}
+                value={newDriverFormData.email}
               />
-              {newDriverFormData.data.address && (
+              {newDriverFormData.address && (
                 <DetailsLineItem
                   label={t("DriverAddress")}
-                  value={newDriverFormData.data.address}
+                  value={newDriverFormData.address}
                 />
               )}
             </DetailsContentWrapper>
@@ -124,16 +122,16 @@ export function NewDriverConfirm({
               <RyogoCaption color="light">{t("LicenseDetails")}</RyogoCaption>
             </DetailsHeaderWrapper>
             <DetailsContentWrapper>
-              {newDriverFormData.data.licenseNumber && (
+              {newDriverFormData.licenseNumber && (
                 <DetailsLineItem
                   label={t("LicenseNumber")}
-                  value={newDriverFormData.data.licenseNumber}
+                  value={newDriverFormData.licenseNumber}
                 />
               )}
-              {newDriverFormData.data.licenseExpiresOn && (
+              {newDriverFormData.licenseExpiresOn && (
                 <DetailsLineItem
                   label={t("LicenseExpiresOn")}
-                  value={newDriverFormData.data.licenseExpiresOn.toDateString()}
+                  value={newDriverFormData.licenseExpiresOn.toDateString()}
                 />
               )}
             </DetailsContentWrapper>
@@ -143,18 +141,16 @@ export function NewDriverConfirm({
               <RyogoCaption color="light">{t("AgencyDetails")}</RyogoCaption>
             </DetailsHeaderWrapper>
             <DetailsContentWrapper>
-              {newDriverFormData.data.canDriveVehicleTypes &&
-                newDriverFormData.data.canDriveVehicleTypes.length > 0 && (
+              {newDriverFormData.canDriveVehicleTypes &&
+                newDriverFormData.canDriveVehicleTypes.length > 0 && (
                   <DetailsLineItem
                     label={t("CanDriveVehicleTypes")}
-                    value={newDriverFormData.data.canDriveVehicleTypes.join(
-                      ", ",
-                    )}
+                    value={newDriverFormData.canDriveVehicleTypes.join(", ")}
                   />
                 )}
               <DetailsLineItem
                 label={t("DefaultAllowancePerDay")}
-                value={`${newDriverFormData.data.defaultAllowancePerDay ?? NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY}`}
+                value={`${newDriverFormData.defaultAllowancePerDay ?? NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY}`}
               />
             </DetailsContentWrapper>
           </DetailsBorderWrapper>

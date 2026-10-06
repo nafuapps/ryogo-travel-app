@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 import z from "zod"
 import { RyogoFileInput, RyogoInput } from "@/components/form/ryogoFormFields"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { FileRegex } from "@/lib/regex"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
@@ -30,8 +30,8 @@ export function AddAgentStep1({
   allAgents,
 }: {
   onNext: () => void
-  finalData: AddAgentRequestType
-  updateFinalData: Dispatch<SetStateAction<AddAgentRequestType>>
+  finalData: AddUserRequestType
+  updateFinalData: Dispatch<SetStateAction<AddUserRequestType>>
   allAgents: FindAllUsersByRoleType
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Step1")
@@ -58,10 +58,10 @@ export function AddAgentStep1({
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      agentName: finalData.data.name,
-      agentPhone: finalData.data.phone,
-      agentEmail: finalData.data.email,
-      agentPhotos: finalData.data.photos,
+      agentName: finalData.name,
+      agentPhone: finalData.phone,
+      agentEmail: finalData.email,
+      agentPhotos: finalData.photos,
     },
   })
 
@@ -80,14 +80,11 @@ export function AddAgentStep1({
     } else {
       //If no errors, move ahead
       updateFinalData({
-        agencyId: finalData.agencyId,
-        data: {
-          ...finalData.data,
-          name: data.agentName,
-          phone: data.agentPhone,
-          email: data.agentEmail,
-          photos: data.agentPhotos,
-        },
+        ...finalData,
+        name: data.agentName,
+        phone: data.agentPhone,
+        email: data.agentEmail,
+        photos: data.agentPhotos,
       })
       onNext()
     }

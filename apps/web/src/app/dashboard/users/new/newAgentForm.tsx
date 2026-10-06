@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import {
   FormContentWrapper,
@@ -90,14 +90,12 @@ export default function NewAgentForm({
         message: t("APIError2"),
       })
     } else {
-      const newAgentData: AddAgentRequestType = {
+      const newAgentData: AddUserRequestType = {
         agencyId: agencyId,
-        data: {
-          name: values.agentName,
-          phone: values.agentPhone,
-          email: values.agentEmail,
-          photos: values.agentPhotos,
-        },
+        name: values.agentName,
+        phone: values.agentPhone,
+        email: values.agentEmail,
+        photos: values.agentPhotos,
       }
       const createdAgent = await addAgentAction(newAgentData, agencyName)
       if (createdAgent && createdAgent.whatsappInviteLink) {

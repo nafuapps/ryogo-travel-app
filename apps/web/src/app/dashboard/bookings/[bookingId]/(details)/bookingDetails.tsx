@@ -50,15 +50,15 @@ import BookingReconcileCard from "@/components/flows/bookings/details/bookingRec
 import BookingIDWrapper from "@/components/flows/bookings/details/bookingIDWrapper"
 import SendQuoteAlertButton from "@/components/buttons/alert/sendQuoteAlertButton"
 import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
-import BookingViewInvoiceButton from "@/components/flows/bookings/details/bookingViewInvoiceButton"
-import BookingViewQuoteButton from "@/components/flows/bookings/details/bookingViewQuoteButton"
-import BookingViewConfirmationButton from "@/components/flows/bookings/details/bookingViewConfirmationButton"
 import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
+import ReopenBookingAlertButton from "@/components/buttons/alert/reopenBookingAlertButton"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { Separator } from "@/components/ui/separator"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import ReopenBookingAlertButton from "@/components/buttons/alert/reopenBookingAlertButton"
+import BookingInvoicePDFViewerButton from "@/components/pdf/bookingInvoicePDFViewerButton"
+import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewer"
+import BookingQuotePDFViewerButton from "@/components/pdf/bookingQuotePDFViewerButton"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -332,13 +332,22 @@ export default async function BookingDetailsPageComponent({
           </SectionRowWrapper>
 
           {canViewQuote && (
-            <BookingViewQuoteButton bookingDetails={bookingDetails} />
+            <BookingQuotePDFViewerButton
+              booking={bookingDetails}
+              label={t("ViewQuote")}
+            />
           )}
           {canViewConfirmation && (
-            <BookingViewConfirmationButton bookingDetails={bookingDetails} />
+            <BookingConfirmationPDFViewerButton
+              booking={bookingDetails}
+              label={t("ViewConfirmation")}
+            />
           )}
           {canViewInvoice && (
-            <BookingViewInvoiceButton bookingDetails={bookingDetails} />
+            <BookingInvoicePDFViewerButton
+              booking={bookingDetails}
+              label={t("ViewInvoice")}
+            />
           )}
           <BookingActionWrapper>
             {canSendInvoice && (

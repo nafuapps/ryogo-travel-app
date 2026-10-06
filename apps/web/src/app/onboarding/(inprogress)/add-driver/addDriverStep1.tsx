@@ -77,10 +77,10 @@ export function AddDriverStep1({
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      driverName: finalData.data.name,
-      driverPhone: finalData.data.phone,
-      driverEmail: finalData.data.email,
-      driverPhotos: finalData.data.userPhotos,
+      driverName: finalData.name,
+      driverPhone: finalData.phone,
+      driverEmail: finalData.email,
+      driverPhotos: finalData.userPhotos,
     },
   })
 
@@ -88,13 +88,10 @@ export function AddDriverStep1({
   const onSubmit = async (data: Step1Type) => {
     updateFinalData({
       ...finalData,
-      data: {
-        ...finalData.data,
-        name: data.driverName,
-        phone: data.driverPhone,
-        email: data.driverEmail,
-        userPhotos: data.driverPhotos,
-      },
+      name: data.driverName,
+      phone: data.driverPhone,
+      email: data.driverEmail,
+      userPhotos: data.driverPhotos,
     })
     onNext()
   }

@@ -62,9 +62,9 @@ export function NewDriverStep3({
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      driverAddress: newDriverFormData.data.address,
-      canDriveVehicleTypes: newDriverFormData.data.canDriveVehicleTypes,
-      defaultAllowancePerDay: newDriverFormData.data.defaultAllowancePerDay,
+      driverAddress: newDriverFormData.address,
+      canDriveVehicleTypes: newDriverFormData.canDriveVehicleTypes,
+      defaultAllowancePerDay: newDriverFormData.defaultAllowancePerDay,
     },
   })
 
@@ -72,12 +72,9 @@ export function NewDriverStep3({
   const onSubmit = (data: Step3Type) => {
     setNewDriverFormData({
       ...newDriverFormData,
-      data: {
-        ...newDriverFormData.data,
-        address: data.driverAddress,
-        canDriveVehicleTypes: data.canDriveVehicleTypes,
-        defaultAllowancePerDay: data.defaultAllowancePerDay,
-      },
+      address: data.driverAddress,
+      canDriveVehicleTypes: data.canDriveVehicleTypes,
+      defaultAllowancePerDay: data.defaultAllowancePerDay,
     })
     onNext()
   }

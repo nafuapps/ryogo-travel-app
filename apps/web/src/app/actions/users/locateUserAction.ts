@@ -4,12 +4,17 @@ import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { updateUserLocatedAtInWebSession } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
-export async function locateUserAction(
-  userId: string,
-  agencyId: string,
-  lat: number,
-  long: number,
-) {
+export async function locateUserAction({
+  userId,
+  agencyId,
+  lat,
+  long,
+}: {
+  userId: string
+  agencyId: string
+  lat: number
+  long: number
+}) {
   const currentUser = await getCurrentUser()
   if (!currentUser || currentUser.agencyId !== agencyId) {
     return
@@ -19,7 +24,7 @@ export async function locateUserAction(
     return
   }
 
-  const result = await userServices.locateUser(userId, lat, long)
+  const result = await userServices.locateUser({ userId, lat, long })
   if (!result || !result.locatedAt) return
 
   await updateUserLocatedAtInWebSession(result.locatedAt)

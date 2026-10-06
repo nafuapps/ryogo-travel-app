@@ -1,11 +1,11 @@
 "use client"
 
-import RyogoPDFViewerButton from "./ryogoPDFViewerButton"
+import { BookingInvoiceDocument } from "./getBookingInvoicePDF"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { BookingConfirmationDocument } from "./getBookingConfirmationPDF"
+import RyogoPDFViewerButton from "./ryogoPDFViewerButton"
 import { Eye } from "lucide-react"
 
-export default function BookingConfirmationPDFViewerButton({
+export default function BookingInvoicePDFViewerButton({
   booking,
   label,
 }: {
@@ -14,8 +14,8 @@ export default function BookingConfirmationPDFViewerButton({
 }) {
   return (
     <RyogoPDFViewerButton
-      document={<BookingConfirmationDocument booking={booking} />}
-      fileName={`${booking.id}-confirmation.pdf`}
+      document={<BookingInvoiceDocument booking={booking} />}
+      fileName={`${booking.id}-invoice.pdf`}
       label={label}
       icon={Eye}
     />

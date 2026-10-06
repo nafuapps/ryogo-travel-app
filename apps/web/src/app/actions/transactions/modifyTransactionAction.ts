@@ -38,10 +38,10 @@ export async function modifyTransactionAction(
         file,
       ),
     )
-    await transactionServices.changeTransactionPhotoUrl(
-      data.transactionId,
-      uploadResult.path,
-    )
+    await transactionServices.changeTransactionPhotoUrl({
+      transactionId: data.transactionId,
+      transactionPhotoUrl: uploadResult.path,
+    })
   }
 
   const updatedTransaction = await transactionServices.modifyTransaction(data)

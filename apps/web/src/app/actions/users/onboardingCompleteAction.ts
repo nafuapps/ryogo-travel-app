@@ -17,7 +17,7 @@ export async function onboardingCompleteAction() {
   }
 
   //Activate owner account
-  await userServices.activateUser(currentUser.userId)
+  await userServices.activateUser({ userId: currentUser.userId })
   //Activate agency
   await agencyServices.activateAgency(currentUser.agencyId, true)
   //Update status in session cookie

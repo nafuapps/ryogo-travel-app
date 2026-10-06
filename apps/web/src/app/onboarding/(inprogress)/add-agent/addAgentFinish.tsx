@@ -2,7 +2,7 @@
 
 import { RyogoH4, RyogoSmall } from "@/components/typography"
 import { useTranslations } from "next-intl"
-import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Check, MessageSquareShare } from "lucide-react"
 // import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
@@ -24,7 +24,7 @@ export function AddAgentFinish({
   finalData,
   agencyName,
 }: {
-  finalData: AddAgentRequestType
+  finalData: AddUserRequestType
   agencyName: string
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Finish")
@@ -40,16 +40,13 @@ export function AddAgentFinish({
   const u = useTranslations("Dashboard.Whatsapp")
   const inviteLink = `${window.location.origin}/auth/login`
   const message = u("AgentInvite", {
-    agentName: finalData.data.name,
+    agentName: finalData.name,
     agencyName: agencyName,
-    emailId: finalData.data.email,
+    emailId: finalData.email,
     inviteLink: inviteLink,
   })
 
-  const whatsappInviteLink = getWhatsappMessageLink(
-    finalData.data.phone,
-    message,
-  )
+  const whatsappInviteLink = getWhatsappMessageLink(finalData.phone, message)
 
   return (
     <FormWrapper
@@ -75,7 +72,7 @@ export function AddAgentFinish({
           {t("Subtitle")}
         </RyogoSmall>
         <RyogoSmall color="slate" className="text-center">
-          {t("Email", { email: finalData.data.email })}
+          {t("Email", { email: finalData.email })}
         </RyogoSmall>
         <RyogoOutlineButton
           type="button"

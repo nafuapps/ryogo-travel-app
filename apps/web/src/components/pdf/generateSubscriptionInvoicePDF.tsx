@@ -29,17 +29,14 @@ export function SubscriptionInvoiceDocument({
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View id="header" style={styles.header}>
+        <View id="header" style={styles.header} wrap={false}>
           <Image src={RyogoLogoSrc} style={styles.agencyLogo} />
           <View id="headerLeft" style={styles.headerLeft}>
             <Text id="CompanyName" style={styles.h2}>
               {"RyoGo Travel App"}
             </Text>
-            <Text id="CompanyEmail" style={styles.p}>
-              {SUPPORT_EMAIL}
-            </Text>
-            <Text id="CompanyPhone" style={styles.p}>
-              {SUPPORT_HELPLINE_NUMBER}
+            <Text id="CompanyEmailPhone" style={styles.p}>
+              {SUPPORT_EMAIL} | {SUPPORT_HELPLINE_NUMBER}
             </Text>
           </View>
           <View id="headerRight" style={styles.headerRight}>
@@ -47,7 +44,7 @@ export function SubscriptionInvoiceDocument({
             <Text style={styles.h1}>INVOICE</Text>
           </View>
         </View>
-        <View id="buyerDetails" style={styles.bookingDetails}>
+        <View id="buyerDetails" style={styles.bookingDetails} wrap={false}>
           <View id="Date" style={styles.detailsSection}>
             <Text style={styles.pBold}>Invoice Date: </Text>
             <Text style={styles.p}>
@@ -71,7 +68,7 @@ export function SubscriptionInvoiceDocument({
             <Text style={styles.p}>{order.agency.businessAddress}</Text>
           </View>
         </View>
-        <View id="pricingTable" style={styles.pricingTable}>
+        <View id="pricingTable" style={styles.pricingTable} wrap={false}>
           <View id="tableHeader" style={styles.tableHeader}>
             <Text style={styles.pBold}>Description</Text>
             <Text style={styles.pBold}>Price</Text>
@@ -92,7 +89,8 @@ export function SubscriptionInvoiceDocument({
             <Text style={styles.pBold}>{order.amount.toFixed(2)}</Text>
           </View>
         </View>
-        <View id="terms" style={styles.terms}>
+        <View style={styles.divider} />
+        <View id="terms" style={styles.terms} wrap={false}>
           <Text style={styles.pBold}>Terms and Conditions:</Text>
           <Text style={styles.caption}>
             1. This invoice is auto generated based on the payment made by the

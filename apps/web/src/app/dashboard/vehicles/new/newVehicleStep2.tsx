@@ -89,26 +89,23 @@ export function NewVehicleStep2({
   const formData = useForm<Step2Type>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
-      capacity: newVehicleFormData.data.capacity,
-      odometerReading: newVehicleFormData.data.odometerReading,
-      rcPhotos: newVehicleFormData.data.rcPhotos,
-      vehiclePhotos: newVehicleFormData.data.vehiclePhotos,
-      rcExpiresOn: newVehicleFormData.data.rcExpiresOn,
+      capacity: newVehicleFormData.capacity,
+      odometerReading: newVehicleFormData.odometerReading,
+      rcPhotos: newVehicleFormData.rcPhotos,
+      vehiclePhotos: newVehicleFormData.vehiclePhotos,
+      rcExpiresOn: newVehicleFormData.rcExpiresOn,
     },
   })
 
   //Submit actions
-  const onSubmit = (data: Step2Type) => {
+  const onSubmit = (values: Step2Type) => {
     setNewVehicleFormData({
       ...newVehicleFormData,
-      data: {
-        ...newVehicleFormData.data,
-        capacity: data.capacity,
-        odometerReading: data.odometerReading,
-        rcPhotos: data.rcPhotos,
-        vehiclePhotos: data.vehiclePhotos,
-        rcExpiresOn: data.rcExpiresOn,
-      },
+      capacity: values.capacity,
+      odometerReading: values.odometerReading,
+      rcPhotos: values.rcPhotos,
+      vehiclePhotos: values.vehiclePhotos,
+      rcExpiresOn: values.rcExpiresOn,
     })
     onNext()
   }

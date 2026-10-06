@@ -37,17 +37,17 @@ export const tripLogServices = {
 
     //Update vehicle odometer reading if provided
     if (data.odometerReading) {
-      await vehicleRepository.updateOdometerReading(
-        data.vehicleId,
-        data.odometerReading,
-      )
+      await vehicleRepository.updateOdometerReading({
+        vehicleId: data.vehicleId,
+        odometerReading: data.odometerReading,
+      })
     }
     if (latLong) {
-      await vehicleRepository.updateLocation(
-        data.vehicleId,
+      await vehicleRepository.updateLocation({
+        vehicleId: data.vehicleId,
         latLong,
         geolocation,
-      )
+      })
       await driverRepository.updateLocation({
         driverId: data.driverId,
         latLong,
@@ -58,7 +58,16 @@ export const tripLogServices = {
   },
 
   //Update trip log photo url
-  async changeTripLogPhotoUrl(tripLogId: string, tripLogPhotoUrl: string) {
-    await tripLogRepository.updateTripLogPhotoUrl(tripLogId, tripLogPhotoUrl)
+  async changeTripLogPhotoUrl({
+    tripLogId,
+    tripLogPhotoUrl,
+  }: {
+    tripLogId: string
+    tripLogPhotoUrl: string
+  }) {
+    await tripLogRepository.updateTripLogPhotoUrl({
+      tripLogId,
+      tripLogPhotoUrl,
+    })
   },
 }

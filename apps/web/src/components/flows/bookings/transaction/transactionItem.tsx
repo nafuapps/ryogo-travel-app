@@ -104,7 +104,7 @@ export default function TransactionItem({
           <SectionRowWrapper className="items-center mt-auto">
             {isOwner && (
               <TransactionApprovalButton
-                txnId={transaction.id}
+                transactionId={transaction.id}
                 isApproved={transaction.isApproved}
                 agencyId={transaction.agencyId}
               />

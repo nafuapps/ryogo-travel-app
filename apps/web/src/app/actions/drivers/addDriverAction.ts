@@ -42,7 +42,7 @@ export async function addDriverAction(
 
   if (driver.id) {
     // Upload files to Supabase Storage
-    const [licenseFile] = data.data.licensePhotos || []
+    const [licenseFile] = data.licensePhotos || []
     if (licenseFile) {
       const uploadedLicense = await uploadFile(
         licenseFile,
@@ -54,13 +54,16 @@ export async function addDriverAction(
       })
     }
 
-    const [userPhotoFile] = data.data.userPhotos || []
+    const [userPhotoFile] = data.userPhotos || []
     if (userPhotoFile) {
       const uploadedPhoto = await uploadFile(
         userPhotoFile,
         generateUserPhotoPathName(driver.userId, userPhotoFile),
       )
-      await userServices.updateUserPhoto(driver.userId, uploadedPhoto.path)
+      await userServices.updateUserPhoto({
+        userId: driver.userId,
+        photoUrl: uploadedPhoto.path,
+      })
     }
   }
 
@@ -105,7 +108,7 @@ export async function addDriverAction(
       emailId: driver.email,
       inviteLink: absoluteUrl,
     })
-    whatsappInviteLink = getWhatsappMessageLink(data.data.phone, message)
+    whatsappInviteLink = getWhatsappMessageLink(data.phone, message)
   }
 
   return { ...driver, whatsappInviteLink: whatsappInviteLink }

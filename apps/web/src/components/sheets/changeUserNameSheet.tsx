@@ -62,13 +62,13 @@ export default function ChangeUserNameSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedUser = await changeUserNameAction(
+    const updatedUser = await changeUserNameAction({
       userId,
       agencyId,
-      data.name,
+      name: data.name,
       userRole,
       addedByUserId,
-    )
+    })
     if (updatedUser) {
       toast.success(t("Success"))
       router.refresh()

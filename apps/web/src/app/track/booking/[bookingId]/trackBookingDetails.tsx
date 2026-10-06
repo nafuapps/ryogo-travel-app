@@ -15,8 +15,6 @@ import BookingSection from "@/components/flows/bookings/details/bookingSection"
 import BookingStartTimeCard from "@/components/flows/bookings/details/bookingStartTimeCard"
 import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
 import BookingVehicleCard from "@/components/flows/bookings/details/bookingVehicleCard"
-import BookingViewConfirmationButton from "@/components/flows/bookings/details/bookingViewConfirmationButton"
-import BookingViewInvoiceButton from "@/components/flows/bookings/details/bookingViewInvoiceButton"
 import {
   PageWrapper,
   SectionRowWrapper,
@@ -48,6 +46,8 @@ import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import Link from "next/link"
 import { differenceInDays } from "date-fns"
 import { BOOKING_RATING_LIMIT_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewer"
+import BookingInvoicePDFViewerButton from "@/components/pdf/bookingInvoicePDFViewerButton"
 
 // A page to display booking details for tracking by customer
 export default async function TrackBookingDetailsPageComponent({
@@ -234,10 +234,16 @@ export default async function TrackBookingDetailsPageComponent({
             <RyogoP color="yellow">{"₹" + pendingAmount}</RyogoP>
           </SectionRowWrapper>
           {bookingDetails.confirmationUrl && (isConfirmed || isInProgress) && (
-            <BookingViewConfirmationButton bookingDetails={bookingDetails} />
+            <BookingConfirmationPDFViewerButton
+              booking={bookingDetails}
+              label={t("ViewConfirmation")}
+            />
           )}
           {bookingDetails.invoiceUrl && isCompleted && (
-            <BookingViewInvoiceButton bookingDetails={bookingDetails} />
+            <BookingInvoicePDFViewerButton
+              booking={bookingDetails}
+              label={t("ViewInvoice")}
+            />
           )}
         </BookingSection>
         <BookingSection sectionTitle={t("VehicleInfo")} icon={Car}>

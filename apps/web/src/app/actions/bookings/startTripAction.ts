@@ -60,10 +60,10 @@ export async function startTripAction(data: AddTripLogRequestType) {
         tripLogPhotoFile,
       ),
     )
-    await tripLogServices.changeTripLogPhotoUrl(
-      newTripLog.id,
-      uploadedFile.path,
-    )
+    await tripLogServices.changeTripLogPhotoUrl({
+      tripLogId: newTripLog.id,
+      tripLogPhotoUrl: uploadedFile.path,
+    })
   }
 
   await notificationServices.addNotification({

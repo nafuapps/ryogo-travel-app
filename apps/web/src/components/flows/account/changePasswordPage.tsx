@@ -71,12 +71,12 @@ export default function ChangePasswordPageComponent({
 
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
-    const result = await changeMyPasswordAction(
+    const result = await changeMyPasswordAction({
       userId,
       agencyId,
-      data.oldPassword,
-      data.newPassword,
-    )
+      oldPassword: data.oldPassword,
+      newPassword: data.newPassword,
+    })
     if (result) {
       //If success, redirect
       toast.success(t("Success"))

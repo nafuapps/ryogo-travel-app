@@ -1,25 +1,27 @@
 import { db } from "@ryogo-travel-app/db"
 import {
   InsertTransactionType,
-  TransactionModesEnum,
   transactions,
-  TransactionPartiesEnum,
-  TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, gte, lte } from "drizzle-orm"
+import { UpdateTransactionRequestType } from "../types/transaction.types"
 
 export const transactionRepository = {
   //Get all transactions within a particular date range
-  async readTransactionsByCreatedRange(
-    agencyId: string,
-    startDate: Date,
-    endDate: Date,
-  ) {
+  async readTransactionsByCreatedRange({
+    agencyId,
+    queryStartDate,
+    queryEndDate,
+  }: {
+    agencyId: string
+    queryStartDate: Date
+    queryEndDate: Date
+  }) {
     return await db.query.transactions.findMany({
       where: and(
-        gte(transactions.createdAt, startDate),
-        lte(transactions.createdAt, endDate),
         eq(transactions.agencyId, agencyId),
+        gte(transactions.createdAt, queryStartDate),
+        lte(transactions.createdAt, queryEndDate),
       ),
     })
   },
@@ -43,9 +45,9 @@ export const transactionRepository = {
   },
 
   //Get transaction by transaction id
-  async readTransactionById(txnId: string) {
+  async readTransactionById(transactionId: string) {
     return await db.query.transactions.findFirst({
-      where: eq(transactions.id, txnId),
+      where: eq(transactions.id, transactionId),
     })
   },
 
@@ -62,24 +64,30 @@ export const transactionRepository = {
   },
 
   //Update transaction photo URL
-  async updateTransactionPhotoUrl(txnId: string, photoUrl: string) {
+  async updateTransactionPhotoUrl({
+    transactionId,
+    transactionPhotoUrl,
+  }: {
+    transactionId: string
+    transactionPhotoUrl: string
+  }) {
     return await db
       .update(transactions)
-      .set({ transactionPhotoUrl: photoUrl })
-      .where(eq(transactions.id, txnId))
+      .set({ transactionPhotoUrl })
+      .where(eq(transactions.id, transactionId))
       .returning()
   },
 
   //Update transaction
-  async updateTransactionDetails(
-    txnId: string,
-    amount: number,
-    type: TransactionTypesEnum,
-    mode: TransactionModesEnum,
-    otherParty: TransactionPartiesEnum,
-    transactionDate: Date,
-    remarks?: string,
-  ) {
+  async updateTransactionDetails({
+    transactionId,
+    amount,
+    type,
+    mode,
+    otherParty,
+    transactionDate,
+    remarks,
+  }: UpdateTransactionRequestType) {
     return await db
       .update(transactions)
       .set({
@@ -90,24 +98,30 @@ export const transactionRepository = {
         transactionDate,
         remarks,
       })
-      .where(eq(transactions.id, txnId))
+      .where(eq(transactions.id, transactionId))
       .returning()
   },
 
   //Update transaction's approval status
-  async updateTransactionApprovalStatus(txnId: string, status: boolean) {
+  async updateTransactionApprovalStatus({
+    transactionId,
+    isApproved,
+  }: {
+    transactionId: string
+    isApproved: boolean
+  }) {
     return await db
       .update(transactions)
-      .set({ isApproved: status })
-      .where(eq(transactions.id, txnId))
+      .set({ isApproved })
+      .where(eq(transactions.id, transactionId))
       .returning()
   },
 
   //Delete a transaction
-  async deleteTransaction(txnId: string) {
+  async deleteTransaction(transactionId: string) {
     return await db
       .delete(transactions)
-      .where(eq(transactions.id, txnId))
+      .where(eq(transactions.id, transactionId))
       .returning()
   },
 }

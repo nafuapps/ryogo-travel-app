@@ -20,8 +20,14 @@ export const verifyCurrentUser = cache(async () => {
 })
 
 // Login user - Create session and update login time in DB
-export async function login(userId: string, password: string) {
-  const user = await createWebSession(userId, password)
+export async function login({
+  userId,
+  password,
+}: {
+  userId: string
+  password: string
+}) {
+  const user = await createWebSession({ userId, password })
   return user
 }
 

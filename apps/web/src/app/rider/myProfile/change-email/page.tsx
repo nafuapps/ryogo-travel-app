@@ -19,10 +19,10 @@ export default async function ChangeEmailMyProfilePage() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const usersWithPhoneRole = await userServices.findUserAccountsByPhoneRole(
-    currentUser.phone,
-    currentUser.userRole,
-  )
+  const usersWithPhoneRole = await userServices.findUserAccountsByPhoneRole({
+    phone: currentUser.phone,
+    role: currentUser.userRole,
+  })
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile/change-email"} />

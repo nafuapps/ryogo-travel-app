@@ -33,10 +33,10 @@ export default async function ChangeUserEmailPage({
   }
 
   //Get all users with this user's role and phone
-  const allUsers = await userServices.findUserAccountsByPhoneRole(
-    user.phone,
-    user.userRole,
-  )
+  const allUsers = await userServices.findUserAccountsByPhoneRole({
+    phone: user.phone,
+    role: user.userRole,
+  })
 
   return (
     <MainWrapper>

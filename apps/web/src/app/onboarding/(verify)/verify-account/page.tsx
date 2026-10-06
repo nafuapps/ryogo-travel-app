@@ -50,5 +50,10 @@ export default async function VerifyAccountPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  return <VerifyAccountPageComponent codeSentAt={userDetails.codeSentAt} />
+  return (
+    <VerifyAccountPageComponent
+      codeSentAt={userDetails.codeSentAt}
+      userId={currentUser.userId}
+    />
+  )
 }

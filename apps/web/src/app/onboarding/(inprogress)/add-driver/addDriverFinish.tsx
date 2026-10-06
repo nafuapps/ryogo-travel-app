@@ -40,16 +40,13 @@ export function AddDriverFinish({
   const u = useTranslations("Dashboard.Whatsapp")
   const inviteLink = `${window.location.origin}/auth/login`
   const message = u("DriverInvite", {
-    driverName: finalData.data.name,
+    driverName: finalData.name,
     agencyName: agencyName,
-    emailId: finalData.data.email,
+    emailId: finalData.email,
     inviteLink: inviteLink,
   })
 
-  const whatsappInviteLink = getWhatsappMessageLink(
-    finalData.data.phone,
-    message,
-  )
+  const whatsappInviteLink = getWhatsappMessageLink(finalData.phone, message)
 
   return (
     <FormWrapper
@@ -75,7 +72,7 @@ export function AddDriverFinish({
           {t("Subtitle")}
         </RyogoSmall>
         <RyogoCaption color="slate" className="text-center">
-          {t("Email", { email: finalData.data.email })}
+          {t("Email", { email: finalData.email })}
         </RyogoCaption>
         <RyogoOutlineButton
           onClick={(e) => {

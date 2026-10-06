@@ -73,26 +73,23 @@ export function NewVehicleStep1({
   const formData = useForm<Step1Type>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      vehicleNumber: newVehicleFormData.data.vehicleNumber,
-      type: newVehicleFormData.data.type,
-      brand: newVehicleFormData.data.brand,
-      color: newVehicleFormData.data.color,
-      model: newVehicleFormData.data.model,
+      vehicleNumber: newVehicleFormData.vehicleNumber,
+      type: newVehicleFormData.type,
+      brand: newVehicleFormData.brand,
+      color: newVehicleFormData.color,
+      model: newVehicleFormData.model,
     },
   })
 
   //Submit actions
-  const onSubmit = async (data: Step1Type) => {
+  const onSubmit = async (values: Step1Type) => {
     setNewVehicleFormData({
       ...newVehicleFormData,
-      data: {
-        ...newVehicleFormData.data,
-        vehicleNumber: data.vehicleNumber,
-        type: data.type,
-        brand: data.brand,
-        color: data.color,
-        model: data.model,
-      },
+      vehicleNumber: values.vehicleNumber,
+      type: values.type,
+      brand: values.brand,
+      color: values.color,
+      model: values.model,
     })
     onNext()
   }

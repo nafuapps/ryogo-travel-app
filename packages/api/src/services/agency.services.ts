@@ -51,9 +51,10 @@ export const agencyServices = {
   async findAgencyData(agencyId: string) {
     const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
     const drivers = await driverRepository.readDriversByAgencyId(agencyId)
-    const agents = await userRepository.readUserByRolesAgencyId(agencyId, [
-      UserRolesEnum.AGENT,
-    ])
+    const agents = await userRepository.readUserByRolesAgencyId({
+      agencyId,
+      userRoles: [UserRolesEnum.AGENT],
+    })
 
     return {
       vehicles: vehicles.map((vehicle) => {

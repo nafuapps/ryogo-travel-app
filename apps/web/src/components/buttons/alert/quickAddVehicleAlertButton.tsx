@@ -48,13 +48,11 @@ export default function QuickAddVehicleAlertButton({
       const newVehicleData: AddVehicleRequestType = {
         agencyId: agencyId,
         addedByUserId: addedByUserId,
-        data: {
-          vehicleNumber: vehicleNumber,
-          type: type,
-          brand: brand,
-          color: color,
-          model: model,
-        },
+        vehicleNumber: vehicleNumber,
+        type: type,
+        brand: brand,
+        color: color,
+        model: model,
       }
       const addedVehicle = await addVehicleAction(newVehicleData)
 

@@ -13,11 +13,11 @@ import {
 } from "@/components/buttons/ryogoButtons"
 
 export function TransactionApprovalButton({
-  txnId,
+  transactionId,
   isApproved,
   agencyId,
 }: {
-  txnId: string
+  transactionId: string
   isApproved: boolean
   agencyId: string
 }) {
@@ -27,7 +27,13 @@ export function TransactionApprovalButton({
 
   async function approveTransaction() {
     startTransition(async () => {
-      if (await changeTransactionApprovalAction(txnId, true, agencyId)) {
+      if (
+        await changeTransactionApprovalAction({
+          transactionId,
+          isApproved: true,
+          agencyId,
+        })
+      ) {
         toast.success(t("ApproveSuccess"))
       } else {
         toast.success(t("ApproveError"))
@@ -37,7 +43,13 @@ export function TransactionApprovalButton({
   }
 
   async function rejectTransaction() {
-    if (await changeTransactionApprovalAction(txnId, false, agencyId)) {
+    if (
+      await changeTransactionApprovalAction({
+        transactionId,
+        isApproved: false,
+        agencyId,
+      })
+    ) {
       toast.info(t("RejectSuccess"))
     } else {
       toast.success(t("RejectError"))

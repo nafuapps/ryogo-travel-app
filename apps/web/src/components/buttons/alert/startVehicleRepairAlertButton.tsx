@@ -31,7 +31,12 @@ export default function StartVehicleRepairAlertButton({
   async function startRepair() {
     startCancelTransition(async () => {
       if (
-        await startVehicleRepairAction(userId, vehicleId, repairId, agencyId)
+        await startVehicleRepairAction({
+          userId,
+          vehicleId,
+          repairId,
+          agencyId,
+        })
       ) {
         toast.success(t("Success"))
         router.refresh()

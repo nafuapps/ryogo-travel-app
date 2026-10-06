@@ -4,14 +4,12 @@ import {
   InsertVehicleType,
   tripLogs,
   TripLogTypesEnum,
-  VehicleBrandEnum,
-  VehicleColorEnum,
   VehicleRepairStatusEnum,
   vehicles,
   VehicleStatusEnum,
-  VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, notInArray, inArray, or, lte, not, gte } from "drizzle-orm"
+import { ModifyVehicleRequestType } from "../types/vehicle.types"
 
 export const vehicleRepository = {
   //Get vehicle by id
@@ -75,7 +73,13 @@ export const vehicleRepository = {
   },
 
   //Get vehicle by number in an agency
-  async readVehicleByNumberInAgency(agencyId: string, vehicleNumber: string) {
+  async readVehicleByNumberInAgency({
+    agencyId,
+    vehicleNumber,
+  }: {
+    agencyId: string
+    vehicleNumber: string
+  }) {
     return await db.query.vehicles.findFirst({
       columns: {
         id: true,
@@ -101,7 +105,13 @@ export const vehicleRepository = {
   },
 
   //Get vehicle schedule data
-  async readVehiclesScheduleData(agencyId: string, queryEndDate: Date) {
+  async readVehiclesScheduleData({
+    agencyId,
+    queryEndDate,
+  }: {
+    agencyId: string
+    queryEndDate: Date
+  }) {
     return await db.query.vehicles.findMany({
       columns: {
         id: true,
@@ -234,13 +244,19 @@ export const vehicleRepository = {
   },
 
   //Update vehicle number
-  async updateVehicleNumber(id: string, vehicleNumber: string) {
+  async updateVehicleNumber({
+    vehicleId,
+    vehicleNumber,
+  }: {
+    vehicleId: string
+    vehicleNumber: string
+  }) {
     return await db
       .update(vehicles)
       .set({
         vehicleNumber,
       })
-      .where(eq(vehicles.id, id))
+      .where(eq(vehicles.id, vehicleId))
       .returning({
         id: vehicles.id,
         vehicleNumber: vehicles.vehicleNumber,
@@ -248,18 +264,18 @@ export const vehicleRepository = {
   },
 
   //Update vehicle details
-  async updateVehicleDetails(
-    id: string,
-    type?: VehicleTypesEnum,
-    brand?: VehicleBrandEnum,
-    color?: VehicleColorEnum,
-    model?: string,
-    capacity?: number,
-    odometerReading?: number,
-    hasAC?: boolean,
-    defaultRatePerKm?: number,
-    defaultAcChargePerDay?: number,
-  ) {
+  async updateVehicleDetails({
+    vehicleId,
+    type,
+    brand,
+    color,
+    model,
+    capacity,
+    odometerReading,
+    hasAC,
+    defaultRatePerKm,
+    defaultAcChargePerDay,
+  }: ModifyVehicleRequestType) {
     return await db
       .update(vehicles)
       .set({
@@ -273,18 +289,24 @@ export const vehicleRepository = {
         defaultRatePerKm,
         defaultAcChargePerDay,
       })
-      .where(eq(vehicles.id, id))
+      .where(eq(vehicles.id, vehicleId))
       .returning()
   },
 
   //Update vehicle Docs Urls
-  async updateDocUrls(
-    vehicleId: string,
-    rcPhotoUrl?: string,
-    pucPhotoUrl?: string,
-    insurancePhotoUrl?: string,
-    vehiclePhotoUrl?: string,
-  ) {
+  async updateDocUrls({
+    vehicleId,
+    rcPhotoUrl,
+    pucPhotoUrl,
+    insurancePhotoUrl,
+    vehiclePhotoUrl,
+  }: {
+    vehicleId: string
+    rcPhotoUrl?: string
+    pucPhotoUrl?: string
+    insurancePhotoUrl?: string
+    vehiclePhotoUrl?: string
+  }) {
     return await db
       .update(vehicles)
       .set({
@@ -296,11 +318,15 @@ export const vehicleRepository = {
       .where(eq(vehicles.id, vehicleId))
   },
 
-  async updateRCDetails(
-    vehicleId: string,
-    rcExpiresOn?: Date,
-    rcPhotoUrl?: string,
-  ) {
+  async updateRCDetails({
+    vehicleId,
+    rcExpiresOn,
+    rcPhotoUrl,
+  }: {
+    vehicleId: string
+    rcExpiresOn?: Date
+    rcPhotoUrl?: string
+  }) {
     return await db
       .update(vehicles)
       .set({
@@ -316,11 +342,15 @@ export const vehicleRepository = {
       })
   },
 
-  async updatePUCDetails(
-    vehicleId: string,
-    pucExpiresOn?: Date,
-    pucPhotoUrl?: string,
-  ) {
+  async updatePUCDetails({
+    vehicleId,
+    pucExpiresOn,
+    pucPhotoUrl,
+  }: {
+    vehicleId: string
+    pucExpiresOn?: Date
+    pucPhotoUrl?: string
+  }) {
     return await db
       .update(vehicles)
       .set({
@@ -336,11 +366,15 @@ export const vehicleRepository = {
       })
   },
 
-  async updateInsuranceDetails(
-    vehicleId: string,
-    insuranceExpiresOn?: Date,
-    insurancePhotoUrl?: string,
-  ) {
+  async updateInsuranceDetails({
+    vehicleId,
+    insuranceExpiresOn,
+    insurancePhotoUrl,
+  }: {
+    vehicleId: string
+    insuranceExpiresOn?: Date
+    insurancePhotoUrl?: string
+  }) {
     return await db
       .update(vehicles)
       .set({
@@ -357,7 +391,13 @@ export const vehicleRepository = {
   },
 
   //Update vehicle photo Url
-  async updateVehiclePhotoUrl(vehicleId: string, vehiclePhotoUrl: string) {
+  async updateVehiclePhotoUrl({
+    vehicleId,
+    vehiclePhotoUrl,
+  }: {
+    vehicleId: string
+    vehiclePhotoUrl: string
+  }) {
     return await db
       .update(vehicles)
       .set({
@@ -372,7 +412,13 @@ export const vehicleRepository = {
   },
 
   //Update vehicle status
-  async updateStatus(vehicleId: string, status: VehicleStatusEnum) {
+  async updateStatus({
+    vehicleId,
+    status,
+  }: {
+    vehicleId: string
+    status: VehicleStatusEnum
+  }) {
     return await db
       .update(vehicles)
       .set({ status })
@@ -385,7 +431,13 @@ export const vehicleRepository = {
   },
 
   //Update vehicle odometerReading
-  async updateOdometerReading(vehicleId: string, odometerReading: number) {
+  async updateOdometerReading({
+    vehicleId,
+    odometerReading,
+  }: {
+    vehicleId: string
+    odometerReading: number
+  }) {
     return await db
       .update(vehicles)
       .set({ odometerReading })
@@ -394,22 +446,26 @@ export const vehicleRepository = {
   },
 
   //Update vehicle location
-  async updateLocation(
-    vehicleId: string,
-    latLong: string,
+  async updateLocation({
+    vehicleId,
+    latLong,
+    geolocation,
+  }: {
+    vehicleId: string
+    latLong: string
     geolocation:
       | {
           x: number
           y: number
         }
-      | undefined,
-  ) {
+      | undefined
+  }) {
     return await db
       .update(vehicles)
       .set({
         locatedAt: new Date(),
-        latLong: latLong,
-        geolocation: geolocation,
+        latLong,
+        geolocation,
       })
       .where(eq(vehicles.id, vehicleId))
       .returning({

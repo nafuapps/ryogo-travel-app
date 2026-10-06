@@ -29,7 +29,13 @@ export const tripLogRepository = {
   },
 
   //Update trip log photo url
-  async updateTripLogPhotoUrl(tripLogId: string, tripLogPhotoUrl: string) {
+  async updateTripLogPhotoUrl({
+    tripLogId,
+    tripLogPhotoUrl,
+  }: {
+    tripLogId: string
+    tripLogPhotoUrl: string
+  }) {
     return await db
       .update(tripLogs)
       .set({ tripLogPhotoUrl })

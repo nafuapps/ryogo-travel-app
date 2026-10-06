@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { RyogoCaption, RyogoP } from "@/components/typography"
-import { AddAgentRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
@@ -29,23 +29,21 @@ export function AddAgentConfirm({
 }: {
   onNext: () => void
   onPrev: () => void
-  finalData: AddAgentRequestType
+  finalData: AddUserRequestType
 }) {
   const t = useTranslations("Onboarding.AddAgentPage.Confirm")
   const router = useRouter()
 
-  const formData = useForm<AddAgentRequestType>()
+  const formData = useForm<AddUserRequestType>()
   //Submit actions
   const onSubmit = async () => {
     // Add agent
-    const newAgentData: AddAgentRequestType = {
+    const newAgentData: AddUserRequestType = {
       agencyId: finalData.agencyId,
-      data: {
-        name: finalData.data.name,
-        email: finalData.data.email,
-        phone: finalData.data.phone,
-        photos: finalData.data.photos,
-      },
+      name: finalData.name,
+      email: finalData.email,
+      phone: finalData.phone,
+      photos: finalData.photos,
     }
     const addAgent = await addAgentAction(newAgentData)
     if (addAgent) {
@@ -70,18 +68,9 @@ export function AddAgentConfirm({
             <RyogoCaption color="light">{t("UserDetails")}</RyogoCaption>
           </DetailsHeaderWrapper>
           <DetailsContentWrapper>
-            <DetailsLineItem
-              label={t("AgentName")}
-              value={finalData.data.name}
-            />
-            <DetailsLineItem
-              label={t("AgentPhone")}
-              value={finalData.data.phone}
-            />
-            <DetailsLineItem
-              label={t("AgentEmail")}
-              value={finalData.data.email}
-            />
+            <DetailsLineItem label={t("AgentName")} value={finalData.name} />
+            <DetailsLineItem label={t("AgentPhone")} value={finalData.phone} />
+            <DetailsLineItem label={t("AgentEmail")} value={finalData.email} />
           </DetailsContentWrapper>
         </DetailsBorderWrapper>
       </FormContentWrapper>

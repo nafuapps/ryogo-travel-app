@@ -25,7 +25,7 @@ export default function TransferAdminAlertButton({
 
   async function transferAdmin() {
     startTransition(async () => {
-      if (await transferAdminAction(currentUserId, otherUserId, agencyId)) {
+      if (await transferAdminAction({ currentUserId, otherUserId, agencyId })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

@@ -41,12 +41,10 @@ export default function QuickAddDriverAlertButton({
       const newDriverData: AddDriverRequestType = {
         agencyId: agencyId,
         addedByUserId: addedByUserId,
-        data: {
-          name: name,
-          email: email,
-          phone: phone,
-          userPhotos: photo,
-        },
+        name: name,
+        email: email,
+        phone: phone,
+        userPhotos: photo,
       }
       const addedDriver = await addDriverAction(newDriverData)
 

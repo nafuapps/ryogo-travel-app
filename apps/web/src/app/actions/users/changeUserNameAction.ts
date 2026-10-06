@@ -6,13 +6,19 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function changeUserNameAction(
-  userId: string,
-  agencyId: string,
-  name: string,
-  role: UserRolesEnum,
-  addedByUserId?: string,
-) {
+export async function changeUserNameAction({
+  userId,
+  agencyId,
+  name,
+  userRole,
+  addedByUserId,
+}: {
+  userId: string
+  agencyId: string
+  name: string
+  userRole: UserRolesEnum
+  addedByUserId?: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -28,7 +34,7 @@ export async function changeUserNameAction(
     return
   }
 
-  const user = await userServices.changeName(userId, name, role)
+  const user = await userServices.changeName({ userId, name, userRole })
   if (!user) return
 
   await notificationServices.addNotification({

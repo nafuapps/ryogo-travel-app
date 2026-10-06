@@ -87,7 +87,7 @@ export default function ExpenseItem({
         )}
         <SectionRowWrapper className="items-center mt-auto">
           <ExpenseApprovalButton
-            expId={expense.id}
+            expenseId={expense.id}
             isApproved={expense.isApproved}
             agencyId={expense.agencyId}
             canEditExpense={canEditExpense}

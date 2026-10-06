@@ -101,7 +101,6 @@ export const driverRepository = {
             photoUrl: true,
             email: true,
             status: true,
-            lastLogin: true,
             userRole: true,
             name: true,
           },

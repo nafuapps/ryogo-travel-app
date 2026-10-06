@@ -37,10 +37,10 @@ export async function addTransactionAction(data: AddTransactionRequestType) {
         file,
       ),
     )
-    await transactionServices.changeTransactionPhotoUrl(
-      addedTransaction.id,
-      uploadResult.path,
-    )
+    await transactionServices.changeTransactionPhotoUrl({
+      transactionId: addedTransaction.id,
+      transactionPhotoUrl: uploadResult.path,
+    })
   }
 
   await notificationServices.addNotification({

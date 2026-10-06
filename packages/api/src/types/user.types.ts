@@ -26,36 +26,22 @@ export type CreateOwnerAccountRequestType = {
 export type AddDriverRequestType = {
   agencyId: string
   addedByUserId: string
-  data: {
-    name: string
-    phone: string
-    email: string
-    licenseNumber?: string
-    licenseExpiresOn?: Date
-    address?: string
-    canDriveVehicleTypes?: VehicleTypesEnum[]
-    defaultAllowancePerDay?: number | undefined
-    licensePhotos?: FileList
-    userPhotos?: FileList
-  }
+  name: string
+  phone: string
+  email: string
+  licenseNumber?: string
+  licenseExpiresOn?: Date
+  address?: string
+  canDriveVehicleTypes?: VehicleTypesEnum[]
+  defaultAllowancePerDay?: number | undefined
+  licensePhotos?: FileList
+  userPhotos?: FileList
 }
 
-export type AddAgentRequestType = {
+export type AddUserRequestType = {
   agencyId: string
-  data: {
-    name: string
-    phone: string
-    email: string
-    photos?: FileList
-  }
-}
-
-export type AddOwnerRequestType = {
-  agencyId: string
-  data: {
-    name: string
-    phone: string
-    email: string
-    photos?: FileList
-  }
+  name: string
+  phone: string
+  email: string
+  photos?: FileList
 }

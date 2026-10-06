@@ -13,13 +13,13 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Check, CheckCheck } from "lucide-react"
 
 export function ExpenseApprovalButton({
-  expId,
+  expenseId,
   isApproved,
   agencyId,
   canEditExpense,
   isRider,
 }: {
-  expId: string
+  expenseId: string
   isApproved: boolean
   agencyId: string
   canEditExpense: boolean
@@ -31,7 +31,13 @@ export function ExpenseApprovalButton({
 
   async function approveExpense() {
     startTransition(async () => {
-      if (await changeExpenseApprovalAction(expId, true, agencyId)) {
+      if (
+        await changeExpenseApprovalAction({
+          expenseId,
+          isApproved: true,
+          agencyId,
+        })
+      ) {
         toast.success(t("ApproveSuccess"))
       } else {
         toast.success(t("ApproveError"))
@@ -42,7 +48,13 @@ export function ExpenseApprovalButton({
 
   async function rejectExpense() {
     startTransition(async () => {
-      if (await changeExpenseApprovalAction(expId, false, agencyId)) {
+      if (
+        await changeExpenseApprovalAction({
+          expenseId,
+          isApproved: false,
+          agencyId,
+        })
+      ) {
         toast.info(t("RejectSuccess"))
       } else {
         toast.success(t("RejectError"))

@@ -44,15 +44,12 @@ export default function MyProfileSettingsPageComponent({
   })
   //Submit actions
   const onSubmit = async (data: SchemaType) => {
-    const newPreferences = {
+    const updatedUser = await changeUserPreferencesAction({
+      userId: userDetails.id,
+      agencyId: userDetails.agencyId,
       prefersDarkTheme: data.dark,
       languagePref: data.lang,
-    }
-    const updatedUser = await changeUserPreferencesAction(
-      userDetails.id,
-      userDetails.agencyId,
-      newPreferences,
-    )
+    })
     if (updatedUser) {
       toast.success(t("Success"))
       router.refresh()

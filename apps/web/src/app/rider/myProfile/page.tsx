@@ -34,7 +34,10 @@ export default async function MyProfilePage() {
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile"} />
       <MyProfileDetailHeaderTabs selectedTab={"Account"} />
-      <RiderProfilePageComponent account={userDetails} />
+      <RiderProfilePageComponent
+        account={userDetails}
+        sessionLoginAt={currentUser.createdAt}
+      />
     </MainWrapper>
   )
 }

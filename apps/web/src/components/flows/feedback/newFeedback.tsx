@@ -23,10 +23,7 @@ import {
   TOTAL_RATING_STARS,
 } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  InsertProductFeedbackType,
-  ProductFeedbackTypeEnum,
-} from "@ryogo-travel-app/db/schema"
+import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import type { Route } from "next"
@@ -80,7 +77,7 @@ export default function NewFeedbackComponent({
       }, 3000) //Clear the error after 3s
       return
     }
-    const feedback: InsertProductFeedbackType = {
+    const result = await addFeedbackAction({
       rating: rating === 0 ? null : rating,
       liked: isLiked,
       remarks: data.remarks,
@@ -88,8 +85,7 @@ export default function NewFeedbackComponent({
       feedbackType: feedbackType,
       userId: userId,
       agencyId: agencyId,
-    }
-    const result = await addFeedbackAction(feedback)
+    })
     if (result) {
       toast.success(t("Success"))
       router.replace(pathname as Route)

@@ -32,6 +32,8 @@ export type NewBookingRequestDataType = {
 
 export type ConfirmBookingRequestType = {
   id: string
+  agencyId: string
+  assignedUserId: string
   startTime: string
   pickupAddress: string
   dropAddress?: string
@@ -47,4 +49,13 @@ export type RateBookingByCustomerType = {
   bookingRatingByCustomer: number
   driverRatingByCustomer?: number
   vehicleRatingByCustomer?: number
+}
+
+export type RateBookingByDriverType = {
+  bookingId: string
+  agencyId: string
+  customerId: string
+  userId: string
+  bookingRatingByDriver: number
+  customerRatingByDriver?: number
 }

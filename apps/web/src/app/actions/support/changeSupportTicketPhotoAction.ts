@@ -5,11 +5,15 @@ import { generateUserSupportTicketPhotoPathName } from "@/lib/utils"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function changeSupportTicketPhotoAction(
-  ticketId: string,
-  userId: string,
-  photo: FileList,
-) {
+export async function changeSupportTicketPhotoAction({
+  ticketId,
+  userId,
+  photo,
+}: {
+  ticketId: string
+  userId: string
+  photo: FileList
+}) {
   const currentUser = await getCurrentUser()
   if (!currentUser || currentUser.userId !== userId) {
     return

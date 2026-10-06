@@ -47,11 +47,11 @@ export default async function ConfirmBookingPage({
   if (
     differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
   ) {
-    await cancelBookingAction(
-      booking.id,
-      booking.agencyId,
-      booking.assignedUserId,
-    )
+    await cancelBookingAction({
+      bookingId: booking.id,
+      agencyId: booking.agencyId,
+      assignedUserId: booking.assignedUserId,
+    })
   }
 
   //Only owner or assigned user can confirm a booking

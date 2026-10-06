@@ -25,10 +25,12 @@ export default function RateBookingByDriverDialog({
   bookingId,
   customerId,
   agencyId,
+  userId,
 }: {
   bookingId: string
   customerId: string
   agencyId: string
+  userId: string
 }) {
   const t = useTranslations("Rider.MyBooking.RateBookingByDriver")
 
@@ -53,13 +55,16 @@ export default function RateBookingByDriverDialog({
       return
     }
 
-    const result = await rateBookingByDriverAction(
-      bookingId,
-      customerId,
-      agencyId,
-      bookingRating,
-      customerRating,
-    )
+    const result = await rateBookingByDriverAction({
+      data: {
+        bookingId,
+        customerId,
+        agencyId,
+        userId,
+        bookingRatingByDriver: bookingRating,
+        customerRatingByDriver: customerRating,
+      },
+    })
     if (result) {
       toast.success(t("Success"))
       router.refresh()

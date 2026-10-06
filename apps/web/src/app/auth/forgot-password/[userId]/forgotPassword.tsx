@@ -36,8 +36,6 @@ export default function ForgotPasswordPageComponent({
 
   const maskedEmail = maskEmail(user.email)
 
-  const forgotPasswordLink = `/auth/forgot-password/${user.id}/reset`
-
   const codeSentRecently = user.codeSentAt
     ? differenceInMinutes(new Date(), user.codeSentAt) <
       VERIFY_CODE_TIMEOUT_MINUTES
@@ -62,10 +60,7 @@ export default function ForgotPasswordPageComponent({
       form.setError("email", { type: "manual", message: t("APIError") })
       setGiveHelp(true)
     } else {
-      const updatedUser = await forgotPasswordAction(
-        user.id,
-        forgotPasswordLink,
-      )
+      const updatedUser = await forgotPasswordAction(user.id)
       if (updatedUser) {
         toast.success(t("Success"))
         router.push(`/auth/forgot-password/${user.id}/reset`)

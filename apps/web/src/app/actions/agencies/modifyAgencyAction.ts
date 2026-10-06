@@ -6,10 +6,13 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function modifyAgencyAction(
-  userId: string,
-  data: ModifyAgencyRequestType,
-) {
+export async function modifyAgencyAction({
+  userId,
+  data,
+}: {
+  userId: string
+  data: ModifyAgencyRequestType
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

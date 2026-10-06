@@ -34,6 +34,7 @@ export function NewDriverStep1({
   agencyId,
   userId,
   allDrivers,
+  agencyName,
 }: {
   onNext: () => void
   newDriverFormData: AddDriverRequestType
@@ -41,6 +42,7 @@ export function NewDriverStep1({
   agencyId: string
   userId: string
   allDrivers: FindAllUsersByRoleType
+  agencyName?: string
 }) {
   const t = useTranslations("Dashboard.NewDriver.Step1")
 
@@ -179,6 +181,7 @@ export function NewDriverStep1({
             disabled={
               !formData.formState.isValid || formData.formState.isSubmitting
             }
+            agencyName={agencyName}
           />
         </StickyActionWrapper>
       </FormWrapper>

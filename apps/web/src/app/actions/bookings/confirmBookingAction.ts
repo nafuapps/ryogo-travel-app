@@ -18,19 +18,15 @@ import { headers } from "next/headers"
 
 export async function confirmBookingAction({
   data,
-  agencyId,
-  assignedUserId,
 }: {
   data: ConfirmBookingRequestType
-  agencyId: string
-  assignedUserId: string
 }) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
-      assignedUserId !== currentUser.userId) ||
-    currentUser.agencyId !== agencyId
+      data.assignedUserId !== currentUser.userId) ||
+    currentUser.agencyId !== data.agencyId
   ) {
     return
   }
@@ -49,7 +45,7 @@ export async function confirmBookingAction({
   }
 
   await notificationServices.addNotification({
-    agencyId: agencyId,
+    agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: bookingDetails.id,
@@ -64,7 +60,7 @@ export async function confirmBookingAction({
 
   //Remove lead mission for this booking
   await missionServices.removePreviousMissionsByEntityTitleKey({
-    agencyId,
+    agencyId: data.agencyId,
     entityType: EntityTypeEnum.BOOKING,
     entityId: bookingDetails.id,
     titleKey: "LeadBooking.Title",
@@ -72,7 +68,7 @@ export async function confirmBookingAction({
 
   if (bookingDetails.assignedDriver) {
     await missionServices.addMission({
-      agencyId: agencyId,
+      agencyId: data.agencyId,
       userId: bookingDetails.assignedDriver.userId,
       entityType: EntityTypeEnum.BOOKING,
       entityId: bookingDetails.id,
@@ -95,7 +91,10 @@ export async function confirmBookingAction({
   ).path
 
   //Update confirmation url in DB
-  await bookingServices.addConfirmationUrl(bookingDetails.id, confirmationUrl)
+  await bookingServices.addConfirmationUrl({
+    bookingId: bookingDetails.id,
+    confirmationUrl,
+  })
 
   //Share confirmation over email to customer
   if (bookingDetails.customer.email) {

@@ -7,10 +7,13 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function changeAgencyQRCodeAction(
-  agencyId: string,
-  qrCode: FileList,
-) {
+export async function changeAgencyQRCodeAction({
+  agencyId,
+  qrCode,
+}: {
+  agencyId: string
+  qrCode: FileList
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -32,10 +35,10 @@ export async function changeAgencyQRCodeAction(
     qrCodeFile,
     generateAgencyQRCodePathName(agencyId, qrCodeFile),
   )
-  const updatedAgency = await agencyServices.updateAgencyQRCode(
+  const updatedAgency = await agencyServices.updateAgencyQRCode({
     agencyId,
-    uploadedFile.path,
-  )
+    qrCodeUrl: uploadedFile.path,
+  })
   if (!updatedAgency) return
 
   await notificationServices.addNotification({

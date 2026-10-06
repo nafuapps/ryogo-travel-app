@@ -23,7 +23,7 @@ export default function ActivateVehicleAlertButton({
 
   async function activate() {
     startTransition(async () => {
-      if (await activateVehicleAction(vehicleId, agencyId)) {
+      if (await activateVehicleAction({ vehicleId, agencyId })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

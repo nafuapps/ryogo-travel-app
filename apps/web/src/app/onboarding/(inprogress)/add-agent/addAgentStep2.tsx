@@ -38,14 +38,15 @@ export function AddAgentConfirm({
   //Submit actions
   const onSubmit = async () => {
     // Add agent
-    const newAgentData: AddUserRequestType = {
-      agencyId: finalData.agencyId,
-      name: finalData.name,
-      email: finalData.email,
-      phone: finalData.phone,
-      photos: finalData.photos,
-    }
-    const addAgent = await addAgentAction(newAgentData)
+    const addAgent = await addAgentAction({
+      data: {
+        agencyId: finalData.agencyId,
+        name: finalData.name,
+        email: finalData.email,
+        phone: finalData.phone,
+        photos: finalData.photos,
+      },
+    })
     if (addAgent) {
       onNext()
       await onboardingCompleteAction()

@@ -5,7 +5,11 @@ import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services
 import { AddTripLogRequestType } from "@ryogo-travel-app/api/types/tripLog.types"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function otherTripLogAction(data: AddTripLogRequestType) {
+export async function otherTripLogAction({
+  data,
+}: {
+  data: AddTripLogRequestType
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -20,17 +24,7 @@ export async function otherTripLogAction(data: AddTripLogRequestType) {
   }
 
   // Create Other Trip Log
-  const newTripLog = await tripLogServices.addTripLog({
-    driverId: data.driverId,
-    bookingId: data.bookingId,
-    vehicleId: data.vehicleId,
-    agencyId: data.agencyId,
-    odometerReading: data.odometerReading,
-    type: data.type,
-    remarks: data.remarks,
-    lat: data.lat,
-    long: data.long,
-  })
+  const newTripLog = await tripLogServices.addTripLog(data)
   if (!newTripLog) return
 
   return newTripLog

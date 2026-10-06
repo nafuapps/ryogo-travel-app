@@ -19,7 +19,6 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { ModifyDriverLeaveRequestType } from "@ryogo-travel-app/api/types/driverLeave.types"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -69,14 +68,15 @@ export default function ModifyDriverLeavePageComponent({
   })
 
   async function onSubmit(values: ModifyDriverLeaveFormType) {
-    const modifyLeave: ModifyDriverLeaveRequestType = {
-      leaveId: leave.id,
-      agencyId: leave.agencyId,
-      startDate: values.startDate,
-      endDate: values.endDate,
-      remarks: values.remarks,
-    }
-    const modifiedLeave = await modifyDriverLeaveAction(modifyLeave)
+    const modifiedLeave = await modifyDriverLeaveAction({
+      data: {
+        leaveId: leave.id,
+        agencyId: leave.agencyId,
+        startDate: values.startDate,
+        endDate: values.endDate,
+        remarks: values.remarks,
+      },
+    })
     if (modifiedLeave) {
       router.replace(`/dashboard/drivers/${leave.driverId}/leaves`)
       toast.success(t("Success"))

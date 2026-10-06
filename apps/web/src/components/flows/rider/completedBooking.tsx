@@ -20,6 +20,7 @@ export default function RiderMyCompletedBookingPageComponent({
     <>
       {bookingDetails.ratingByDriver ||
       !bookingDetails.completedAt ||
+      !bookingDetails.assignedDriver ||
       differenceInDays(new Date(), bookingDetails.completedAt) >
         BOOKING_RATING_LIMIT_DAYS ? (
         <RyogoDefaultButton
@@ -32,6 +33,7 @@ export default function RiderMyCompletedBookingPageComponent({
           bookingId={bookingDetails.id}
           customerId={bookingDetails.customerId}
           agencyId={bookingDetails.agencyId}
+          userId={bookingDetails.assignedDriver.userId}
         />
       )}
     </>

@@ -66,12 +66,12 @@ export default function ChangePickupAddressSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedBooking = await changePickupAddressAction(
+    const updatedBooking = await changePickupAddressAction({
       bookingId,
       agencyId,
-      userId,
-      data.pickupAddress,
-    )
+      assignedUserId: userId,
+      pickupAddress: data.pickupAddress,
+    })
     if (updatedBooking) {
       toast.success(t("Success"))
       router.refresh()

@@ -27,12 +27,12 @@ export default function CancelBookingAlertButton({
   async function cancel() {
     startCancelTransition(async () => {
       //If cancel is successful, show cancel success message and redirect to cancelled booking details
-      const cancelMessage = await cancelBookingAction(
+      const cancelMessage = await cancelBookingAction({
         bookingId,
         agencyId,
         assignedUserId,
-        true,
-      )
+        isCancelledByUser: true,
+      })
       if (cancelMessage) {
         toast.success(t("Success"))
         if (typeof cancelMessage === "string") {

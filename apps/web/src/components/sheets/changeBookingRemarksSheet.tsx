@@ -60,12 +60,12 @@ export default function ChangeBookingRemarksSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedBooking = await changeBookingRemarksAction(
+    const updatedBooking = await changeBookingRemarksAction({
       bookingId,
       agencyId,
-      userId,
-      data.remarks,
-    )
+      assignedUserId: userId,
+      bookingRemarks: data.remarks,
+    })
     if (updatedBooking) {
       toast.success(t("Success"))
       router.refresh()

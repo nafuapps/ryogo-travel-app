@@ -5,12 +5,17 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { EntityTypeEnum, TicketStatusEnum } from "@ryogo-travel-app/db/schema"
 
-export async function deleteSupportTicketAction(
-  ticketId: string,
-  userId: string,
-  agencyId: string,
-  status: TicketStatusEnum,
-) {
+export async function deleteSupportTicketAction({
+  ticketId,
+  userId,
+  agencyId,
+  status,
+}: {
+  ticketId: string
+  userId: string
+  agencyId: string
+  status: TicketStatusEnum
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

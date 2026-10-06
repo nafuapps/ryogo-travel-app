@@ -32,7 +32,9 @@ export default function DeleteSupportTicketAlertButton({
 
   async function deleteCustomMission() {
     startCancelTransition(async () => {
-      if (await deleteSupportTicketAction(ticketId, userId, agencyId, status)) {
+      if (
+        await deleteSupportTicketAction({ ticketId, userId, agencyId, status })
+      ) {
         toast.success(t("Success"))
         router.replace(
           isRider ? `/rider/mySupport/tickets` : `/dashboard/support/tickets`,

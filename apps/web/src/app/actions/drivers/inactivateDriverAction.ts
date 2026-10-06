@@ -6,7 +6,13 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function inactivateDriverAction(id: string, agencyId: string) {
+export async function inactivateDriverAction({
+  driverId,
+  agencyId,
+}: {
+  driverId: string
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -22,7 +28,7 @@ export async function inactivateDriverAction(id: string, agencyId: string) {
     return
   }
 
-  const driver = await driverServices.inactivateDriver(id)
+  const driver = await driverServices.inactivateDriver(driverId)
   if (!driver) return
 
   await notificationServices.addNotification({

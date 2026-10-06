@@ -5,11 +5,15 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function deleteTransactionAction(
-  id: string,
-  agencyId: string,
-  assignedUserId: string,
-) {
+export async function deleteTransactionAction({
+  transactionId,
+  agencyId,
+  assignedUserId,
+}: {
+  transactionId: string
+  agencyId: string
+  assignedUserId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -24,7 +28,8 @@ export async function deleteTransactionAction(
     return
   }
 
-  const deletedTransaction = await transactionServices.removeTransaction(id)
+  const deletedTransaction =
+    await transactionServices.removeTransaction(transactionId)
   if (!deletedTransaction) return
 
   await notificationServices.addNotification({

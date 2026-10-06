@@ -8,10 +8,7 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  InsertVehicleRepairType,
-  VehicleRepairStatusEnum,
-} from "@ryogo-travel-app/db/schema"
+import { VehicleRepairStatusEnum } from "@ryogo-travel-app/db/schema"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -44,7 +41,7 @@ export default function NewVehicleRepairPageComponent({
   const t = useTranslations("Dashboard.NewVehicleRepair")
   const router = useRouter()
 
-  const newDriverleaveSchema = z
+  const newVehicleRepairSchema = z
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
       endDate: z.date(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
@@ -69,17 +66,17 @@ export default function NewVehicleRepairPageComponent({
       }
     })
 
-  type NewVehicleRepairType = z.infer<typeof newDriverleaveSchema>
+  type NewVehicleRepairType = z.infer<typeof newVehicleRepairSchema>
 
   const form = useForm<NewVehicleRepairType>({
-    resolver: zodResolver(newDriverleaveSchema),
+    resolver: zodResolver(newVehicleRepairSchema),
     defaultValues: {
       status: false,
     },
   })
 
   async function onSubmit(values: NewVehicleRepairType) {
-    const newLeave: InsertVehicleRepairType = {
+    const createdRepair = await newVehicleRepairAction({
       agencyId: agencyId,
       vehicleId: vehicleId,
       addedByUserId: userId,
@@ -90,9 +87,8 @@ export default function NewVehicleRepairPageComponent({
         : VehicleRepairStatusEnum.PENDING,
       remarks: values.remarks,
       cost: values.cost,
-    }
-    const createdLeave = await newVehicleRepairAction(newLeave)
-    if (createdLeave) {
+    })
+    if (createdRepair) {
       router.replace(`/dashboard/vehicles/${vehicleId}/repairs`)
       toast.success(t("Success"))
     } else {

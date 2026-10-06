@@ -21,10 +21,7 @@ export async function sendSupportQueryAction(data: {
 
   //Add the query to the database
   const supportQuery = await supportServices.addSupportQuery({
-    email: data.email,
-    message: data.message,
-    name: data.name,
-    phone: data.phone,
+    ...data,
     businessName: data.agencyName,
   })
 

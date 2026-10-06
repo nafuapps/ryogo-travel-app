@@ -63,12 +63,12 @@ export default function ChangeDropAddressSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedBooking = await changeDropAddressAction(
+    const updatedBooking = await changeDropAddressAction({
       bookingId,
       agencyId,
-      userId,
-      data.dropAddress,
-    )
+      assignedUserId: userId,
+      dropAddress: data.dropAddress,
+    })
     if (updatedBooking) {
       toast.success(t("Success"))
       router.refresh()

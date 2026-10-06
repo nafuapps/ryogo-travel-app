@@ -24,6 +24,10 @@ import {
   lt,
 } from "drizzle-orm"
 import { addDays, subDays } from "date-fns"
+import {
+  RateBookingByCustomerType,
+  RateBookingByDriverType,
+} from "../types/booking.types"
 
 export const bookingRepository = {
   async readDashboardTripsByAgencyId(agencyId: string) {
@@ -1959,14 +1963,7 @@ export const bookingRepository = {
     bookingRatingByCustomer,
     driverRatingByCustomer,
     vehicleRatingByCustomer,
-  }: {
-    bookingId: string
-    driverId: string
-    vehicleId: string
-    bookingRatingByCustomer: number
-    driverRatingByCustomer?: number
-    vehicleRatingByCustomer?: number
-  }) {
+  }: RateBookingByCustomerType) {
     return await db.transaction(async (tx) => {
       await tx
         .update(bookings)
@@ -2005,12 +2002,7 @@ export const bookingRepository = {
     customerId,
     bookingRatingByDriver,
     customerRatingByDriver,
-  }: {
-    bookingId: string
-    customerId: string
-    bookingRatingByDriver: number
-    customerRatingByDriver?: number
-  }) {
+  }: RateBookingByDriverType) {
     return await db.transaction(async (tx) => {
       await tx
         .update(bookings)
@@ -2144,14 +2136,20 @@ export const bookingRepository = {
       .returning({ id: bookings.id, assignedUserId: bookings.assignedUserId })
   },
 
-  async updateQuoteUrl({ id, quoteUrl }: { id: string; quoteUrl: string }) {
+  async updateQuoteUrl({
+    bookingId,
+    quoteUrl,
+  }: {
+    bookingId: string
+    quoteUrl: string
+  }) {
     return await db
       .update(bookings)
       .set({
         quoteSentOn: new Date(),
         quoteUrl,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         quoteSent: bookings.quoteSentOn,
@@ -2173,10 +2171,10 @@ export const bookingRepository = {
   },
 
   async updateConfirmationUrl({
-    id,
+    bookingId,
     confirmationUrl,
   }: {
-    id: string
+    bookingId: string
     confirmationUrl: string
   }) {
     return await db
@@ -2185,7 +2183,7 @@ export const bookingRepository = {
         confirmationSentOn: new Date(),
         confirmationUrl,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         confirmationSent: bookings.confirmationSentOn,
@@ -2207,10 +2205,10 @@ export const bookingRepository = {
   },
 
   async updateInvoiceUrl({
-    id,
+    bookingId,
     invoiceUrl,
   }: {
-    id: string
+    bookingId: string
     invoiceUrl: string
   }) {
     return await db
@@ -2219,7 +2217,7 @@ export const bookingRepository = {
         invoiceSentOn: new Date(),
         invoiceUrl,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         invoiceSent: bookings.invoiceSentOn,

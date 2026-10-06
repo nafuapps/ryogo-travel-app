@@ -72,11 +72,11 @@ export default function ChangeAgencyPhonePageComponent({
         message: t("Field1.Error3"),
       })
     } else {
-      const updatedAgency = await changeAgencyPhoneAction(
-        agency.id,
+      const updatedAgency = await changeAgencyPhoneAction({
         userId,
-        data.newPhone,
-      )
+        agencyId: agency.id,
+        businessPhone: data.newPhone,
+      })
       if (updatedAgency) {
         router.replace(`/dashboard/account/agency`)
         toast.success(t("Success"))

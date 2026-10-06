@@ -29,11 +29,11 @@ export default function DeleteDriverLeaveAlertButton({
 
   async function deleteLeave() {
     startCancelTransition(async () => {
-      const leave = await await deleteDriverLeaveAction(
+      const leave = await await deleteDriverLeaveAction({
         leaveId,
         userId,
         agencyId,
-      )
+      })
       if (leave) {
         toast.success(t("Success"))
         router.replace(`/dashboard/drivers/${leave.driverId}/leaves`)

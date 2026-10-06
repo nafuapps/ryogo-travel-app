@@ -97,12 +97,16 @@ export default function AddSupportTicketPageComponent({
   })
 
   async function onSubmit(values: AddTicketType) {
-    const newTicket = await addSupportTicketAction(userId, agencyId, {
-      entityType: values.entityType,
-      entityId: values.entityId,
-      issue: values.issue,
-      details: values.details,
-      photo: values.photo,
+    const newTicket = await addSupportTicketAction({
+      data: {
+        userId,
+        agencyId,
+        entityType: values.entityType,
+        entityId: values.entityId,
+        issue: values.issue,
+        details: values.details,
+        photo: values.photo,
+      },
     })
     if (newTicket) {
       toast.success(t("Success"))

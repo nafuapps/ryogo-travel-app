@@ -14,10 +14,13 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
-export async function addOwnerAction(
-  data: AddUserRequestType,
-  agencyName?: string,
-) {
+export async function addOwnerAction({
+  data,
+  agencyName,
+}: {
+  data: AddUserRequestType
+  agencyName: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

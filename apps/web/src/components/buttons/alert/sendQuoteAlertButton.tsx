@@ -32,11 +32,11 @@ export default function SendQuoteAlertButton({
   // Send quote to customer over whatsapp
   async function sendQuote() {
     startSendTransition(async () => {
-      const quoteMessage = await sendQuoteAction(
+      const quoteMessage = await sendQuoteAction({
         bookingId,
         agencyId,
         assignedUserId,
-      )
+      })
       if (quoteMessage) {
         toast.success(t("Success"))
         window.open(quoteMessage, "_blank", "noopener,noreferrer")

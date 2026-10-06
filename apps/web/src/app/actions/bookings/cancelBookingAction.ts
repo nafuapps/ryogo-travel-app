@@ -16,12 +16,17 @@ import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
 
-export async function cancelBookingAction(
-  bookingId: string,
-  agencyId: string,
-  assignedUserId: string,
-  isCancelledByUser?: boolean,
-) {
+export async function cancelBookingAction({
+  bookingId,
+  agencyId,
+  assignedUserId,
+  isCancelledByUser,
+}: {
+  bookingId: string
+  agencyId: string
+  assignedUserId: string
+  isCancelledByUser?: boolean
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

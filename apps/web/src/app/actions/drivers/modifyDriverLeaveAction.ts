@@ -6,9 +6,11 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { ModifyDriverLeaveRequestType } from "@ryogo-travel-app/api/types/driverLeave.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function modifyDriverLeaveAction(
-  data: ModifyDriverLeaveRequestType,
-) {
+export async function modifyDriverLeaveAction({
+  data,
+}: {
+  data: ModifyDriverLeaveRequestType
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

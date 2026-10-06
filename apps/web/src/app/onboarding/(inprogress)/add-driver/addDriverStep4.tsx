@@ -38,21 +38,22 @@ export function AddDriverConfirm({
   //Submit actions
   const onSubmit = async () => {
     // Add driver
-    const newDriverData: AddDriverRequestType = {
-      agencyId: finalData.agencyId,
-      addedByUserId: finalData.addedByUserId,
-      name: finalData.name,
-      email: finalData.email,
-      phone: finalData.phone,
-      address: finalData.address,
-      canDriveVehicleTypes: finalData.canDriveVehicleTypes,
-      defaultAllowancePerDay: finalData.defaultAllowancePerDay,
-      licenseNumber: finalData.licenseNumber,
-      licenseExpiresOn: finalData.licenseExpiresOn,
-      licensePhotos: finalData.licensePhotos,
-      userPhotos: finalData.userPhotos,
-    }
-    const addedDriver = await addDriverAction(newDriverData)
+    const addedDriver = await addDriverAction({
+      data: {
+        agencyId: finalData.agencyId,
+        addedByUserId: finalData.addedByUserId,
+        name: finalData.name,
+        email: finalData.email,
+        phone: finalData.phone,
+        address: finalData.address,
+        canDriveVehicleTypes: finalData.canDriveVehicleTypes,
+        defaultAllowancePerDay: finalData.defaultAllowancePerDay,
+        licenseNumber: finalData.licenseNumber,
+        licenseExpiresOn: finalData.licenseExpiresOn,
+        licensePhotos: finalData.licensePhotos,
+        userPhotos: finalData.userPhotos,
+      },
+    })
     if (addedDriver) {
       //Move to next step
       onNext()

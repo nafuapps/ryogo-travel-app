@@ -8,7 +8,7 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect } from "next/navigation"
 import { headers } from "next/headers"
 
-export async function forgotPasswordAction(userId: string, link: string) {
+export async function forgotPasswordAction(userId: string) {
   const currentUser = await getCurrentUser()
   if (currentUser) {
     if (currentUser.userRole === UserRolesEnum.DRIVER) {
@@ -19,6 +19,8 @@ export async function forgotPasswordAction(userId: string, link: string) {
   }
   const user = await userServices.generateAndSendCode(userId)
   if (!user) return
+
+  const link = `/auth/forgot-password/${userId}/reset`
 
   const headerList = await headers()
   const host = headerList.get("host")

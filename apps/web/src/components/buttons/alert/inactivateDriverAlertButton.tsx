@@ -23,7 +23,7 @@ export default function InactivateDriverAlertButton({
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateDriverAction(driverId, agencyId)) {
+      if (await inactivateDriverAction({ driverId, agencyId })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

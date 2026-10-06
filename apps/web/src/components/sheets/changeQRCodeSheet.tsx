@@ -56,7 +56,10 @@ export default function ChangeQRCodeSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedAgency = await changeAgencyQRCodeAction(agencyId, data.qrCode)
+    const updatedAgency = await changeAgencyQRCodeAction({
+      agencyId,
+      qrCode: data.qrCode,
+    })
     if (updatedAgency) {
       toast.success(t("Success"))
       router.refresh()

@@ -9,7 +9,11 @@ import {
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 
-export async function newDriverLeaveAction(data: InsertDriverLeaveType) {
+export async function newDriverLeaveAction({
+  data,
+}: {
+  data: InsertDriverLeaveType
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

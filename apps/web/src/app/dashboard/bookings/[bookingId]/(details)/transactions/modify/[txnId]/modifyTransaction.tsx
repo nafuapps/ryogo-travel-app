@@ -96,15 +96,15 @@ export default function ModifyTransactionPageComponent({
 
   //Form submit
   async function onSubmit(values: ModifyTransactionType) {
-    const updatedTransaction = await modifyTransactionAction(
-      {
+    const updatedTransaction = await modifyTransactionAction({
+      data: {
+        ...values,
         transactionId: transactionDetails.id,
         bookingId: transactionDetails.bookingId,
-        ...values,
+        agencyId: transactionDetails.agencyId,
+        assignedUserId,
       },
-      transactionDetails.agencyId,
-      assignedUserId,
-    )
+    })
     if (updatedTransaction) {
       toast.success(t("Success"))
       router.replace(

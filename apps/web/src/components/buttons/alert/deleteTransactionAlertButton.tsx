@@ -33,7 +33,11 @@ export default function DeleteTransactionAlertButton({
     startTransition(async () => {
       //If delete is successful, show delete success message and redirect to transactions
       if (
-        await deleteTransactionAction(transactionId, agencyId, assignedUserId)
+        await deleteTransactionAction({
+          transactionId,
+          agencyId,
+          assignedUserId,
+        })
       ) {
         toast.success(t("Success"))
         router.replace(`/dashboard/bookings/${bookingId}/transactions`)

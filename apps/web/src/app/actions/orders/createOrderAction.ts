@@ -17,11 +17,15 @@ const razorpay = new Razorpay({
       : process.env.RAZORPAY_TEST_KEY_SECRET!,
 })
 
-export async function createOrderAction(
-  agencyId: string,
-  userId: string,
-  orderType: OrderTypeEnum,
-) {
+export async function createOrderAction({
+  agencyId,
+  userId,
+  orderType,
+}: {
+  agencyId: string
+  userId: string
+  orderType: OrderTypeEnum
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

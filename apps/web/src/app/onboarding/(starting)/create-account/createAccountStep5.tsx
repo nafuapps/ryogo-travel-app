@@ -42,7 +42,8 @@ export function CreateAccountConfirm({
 
   const onSubmit = async () => {
     // Create Agency and Owner Account
-    const newAccountData: CreateOwnerAccountRequestType = {
+
+    const createdOwnerAccount = await createOwnerAccountAction({
       agency: {
         businessEmail: finalData.agency.businessEmail,
         businessPhone: finalData.agency.businessPhone,
@@ -62,9 +63,7 @@ export function CreateAccountConfirm({
         password: finalData.owner.password,
         photos: finalData.owner.photos,
       },
-    }
-
-    const createdOwnerAccount = await createOwnerAccountAction(newAccountData)
+    })
     if (createdOwnerAccount) {
       //If success, update userid and move to next success page
       updateFinalData({

@@ -21,7 +21,6 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { ModifyCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -80,18 +79,19 @@ export default function ModifyCustomerPageComponent({
   })
 
   //Submit actions
-  async function onSubmit(data: ModifyCustomerType) {
-    const modifyCustomerData: ModifyCustomerRequestType = {
-      customerId: customer.id,
-      agencyId: customer.agencyId,
-      name: data.name,
-      email: data.email,
-      address: data.address,
-      remarks: data.remarks,
-      state: data.state,
-      city: data.city,
-    }
-    const updatedCustomer = await modifyCustomerAction(modifyCustomerData)
+  async function onSubmit(values: ModifyCustomerType) {
+    const updatedCustomer = await modifyCustomerAction({
+      data: {
+        customerId: customer.id,
+        agencyId: customer.agencyId,
+        name: values.name,
+        email: values.email,
+        address: values.address,
+        remarks: values.remarks,
+        state: values.state,
+        city: values.city,
+      },
+    })
     if (updatedCustomer) {
       router.replace(`/dashboard/customers/${customer.id}`)
       toast.success(t("Success"))

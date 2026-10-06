@@ -77,7 +77,7 @@ export default function ChangeAgencyEmailPageComponent({
       const updatedAgency = await changeAgencyEmailAction({
         userId,
         agencyId: agency.id,
-        email: data.newEmail,
+        businessEmail: data.newEmail,
       })
       if (updatedAgency) {
         router.replace("/dashboard/account/agency")

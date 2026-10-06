@@ -5,7 +5,13 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function activateVehicleAction(id: string, agencyId: string) {
+export async function activateVehicleAction({
+  vehicleId,
+  agencyId,
+}: {
+  vehicleId: string
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -21,7 +27,7 @@ export async function activateVehicleAction(id: string, agencyId: string) {
     return
   }
 
-  const vehicle = await vehicleServices.activateVehicle(id)
+  const vehicle = await vehicleServices.activateVehicle(vehicleId)
   if (!vehicle) return
 
   await notificationServices.addNotification({

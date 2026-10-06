@@ -5,10 +5,13 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
-export async function downgradeAgencyToBasicAction(
-  userId: string,
-  agencyId: string,
-) {
+export async function downgradeAgencyToBasicAction({
+  userId,
+  agencyId,
+}: {
+  userId: string
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

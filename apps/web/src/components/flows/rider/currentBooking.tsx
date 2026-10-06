@@ -72,13 +72,15 @@ export default function RiderMyOngoingBookingPageComponent({
         booking.assignedVehicleId
       ) {
         await otherTripLogAction({
-          agencyId: booking.agencyId,
-          bookingId: booking.id,
-          driverId: booking.assignedDriverId,
-          vehicleId: booking.assignedVehicleId,
-          type: TripLogTypesEnum.OTHER,
-          lat: latLong.latitude,
-          long: latLong.longitude,
+          data: {
+            agencyId: booking.agencyId,
+            bookingId: booking.id,
+            driverId: booking.assignedDriverId,
+            vehicleId: booking.assignedVehicleId,
+            type: TripLogTypesEnum.OTHER,
+            lat: latLong.latitude,
+            long: latLong.longitude,
+          },
         })
       }
     }

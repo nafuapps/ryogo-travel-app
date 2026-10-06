@@ -29,11 +29,11 @@ export default function DeleteVehicleRepairAlertButton({
 
   async function deleteRepair() {
     startCancelTransition(async () => {
-      const repair = await await deleteVehicleRepairAction(
+      const repair = await await deleteVehicleRepairAction({
         repairId,
         userId,
         agencyId,
-      )
+      })
       if (repair) {
         toast.success(t("Success"))
         router.replace(`/dashboard/vehicles/${repair.vehicleId}/repairs`)

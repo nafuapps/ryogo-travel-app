@@ -33,11 +33,11 @@ export default function SendInvoiceAlertButton({
   // Send invoice to customer over whatsapp
   async function sendInvoice() {
     startSendTransition(async () => {
-      const invoiceMessage = await sendInvoiceAction(
+      const invoiceMessage = await sendInvoiceAction({
         bookingId,
         agencyId,
         assignedUserId,
-      )
+      })
       if (invoiceMessage) {
         toast.success(t("Success"))
         window.open(invoiceMessage, "_blank", "noopener,noreferrer")

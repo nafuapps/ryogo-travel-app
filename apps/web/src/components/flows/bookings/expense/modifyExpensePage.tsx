@@ -89,16 +89,16 @@ export default function ModifyExpensePageComponent({
 
   //Form submit
   async function onSubmit(values: ModifyExpenseType) {
-    const updatedExpense = await modifyExpenseAction(
-      {
+    const updatedExpense = await modifyExpenseAction({
+      data: {
         expenseId: expenseDetails.id,
         bookingId: expenseDetails.bookingId,
         ...values,
       },
-      expenseDetails.agencyId,
-      bookingAssignedUserId,
+      agencyId: expenseDetails.agencyId,
+      assignedUserId: bookingAssignedUserId,
       isRider,
-    )
+    })
     if (updatedExpense) {
       toast.success(t("Success"))
       router.replace(

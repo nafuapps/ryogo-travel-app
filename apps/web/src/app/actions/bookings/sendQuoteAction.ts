@@ -10,11 +10,15 @@ import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 
-export async function sendQuoteAction(
-  id: string,
-  agencyId: string,
-  assignedUserId: string,
-) {
+export async function sendQuoteAction({
+  bookingId,
+  agencyId,
+  assignedUserId,
+}: {
+  bookingId: string
+  agencyId: string
+  assignedUserId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -30,7 +34,7 @@ export async function sendQuoteAction(
   }
 
   //Get lead booking details
-  const bookingDetails = await bookingServices.findBookingDetailsById(id)
+  const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
   if (!bookingDetails) return
 
   let quoteUrl = bookingDetails.quoteUrl
@@ -40,15 +44,16 @@ export async function sendQuoteAction(
     const quoteFile = await getLeadQuotePDF(bookingDetails)
 
     //Upload file and get storage url
-    quoteUrl = (await uploadFile(quoteFile, generateBookingQuotePathName(id)))
-      .path
+    quoteUrl = (
+      await uploadFile(quoteFile, generateBookingQuotePathName(bookingId))
+    ).path
     if (!quoteUrl) return
 
     //Update quote url in DB
-    await bookingServices.addQuoteUrl(id, quoteUrl)
+    await bookingServices.addQuoteUrl({ bookingId, quoteUrl })
   } else {
     //Else, just update quote sent time in DB
-    await bookingServices.changeQuoteSent(id)
+    await bookingServices.changeQuoteSent(bookingId)
   }
 
   //Send quote pdf to customer over whatsapp

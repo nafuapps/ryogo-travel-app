@@ -60,7 +60,10 @@ export default async function DashboardHomePage({
     !isBasic &&
     daysToExpiry + SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS < 0
   ) {
-    await downgradeAgencyToBasicAction(currentUser.userId, agency.id)
+    await downgradeAgencyToBasicAction({
+      userId: currentUser.userId,
+      agencyId: currentUser.agencyId,
+    })
   }
 
   //Subscribed agency which is about to expire, show reminder strip

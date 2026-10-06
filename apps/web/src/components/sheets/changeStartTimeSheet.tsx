@@ -59,12 +59,12 @@ export default function ChangeStartTimeSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedBooking = await changeStartTimeAction(
+    const updatedBooking = await changeStartTimeAction({
       bookingId,
       agencyId,
-      userId,
-      data.startTime,
-    )
+      assignedUserId: userId,
+      startTime: data.startTime,
+    })
     if (updatedBooking) {
       toast.success(t("Success"))
       router.refresh()

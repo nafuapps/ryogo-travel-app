@@ -8,7 +8,11 @@ import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.typ
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function newCustomerAction(data: NewCustomerRequestType) {
+export async function newCustomerAction({
+  data,
+}: {
+  data: NewCustomerRequestType
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

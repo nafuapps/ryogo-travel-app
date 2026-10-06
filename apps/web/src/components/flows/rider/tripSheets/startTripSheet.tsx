@@ -88,20 +88,21 @@ export default function StartTripSheet({
   const vehicleId = booking.assignedVehicleId
   const driverId = booking.assignedDriverId
 
-  const onSubmit = async (data: SchemaType) => {
-    const startTripData = {
-      agencyId: booking.agencyId,
-      bookingId: booking.id,
-      driverId: driverId,
-      vehicleId: vehicleId,
-      type: TripLogTypesEnum.STARTED,
-      odometerReading: data.odometerReading,
-      remarks: data.remarks,
-      tripLogPhoto: data.tripLogPhoto,
-      lat: latLong?.latitude,
-      long: latLong?.longitude,
-    }
-    const result = await startTripAction(startTripData)
+  const onSubmit = async (values: SchemaType) => {
+    const result = await startTripAction({
+      data: {
+        agencyId: booking.agencyId,
+        bookingId: booking.id,
+        driverId: driverId,
+        vehicleId: vehicleId,
+        type: TripLogTypesEnum.STARTED,
+        odometerReading: values.odometerReading,
+        remarks: values.remarks,
+        tripLogPhoto: values.tripLogPhoto,
+        lat: latLong?.latitude,
+        long: latLong?.longitude,
+      },
+    })
     if (result) {
       setOpen(false)
       router.refresh()

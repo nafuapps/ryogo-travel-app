@@ -43,7 +43,7 @@ export default function ChangeUserPhotoSheet({
   const router = useRouter()
 
   const schema = z.object({
-    accountPhotos: FileRegex.refine((file) => {
+    accountPhoto: FileRegex.refine((file) => {
       return checkImageFileSize(file)
     }, t("Error1")).refine((file) => {
       return checkImageFileType(file)
@@ -58,11 +58,11 @@ export default function ChangeUserPhotoSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedUser = await changeUserPhotoAction(
+    const updatedUser = await changeUserPhotoAction({
       userId,
       agencyId,
-      data.accountPhotos,
-    )
+      photo: data.accountPhoto,
+    })
     if (updatedUser) {
       toast.success(t("Success"))
       router.refresh()
@@ -85,8 +85,8 @@ export default function ChangeUserPhotoSheet({
         >
           <FormContentWrapper asCard={false} className="px-4 lg:px-5">
             <RyogoFileInput
-              name={"accountPhotos"}
-              register={form.register("accountPhotos")}
+              name={"accountPhoto"}
+              register={form.register("accountPhoto")}
               label={t("Title")}
               placeholder={t("Placeholder")}
             />

@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -90,14 +89,16 @@ export default function AddOwnerForm({
         message: t("APIError2"),
       })
     } else {
-      const addOwnerData: AddUserRequestType = {
-        agencyId: agencyId,
-        name: values.ownerName,
-        phone: values.ownerPhone,
-        email: values.ownerEmail,
-        photos: values.ownerPhotos,
-      }
-      const createdOwner = await addOwnerAction(addOwnerData, agencyName)
+      const createdOwner = await addOwnerAction({
+        data: {
+          agencyId: agencyId,
+          name: values.ownerName,
+          phone: values.ownerPhone,
+          email: values.ownerEmail,
+          photos: values.ownerPhotos,
+        },
+        agencyName,
+      })
       if (createdOwner) {
         toast.success(t("Success"))
         window.open(

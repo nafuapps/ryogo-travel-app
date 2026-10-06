@@ -25,7 +25,6 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { ModifyVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -112,7 +111,7 @@ export default function ModifyVehiclePageComponent({
 
   //Submit actions
   async function onSubmit(data: ModifyVehicleType) {
-    const modifyVehicleData: ModifyVehicleRequestType = {
+    const modifiedVehicle = await modifyVehicleAction({
       vehicleId: vehicle.id,
       agencyId: vehicle.agencyId,
       type: data.type,
@@ -124,8 +123,7 @@ export default function ModifyVehiclePageComponent({
       defaultRatePerKm: data.defaultRatePerKm,
       hasAC: data.hasAC,
       defaultAcChargePerDay: data.defaultAcChargePerDay,
-    }
-    const modifiedVehicle = await modifyVehicleAction(modifyVehicleData)
+    })
     if (modifiedVehicle) {
       router.replace(`/dashboard/vehicles/${vehicle.id}`)
       toast.success(t("Success"))

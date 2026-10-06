@@ -7,19 +7,20 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
 import { AddTripLogRequestType } from "@ryogo-travel-app/api/types/tripLog.types"
-import {
-  EntityTypeEnum,
-  TripLogTypesEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function endTripAction(
-  data: AddTripLogRequestType,
-  customerId: string,
-  customerRatingData?: number,
-  bookingRatingData?: number,
-) {
+export async function endTripAction({
+  data,
+  customerId,
+  customerRatingData,
+  bookingRatingData,
+}: {
+  data: AddTripLogRequestType
+  customerId: string
+  customerRatingData?: number
+  bookingRatingData?: number
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -34,17 +35,7 @@ export async function endTripAction(
   }
 
   // Create End Trip Log
-  const newTripLog = await tripLogServices.addTripLog({
-    driverId: data.driverId,
-    bookingId: data.bookingId,
-    vehicleId: data.vehicleId,
-    agencyId: data.agencyId,
-    odometerReading: data.odometerReading,
-    type: TripLogTypesEnum.ENDED,
-    remarks: data.remarks,
-    lat: data.lat,
-    long: data.long,
-  })
+  const newTripLog = await tripLogServices.addTripLog(data)
   if (!newTripLog) return
 
   //Upload triplog photo if attached

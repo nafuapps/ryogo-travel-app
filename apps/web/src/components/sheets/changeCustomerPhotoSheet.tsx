@@ -58,11 +58,11 @@ export default function ChangeCustomerPhotoSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedCustomer = await changeCustomerPhotoAction(
+    const updatedCustomer = await changeCustomerPhotoAction({
       customerId,
-      data.customerPhotos,
       agencyId,
-    )
+      photo: data.customerPhotos,
+    })
     if (updatedCustomer) {
       toast.success(t("Success"))
       router.refresh()

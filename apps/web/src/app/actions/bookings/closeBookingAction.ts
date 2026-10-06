@@ -16,17 +16,22 @@ import {
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { headers } from "next/headers"
 
-export async function closeBookingAction(
-  bookingId: string,
-  agencyId: string,
-  userId: string,
-  customerEmail?: string | null,
-) {
+export async function closeBookingAction({
+  bookingId,
+  agencyId,
+  assignedUserId,
+  customerEmail,
+}: {
+  bookingId: string
+  agencyId: string
+  assignedUserId: string
+  customerEmail: string | null
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== userId) ||
+      currentUser.userId !== assignedUserId) ||
     currentUser.agencyId !== agencyId
   ) {
     return
@@ -59,7 +64,7 @@ export async function closeBookingAction(
   if (!invoiceUrl) return
 
   //Update invoice url in DB
-  await bookingServices.addInvoiceUrl(bookingId, invoiceUrl)
+  await bookingServices.addInvoiceUrl({ bookingId, invoiceUrl })
 
   if (customerEmail) {
     const headerList = await headers()

@@ -23,7 +23,7 @@ export default function ResetUserPasswordAlertButton({
 
   const reset = async () => {
     startTransition(async () => {
-      if (await resetUserPasswordAction(userId, agencyId)) {
+      if (await resetUserPasswordAction({ userId, agencyId })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

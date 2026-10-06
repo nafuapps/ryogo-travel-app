@@ -37,11 +37,11 @@ export default async function BookingIdLayout({
     booking.status === BookingStatusEnum.LEAD &&
     differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
   ) {
-    await cancelBookingAction(
-      booking.id,
-      booking.agencyId,
-      booking.assignedUserId,
-    )
+    await cancelBookingAction({
+      bookingId: booking.id,
+      agencyId: booking.agencyId,
+      assignedUserId: booking.assignedUserId,
+    })
   }
 
   return children

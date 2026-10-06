@@ -7,11 +7,15 @@ import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function changeVehiclePhotoAction(
-  vehicleId: string,
-  agencyId: string,
-  photo: FileList,
-) {
+export async function changeVehiclePhotoAction({
+  vehicleId,
+  agencyId,
+  photo,
+}: {
+  vehicleId: string
+  agencyId: string
+  photo: FileList
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

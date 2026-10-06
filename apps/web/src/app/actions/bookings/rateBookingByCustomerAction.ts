@@ -5,9 +5,11 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { RateBookingByCustomerType } from "@ryogo-travel-app/api/types/booking.types"
 
-export async function rateBookingByCustomerAction(
-  data: RateBookingByCustomerType,
-) {
+export async function rateBookingByCustomerAction({
+  data,
+}: {
+  data: RateBookingByCustomerType
+}) {
   const currentUser = await getCurrentUser()
   if (currentUser) {
     redirect(

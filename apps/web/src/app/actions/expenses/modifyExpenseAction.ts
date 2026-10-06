@@ -9,12 +9,17 @@ import { UpdateExpenseRequestType } from "@ryogo-travel-app/api/types/expense.ty
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function modifyExpenseAction(
-  data: UpdateExpenseRequestType,
-  agencyId: string,
-  assignedUserId: string,
-  isRider?: boolean,
-) {
+export async function modifyExpenseAction({
+  data,
+  agencyId,
+  assignedUserId,
+  isRider,
+}: {
+  data: UpdateExpenseRequestType
+  agencyId: string
+  assignedUserId: string
+  isRider?: boolean
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

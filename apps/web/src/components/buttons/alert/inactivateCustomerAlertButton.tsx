@@ -23,7 +23,7 @@ export default function InactivateCustomerAlertButton({
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateCustomerAction(customerId, agencyId)) {
+      if (await inactivateCustomerAction({ customerId, agencyId })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

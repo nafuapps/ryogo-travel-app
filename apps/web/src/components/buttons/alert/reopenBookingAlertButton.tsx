@@ -25,7 +25,7 @@ export default function ReopenBookingAlertButton({
   // Reopen booking and delete invoice
   async function reopenBooking() {
     startTransition(async () => {
-      const reopenedBooking = await reopenBookingAction(bookingId, agencyId)
+      const reopenedBooking = await reopenBookingAction({ bookingId, agencyId })
       if (reopenedBooking) {
         toast.success(t("Success"))
         router.refresh()

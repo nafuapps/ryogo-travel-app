@@ -54,6 +54,7 @@ export default function NewDriverForm({
       agencyId={agencyId}
       userId={userId}
       allDrivers={allDrivers}
+      agencyName={agencyName}
     />,
     <NewDriverStep2
       key={1}

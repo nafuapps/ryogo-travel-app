@@ -17,7 +17,7 @@ import RyogoAlertDialog from "@/components/buttons/alert/ryogoAlertDialog"
 export default function PaymentButton({
   agencyId,
   userId,
-  plan,
+  orderType,
   ownerName,
   ownerEmail,
   ownerPhone,
@@ -26,7 +26,7 @@ export default function PaymentButton({
 }: {
   agencyId: string
   userId: string
-  plan: OrderTypeEnum
+  orderType: OrderTypeEnum
   ownerName: string
   ownerEmail: string
   ownerPhone: string
@@ -39,7 +39,11 @@ export default function PaymentButton({
 
   const handlePayment = async () => {
     startTransition(async () => {
-      const createdOrder = await createOrderAction(agencyId, userId, plan)
+      const createdOrder = await createOrderAction({
+        agencyId,
+        userId,
+        orderType,
+      })
       if (!createdOrder) return
 
       const options = {
@@ -49,7 +53,7 @@ export default function PaymentButton({
             : process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY_ID!,
         currency: "INR",
         name: "RyoGo Travel App",
-        description: `Premium Subscription - ${plan} Plan`,
+        description: `Premium Subscription - ${orderType} Plan`,
         amount: createdOrder.amount,
         order_id: createdOrder.rpOrderId,
         // UPI optimization - set as default method
@@ -105,7 +109,7 @@ export default function PaymentButton({
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <RyogoAlertDialog
         title={t("Title")}
-        desc={t("Desc", { plan: plan })}
+        desc={t("Desc", { plan: orderType })}
         noCTA={t("NoCTA")}
         labelChild={
           <RyogoBrandButton size="lg" label={renewLabel} disabled={isPending}>

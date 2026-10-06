@@ -45,7 +45,7 @@ export function NewVehicleConfirm({
   const router = useRouter()
 
   const onSubmit = async () => {
-    const newVehicleData: AddVehicleRequestType = {
+    const addedVehicle = await addVehicleAction({
       agencyId: agencyId,
       addedByUserId: userId,
       vehicleNumber: newVehicleFormData.vehicleNumber,
@@ -65,8 +65,7 @@ export function NewVehicleConfirm({
       pucPhotos: newVehicleFormData.pucPhotos,
       rcPhotos: newVehicleFormData.rcPhotos,
       vehiclePhotos: newVehicleFormData.vehiclePhotos,
-    }
-    const addedVehicle = await addVehicleAction(newVehicleData)
+    })
 
     if (addedVehicle) {
       toast.success(t("APISuccess"))

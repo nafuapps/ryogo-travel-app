@@ -5,7 +5,6 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   VehicleTypesEnum,
   VehicleBrandEnum,
@@ -45,7 +44,7 @@ export default function QuickAddVehicleAlertButton({
 
   async function quickAddVehicle() {
     startTransition(async () => {
-      const newVehicleData: AddVehicleRequestType = {
+      const addedVehicle = await addVehicleAction({
         agencyId: agencyId,
         addedByUserId: addedByUserId,
         vehicleNumber: vehicleNumber,
@@ -53,8 +52,7 @@ export default function QuickAddVehicleAlertButton({
         brand: brand,
         color: color,
         model: model,
-      }
-      const addedVehicle = await addVehicleAction(newVehicleData)
+      })
 
       if (addedVehicle) {
         toast.success(t("Success"))

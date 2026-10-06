@@ -3,17 +3,17 @@ import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
-import {
-  EntityTypeEnum,
-  TripLogTypesEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { AddTripLogRequestType } from "@ryogo-travel-app/api/types/tripLog.types"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 
-export async function startTripAction(data: AddTripLogRequestType) {
+export async function startTripAction({
+  data,
+}: {
+  data: AddTripLogRequestType
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -36,17 +36,7 @@ export async function startTripAction(data: AddTripLogRequestType) {
   if (!bookingChanged) return
 
   // Create Start Trip Log
-  const newTripLog = await tripLogServices.addTripLog({
-    driverId: data.driverId,
-    bookingId: data.bookingId,
-    vehicleId: data.vehicleId,
-    agencyId: data.agencyId,
-    odometerReading: data.odometerReading,
-    type: TripLogTypesEnum.STARTED,
-    remarks: data.remarks,
-    lat: data.lat,
-    long: data.long,
-  })
+  const newTripLog = await tripLogServices.addTripLog(data)
   if (!newTripLog) return
 
   //Upload triplog photo if attached

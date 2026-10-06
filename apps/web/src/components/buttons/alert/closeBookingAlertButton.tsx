@@ -18,10 +18,12 @@ export default function CloseBookingAlertButton({
   bookingId,
   agencyId,
   assignedUserId,
+  customerEmail,
 }: {
   bookingId: string
   agencyId: string
   assignedUserId: string
+  customerEmail: string | null
 }) {
   const t = useTranslations("Dashboard.Buttons.CloseBooking")
   const router = useRouter()
@@ -31,11 +33,12 @@ export default function CloseBookingAlertButton({
   // Close booking and generate invoice
   async function closeBooking() {
     startTransition(async () => {
-      const closedBooking = await closeBookingAction(
+      const closedBooking = await closeBookingAction({
         bookingId,
         agencyId,
         assignedUserId,
-      )
+        customerEmail,
+      })
       if (closedBooking) {
         toast.success(t("Success"))
         router.refresh()

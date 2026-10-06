@@ -20,6 +20,8 @@ export type AddTransactionRequestType = {
 }
 
 export type UpdateTransactionRequestType = {
+  agencyId: string
+  assignedUserId: string
   transactionId: string
   bookingId: string
   type: TransactionTypesEnum

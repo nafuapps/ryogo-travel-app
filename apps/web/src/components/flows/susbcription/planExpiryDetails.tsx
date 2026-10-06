@@ -14,11 +14,11 @@ import { getSubscriptionPlanPrice } from "@/lib/utils"
 export default async function PlanExpiryDetails({
   userDetails,
   agencyDetails,
-  lastPaidOrderType,
+  lastOrderType,
 }: {
   userDetails: NonNullable<FindUserDetailsByIdType>
   agencyDetails: NonNullable<FindAgencyByIdType>
-  lastPaidOrderType?: OrderTypeEnum
+  lastOrderType?: OrderTypeEnum
 }) {
   const t = await getTranslations("Dashboard.AccountSubscription.PlanExpiry")
 
@@ -30,7 +30,7 @@ export default async function PlanExpiryDetails({
   )
   const needExpiryReminder = daysToExpiry <= SUBSCRIPTION_EXPIRY_REMINDER_DAYS
 
-  const planToRenew = lastPaidOrderType ?? OrderTypeEnum.MONTHLY
+  const newOrderType = lastOrderType ?? OrderTypeEnum.MONTHLY
 
   return (
     <div
@@ -55,7 +55,7 @@ export default async function PlanExpiryDetails({
             <PaymentButton
               agencyId={agencyDetails.id}
               userId={userDetails.id}
-              plan={planToRenew}
+              orderType={newOrderType}
               ownerName={userDetails.name}
               ownerEmail={userDetails.email}
               ownerPhone={userDetails.phone}
@@ -63,8 +63,8 @@ export default async function PlanExpiryDetails({
                 <RyogoIcon icon={CalendarSync} size="sm" color="white" thick />
               }
               renewLabel={t("RenewCTA", {
-                plan: planToRenew,
-                price: getSubscriptionPlanPrice(planToRenew),
+                plan: newOrderType,
+                price: getSubscriptionPlanPrice(newOrderType),
               })}
             />
           )}

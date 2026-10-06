@@ -26,7 +26,7 @@ export default function TryPremiumAlertButton({
 
   async function tryPremium() {
     startTransition(async () => {
-      if (await tryPremiumAction(agencyId, userId, days)) {
+      if (await tryPremiumAction({ agencyId, userId, days })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

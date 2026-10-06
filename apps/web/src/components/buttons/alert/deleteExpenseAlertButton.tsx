@@ -36,12 +36,12 @@ export default function DeleteExpenseAlertButton({
     startCancelTransition(async () => {
       //If delete is successful, show delete success message and redirect to expenses
       if (
-        await deleteExpenseAction(
+        await deleteExpenseAction({
           expenseId,
           agencyId,
           bookingAssignedUserId,
           isRider,
-        )
+        })
       ) {
         toast.success(t("Success"))
         router.replace(

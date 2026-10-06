@@ -31,7 +31,7 @@ export default function DeleteMissionAlertButton({
 
   async function deleteMission() {
     startCancelTransition(async () => {
-      if (await deleteMissionAction(missionId, userId, agencyId)) {
+      if (await deleteMissionAction({ missionId, userId, agencyId })) {
         toast.success(t("Success"))
         router.replace(isRider ? `/rider/myMissions` : `/dashboard/missions`)
       } else {

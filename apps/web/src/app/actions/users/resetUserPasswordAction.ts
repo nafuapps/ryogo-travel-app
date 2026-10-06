@@ -8,10 +8,13 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 //Owner resetting user's password flow
-export async function resetUserPasswordAction(
-  userId: string,
-  agencyId: string,
-) {
+export async function resetUserPasswordAction({
+  userId,
+  agencyId,
+}: {
+  userId: string
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

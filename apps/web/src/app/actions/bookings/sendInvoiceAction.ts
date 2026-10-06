@@ -10,11 +10,15 @@ import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 
-export async function sendInvoiceAction(
-  id: string,
-  agencyId: string,
-  assignedUserId: string,
-) {
+export async function sendInvoiceAction({
+  bookingId,
+  agencyId,
+  assignedUserId,
+}: {
+  bookingId: string
+  agencyId: string
+  assignedUserId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -30,7 +34,7 @@ export async function sendInvoiceAction(
   }
 
   //Get booking details
-  const bookingDetails = await bookingServices.findBookingDetailsById(id)
+  const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
   if (!bookingDetails) return
 
   let invoiceUrl = bookingDetails.invoiceUrl
@@ -41,15 +45,15 @@ export async function sendInvoiceAction(
 
     //Upload file and get storage url
     invoiceUrl = (
-      await uploadFile(invoiceFile, generateBookingInvoicePathName(id))
+      await uploadFile(invoiceFile, generateBookingInvoicePathName(bookingId))
     ).path
     if (!invoiceUrl) return
 
     //Update invoice url in DB
-    await bookingServices.addInvoiceUrl(id, invoiceUrl)
+    await bookingServices.addInvoiceUrl({ bookingId, invoiceUrl })
   } else {
     //Else, just update invoice sent time
-    await bookingServices.changeInvoiceSent(id)
+    await bookingServices.changeInvoiceSent(bookingId)
   }
 
   // Send invoice pdf to customer over whatsapp

@@ -14,6 +14,7 @@ import {
   ConfirmBookingRequestType,
   NewBookingRequestDataType,
   RateBookingByCustomerType,
+  RateBookingByDriverType,
 } from "../types/booking.types"
 import { locationRepository } from "../repositories/location.repo"
 import { routeServices } from "./route.services"
@@ -576,50 +577,25 @@ export const bookingServices = {
   },
 
   //Update booking rating by driver
-  async changeBookingRatingByDriver({
-    bookingId,
-    customerId,
-    userId,
-    bookingRatingByDriver,
-    customerRatingByDriver,
-  }: {
-    bookingId: string
-    customerId: string
-    userId: string
-    bookingRatingByDriver: number
-    customerRatingByDriver?: number
-  }) {
-    const booking = await bookingRepository.readBookingById(bookingId)
+  async changeBookingRatingByDriver(data: RateBookingByDriverType) {
+    const booking = await bookingRepository.readBookingById(data.bookingId)
 
     //Only completed bookings can be rated by driver
     if (
       !booking ||
       booking.status !== BookingStatusEnum.COMPLETED ||
       !booking.assignedDriver ||
-      booking.assignedDriver.userId !== userId ||
+      booking.assignedDriver.userId !== data.userId ||
       booking.ratingByDriver
     ) {
       return
     }
-    return await bookingRepository.updateBookingRatingByDriver({
-      bookingId,
-      customerId,
-      bookingRatingByDriver,
-      customerRatingByDriver,
-    })
+    return await bookingRepository.updateBookingRatingByDriver(data)
   },
 
   //Update booking rating by customer
-  async changeBookingRatingByCustomer({
-    bookingId,
-    driverId,
-    vehicleId,
-    code,
-    bookingRatingByCustomer,
-    driverRatingByCustomer,
-    vehicleRatingByCustomer,
-  }: RateBookingByCustomerType) {
-    const booking = await bookingRepository.readBookingById(bookingId)
+  async changeBookingRatingByCustomer(data: RateBookingByCustomerType) {
+    const booking = await bookingRepository.readBookingById(data.bookingId)
 
     //Only completed bookings with secret code can be rated by customer
     if (
@@ -632,18 +608,11 @@ export const bookingServices = {
     }
 
     //Check if the secret code is valid
-    if (code !== booking.secretCode && code !== SUPER_CODE) {
+    if (data.code !== booking.secretCode && data.code !== SUPER_CODE) {
       return { error: "invalidCode" }
     }
 
-    return await bookingRepository.updateBookingRatingByCustomer({
-      bookingId,
-      driverId,
-      vehicleId,
-      bookingRatingByCustomer,
-      driverRatingByCustomer,
-      vehicleRatingByCustomer,
-    })
+    return await bookingRepository.updateBookingRatingByCustomer(data)
   },
 
   async addSecretCode(id: string) {
@@ -802,9 +771,15 @@ export const bookingServices = {
     return updatedBooking
   },
 
-  async addQuoteUrl(id: string, quoteUrl: string) {
+  async addQuoteUrl({
+    bookingId,
+    quoteUrl,
+  }: {
+    bookingId: string
+    quoteUrl: string
+  }) {
     return await bookingRepository.updateQuoteUrl({
-      id,
+      bookingId,
       quoteUrl,
     })
   },
@@ -813,9 +788,15 @@ export const bookingServices = {
     return await bookingRepository.updateQuoteSent(bookingId)
   },
 
-  async addConfirmationUrl(id: string, confirmationUrl: string) {
+  async addConfirmationUrl({
+    bookingId,
+    confirmationUrl,
+  }: {
+    bookingId: string
+    confirmationUrl: string
+  }) {
     return await bookingRepository.updateConfirmationUrl({
-      id,
+      bookingId,
       confirmationUrl,
     })
   },
@@ -824,8 +805,14 @@ export const bookingServices = {
     return await bookingRepository.updateConfirmationSent(bookingId)
   },
 
-  async addInvoiceUrl(id: string, invoiceUrl: string) {
-    return await bookingRepository.updateInvoiceUrl({ id, invoiceUrl })
+  async addInvoiceUrl({
+    bookingId,
+    invoiceUrl,
+  }: {
+    bookingId: string
+    invoiceUrl: string
+  }) {
+    return await bookingRepository.updateInvoiceUrl({ bookingId, invoiceUrl })
   },
 
   async changeInvoiceSent(bookingId: string) {

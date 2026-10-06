@@ -6,7 +6,11 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { ModifyCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function modifyCustomerAction(data: ModifyCustomerRequestType) {
+export async function modifyCustomerAction({
+  data,
+}: {
+  data: ModifyCustomerRequestType
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

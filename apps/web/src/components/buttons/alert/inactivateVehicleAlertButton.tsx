@@ -23,7 +23,7 @@ export default function InactivateVehicleAlertButton({
 
   async function inactivate() {
     startTransition(async () => {
-      if (await inactivateVehicleAction(vehicleId, agencyId)) {
+      if (await inactivateVehicleAction({ vehicleId, agencyId })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

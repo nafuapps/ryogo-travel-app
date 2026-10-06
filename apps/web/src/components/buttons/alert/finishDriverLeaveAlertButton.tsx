@@ -30,7 +30,9 @@ export default function FinishDriverLeaveAlertButton({
   //Finish Driver Leave
   async function finishLeave() {
     startCancelTransition(async () => {
-      if (await finishDriverLeaveAction(userId, driverId, leaveId, agencyId)) {
+      if (
+        await finishDriverLeaveAction({ userId, driverId, leaveId, agencyId })
+      ) {
         toast.success(t("Success"))
         router.refresh()
       } else {

@@ -18,10 +18,13 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
 
-export async function addDriverAction(
-  data: AddDriverRequestType,
-  agencyName?: string,
-) {
+export async function addDriverAction({
+  data,
+  agencyName,
+}: {
+  data: AddDriverRequestType
+  agencyName?: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

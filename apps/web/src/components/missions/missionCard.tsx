@@ -9,10 +9,9 @@ import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import getEntityIcon from "@/components/icons/entityIcon"
 import Link from "next/link"
 import { useState, useTransition } from "react"
-import { markReadMissionAction } from "@/app/actions/missions/markReadMissionAction"
+import { changeIsReadMissionAction } from "@/app/actions/missions/changeIsReadMissionAction"
 import { toast } from "sonner"
 import { CircleCheckBig, ChevronRight } from "lucide-react"
-import { markUnreadMissionAction } from "@/app/actions/missions/markUnreadMissionAction"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import { Separator } from "@/components/ui/separator"
 import { CarouselItem } from "@/components/ui/carousel"
@@ -38,13 +37,14 @@ export default function MissionCard({
 
   const markRead = async () => {
     startTransition(async () => {
-      const result = await markReadMissionAction(
-        mission.id,
-        mission.userId,
-        mission.agencyId,
-      )
+      const result = await changeIsReadMissionAction({
+        missionId: mission.id,
+        userId: mission.userId,
+        agencyId: mission.agencyId,
+        isRead: true,
+      })
       if (result) {
-        setIsRead(true)
+        setIsRead(result.isRead)
       } else {
         toast.error(t("Card.ErrorMarkingRead"))
       }
@@ -53,13 +53,14 @@ export default function MissionCard({
 
   const markUnread = async () => {
     startTransition(async () => {
-      const result = await markUnreadMissionAction(
-        mission.id,
-        mission.userId,
-        mission.agencyId,
-      )
+      const result = await changeIsReadMissionAction({
+        missionId: mission.id,
+        userId: mission.userId,
+        agencyId: mission.agencyId,
+        isRead: false,
+      })
       if (result) {
-        setIsRead(false)
+        setIsRead(result.isRead)
       } else {
         toast.error(t("Card.ErrorMarkingUnread"))
       }

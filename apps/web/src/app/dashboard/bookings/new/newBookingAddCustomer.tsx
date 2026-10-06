@@ -91,12 +91,14 @@ export default function NewBookingAddCustomerPageComponent({
 
     //Create a new customer
     const newCustomer = await newCustomerAction({
-      phone: values.newCustomerPhone,
-      name: values.newCustomerName,
-      state: values.newCustomerState,
-      city: values.newCustomerCity,
-      agencyId: agency.id,
-      addedByUserId: userId,
+      data: {
+        phone: values.newCustomerPhone,
+        name: values.newCustomerName,
+        state: values.newCustomerState,
+        city: values.newCustomerCity,
+        agencyId: agency.id,
+        addedByUserId: userId,
+      },
     })
     if (newCustomer) {
       //Go to new booking with customer page

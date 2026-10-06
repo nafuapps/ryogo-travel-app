@@ -8,11 +8,11 @@ import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 export async function changeAgencyEmailAction({
   agencyId,
   userId,
-  email,
+  businessEmail,
 }: {
   agencyId: string
   userId: string
-  email: string
+  businessEmail: string
 }) {
   const currentUser = await getCurrentUser()
   if (
@@ -28,7 +28,10 @@ export async function changeAgencyEmailAction({
     return
   }
 
-  const agency = await agencyServices.changeAgencyEmail(agencyId, email)
+  const agency = await agencyServices.changeAgencyEmail({
+    agencyId,
+    businessEmail,
+  })
   if (!agency) return
 
   await notificationServices.addNotification({

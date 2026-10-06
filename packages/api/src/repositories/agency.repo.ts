@@ -184,16 +184,16 @@ export const agencyRepository = {
 
   //Update agency phone by Id
   async updateAgencyPhone({
-    id,
+    agencyId,
     businessPhone,
   }: {
-    id: string
+    agencyId: string
     businessPhone: string
   }) {
     return await db
       .update(agencies)
       .set({ businessPhone })
-      .where(eq(agencies.id, id))
+      .where(eq(agencies.id, agencyId))
       .returning({
         id: agencies.id,
         businessPhone: agencies.businessPhone,
@@ -202,16 +202,16 @@ export const agencyRepository = {
 
   //Update agency email by Id
   async updateAgencyEmail({
-    id,
+    agencyId,
     businessEmail,
   }: {
-    id: string
+    agencyId: string
     businessEmail: string
   }) {
     return await db
       .update(agencies)
       .set({ businessEmail })
-      .where(eq(agencies.id, id))
+      .where(eq(agencies.id, agencyId))
       .returning({
         id: agencies.id,
         businessEmail: agencies.businessEmail,
@@ -219,26 +219,32 @@ export const agencyRepository = {
   },
 
   //Update logo URL by Id
-  async updateAgencyLogoUrl({ id, logoUrl }: { id: string; logoUrl: string }) {
+  async updateAgencyLogoUrl({
+    agencyId,
+    logoUrl,
+  }: {
+    agencyId: string
+    logoUrl: string
+  }) {
     return await db
       .update(agencies)
       .set({ logoUrl })
-      .where(eq(agencies.id, id))
+      .where(eq(agencies.id, agencyId))
       .returning({ id: agencies.id, logoUrl: agencies.logoUrl })
   },
 
   //Update QR Code URL by Id
   async updateAgencyQRCodeUrl({
-    id,
+    agencyId,
     qrCodeUrl,
   }: {
-    id: string
+    agencyId: string
     qrCodeUrl: string
   }) {
     return await db
       .update(agencies)
       .set({ qrCodeUrl })
-      .where(eq(agencies.id, id))
+      .where(eq(agencies.id, agencyId))
       .returning({ id: agencies.id, qrCodeUrl: agencies.qrCodeUrl })
   },
 }

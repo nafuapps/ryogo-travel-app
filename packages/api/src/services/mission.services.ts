@@ -93,18 +93,16 @@ export const missionServices = {
     await missionRepository.deleteMissionsByEntityId({ agencyId, entityId })
   },
 
-  async markReadMission(missionId: string) {
+  async changeIsReadMission({
+    missionId,
+    isRead,
+  }: {
+    missionId: string
+    isRead: boolean
+  }) {
     const [updatedMission] = await missionRepository.updateReadStatus({
       missionId,
-      isRead: true,
-    })
-    return updatedMission
-  },
-
-  async markUnReadMission(missionId: string) {
-    const [updatedMission] = await missionRepository.updateReadStatus({
-      missionId,
-      isRead: false,
+      isRead,
     })
     return updatedMission
   },

@@ -33,11 +33,11 @@ export default function SendConfirmationAlertButton({
   // Send confirmation to customer over whatsapp
   async function sendConfirmation() {
     startSendTransition(async () => {
-      const confirmationMessage = await sendConfirmationAction(
+      const confirmationMessage = await sendConfirmationAction({
         bookingId,
         agencyId,
         assignedUserId,
-      )
+      })
       if (confirmationMessage) {
         toast.success(t("Success"))
         window.open(confirmationMessage, "_blank", "noopener,noreferrer")

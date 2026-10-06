@@ -8,17 +8,17 @@ import { UpdateTransactionRequestType } from "@ryogo-travel-app/api/types/transa
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function modifyTransactionAction(
-  data: UpdateTransactionRequestType,
-  agencyId: string,
-  assignedUserId: string,
-) {
+export async function modifyTransactionAction({
+  data,
+}: {
+  data: UpdateTransactionRequestType
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
-      assignedUserId !== currentUser.userId) ||
-    currentUser.agencyId !== agencyId
+      data.assignedUserId !== currentUser.userId) ||
+    currentUser.agencyId !== data.agencyId
   ) {
     return
   }
@@ -48,7 +48,7 @@ export async function modifyTransactionAction(
   if (!updatedTransaction) return
 
   await notificationServices.addNotification({
-    agencyId: agencyId,
+    agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.TRANSACTION,
     entityId: updatedTransaction.id,

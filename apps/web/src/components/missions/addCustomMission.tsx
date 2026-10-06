@@ -109,13 +109,17 @@ export default function AddCustomMissionPageComponent({
   })
 
   async function onSubmit(values: AddCustomMissionType) {
-    const addedMission = await addCustomMissionAction(userId, agencyId, {
-      entityType: values.entityType,
-      entityId: values.entityId,
-      title: values.title,
-      message: values.message,
-      dueDate: getDateTime(values.dueDate, values.dueTime),
-      isCritical: values.isCritical,
+    const addedMission = await addCustomMissionAction({
+      data: {
+        userId,
+        agencyId,
+        entityType: values.entityType,
+        entityId: values.entityId,
+        title: values.title,
+        message: values.message,
+        dueDate: getDateTime(values.dueDate, values.dueTime),
+        isCritical: values.isCritical,
+      },
     })
     if (addedMission) {
       toast.success(t("Success"))

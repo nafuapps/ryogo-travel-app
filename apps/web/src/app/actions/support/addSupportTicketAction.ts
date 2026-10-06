@@ -10,22 +10,24 @@ import { generateUserSupportTicketPhotoPathName } from "@/lib/utils"
 import { AddSupportTicketEmailTemplate } from "@/components/email/addSupportTicketEmailTemplate"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 
-export async function addSupportTicketAction(
-  userId: string,
-  agencyId: string,
+export async function addSupportTicketAction({
+  data,
+}: {
   data: {
+    userId: string
+    agencyId: string
     entityType: EntityTypeEnum
     issue: string
     details?: string
     entityId?: string
     photo?: FileList
-  },
-) {
+  }
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId
+    currentUser.userId !== data.userId ||
+    currentUser.agencyId !== data.agencyId
   ) {
     return
   }
@@ -79,7 +81,7 @@ export async function addSupportTicketAction(
   })
 
   await notificationServices.addNotification({
-    agencyId: agencyId,
+    agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.SUPPORT,
     entityId: supportTicket.id,

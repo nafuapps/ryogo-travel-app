@@ -86,13 +86,15 @@ export default function RateBookingByCustomerDialog({
       return
     }
     const result = await rateBookingByCustomerAction({
-      bookingId,
-      driverId,
-      vehicleId,
-      code: data.userEnteredcode,
-      bookingRatingByCustomer: bookingRating,
-      driverRatingByCustomer: driverRating,
-      vehicleRatingByCustomer: vehicleRating,
+      data: {
+        bookingId,
+        driverId,
+        vehicleId,
+        code: data.userEnteredcode,
+        bookingRatingByCustomer: bookingRating,
+        driverRatingByCustomer: driverRating,
+        vehicleRatingByCustomer: vehicleRating,
+      },
     })
     if (result) {
       if ("id" in result) {

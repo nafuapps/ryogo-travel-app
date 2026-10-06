@@ -5,7 +5,13 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function reopenBookingAction(bookingId: string, agencyId: string) {
+export async function reopenBookingAction({
+  bookingId,
+  agencyId,
+}: {
+  bookingId: string
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

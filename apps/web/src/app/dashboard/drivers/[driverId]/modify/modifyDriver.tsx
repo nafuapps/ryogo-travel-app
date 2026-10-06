@@ -21,7 +21,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { ModifyDriverRequestType } from "@ryogo-travel-app/api/types/driver.types"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -72,15 +71,16 @@ export default function ModifyDriverPageComponent({
 
   //Submit actions
   async function onSubmit(data: ModifyDriverType) {
-    const modifyDriverData: ModifyDriverRequestType = {
-      id: driver.id,
-      agencyId: driver.agencyId,
-      addedByUserId: driver.addedByUserId,
-      address: data.address,
-      canDriveVehicleTypes: data.canDriveVehicleTypes,
-      defaultAllowancePerDay: data.defaultAllowancePerDay,
-    }
-    const updatedDriver = await modifyDriverAction(modifyDriverData)
+    const updatedDriver = await modifyDriverAction({
+      data: {
+        id: driver.id,
+        agencyId: driver.agencyId,
+        addedByUserId: driver.addedByUserId,
+        address: data.address,
+        canDriveVehicleTypes: data.canDriveVehicleTypes,
+        defaultAllowancePerDay: data.defaultAllowancePerDay,
+      },
+    })
     if (updatedDriver) {
       router.replace(`/dashboard/drivers/${driver.id}`)
       toast.success(t("Success"))

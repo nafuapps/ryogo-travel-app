@@ -514,6 +514,7 @@ export default async function BookingDetailsPageComponent({
             bookingId={bookingDetails.id}
             agencyId={bookingDetails.agencyId}
             assignedUserId={bookingDetails.assignedUserId}
+            customerEmail={bookingDetails.customer.email}
           />
         )}
         <HelpIconButton

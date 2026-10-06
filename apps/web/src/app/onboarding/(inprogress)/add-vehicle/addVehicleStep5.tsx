@@ -42,7 +42,7 @@ export function AddVehicleConfirm({
 
   //Submit actions
   const onSubmit = async () => {
-    const newVehicleData: AddVehicleRequestType = {
+    const addedVehicle = await addVehicleAction({
       agencyId: finalData.agencyId,
       addedByUserId: finalData.addedByUserId,
       vehicleNumber: finalData.vehicleNumber,
@@ -62,8 +62,8 @@ export function AddVehicleConfirm({
       pucPhotos: finalData.pucPhotos,
       insurancePhotos: finalData.insurancePhotos,
       vehiclePhotos: finalData.vehiclePhotos,
-    }
-    if (await addVehicleAction(newVehicleData)) {
+    })
+    if (addedVehicle) {
       onNext()
     } else {
       //If failed, Take back to vehicle onboarding page and show error

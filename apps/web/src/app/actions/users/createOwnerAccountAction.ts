@@ -40,7 +40,10 @@ export async function createOwnerAccountAction(
       logoFile,
       generateAgencyLogoPathName(user.agencyId, logoFile),
     )
-    await agencyServices.updateAgencyLogo(user.agencyId, uploadLogoData.path)
+    await agencyServices.updateAgencyLogo({
+      agencyId: user.agencyId,
+      logoUrl: uploadLogoData.path,
+    })
   }
 
   // Upload agency qrCode to storage
@@ -50,10 +53,10 @@ export async function createOwnerAccountAction(
       qrCodeFile,
       generateAgencyQRCodePathName(user.agencyId, qrCodeFile),
     )
-    await agencyServices.updateAgencyQRCode(
-      user.agencyId,
-      uploadQRCodeData.path,
-    )
+    await agencyServices.updateAgencyQRCode({
+      agencyId: user.agencyId,
+      qrCodeUrl: uploadQRCodeData.path,
+    })
   }
 
   // Upload owner photo to storage

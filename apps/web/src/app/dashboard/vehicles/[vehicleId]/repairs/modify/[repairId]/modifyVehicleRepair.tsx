@@ -20,7 +20,6 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { ModifyVehicleRepairRequestType } from "@ryogo-travel-app/api/types/vehicleRepair.types"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -79,15 +78,14 @@ export default function ModifyVehicleRepairPageComponent({
   })
 
   async function onSubmit(values: ModifyVehicleRepairType) {
-    const modifyRepair: ModifyVehicleRepairRequestType = {
+    const modifiedRepair = await modifyVehicleRepairAction({
       repairId: repair.id,
       agencyId: repair.agencyId,
       startDate: values.startDate,
       endDate: values.endDate,
       remarks: values.remarks,
       cost: values.cost,
-    }
-    const modifiedRepair = await modifyVehicleRepairAction(modifyRepair)
+    })
     if (modifiedRepair) {
       router.replace(`/dashboard/vehicles/${repair.vehicleId}/repairs`)
       toast.success(t("Success"))

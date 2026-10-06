@@ -161,12 +161,12 @@ export default function NewBookingStepTripDetails({
           destinationId: newBookingFormData.destinationId,
           distance: newBookingFormData.citydistance,
         }
-      : await findOrCreateRouteAction(
-          values.sourceCity,
-          values.sourceState,
-          values.destinationCity,
-          values.destinationState,
-        )
+      : await findOrCreateRouteAction({
+          sourceCity: values.sourceCity,
+          sourceState: values.sourceState,
+          destinationCity: values.destinationCity,
+          destinationState: values.destinationState,
+        })
 
     setNewBookingFormData({
       ...newBookingFormData,

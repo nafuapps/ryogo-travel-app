@@ -4,11 +4,17 @@ import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { refresh } from "next/cache"
 
-export async function markUnreadMissionAction(
-  missionId: string,
-  userId: string,
-  agencyId: string,
-) {
+export async function changeIsReadMissionAction({
+  missionId,
+  userId,
+  agencyId,
+  isRead,
+}: {
+  missionId: string
+  userId: string
+  agencyId: string
+  isRead: boolean
+}) {
   const currentUser = await getCurrentUser()
 
   if (
@@ -23,7 +29,10 @@ export async function markUnreadMissionAction(
     return
   }
 
-  const mission = await missionServices.markUnReadMission(missionId)
+  const mission = await missionServices.changeIsReadMission({
+    missionId,
+    isRead,
+  })
   if (!mission) {
     return
   }

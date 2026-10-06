@@ -23,7 +23,7 @@ export default function ActivateCustomerAlertButton({
 
   async function activate() {
     startTransition(async () => {
-      if (await activateCustomerAction(customerId, agencyId)) {
+      if (await activateCustomerAction({ customerId, agencyId })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

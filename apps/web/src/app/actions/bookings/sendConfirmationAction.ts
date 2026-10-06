@@ -10,11 +10,15 @@ import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
 
-export async function sendConfirmationAction(
-  id: string,
-  agencyId: string,
-  assignedUserId: string,
-) {
+export async function sendConfirmationAction({
+  bookingId,
+  agencyId,
+  assignedUserId,
+}: {
+  bookingId: string
+  agencyId: string
+  assignedUserId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -29,7 +33,7 @@ export async function sendConfirmationAction(
   }
 
   //Get lead booking details
-  const bookingDetails = await bookingServices.findBookingDetailsById(id)
+  const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
   if (!bookingDetails || !bookingDetails.startTime) return
 
   let confirmationUrl = bookingDetails.confirmationUrl
@@ -42,16 +46,16 @@ export async function sendConfirmationAction(
     confirmationUrl = (
       await uploadFile(
         confirmationFile,
-        generateBookingConfirmationPathName(id),
+        generateBookingConfirmationPathName(bookingId),
       )
     ).path
     if (!confirmationUrl) return
 
     //Update confirmation url in DB
-    await bookingServices.addConfirmationUrl(id, confirmationUrl)
+    await bookingServices.addConfirmationUrl({ bookingId, confirmationUrl })
   } else {
     //Else, just update confirmation sent time
-    await bookingServices.changeConfirmationSent(id)
+    await bookingServices.changeConfirmationSent(bookingId)
   }
 
   //Send confirmation pdf to customer over whatsapp

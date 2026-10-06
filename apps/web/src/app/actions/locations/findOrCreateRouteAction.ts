@@ -4,12 +4,17 @@ import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { routeServices } from "@ryogo-travel-app/api/services/route.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function findOrCreateRouteAction(
-  sourceCity: string,
-  sourceState: string,
-  destinationCity: string,
-  destinationState: string,
-) {
+export async function findOrCreateRouteAction({
+  sourceCity,
+  sourceState,
+  destinationCity,
+  destinationState,
+}: {
+  sourceCity: string
+  sourceState: string
+  destinationCity: string
+  destinationState: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

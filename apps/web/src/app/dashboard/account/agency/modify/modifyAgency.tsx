@@ -14,7 +14,6 @@ import stateCityData from "@/lib/states_cities.json"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { modifyAgencyAction } from "@/app/actions/agencies/modifyAgencyAction"
-import { ModifyAgencyRequestType } from "@ryogo-travel-app/api/types/agency.types"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -80,15 +79,17 @@ export default function ModifyAgencyPageForm({
 
   //Submit actions
   async function onSubmit(data: SchemaType) {
-    const modifyAgencyData: ModifyAgencyRequestType = {
-      agencyId: agency.id,
-      businessName: data.agencyName,
-      businessAddress: data.agencyAddress,
-      defaultCommissionRate: data.commissionRate,
-      agencyState: data.agencyState,
-      agencyCity: data.agencyCity,
-    }
-    const updatedAgency = await modifyAgencyAction(userId, modifyAgencyData)
+    const updatedAgency = await modifyAgencyAction({
+      userId,
+      data: {
+        agencyId: agency.id,
+        businessName: data.agencyName,
+        businessAddress: data.agencyAddress,
+        defaultCommissionRate: data.commissionRate,
+        agencyState: data.agencyState,
+        agencyCity: data.agencyCity,
+      },
+    })
     if (updatedAgency) {
       router.replace(`/dashboard/account/agency`)
       toast.success(t("Success"))

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import {
   RyogoOutlineButton,
   RyogoDefaultButton,
@@ -21,6 +20,7 @@ export default function QuickAddDriverAlertButton({
   photo,
   disabled,
   isOnboarding,
+  agencyName,
 }: {
   agencyId: string
   addedByUserId: string
@@ -30,6 +30,7 @@ export default function QuickAddDriverAlertButton({
   photo?: FileList
   disabled: boolean
   isOnboarding?: boolean
+  agencyName?: string
 }) {
   const t = useTranslations("Dashboard.Buttons.QuickAddDriver")
 
@@ -38,15 +39,17 @@ export default function QuickAddDriverAlertButton({
 
   async function quickAddDriver() {
     startTransition(async () => {
-      const newDriverData: AddDriverRequestType = {
-        agencyId: agencyId,
-        addedByUserId: addedByUserId,
-        name: name,
-        email: email,
-        phone: phone,
-        userPhotos: photo,
-      }
-      const addedDriver = await addDriverAction(newDriverData)
+      const addedDriver = await addDriverAction({
+        data: {
+          agencyId: agencyId,
+          addedByUserId: addedByUserId,
+          name: name,
+          email: email,
+          phone: phone,
+          userPhotos: photo,
+        },
+        agencyName,
+      })
 
       if (addedDriver) {
         toast.success(t("Success"))

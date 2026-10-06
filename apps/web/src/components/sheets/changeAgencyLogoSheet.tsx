@@ -56,7 +56,10 @@ export default function ChangeAgencyLogoSheet({
 
   const onSubmit = async (data: SchemaType) => {
     setOpen(false)
-    const updatedAgency = await changeAgencyLogoAction(agencyId, data.logo)
+    const updatedAgency = await changeAgencyLogoAction({
+      agencyId,
+      logo: data.logo,
+    })
     if (updatedAgency) {
       toast.success(t("Success"))
       router.refresh()

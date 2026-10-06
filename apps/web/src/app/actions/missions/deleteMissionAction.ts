@@ -3,11 +3,15 @@
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 
-export async function deleteMissionAction(
-  missionId: string,
-  userId: string,
-  agencyId: string,
-) {
+export async function deleteMissionAction({
+  missionId,
+  userId,
+  agencyId,
+}: {
+  missionId: string
+  userId: string
+  agencyId: string
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||

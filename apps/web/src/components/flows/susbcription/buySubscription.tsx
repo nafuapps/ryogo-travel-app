@@ -82,7 +82,7 @@ export default function BuySubscriptionComponent({
         <PaymentButton
           agencyId={userDetails.agencyId}
           userId={userDetails.id}
-          plan={selectedPaymentOption}
+          orderType={selectedPaymentOption}
           ownerName={userDetails.name}
           ownerEmail={userDetails.email}
           ownerPhone={userDetails.phone}

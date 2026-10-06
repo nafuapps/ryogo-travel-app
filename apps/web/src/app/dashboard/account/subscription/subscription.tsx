@@ -58,7 +58,7 @@ export default async function SubscriptionPageComponent({
     agencyDetails.subscriptionExpiresOn,
     new Date(),
   )
-  const lastPaidPlan = lastPaidOrder?.orderType
+  const lastOrderType = lastPaidOrder?.orderType
   const needExpiryReminder = daysToExpiry <= SUBSCRIPTION_EXPIRY_REMINDER_DAYS
 
   return (
@@ -68,21 +68,21 @@ export default async function SubscriptionPageComponent({
           isBasic={isBasic}
           isOwner={isOwner}
           subscriptionPlan={agencyDetails.subscriptionPlan}
-          lastPaidPlan={lastPaidPlan}
+          lastPaidPlan={lastOrderType}
         />
         {isBasic ? (
           isOwner ? (
             <PremiumNudge
               userDetails={userDetails}
               agencyDetails={agencyDetails}
-              lastPlan={lastPaidPlan}
+              lastOrderType={lastOrderType}
             />
           ) : null
         ) : (
           <PlanExpiryDetails
             userDetails={userDetails}
             agencyDetails={agencyDetails}
-            lastPaidOrderType={lastPaidPlan}
+            lastOrderType={lastOrderType}
           />
         )}
       </SectionWrapper>

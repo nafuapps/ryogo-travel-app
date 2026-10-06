@@ -15,7 +15,6 @@ import { toast } from "sonner"
 import z from "zod"
 import stateCityData from "@/lib/states_cities.json"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
-import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -111,19 +110,20 @@ export default function NewCustomerForm({
         message: t("APIError"),
       })
     } else {
-      const newCustomerData: NewCustomerRequestType = {
-        agencyId: agencyId,
-        addedByUserId: userId,
-        name: values.name,
-        phone: values.phone,
-        state: values.state,
-        city: values.city,
-        email: values.email,
-        address: values.address,
-        remarks: values.remarks,
-        photo: values.photo,
-      }
-      const createdCustomer = await newCustomerAction(newCustomerData)
+      const createdCustomer = await newCustomerAction({
+        data: {
+          agencyId: agencyId,
+          addedByUserId: userId,
+          name: values.name,
+          phone: values.phone,
+          state: values.state,
+          city: values.city,
+          email: values.email,
+          address: values.address,
+          remarks: values.remarks,
+          photo: values.photo,
+        },
+      })
       if (createdCustomer) {
         toast.success(t("Success"))
         router.replace(

@@ -202,36 +202,60 @@ export const agencyServices = {
     return updatedAgency
   },
 
-  async updateAgencyLogo(agencyId: string, url: string) {
+  async updateAgencyLogo({
+    agencyId,
+    logoUrl,
+  }: {
+    agencyId: string
+    logoUrl: string
+  }) {
     const [agency] = await agencyRepository.updateAgencyLogoUrl({
-      id: agencyId,
-      logoUrl: url,
+      agencyId,
+      logoUrl,
     })
     return agency
   },
 
-  async updateAgencyQRCode(agencyId: string, url: string) {
+  async updateAgencyQRCode({
+    agencyId,
+    qrCodeUrl,
+  }: {
+    agencyId: string
+    qrCodeUrl: string
+  }) {
     const [agency] = await agencyRepository.updateAgencyQRCodeUrl({
-      id: agencyId,
-      qrCodeUrl: url,
+      agencyId,
+      qrCodeUrl,
     })
     return agency
   },
 
   //Change agency phone
-  async changeAgencyPhone(agencyId: string, newPhone: string) {
+  async changeAgencyPhone({
+    agencyId,
+    businessPhone,
+  }: {
+    agencyId: string
+    businessPhone: string
+  }) {
     const [updatedAgency] = await agencyRepository.updateAgencyPhone({
-      id: agencyId,
-      businessPhone: newPhone,
+      agencyId,
+      businessPhone,
     })
     return updatedAgency
   },
 
   //Change agency email
-  async changeAgencyEmail(agencyId: string, newEmail: string) {
+  async changeAgencyEmail({
+    agencyId,
+    businessEmail,
+  }: {
+    agencyId: string
+    businessEmail: string
+  }) {
     const [updatedAgency] = await agencyRepository.updateAgencyEmail({
-      id: agencyId,
-      businessEmail: newEmail,
+      agencyId,
+      businessEmail,
     })
     return updatedAgency
   },

@@ -6,12 +6,17 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function deleteExpenseAction(
-  id: string,
-  agencyId: string,
-  bookingAssignedUserId: string,
-  byDriver?: boolean,
-) {
+export async function deleteExpenseAction({
+  expenseId,
+  agencyId,
+  bookingAssignedUserId,
+  isRider,
+}: {
+  expenseId: string
+  agencyId: string
+  bookingAssignedUserId: string
+  isRider?: boolean
+}) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
@@ -27,7 +32,7 @@ export async function deleteExpenseAction(
     return
   }
 
-  const deletedExpense = await expenseServices.removeExpense(id)
+  const deletedExpense = await expenseServices.removeExpense(expenseId)
   if (!deletedExpense) return
 
   await notificationServices.addNotification({
@@ -44,7 +49,7 @@ export async function deleteExpenseAction(
     link: `/dashboard/bookings/${deletedExpense.bookingId}/expenses`,
   })
 
-  if (byDriver) {
+  if (isRider) {
     await missionServices.removePreviousMissionsByEntityId({
       agencyId,
       entityId: deletedExpense.id,

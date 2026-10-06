@@ -6,10 +6,7 @@ import {
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  DriverLeaveStatusEnum,
-  InsertDriverLeaveType,
-} from "@ryogo-travel-app/db/schema"
+import { DriverLeaveStatusEnum } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -42,7 +39,7 @@ export default function NewDriverLeavePageComponent({
   const t = useTranslations("Dashboard.NewDriverLeave")
   const router = useRouter()
 
-  const newDriverleaveSchema = z
+  const newDriverLeaveSchema = z
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
       endDate: z.date(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
@@ -60,28 +57,29 @@ export default function NewDriverLeavePageComponent({
       }
     })
 
-  type NewDriverLeaveType = z.infer<typeof newDriverleaveSchema>
+  type NewDriverLeaveType = z.infer<typeof newDriverLeaveSchema>
 
   const form = useForm<NewDriverLeaveType>({
-    resolver: zodResolver(newDriverleaveSchema),
+    resolver: zodResolver(newDriverLeaveSchema),
     defaultValues: {
       status: false,
     },
   })
 
   async function onSubmit(values: NewDriverLeaveType) {
-    const newLeave: InsertDriverLeaveType = {
-      agencyId: agencyId,
-      driverId: driverId,
-      addedByUserId: userId,
-      startDate: values.startDate,
-      endDate: values.endDate,
-      status: values.status
-        ? DriverLeaveStatusEnum.COMPLETED
-        : DriverLeaveStatusEnum.PENDING,
-      remarks: values.remarks,
-    }
-    const createdLeave = await newDriverLeaveAction(newLeave)
+    const createdLeave = await newDriverLeaveAction({
+      data: {
+        agencyId: agencyId,
+        driverId: driverId,
+        addedByUserId: userId,
+        startDate: values.startDate,
+        endDate: values.endDate,
+        status: values.status
+          ? DriverLeaveStatusEnum.COMPLETED
+          : DriverLeaveStatusEnum.PENDING,
+        remarks: values.remarks,
+      },
+    })
     if (createdLeave) {
       router.replace(`/dashboard/drivers/${driverId}/leaves`)
       toast.success(t("Success"))

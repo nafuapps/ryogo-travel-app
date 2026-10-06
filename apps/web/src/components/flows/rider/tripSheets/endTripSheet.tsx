@@ -96,19 +96,7 @@ export default function EndTripSheet({
   const vehicleId = booking.assignedVehicleId
   const driverId = booking.assignedDriverId
 
-  const onSubmit = async (data: SchemaType) => {
-    const endTripData = {
-      agencyId: booking.agencyId,
-      bookingId: booking.id,
-      driverId: driverId,
-      vehicleId: vehicleId,
-      type: TripLogTypesEnum.ENDED,
-      odometerReading: data.odometerReading,
-      remarks: data.remarks,
-      tripLogPhoto: data.tripLogPhoto,
-      lat: latLong.latitude,
-      long: latLong.longitude,
-    }
+  const onSubmit = async (values: SchemaType) => {
     const customerRatingData =
       customerRating > 0 && customerRating <= TOTAL_RATING_STARS
         ? customerRating
@@ -117,12 +105,23 @@ export default function EndTripSheet({
       bookingRating > 0 && bookingRating <= TOTAL_RATING_STARS
         ? bookingRating
         : undefined
-    const result = await endTripAction(
-      endTripData,
-      booking.customerId,
+    const result = await endTripAction({
       customerRatingData,
       bookingRatingData,
-    )
+      customerId: booking.customerId,
+      data: {
+        agencyId: booking.agencyId,
+        bookingId: booking.id,
+        driverId: driverId,
+        vehicleId: vehicleId,
+        type: TripLogTypesEnum.ENDED,
+        odometerReading: values.odometerReading,
+        remarks: values.remarks,
+        tripLogPhoto: values.tripLogPhoto,
+        lat: latLong.latitude,
+        long: latLong.longitude,
+      },
+    })
     if (result) {
       router.refresh()
       setOpen(false)

@@ -50,7 +50,7 @@ export async function newBookingAction({
     if (!quoteUrl) return
 
     //Update quote url in DB
-    await bookingServices.addQuoteUrl(leadBooking.id, quoteUrl)
+    await bookingServices.addQuoteUrl({ bookingId: leadBooking.id, quoteUrl })
 
     // Share quote over email to customer
     await sendEmail({

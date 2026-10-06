@@ -46,29 +46,33 @@ export function NewDriverConfirm({
 
   const onSubmit = async () => {
     // Add driver
-    const newDriverData: AddDriverRequestType = {
-      agencyId: agencyId,
-      addedByUserId: userId,
-      name: newDriverFormData.name,
-      email: newDriverFormData.email,
-      phone: newDriverFormData.phone,
-      address: newDriverFormData.address,
-      canDriveVehicleTypes: newDriverFormData.canDriveVehicleTypes,
-      defaultAllowancePerDay: newDriverFormData.defaultAllowancePerDay,
-      licenseNumber: newDriverFormData.licenseNumber,
-      licenseExpiresOn: newDriverFormData.licenseExpiresOn,
-      licensePhotos: newDriverFormData.licensePhotos,
-      userPhotos: newDriverFormData.userPhotos,
-    }
-    const addedDriver = await addDriverAction(newDriverData, agencyName)
+    const addedDriver = await addDriverAction({
+      data: {
+        agencyId: agencyId,
+        addedByUserId: userId,
+        name: newDriverFormData.name,
+        email: newDriverFormData.email,
+        phone: newDriverFormData.phone,
+        address: newDriverFormData.address,
+        canDriveVehicleTypes: newDriverFormData.canDriveVehicleTypes,
+        defaultAllowancePerDay: newDriverFormData.defaultAllowancePerDay,
+        licenseNumber: newDriverFormData.licenseNumber,
+        licenseExpiresOn: newDriverFormData.licenseExpiresOn,
+        licensePhotos: newDriverFormData.licensePhotos,
+        userPhotos: newDriverFormData.userPhotos,
+      },
+      agencyName,
+    })
     if (addedDriver) {
       //Send to driver details page
       toast.success(t("APISuccess"))
-      window.open(
-        addedDriver.whatsappInviteLink,
-        "_blank",
-        "noopener,noreferrer",
-      )
+      if (addedDriver.whatsappInviteLink) {
+        window.open(
+          addedDriver.whatsappInviteLink,
+          "_blank",
+          "noopener,noreferrer",
+        )
+      }
       router.replace(`/dashboard/drivers/${addedDriver.id}?feedback=true`)
     } else {
       //If failed, Take back to driver page and show error

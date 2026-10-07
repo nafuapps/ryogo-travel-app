@@ -20,7 +20,6 @@ import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import BookingActionWrapper from "@/components/flows/bookings/details/bookingActionWrapper"
 import BookingAssignedUserCard from "@/components/flows/bookings/details/bookingAssignedUserCard"
 import BookingIDWrapper from "@/components/flows/bookings/details/bookingIDWrapper"
-import BookingCreationInfoCard from "@/components/flows/bookings/details/bookingInfoCard"
 import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
 import BookingCustomerCard from "@/components/flows/bookings/details/bookingCustomerCard"
 import BookingVehicleCard from "@/components/flows/bookings/details/bookingVehicleCard"
@@ -28,6 +27,7 @@ import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard
 import { getDisplayTime } from "@/lib/utils"
 import { EditInfoWrapper } from "@/components/page/pageWrappers"
 import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
+import BookingTimeline from "@/components/flows/bookings/details/bookingTimeline"
 
 export default async function RiderMyBooking({
   booking,
@@ -48,11 +48,7 @@ export default async function RiderMyBooking({
     <BookingGrid>
       <BookingSection sectionTitle={t("BookingInfo")} icon={BriefcaseBusiness}>
         <BookingIDWrapper id={booking.id} status={booking.status} />
-        <BookingCreationInfoCard
-          name={booking.bookedByUser.name}
-          photoUrl={booking.bookedByUser.photoUrl}
-          createdAt={booking.createdAt}
-        />
+        <BookingTimeline booking={booking} />
         {isCompleted && (
           <BookingRatingWrapper
             ratingByCustomer={booking.ratingByCustomer}

@@ -26,19 +26,20 @@ export default async function MyMissionsPage() {
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const isPremium = agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC
 
-  const missions = await missionServices.findMissionsByUserId(
-    currentUser.userId,
-  )
+  let missions = await missionServices.findMissionsByUserId(currentUser.userId)
+
+  //SUBSCRIPTION BLOCKER: Hide custom missions if not subscribed
+  if (!isPremium) {
+    missions = missions.filter((m) => !m.isCustom)
+  }
 
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myMissions"} />
       <MyMissionDetailHeaderTabs selectedTab={"Missions"} />
-      <MyMissionsPageComponent
-        missions={missions}
-        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
-      />
+      <MyMissionsPageComponent missions={missions} isPremium={isPremium} />
     </MainWrapper>
   )
 }

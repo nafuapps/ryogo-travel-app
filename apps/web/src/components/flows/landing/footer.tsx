@@ -13,6 +13,7 @@ import {
 } from "@/lib/uiConfig"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import InstallPWAButton from "@/components/buttons/installPWAButton"
 
 export default async function Footer() {
   const t = await getTranslations("Landing.Footer")
@@ -25,6 +26,7 @@ export default async function Footer() {
           <SectionColWrapper>
             <RyoGoLightLogo />
             <RyogoSmall color="light">{t("LogoCaption")}</RyogoSmall>
+            <InstallPWAButton label={t("InstallPWA")} />
           </SectionColWrapper>
 
           {/* Product //TODO: Add Download PWA Link */}

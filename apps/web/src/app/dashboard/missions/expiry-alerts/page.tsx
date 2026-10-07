@@ -22,7 +22,6 @@ export default async function ExpiryAlertsPage() {
 
   const expiryAlerts = await agencyServices.findAgencyExpiryAlerts({
     agencyId: currentUser.agencyId,
-    userId: currentUser.userId,
   })
 
   return (

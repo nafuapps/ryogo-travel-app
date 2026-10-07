@@ -42,5 +42,7 @@ export async function newVehicleRepairAction(data: InsertVehicleRepairType) {
     link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
   })
 
+  //TODO: Add newRepair mission for assignedUser
+
   return repair
 }

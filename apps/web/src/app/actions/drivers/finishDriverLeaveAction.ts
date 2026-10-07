@@ -32,5 +32,11 @@ export async function finishDriverLeaveAction({
   const leave = await driverServices.endDriverLeave({ leaveId, driverId })
   if (!leave) return
 
+  //TODO: Add finishedleave mission for assignedUser if ended by driver) and vice versa
+  if (currentUser.userRole === UserRolesEnum.DRIVER) {
+  }
+
+  //TODO: Remove startedleave mission
+
   return leave
 }

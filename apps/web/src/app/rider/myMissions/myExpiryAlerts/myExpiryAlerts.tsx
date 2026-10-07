@@ -1,14 +1,17 @@
-import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import ExpiryAlertCard from "@/components/missions/expiryAlertCard"
 import {
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 import { EXPIRATION_ALERT_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { FindDriverByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
 import { differenceInDays } from "date-fns"
+import { AlarmClockMinus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 export default async function MyExpiryAlertsPageComponent({
@@ -38,8 +41,13 @@ export default async function MyExpiryAlertsPageComponent({
 
   return (
     <PageWrapper id="ExpiryAlertsPage">
-      {alertCount > 0 && (
-        <RyogoCarouselWrapper count={t("Header", { count: alertCount })}>
+      <SectionRowWrapper className="w-full items-center justify-between">
+        <RyogoCaption color="light">
+          {t("Alerts") + " (" + alertCount + ")"}
+        </RyogoCaption>
+      </SectionRowWrapper>
+      {alertCount > 0 ? (
+        <>
           {showLicenseAlert && driver.licenseExpiresOn && (
             <ExpiryAlertCard
               dueDate={driver.licenseExpiresOn}
@@ -76,7 +84,9 @@ export default async function MyExpiryAlertsPageComponent({
               isDriver
             />
           )}
-        </RyogoCarouselWrapper>
+        </>
+      ) : (
+        <EmptyStateIcon icon={AlarmClockMinus} label={t("NoAlerts")} />
       )}
       <StickyActionWrapper>
         <HelpIconButton

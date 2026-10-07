@@ -69,7 +69,7 @@ export default async function SupportPageComponent({
     },
     {
       question: t("FAQs.Subscription.Question"),
-      answer: t("FAQs.Subscription.Answer", { day: PREMIUM_TRIAL_DAYS }),
+      answer: t("FAQs.Subscription.Answer", { days: PREMIUM_TRIAL_DAYS }),
     },
   ]
 

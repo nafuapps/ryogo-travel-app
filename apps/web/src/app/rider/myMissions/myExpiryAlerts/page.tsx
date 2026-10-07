@@ -1,13 +1,13 @@
 import { Metadata } from "next"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
-import DashboardHeader from "@/components/header/dashboardHeader"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import MyExpiryAlertsPageComponent from "./myExpiryAlerts"
 import MyMissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/myMissionDetailHeaderTabs"
+import RiderHeader from "@/components/header/riderHeader"
 
 export const metadata: Metadata = {
   title: `My Expiry Alerts - ${pageTitle}`,
@@ -32,7 +32,7 @@ export default async function ExpiryAlertsPage() {
 
   return (
     <MainWrapper>
-      <DashboardHeader pathName={"/rider/myMissions/expiry-alerts"} />
+      <RiderHeader pathName={"/rider/myMissions/myExpiryAlerts"} />
       <MyMissionDetailHeaderTabs selectedTab={"ExpiryAlerts"} />
       <MyExpiryAlertsPageComponent
         driver={driver}

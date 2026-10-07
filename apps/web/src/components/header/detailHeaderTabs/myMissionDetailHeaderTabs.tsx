@@ -11,7 +11,7 @@ export default function MyMissionDetailHeaderTabs({
   const t = useTranslations("Dashboard.MissionDetailsHeaderTabs")
   const links = {
     Missions: `/rider/myMissions`,
-    ExpiryAlerts: `/rider/myMissions/expiry-alerts`,
+    ExpiryAlerts: `/rider/myMissions/myExpiryAlerts`,
   } as const
 
   return (

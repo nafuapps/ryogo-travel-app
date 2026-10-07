@@ -1,9 +1,7 @@
 import {
   AgencyStatusEnum,
-  DriverLeaveStatusEnum,
   SubscriptionPlanEnum,
   UserRolesEnum,
-  VehicleRepairStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { agencyRepository } from "../repositories/agency.repo"
 import { locationRepository } from "../repositories/location.repo"
@@ -19,8 +17,6 @@ import {
 } from "../apiConfig"
 import { ModifyAgencyRequestType } from "../types/agency.types"
 import { addDays, differenceInDays, subDays } from "date-fns"
-import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
-import { driverLeaveRepository } from "../repositories/driverLeave.repo"
 
 export const agencyServices = {
   //Find all agencies
@@ -92,16 +88,8 @@ export const agencyServices = {
   /*
   1. Vehicle -  RC, PUC, Insurance
   2. Driver - License
-  3. Driver leave
-  4. Vehicle repair
   */
-  async findAgencyExpiryAlerts({
-    agencyId,
-    userId,
-  }: {
-    agencyId: string
-    userId: string
-  }) {
+  async findAgencyExpiryAlerts({ agencyId }: { agencyId: string }) {
     const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
     const rcExpiring = vehicles.filter(
       (vehicle) =>
@@ -122,14 +110,6 @@ export const agencyServices = {
           EXPIRATION_ALERT_WINDOW_DAYS,
     )
 
-    const vehicleRepairs =
-      await vehicleRepairRepository.readVehicleRepairsByAddedUserId(userId)
-    const vehicleRepairAlerts = vehicleRepairs.filter(
-      (vehicleRepair) =>
-        vehicleRepair.status !== VehicleRepairStatusEnum.COMPLETED &&
-        differenceInDays(vehicleRepair.endDate, new Date()) <= 0,
-    )
-
     const drivers = await driverRepository.readDriversByAgencyId(agencyId)
     const licenseExpiring = drivers.filter((driver) => {
       driver.licenseExpiresOn &&
@@ -137,21 +117,11 @@ export const agencyServices = {
           EXPIRATION_ALERT_WINDOW_DAYS
     })
 
-    const driverLeaves =
-      await driverLeaveRepository.readDriverLeavesByAddedUserId(userId)
-    const driverLeaveAlerts = driverLeaves.filter(
-      (driverLeave) =>
-        driverLeave.status !== DriverLeaveStatusEnum.COMPLETED &&
-        differenceInDays(driverLeave.endDate, new Date()) <= 0,
-    )
-
     return {
       rcExpiring,
       pucExpiring,
       insuranceExpiring,
-      vehicleRepairAlerts,
       licenseExpiring,
-      driverLeaveAlerts,
     }
   },
 

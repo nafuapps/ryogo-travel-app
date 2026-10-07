@@ -35,6 +35,7 @@ import {
   SupportFAQItemType,
 } from "@/components/flows/support/supportFAQWrapper"
 import { RyogoWhiteButton } from "@/components/buttons/ryogoButtons"
+import InstallPWAButton from "@/components/buttons/installPWAButton"
 
 export default async function MySupportPageComponent({
   isPremium,
@@ -144,6 +145,7 @@ export default async function MySupportPageComponent({
         </SupportFAQWrapper>
       </PageWrapper>
       <SideWrapper>
+        <InstallPWAButton label={t("InstallPWA")} />
         <SectionWrapper id="Contact" className="items-center">
           <RyogoP weight="font-bold">{t("Contact.Title")}</RyogoP>
           <RyogoCaption color="light" className="text-center">

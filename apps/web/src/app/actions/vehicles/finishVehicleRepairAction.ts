@@ -32,5 +32,7 @@ export async function finishVehicleRepairAction({
   const repair = await vehicleServices.endVehicleRepair({ repairId, vehicleId })
   if (!repair) return
 
+  //TODO: Remove startedRepair mission
+
   return repair
 }

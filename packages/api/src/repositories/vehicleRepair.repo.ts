@@ -84,21 +84,6 @@ export const vehicleRepairRepository = {
     })
   },
 
-  //Get vehicle repairs by user id
-  async readVehicleRepairsByAddedUserId(userId: string) {
-    return await db.query.vehicleRepairs.findMany({
-      orderBy: (vehicleRepairs, { desc }) => [desc(vehicleRepairs.createdAt)],
-      where: eq(vehicleRepairs.addedByUserId, userId),
-      with: {
-        vehicle: {
-          columns: {
-            vehicleNumber: true,
-          },
-        },
-      },
-    })
-  },
-
   //Add a vehicle repair
   async createRepair(data: InsertVehicleRepairType) {
     return await db.insert(vehicleRepairs).values(data).returning()

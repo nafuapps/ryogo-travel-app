@@ -10,7 +10,7 @@ import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 
 /*
-  TODO
+  TODO: Blogs support page
   - Blogs
 */
 

@@ -1217,7 +1217,6 @@
     },
     "BookingDetails": {
       "BookingInfo": "BASIC DETAILS",
-      "Created": "Booking Creation Info",
       "CustomerRating": "Customer Rating",
       "DriverRating": "Driver Rating",
       "AssignedUserInfo": "ASSIGNED USER",
@@ -1307,7 +1306,17 @@
         "Title": "Share Tracking Link",
         "Subtitle": "Send a link to the customer on Whatsapp to track their trip"
       },
-      "TrackAnother": "Track another booking"
+      "TrackAnother": "Track another booking",
+      "Timeline": {
+        "CreatedBy": "Created by",
+        "Created": "Lead created",
+        "Confirmed": "Booking confirmed",
+        "Cancelled": "Booking cancelled",
+        "Started": "Trip started",
+        "Completed": "Trip completed",
+        "Closed": "Invoice generated",
+        "Reconciled": "Booking reconciled"
+      }
     },
     "BookingTransactions": {
       "Reconciled": "Booking reconciled.. no transactions changes allowed",
@@ -2879,7 +2888,8 @@
           "Description": "Get faster resolution via support tickets in Premium plan",
           "CTA": "Upgrade Now"
         }
-      }
+      },
+      "InstallPWA": "Install RyoGo App"
     },
     "SupportTickets": {
       "TicketsTrialWarning": "You cannot access support tickets because you are on Basic plan.",
@@ -4602,8 +4612,12 @@
     },
     "Missions": {
       "AddCustomMission": "Add Custom Mission",
-      "CriticalMissions": "{count, plural, =1 {1 CRITICAL MISSION} other {# CRITICAL MISSIONS}}",
-      "OtherMissions": "{count, plural, =1 {1 NON-CRITICAL MISSION} other {# NON-CRITICAL MISSIONS}}",
+      "Missions": "Filtered Missions",
+      "CriticalFilter": "Critical missions filter",
+      "ReadFilter": "Completed missions filter",
+      "CustomFilter": "Custom missions filter",
+      "ClearFilters": "Clear Filters",
+      "NoMissions": "No missions found.. Try changing the filters.",
       "Card": {
         "Due": "Due ",
         "CheckNow": "Act Now",
@@ -4615,7 +4629,8 @@
         "ErrorMarkingUnread": "Failed to mark mission as unread.. please try again later"
       },
       "ExpiryAlerts": {
-        "Header": "{count, plural, =1 {1 EXPIRY ALERT} other {# EXPIRY ALERTS}}",
+        "Alerts": "Alerts",
+        "NoAlerts": "No alerts found",
         "License": "LICENSE",
         "Insurance": "INSURANCE",
         "PUC": "PUC",
@@ -5239,7 +5254,7 @@
       "Title": {
         "/rider/home": "Home",
         "/rider/myMissions": "Missions",
-        "/rider/myMissions/expiry-alerts": "Expiry Alerts",
+        "/rider/myMissions/myExpiryAlerts": "Expiry Alerts",
         "/rider/myMissions/add": "Add Custom Mission",
         "/rider/myMissions/modify": "Modify Custom Mission",
         "/rider/myBookings": "Bookings",
@@ -5577,7 +5592,8 @@
           "Title": "Want Premium Support?",
           "Description": "Get elite customer support with the help of support ticket feature with Premium plan."
         }
-      }
+      },
+      "InstallPWA": "Install RyoGo App"
     },
     "MySupportAccountHelp": {
       "Title": "Account & Profile",
@@ -6577,7 +6593,8 @@
       "Signup": "Sign up"
     },
     "Footer": {
-      "LogoCaption": "Reimagining travel agency operations for the modern age",
+      "LogoCaption": "Digitalizing travel agency operations for modern India",
+      "InstallPWA": "Install RyoGo App",
       "Product": {
         "Title": "PRODUCT",
         "Features": "Features",

@@ -1,45 +1,70 @@
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
+"use client"
+
+import { useTranslations } from "next-intl"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import MissionCard from "@/components/missions/missionCard"
 import {
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
-import { getTranslations } from "next-intl/server"
+import { AlarmClockMinus } from "lucide-react"
 import Link from "next/link"
+import { RyogoCaption } from "@/components/typography"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import MissionsFiltersCard from "@/components/filter/missionsFiltersCard"
+import { Route } from "next"
 
-export default async function MissionsPageComponent({
+export default function MissionsPageComponent({
   missions,
   isPremium,
 }: {
   missions: FindMissionsByUserIdType
   isPremium: boolean
 }) {
-  const t = await getTranslations("Dashboard.Missions")
-  const criticalMissions = missions.filter((mission) => mission.isCritical)
-  const otherMissions = missions.filter((mission) => !mission.isCritical)
+  const t = useTranslations("Dashboard.Missions")
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const searchParams = useSearchParams()
+  const critical = searchParams.get("critical")
+  const read = searchParams.get("read")
+  const custom = searchParams.get("custom")
+
+  const filteredMissions = missions.filter((mission) => {
+    return (
+      (critical === null || mission.isCritical === (critical === "True")) &&
+      (read === null || mission.isRead === (read === "True")) &&
+      (custom === null || mission.isCustom === (custom === "True"))
+    )
+  })
 
   return (
     <PageWrapper id="MissionsPage">
-      {criticalMissions.length > 0 && (
-        <RyogoCarouselWrapper
-          count={t("CriticalMissions", { count: criticalMissions.length })}
-        >
-          {criticalMissions.map((mission) => (
-            <MissionCard key={mission.id} mission={mission} />
-          ))}
-        </RyogoCarouselWrapper>
-      )}
-      {otherMissions.length > 0 && (
-        <RyogoCarouselWrapper
-          count={t("OtherMissions", { count: otherMissions.length })}
-        >
-          {otherMissions.map((mission) => (
-            <MissionCard key={mission.id} mission={mission} />
-          ))}
-        </RyogoCarouselWrapper>
+      <MissionsFiltersCard isPremium={isPremium} />
+      <SectionRowWrapper className="w-full items-center justify-between">
+        <RyogoCaption color="light">
+          {t("Missions") + " (" + filteredMissions.length + ")"}
+        </RyogoCaption>
+        <RyogoGhostButton
+          label={t("ClearFilters")}
+          labelColor="light"
+          onClick={() => router.push(pathname as Route)}
+          disabled={searchParams.size === 0}
+        />
+      </SectionRowWrapper>
+      {filteredMissions.length > 0 ? (
+        filteredMissions.map((mission) => (
+          <MissionCard key={mission.id} mission={mission} />
+        ))
+      ) : (
+        <EmptyStateIcon icon={AlarmClockMinus} label={t("NoMissions")} />
       )}
       <StickyActionWrapper>
         {isPremium && (

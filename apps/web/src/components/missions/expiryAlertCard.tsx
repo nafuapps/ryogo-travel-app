@@ -1,7 +1,10 @@
 import { getTranslations } from "next-intl/server"
-import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionRowWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 import moment from "moment"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoSmall, RyogoTiny } from "@/components/typography"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import Link from "next/link"
 import { differenceInDays } from "date-fns"
@@ -14,7 +17,6 @@ import {
   Wrench,
 } from "lucide-react"
 import { EXPIRY_WARNING_DAYS } from "@/lib/uiConfig"
-import { CarouselItem } from "@/components/ui/carousel"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 
 type ExpiryType = "License" | "PUC" | "RC" | "Insurance" | "Leave" | "Repair"
@@ -35,10 +37,11 @@ export default async function ExpiryAlertCard({
   const t = await getTranslations("Dashboard.Missions.ExpiryAlerts")
   const expiryDays = differenceInDays(dueDate, new Date())
   return (
-    <CarouselItem
-      className={`flex flex-col gap-2 lg:gap-3 basis-full md:basis-1/2 xl:basis-1/3 p-4 lg:p-5 rounded-lg transition-all delay-200 duration-300 ease-in bg-white dark:bg-slate-800 shadow ${expiryDays < 0 ? "border-l-6 border-red-700 dark:border-red-300" : expiryDays < 0 ? "border-l-6 border-yellow-700 dark:border-yellow-300" : "border-l-6 border-sky-700 dark:border-sky-300"}`}
+    <SectionWrapper
+      id={entityId}
+      className={` ${expiryDays < 0 ? "border-l-6 border-red-700 dark:border-red-300" : expiryDays < 0 ? "border-l-6 border-yellow-700 dark:border-yellow-300" : "border-l-6 border-sky-700 dark:border-sky-300"}`}
     >
-      <SectionRowWrapper className="items-center">
+      <SectionRowWrapper className="items-center justify-between">
         <SectionRowWrapper className="items-center justify-start">
           <RyogoEnclosedIcon
             icon={getExpiryIcon(expiryType)}
@@ -50,7 +53,7 @@ export default async function ExpiryAlertCard({
             <RyogoCaption color="slate" weight="font-bold">
               {t(expiryType as Parameters<typeof t>[0])}
             </RyogoCaption>
-            <RyogoCaption color="light">{"(" + entityId + ")"}</RyogoCaption>
+            <RyogoTiny color="light">{entityId}</RyogoTiny>
           </div>
         </SectionRowWrapper>
         <RyogoCaption
@@ -65,7 +68,7 @@ export default async function ExpiryAlertCard({
           {moment(dueDate).fromNow()}
         </RyogoCaption>
       </SectionRowWrapper>
-      <RyogoSmall weight="font-bold" color="dark">
+      <RyogoSmall weight="font-bold" color="slate">
         {t(("Title." + expiryType) as Parameters<typeof t>[0], {
           expired: expiryDays < 0 ? "true" : "false",
           entityName: entityName,
@@ -81,7 +84,7 @@ export default async function ExpiryAlertCard({
       >
         <RyogoDefaultButton className="w-full" label={t("CheckNow")} />
       </Link>
-    </CarouselItem>
+    </SectionWrapper>
   )
 }
 

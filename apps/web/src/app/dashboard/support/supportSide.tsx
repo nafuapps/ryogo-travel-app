@@ -1,4 +1,5 @@
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
+import InstallPWAButton from "@/components/buttons/installPWAButton"
 import RyogoMailButton from "@/components/buttons/mail/ryogoMailButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
 import { RyogoWhiteButton } from "@/components/buttons/ryogoButtons"
@@ -29,6 +30,7 @@ export default async function SupportSideComponent({
 
   return (
     <SideWrapper>
+      <InstallPWAButton label={t("InstallPWA")} />
       <SectionWrapper id="Contact" className="items-center">
         <RyogoP weight="font-bold">{t("Contact.Title")}</RyogoP>
         <RyogoCaption color="light" className="text-center">

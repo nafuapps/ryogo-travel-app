@@ -1,9 +1,13 @@
 "use client"
 
 import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
-import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 import moment from "moment"
-import { RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoCaption, RyogoSmall, RyogoTiny } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import getEntityIcon from "@/components/icons/entityIcon"
@@ -13,13 +17,9 @@ import { changeIsReadMissionAction } from "@/app/actions/missions/changeIsReadMi
 import { toast } from "sonner"
 import { CircleCheckBig, ChevronRight } from "lucide-react"
 import { RyogoPill } from "@/components/pills/ryogoPills"
-import { Separator } from "@/components/ui/separator"
-import { CarouselItem } from "@/components/ui/carousel"
 import { useRouter } from "next/navigation"
-import DeleteMissionAlertButton from "@/components/buttons/alert/deleteMissionAlertButton"
 import {
   RyogoDefaultButton,
-  RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 
@@ -68,109 +68,110 @@ export default function MissionCard({
   }
 
   return (
-    <CarouselItem
-      className={`flex flex-col gap-2 lg:gap-3 p-4 lg:p-5 basis-full md:basis-1/2 xl:basis-1/3 rounded-lg transition-all delay-200 duration-300 ease-in ${isRead ? "bg-slate-50 dark:bg-slate-900 shadow-sm" : "bg-white dark:bg-slate-800 shadow"} ${!isRead ? (mission.isCritical ? "border-l-6 border-red-700 dark:border-red-300" : "border-l-6 border-sky-700 dark:border-sky-300") : ""}`}
+    <SectionWrapper
+      id={mission.id}
+      className={`transition-all delay-200 duration-300 ease-in ${isRead ? "opacity-70" : ""}`}
     >
-      <SectionRowWrapper className="items-center">
+      <SectionRowWrapper className="items-center justify-between">
         <SectionRowWrapper className="items-center justify-start">
           <RyogoEnclosedIcon
             icon={getEntityIcon(mission.entityType)}
             size="sm"
             color={isRead ? "light" : "slate"}
-            circular
           />
           <div className="flex flex-col gap-0.5">
             <RyogoCaption color={isRead ? "light" : "slate"} weight="font-bold">
               {mission.entityType}
             </RyogoCaption>
-            <RyogoCaption color={"light"}>
-              {"(" + mission.entityId + ")"}
-            </RyogoCaption>
+            <RyogoTiny color={"light"}>{mission.entityId}</RyogoTiny>
           </div>
         </SectionRowWrapper>
+        {mission.dueDate && !isRead && (
+          <RyogoCaption color={mission.dueDate < new Date() ? "red" : "slate"}>
+            {t("Card.Due") + moment(mission.dueDate).fromNow()}
+          </RyogoCaption>
+        )}
+      </SectionRowWrapper>
+      <SectionColWrapper small>
+        <RyogoSmall weight="font-bold" color="slate">
+          {mission.isCustom
+            ? mission.titleKey
+            : t(
+                mission.titleKey as Parameters<typeof t>[0],
+                mission.titleObject as Record<string, string | number | Date>,
+              )}
+        </RyogoSmall>
+        {mission.messageKey && (
+          <RyogoCaption color="light">
+            {mission.isCustom
+              ? mission.messageKey
+              : t(
+                  mission.messageKey as Parameters<typeof t>[0],
+                  mission.messageObject as Record<
+                    string,
+                    string | number | Date
+                  >,
+                )}
+          </RyogoCaption>
+        )}
+      </SectionColWrapper>
+      <SectionRowWrapper>
         {isRead ? (
-          <RyogoGhostButton
+          <RyogoOutlineButton
             onClick={markUnread}
             disabled={isPending}
             label={t("Card.Read")}
             labelColor="light"
+            className="grow"
           >
-            <RyogoIcon icon={CircleCheckBig} size={"sm"} color="light" />
-          </RyogoGhostButton>
+            <RyogoIcon icon={CircleCheckBig} size="xs" color="light" />
+          </RyogoOutlineButton>
         ) : (
-          mission.dueDate && (
-            <RyogoCaption
-              color={mission.dueDate < new Date() ? "red" : "slate"}
+          <RyogoOutlineButton
+            label={t("Card.MarkRead")}
+            onClick={markRead}
+            className="grow"
+            disabled={isPending}
+          />
+        )}
+        {mission.link && !isRead && (
+          <Link
+            href={mission.link as React.ComponentProps<typeof Link>["href"]}
+            className="grow"
+          >
+            <RyogoDefaultButton
+              label={t("Card.CheckNow")}
+              className="w-full"
+              disabled={isPending}
             >
-              {t("Card.Due") + moment(mission.dueDate).fromNow()}
-            </RyogoCaption>
-          )
+              <RyogoIcon icon={ChevronRight} size="xs" color="white" thick />
+            </RyogoDefaultButton>
+          </Link>
         )}
       </SectionRowWrapper>
-      <RyogoP weight="font-bold" color={isRead ? "light" : "dark"}>
-        {mission.isCustom
-          ? mission.titleKey
-          : t(
-              mission.titleKey as Parameters<typeof t>[0],
-              mission.titleObject as Record<string, string | number | Date>,
-            )}
-      </RyogoP>
-      {mission.messageKey && (
-        <RyogoCaption color={isRead ? "light" : "slate"}>
-          {mission.isCustom
-            ? mission.messageKey
-            : t(
-                mission.messageKey as Parameters<typeof t>[0],
-                mission.messageObject as Record<string, string | number | Date>,
-              )}
-        </RyogoCaption>
-      )}
-      {mission.link && !isRead && (
-        <Link href={mission.link as React.ComponentProps<typeof Link>["href"]}>
-          <RyogoDefaultButton
-            label={t("Card.CheckNow")}
-            disabled={isPending}
-            className="w-full"
-          />
-        </Link>
-      )}
-      {!isRead && (
-        <RyogoOutlineButton
-          label={t("Card.MarkRead")}
-          onClick={markRead}
-          disabled={isPending}
-        />
-      )}
-      <DeleteMissionAlertButton
-        isRider={isRider}
-        missionId={mission.id}
-        userId={mission.userId}
-        agencyId={mission.agencyId}
-        disabled={isPending}
-      />
       {mission.isCustom && (
-        <>
-          <Separator />
-          <div className="flex items-center justify-between gap-1.5 lg:gap-2">
-            <RyogoPill
-              label={t("Card.Custom")}
-              bgColor={isRead ? "light" : "slate"}
-            />
-            <RyogoOutlineButton
-              disabled={isPending || isRead}
-              onClick={() =>
-                isRider
-                  ? router.push(`/rider/myMissions/${mission.id}/modify`)
-                  : router.push(`/dashboard/missions/${mission.id}/modify`)
-              }
-              className="hover:bg-slate-100 dark:hover:bg-slate-700"
-              label={t("Card.EditMission")}
-            >
-              <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
-            </RyogoOutlineButton>
-          </div>
-        </>
+        <SectionRowWrapper
+          small
+          className="items-center justify-between border p-2 lg:p-3 rounded-md"
+        >
+          <RyogoPill
+            label={t("Card.Custom")}
+            bgColor={isRead ? "light" : "slate"}
+          />
+          <RyogoOutlineButton
+            disabled={isPending || isRead}
+            onClick={() =>
+              isRider
+                ? router.push(`/rider/myMissions/${mission.id}/modify`)
+                : router.push(`/dashboard/missions/${mission.id}/modify`)
+            }
+            className="hover:bg-slate-100 dark:hover:bg-slate-700"
+            label={t("Card.EditMission")}
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
+          </RyogoOutlineButton>
+        </SectionRowWrapper>
       )}
-    </CarouselItem>
+    </SectionWrapper>
   )
 }

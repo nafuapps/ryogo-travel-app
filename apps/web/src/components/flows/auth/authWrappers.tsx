@@ -20,7 +20,7 @@ export function AuthMainWrapper({
           <div className="absolute inset-0 bg-white/70 dark:bg-slate-800/70 md:hidden" />
         </>
       ) : null}
-      <div className="z-10 flex w-full h-full flex-col items-center gap-6 md:gap-8 mt-24 md:mt-28">
+      <div className="z-10 flex w-full h-full flex-col items-center justify-between gap-6 md:gap-8 mt-24 md:mt-28 mb-4 md:mb-5">
         {children}
         <Link href="/">
           <RyoGoLogo />

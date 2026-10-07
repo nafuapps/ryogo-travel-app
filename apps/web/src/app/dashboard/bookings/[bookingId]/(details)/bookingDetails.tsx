@@ -45,7 +45,6 @@ import BookingStartTimeCard from "@/components/flows/bookings/details/bookingSta
 import BookingDropAddressCard from "@/components/flows/bookings/details/bookingDropAddressCard"
 import BookingPickupAddressCard from "@/components/flows/bookings/details/bookingPickupAddressCard"
 import BookingRemarksCard from "@/components/flows/bookings/details/bookingRemarksCard"
-import BookingCreationInfoCard from "@/components/flows/bookings/details/bookingInfoCard"
 import BookingReconcileCard from "@/components/flows/bookings/details/bookingReconcileCard"
 import BookingIDWrapper from "@/components/flows/bookings/details/bookingIDWrapper"
 import SendQuoteAlertButton from "@/components/buttons/alert/sendQuoteAlertButton"
@@ -59,6 +58,7 @@ import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import BookingInvoicePDFViewerButton from "@/components/pdf/bookingInvoicePDFViewerButton"
 import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewer"
 import BookingQuotePDFViewerButton from "@/components/pdf/bookingQuotePDFViewerButton"
+import BookingTimeline from "@/components/flows/bookings/details/bookingTimeline"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -154,7 +154,6 @@ export default async function BookingDetailsPageComponent({
     }, 0)
   const pendingAmount = totalAmount - receivedAmount
 
-  //TODO: Add booking status timeline
   return (
     <PageWrapper id="BookingDetailsPage">
       <BookingGrid>
@@ -166,11 +165,7 @@ export default async function BookingDetailsPageComponent({
             id={bookingDetails.id}
             status={bookingDetails.status}
           />
-          <BookingCreationInfoCard
-            name={bookingDetails.bookedByUser.name}
-            photoUrl={bookingDetails.bookedByUser.photoUrl}
-            createdAt={bookingDetails.createdAt}
-          />
+          <BookingTimeline booking={bookingDetails} />
           {isCompleted && (
             <BookingRatingWrapper
               ratingByCustomer={bookingDetails.ratingByCustomer}

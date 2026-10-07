@@ -119,7 +119,7 @@ export default function CreateAccountPageComponent({
                   total: CreateAccountTotalSteps,
                 })
           }
-          href={"https://www.youtube.com/embed/dQw4w9WgXcQ"} //TODO: update onboarding video link
+          href={""} //TODO: update onboarding video link
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

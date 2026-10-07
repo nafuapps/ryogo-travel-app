@@ -90,21 +90,6 @@ export const driverLeaveRepository = {
     })
   },
 
-  //Get driver leaves by user id
-  async readDriverLeavesByAddedUserId(userId: string) {
-    return await db.query.driverLeaves.findMany({
-      orderBy: (driverLeaves, { desc }) => [desc(driverLeaves.createdAt)],
-      where: eq(driverLeaves.addedByUserId, userId),
-      with: {
-        driver: {
-          columns: {
-            name: true,
-          },
-        },
-      },
-    })
-  },
-
   //Add a driver leave
   async createLeave(data: InsertDriverLeaveType) {
     return await db.insert(driverLeaves).values(data).returning()

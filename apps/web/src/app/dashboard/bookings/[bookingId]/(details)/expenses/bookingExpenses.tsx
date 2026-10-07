@@ -53,14 +53,12 @@ export default function BookingExpensesPageComponent({
   const searchParams = useSearchParams()
   const type = searchParams.get("type")
   const role = searchParams.get("role")
-  // const party = searchParams.get("party")
   const approved = searchParams.get("approved")
 
   const filteredExpenses = bookingExpenses.filter((expense) => {
     return (
       (!type || expense.type === (type as ExpenseTypesEnum)) &&
       (!role || expense.addedByUser.userRole === (role as UserRolesEnum)) &&
-      // (!party || expense.otherParty === (party as TransactionPartiesEnum)) &&
       (approved === null || expense.isApproved === (approved === "True"))
     )
   })

@@ -1,11 +1,14 @@
-import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import ExpiryAlertCard from "@/components/missions/expiryAlertCard"
 import {
   PageWrapper,
+  SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 import { FindAgencyExpiryAlertsType } from "@ryogo-travel-app/api/services/agency.services"
+import { AlarmClockMinus } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 export default async function ExpiryAlertsPageComponent({
@@ -16,8 +19,7 @@ export default async function ExpiryAlertsPageComponent({
   const t = await getTranslations("Dashboard.Missions.ExpiryAlerts")
 
   const expiryAlertsCount = expiryAlerts
-    ? expiryAlerts.driverLeaveAlerts.length +
-      expiryAlerts.vehicleRepairAlerts.length +
+    ? expiryAlerts.licenseExpiring.length +
       expiryAlerts.pucExpiring.length +
       expiryAlerts.rcExpiring.length +
       expiryAlerts.insuranceExpiring.length
@@ -25,26 +27,13 @@ export default async function ExpiryAlertsPageComponent({
 
   return (
     <PageWrapper id="ExpiryAlertsPage">
-      {expiryAlerts && (
-        <RyogoCarouselWrapper count={t("Header", { count: expiryAlertsCount })}>
-          {expiryAlerts.vehicleRepairAlerts.map((repair) => (
-            <ExpiryAlertCard
-              key={repair.id}
-              dueDate={repair.endDate}
-              entityId={repair.vehicleId}
-              entityName={repair.vehicle.vehicleNumber}
-              expiryType="Repair"
-            />
-          ))}
-          {expiryAlerts.driverLeaveAlerts.map((leave) => (
-            <ExpiryAlertCard
-              key={leave.id}
-              dueDate={leave.endDate}
-              entityId={leave.driverId}
-              entityName={leave.driver.name}
-              expiryType="Leave"
-            />
-          ))}
+      <SectionRowWrapper className="w-full items-center justify-between">
+        <RyogoCaption color="light">
+          {t("Alerts") + " (" + expiryAlertsCount + ")"}
+        </RyogoCaption>
+      </SectionRowWrapper>
+      {expiryAlerts && expiryAlertsCount > 0 ? (
+        <>
           {expiryAlerts.rcExpiring.map(
             (rc) =>
               rc.rcExpiresOn && (
@@ -93,7 +82,9 @@ export default async function ExpiryAlertsPageComponent({
                 />
               ),
           )}
-        </RyogoCarouselWrapper>
+        </>
+      ) : (
+        <EmptyStateIcon icon={AlarmClockMinus} label={t("NoAlerts")} />
       )}
       <StickyActionWrapper>
         <HelpIconButton

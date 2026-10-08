@@ -2,13 +2,13 @@
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
-import { AddCustomMissionRequestType } from "@ryogo-travel-app/api/types/mission.types"
+import { AddMissionRequestType } from "@ryogo-travel-app/api/types/mission.types"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
-export async function addCustomMissionAction({
+export async function addReminderAction({
   data,
 }: {
-  data: AddCustomMissionRequestType
+  data: AddMissionRequestType
 }) {
   const currentUser = await getCurrentUser()
   if (

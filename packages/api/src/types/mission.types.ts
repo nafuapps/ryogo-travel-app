@@ -1,6 +1,6 @@
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
-export type AddCustomMissionRequestType = {
+export type AddMissionRequestType = {
   userId: string
   agencyId: string
   entityType: EntityTypeEnum

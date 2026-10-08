@@ -105,7 +105,7 @@ export default async function SupportHelpMissionsPage() {
 
   const quickActions: SupportQuickActionType[] = [
     {
-      href: `/dashboard/missions/add`,
+      href: `/dashboard/missions/reminders/add`,
       icon: Plus,
       label: t("QuickActions.CreateCustomMission"),
     },
@@ -304,7 +304,7 @@ async function CustomContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/missions/add"}
+          href={"/dashboard/missions/reminders/add"}
           label={t("CreatingCustom.CTA")}
         />
       </SupportContentSectionWrapper>

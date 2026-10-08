@@ -12,7 +12,6 @@ import {
   RyogoOutlineButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
-// import { YTVideo } from "@/components/video/ytVideoEmbed"
 import { RyogoVideo } from "@/components/video/ryogoVideo"
 
 export default async function ResourcesHeroSection() {
@@ -61,7 +60,6 @@ export default async function ResourcesHeroSection() {
             title="Ryogo Demo video"
             className="w-full aspect-video rounded-md"
           />
-          {/* <YTVideo id="1MobY_vR7-g" /> */}
           <Link href="#videos">
             <RyogoGhostButton
               size="lg"

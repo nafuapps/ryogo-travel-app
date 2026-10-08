@@ -11,8 +11,6 @@ export default async function AnalyticsPageComponent({
 }: {
   agencyId: string
 }) {
-  const t = await getTranslations("Dashboard.Analytics")
-
   //Get agency Data
   const agency = await agencyServices.findAgencyById(agencyId)
   if (!agency) {
@@ -25,6 +23,7 @@ export default async function AnalyticsPageComponent({
     !APP_TRIAL_MODE &&
     (isBasic || agency.subscriptionExpiresOn < new Date())
   ) {
+    const t = await getTranslations("Dashboard.Analytics")
     return (
       <PageWrapper id="AnalyticsBlockedPage">
         <SubscriptionBlockerSection

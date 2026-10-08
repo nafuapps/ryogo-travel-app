@@ -24,13 +24,12 @@ import {
 } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoH3 } from "@/components/typography"
-import { modifyCustomMissionAction } from "@/app/actions/missions/modifyCustomMissionAction"
+import { modifyReminderAction } from "@/app/actions/missions/modifyReminderAction"
 import {
   regexCheckIDByEntityType,
   getDateTime,
   extractTimeFromDate,
 } from "@/components/missions/missionCommons"
-import DeleteMissionAlertButton from "@/components/buttons/alert/deleteMissionAlertButton"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -44,18 +43,19 @@ import {
   MIN_ENTITY_ID_LENGTH,
 } from "@/lib/uiConfig"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import DeleteReminderAlertButton from "@/components/buttons/alert/deleteReminderAlertButton"
 
-export default function ModifyCustomMissionPageComponent({
+export default function ModifyReminderPageComponent({
   mission,
   isRider,
 }: {
   mission: NonNullable<FindMissionByIdType>
   isRider?: boolean
 }) {
-  const t = useTranslations("Dashboard.ModifyCustomMission")
+  const t = useTranslations("Dashboard.ModifyReminder")
   const router = useRouter()
 
-  const modifyCustomMissionSchema = z
+  const modifyReminderSchema = z
     .object({
       entityType: z.enum(EntityTypeEnum).nonoptional(t("Field1.Error1")),
       entityId: z
@@ -95,9 +95,9 @@ export default function ModifyCustomMissionPageComponent({
         })
       }
     })
-  type ModifyCustomMissionType = z.infer<typeof modifyCustomMissionSchema>
-  const form = useForm<ModifyCustomMissionType>({
-    resolver: zodResolver(modifyCustomMissionSchema),
+  type ModifyReminderType = z.infer<typeof modifyReminderSchema>
+  const form = useForm<ModifyReminderType>({
+    resolver: zodResolver(modifyReminderSchema),
     defaultValues: {
       entityType: mission.entityType,
       entityId: mission.entityId,
@@ -109,8 +109,8 @@ export default function ModifyCustomMissionPageComponent({
     },
   })
 
-  async function onSubmit(values: ModifyCustomMissionType) {
-    const updatedMission = await modifyCustomMissionAction({
+  async function onSubmit(values: ModifyReminderType) {
+    const updatedReminder = await modifyReminderAction({
       missionId: mission.id,
       userId: mission.userId,
       agencyId: mission.agencyId,
@@ -121,19 +121,23 @@ export default function ModifyCustomMissionPageComponent({
       dueDate: getDateTime(values.dueDate, values.dueTime),
       isCritical: values.isCritical,
     })
-    if (updatedMission) {
+    if (updatedReminder) {
       toast.success(t("Success"))
     } else {
       toast.error(t("Error"))
     }
-    router.replace(isRider ? `/rider/myMissions` : "/dashboard/missions")
+    router.replace(
+      isRider
+        ? "/rider/myMissions/myReminders"
+        : "/dashboard/missions/reminders",
+    )
   }
   return (
-    <PageWrapper id="ModifyCustomMissionPage">
-      <FormWrapper<ModifyCustomMissionType>
+    <PageWrapper id="ModifyReminderPage">
+      <FormWrapper<ModifyReminderType>
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
-        id="modifyCustomMissionForm"
+        id="modifyReminderForm"
       >
         <SectionRowWrapper className="items-start justify-between">
           <RyogoH3>{t("Title")}</RyogoH3>
@@ -197,7 +201,7 @@ export default function ModifyCustomMissionPageComponent({
             onClick={() => router.back()}
             disabled={form.formState.isSubmitting}
           />
-          <DeleteMissionAlertButton
+          <DeleteReminderAlertButton
             missionId={mission.id}
             userId={mission.userId}
             agencyId={mission.agencyId}

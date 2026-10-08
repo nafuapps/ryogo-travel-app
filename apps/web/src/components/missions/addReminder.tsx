@@ -22,7 +22,7 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
-import { addCustomMissionAction } from "@/app/actions/missions/addCustomMissionAction"
+import { addReminderAction } from "@/app/actions/missions/addReminderAction"
 import { RyogoH3 } from "@/components/typography"
 import {
   regexCheckIDByEntityType,
@@ -41,9 +41,10 @@ import {
   MIN_FIELD_TITLE_LENGTH,
 } from "@/lib/uiConfig"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { addDays } from "date-fns"
 
 //TODO: Entity ID user friendly selection
-export default function AddCustomMissionPageComponent({
+export default function AddReminderPageComponent({
   userId,
   agencyId,
   isRider,
@@ -52,10 +53,10 @@ export default function AddCustomMissionPageComponent({
   agencyId: string
   isRider?: boolean
 }) {
-  const t = useTranslations("Dashboard.AddCustomMission")
+  const t = useTranslations("Dashboard.AddReminder")
   const router = useRouter()
 
-  const addCustomMissionSchema = z
+  const addReminderSchema = z
     .object({
       entityType: z.enum(EntityTypeEnum).nonoptional(t("Field1.Error1")),
       entityId: z
@@ -95,21 +96,21 @@ export default function AddCustomMissionPageComponent({
         })
       }
     })
-  type AddCustomMissionType = z.infer<typeof addCustomMissionSchema>
+  type AddReminderType = z.infer<typeof addReminderSchema>
 
-  const form = useForm<AddCustomMissionType>({
-    resolver: zodResolver(addCustomMissionSchema),
+  const form = useForm<AddReminderType>({
+    resolver: zodResolver(addReminderSchema),
     defaultValues: {
       entityType: EntityTypeEnum.USER,
       title: "",
-      dueDate: new Date(),
+      dueDate: addDays(new Date(), 1),
       dueTime: "10:00",
       isCritical: false,
     },
   })
 
-  async function onSubmit(values: AddCustomMissionType) {
-    const addedMission = await addCustomMissionAction({
+  async function onSubmit(values: AddReminderType) {
+    const addedReminder = await addReminderAction({
       data: {
         userId,
         agencyId,
@@ -121,20 +122,24 @@ export default function AddCustomMissionPageComponent({
         isCritical: values.isCritical,
       },
     })
-    if (addedMission) {
+    if (addedReminder) {
       toast.success(t("Success"))
     } else {
       toast.error(t("Error"))
     }
-    router.replace(isRider ? `/rider/myMissions` : "/dashboard/missions")
+    router.replace(
+      isRider
+        ? `/rider/myMissions/myReminders`
+        : "/dashboard/missions/reminders",
+    )
   }
 
   return (
-    <PageWrapper id="AddCustomMissionPage">
-      <FormWrapper<AddCustomMissionType>
+    <PageWrapper id="AddReminderPage">
+      <FormWrapper<AddReminderType>
         form={form}
         onSubmit={form.handleSubmit(onSubmit)}
-        id="addCustomMissionForm"
+        id="addReminderForm"
       >
         <SectionRowWrapper className="items-start justify-between">
           <RyogoH3>{t("Title")}</RyogoH3>

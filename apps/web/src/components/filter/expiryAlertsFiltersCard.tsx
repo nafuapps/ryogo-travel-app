@@ -8,14 +8,13 @@ import SelectFilter from "./selectFilter"
 import { Route } from "next"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { useState, useTransition } from "react"
-import { RyogoCaption } from "@/components/typography"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { useTransition, useState } from "react"
 import { ChevronUp, ChevronDown } from "lucide-react"
-import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoCaption } from "@/components/typography"
 
-export default function MissionsFiltersCard() {
-  const t = useTranslations("Dashboard.Missions")
+export default function ExpiryAlertsFiltersCard() {
+  const t = useTranslations("Dashboard.ExpiryAlerts")
   const [isOpen, setIsOpen] = useState(false)
 
   const router = useRouter()
@@ -23,9 +22,7 @@ export default function MissionsFiltersCard() {
   const [isPending, startTransition] = useTransition()
 
   const searchParams = useSearchParams()
-  const critical = searchParams.get("critical")
-  const read = searchParams.get("read")
-  const due = searchParams.get("due")
+  const expired = searchParams.get("expired")
   const type = searchParams.get("type")
 
   const updateFilters = (updates: Record<string, string | null>) => {
@@ -45,7 +42,7 @@ export default function MissionsFiltersCard() {
   }
 
   return (
-    <SectionWrapper id="MissionsFiltersCard">
+    <SectionWrapper id="ExpiryAlertsFiltersCard">
       <SectionRowWrapper
         className="items-center justify-between"
         onClick={() => setIsOpen(!isOpen)}
@@ -59,34 +56,20 @@ export default function MissionsFiltersCard() {
         />
       </SectionRowWrapper>
       <div
-        className={`grid gap-4 lg:gap-5 grid-cols-2 lg:grid-cols-4 w-full ${isOpen ? "block" : "hidden"}`}
+        className={`grid gap-4 lg:gap-5 grid-cols-2 w-full ${isOpen ? "block" : "hidden"}`}
       >
         <SelectFilter
-          label={t("CriticalFilter")}
+          label={t("ExpiredFilter")}
           enumList={["True", "False"]}
-          value={critical ?? "All"}
-          onValueChange={(value) => updateFilters({ critical: value })}
-          disabled={isPending}
-        />
-        <SelectFilter
-          label={t("ReadFilter")}
-          enumList={["True", "False"]}
-          value={read ?? "All"}
-          onValueChange={(value: string) => updateFilters({ read: value })}
-          disabled={isPending}
-        />
-        <SelectFilter
-          label={t("DueFilter")}
-          enumList={["True", "False"]}
-          value={due ?? "All"}
-          onValueChange={(value: string) => updateFilters({ due: value })}
+          value={expired ?? "All"}
+          onValueChange={(value) => updateFilters({ expired: value })}
           disabled={isPending}
         />
         <SelectFilter
           label={t("TypeFilter")}
-          enumList={Object.values(EntityTypeEnum)}
+          enumList={["RC", "PUC", "Insurance", "License"]}
           value={type ?? "All"}
-          onValueChange={(value) => updateFilters({ type: value })}
+          onValueChange={(value: string) => updateFilters({ type: value })}
           disabled={isPending}
         />
       </div>

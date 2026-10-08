@@ -12,6 +12,11 @@ export const missionServices = {
     return missions
   },
 
+  async findRemindersByUserId(userId: string) {
+    const reminders = await missionRepository.readCustomMissionsByUserId(userId)
+    return reminders
+  },
+
   async findDashboardMissionsByUserId(userId: string) {
     const missions =
       await missionRepository.readUnreadCriticalMissionsByUserId(userId)
@@ -110,6 +115,10 @@ export const missionServices = {
 
 export type FindMissionsByUserIdType = Awaited<
   ReturnType<typeof missionServices.findMissionsByUserId>
+>
+
+export type FindRemindersByUserIdType = Awaited<
+  ReturnType<typeof missionServices.findRemindersByUserId>
 >
 
 export type FindMissionByIdType = Awaited<

@@ -2,13 +2,16 @@ import { Metadata } from "next"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { getCurrentUser } from "@/lib/auth"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import {
+  MainWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
-import MissionsPageComponent from "./missions"
+import MissionsPageComponent from "@/components/missions/missions"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import MissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/missionDetailHeaderTabs"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export const metadata: Metadata = {
   title: `Missions - ${pageTitle}`,
@@ -22,24 +25,23 @@ export default async function MissionsPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-  const isPremium = agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC
-
-  let missions = await missionServices.findMissionsByUserId(currentUser.userId)
-
-  //SUBSCRIPTION BLOCKER: Hide custom missions if not subscribed
-  if (!isPremium) {
-    missions = missions.filter((m) => !m.isCustom)
-  }
+  const missions = await missionServices.findMissionsByUserId(
+    currentUser.userId,
+  )
 
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/missions"} />
       <MissionDetailHeaderTabs selectedTab={"Missions"} />
-      <MissionsPageComponent missions={missions} isPremium={isPremium} />
+      <PageWrapper id="MissionsPage">
+        <MissionsPageComponent missions={missions} />
+        <StickyActionWrapper>
+          <HelpIconButton
+            href={"/dashboard/support/help-missions"}
+            showLabelSmall
+          />
+        </StickyActionWrapper>
+      </PageWrapper>
     </MainWrapper>
   )
 }

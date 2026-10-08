@@ -26,18 +26,19 @@ export default function FilterCheckboxGroup({
     <SectionWrapper id="Filters">
       <FieldSet className="gap-4">
         <SectionRowWrapper
-          className="items-center"
+          className="items-center justify-between"
           onClick={() => setOpen(!open)}
         >
           <RyogoCaption color="light">{title}</RyogoCaption>
           <RyogoIcon
             icon={open ? ChevronUp : ChevronDown}
             size="sm"
-            color="slate"
+            color="light"
+            thick
           />
         </SectionRowWrapper>
         <FieldGroup
-          className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ${open ? "" : "hidden"}`}
+          className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 ${open ? "" : "hidden"}`}
         >
           {allFilters.map((item) => (
             <Field

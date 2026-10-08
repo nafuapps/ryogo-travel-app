@@ -6,14 +6,14 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import { redirect, RedirectType } from "next/navigation"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { MissionIdRegex } from "@/lib/regex"
-import ModifyCustomMissionPageComponent from "@/components/missions/modifyCustomMission"
+import ModifyReminderPageComponent from "@/components/missions/modifyReminder"
 
 export const metadata: Metadata = {
-  title: `Modify Custom Mission - ${pageTitle}`,
+  title: `Modify Reminder - ${pageTitle}`,
   description: pageDescription,
 }
 
-export default async function ModifyCustomMissionPage({
+export default async function ModifyReminderPage({
   params,
 }: {
   params: Promise<{ missionId: string }>
@@ -21,7 +21,7 @@ export default async function ModifyCustomMissionPage({
   const { missionId } = await params
 
   if (!MissionIdRegex.safeParse(missionId).success) {
-    redirect("/dashboard/missions", RedirectType.replace)
+    redirect("/dashboard/missions/reminders", RedirectType.replace)
   }
 
   const currentUser = await getCurrentUser()
@@ -31,19 +31,20 @@ export default async function ModifyCustomMissionPage({
 
   const mission = await missionServices.findMissionById(missionId)
 
-  //If no mission found or user/agency mismatch
+  //If no mission found, not a custom mission or user/agency mismatch
   if (
     !mission ||
+    !mission.isCustom ||
     currentUser.userId !== mission.userId ||
     mission.agencyId !== currentUser.agencyId
   ) {
-    redirect("/dashboard/missions", RedirectType.replace)
+    redirect("/dashboard/missions/reminders", RedirectType.replace)
   }
 
   return (
     <MainWrapper>
-      <DashboardHeader pathName={"/dashboard/missions/modify"} />
-      <ModifyCustomMissionPageComponent mission={mission} />
+      <DashboardHeader pathName={"/dashboard/missions/reminders/modify"} />
+      <ModifyReminderPageComponent mission={mission} />
     </MainWrapper>
   )
 }

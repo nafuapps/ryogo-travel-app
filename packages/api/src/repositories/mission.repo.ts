@@ -14,6 +14,7 @@ export const missionRepository = {
       orderBy: (missions, { asc }) => [asc(missions.dueDate)],
       where: and(
         eq(missions.userId, userId),
+        eq(missions.isCustom, false),
         or(
           eq(missions.isRead, false),
           and(
@@ -22,6 +23,13 @@ export const missionRepository = {
           ),
         ),
       ),
+    })
+  },
+
+  async readCustomMissionsByUserId(userId: string) {
+    return await db.query.missions.findMany({
+      orderBy: (missions, { asc }) => [asc(missions.dueDate)],
+      where: and(eq(missions.userId, userId), eq(missions.isCustom, true)),
     })
   },
 

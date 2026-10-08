@@ -1,3 +1,7 @@
+"use client"
+
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
+import ExpiryAlertsFiltersCard from "@/components/filter/expiryAlertsFiltersCard"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import ExpiryAlertCard from "@/components/missions/expiryAlertCard"
@@ -9,32 +13,80 @@ import {
 import { RyogoCaption } from "@/components/typography"
 import { FindAgencyExpiryAlertsType } from "@ryogo-travel-app/api/services/agency.services"
 import { AlarmClockMinus } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+import { Route } from "next"
+import { useTranslations } from "next-intl"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
-export default async function ExpiryAlertsPageComponent({
+export default function ExpiryAlertsPageComponent({
   expiryAlerts,
 }: {
-  expiryAlerts?: FindAgencyExpiryAlertsType
+  expiryAlerts: FindAgencyExpiryAlertsType
 }) {
-  const t = await getTranslations("Dashboard.Missions.ExpiryAlerts")
+  const t = useTranslations("Dashboard.ExpiryAlerts")
+
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const searchParams = useSearchParams()
+  const type = searchParams.get("type")
+  const expired = searchParams.get("expired")
+
+  const filteredLicenseExpiring = expiryAlerts?.licenseExpiring.filter(
+    (license) => {
+      return checkFilteredItem(
+        "License",
+        license.licenseExpiresOn,
+        type,
+        expired,
+      )
+    },
+  )
+
+  const filteredPUCExpiring = expiryAlerts?.pucExpiring.filter((puc) => {
+    return checkFilteredItem("PUC", puc.pucExpiresOn, type, expired)
+  })
+
+  const filteredRCExpiring = expiryAlerts?.rcExpiring.filter((rc) => {
+    return checkFilteredItem("RC", rc.rcExpiresOn, type, expired)
+  })
+
+  const filteredInsuranceExpiring = expiryAlerts?.insuranceExpiring.filter(
+    (insurance) => {
+      return checkFilteredItem(
+        "Insurance",
+        insurance.insuranceExpiresOn,
+        type,
+        expired,
+      )
+    },
+  )
 
   const expiryAlertsCount = expiryAlerts
-    ? expiryAlerts.licenseExpiring.length +
-      expiryAlerts.pucExpiring.length +
-      expiryAlerts.rcExpiring.length +
-      expiryAlerts.insuranceExpiring.length
+    ? filteredLicenseExpiring.length +
+      filteredPUCExpiring.length +
+      filteredRCExpiring.length +
+      filteredInsuranceExpiring.length
     : 0
 
   return (
     <PageWrapper id="ExpiryAlertsPage">
+      <ExpiryAlertsFiltersCard />
       <SectionRowWrapper className="w-full items-center justify-between">
         <RyogoCaption color="light">
-          {t("Alerts") + " (" + expiryAlertsCount + ")"}
+          {searchParams.size === 0
+            ? t("AllAlerts", { count: expiryAlertsCount })
+            : t("FilteredAlerts", { count: expiryAlertsCount })}
         </RyogoCaption>
+        <RyogoGhostButton
+          label={t("ClearFilters")}
+          labelColor="light"
+          onClick={() => router.push(pathname as Route)}
+          disabled={searchParams.size === 0}
+        />
       </SectionRowWrapper>
       {expiryAlerts && expiryAlertsCount > 0 ? (
         <>
-          {expiryAlerts.rcExpiring.map(
+          {filteredRCExpiring.map(
             (rc) =>
               rc.rcExpiresOn && (
                 <ExpiryAlertCard
@@ -46,7 +98,7 @@ export default async function ExpiryAlertsPageComponent({
                 />
               ),
           )}
-          {expiryAlerts.pucExpiring.map(
+          {filteredPUCExpiring.map(
             (puc) =>
               puc.pucExpiresOn && (
                 <ExpiryAlertCard
@@ -58,7 +110,7 @@ export default async function ExpiryAlertsPageComponent({
                 />
               ),
           )}
-          {expiryAlerts.insuranceExpiring.map(
+          {filteredInsuranceExpiring.map(
             (insurance) =>
               insurance.insuranceExpiresOn && (
                 <ExpiryAlertCard
@@ -70,7 +122,7 @@ export default async function ExpiryAlertsPageComponent({
                 />
               ),
           )}
-          {expiryAlerts.licenseExpiring.map(
+          {filteredLicenseExpiring.map(
             (license) =>
               license.licenseExpiresOn && (
                 <ExpiryAlertCard
@@ -93,5 +145,18 @@ export default async function ExpiryAlertsPageComponent({
         />
       </StickyActionWrapper>
     </PageWrapper>
+  )
+}
+
+function checkFilteredItem(
+  itemType: string,
+  itemExpiryDate: Date | null,
+  type: string | null,
+  expired: string | null,
+) {
+  return (
+    itemExpiryDate &&
+    (type === null || itemType === type) &&
+    (expired === null || itemExpiryDate < new Date() === (expired === "True"))
   )
 }

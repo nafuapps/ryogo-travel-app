@@ -1,6 +1,6 @@
 "use client"
 
-import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
+import { FindRemindersByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
 import {
   SectionColWrapper,
   SectionRowWrapper,
@@ -11,37 +11,37 @@ import { RyogoCaption, RyogoSmall, RyogoTiny } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import getEntityIcon from "@/components/icons/entityIcon"
-import Link from "next/link"
 import { useState, useTransition } from "react"
 import { changeIsReadMissionAction } from "@/app/actions/missions/changeIsReadMissionAction"
 import { toast } from "sonner"
 import { CircleCheckBig, ChevronRight } from "lucide-react"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import { useRouter } from "next/navigation"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
-export default function MissionCard({
-  mission,
+export default function ReminderCard({
+  reminder,
+  isRider,
 }: {
-  mission: FindMissionsByUserIdType[number]
+  reminder: FindRemindersByUserIdType[number]
+  isRider?: boolean
 }) {
-  const t = useTranslations("Dashboard.Missions")
+  const t = useTranslations("Dashboard.Reminders")
+  const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const [isRead, setIsRead] = useState(mission.isRead)
+  const [isRead, setIsRead] = useState(reminder.isRead)
 
   const markRead = async () => {
     startTransition(async () => {
       const result = await changeIsReadMissionAction({
-        missionId: mission.id,
-        userId: mission.userId,
-        agencyId: mission.agencyId,
+        missionId: reminder.id,
+        userId: reminder.userId,
+        agencyId: reminder.agencyId,
         isRead: true,
       })
       if (result) {
         setIsRead(result.isRead)
       } else {
-        toast.error(t("Card.ErrorMarkingRead"))
+        toast.error(t("Card.ErrorMarkingDone"))
       }
     })
   }
@@ -49,67 +49,52 @@ export default function MissionCard({
   const markUnread = async () => {
     startTransition(async () => {
       const result = await changeIsReadMissionAction({
-        missionId: mission.id,
-        userId: mission.userId,
-        agencyId: mission.agencyId,
+        missionId: reminder.id,
+        userId: reminder.userId,
+        agencyId: reminder.agencyId,
         isRead: false,
       })
       if (result) {
         setIsRead(result.isRead)
       } else {
-        toast.error(t("Card.ErrorMarkingUnread"))
+        toast.error(t("Card.ErrorMarkingUndone"))
       }
     })
   }
 
   return (
     <SectionWrapper
-      id={mission.id}
-      className={`transition-all delay-200 duration-300 ease-in ${isRead ? "opacity-70" : ""} ${mission.isCritical ? "border-l-4 border-red-700 dark:border-red-300" : ""}`}
+      id={reminder.id}
+      className={`transition-all delay-200 duration-300 ease-in ${isRead ? "opacity-70" : ""}`}
     >
       <SectionRowWrapper className="items-center justify-between">
         <SectionRowWrapper className="items-center justify-start">
           <RyogoEnclosedIcon
-            icon={getEntityIcon(mission.entityType)}
+            icon={getEntityIcon(reminder.entityType)}
             size="sm"
             color={isRead ? "light" : "slate"}
           />
           <div className="flex flex-col gap-0.5">
             <RyogoCaption color={isRead ? "light" : "slate"} weight="font-bold">
-              {mission.entityType}
+              {reminder.entityType}
             </RyogoCaption>
-            <RyogoTiny color={"light"}>{mission.entityId}</RyogoTiny>
+            <RyogoTiny color={"light"}>{reminder.entityId}</RyogoTiny>
           </div>
         </SectionRowWrapper>
-        {mission.dueDate && (
+        {reminder.dueDate && (
           <RyogoCaption
-            color={mission.dueDate < new Date() && !isRead ? "red" : "slate"}
+            color={reminder.dueDate < new Date() && !isRead ? "red" : "slate"}
           >
-            {t("Card.Due") + moment(mission.dueDate).fromNow()}
+            {t("Card.Due") + moment(reminder.dueDate).fromNow()}
           </RyogoCaption>
         )}
       </SectionRowWrapper>
       <SectionColWrapper small>
         <RyogoSmall weight="font-bold" color="slate">
-          {mission.isCustom
-            ? mission.titleKey
-            : t(
-                mission.titleKey as Parameters<typeof t>[0],
-                mission.titleObject as Record<string, string | number | Date>,
-              )}
+          {reminder.titleKey}
         </RyogoSmall>
-        {mission.messageKey && (
-          <RyogoCaption color="light">
-            {mission.isCustom
-              ? mission.messageKey
-              : t(
-                  mission.messageKey as Parameters<typeof t>[0],
-                  mission.messageObject as Record<
-                    string,
-                    string | number | Date
-                  >,
-                )}
-          </RyogoCaption>
+        {reminder.messageKey && (
+          <RyogoCaption color="light">{reminder.messageKey}</RyogoCaption>
         )}
       </SectionColWrapper>
       <SectionRowWrapper>
@@ -117,7 +102,7 @@ export default function MissionCard({
           <RyogoOutlineButton
             onClick={markUnread}
             disabled={isPending}
-            label={t("Card.Read")}
+            label={t("Card.Done")}
             labelColor="light"
             className="grow"
           >
@@ -125,25 +110,29 @@ export default function MissionCard({
           </RyogoOutlineButton>
         ) : (
           <RyogoOutlineButton
-            label={t("Card.MarkRead")}
+            label={t("Card.MarkDone")}
             onClick={markRead}
             className="grow"
             disabled={isPending}
           />
         )}
-        {mission.link && !isRead && (
-          <Link
-            href={mission.link as React.ComponentProps<typeof Link>["href"]}
-            className="grow"
+        {!isRead && (
+          <RyogoOutlineButton
+            disabled={isPending || isRead}
+            onClick={() =>
+              isRider
+                ? router.push(
+                    `/rider/myMissions/myReminders/${reminder.id}/modify`,
+                  )
+                : router.push(
+                    `/dashboard/missions/reminders/${reminder.id}/modify`,
+                  )
+            }
+            className="hover:bg-slate-100 dark:hover:bg-slate-700"
+            label={t("Card.EditReminder")}
           >
-            <RyogoDefaultButton
-              label={t("Card.CheckNow")}
-              className="w-full"
-              disabled={isPending}
-            >
-              <RyogoIcon icon={ChevronRight} size="xs" color="white" thick />
-            </RyogoDefaultButton>
-          </Link>
+            <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
+          </RyogoOutlineButton>
         )}
       </SectionRowWrapper>
     </SectionWrapper>

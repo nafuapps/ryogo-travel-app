@@ -807,8 +807,9 @@
         "/dashboard/feed": "Notification Feed",
         "/dashboard/missions": "Missions",
         "/dashboard/missions/expiry-alerts": "Expiry Alerts",
-        "/dashboard/missions/add": "Add Custom Mission",
-        "/dashboard/missions/modify": "Modify Custom Mission",
+        "/dashboard/missions/reminders": "Reminders",
+        "/dashboard/missions/reminders/add": "Add Reminder",
+        "/dashboard/missions/reminders/modify": "Modify Reminder",
         "/dashboard/search": "Search",
         "/dashboard/support": "Support",
         "/dashboard/support/help-started": "Get Started Help",
@@ -4608,44 +4609,28 @@
     },
     "MissionDetailsHeaderTabs": {
       "Missions": "Missions",
-      "ExpiryAlerts": "Expiry Alerts"
+      "ExpiryAlerts": "Document Expiry",
+      "Reminders": "Reminders"
     },
     "Missions": {
-      "AddCustomMission": "Add Custom Mission",
-      "Missions": "Filtered Missions",
-      "CriticalFilter": "Critical missions filter",
-      "ReadFilter": "Completed missions filter",
-      "CustomFilter": "Custom missions filter",
+      "AllMissions": "All Missions ({count})",
+      "FilteredMissions": "Filtered Missions ({count})",
+      "Filters": "MISSION FILTERS",
+      "CriticalFilter": "Critical",
+      "ReadFilter": "Read",
+      "DueFilter": "Due date elapsed",
+      "TypeFilter": "Entity type",
       "ClearFilters": "Clear Filters",
       "NoMissions": "No missions found.. Try changing the filters.",
       "Card": {
         "Due": "Due ",
         "CheckNow": "Act Now",
-        "MarkRead": "Mark as Completed",
-        "Read": "Completed",
+        "MarkRead": "Mark as Read",
+        "Read": "Read",
         "Custom": "CUSTOM",
         "EditMission": "Edit",
-        "ErrorMarkingRead": "Failed to mark mission as completed.. please try again later",
+        "ErrorMarkingRead": "Failed to mark mission as read.. please try again later",
         "ErrorMarkingUnread": "Failed to mark mission as unread.. please try again later"
-      },
-      "ExpiryAlerts": {
-        "Alerts": "Alerts",
-        "NoAlerts": "No alerts found",
-        "License": "LICENSE",
-        "Insurance": "INSURANCE",
-        "PUC": "PUC",
-        "RC": "RC",
-        "Leave": "LEAVE",
-        "Repair": "REPAIR",
-        "Title": {
-          "License": "Driver license {expired,select,true {has expired} other {is expiring}} for {entityName}",
-          "Leave": "Driver Leave {expired,select,true {has ended} other {is going to end}} for {entityName}",
-          "PUC": "Vehicle PUC certicate {expired,select,true {has expired} other {is expiring}} for {entityName}",
-          "RC": "Vehicle registration certificate {expired,select,true {has expired} other {is expiring}} for {entityName}",
-          "Insurance": "Vehicle insurance {expired,select,true {has expired} other {is expiring}} for {entityName}",
-          "Repair": "Vehicle Repair {expired,select,true {has ended} other {is going to end}} for {entityName}"
-        },
-        "CheckNow": "Check Now"
       },
       "LeadBooking": {
         "Title": "Lead booking #{bookingId}",
@@ -4704,8 +4689,56 @@
         "Message": "You are the superuser for the agency now. You can manage other owners and users."
       }
     },
-    "AddCustomMission": {
-      "Title": "Set a custom reminder",
+    "ExpiryAlerts": {
+      "Alerts": "Alerts",
+      "Filters": "ALERT FILTERS",
+      "ExpiredFilter": "Expired",
+      "TypeFilter": "Document type",
+      "AllAlerts": "All Alerts ({count})",
+      "FilteredAlerts": "Filtered Alerts ({count})",
+      "ClearFilters": "Clear Filters",
+      "NoAlerts": "No alerts found.. Try changing the filters.",
+      "License": "LICENSE",
+      "Insurance": "INSURANCE",
+      "PUC": "PUC",
+      "RC": "RC",
+      "Title": {
+        "License": "Driver license {expired,select,true {has expired} other {is expiring}} for {entityName}",
+        "PUC": "Vehicle PUC {expired,select,true {has expired} other {is expiring}} for {entityName}",
+        "RC": "Vehicle registration {expired,select,true {has expired} other {is expiring}} for {entityName}",
+        "Insurance": "Vehicle insurance {expired,select,true {has expired} other {is expiring}} for {entityName}"
+      },
+      "CheckNow": "Check Now"
+    },
+    "Reminders": {
+      "RemindersTrialWarning": "You cannot access reminders with basic plan.",
+      "RemindersExpiredWarning": "Your subscription plan has expired.",
+      "RemindersTrialAction": "Please upgrade your subscription plan to access reminders!",
+      "RemindersExpiredAction": "Please renew your subscription plan to access reminders!",
+      "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
+      "RenewCTA": "Renew Subscription",
+      "AddReminder": "Set a new reminder",
+      "AllReminders": "All Reminders",
+      "FilteredReminders": "Filtered Reminders",
+      "Filters": "REMINDER FILTERS",
+      "CriticalFilter": "Critical",
+      "DoneFilter": "Done",
+      "DueFilter": "Due date elapsed",
+      "TypeFilter": "Entity type",
+      "ClearFilters": "Clear Filters",
+      "NoReminders": "No reminders found.. Try changing the filters.",
+      "Card": {
+        "Due": "Due ",
+        "MarkDone": "Mark as Done",
+        "Done": "Done",
+        "EditReminder": "Edit",
+        "ErrorMarkingDone": "Failed to mark reminder as done.. please try again later",
+        "ErrorMarkingUndone": "Failed to mark reminder as undone.. please try again later"
+      }
+    },
+    "AddReminder": {
+      "Title": "Set a reminder",
       "Field1": {
         "Title": "Entity Type",
         "Placeholder": "Select Entity Type",
@@ -4744,7 +4777,7 @@
         "Error1": "Time is required"
       },
       "Field7": {
-        "Title": "Is it a critical alert?"
+        "Title": "Is it a critical reminder?"
       },
       "PrimaryCTA": "Add Reminder",
       "Loading": "Loading..",
@@ -4752,8 +4785,8 @@
       "Success": "Reminder added successfully!",
       "Error": "Cannot add reminder.. Try again later!"
     },
-    "ModifyCustomMission": {
-      "Title": "Edit custom reminder",
+    "ModifyReminder": {
+      "Title": "Edit reminder",
       "Field1": {
         "Title": "Entity Type",
         "Placeholder": "Select Entity Type",
@@ -4792,7 +4825,7 @@
         "Error1": "Time is required"
       },
       "Field7": {
-        "Title": "Is it a critical alert?"
+        "Title": "Is it a critical reminder?"
       },
       "PrimaryCTA": "Save changes",
       "Loading": "Loading..",
@@ -5255,8 +5288,9 @@
         "/rider/home": "Home",
         "/rider/myMissions": "Missions",
         "/rider/myMissions/myExpiryAlerts": "Expiry Alerts",
-        "/rider/myMissions/add": "Add Custom Mission",
-        "/rider/myMissions/modify": "Modify Custom Mission",
+        "/rider/myMissions/myReminders": "Reminders",
+        "/rider/myMissions/myReminders/add": "Add Custom Mission",
+        "/rider/myMissions/myReminders/modify": "Modify Custom Mission",
         "/rider/myBookings": "Bookings",
         "/rider/myBookings/completed": "Completed Bookings",
         "/rider/myBookings/[id]": "Booking Details",
@@ -6434,9 +6468,9 @@
       "SocialMedia": "SOCIAL MEDIA"
     },
     "BookingCards": {
-      "ViewDetails": "View Details",
-      "AssignVehicle": "Assign Vehicle",
-      "AssignDriver": "Assign Driver"
+      "ViewDetails": "View booking details",
+      "AssignVehicle": "Assign vehicle",
+      "AssignDriver": "Assign driver"
     },
     "IdCopyPill": {
       "CopyID": "Copy ID",

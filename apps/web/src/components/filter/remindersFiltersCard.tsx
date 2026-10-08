@@ -14,8 +14,8 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronUp, ChevronDown } from "lucide-react"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
-export default function MissionsFiltersCard() {
-  const t = useTranslations("Dashboard.Missions")
+export default function RemindersFiltersCard() {
+  const t = useTranslations("Dashboard.Reminders")
   const [isOpen, setIsOpen] = useState(false)
 
   const router = useRouter()
@@ -24,7 +24,7 @@ export default function MissionsFiltersCard() {
 
   const searchParams = useSearchParams()
   const critical = searchParams.get("critical")
-  const read = searchParams.get("read")
+  const done = searchParams.get("done")
   const due = searchParams.get("due")
   const type = searchParams.get("type")
 
@@ -45,7 +45,7 @@ export default function MissionsFiltersCard() {
   }
 
   return (
-    <SectionWrapper id="MissionsFiltersCard">
+    <SectionWrapper id="RemindersFiltersCard">
       <SectionRowWrapper
         className="items-center justify-between"
         onClick={() => setIsOpen(!isOpen)}
@@ -69,10 +69,10 @@ export default function MissionsFiltersCard() {
           disabled={isPending}
         />
         <SelectFilter
-          label={t("ReadFilter")}
+          label={t("DoneFilter")}
           enumList={["True", "False"]}
-          value={read ?? "All"}
-          onValueChange={(value: string) => updateFilters({ read: value })}
+          value={done ?? "All"}
+          onValueChange={(value: string) => updateFilters({ done: value })}
           disabled={isPending}
         />
         <SelectFilter

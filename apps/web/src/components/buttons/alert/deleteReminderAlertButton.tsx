@@ -5,13 +5,13 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { deleteMissionAction } from "@/app/actions/missions/deleteMissionAction"
+import { deleteReminderAction } from "@/app/actions/missions/deleteReminderAction"
 import {
   RyogoGhostButton,
   RyogoDestructiveButton,
 } from "@/components/buttons/ryogoButtons"
 
-export default function DeleteMissionAlertButton({
+export default function DeleteReminderAlertButton({
   missionId,
   userId,
   agencyId,
@@ -29,9 +29,9 @@ export default function DeleteMissionAlertButton({
 
   const router = useRouter()
 
-  async function deleteMission() {
+  async function deleteReminder() {
     startCancelTransition(async () => {
-      if (await deleteMissionAction({ missionId, userId, agencyId })) {
+      if (await deleteReminderAction({ missionId, userId, agencyId })) {
         toast.success(t("Success"))
         router.replace(isRider ? `/rider/myMissions` : `/dashboard/missions`)
       } else {
@@ -55,7 +55,7 @@ export default function DeleteMissionAlertButton({
       }
     >
       <RyogoDestructiveButton
-        onClick={deleteMission}
+        onClick={deleteReminder}
         disabled={isPending}
         showSpinner={isPending}
         label={isPending ? t("Loading") : t("YesCTA")}

@@ -1,27 +1,23 @@
-import { getTranslations } from "next-intl/server"
+"use client"
+
+import { useTranslations } from "next-intl"
 import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import moment from "moment"
 import { RyogoCaption, RyogoSmall, RyogoTiny } from "@/components/typography"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import Link from "next/link"
 import { differenceInDays } from "date-fns"
-import {
-  AlarmSmoke,
-  Ambulance,
-  IdCard,
-  IdCardLanyard,
-  TreePalm,
-  Wrench,
-} from "lucide-react"
+import { AlarmSmoke, Ambulance, IdCard, IdCardLanyard } from "lucide-react"
 import { EXPIRY_WARNING_DAYS } from "@/lib/uiConfig"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { ChevronRight } from "lucide-react"
 
-type ExpiryType = "License" | "PUC" | "RC" | "Insurance" | "Leave" | "Repair"
+type ExpiryType = "License" | "PUC" | "RC" | "Insurance"
 
-export default async function ExpiryAlertCard({
+export default function ExpiryAlertCard({
   expiryType,
   entityId,
   entityName,
@@ -34,13 +30,10 @@ export default async function ExpiryAlertCard({
   dueDate: Date
   isDriver?: boolean
 }) {
-  const t = await getTranslations("Dashboard.Missions.ExpiryAlerts")
+  const t = useTranslations("Dashboard.ExpiryAlerts")
   const expiryDays = differenceInDays(dueDate, new Date())
   return (
-    <SectionWrapper
-      id={entityId}
-      className={` ${expiryDays < 0 ? "border-l-6 border-red-700 dark:border-red-300" : expiryDays < 0 ? "border-l-6 border-yellow-700 dark:border-yellow-300" : "border-l-6 border-sky-700 dark:border-sky-300"}`}
-    >
+    <SectionWrapper id={entityId}>
       <SectionRowWrapper className="items-center justify-between">
         <SectionRowWrapper className="items-center justify-start">
           <RyogoEnclosedIcon
@@ -51,7 +44,7 @@ export default async function ExpiryAlertCard({
           />
           <div className="flex flex-col gap-0.5">
             <RyogoCaption color="slate" weight="font-bold">
-              {t(expiryType as Parameters<typeof t>[0])}
+              {expiryType}
             </RyogoCaption>
             <RyogoTiny color="light">{entityId}</RyogoTiny>
           </div>
@@ -82,7 +75,9 @@ export default async function ExpiryAlertCard({
         }
         className="mt-auto"
       >
-        <RyogoDefaultButton className="w-full" label={t("CheckNow")} />
+        <RyogoOutlineButton className="w-full" label={t("CheckNow")}>
+          <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
+        </RyogoOutlineButton>
       </Link>
     </SectionWrapper>
   )
@@ -98,30 +93,26 @@ function getExpiryIcon(type: ExpiryType) {
       return IdCard
     case "Insurance":
       return Ambulance
-    case "Leave":
-      return TreePalm
-    case "Repair":
-      return Wrench
   }
 }
 
 function getExpiryLink(type: ExpiryType, entityId: string, isDriver?: boolean) {
   switch (type) {
     case "License":
-      return isDriver ? `/rider/myProfile` : `/dashboard/drivers/${entityId}`
-    case "Leave":
       return isDriver
-        ? `/rider/myProfile`
-        : `/dashboard/drivers/${entityId}/leaves`
-
+        ? `/rider/myProfile#RiderDriverDetails`
+        : `/dashboard/drivers/${entityId}#DriverLicenseDetails`
     case "PUC":
-    case "RC":
-    case "Insurance":
-      return isDriver ? `/rider/myVehicle` : `/dashboard/vehicles/${entityId}`
-
-    case "Repair":
       return isDriver
-        ? `/rider/myVehicle`
-        : `/dashboard/vehicles/${entityId}/repairs`
+        ? `/rider/myVehicle#VehiclePUCDetails`
+        : `/dashboard/vehicles/${entityId}#VehiclePUCDetails`
+    case "RC":
+      return isDriver
+        ? `/rider/myVehicle#VehicleRCDetails`
+        : `/dashboard/vehicles/${entityId}#VehicleRCDetails`
+    case "Insurance":
+      return isDriver
+        ? `/rider/myVehicle#VehicleInsuranceDetails`
+        : `/dashboard/vehicles/${entityId}#VehicleInsuranceDetails`
   }
 }

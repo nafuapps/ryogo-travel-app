@@ -5,7 +5,11 @@ import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { RyogoFileInput, RyogoInput } from "@/components/form/ryogoFormFields"
+import {
+  RyogoFileInput,
+  RyogoInput,
+  RyogoOTPInput,
+} from "@/components/form/ryogoFormFields"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { FileRegex } from "@/lib/regex"
@@ -104,11 +108,10 @@ export function AddAgentStep1({
           placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
         />
-        <RyogoInput
+        <RyogoOTPInput
+          length={10}
           name={"agentPhone"}
-          type="tel"
           label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
           description={t("Field2.Description")}
         />
         <RyogoInput

@@ -100,11 +100,15 @@ export function RyogoInput({
 export function RyogoOTPInput({
   name,
   label,
+  length,
+  onSubmit,
   description,
   disabled,
 }: {
   name: string
   label: string
+  length: 6 | 10
+  onSubmit?: () => void
   description?: string
   disabled?: boolean
 }) {
@@ -122,14 +126,17 @@ export function RyogoOTPInput({
             </RyogoCaption>
           </FormLabel>
           <FormControl>
-            <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS} {...field}>
+            <InputOTP
+              maxLength={length}
+              pattern={REGEXP_ONLY_DIGITS}
+              onComplete={onSubmit}
+              disabled={disabled}
+              {...field}
+            >
               <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
+                {Array.from({ length: length }).map((_, index) => {
+                  return <InputOTPSlot key={index} index={index} />
+                })}
               </InputOTPGroup>
             </InputOTP>
           </FormControl>

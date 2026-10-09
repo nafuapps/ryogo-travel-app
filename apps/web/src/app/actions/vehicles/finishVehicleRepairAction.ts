@@ -44,7 +44,7 @@ export async function finishVehicleRepairAction({
     textObject: {
       endDate: repair.actualEndDate,
       userName: currentUser.name,
-      vehicleNumber: repair.vehicleNumber,
+      vehicleNumber: repair.vehicle.vehicleNumber,
     },
     link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
   })

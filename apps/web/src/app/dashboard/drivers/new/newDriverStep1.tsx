@@ -5,7 +5,11 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import z from "zod"
 import { Dispatch, SetStateAction } from "react"
-import { RyogoFileInput, RyogoInput } from "@/components/form/ryogoFormFields"
+import {
+  RyogoFileInput,
+  RyogoInput,
+  RyogoOTPInput,
+} from "@/components/form/ryogoFormFields"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
@@ -139,11 +143,10 @@ export function NewDriverStep1({
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <RyogoInput
+          <RyogoOTPInput
+            length={10}
             name={"driverPhone"}
-            type="tel"
             label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
           <RyogoInput

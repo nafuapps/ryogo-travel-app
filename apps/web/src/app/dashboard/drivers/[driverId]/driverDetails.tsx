@@ -1,6 +1,6 @@
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { getTranslations } from "next-intl/server"
-import { Camera, SquarePen } from "lucide-react"
+import { Camera, IdCard, SquarePen } from "lucide-react"
 import Link from "next/link"
 import InactivateDriverAlertButton from "@/components/buttons/alert/inactivateDriverAlertButton"
 import ActivateDriverAlertButton from "@/components/buttons/alert/activateDriverAlertButton"
@@ -70,9 +70,13 @@ export default async function DriverDetailsPageComponent({
       )}
       <SectionWrapper id="DriverLicenseDetails">
         <DriverLicenseInfoComponent
+          id={driver.id}
+          agencyId={driver.agencyId}
+          addedByUserId={driver.addedByUserId}
           licenseNumber={driver.licenseNumber}
           photoUrl={driver.licensePhotoUrl}
           licenseExpiresOn={driver.licenseExpiresOn}
+          canChange={canChangeDetails}
         />
       </SectionWrapper>
       <GridWrapper id="DriverCommunication">
@@ -109,7 +113,14 @@ export default async function DriverDetailsPageComponent({
             addedByUserId={driver.addedByUserId}
             lNumber={driver.licenseNumber}
             lExpiresOn={driver.licenseExpiresOn}
-          />
+            canChange
+          >
+            <RyogoDetailedIconButton
+              label={t("ChangeLicense.Button")}
+              icon={IdCard}
+              subtitle={t("ChangeLicense.Subtitle")}
+            />
+          </ChangeDriverLicenseSheet>
           <Link href={`/dashboard/drivers/${driver.id}/modify`}>
             <RyogoDetailedIconButton
               label={t("EditDetails.Title")}

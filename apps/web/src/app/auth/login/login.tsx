@@ -8,10 +8,9 @@ import { RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
 import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { toast } from "sonner"
 import { useBotDetection } from "@/hooks/useBotDetection"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { PHONE_LENGTH } from "@/lib/uiConfig"
 import { FormWrapper } from "@/components/page/pageWrappers"
 
@@ -45,6 +44,7 @@ export default function LoginPageComponent() {
   const onSubmit = async (data: SchemaType) => {
     if (checkBotActivity()) {
       toast.error(t("BotError"))
+      form.setValue("phoneNumber", "")
       return
     }
 
@@ -61,28 +61,23 @@ export default function LoginPageComponent() {
           type: "manual",
           message: t("NotFoundError"),
         })
+        setTimeout(() => {
+          form.setValue("phoneNumber", "")
+          form.clearErrors("phoneNumber")
+        }, 3000) //Clear the field after 3s
       }
     }
   }
 
   return (
     <AuthPageWrapper>
-      <FormWrapper<SchemaType>
-        id="LoginForm"
-        form={form}
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+      <FormWrapper<SchemaType> id="LoginForm" form={form}>
         <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
-        <RyogoInput
+        <RyogoOTPInput
           name={"phoneNumber"}
-          type="tel"
           label={t("Input.Title")}
-          placeholder={t("Input.Placeholder")}
-        />
-        <RyogoDefaultButton
-          label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
-          size="lg"
-          type="submit"
+          length={10}
+          onSubmit={form.handleSubmit(onSubmit)}
           disabled={form.formState.isSubmitting || isBot}
         />
       </FormWrapper>

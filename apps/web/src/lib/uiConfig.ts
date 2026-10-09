@@ -6,6 +6,7 @@ export const SLIDESHOW_TIMER_MS = 5000
 export const MIN_PASSWORD_LENGTH = 8
 export const MIN_NAME_LENGTH = 3
 export const MAX_NAME_LENGTH = 30
+export const CODE_LENGTH = 6
 export const PHONE_LENGTH = 10
 export const MAX_EMAIL_LENGTH = 60
 export const MAX_FILE_UPLOAD_SIZE = 200000 //File must be less than 200kB

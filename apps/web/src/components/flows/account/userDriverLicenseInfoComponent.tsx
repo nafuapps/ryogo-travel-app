@@ -25,6 +25,9 @@ export default async function UserDriverLicenseInfoComponent({
 
   return (
     <SectionColWrapper className="items-center">
+      <RyogoCaption color="light" weight="font-bold">
+        {t("License")}
+      </RyogoCaption>
       {photoUrl ? (
         <RyogoDialogImage
           src={getFileUrl(photoUrl)}
@@ -32,11 +35,10 @@ export default async function UserDriverLicenseInfoComponent({
           imageSize="lg"
         />
       ) : (
-        <RyogoEnclosedIcon icon={IdCard} size="xl" />
+        <RyogoEnclosedIcon icon={IdCard} size="lg" />
       )}
       <SectionColWrapper className="items-center">
-        <RyogoCaption color="light">{t("License")}</RyogoCaption>
-        {licenseNumber && <RyogoP>{licenseNumber}</RyogoP>}
+        {licenseNumber && <RyogoP weight="font-bold">{licenseNumber}</RyogoP>}
         {expiryDate && (
           <DetailsBorderWrapper>
             <DetailsHeaderWrapper>

@@ -18,7 +18,7 @@ import {
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { DialogHeader } from "@/components/ui/dialog"
 import { useRefreshPage } from "@/hooks/useRefreshPage"
-import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
+import { CODE_LENGTH, TOTAL_RATING_STARS } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog"
 import { useTranslations } from "next-intl"
@@ -58,7 +58,7 @@ export default function RateBookingByCustomerDialog({
   const ratingSchema = z.object({
     userEnteredcode: z
       .string()
-      .length(6, t("Field4.Error1"))
+      .length(CODE_LENGTH, t("Field4.Error1"))
       .nonoptional(t("Field4.Error1")),
   })
   type RatingType = z.infer<typeof ratingSchema>
@@ -176,6 +176,7 @@ export default function RateBookingByCustomerDialog({
               name={"userEnteredcode"}
               label={t("Field4.Title")}
               description={t("Field4.Description")}
+              length={6}
             />
           </FormContentWrapper>
           {formData.formState.errors.root && (

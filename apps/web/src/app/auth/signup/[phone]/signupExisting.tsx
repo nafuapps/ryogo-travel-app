@@ -4,10 +4,7 @@ import Link from "next/link"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { getTranslations } from "next-intl/server"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import {
-  AuthAccountsWrapper,
-  AuthPageWrapper,
-} from "@/components/flows/auth/authWrappers"
+import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -17,6 +14,7 @@ import {
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import { ChevronRight } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 /*
   If no owner account found, show account details and nudge user to login (but also an extra option to create account)
@@ -44,13 +42,13 @@ export default async function SignupExistingPageComponent({
           ? t("InfoYes")
           : t("InfoNo", { count: accounts.length })}
       </RyogoSmall>
-      <AuthAccountsWrapper length={accounts.length}>
+      <SectionColWrapper>
         {accounts.map((account) => (
           <Link href={`/auth/login/password/${account.id}`} key={account.id}>
             <AuthAccountCard user={account} isLink />
           </Link>
         ))}
-      </AuthAccountsWrapper>
+      </SectionColWrapper>
       <Link href={"/auth/signup"}>
         <RyogoOutlineButton className="w-full" label={t("BackCTA")} />
       </Link>

@@ -5,6 +5,7 @@ import {
   RyogoTextarea,
   RyogoFileInput,
   RyogoCombobox,
+  RyogoOTPInput,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
@@ -161,11 +162,10 @@ export default function NewCustomerForm({
             placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
-          <RyogoInput
+          <RyogoOTPInput
+            length={10}
             name={"phone"}
-            type="tel"
             label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
           />
           <RyogoInput

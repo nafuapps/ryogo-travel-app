@@ -16,7 +16,7 @@ import {
   RyogoDefaultButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
-import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { CODE_LENGTH, MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import {
@@ -43,7 +43,7 @@ export default function ResetWithCodePageComponent({
 
   const formSchema = z
     .object({
-      code: z.string().length(6, t("Field1.Error1")),
+      code: z.string().length(CODE_LENGTH, t("Field1.Error1")),
       password: z
         .string()
         .min(MIN_PASSWORD_LENGTH, t("Field2.Error1"))
@@ -137,6 +137,7 @@ export default function ResetWithCodePageComponent({
             name={"code"}
             label={t("Field1.Title")}
             description={t("Field1.Description")}
+            length={6}
           />
           <RyogoDefaultButton
             label={isPending ? t("Loading") : t("VerifyCTA")}

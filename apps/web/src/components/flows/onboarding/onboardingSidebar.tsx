@@ -5,6 +5,7 @@ import {
   RyogoP,
   RyogoCaption,
   RyogoTiny,
+  RyogoSmall,
 } from "@/components/typography"
 import {
   Sidebar,
@@ -131,7 +132,7 @@ export default function OnboardingSidebar({
                   )}
                 </SectionColWrapper>
                 <SectionColWrapper small>
-                  <RyogoP
+                  <RyogoSmall
                     weight={"font-bold"}
                     color={
                       currentProcess > index
@@ -142,7 +143,7 @@ export default function OnboardingSidebar({
                     }
                   >
                     {item.title}
-                  </RyogoP>
+                  </RyogoSmall>
                   <RyogoCaption
                     color={currentProcess >= index ? "slate" : "light"}
                   >

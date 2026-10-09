@@ -18,7 +18,7 @@
         "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
-        "PageTitle": "Welcome back!",
+        "PageTitle": "Welcome!",
         "Info": "Select the account you want to log into:",
         "SecondaryCTA": "Back to login"
       },
@@ -960,9 +960,9 @@
     "NewBooking": {
       "Title": "Create Booking",
       "Description": "Finding customer by phone number",
-      "Phone": "Enter customer phone number to search",
+      "Phone": "Enter customer phone number to search (atleast 3 digits)",
       "Placeholder": "9876543210",
-      "Error1": "Enter atleast 4 digits to search customer",
+      "Error1": "Enter atleast 3 digits to search customer",
       "Error2": "Phone number cannot be longer than 10 digits",
       "SearchCTA": "Search Customer",
       "ClearCTA": "Clear",

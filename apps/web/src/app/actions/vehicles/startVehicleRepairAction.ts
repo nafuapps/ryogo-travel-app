@@ -47,7 +47,7 @@ export async function startVehicleRepairAction({
     textObject: {
       startDate: repair.actualStartDate,
       userName: currentUser.name,
-      vehicleNumber: repair.vehicleNumber,
+      vehicleNumber: repair.vehicle.vehicleNumber,
     },
     link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
   })
@@ -60,7 +60,7 @@ export async function startVehicleRepairAction({
     entityId: repair.id,
     titleKey: "VehicleRepairStarted.Title",
     titleObject: {
-      vehicleNumber: repair.vehicleNumber,
+      vehicleNumber: repair.vehicle.vehicleNumber,
     },
     messageKey: "VehicleRepairStarted.Message",
     messageObject: {

@@ -10,6 +10,7 @@ import {
   RyogoCheckbox,
   RyogoTextarea,
   RyogoFileInput,
+  RyogoOTPInput,
 } from "@/components/form/ryogoFormFields"
 import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
@@ -144,11 +145,10 @@ export function CreateAccountStep2({
       onSubmit={formData.handleSubmit(onSubmit)}
     >
       <FormContentWrapper asCard={false}>
-        <RyogoInput
+        <RyogoOTPInput
+          length={10}
           name={"agencyPhone"}
-          type="tel"
           label={t("Field1.Title")}
-          placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
         />
         <RyogoCheckbox name={"sameAsOwnerPhone"} label={t("Field1.Checkbox")} />

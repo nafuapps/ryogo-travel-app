@@ -6,7 +6,11 @@ import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { resendVerificationCodeAction } from "@/app/actions/users/resendVerificationCodeAction"
-import { SUPPORT_EMAIL, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
+import {
+  CODE_LENGTH,
+  SUPPORT_EMAIL,
+  VERIFY_CODE_TIMEOUT_MINUTES,
+} from "@/lib/uiConfig"
 import Link from "next/link"
 import {
   RyogoDefaultButton,
@@ -40,7 +44,7 @@ export function VerifyAccountStep1({
   )
 
   const step1Schema = z.object({
-    userEnteredcode: z.string().length(6, t("Field1.Error1")),
+    userEnteredcode: z.string().length(CODE_LENGTH, t("Field1.Error1")),
   })
   type Step1Type = z.infer<typeof step1Schema>
   const formData = useForm<Step1Type>({
@@ -95,6 +99,7 @@ export function VerifyAccountStep1({
           name={"userEnteredcode"}
           label={t("Field1.Title")}
           description={t("Field1.Description")}
+          length={6}
         />
       </FormContentWrapper>
       <StickyActionWrapper bgTransparent>

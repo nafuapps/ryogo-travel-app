@@ -2,7 +2,11 @@
 
 import { sendSupportQueryAction } from "@/app/actions/support/sendSupportQueryAction"
 import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
-import { RyogoInput, RyogoTextarea } from "@/components/form/ryogoFormFields"
+import {
+  RyogoInput,
+  RyogoOTPInput,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { FormWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoH4 } from "@/components/typography"
@@ -99,12 +103,7 @@ export default function QueryForm() {
           label={t("Field1.Title")}
           placeholder={t("Field1.Placeholder")}
         />
-        <RyogoInput
-          name={"phone"}
-          type="tel"
-          label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
-        />
+        <RyogoOTPInput length={10} name={"phone"} label={t("Field2.Title")} />
         <RyogoInput
           name={"email"}
           type="email"

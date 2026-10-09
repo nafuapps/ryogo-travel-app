@@ -276,15 +276,15 @@ export const userRepository = {
       .update(users)
       .set({
         password: passwordHash,
-        isVerified: true,
         status: status,
-        verificationCode: null,
+        isVerified: status ? true : undefined,
+        verificationCode: status ? null : undefined,
       })
       .where(eq(users.id, userId))
       .returning({
         id: users.id,
         email: users.email,
-        name: users.email,
+        name: users.name,
         agencyId: users.agencyId,
       })
   },

@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { useBotDetection } from "@/hooks/useBotDetection"
@@ -115,11 +115,10 @@ export function CreateAccountStep1({
           placeholder={t("Field2.Placeholder")}
           description={t("Field2.Description")}
         />
-        <RyogoInput
+        <RyogoOTPInput
+          length={10}
           name={"ownerPhone"}
-          type="tel"
           label={t("Field3.Title")}
-          placeholder={t("Field3.Placeholder")}
           description={t("Field3.Description")}
         />
         <RyogoInput

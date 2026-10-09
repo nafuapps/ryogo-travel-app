@@ -1,6 +1,10 @@
 "use client"
 
-import { RyogoInput, RyogoFileInput } from "@/components/form/ryogoFormFields"
+import {
+  RyogoInput,
+  RyogoFileInput,
+  RyogoOTPInput,
+} from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
@@ -133,11 +137,10 @@ export default function NewAgentForm({
           placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
         />
-        <RyogoInput
+        <RyogoOTPInput
+          length={10}
           name={"agentPhone"}
-          type="tel"
           label={t("Field2.Title")}
-          placeholder={t("Field2.Placeholder")}
           description={t("Field2.Description")}
         />
         <RyogoInput

@@ -1,6 +1,6 @@
 "use client"
 
-import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   FindUserAccountsByPhoneRoleType,
@@ -92,11 +92,10 @@ export default function ChangeUserPhonePageComponent({
           <HelpIconButton href="/dashboard/support/help-users#managing" />
         </SectionRowWrapper>
         <FormContentWrapper>
-          <RyogoInput
+          <RyogoOTPInput
+            length={10}
             name={"newPhone"}
-            type="tel"
             label={t("Field1.Title")}
-            placeholder={t("Field1.Placeholder")}
             description={t("Field1.Description")}
           />
         </FormContentWrapper>

@@ -5,7 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import z from "zod"
-import { RyogoCombobox, RyogoInput } from "@/components/form/ryogoFormFields"
+import {
+  RyogoCombobox,
+  RyogoInput,
+  RyogoOTPInput,
+} from "@/components/form/ryogoFormFields"
 import stateCityData from "@/lib/states_cities.json"
 import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
@@ -142,11 +146,10 @@ export default function NewBookingAddCustomerPageComponent({
             label={t("Field1.Title")}
             placeholder={t("Field1.Placeholder")}
           />
-          <RyogoInput
+          <RyogoOTPInput
+            length={10}
             name="newCustomerPhone"
             label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            type="tel"
           />
           <RyogoCombobox
             name={"newCustomerState"}

@@ -28,8 +28,6 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { MIN_LICENSE_LENGTH, MAX_LICENSE_LENGTH } from "@/lib/uiConfig"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
-import { IdCard } from "lucide-react"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export default function ChangeDriverPhotoSheet({
@@ -38,13 +36,19 @@ export default function ChangeDriverPhotoSheet({
   addedByUserId,
   lNumber,
   lExpiresOn,
+  children,
+  canChange,
 }: {
   driverId: string
   agencyId: string
   addedByUserId: string
   lNumber: string | null
   lExpiresOn: Date | null
+  children: React.ReactNode
+  canChange?: boolean
 }) {
+  if (!canChange) return children
+
   const t = useTranslations("Dashboard.DriverDetails.ChangeLicense")
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -101,13 +105,7 @@ export default function ChangeDriverPhotoSheet({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <RyogoDetailedIconButton
-          label={t("Button")}
-          icon={IdCard}
-          subtitle={t("Subtitle")}
-        />
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>{t("Header")}</SheetTitle>

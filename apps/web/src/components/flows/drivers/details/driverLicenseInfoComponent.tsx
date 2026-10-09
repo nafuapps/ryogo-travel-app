@@ -10,15 +10,24 @@ import {
   DetailsHeaderWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
+import ChangeDriverLicenseSheet from "@/components/sheets/changeDriverLicenseSheet"
 
 export default async function DriverLicenseInfoComponent({
+  id,
+  agencyId,
+  addedByUserId,
   licenseNumber,
   photoUrl,
   licenseExpiresOn,
+  canChange,
 }: {
+  id: string
+  agencyId: string
+  addedByUserId: string
   licenseNumber: string | null
   photoUrl: string | null
   licenseExpiresOn: Date | null
+  canChange: boolean
 }) {
   const isExpired = licenseExpiresOn && licenseExpiresOn < new Date()
   const t = await getTranslations("Dashboard.DriverDetails.License")
@@ -35,7 +44,16 @@ export default async function DriverLicenseInfoComponent({
           imageSize="lg"
         />
       ) : (
-        <RyogoEnclosedIcon icon={IdCard} size="lg" />
+        <ChangeDriverLicenseSheet
+          driverId={id}
+          agencyId={agencyId}
+          addedByUserId={addedByUserId}
+          lNumber={licenseNumber}
+          lExpiresOn={licenseExpiresOn}
+          canChange={canChange}
+        >
+          <RyogoEnclosedIcon icon={IdCard} size="lg" />
+        </ChangeDriverLicenseSheet>
       )}
       <SectionColWrapper className="items-center">
         {licenseNumber && <RyogoP weight="font-bold">{licenseNumber}</RyogoP>}

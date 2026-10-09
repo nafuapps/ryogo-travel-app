@@ -37,8 +37,8 @@ export function useLocation() {
     // Optional options for high accuracy and timeout
     const options = {
       enableHighAccuracy: true,
-      timeout: 50000,
-      maximumAge: 0,
+      timeout: 30000, // 30 seconds timeout
+      maximumAge: 300000, // 5 minutes (use cached location if any)
     }
 
     // Request the current position

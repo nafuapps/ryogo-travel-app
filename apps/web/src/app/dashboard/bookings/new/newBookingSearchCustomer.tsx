@@ -103,7 +103,7 @@ export default function NewBookingSearchCustomerPageComponent({
           <RyogoDefaultButton
             size={"lg"}
             type="submit"
-            disabled={form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting || phone.length < 3}
             showSpinner={form.formState.isSubmitting}
             label={t("SearchCTA")}
           />

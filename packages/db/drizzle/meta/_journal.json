@@ -442,6 +442,13 @@
       "when": 1791113592658,
       "tag": "0062_glorious_night_thrasher",
       "breakpoints": true
+    },
+    {
+      "idx": 63,
+      "version": "7",
+      "when": 1791522387157,
+      "tag": "0063_stiff_captain_america",
+      "breakpoints": true
     }
   ]
 }

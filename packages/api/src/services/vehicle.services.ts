@@ -203,7 +203,9 @@ export const vehicleServices = {
 
     const [repair] =
       await vehicleRepairRepository.updateRepairToStarted(repairId)
-    return repair
+    if (!repair) return
+
+    return { ...repair, vehicleNumber: vehicle.vehicleNumber }
   },
 
   //End vehicle repair
@@ -224,7 +226,9 @@ export const vehicleServices = {
     if (!updatedVehicle) return
 
     const [repair] = await vehicleRepairRepository.updateRepairToEnded(repairId)
-    return repair
+    if (!repair) return
+
+    return { ...repair, vehicleNumber: vehicle.vehicleNumber }
   },
 
   //Change vehicle number

@@ -10,6 +10,8 @@ import {
   User,
   BanknoteArrowUp,
   BadgeQuestionMark,
+  TreePalm,
+  Wrench,
 } from "lucide-react"
 
 export default function getEntityIcon(entityType: EntityTypeEnum) {
@@ -22,8 +24,13 @@ export default function getEntityIcon(entityType: EntityTypeEnum) {
       return BadgeIndianRupee
     case EntityTypeEnum.DRIVER:
       return IdCard
+    case EntityTypeEnum.DRIVER_LEAVE:
+      return TreePalm
+
     case EntityTypeEnum.VEHICLE:
       return Car
+    case EntityTypeEnum.VEHICLE_REPAIR:
+      return Wrench
     case EntityTypeEnum.ORDER:
       return CreditCard
     case EntityTypeEnum.EXPENSE:

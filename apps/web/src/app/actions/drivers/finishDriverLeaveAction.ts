@@ -2,7 +2,9 @@
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function finishDriverLeaveAction({
   userId,
@@ -32,11 +34,29 @@ export async function finishDriverLeaveAction({
   const leave = await driverServices.endDriverLeave({ leaveId, driverId })
   if (!leave) return
 
-  //TODO: Add finishedleave mission for assignedUser if ended by driver) and vice versa
-  if (currentUser.userRole === UserRolesEnum.DRIVER) {
-  }
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.DRIVER_LEAVE,
+    entityId: leave.id,
+    isFeed: true,
+    textKey:
+      currentUser.userRole === UserRolesEnum.DRIVER
+        ? "EndedDriverLeave"
+        : "DriverLeaveEnded",
+    textObject: {
+      endDate: leave.actualEndDate,
+      userName: currentUser.name,
+      driverName: leave.driverName,
+    },
+    link: `/dashboard/drivers/${leave.driverId}/leaves`,
+  })
 
-  //TODO: Remove startedleave mission
+  // Remove previous driverLeave missions
+  await missionServices.removePreviousMissionsByEntityId({
+    agencyId: agencyId,
+    entityId: leave.id,
+  })
 
   return leave
 }

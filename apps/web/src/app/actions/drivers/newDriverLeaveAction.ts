@@ -2,8 +2,10 @@
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import {
+  DriverLeaveStatusEnum,
   EntityTypeEnum,
   InsertDriverLeaveType,
   UserRolesEnum,
@@ -36,8 +38,8 @@ export async function newDriverLeaveAction({
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     userId: currentUser.userId,
-    entityType: EntityTypeEnum.DRIVER,
-    entityId: leave.driverId,
+    entityType: EntityTypeEnum.DRIVER_LEAVE,
+    entityId: leave.id,
     isFeed: true,
     textKey: "DriverLeaveAdded",
     textObject: {
@@ -47,7 +49,29 @@ export async function newDriverLeaveAction({
     link: `/dashboard/drivers/${leave.driverId}/leaves`,
   })
 
-  //TODO: Add newleave mission for assignedUser and driver
+  if (leave.status === DriverLeaveStatusEnum.PENDING) {
+    //Add newleave mission for assignedUser
+    await missionServices.addMission(
+      {
+        agencyId: data.agencyId,
+        userId: currentUser.userId,
+        entityType: EntityTypeEnum.DRIVER_LEAVE,
+        entityId: leave.id,
+        titleKey: "DriverLeaveAdded.Title",
+        titleObject: {
+          driverName: leave.driverName,
+        },
+        messageKey: "DriverLeaveAdded.Message",
+        messageObject: {
+          startDate: leave.startDate,
+          endDate: leave.endDate,
+        },
+        dueDate: leave.startDate,
+        link: `/dashboard/drivers/${leave.driverId}/leaves`,
+      },
+      false,
+    )
+  }
 
   return leave
 }

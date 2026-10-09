@@ -36,7 +36,7 @@ export default function ModifyDriverLeavePageComponent({
   const t = useTranslations("Dashboard.ModifyDriverLeave")
   const router = useRouter()
 
-  //Only pending leaves dates can be modified
+  //Only pending leaves can be deleted or date changed
   const isPending = leave.status === DriverLeaveStatusEnum.PENDING
 
   const modifyDriverleaveSchema = z

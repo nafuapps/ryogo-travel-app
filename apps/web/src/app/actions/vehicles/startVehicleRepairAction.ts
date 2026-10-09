@@ -1,8 +1,10 @@
 "use server"
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function startVehicleRepairAction({
   userId,
@@ -35,9 +37,47 @@ export async function startVehicleRepairAction({
   })
   if (!repair) return
 
-  //TODO: Add startedRepair mission for assignedUser
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.VEHICLE_REPAIR,
+    entityId: repair.id,
+    isFeed: true,
+    textKey: "VehicleRepairStarted",
+    textObject: {
+      startDate: repair.actualStartDate,
+      userName: currentUser.name,
+      vehicleNumber: repair.vehicleNumber,
+    },
+    link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
+  })
 
-  //TODO: Remove newRepair mission
+  // Add startedRepair mission for assignedUser
+  await missionServices.addMission({
+    agencyId: agencyId,
+    userId: repair.addedByUserId,
+    entityType: EntityTypeEnum.VEHICLE_REPAIR,
+    entityId: repair.id,
+    titleKey: "VehicleRepairStarted.Title",
+    titleObject: {
+      vehicleNumber: repair.vehicleNumber,
+    },
+    messageKey: "VehicleRepairStarted.Message",
+    messageObject: {
+      startDate: repair.actualStartDate,
+      endDate: repair.endDate,
+    },
+    dueDate: repair.endDate,
+    link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
+  })
+
+  //Remove newRepair mission
+  await missionServices.removePreviousMissionsByEntityTitleKey({
+    agencyId: agencyId,
+    entityType: EntityTypeEnum.VEHICLE_REPAIR,
+    entityId: repair.id,
+    titleKey: "VehicleRepairAdded.Title",
+  })
 
   return repair
 }

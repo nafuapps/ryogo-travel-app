@@ -17,6 +17,7 @@ export default async function NewDriverLeavePage({
   params: Promise<{ driverId: string }>
 }) {
   const { driverId } = await params
+
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)

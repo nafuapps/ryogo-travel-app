@@ -329,7 +329,9 @@ export const paymentRelations = relations(payments, ({ one }) => ({
 export enum EntityTypeEnum {
   BOOKING = "Booking",
   DRIVER = "Driver",
+  DRIVER_LEAVE = "Driver Leave",
   VEHICLE = "Vehicle",
+  VEHICLE_REPAIR = "Vehicle Repair",
   USER = "User",
   AGENCY = "Agency",
   CUSTOMER = "Customer",
@@ -341,7 +343,9 @@ export enum EntityTypeEnum {
 export const entityType = pgEnum("entity_type", [
   EntityTypeEnum.BOOKING, //TE: BookingId
   EntityTypeEnum.DRIVER, //TE: DriverId
+  EntityTypeEnum.DRIVER_LEAVE, //TE: DriverLeaveId
   EntityTypeEnum.VEHICLE, //TE: VehicleId
+  EntityTypeEnum.VEHICLE_REPAIR, //TE: VehicleRepairId
   EntityTypeEnum.USER, //TE: UserId
   EntityTypeEnum.AGENCY, //TE: AgencyId
   EntityTypeEnum.CUSTOMER, //TE: CustomerId

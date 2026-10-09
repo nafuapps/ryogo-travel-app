@@ -2,7 +2,9 @@
 
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function startDriverLeaveAction({
   userId,
@@ -32,11 +34,56 @@ export async function startDriverLeaveAction({
   const leave = await driverServices.startDriverLeave({ leaveId, driverId })
   if (!leave) return
 
-  //TODO: Add startedleave mission for assignedUser if started by driver and vice versa
-  if (currentUser.userRole === UserRolesEnum.DRIVER) {
-  }
+  await notificationServices.addNotification({
+    agencyId: agencyId,
+    userId: currentUser.userId,
+    entityType: EntityTypeEnum.DRIVER_LEAVE,
+    entityId: leave.id,
+    isFeed: true,
+    textKey:
+      currentUser.userRole === UserRolesEnum.DRIVER
+        ? "StartedDriverLeave"
+        : "DriverLeaveStarted",
+    textObject: {
+      startDate: leave.actualStartDate,
+      userName: currentUser.name,
+      driverName: leave.driverName,
+    },
+    link: `/dashboard/drivers/${leave.driverId}/leaves`,
+  })
 
-  //TODO: Remove newleave mission
+  //Add startedLeave mission for assignedUser if started by driver and vice versa
+  await missionServices.addMission({
+    agencyId: agencyId,
+    userId:
+      currentUser.userRole === UserRolesEnum.DRIVER
+        ? leave.addedByUserId
+        : leave.driverUserId,
+    entityType: EntityTypeEnum.DRIVER_LEAVE,
+    entityId: leave.id,
+    titleKey: "DriverLeaveStarted.Title",
+    titleObject: {
+      driverId: leave.driverId,
+    },
+    messageKey: "DriverLeaveStarted.Message",
+    messageObject: {
+      startDate: leave.actualStartDate,
+      endDate: leave.endDate,
+    },
+    dueDate: leave.endDate,
+    link:
+      currentUser.userRole === UserRolesEnum.DRIVER
+        ? `/dashboard/drivers/${leave.driverId}/leaves`
+        : "rider/myLeaves",
+  })
+
+  //Remove newLeave mission
+  await missionServices.removePreviousMissionsByEntityTitleKey({
+    agencyId: agencyId,
+    entityType: EntityTypeEnum.DRIVER_LEAVE,
+    entityId: leave.id,
+    titleKey: "DriverLeaveAdded.Title",
+  })
 
   return leave
 }

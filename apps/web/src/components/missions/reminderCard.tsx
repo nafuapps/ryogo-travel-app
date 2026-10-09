@@ -65,7 +65,7 @@ export default function ReminderCard({
   return (
     <SectionWrapper
       id={reminder.id}
-      className={`transition-all delay-200 duration-300 ease-in ${isRead ? "opacity-70" : ""}`}
+      className={`transition-all delay-200 duration-300 ease-in ${isRead ? "opacity-70" : ""} ${reminder.isCritical ? "border-l-4 border-red-700 dark:border-red-300" : ""}`}
     >
       <SectionRowWrapper className="items-center justify-between">
         <SectionRowWrapper className="items-center justify-start">
@@ -128,7 +128,7 @@ export default function ReminderCard({
                     `/dashboard/missions/reminders/${reminder.id}/modify`,
                   )
             }
-            className="hover:bg-slate-100 dark:hover:bg-slate-700"
+            className="grow"
             label={t("Card.EditReminder")}
           >
             <RyogoIcon icon={ChevronRight} size="sm" color="slate" />

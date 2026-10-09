@@ -190,7 +190,8 @@ export const driverServices = {
     if (!updatedDriver) return
 
     const [leave] = await driverLeaveRepository.updateLeaveToStarted(leaveId)
-    return leave
+    if (!leave) return
+    return { ...leave, driverUserId: driver.userId, driverName: driver.name }
   },
 
   //End driver leave
@@ -211,7 +212,8 @@ export const driverServices = {
     if (!updatedDriver) return
 
     const [leave] = await driverLeaveRepository.updateLeaveToEnded(leaveId)
-    return leave
+    if (!leave) return
+    return { ...leave, driverName: driver.name }
   },
 
   //Upload driver license photo

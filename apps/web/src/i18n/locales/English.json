@@ -4687,6 +4687,22 @@
       "AdminTransferred": {
         "Title": "Admin rights received",
         "Message": "You are the superuser for the agency now. You can manage other owners and users."
+      },
+      "DriverLeaveAdded": {
+        "Title": "New leave added for driver #{driverName}",
+        "Message": "Driver leave has been scheduled from {startDate} to {endDate}. Do not assign any trips during this period."
+      },
+      "DriverLeaveStarted": {
+        "Title": "Leave started for driver #{driverName} ",
+        "Message": "Schedule leave has been started on {startDate}. It will end on {endDate}. Any assigned trips cannot be started during this period."
+      },
+      "VehicleRepairAdded": {
+        "Title": "New repair added for vehicle #{vehicleNumber}",
+        "Message": "Vehicle repair has been scheduled from {startDate} to {endDate}. Do not assign any trips during this period."
+      },
+      "VehicleRepairStarted": {
+        "Title": "Repair started for vehicle #{vehicleNumber}",
+        "Message": "Schedule repair has been started on {startDate}. It will end on {endDate}. Any assigned trips cannot be started during this period."
       }
     },
     "ExpiryAlerts": {
@@ -4863,6 +4879,10 @@
         "DriverLicenseModified": "Driver {driverName} license details have been changed by {userName}",
         "DriverLeaveAdded": "New driver leave for {driverName} has been added by {userName}",
         "DriverLeaveModified": "Driver leave details edited for {driverName} by {userName}",
+        "DriverLeaveStarted": "Driver leave has been started for {driverName} on {startDate} by {userName}",
+        "DriverLeaveEnded": "Driver leave has been ended for {driverName} on {endDate} by {userName}",
+        "StartedDriverLeave": "{driverName} has started their leave on {startDate}",
+        "EndedDriverLeave": "{driverName} has ended their leave on {endDate}",
         "VehicleActivated": "Vehicle {vehicleNumber} has been activated by {userName}",
         "VehicleInactivated": "Vehicle {vehicleNumber} has been inactivated by {userName}",
         "VehicleAdded": "New vehicle {vehicleNumber} has been added by {userName}",
@@ -4872,6 +4892,8 @@
         "VehicleNumberModified": "Vehicle number {oldVehicleNumber} has been changed to {newVehicleNumber} by {userName}",
         "VehicleRepairAdded": "New vehicle repair added for {vehicleNumber} by {userName}",
         "VehicleRepairModified": "Vehicle repair details edited for {vehicleNumber} by {userName}",
+        "VehicleRepairStarted": "Vehicle repair for {vehicleNumber} has been started on {startDate} by {userName}",
+        "VehicleRepairEnded": "Vehcile repair for {vehicleNumber} has been ended on {endDate} by {userName}",
         "SubscriptionPurchased": "{plan} Premium subscription plan has been activated by {userName}",
         "AgentAdded": "New agent {agentName} has been added by {userName}",
         "UserPhotoChanged": "{userName} photo has changed",

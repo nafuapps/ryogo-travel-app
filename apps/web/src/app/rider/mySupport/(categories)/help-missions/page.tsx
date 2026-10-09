@@ -92,7 +92,7 @@ export default async function MySupportHelpMissionsPage() {
 
   const quickActions: SupportQuickActionType[] = [
     {
-      href: `/rider/myMissions/add`,
+      href: `/rider/myMissions/myReminders/add`,
       icon: Plus,
       label: t("QuickActions.CreateCustomMission"),
     },
@@ -286,7 +286,7 @@ async function CustomContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/rider/myMissions/add"}
+          href={"/rider/myMissions/myReminders/add"}
           label={t("CreatingCustom.CTA")}
         />
       </SupportContentSectionWrapper>

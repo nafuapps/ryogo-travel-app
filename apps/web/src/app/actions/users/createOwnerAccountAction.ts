@@ -31,7 +31,7 @@ export async function createOwnerAccountAction(
 
   //Try to create a new user and agency account
   const user = await userServices.addAgencyAndOwnerAccount(data)
-  if (!user) return
+  if (!user || !user.verificationCode) return
 
   // Upload agency logo to storage
   const [logoFile] = data.agency.logo || []
@@ -109,7 +109,7 @@ export async function createOwnerAccountAction(
     subject: "Welcome to RyoGo",
     element: OnboardOwnerEmailTemplate({
       name: user.name,
-      code: user.code,
+      code: user.verificationCode,
       link: absoluteUrl,
     }),
   })

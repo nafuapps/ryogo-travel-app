@@ -72,6 +72,7 @@ export default function ModifyDriverLeavePageComponent({
       data: {
         leaveId: leave.id,
         agencyId: leave.agencyId,
+        driverId: leave.driverId,
         startDate: values.startDate,
         endDate: values.endDate,
         remarks: values.remarks,

@@ -1,10 +1,14 @@
-import { InsertTransactionType } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  InsertTransactionType,
+} from "@ryogo-travel-app/db/schema"
 import { transactionRepository } from "../repositories/transaction.repo"
 import {
   AddTransactionRequestType,
   UpdateTransactionRequestType,
 } from "../types/transaction.types"
 import { subDays } from "date-fns"
+import { bookingRepository } from "../repositories/booking.repo"
 
 export const transactionServices = {
   //Get previous N days transactions
@@ -30,7 +34,9 @@ export const transactionServices = {
 
   //Get transaction details by transaction id
   async findTransactionDetailsById(transactionId: string) {
-    return await transactionRepository.readTransactionById(transactionId)
+    const transaction =
+      await transactionRepository.readTransactionById(transactionId)
+    return transaction
   },
 
   //Add a transaction
@@ -55,6 +61,19 @@ export const transactionServices = {
 
   //Modify a transaction's details
   async modifyTransaction(data: UpdateTransactionRequestType) {
+    const booking = await bookingRepository.readBookingStatusById(
+      data.bookingId,
+    )
+    if (
+      !booking ||
+      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+        booking.status,
+      ) ||
+      booking.reconciledAt
+    ) {
+      return
+    }
+
     const [updatedTransaction] =
       await transactionRepository.updateTransactionDetails(data)
     return updatedTransaction
@@ -68,12 +87,29 @@ export const transactionServices = {
     transactionId: string
     isApproved: boolean
   }) {
-    const [transaction] =
+    const transaction =
+      await transactionRepository.readTransactionById(transactionId)
+    if (!transaction || transaction.isApproved === isApproved) return
+
+    const booking = await bookingRepository.readBookingStatusById(
+      transaction.bookingId,
+    )
+    if (
+      !booking ||
+      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+        booking.status,
+      ) ||
+      booking.reconciledAt
+    ) {
+      return
+    }
+
+    const [updatedTransaction] =
       await transactionRepository.updateTransactionApprovalStatus({
         transactionId,
         isApproved,
       })
-    return transaction
+    return updatedTransaction
   },
 
   //Upload transaction photo
@@ -84,20 +120,36 @@ export const transactionServices = {
     transactionId: string
     transactionPhotoUrl: string
   }) {
-    const [transaction] = await transactionRepository.updateTransactionPhotoUrl(
-      {
+    const [updatedTransaction] =
+      await transactionRepository.updateTransactionPhotoUrl({
         transactionId,
         transactionPhotoUrl,
-      },
-    )
-    return transaction
+      })
+    return updatedTransaction
   },
 
   //Delete a transaction
   async removeTransaction(transactionId: string) {
-    const [transaction] =
+    const transaction =
+      await transactionRepository.readTransactionById(transactionId)
+    if (!transaction) return
+
+    const booking = await bookingRepository.readBookingStatusById(
+      transaction.bookingId,
+    )
+    if (
+      !booking ||
+      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+        booking.status,
+      ) ||
+      booking.reconciledAt
+    ) {
+      return
+    }
+
+    const [updatedTransaction] =
       await transactionRepository.deleteTransaction(transactionId)
-    return transaction
+    return updatedTransaction
   },
 }
 

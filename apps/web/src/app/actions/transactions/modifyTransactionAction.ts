@@ -27,6 +27,7 @@ export async function modifyTransactionAction({
     return
   }
 
+  let transactionPhotoUrl
   //If there is a transaction photo, upload it to cloud storage
   const [file] = data.txnPhoto || []
   if (file) {
@@ -38,13 +39,13 @@ export async function modifyTransactionAction({
         file,
       ),
     )
-    await transactionServices.changeTransactionPhotoUrl({
-      transactionId: data.transactionId,
-      transactionPhotoUrl: uploadResult.path,
-    })
+    transactionPhotoUrl = uploadResult.path
   }
 
-  const updatedTransaction = await transactionServices.modifyTransaction(data)
+  const updatedTransaction = await transactionServices.modifyTransaction({
+    ...data,
+    transactionPhotoUrl,
+  })
   if (!updatedTransaction) return
 
   await notificationServices.addNotification({

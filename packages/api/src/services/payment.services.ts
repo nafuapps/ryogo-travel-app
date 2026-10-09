@@ -4,17 +4,21 @@ import { UpdatePaymentDetailsType } from "../types/payment.types"
 
 export const paymentServices = {
   async findAllPaymentsByOrderId(orderId: string) {
-    return await paymentRepository.readAllPaymentsByOrderId(orderId)
+    const payments = await paymentRepository.readAllPaymentsByOrderId(orderId)
+    return payments
   },
   async findAllPaymentsByUserId(userId: string) {
-    return await paymentRepository.readAllPaymentsByUserId(userId)
+    const payments = await paymentRepository.readAllPaymentsByUserId(userId)
+    return payments
   },
   async findAllPaymentsByAgencyId(agencyId: string) {
-    return await paymentRepository.readAllPaymentsByAgencyId(agencyId)
+    const payments = await paymentRepository.readAllPaymentsByAgencyId(agencyId)
+    return payments
   },
 
   async findPaymentByRPId(rpPaymentId: string) {
-    return await paymentRepository.readPaymentByRPId(rpPaymentId)
+    const payment = await paymentRepository.readPaymentByRPId(rpPaymentId)
+    return payment
   },
 
   async addPayment(newPayment: InsertPaymentType) {

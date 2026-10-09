@@ -18,13 +18,16 @@ export async function resendVerificationCodeAction() {
   }
 
   const user = await userServices.regenerateCode(currentUser.userId)
-  if (!user) return
+  if (!user || !user.verificationCode) return
 
   //Send new code to the user
   await sendEmail({
     receipientEmail: [user.email],
     subject: "RyoGo Account Verification Code",
-    element: resendCodeEmailTemplate({ name: user.name, code: user.code }),
+    element: resendCodeEmailTemplate({
+      name: user.name,
+      code: user.verificationCode,
+    }),
   })
 
   return user

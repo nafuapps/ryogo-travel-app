@@ -449,6 +449,13 @@
       "when": 1791522387157,
       "tag": "0063_stiff_captain_america",
       "breakpoints": true
+    },
+    {
+      "idx": 64,
+      "version": "7",
+      "when": 1791538082462,
+      "tag": "0064_natural_vulture",
+      "breakpoints": true
     }
   ]
 }

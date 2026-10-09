@@ -35,20 +35,21 @@ export async function modifyExpenseAction({
     return
   }
 
-  //If there is an expense photo, upload it to cloud storage
+  //If there is an expense photo, upload it to storage
+  let expensePhotoUrl
   const [file] = data.expensePhoto || []
   if (file) {
     const uploadResult = await uploadFile(
       file,
       generateExpensePhotoPathName(data.bookingId, data.expenseId, file),
     )
-    await expenseServices.changeExpensePhotoUrl({
-      expenseId: data.expenseId,
-      expensePhotoUrl: uploadResult.path,
-    })
+    expensePhotoUrl = uploadResult.path
   }
 
-  const updatedExpense = await expenseServices.modifyExpense(data)
+  const updatedExpense = await expenseServices.modifyExpense({
+    ...data,
+    expensePhotoUrl,
+  })
   if (!updatedExpense) return
 
   await notificationServices.addNotification({
@@ -66,10 +67,6 @@ export async function modifyExpenseAction({
   })
 
   if (isRider) {
-    await missionServices.removePreviousMissionsByEntityId({
-      agencyId,
-      entityId: updatedExpense.id,
-    })
     await missionServices.addMission({
       agencyId: agencyId,
       userId: assignedUserId,

@@ -241,7 +241,7 @@ export const userRepository = {
       id: users.id,
       email: users.email,
       name: users.name,
-      code: users.verificationCode,
+      verificationCode: users.verificationCode,
     })
   },
 
@@ -274,7 +274,12 @@ export const userRepository = {
   }) {
     return await db
       .update(users)
-      .set({ password: passwordHash, isVerified: true, status: status })
+      .set({
+        password: passwordHash,
+        isVerified: true,
+        status: status,
+        verificationCode: null,
+      })
       .where(eq(users.id, userId))
       .returning({
         id: users.id,
@@ -366,7 +371,7 @@ export const userRepository = {
   async updateVerificationStatus(userId: string) {
     return await db
       .update(users)
-      .set({ isVerified: true })
+      .set({ isVerified: true, verificationCode: null })
       .where(eq(users.id, userId))
       .returning({ id: users.id, isVerified: users.isVerified })
   },
@@ -385,6 +390,7 @@ export const userRepository = {
         password: passwordHash,
         status: UserStatusEnum.ACTIVE,
         isVerified: true,
+        verificationCode: null,
       })
       .where(eq(users.id, userId))
       .returning({
@@ -410,7 +416,7 @@ export const userRepository = {
         id: users.id,
         name: users.name,
         email: users.email,
-        code: users.verificationCode,
+        verificationCode: users.verificationCode,
       })
   },
 

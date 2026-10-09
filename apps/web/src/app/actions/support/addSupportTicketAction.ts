@@ -37,7 +37,7 @@ export async function addSupportTicketAction({
   }
 
   //Add the ticket to the database
-  const supportTicket = await supportServices.addSupportTicket({
+  const newSupportTicket = await supportServices.addSupportTicket({
     userId: currentUser.userId,
     agencyId: currentUser.agencyId,
     entityType: data.entityType,
@@ -46,7 +46,7 @@ export async function addSupportTicketAction({
     details: data.details,
   })
 
-  if (!supportTicket) {
+  if (!newSupportTicket) {
     return
   }
 
@@ -57,12 +57,12 @@ export async function addSupportTicketAction({
       ticketPhotoFile,
       generateUserSupportTicketPhotoPathName(
         currentUser.userId,
-        supportTicket.id,
+        newSupportTicket.id,
         ticketPhotoFile,
       ),
     )
     await supportServices.updateSupportTicketPhoto({
-      ticketId: supportTicket.id,
+      ticketId: newSupportTicket.id,
       photoUrl: uploadedTicketPhoto.path,
     })
   }
@@ -72,11 +72,11 @@ export async function addSupportTicketAction({
     receipientEmail: [SUPPORT_EMAIL],
     subject: "RyoGo Support Ticket Received",
     element: AddSupportTicketEmailTemplate({
-      id: supportTicket.id,
-      userId: supportTicket.userId,
-      agencyId: supportTicket.agencyId,
-      issue: supportTicket.issue,
-      details: supportTicket.details,
+      id: newSupportTicket.id,
+      userId: newSupportTicket.userId,
+      agencyId: newSupportTicket.agencyId,
+      issue: newSupportTicket.issue,
+      details: newSupportTicket.details,
     }),
   })
 
@@ -84,14 +84,14 @@ export async function addSupportTicketAction({
     agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.SUPPORT,
-    entityId: supportTicket.id,
+    entityId: newSupportTicket.id,
     textKey: "TicketAdded",
     textObject: {
-      ticketId: supportTicket.id,
+      ticketId: newSupportTicket.id,
       userName: currentUser.name,
     },
-    link: `/dashboard/support/tickets/${supportTicket.id}`,
+    link: `/dashboard/support/tickets/${newSupportTicket.id}`,
   })
 
-  return supportTicket
+  return newSupportTicket
 }

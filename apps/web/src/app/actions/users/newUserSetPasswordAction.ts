@@ -29,14 +29,17 @@ export async function newUserSetPasswordAction({
     return
   }
 
-  const user = await userServices.setNewPassword({ userId, newPassword })
+  const user = await userServices.verifyUserAndSetNewPassword({
+    userId,
+    newPassword,
+  })
   if (!user) return
-
-  // Update user status to active in cookies
-  await updateUserStatusInWebSession(user.status)
 
   // Update verification status to true in cookies
   await updateUserVerificationInWebSession(user.isVerified)
+
+  // Update user status to active in cookies
+  await updateUserStatusInWebSession(user.status)
 
   return user
 }

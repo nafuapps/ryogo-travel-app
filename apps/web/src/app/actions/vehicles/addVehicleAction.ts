@@ -75,7 +75,7 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   }
 
   if (rcPhotoUrl || pucPhotoUrl || insurancePhotoUrl || vehiclePhotoUrl) {
-    await vehicleServices.renewVehicleDocURLs({
+    await vehicleServices.changeVehicleDocURLs({
       vehicleId: vehicle.id,
       rcPhotoUrl,
       pucPhotoUrl,

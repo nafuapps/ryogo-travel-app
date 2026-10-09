@@ -18,12 +18,10 @@ export default function CloseBookingAlertButton({
   bookingId,
   agencyId,
   assignedUserId,
-  customerEmail,
 }: {
   bookingId: string
   agencyId: string
   assignedUserId: string
-  customerEmail: string | null
 }) {
   const t = useTranslations("Dashboard.Buttons.CloseBooking")
   const router = useRouter()
@@ -37,7 +35,6 @@ export default function CloseBookingAlertButton({
         bookingId,
         agencyId,
         assignedUserId,
-        customerEmail,
       })
       if (closedBooking) {
         toast.success(t("Success"))

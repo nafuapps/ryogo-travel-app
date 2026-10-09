@@ -81,6 +81,7 @@ export default function ModifyVehicleRepairPageComponent({
     const modifiedRepair = await modifyVehicleRepairAction({
       repairId: repair.id,
       agencyId: repair.agencyId,
+      vehicleId: repair.vehicleId,
       startDate: values.startDate,
       endDate: values.endDate,
       remarks: values.remarks,

@@ -27,6 +27,7 @@ export default async function ConfirmEmailPage({
   if (!user) {
     redirect("/auth/login", RedirectType.replace)
   }
+
   const t = await getTranslations("Auth.ForgotPassword")
 
   return (

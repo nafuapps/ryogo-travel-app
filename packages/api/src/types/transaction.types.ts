@@ -31,4 +31,5 @@ export type UpdateTransactionRequestType = {
   transactionDate: Date
   remarks?: string | undefined
   txnPhoto?: FileList | undefined
+  transactionPhotoUrl?: string
 }

@@ -25,7 +25,7 @@ export default function DeleteReminderAlertButton({
   isRider?: boolean
 }) {
   const [isPending, startCancelTransition] = useTransition()
-  const t = useTranslations("Dashboard.Buttons.DeleteMission")
+  const t = useTranslations("Dashboard.Buttons.DeleteReminder")
 
   const router = useRouter()
 

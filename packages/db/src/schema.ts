@@ -408,9 +408,7 @@ export const users = pgTable(
     photoUrl: text("photo_url"),
     isAdmin: boolean().default(false).notNull(), //Is the creator/admin of the agency
     isVerified: boolean().default(false).notNull(), //To verify owner's email during onboarding
-    verificationCode: varchar("verification_code", { length: 6 })
-      .notNull()
-      .default("123456"),
+    verificationCode: varchar("verification_code", { length: 6 }),
     codeSentAt: timestamp("code_sent_at", { withTimezone: true }),
     prefersDarkTheme: boolean().default(false),
     languagePref: userLangs().notNull().default(UserLangEnum.ENGLISH),

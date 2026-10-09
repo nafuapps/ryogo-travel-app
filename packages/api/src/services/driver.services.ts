@@ -1,4 +1,5 @@
 import {
+  DriverLeaveStatusEnum,
   DriverStatusEnum,
   InsertDriverLeaveType,
   InsertDriverType,
@@ -96,7 +97,8 @@ export const driverServices = {
 
   //Get driver leave by id
   async findDriverLeaveById(leaveId: string) {
-    return await driverLeaveRepository.readLeaveById(leaveId)
+    const leave = await driverLeaveRepository.readLeaveById(leaveId)
+    return leave
   },
 
   //Create driver
@@ -128,28 +130,24 @@ export const driverServices = {
 
   //Modify driver details
   async modifyDriver(data: ModifyDriverRequestType) {
-    const [driver] = await driverRepository.updateDriverDetails(data)
-    return driver
+    const driver = await driverRepository.readDriverById(data.id)
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+
+    const [updatedDriver] = await driverRepository.updateDriverDetails(data)
+    return updatedDriver
   },
 
   //Change driver license details
-  async changeDriverLicense(
-    data: ChangeDriverLicenseRequestType,
-    licensePhotoUrl?: string,
-  ) {
-    const [driver] = await driverRepository.updateDriverLicenseDetails({
-      ...data,
-      licensePhotoUrl,
-    })
-    return driver
+  async changeDriverLicense(data: ChangeDriverLicenseRequestType) {
+    const [updatedDriver] =
+      await driverRepository.updateDriverLicenseDetails(data)
+    return updatedDriver
   },
 
   //Add driver leave
   async addDriverLeave(data: InsertDriverLeaveType) {
     const driver = await driverRepository.readDriverById(data.driverId)
-    if (!driver) {
-      return
-    }
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
 
     const [leave] = await driverLeaveRepository.createLeave(data)
     if (!leave) return
@@ -159,11 +157,13 @@ export const driverServices = {
 
   //Modify driver leave
   async modifyDriverLeave(data: ModifyDriverLeaveRequestType) {
+    const driver = await driverRepository.readDriverById(data.driverId)
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+
     const [leave] = await driverLeaveRepository.updateLeave(data)
     if (!leave) return
-    const driver = await driverRepository.readDriverById(leave.driverId)
-    if (!driver) return
-    return { ...leave, driverName: driver?.name }
+
+    return { ...leave, driverName: driver.name }
   },
 
   //Remove driver leave
@@ -183,15 +183,14 @@ export const driverServices = {
     const driver = await driverRepository.readDriverById(driverId)
     if (!driver || driver.status !== DriverStatusEnum.AVAILABLE) return
 
-    const updatedDriver = await driverRepository.updateStatus({
-      driverId,
-      status: DriverStatusEnum.LEAVE,
-    })
-    if (!updatedDriver) return
+    const leave = await driverLeaveRepository.readLeaveById(leaveId)
+    if (!leave || leave.status !== DriverLeaveStatusEnum.PENDING) return
 
-    const [leave] = await driverLeaveRepository.updateLeaveToStarted(leaveId)
-    if (!leave) return
-    return { ...leave, driverUserId: driver.userId, driverName: driver.name }
+    const startedLeave = await driverLeaveRepository.updateLeaveToStarted({
+      leaveId,
+      driverId,
+    })
+    return startedLeave
   },
 
   //End driver leave
@@ -205,15 +204,14 @@ export const driverServices = {
     const driver = await driverRepository.readDriverById(driverId)
     if (!driver || driver.status !== DriverStatusEnum.LEAVE) return
 
-    const updatedDriver = await driverRepository.updateStatus({
-      driverId,
-      status: DriverStatusEnum.AVAILABLE,
-    })
-    if (!updatedDriver) return
+    const leave = await driverLeaveRepository.readLeaveById(leaveId)
+    if (!leave || leave.status !== DriverLeaveStatusEnum.ONGOING) return
 
-    const [leave] = await driverLeaveRepository.updateLeaveToEnded(leaveId)
-    if (!leave) return
-    return { ...leave, driverName: driver.name }
+    const endedLeave = await driverLeaveRepository.updateLeaveToEnded({
+      leaveId,
+      driverId,
+    })
+    return endedLeave
   },
 
   //Upload driver license photo
@@ -235,25 +233,46 @@ export const driverServices = {
     driverId: string
     userId: string
   }) {
-    //Cannot activate if the corresponding user is inactive
+    //Cannot activate if the corresponding user is inactive or suspended
     const user = await userRepository.readUserById(userId)
-    if (!user || user.status === UserStatusEnum.INACTIVE) {
+    if (
+      !user ||
+      user.status === UserStatusEnum.INACTIVE ||
+      user.status === UserStatusEnum.SUSPENDED
+    ) {
       return
     }
-    const [driver] = await driverRepository.updateStatus({
+
+    const driver = await driverRepository.readDriverById(driverId)
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+
+    const [updatedDriver] = await driverRepository.updateStatus({
       driverId,
       status: DriverStatusEnum.AVAILABLE,
     })
-    return driver
+    return updatedDriver
   },
 
   //Inactivate Driver
-  async inactivateDriver(driverId: string) {
-    const [driver] = await driverRepository.updateStatus({
+  async inactivateDriver({
+    driverId,
+    userId,
+  }: {
+    driverId: string
+    userId: string
+  }) {
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      return
+    }
+    const driver = await driverRepository.readDriverById(driverId)
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+
+    const [updatedDriver] = await driverRepository.updateStatus({
       driverId,
       status: DriverStatusEnum.INACTIVE,
     })
-    return driver
+    return updatedDriver
   },
 }
 

@@ -86,6 +86,7 @@ export const transactionRepository = {
     mode,
     otherParty,
     transactionDate,
+    transactionPhotoUrl,
     remarks,
   }: UpdateTransactionRequestType) {
     return await db
@@ -96,6 +97,7 @@ export const transactionRepository = {
         mode,
         otherParty,
         transactionDate,
+        transactionPhotoUrl,
         remarks,
       })
       .where(eq(transactions.id, transactionId))

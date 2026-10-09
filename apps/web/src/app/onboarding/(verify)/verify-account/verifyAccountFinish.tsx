@@ -1,7 +1,7 @@
 import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { verifyAccountAction } from "@/app/actions/users/verifyAccountAction"
+import { verifyOwnerAccountAction } from "@/app/actions/users/verifyOwnerAccountAction"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { useForm } from "react-hook-form"
 import {
@@ -19,7 +19,7 @@ export function VerifyAccountFinish() {
 
   const onSubmit = async () => {
     //Verify user in cookies and take to vehicle onboarding
-    await verifyAccountAction()
+    await verifyOwnerAccountAction()
     router.push("/onboarding/add-vehicle")
   }
 

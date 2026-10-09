@@ -6,6 +6,7 @@ import {
   TransactionPartiesEnum,
   TransactionTypesEnum,
   TripLogTypesEnum,
+  UserRolesEnum,
   UserStatusEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
@@ -270,7 +271,7 @@ export const bookingServices = {
 
   //Get assigned user id by booking id
   async findAssignedUserIdByBookingId(bookingId: string) {
-    const booking = await bookingRepository.readBookingById(bookingId)
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
     if (!booking) return
     return booking.assignedUserId
   },
@@ -391,6 +392,11 @@ export const bookingServices = {
     updateCustomerAddress,
     customerId,
   }: ConfirmBookingRequestType) {
+    const booking = await bookingRepository.readBookingStatusById(id)
+    if (!booking || booking.status !== BookingStatusEnum.LEAD) {
+      return
+    }
+
     if (updateCustomerAddress && pickupAddress && customerId) {
       await customerRepository.updateCustomerAddress({
         customerId,
@@ -417,11 +423,8 @@ export const bookingServices = {
     vehicleId: string
   }) {
     //Check if the booking is confirmed
-    const bookingStatus = await this.findBookingStatusById(bookingId)
-    if (
-      !bookingStatus ||
-      bookingStatus.status !== BookingStatusEnum.CONFIRMED
-    ) {
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
+    if (!booking || booking.status !== BookingStatusEnum.CONFIRMED) {
       return
     }
     //Check if the driver is available
@@ -439,27 +442,31 @@ export const bookingServices = {
     }
 
     //Atomic transaction to change booking to in progress and driver, vehicle to on trip
-    const booking = await bookingRepository.startBookingAtomicTransaction({
-      bookingId,
-      driverId,
-      vehicleId,
-    })
+    const updatedBooking =
+      await bookingRepository.startBookingAtomicTransaction({
+        bookingId,
+        driverId,
+        vehicleId,
+      })
 
-    if (!booking || booking.status !== BookingStatusEnum.IN_PROGRESS) {
+    if (
+      !updatedBooking ||
+      updatedBooking.status !== BookingStatusEnum.IN_PROGRESS
+    ) {
       return
     }
     return {
-      ...booking,
+      ...updatedBooking,
       driverName: driverStatus.name,
       vehicleNumber: vehicleStatus.vehicleNumber,
-      assignedUserId: bookingStatus.assignedUserId,
+      assignedUserId: booking.assignedUserId,
     }
   },
 
   //Update booking values on trip completion like total distance, total amount etc
   async updateBookingActualValues(bookingId: string) {
     const booking = await bookingRepository.readBookingDetailsById(bookingId)
-    if (!booking) return
+    if (!booking || booking.status !== BookingStatusEnum.COMPLETED) return
 
     let actualStartDate = booking.actualStartDate
     let actualEndDate = booking.actualEndDate
@@ -526,7 +533,8 @@ export const bookingServices = {
     bookingRatingByDriver?: number
   }) {
     //Check if the booking is in progress
-    const bookingStatus = await this.findBookingStatusById(bookingId)
+    const bookingStatus =
+      await bookingRepository.readBookingStatusById(bookingId)
     if (
       !bookingStatus ||
       bookingStatus.status !== BookingStatusEnum.IN_PROGRESS
@@ -590,7 +598,9 @@ export const bookingServices = {
     ) {
       return
     }
-    return await bookingRepository.updateBookingRatingByDriver(data)
+    const updatedBooking =
+      await bookingRepository.updateBookingRatingByDriver(data)
+    return updatedBooking
   },
 
   //Update booking rating by customer
@@ -612,13 +622,15 @@ export const bookingServices = {
       return { error: "invalidCode" }
     }
 
-    return await bookingRepository.updateBookingRatingByCustomer(data)
+    const updatedBooking =
+      await bookingRepository.updateBookingRatingByCustomer(data)
+    return updatedBooking
   },
 
-  async addSecretCode(id: string) {
+  async addSecretCode(bookingId: string) {
     const secretCode = generateSecretCode()
     const [updatedBooking] = await bookingRepository.updateSecretCode({
-      id,
+      bookingId,
       secretCode,
     })
     return updatedBooking
@@ -632,7 +644,7 @@ export const bookingServices = {
 
   //Cancel a booking
   async cancelBooking(bookingId: string) {
-    const booking = await bookingRepository.readBookingById(bookingId)
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
     //Only lead or confirmed booking can be cancelled
     if (
       !booking ||
@@ -660,14 +672,15 @@ export const bookingServices = {
     const driver = await driverRepository.readDriverById(assignedDriverId)
     if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
 
-    const booking = await bookingRepository.readBookingById(bookingId)
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
     if (
       !booking ||
       ![BookingStatusEnum.LEAD, BookingStatusEnum.CONFIRMED].includes(
         booking.status,
       )
-    )
+    ) {
       return
+    }
 
     const [updatedBooking] = await bookingRepository.updateAssignedDriver({
       bookingId,
@@ -698,8 +711,9 @@ export const bookingServices = {
       ![BookingStatusEnum.LEAD, BookingStatusEnum.CONFIRMED].includes(
         booking.status,
       )
-    )
+    ) {
       return
+    }
 
     const [updatedBooking] = await bookingRepository.updateAssignedVehicle({
       bookingId,
@@ -722,10 +736,15 @@ export const bookingServices = {
     assignedUserId: string
   }) {
     const user = await userRepository.readUserById(assignedUserId)
-    if (!user || user.status === UserStatusEnum.SUSPENDED) return
+    if (
+      !user ||
+      user.status === UserStatusEnum.SUSPENDED ||
+      user.userRole === UserRolesEnum.DRIVER
+    )
+      return
 
     const booking = await bookingRepository.readBookingById(bookingId)
-    if (!booking) return
+    if (!booking || booking.status === BookingStatusEnum.CANCELLED) return
 
     const [updatedBooking] = await bookingRepository.updateAssignedUser({
       bookingId,
@@ -739,8 +758,8 @@ export const bookingServices = {
   },
 
   //Close a booking after review, add expenses and update total amount
-  async closeBooking(id: string) {
-    const expenses = await expenseRepository.readExpensesByBookingId(id)
+  async closeBooking(bookingId: string) {
+    const expenses = await expenseRepository.readExpensesByBookingId(bookingId)
     const actualExpensesAmount = expenses.reduce((acc, curr) => {
       if (curr.isApproved) {
         return acc + curr.amount
@@ -749,7 +768,7 @@ export const bookingServices = {
     }, 0)
 
     const [updatedBooking] = await bookingRepository.addClosedAt({
-      id,
+      bookingId,
       actualExpensesAmount,
     })
     return updatedBooking
@@ -757,12 +776,11 @@ export const bookingServices = {
 
   //Reopen a closed booking for review, remove expenses and adjust total amount
   async reopenBooking(bookingId: string) {
-    const bookingDetails =
-      await bookingServices.findBookingDetailsById(bookingId)
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
     if (
-      !bookingDetails ||
-      bookingDetails.status !== BookingStatusEnum.COMPLETED ||
-      !bookingDetails.closedAt
+      !booking ||
+      booking.status !== BookingStatusEnum.COMPLETED ||
+      !booking.closedAt
     ) {
       return
     }
@@ -778,14 +796,16 @@ export const bookingServices = {
     bookingId: string
     quoteUrl: string
   }) {
-    return await bookingRepository.updateQuoteUrl({
+    const [updatedBooking] = await bookingRepository.updateQuoteUrl({
       bookingId,
       quoteUrl,
     })
+    return updatedBooking
   },
 
   async changeQuoteSent(bookingId: string) {
-    return await bookingRepository.updateQuoteSent(bookingId)
+    const [updatedBooking] = await bookingRepository.updateQuoteSent(bookingId)
+    return updatedBooking
   },
 
   async addConfirmationUrl({
@@ -795,14 +815,17 @@ export const bookingServices = {
     bookingId: string
     confirmationUrl: string
   }) {
-    return await bookingRepository.updateConfirmationUrl({
+    const [updatedBooking] = await bookingRepository.updateConfirmationUrl({
       bookingId,
       confirmationUrl,
     })
+    return updatedBooking
   },
 
   async changeConfirmationSent(bookingId: string) {
-    return await bookingRepository.updateConfirmationSent(bookingId)
+    const [updatedBooking] =
+      await bookingRepository.updateConfirmationSent(bookingId)
+    return updatedBooking
   },
 
   async addInvoiceUrl({
@@ -812,27 +835,61 @@ export const bookingServices = {
     bookingId: string
     invoiceUrl: string
   }) {
-    return await bookingRepository.updateInvoiceUrl({ bookingId, invoiceUrl })
+    const [updatedBooking] = await bookingRepository.updateInvoiceUrl({
+      bookingId,
+      invoiceUrl,
+    })
+    return updatedBooking
   },
 
   async changeInvoiceSent(bookingId: string) {
-    return await bookingRepository.updateInvoiceSent(bookingId)
+    const [updatedBooking] =
+      await bookingRepository.updateInvoiceSent(bookingId)
+    return updatedBooking
   },
 
-  async changeStartTime(id: string, startTime: string) {
-    return await bookingRepository.updateStartTime({ id, startTime })
+  async changeStartTime(bookingId: string, startTime: string) {
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
+    if (!booking || booking.status !== BookingStatusEnum.CONFIRMED) {
+      return
+    }
+    const [updatedBooking] = await bookingRepository.updateStartTime({
+      bookingId,
+      startTime,
+    })
+    return updatedBooking
   },
 
-  async changeBookingRemarks(id: string, remarks: string) {
-    return await bookingRepository.updateRemarks({ id, remarks })
+  async changeBookingRemarks(bookingId: string, remarks: string) {
+    const [updatedBooking] = await bookingRepository.updateRemarks({
+      bookingId,
+      remarks,
+    })
+    return updatedBooking
   },
 
-  async changePickupAddress(id: string, pickupAddress: string) {
-    return await bookingRepository.updatePickupAddress({ id, pickupAddress })
+  async changePickupAddress(bookingId: string, pickupAddress: string) {
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
+    if (!booking || booking.status !== BookingStatusEnum.CONFIRMED) {
+      return
+    }
+    const [updatedBooking] = await bookingRepository.updatePickupAddress({
+      bookingId,
+      pickupAddress,
+    })
+    return updatedBooking
   },
 
-  async changeDropAddress(id: string, dropAddress: string) {
-    return await bookingRepository.updateDropAddress({ id, dropAddress })
+  async changeDropAddress(bookingId: string, dropAddress: string) {
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
+    if (!booking || booking.status !== BookingStatusEnum.CONFIRMED) {
+      return
+    }
+    const [updatedBooking] = await bookingRepository.updateDropAddress({
+      bookingId,
+      dropAddress,
+    })
+    return updatedBooking
   },
 }
 

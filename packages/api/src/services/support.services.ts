@@ -56,6 +56,9 @@ export const supportServices = {
     ticketId: string
     resolutionRating?: number
   }) {
+    const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
+    if (!ticket || ticket.status !== TicketStatusEnum.RESOLVED) return
+
     const [closedTicket] =
       await supportTicketRepository.updateTicketStatusWithRating({
         ticketId,
@@ -81,6 +84,9 @@ export const supportServices = {
   },
 
   async removeTicket(ticketId: string) {
+    const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
+    if (!ticket || ticket.status !== TicketStatusEnum.OPEN) return
+
     const [removedTicket] =
       await supportTicketRepository.deleteSupportTicket(ticketId)
     return removedTicket

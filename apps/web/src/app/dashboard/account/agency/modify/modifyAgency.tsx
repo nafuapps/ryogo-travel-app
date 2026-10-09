@@ -78,17 +78,15 @@ export default function ModifyAgencyPageForm({
   })
 
   //Submit actions
-  async function onSubmit(data: SchemaType) {
+  async function onSubmit(values: SchemaType) {
     const updatedAgency = await modifyAgencyAction({
       userId,
-      data: {
-        agencyId: agency.id,
-        businessName: data.agencyName,
-        businessAddress: data.agencyAddress,
-        defaultCommissionRate: data.commissionRate,
-        agencyState: data.agencyState,
-        agencyCity: data.agencyCity,
-      },
+      agencyId: agency.id,
+      businessName: values.agencyName,
+      businessAddress: values.agencyAddress,
+      defaultCommissionRate: values.commissionRate,
+      agencyState: values.agencyState,
+      agencyCity: values.agencyCity,
     })
     if (updatedAgency) {
       router.replace(`/dashboard/account/agency`)

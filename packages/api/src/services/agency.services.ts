@@ -127,6 +127,11 @@ export const agencyServices = {
 
   //Modify agency details
   async modifyAgency(data: ModifyAgencyRequestType) {
+    const agency = await agencyRepository.readAgencyById(data.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      return
+    }
+
     //Step1: Get location id from city, state (if provided)
     let locationId: string | undefined = undefined
     if (data.agencyCity && data.agencyState) {
@@ -153,6 +158,15 @@ export const agencyServices = {
 
   //Activate an agency
   async activateAgency(agencyId: string, updateSubscriptionExpiry?: boolean) {
+    const agency = await agencyRepository.readAgencyById(agencyId)
+    if (
+      !agency ||
+      agency.status === AgencyStatusEnum.SUSPENDED ||
+      agency.status === AgencyStatusEnum.ACTIVE
+    ) {
+      return
+    }
+
     const [updatedAgency] = await agencyRepository.updateAgencyStatus({
       id: agencyId,
       status: AgencyStatusEnum.ACTIVE,
@@ -165,6 +179,15 @@ export const agencyServices = {
 
   //Inactivate an agency
   async inactivateAgency(agencyId: string) {
+    const agency = await agencyRepository.readAgencyById(agencyId)
+    if (
+      !agency ||
+      agency.status === AgencyStatusEnum.SUSPENDED ||
+      agency.status === AgencyStatusEnum.INACTIVE
+    ) {
+      return
+    }
+
     const [updatedAgency] = await agencyRepository.updateAgencyStatus({
       id: agencyId,
       status: AgencyStatusEnum.INACTIVE,
@@ -179,11 +202,11 @@ export const agencyServices = {
     agencyId: string
     logoUrl: string
   }) {
-    const [agency] = await agencyRepository.updateAgencyLogoUrl({
+    const [updatedAgency] = await agencyRepository.updateAgencyLogoUrl({
       agencyId,
       logoUrl,
     })
-    return agency
+    return updatedAgency
   },
 
   async updateAgencyQRCode({
@@ -193,11 +216,11 @@ export const agencyServices = {
     agencyId: string
     qrCodeUrl: string
   }) {
-    const [agency] = await agencyRepository.updateAgencyQRCodeUrl({
+    const [updatedAgency] = await agencyRepository.updateAgencyQRCodeUrl({
       agencyId,
       qrCodeUrl,
     })
-    return agency
+    return updatedAgency
   },
 
   //Change agency phone
@@ -231,6 +254,15 @@ export const agencyServices = {
   },
 
   async downgradeAgencyToBasic(agencyId: string) {
+    const agency = await agencyRepository.readAgencyById(agencyId)
+    if (
+      !agency ||
+      agency.status === AgencyStatusEnum.SUSPENDED ||
+      agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+    ) {
+      return
+    }
+
     const [updatedAgency] = await agencyRepository.updateAgencySubscriptionPlan(
       {
         id: agencyId,
@@ -242,6 +274,16 @@ export const agencyServices = {
   },
 
   async tryPremium(agencyId: string) {
+    const agency = await agencyRepository.readAgencyById(agencyId)
+    if (
+      !agency ||
+      agency.status === AgencyStatusEnum.SUSPENDED ||
+      agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC ||
+      agency.hasTriedSubscription
+    ) {
+      return
+    }
+
     const [updatedAgency] = await agencyRepository.updateAgencySubscriptionPlan(
       {
         id: agencyId,

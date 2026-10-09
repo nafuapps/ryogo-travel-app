@@ -18,7 +18,7 @@ export async function forgotPasswordAction(userId: string) {
     }
   }
   const user = await userServices.generateAndSendCode(userId)
-  if (!user) return
+  if (!user || !user.verificationCode) return
 
   const link = `/auth/forgot-password/${userId}/reset`
 
@@ -33,7 +33,7 @@ export async function forgotPasswordAction(userId: string) {
     subject: "RyoGo verification code - Password reset",
     element: ForgotPasswordCodeTemplate({
       name: user.name,
-      code: user.code,
+      code: user.verificationCode,
       link: absoluteUrl,
     }),
   })

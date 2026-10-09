@@ -51,7 +51,7 @@ export async function decrypt(session: string = "") {
 
 //Get session from DB by token
 export async function verifyWebSessionInDB(token: string, userId: string) {
-  const sessionDB = await userServices.getUserSessionByToken(token)
+  const sessionDB = await userServices.findUserSessionByToken(token)
 
   //Check if session exists in DB, is not expired and is of the same user
   if (
@@ -93,7 +93,7 @@ export async function createWebSession({
   const userAgent = headerList.get("user-agent")
 
   // 1. Create a session in the database
-  const [sessionData] = await userServices.addUserSession({
+  const sessionData = await userServices.addUserSession({
     userId: userData.id,
     token,
     expiresAt,
@@ -182,20 +182,23 @@ export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
 
 //Update user status in session
 export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
-  // 1. Get session payload from cookie
+  // Get session payload from cookie
   const payload = await getSessionPayloadFromCookie()
   if (!payload) return
 
-  // 2. Update user status in payload
+  // Update user status in payload
   const newSession = await encrypt({
     ...payload,
     status: newStatus,
   })
 
-  // 3. Update New expiry in DB
-  const newExpiresAt = await updateSessionExpiryInDB(payload.sessionId)
+  // Update New expiry in DB
+  const newExpiresAt = await updateSessionExpiryInDB({
+    sessionId: payload.sessionId,
+    userId: payload.userId,
+  })
 
-  // 4. Update session expiry in cookie
+  // Update session in cookie
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
@@ -207,50 +210,44 @@ export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
 
 //Update user verification status in session
 export async function updateUserVerificationInWebSession(isVerified: boolean) {
-  // 1. Get session payload from cookie
+  // Get session payload from cookie
   const payload = await getSessionPayloadFromCookie()
   if (!payload) return
 
-  // 2. Update verification status in payload
+  // Update verification status in payload
   const newSession = await encrypt({
     ...payload,
     isVerified: isVerified,
   })
 
-  // 3. Update New expiry in DB
-  const newExpiresAt = await updateSessionExpiryInDB(payload.sessionId)
-
-  // 4. Update session expiry in cookie
+  // Update session in cookie
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
     secure: true,
-    expires: newExpiresAt,
+    expires: payload.expiresAt,
     sameSite: "lax",
   })
 }
 
 //Update user admin status in session
 export async function updateUserAdminInWebSession(isAdmin: boolean) {
-  // 1. Get session payload from cookie
+  // Get session payload from cookie
   const payload = await getSessionPayloadFromCookie()
   if (!payload) return
 
-  // 2. Update verification status in payload
+  // Update verification status in payload
   const newSession = await encrypt({
     ...payload,
     isAdmin: isAdmin,
   })
 
-  // 3. Update New expiry in DB
-  const newExpiresAt = await updateSessionExpiryInDB(payload.sessionId)
-
-  // 4. Update session expiry in cookie
+  // Update session in cookie
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
     secure: true,
-    expires: newExpiresAt,
+    expires: payload.expiresAt,
     sameSite: "lax",
   })
 }
@@ -313,9 +310,15 @@ export async function deleteWebSession() {
   return user
 }
 
-async function updateSessionExpiryInDB(sessionId: string) {
+async function updateSessionExpiryInDB({
+  sessionId,
+  userId,
+}: {
+  sessionId: string
+  userId: string
+}) {
   const expiresAt = createNewExpiryDate()
-  await userServices.changeUserSessionExpiry({ sessionId, expiresAt })
+  await userServices.changeUserSessionExpiry({ sessionId, expiresAt, userId })
   return expiresAt
 }
 

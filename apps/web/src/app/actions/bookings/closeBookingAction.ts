@@ -20,12 +20,10 @@ export async function closeBookingAction({
   bookingId,
   agencyId,
   assignedUserId,
-  customerEmail,
 }: {
   bookingId: string
   agencyId: string
   assignedUserId: string
-  customerEmail: string | null
 }) {
   const currentUser = await getCurrentUser()
   if (
@@ -54,19 +52,15 @@ export async function closeBookingAction({
     return
   }
 
-  //Generate invoice pdf
+  //Generate and store invoice pdf
   const invoiceFile = await getBookingInvoicePDF(bookingDetails)
-
-  //Upload file and get storage url
   const invoiceUrl = (
     await uploadFile(invoiceFile, generateBookingInvoicePathName(bookingId))
   ).path
-  if (!invoiceUrl) return
-
-  //Update invoice url in DB
   await bookingServices.addInvoiceUrl({ bookingId, invoiceUrl })
 
-  if (customerEmail) {
+  //Send invoice over email to customer
+  if (bookingDetails.customer.email) {
     const headerList = await headers()
     const host = headerList.get("host")
     const protocol = headerList.get("x-forwarded-proto") || "http"
@@ -74,7 +68,7 @@ export async function closeBookingAction({
 
     //Send invoice over email to the customer
     const result = await sendEmail({
-      receipientEmail: [customerEmail],
+      receipientEmail: [bookingDetails.customer.email],
       subject: "Booking Completed - Invoice | RyoGo",
       element: BookingCompletedInvoiceEmailTemplate({
         name: bookingDetails.customer.name,

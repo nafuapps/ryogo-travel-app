@@ -47,7 +47,7 @@ export async function finishDriverLeaveAction({
     textObject: {
       endDate: leave.actualEndDate,
       userName: currentUser.name,
-      driverName: leave.driverName,
+      driverName: leave.driver.name,
     },
     link: `/dashboard/drivers/${leave.driverId}/leaves`,
   })

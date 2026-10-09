@@ -23,5 +23,9 @@ export default async function VerifyCodePage({
     redirect("/auth/login", RedirectType.replace)
   }
 
+  if (!user.verificationCode) {
+    redirect(`/auth/forgot-password/${userId}`, RedirectType.replace)
+  }
+
   return <ResetWithCodePageComponent user={user} />
 }

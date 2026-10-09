@@ -5,9 +5,13 @@ import { updateUserVerificationInWebSession } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function verifyAccountAction() {
+export async function verifyOwnerAccountAction() {
   const currentUser = await getCurrentUser()
-  if (!currentUser || currentUser.userRole !== UserRolesEnum.OWNER) {
+  if (
+    !currentUser ||
+    currentUser.userRole !== UserRolesEnum.OWNER ||
+    !currentUser.isAdmin
+  ) {
     return
   }
 
@@ -15,7 +19,7 @@ export async function verifyAccountAction() {
     return
   }
 
-  const user = await userServices.verifyUser(currentUser.userId)
+  const user = await userServices.verifyOwner(currentUser.userId)
   if (!user || !user.isVerified) return
 
   //Update verification in session cookie

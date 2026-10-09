@@ -3,6 +3,8 @@ import {
   InsertVehicleRepairType,
   vehicleRepairs,
   VehicleRepairStatusEnum,
+  vehicles,
+  VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { and, eq, gte, lte, or } from "drizzle-orm"
 import { ModifyVehicleRepairRequestType } from "../types/vehicleRepair.types"
@@ -109,28 +111,74 @@ export const vehicleRepairRepository = {
       .returning()
   },
 
-  //Update a vehicle repair to started
-  async updateRepairToStarted(repairId: string) {
-    return await db
-      .update(vehicleRepairs)
-      .set({
-        status: VehicleRepairStatusEnum.ONGOING,
-        actualStartDate: new Date(),
+  //Update a vehicle repair to started and vehicle status to Repair
+  async updateRepairToStarted({
+    repairId,
+    vehicleId,
+  }: {
+    repairId: string
+    vehicleId: string
+  }) {
+    return await db.transaction(async (tx) => {
+      await tx
+        .update(vehicles)
+        .set({
+          status: VehicleStatusEnum.REPAIR,
+        })
+        .where(eq(vehicles.id, vehicleId))
+      await tx
+        .update(vehicleRepairs)
+        .set({
+          status: VehicleRepairStatusEnum.ONGOING,
+          actualStartDate: new Date(),
+        })
+        .where(eq(vehicleRepairs.id, repairId))
+      return await tx.query.vehicleRepairs.findFirst({
+        where: eq(vehicleRepairs.id, repairId),
+        with: {
+          vehicle: {
+            columns: {
+              vehicleNumber: true,
+            },
+          },
+        },
       })
-      .where(eq(vehicleRepairs.id, repairId))
-      .returning()
+    })
   },
 
   //Update a vehicle repair to ended
-  async updateRepairToEnded(repairId: string) {
-    return await db
-      .update(vehicleRepairs)
-      .set({
-        status: VehicleRepairStatusEnum.COMPLETED,
-        actualEndDate: new Date(),
+  async updateRepairToEnded({
+    repairId,
+    vehicleId,
+  }: {
+    repairId: string
+    vehicleId: string
+  }) {
+    return await db.transaction(async (tx) => {
+      await tx
+        .update(vehicles)
+        .set({
+          status: VehicleStatusEnum.AVAILABLE,
+        })
+        .where(eq(vehicles.id, vehicleId))
+      await tx
+        .update(vehicleRepairs)
+        .set({
+          status: VehicleRepairStatusEnum.COMPLETED,
+          actualEndDate: new Date(),
+        })
+        .where(eq(vehicleRepairs.id, repairId))
+      return await tx.query.vehicleRepairs.findFirst({
+        where: eq(vehicleRepairs.id, repairId),
+        with: {
+          vehicle: {
+            columns: {
+              vehicleNumber: true,
+            },
+          },
+        },
       })
-      .where(eq(vehicleRepairs.id, repairId))
-      .returning()
+    })
   },
 
   //Delete a vehicle repair

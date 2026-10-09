@@ -21,4 +21,5 @@ export type UpdateExpenseRequestType = {
   expenseDate: Date
   remarks?: string | undefined
   expensePhoto?: FileList | undefined
+  expensePhotoUrl?: string
 }

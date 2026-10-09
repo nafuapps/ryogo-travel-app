@@ -62,12 +62,14 @@ function generateNewPassword() {
 export const userServices = {
   //Find all users by role
   async findAllUsersByRole(roles: UserRolesEnum[]) {
-    return await userRepository.readAllUsersByRole(roles)
+    const users = await userRepository.readAllUsersByRole(roles)
+    return users
   },
 
   //Find all users in an agency
   async findAllUsersInAgency(agencyId: string) {
-    return await userRepository.readAllUsersByAgency(agencyId)
+    const users = await userRepository.readAllUsersByAgency(agencyId)
+    return users
   },
 
   //Find user account details
@@ -171,8 +173,9 @@ export const userServices = {
   },
 
   //Get user session by token
-  async getUserSessionByToken(token: string) {
-    return await sessionRepository.readSessionByToken(token)
+  async findUserSessionByToken(token: string) {
+    const session = await sessionRepository.readSessionByToken(token)
+    return session
   },
 
   //Create Agency and Owner Account
@@ -253,11 +256,12 @@ export const userServices = {
       password: data.owner.password,
       email: owner.email,
       name: owner.name,
-      code: owner.code,
+      verificationCode: owner.verificationCode,
     }
   },
 
-  //Create Agent (Onboarding flow)
+  //TODO: New user can login with verification code (in email) and then change password
+  //Create Agent
   async addAgentUser(data: AddUserRequestType) {
     //Step1: Check if agent with same phone already exists in this agency
     const existingUserInAgency =
@@ -386,7 +390,8 @@ export const userServices = {
       !currentUser ||
       !currentUser.isAdmin ||
       currentUser.userRole !== UserRolesEnum.OWNER ||
-      currentUser.agencyId !== agencyId
+      currentUser.agencyId !== agencyId ||
+      currentUser.status !== UserStatusEnum.SUSPENDED
     ) {
       return
     }
@@ -499,15 +504,15 @@ export const userServices = {
     password: string
   }) {
     //Step1: Find user with userID
-    const userFound = await userRepository.readUserWithPasswordById(userId)
+    const user = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot login
-    if (!userFound) {
+    if (!user) {
       return {
         error: "userNotFound",
       }
     }
 
-    if (userFound.status === UserStatusEnum.SUSPENDED) {
+    if (user.status === UserStatusEnum.SUSPENDED) {
       return {
         error: "userSuspended",
       }
@@ -516,7 +521,7 @@ export const userServices = {
     //Step2: Compare password
     const valid = await comparePassword({
       enteredPassword: password,
-      dbPasswordHash: userFound.password,
+      dbPasswordHash: user.password,
     })
     if (!valid) {
       return {
@@ -525,25 +530,34 @@ export const userServices = {
     }
 
     //Step3: Update last login and seen
-    await userRepository.updateLastLoginAndSeen(userFound.id)
+    await userRepository.updateLastLoginAndSeen(user.id)
 
     //Step4: Return user details
-    return { data: userFound }
+    return { data: user }
   },
 
   //Create user session
   async addUserSession(data: InsertSessionType) {
-    return await sessionRepository.createSession(data)
+    const user = await userRepository.readUserById(data.userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) return
+
+    const [newSession] = await sessionRepository.createSession(data)
+    return newSession
   },
 
   //Update user session expiry
   async changeUserSessionExpiry({
     sessionId,
+    userId,
     expiresAt,
   }: {
     sessionId: string
+    userId: string
     expiresAt: Date
   }) {
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) return
+
     await sessionRepository.updateSessionExpiringTime({ sessionId, expiresAt })
   },
 
@@ -555,10 +569,16 @@ export const userServices = {
 
   //Logout in DB
   async logOutInDB({ sessionId }: { sessionId: string }) {
+    const session = await sessionRepository.readSessionById(sessionId)
+    if (!session || session.expiresAt < new Date()) {
+      return
+    }
+
     const [sessionDeleted] = await sessionRepository.deleteSession(sessionId)
     if (!sessionDeleted) {
       return
     }
+
     const [updatedUser] = await userRepository.updateLastLogout(
       sessionDeleted.userId,
     )
@@ -568,8 +588,7 @@ export const userServices = {
   //Reset user password (by owner - user details flow)
   async resetUserPassword(userId: string) {
     const user = await userRepository.readUserById(userId)
-    // If no user found, cannot reset password
-    if (!user) {
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
       return
     }
 
@@ -596,13 +615,18 @@ export const userServices = {
   },
 
   //Verify and activate user and set new password
-  async setNewPassword({
+  async verifyUserAndSetNewPassword({
     userId,
     newPassword,
   }: {
     userId: string
     newPassword: string
   }) {
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status !== UserStatusEnum.NEW || user.isVerified) {
+      return
+    }
+
     //Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
 
@@ -616,32 +640,27 @@ export const userServices = {
   },
 
   //Change new password (by user - forgot password flow)
-  async changeNewPassword({
+  async resetMyPassword({
     userId,
     newPassword,
   }: {
     userId: string
     newPassword: string
   }) {
-    //Step1: Find user with userID
-    const userFound = await userRepository.readUserById(userId)
-    // If no user found, cannot change password
-    if (!userFound) {
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
       return
     }
 
-    //Step2: Set a new password
+    //Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
     const [newUserData] = await userRepository.updatePassword({
       userId,
       passwordHash,
       status:
-        userFound.status === UserStatusEnum.NEW
-          ? UserStatusEnum.ACTIVE
-          : undefined,
+        user.status === UserStatusEnum.NEW ? UserStatusEnum.ACTIVE : undefined,
     })
 
-    //Return userId as reset confirmation
     return newUserData
   },
 
@@ -656,16 +675,16 @@ export const userServices = {
     newPassword: string
   }) {
     //Step1: Find user with userID
-    const userFound = await userRepository.readUserWithPasswordById(userId)
+    const user = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot change password
-    if (!userFound) {
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
       return
     }
 
     //Step2: Compare old password
     const valid = await comparePassword({
       enteredPassword: oldPassword,
-      dbPasswordHash: userFound.password,
+      dbPasswordHash: user.password,
     })
     if (!valid) {
       return
@@ -707,6 +726,11 @@ export const userServices = {
     name: string
     userRole: UserRolesEnum
   }) {
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      return
+    }
+
     const [updatedUser] = await userRepository.updateName({ userId, name })
     if (userRole === UserRolesEnum.DRIVER) {
       await driverRepository.updateNameByUserId({ userId, name })
@@ -724,6 +748,11 @@ export const userServices = {
     prefersDarkTheme?: boolean
     languagePref?: UserLangEnum
   }) {
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      return
+    }
+
     const [updatedUser] = await userRepository.updateUserPreferences({
       userId,
       prefersDarkTheme,
@@ -742,28 +771,30 @@ export const userServices = {
     password: string
     email: string
   }) {
-    //Step1: Find user with userID
-    const userFound = await userRepository.readUserWithPasswordById(userId)
-    // If no user found, cannot change email
-    if (!userFound) {
+    const user = await userRepository.readUserWithPasswordById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
       return
     }
 
-    //Step2: Compare password
     const valid = await comparePassword({
       enteredPassword: password,
-      dbPasswordHash: userFound.password,
+      dbPasswordHash: user.password,
     })
     if (!valid) {
       return
     }
-    //Step3: Update email
+
     const [updatedUser] = await userRepository.updateEmail({ userId, email })
     return updatedUser
   },
 
   //change user's email (by owner)
   async changeUserEmail({ userId, email }: { userId: string; email: string }) {
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      return
+    }
+
     const [updatedUser] = await userRepository.updateEmail({ userId, email })
     return updatedUser
   },
@@ -778,6 +809,11 @@ export const userServices = {
     phone: string
     role: UserRolesEnum
   }) {
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      return
+    }
+
     const [updatedUser] = await userRepository.updatePhone({ userId, phone })
     if (role === UserRolesEnum.DRIVER) {
       await driverRepository.updatePhoneByUserId({ userId, phone })
@@ -793,7 +829,12 @@ export const userServices = {
     userId: string
     role?: UserRolesEnum
   }) {
-    const [user] = await userRepository.updateUserStatus({
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      return
+    }
+
+    const [updatedUser] = await userRepository.updateUserStatus({
       userId,
       status: UserStatusEnum.ACTIVE,
     })
@@ -803,7 +844,7 @@ export const userServices = {
         status: DriverStatusEnum.AVAILABLE,
       })
     }
-    return user
+    return updatedUser
   },
 
   //Inactivate User
@@ -814,7 +855,12 @@ export const userServices = {
     userId: string
     role: UserRolesEnum
   }) {
-    const [user] = await userRepository.updateUserStatus({
+    const user = await userRepository.readUserById(userId)
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      return
+    }
+
+    const [updatedUser] = await userRepository.updateUserStatus({
       userId,
       status: UserStatusEnum.INACTIVE,
     })
@@ -824,11 +870,22 @@ export const userServices = {
         status: DriverStatusEnum.INACTIVE,
       })
     }
-    return user
+    return updatedUser
   },
 
-  //Verify user with code
-  async verifyUser(userId: string) {
+  //Verify owner (VerifyAccount Onboarding flow)
+  async verifyOwner(userId: string) {
+    const user = await userRepository.readUserById(userId)
+    if (
+      !user ||
+      user.status === UserStatusEnum.SUSPENDED ||
+      user.isVerified ||
+      user.userRole !== UserRolesEnum.OWNER ||
+      !user.isAdmin
+    ) {
+      return
+    }
+
     const [verifiedUser] = await userRepository.updateVerificationStatus(userId)
     return verifiedUser
   },
@@ -842,20 +899,31 @@ export const userServices = {
     code: string
   }) {
     const user = await userRepository.readUserById(userId)
-    if (!user) return
+    if (
+      !user ||
+      user.status === UserStatusEnum.SUSPENDED ||
+      !user.verificationCode
+    ) {
+      return
+    }
 
     if (SUPER_CODE && code === SUPER_CODE) return true
     return user.verificationCode === code
   },
 
-  //Regenerate verification code
+  //Regenerate verification code (Verify Account Onboarding flow)
   async regenerateCode(userId: string) {
     const user = await userRepository.readUserById(userId)
-    if (!user) return
-    //Already verified - not need to regenerate code
-    if (user.isVerified) {
+    if (
+      !user ||
+      user.status === UserStatusEnum.SUSPENDED ||
+      user.isVerified ||
+      user.userRole !== UserRolesEnum.OWNER ||
+      !user.isAdmin
+    ) {
       return
     }
+
     const [updatedUser] = await userRepository.updateVerificationCode({
       userId,
       verificationCode: generateVerificationCode(),
@@ -865,7 +933,10 @@ export const userServices = {
 
   async generateAndSendCode(userId: string) {
     const user = await userRepository.readUserById(userId)
-    if (!user) return
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      return
+    }
+
     const [updatedUser] = await userRepository.updateVerificationCode({
       userId,
       verificationCode: generateVerificationCode(),
@@ -884,12 +955,14 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user) return
+
     if (
       user.locatedAt &&
       differenceInMinutes(new Date(), user.locatedAt) < LOCATE_USER_MINUTES
     ) {
       return
     }
+
     const [updatedUser] = await userRepository.updateLocation({
       userId,
       lat,

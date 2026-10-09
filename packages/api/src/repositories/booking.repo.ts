@@ -1559,88 +1559,9 @@ export const bookingRepository = {
     return await db.query.bookings.findFirst({
       where: eq(bookings.id, id),
       with: {
-        agency: {
-          columns: {
-            id: true,
-            businessName: true,
-            businessPhone: true,
-            businessEmail: true,
-            businessAddress: true,
-            logoUrl: true,
-            qrCodeUrl: true,
-          },
-        },
-        assignedUser: {
-          columns: {
-            id: true,
-            userRole: true,
-            name: true,
-            phone: true,
-          },
-        },
         assignedDriver: {
           columns: {
-            id: true,
-            name: true,
-            phone: true,
             userId: true,
-          },
-        },
-        assignedVehicle: {
-          columns: {
-            id: true,
-            vehicleNumber: true,
-            brand: true,
-            model: true,
-          },
-        },
-        bookedByUser: {
-          columns: {
-            id: true,
-            name: true,
-          },
-        },
-        source: {
-          columns: {
-            city: true,
-            state: true,
-          },
-        },
-        destination: {
-          columns: {
-            city: true,
-            state: true,
-          },
-        },
-        customer: {
-          columns: {
-            id: true,
-            name: true,
-            remarks: true,
-            phone: true,
-            photoUrl: true,
-            address: true,
-            email: true,
-          },
-          with: {
-            location: {
-              columns: {
-                city: true,
-                state: true,
-              },
-            },
-            bookings: {
-              columns: {
-                id: true,
-                status: true,
-              },
-            },
-          },
-        },
-        route: {
-          columns: {
-            id: true,
-            distance: true,
           },
         },
       },
@@ -2029,10 +1950,10 @@ export const bookingRepository = {
   },
 
   async updateSecretCode({
-    id,
+    bookingId,
     secretCode,
   }: {
-    id: string
+    bookingId: string
     secretCode: string
   }) {
     return await db
@@ -2040,27 +1961,27 @@ export const bookingRepository = {
       .set({
         secretCode,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         secretCode: bookings.secretCode,
       })
   },
 
-  async updateCodeSentOn(id: string) {
+  async updateCodeSentOn(bookingId: string) {
     return await db
       .update(bookings)
       .set({
         codeSentOn: new Date(),
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         codeSentOn: bookings.codeSentOn,
       })
   },
 
-  async updateBookingToCancel(id: string) {
+  async updateBookingToCancel(bookingId: string) {
     return await db
       .update(bookings)
       .set({
@@ -2069,7 +1990,7 @@ export const bookingRepository = {
         assignedDriverId: null,
         assignedVehicleId: null,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         status: bookings.status,
@@ -2157,13 +2078,13 @@ export const bookingRepository = {
       })
   },
 
-  async updateQuoteSent(id: string) {
+  async updateQuoteSent(bookingId: string) {
     return await db
       .update(bookings)
       .set({
         quoteSentOn: new Date(),
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         quoteSent: bookings.quoteSentOn,
@@ -2191,13 +2112,13 @@ export const bookingRepository = {
       })
   },
 
-  async updateConfirmationSent(id: string) {
+  async updateConfirmationSent(bookingId: string) {
     return await db
       .update(bookings)
       .set({
         confirmationSentOn: new Date(),
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         confirmationSent: bookings.confirmationSentOn,
@@ -2225,39 +2146,51 @@ export const bookingRepository = {
       })
   },
 
-  async updateInvoiceSent(id: string) {
+  async updateInvoiceSent(bookingId: string) {
     return await db
       .update(bookings)
       .set({
         invoiceSentOn: new Date(),
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         invoiceSentOn: bookings.invoiceSentOn,
       })
   },
 
-  async updateStartTime({ id, startTime }: { id: string; startTime: string }) {
+  async updateStartTime({
+    bookingId,
+    startTime,
+  }: {
+    bookingId: string
+    startTime: string
+  }) {
     return await db
       .update(bookings)
       .set({
         startTime,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         startTime: bookings.startTime,
       })
   },
 
-  async updateRemarks({ id, remarks }: { id: string; remarks: string }) {
+  async updateRemarks({
+    bookingId,
+    remarks,
+  }: {
+    bookingId: string
+    remarks: string
+  }) {
     return await db
       .update(bookings)
       .set({
         remarks,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         remarks: bookings.remarks,
@@ -2265,10 +2198,10 @@ export const bookingRepository = {
   },
 
   async updatePickupAddress({
-    id,
+    bookingId,
     pickupAddress,
   }: {
-    id: string
+    bookingId: string
     pickupAddress: string
   }) {
     return await db
@@ -2276,7 +2209,7 @@ export const bookingRepository = {
       .set({
         pickupAddress,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         pickupAddress: bookings.pickupAddress,
@@ -2284,10 +2217,10 @@ export const bookingRepository = {
   },
 
   async updateDropAddress({
-    id,
+    bookingId,
     dropAddress,
   }: {
-    id: string
+    bookingId: string
     dropAddress: string
   }) {
     return await db
@@ -2295,7 +2228,7 @@ export const bookingRepository = {
       .set({
         dropAddress,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         dropAddress: bookings.dropAddress,
@@ -2304,10 +2237,10 @@ export const bookingRepository = {
 
   //Close booking and update actual expenses amount and add it to total amount
   async addClosedAt({
-    id,
+    bookingId,
     actualExpensesAmount,
   }: {
-    id: string
+    bookingId: string
     actualExpensesAmount: number
   }) {
     return await db
@@ -2317,7 +2250,7 @@ export const bookingRepository = {
         actualTotalAmount: sql`${bookings.actualTotalAmount} + ${actualExpensesAmount}`,
         actualExpensesAmount,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         closedAt: bookings.closedAt,
@@ -2327,7 +2260,7 @@ export const bookingRepository = {
   },
 
   //Reopen booking (only by owner) and delete invoice and readjust actual total
-  async deleteClosedAt(id: string) {
+  async deleteClosedAt(bookingId: string) {
     return await db
       .update(bookings)
       .set({
@@ -2337,7 +2270,7 @@ export const bookingRepository = {
         actualTotalAmount: sql`${bookings.actualTotalAmount} - ${bookings.actualExpensesAmount}`,
         actualExpensesAmount: null,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         closedAt: bookings.closedAt,

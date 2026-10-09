@@ -92,6 +92,7 @@
         "DidnotReceiveCode": "Did not receive a code?",
         "Success": "Password reset successfully!",
         "Error": "Cannot reset password.. Try again later!",
+        "APIError": "Cannot verify code.. Try again later!",
         "BotError": "Bot/Fraud activity detected."
       }
     },
@@ -5248,9 +5249,9 @@
         "Loading": "Loading..",
         "YesCTA": "Yes, Delete"
       },
-      "DeleteMission": {
+      "DeleteReminder": {
         "Label": "DELETE",
-        "Title": "Are you sure you want to delete this mission?",
+        "Title": "Are you sure you want to delete this reminder?",
         "Desc": "When deleted, this reminder cannot be recovered later.",
         "NoCTA": "No",
         "Success": "Reminder deleted!",

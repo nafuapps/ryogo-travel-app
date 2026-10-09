@@ -3,6 +3,7 @@ import { feedbackRepository } from "../repositories/feedback.repo"
 
 export const feedbackServices = {
   async addProductFeedback(data: InsertProductFeedbackType) {
-    return await feedbackRepository.createProductFeedback(data)
+    const [feedback] = await feedbackRepository.createProductFeedback(data)
+    return feedback
   },
 }

@@ -5,7 +5,7 @@ import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
@@ -35,7 +35,8 @@ export async function sendQuoteAction({
 
   //Get lead booking details
   const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
-  if (!bookingDetails) return
+  if (!bookingDetails || bookingDetails.status !== BookingStatusEnum.LEAD)
+    return
 
   let quoteUrl = bookingDetails.quoteUrl
 

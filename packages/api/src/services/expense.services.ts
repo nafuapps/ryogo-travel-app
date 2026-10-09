@@ -1,14 +1,19 @@
-import { InsertExpenseType } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  InsertExpenseType,
+} from "@ryogo-travel-app/db/schema"
 import { expenseRepository } from "../repositories/expense.repo"
 import {
   AddExpenseRequestType,
   UpdateExpenseRequestType,
 } from "../types/expense.types"
+import { bookingRepository } from "../repositories/booking.repo"
 
 export const expenseServices = {
   //Get expense details by expense id
   async findExpenseDetailsById(expenseId: string) {
-    return await expenseRepository.readExpenseById(expenseId)
+    const expense = await expenseRepository.readExpenseById(expenseId)
+    return expense
   },
 
   //Add a expense
@@ -29,6 +34,19 @@ export const expenseServices = {
 
   //Modify an expense's details
   async modifyExpense(data: UpdateExpenseRequestType) {
+    const booking = await bookingRepository.readBookingStatusById(
+      data.bookingId,
+    )
+    if (
+      !booking ||
+      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+        booking.status,
+      ) ||
+      booking.closedAt
+    ) {
+      return
+    }
+
     const [updatedExpense] = await expenseRepository.updateExpenseDetails(data)
     return updatedExpense
   },
@@ -41,11 +59,28 @@ export const expenseServices = {
     expenseId: string
     isApproved: boolean
   }) {
-    const [expense] = await expenseRepository.updateExpenseApprovalStatus({
-      expenseId,
-      isApproved,
-    })
-    return expense
+    const expense = await expenseRepository.readExpenseById(expenseId)
+    if (!expense || expense.isApproved === isApproved) return
+
+    const booking = await bookingRepository.readBookingStatusById(
+      expense.bookingId,
+    )
+    if (
+      !booking ||
+      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+        booking.status,
+      ) ||
+      booking.closedAt
+    ) {
+      return
+    }
+
+    const [updatedExpense] =
+      await expenseRepository.updateExpenseApprovalStatus({
+        expenseId,
+        isApproved,
+      })
+    return updatedExpense
   },
 
   //update expense photo url
@@ -64,6 +99,22 @@ export const expenseServices = {
 
   //Delete a expense
   async removeExpense(expenseId: string) {
+    const expense = await expenseRepository.readExpenseById(expenseId)
+    if (!expense) return
+
+    const booking = await bookingRepository.readBookingStatusById(
+      expense.bookingId,
+    )
+    if (
+      !booking ||
+      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+        booking.status,
+      ) ||
+      booking.closedAt
+    ) {
+      return
+    }
+
     const [deletedExpense] = await expenseRepository.deleteExpense(expenseId)
     return deletedExpense
   },

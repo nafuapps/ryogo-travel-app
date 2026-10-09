@@ -5,7 +5,7 @@ import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { generateBookingConfirmationPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
@@ -32,9 +32,14 @@ export async function sendConfirmationAction({
     return
   }
 
-  //Get lead booking details
+  //Get booking details
   const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
-  if (!bookingDetails || !bookingDetails.startTime) return
+  if (
+    !bookingDetails ||
+    !bookingDetails.startTime ||
+    bookingDetails.status !== BookingStatusEnum.CONFIRMED
+  )
+    return
 
   let confirmationUrl = bookingDetails.confirmationUrl
 

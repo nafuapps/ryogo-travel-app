@@ -2,6 +2,8 @@ import { db } from "@ryogo-travel-app/db"
 import {
   driverLeaves,
   DriverLeaveStatusEnum,
+  drivers,
+  DriverStatusEnum,
   InsertDriverLeaveType,
 } from "@ryogo-travel-app/db/schema"
 import { and, eq, gte, lte, or } from "drizzle-orm"
@@ -113,28 +115,75 @@ export const driverLeaveRepository = {
       .returning()
   },
 
-  //Update a driver leave to started
-  async updateLeaveToStarted(id: string) {
-    return await db
-      .update(driverLeaves)
-      .set({
-        status: DriverLeaveStatusEnum.ONGOING,
-        actualStartDate: new Date(),
+  //Update a driver leave to Ongoing and driver status to Leave
+  async updateLeaveToStarted({
+    leaveId,
+    driverId,
+  }: {
+    leaveId: string
+    driverId: string
+  }) {
+    return await db.transaction(async (tx) => {
+      await tx
+        .update(drivers)
+        .set({
+          status: DriverStatusEnum.LEAVE,
+        })
+        .where(eq(drivers.id, driverId))
+      await tx
+        .update(driverLeaves)
+        .set({
+          status: DriverLeaveStatusEnum.ONGOING,
+          actualStartDate: new Date(),
+        })
+        .where(eq(driverLeaves.id, leaveId))
+      return await tx.query.driverLeaves.findFirst({
+        where: eq(driverLeaves.id, leaveId),
+        with: {
+          driver: {
+            columns: {
+              name: true,
+              userId: true,
+            },
+          },
+        },
       })
-      .where(eq(driverLeaves.id, id))
-      .returning()
+    })
   },
 
-  //Update a driver leave to ended
-  async updateLeaveToEnded(id: string) {
-    return await db
-      .update(driverLeaves)
-      .set({
-        status: DriverLeaveStatusEnum.COMPLETED,
-        actualEndDate: new Date(),
+  //Update a driver leave to Completed and driver status to Available
+  async updateLeaveToEnded({
+    leaveId,
+    driverId,
+  }: {
+    leaveId: string
+    driverId: string
+  }) {
+    return await db.transaction(async (tx) => {
+      await tx
+        .update(drivers)
+        .set({
+          status: DriverStatusEnum.AVAILABLE,
+        })
+        .where(eq(drivers.id, driverId))
+      await tx
+        .update(driverLeaves)
+        .set({
+          status: DriverLeaveStatusEnum.COMPLETED,
+          actualEndDate: new Date(),
+        })
+        .where(eq(driverLeaves.id, leaveId))
+      return await tx.query.driverLeaves.findFirst({
+        where: eq(driverLeaves.id, leaveId),
+        with: {
+          driver: {
+            columns: {
+              name: true,
+            },
+          },
+        },
       })
-      .where(eq(driverLeaves.id, id))
-      .returning()
+    })
   },
 
   //Delete a driver leave

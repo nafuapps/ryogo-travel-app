@@ -9,9 +9,11 @@ import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 export async function inactivateDriverAction({
   driverId,
   agencyId,
+  userId,
 }: {
   driverId: string
   agencyId: string
+  userId: string
 }) {
   const currentUser = await getCurrentUser()
   if (
@@ -28,7 +30,7 @@ export async function inactivateDriverAction({
     return
   }
 
-  const driver = await driverServices.inactivateDriver(driverId)
+  const driver = await driverServices.inactivateDriver({ driverId, userId })
   if (!driver) return
 
   await notificationServices.addNotification({

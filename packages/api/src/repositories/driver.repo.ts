@@ -9,7 +9,10 @@ import {
   TripLogTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { eq, and, notInArray, or, lte, not, gte } from "drizzle-orm"
-import { ModifyDriverRequestType } from "../types/driver.types"
+import {
+  ChangeDriverLicenseRequestType,
+  ModifyDriverRequestType,
+} from "../types/driver.types"
 
 export const driverRepository = {
   //Get driver by id
@@ -284,12 +287,7 @@ export const driverRepository = {
     licenseNumber,
     licenseExpiresOn,
     licensePhotoUrl,
-  }: {
-    id: string
-    licenseNumber?: string
-    licenseExpiresOn?: Date
-    licensePhotoUrl?: string
-  }) {
+  }: ChangeDriverLicenseRequestType) {
     return await db
       .update(drivers)
       .set({

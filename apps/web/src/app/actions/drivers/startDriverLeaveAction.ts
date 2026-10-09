@@ -47,7 +47,7 @@ export async function startDriverLeaveAction({
     textObject: {
       startDate: leave.actualStartDate,
       userName: currentUser.name,
-      driverName: leave.driverName,
+      driverName: leave.driver.name,
     },
     link: `/dashboard/drivers/${leave.driverId}/leaves`,
   })
@@ -58,7 +58,7 @@ export async function startDriverLeaveAction({
     userId:
       currentUser.userRole === UserRolesEnum.DRIVER
         ? leave.addedByUserId
-        : leave.driverUserId,
+        : leave.driver.userId,
     entityType: EntityTypeEnum.DRIVER_LEAVE,
     entityId: leave.id,
     titleKey: "DriverLeaveStarted.Title",

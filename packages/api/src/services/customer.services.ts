@@ -86,7 +86,13 @@ export const customerServices = {
     return newCustomer
   },
 
+  //Modify customer details
   async modifyCustomer(data: ModifyCustomerRequestType) {
+    const customer = await customerRepository.readCustomerById(data.customerId)
+    if (!customer || customer.status === CustomerStatusEnum.SUSPENDED) {
+      return
+    }
+
     //Find location
     const location = await locationRepository.readLocationByCityState({
       city: data.city,
@@ -95,12 +101,14 @@ export const customerServices = {
     if (!location) {
       return
     }
-    const [customer] = await customerRepository.updateCustomer({
+
+    const [updatedCustomer] = await customerRepository.updateCustomer({
       ...data,
       locationId: location.id,
     })
-    return customer
+    return updatedCustomer
   },
+
   //Update customer photo url
   async updateCustomerPhoto(customerId: string, photoUrl: string) {
     const [updatedCustomer] = await customerRepository.updatePhotoUrl({
@@ -112,6 +120,11 @@ export const customerServices = {
 
   //Activate Customer
   async activateCustomer(customerId: string) {
+    const customer = await customerRepository.readCustomerById(customerId)
+    if (!customer || customer.status !== CustomerStatusEnum.INACTIVE) {
+      return
+    }
+
     const [updatedCustomer] = await customerRepository.updateStatus({
       customerId,
       status: CustomerStatusEnum.ACTIVE,
@@ -121,6 +134,11 @@ export const customerServices = {
 
   //Inctivate Customer
   async inactivateCustomer(customerId: string) {
+    const customer = await customerRepository.readCustomerById(customerId)
+    if (!customer || customer.status !== CustomerStatusEnum.ACTIVE) {
+      return
+    }
+
     const [updatedCustomer] = await customerRepository.updateStatus({
       customerId,
       status: CustomerStatusEnum.INACTIVE,

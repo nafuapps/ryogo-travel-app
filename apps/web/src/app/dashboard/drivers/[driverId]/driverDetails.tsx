@@ -121,6 +121,7 @@ export default async function DriverDetailsPageComponent({
             <InactivateDriverAlertButton
               driverId={driver.id}
               agencyId={driver.agencyId}
+              userId={driver.userId}
             />
           ) : (
             <ActivateDriverAlertButton

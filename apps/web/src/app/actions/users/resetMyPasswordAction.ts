@@ -6,8 +6,8 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect } from "next/navigation"
 
-//Forgot password reset flow
-export async function setNewPasswordAction({
+//Forgot password reset flow (by user)
+export async function resetMyPasswordAction({
   userId,
   newPassword,
 }: {
@@ -23,7 +23,7 @@ export async function setNewPasswordAction({
     }
   }
 
-  const user = await userServices.changeNewPassword({
+  const user = await userServices.resetMyPassword({
     userId,
     newPassword,
   })

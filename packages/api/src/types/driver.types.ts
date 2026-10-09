@@ -16,4 +16,5 @@ export type ChangeDriverLicenseRequestType = {
   licenseNumber?: string
   licenseExpiresOn?: Date
   licensePhotos?: FileList
+  licensePhotoUrl?: string
 }

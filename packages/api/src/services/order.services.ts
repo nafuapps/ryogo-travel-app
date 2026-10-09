@@ -16,21 +16,25 @@ import { addDays, max } from "date-fns"
 
 export const orderServices = {
   async findAllOrdersByAgencyId(agencyId: string) {
-    return await orderRepository.readAllOrdersByAgencyId(agencyId)
+    const orders = await orderRepository.readAllOrdersByAgencyId(agencyId)
+    return orders
   },
   async findAllOrdersByUserId(userId: string) {
-    return await orderRepository.readAllOrdersByUserId(userId)
+    const orders = await orderRepository.readAllOrdersByUserId(userId)
+    return orders
   },
 
   async findOrderByRPId(rpOrderId: string) {
-    return await orderRepository.readOrderByRPId(rpOrderId)
+    const order = await orderRepository.readOrderByRPId(rpOrderId)
+    return order
   },
 
   async findLastPaidOrder(agencyId: string) {
-    return await orderRepository.readAgencyLatestOrderByStatus({
+    const order = await orderRepository.readAgencyLatestOrderByStatus({
       agencyId,
       status: OrderStatusEnum.PAID,
     })
+    return order
   },
 
   async findExistingCreatedOrder({
@@ -80,18 +84,14 @@ export const orderServices = {
     isWebhookConfirmed: boolean
     attempts?: number
   }) {
-    const orderDetails = await orderRepository.readOrderByRPId(rpOrderId)
-    if (!orderDetails) return
-    const agencyDetails = await agencyRepository.readAgencyById(
-      orderDetails.agencyId,
-    )
-    if (!agencyDetails) return
+    const order = await orderRepository.readOrderByRPId(rpOrderId)
+    if (!order) return
 
-    //If already paid and confirmed, do nothing
-    if (
-      orderDetails.status === OrderStatusEnum.PAID &&
-      orderDetails.isWebhookConfirmed
-    )
+    const agency = await agencyRepository.readAgencyById(order.agencyId)
+    if (!agency) return
+
+    //If already paid and webhook confirmed, do nothing
+    if (order.status === OrderStatusEnum.PAID && order.isWebhookConfirmed)
       return
 
     //Update order in DB
@@ -101,21 +101,22 @@ export const orderServices = {
       isWebhookConfirmed,
       attempts,
     })
-    // If for some reason, order update failed, should we proceed with subscription upgrade? -> NO
+    // If for some reason, order update failed, should we proceed with subscription upgrade?
+    // -> NO (Confirm in bank account first and then manually upgrade)
     if (!updatedOrder) return
 
-    //If it was already paid, return now
-    if (orderDetails.status === OrderStatusEnum.PAID) return
+    //If it was already paid, return now (no need to upgrade subscription again)
+    if (order.status === OrderStatusEnum.PAID) return
 
     //Trigger subscription upgrade
-    const orderSubscriptionDays = getSubscriptionDays(updatedOrder.orderType)
+    const orderSubscriptionDays = getSubscriptionDays(order.orderType)
 
     //For basic to premium upgrade, subscription starts today.
     //For premium renewal, if plan has not expired yet, add on the current expiry date
     const subscriptionStartDate =
-      agencyDetails.subscriptionPlan === SubscriptionPlanEnum.BASIC
+      agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
         ? new Date()
-        : max([agencyDetails.subscriptionExpiresOn, new Date()])
+        : max([agency.subscriptionExpiresOn, new Date()])
 
     //Calculate new expiry date based on order type
     const newSubscriptionExpiryDate = addDays(
@@ -124,17 +125,19 @@ export const orderServices = {
     )
 
     await agencyRepository.updateAgencySubscriptionWithOrder({
-      id: updatedOrder.agencyId,
+      id: order.agencyId,
       subscriptionPlan: SubscriptionPlanEnum.PREMIUM,
       subscriptionExpiresOn: newSubscriptionExpiryDate,
-      latestPaidOrderId: updatedOrder.id,
+      latestPaidOrderId: order.id,
     })
 
     return updatedOrder
   },
 
   async confirmOrderWebhookStatus(orderId: string) {
-    return await orderRepository.updateOrderWebhookConfirmed(orderId)
+    const [updatedOrder] =
+      await orderRepository.updateOrderWebhookConfirmed(orderId)
+    return updatedOrder
   },
 
   async addInvoiceUrlAndEmailSentTime({

@@ -9,7 +9,7 @@ import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
-import { setNewPasswordAction } from "@/app/actions/users/setNewPasswordAction"
+import { resetMyPasswordAction } from "@/app/actions/users/resetMyPasswordAction"
 import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import {
@@ -82,10 +82,14 @@ export default function ResetWithCodePageComponent({
       if (result === true) {
         setCodeSuccess(true)
       } else {
-        form.setError("code", {
-          type: "manual",
-          message: t("Field1.Error2"),
-        })
+        if (result === false) {
+          form.setError("code", {
+            type: "manual",
+            message: t("Field1.Error2"),
+          })
+        } else {
+          toast.error(t("APIError"))
+        }
         setTimeout(() => {
           form.setValue("code", "")
           form.clearErrors("code")
@@ -101,7 +105,7 @@ export default function ResetWithCodePageComponent({
       toast.error(t("BotError"))
       return
     }
-    const updatedUser = await setNewPasswordAction({
+    const updatedUser = await resetMyPasswordAction({
       userId: user.id,
       newPassword: data.password,
     })

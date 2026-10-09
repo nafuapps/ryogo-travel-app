@@ -3,12 +3,14 @@ import {
   BookingIdRegex,
   CustomerIdRegex,
   DriverIdRegex,
+  DriverLeaveIdRegex,
   ExpenseIdRegex,
   OrderIdRegex,
   SupportTicketIdRegex,
   TransactionIdRegex,
   UserIdRegex,
   VehicleIdRegex,
+  VehicleRepairIdRegex,
 } from "@/lib/regex"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
@@ -34,6 +36,10 @@ export function regexCheckIDByEntityType(type: EntityTypeEnum, value: string) {
       return TransactionIdRegex.safeParse(value).success
     case EntityTypeEnum.SUPPORT:
       return SupportTicketIdRegex.safeParse(value).success
+    case EntityTypeEnum.DRIVER_LEAVE:
+      return DriverLeaveIdRegex.safeParse(value).success
+    case EntityTypeEnum.VEHICLE_REPAIR:
+      return VehicleRepairIdRegex.safeParse(value).success
   }
 }
 

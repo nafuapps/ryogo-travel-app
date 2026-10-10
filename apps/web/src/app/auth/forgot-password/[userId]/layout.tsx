@@ -5,6 +5,11 @@ import {
 } from "@/components/flows/auth/authWrappers"
 import { UserIdRegex } from "@/lib/regex"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { RyogoCaption } from "@/components/typography"
+import Link from "next/link"
+import { getTranslations } from "next-intl/server"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 export default async function LoginLayout({
   children,
@@ -23,11 +28,18 @@ export default async function LoginLayout({
   if (!user) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const t = await getTranslations("Auth.ForgotPassword")
 
   return (
     <>
       <AuthMainWrapper src={"/forgotPasswordBG.png"}>
         {children}
+        <SectionColWrapper className="items-center">
+          <RyogoCaption color="slate">{t("RememberTitle")}</RyogoCaption>
+          <Link href={`/auth/login/password/${userId}`}>
+            <RyogoOutlineButton label={t("RememberCTA")} />
+          </Link>
+        </SectionColWrapper>
       </AuthMainWrapper>
       <AuthSideWrapper
         src={"/forgotPasswordBG.png"}

@@ -20,9 +20,9 @@ export default async function PricingCTASection() {
     <LandingSectionWrapper
       id="cta"
       shrink
-      className="bg-linear-to-b from-sky-600 dark:from-sky-300 to-sky-900 dark:to-sky-50"
+      className="bg-linear-to-b from-sky-500 dark:from-sky-300 to-sky-900 dark:to-sky-50"
     >
-      <LandingContentWrapper className="md:flex-row">
+      <LandingContentWrapper className="md:flex-row my-16 md:my-20">
         <RyogoH1 color="white" weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>

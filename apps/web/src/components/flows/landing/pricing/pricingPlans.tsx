@@ -23,7 +23,7 @@ export default async function PricingPlansSection() {
     <LandingSectionWrapper id="pricing" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 md:px-10 lg:px-16 pt-24 pb-12 md:pt-32 md:pb-18 rounded-lg bg-linear-to-b from-cyan-200 dark:from-cyan-700 to-sky-100 dark:to-sky-800"
+        className="h-full px-5 md:px-10 lg:px-16 pt-24 pb-12 md:pt-32 md:pb-18 rounded-lg bg-linear-to-b from-blue-200 dark:from-blue-800 to-cyan-100 dark:to-cyan-900"
       >
         <RyogoH1 weight="font-bold" color="brand" className="text-center">
           {t("Title")}
@@ -112,17 +112,22 @@ function PricingPlanCard({
 }) {
   return (
     <div className="flex flex-col gap-4 lg:gap-5 p-6 lg:p-8 bg-white dark:bg-slate-800 shadow-lg rounded-lg">
-      <RyogoP weight="font-bold" color="slate">
+      <RyogoP weight="font-bold" color={everything ? "brand" : "slate"}>
         {title}
       </RyogoP>
       <RyogoSmall color="light">{description}</RyogoSmall>
-      <RyogoH4 weight="font-bold">{price}</RyogoH4>
+      <RyogoH4 weight="font-medium">{price}</RyogoH4>
       {children}
       <div className="flex flex-col gap-2 lg:gap-3 mb-2">
         {everything && <RyogoSmall>{everything}</RyogoSmall>}
         {features.map((feature) => (
           <li key={feature} className="flex gap-3">
-            <RyogoIcon icon={Check} size="sm" color="brand" thick />
+            <RyogoIcon
+              icon={Check}
+              size="sm"
+              color={everything ? "brand" : "slate"}
+              thick
+            />
             <RyogoSmall>{feature}</RyogoSmall>
           </li>
         ))}

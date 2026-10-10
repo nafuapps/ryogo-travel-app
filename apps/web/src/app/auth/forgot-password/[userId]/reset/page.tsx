@@ -23,7 +23,7 @@ export default async function VerifyCodePage({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  if (!user.verificationCode) {
+  if (!user.codeSentAt) {
     redirect(`/auth/forgot-password/${userId}`, RedirectType.replace)
   }
 

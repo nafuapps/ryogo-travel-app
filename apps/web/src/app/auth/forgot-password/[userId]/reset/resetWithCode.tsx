@@ -28,6 +28,7 @@ import { useState, useTransition } from "react"
 import { checkVerificationCodeAction } from "@/app/actions/users/checkVerificationCodeAction"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { CheckCircle } from "lucide-react"
+import { Separator } from "@/components/ui/separator"
 
 export default function ResetWithCodePageComponent({
   user,
@@ -40,6 +41,7 @@ export default function ResetWithCodePageComponent({
   const [isPending, startTransition] = useTransition()
   const { checkBotActivity, isBot } = useBotDetection()
   const [codeSuccess, setCodeSuccess] = useState<boolean | null>(null)
+  const [formSuccess, setFormSuccess] = useState<boolean>(false)
 
   const formSchema = z
     .object({
@@ -90,11 +92,12 @@ export default function ResetWithCodePageComponent({
         } else {
           toast.error(t("APIError"))
         }
+        setCodeSuccess(false)
         setTimeout(() => {
+          setCodeSuccess(null)
           form.setValue("code", "")
           form.clearErrors("code")
-        }, 3000) //Clear the field and errors after 3s
-        setCodeSuccess(false)
+        }, 2000) //Clear the field and errors after 2s
       }
     })
   }
@@ -110,6 +113,7 @@ export default function ResetWithCodePageComponent({
       newPassword: data.password,
     })
     if (updatedUser) {
+      setFormSuccess(true)
       toast.success(t("Success"))
     } else {
       toast.error(t("Error"))
@@ -117,20 +121,24 @@ export default function ResetWithCodePageComponent({
   }
 
   return (
-    <AuthPageWrapper>
+    <AuthPageWrapper
+      className={`${formSuccess === true && "animate-zoom-out"}`}
+    >
+      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+      <AuthAccountCard user={user} />
       <FormWrapper<SchemaType>
         id="ForgorPasswordForm"
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
       >
-        <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
-        <AuthAccountCard user={user} />
         <FormContentWrapper
           asCard={false}
           className={`px-1 overflow-hidden transition-transform duration-500 ease-in-out ${
-            codeSuccess !== true
-              ? "translate-x-0"
-              : "-translate-x-full absolute top-0 left-0 size-0"
+            codeSuccess === true
+              ? "-translate-x-full absolute top-0 left-0 size-0"
+              : codeSuccess === false
+                ? "animate-shake"
+                : "translate-x-0"
           }`}
         >
           <RyogoOTPInput
@@ -138,25 +146,23 @@ export default function ResetWithCodePageComponent({
             label={t("Field1.Title")}
             description={t("Field1.Description")}
             length={6}
-          />
-          <RyogoDefaultButton
-            label={isPending ? t("Loading") : t("VerifyCTA")}
-            size="lg"
-            type="button"
-            onClick={() => verifyCode(form.getValues("code"))}
-            disabled={isPending || isBot}
-          />
-          <RyogoGhostButton
-            label={t("DidnotReceiveCode")}
-            labelColor="light"
-            size="lg"
-            type="button"
-            disabled={isPending}
-            onClick={() => {
-              router.push(`/auth/forgot-password/${user.id}`)
-            }}
+            onSubmit={() => verifyCode(form.getValues("code"))}
           />
         </FormContentWrapper>
+        {!codeSuccess && (
+          <>
+            <Separator />
+            <RyogoGhostButton
+              label={t("DidnotReceiveCode")}
+              labelColor="light"
+              type="button"
+              disabled={isPending}
+              onClick={() => {
+                router.push(`/auth/forgot-password/${user.id}`)
+              }}
+            />
+          </>
+        )}
         <FormContentWrapper
           asCard={false}
           className={`px-1 overflow-hidden transition-transform duration-500 ease-in-out ${

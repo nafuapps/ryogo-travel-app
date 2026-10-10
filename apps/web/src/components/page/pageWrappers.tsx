@@ -90,19 +90,21 @@ export function FormWrapper<T extends FieldValues>({
   children,
   onSubmit,
   justifyCenter,
+  className,
 }: {
   id: string
   form: UseFormReturn<T, any, T>
   children: React.ReactNode
   onSubmit?: SubmitEventHandler<HTMLFormElement>
   justifyCenter?: boolean
+  className?: string
 }) {
   return (
     <Form {...form}>
       <form
         id={id}
         onSubmit={onSubmit}
-        className={`flex flex-col gap-3 lg:gap-4 w-full h-full ${justifyCenter ? "justify-center" : ""}`}
+        className={`flex flex-col gap-3 lg:gap-4 w-full h-full ${justifyCenter ? "justify-center" : ""} ${className ?? ""}`}
       >
         {children}
       </form>

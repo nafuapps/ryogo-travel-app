@@ -19,8 +19,13 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { X, Info } from "lucide-react"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { MAX_EMAIL_LENGTH, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
 import { FormWrapper } from "@/components/page/pageWrappers"
+import Link from "next/link"
+import { Separator } from "@/components/ui/separator"
 
 export default function ForgotPasswordPageComponent({
   user,
@@ -28,6 +33,7 @@ export default function ForgotPasswordPageComponent({
   user: NonNullable<FindUserDetailsByIdType>
 }) {
   const t = useTranslations("Auth.ForgotPassword.Step1")
+  const [formSuccess, setFormSuccess] = useState<boolean | null>(null)
 
   const router = useRouter()
 
@@ -57,11 +63,15 @@ export default function ForgotPasswordPageComponent({
       return
     }
     if (data.email.toLowerCase().trim() !== user.email.toLowerCase().trim()) {
+      setFormSuccess(false)
       form.setError("email", { type: "manual", message: t("APIError") })
-      setGiveHelp(true)
+      if (form.formState.submitCount > 1) {
+        setGiveHelp(true)
+      }
     } else {
       const updatedUser = await forgotPasswordAction(user.id)
       if (updatedUser) {
+        setFormSuccess(true)
         toast.success(t("Success"))
         router.push(`/auth/forgot-password/${user.id}/reset`)
       } else {
@@ -72,13 +82,14 @@ export default function ForgotPasswordPageComponent({
 
   return (
     <AuthPageWrapper>
+      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+      <AuthAccountCard user={user} />
       <FormWrapper<SchemaType>
         id="ForgorPasswordForm"
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
+        className={`${formSuccess === false && "animate-shake"}`}
       >
-        <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
-        <AuthAccountCard user={user} />
         <RyogoInput
           name={"email"}
           type="email"
@@ -116,6 +127,19 @@ export default function ForgotPasswordPageComponent({
           disabled={form.formState.isSubmitting || codeSentRecently || isBot}
           showSpinner={form.formState.isSubmitting}
         />
+        {user.codeSentAt && (
+          <>
+            <Separator />
+            <Link href={`/auth/forgot-password/${user.id}/reset`}>
+              <RyogoGhostButton
+                label={t("AlreadyCTA")}
+                type="button"
+                className="w-full"
+                labelColor="light"
+              />
+            </Link>
+          </>
+        )}
       </FormWrapper>
     </AuthPageWrapper>
   )

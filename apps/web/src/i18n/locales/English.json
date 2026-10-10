@@ -7,20 +7,20 @@
         "PageTitle": "Log into RyoGo",
         "Input": {
           "Title": "Enter phone number",
-          "Placeholder": "9876543210"
+          "Description": "Provide your 10-digit phone number to login"
         },
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric and without spaces",
-        "NotFoundError": "Phone number not registered or suspended",
+        "NotFoundError": "Phone number not registered.. Check and try again!",
         "ServerError": "Cannot connect to server.. Try again later!",
         "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
         "PageTitle": "Welcome!",
         "Info": "Select the account you want to log into:",
-        "SecondaryCTA": "Back to login"
+        "SecondaryCTA": "Back"
       },
       "Step3": {
         "PageTitle": "Hello!",
@@ -43,7 +43,7 @@
     },
     "ForgotPassword": {
       "RememberTitle": "Remember your password?",
-      "RememberCTA": "Go to Login",
+      "RememberCTA": "Go to login page",
       "Step1": {
         "PageTitle": "Forgot password?",
         "Input": {
@@ -53,6 +53,7 @@
         },
         "GiveHelp": "Your email looks something like: {maskedEmail}",
         "PrimaryCTA": "Get verification code",
+        "AlreadyCTA": "Already have a code?",
         "CodeSentRecently": "Wait {count} minutes to resend code",
         "Loading": "Loading",
         "Error1": "Not a valid email",
@@ -102,8 +103,8 @@
       "Step1": {
         "PageTitle": "Welcome to RyoGo!",
         "Input": {
-          "Title": "Enter your phone number to sign up",
-          "Placeholder": "9876543210"
+          "Title": "Enter phone number",
+          "Description": "Provide your 10-digit phone number to signup"
         },
         "PrimaryCTA": "Create account",
         "Loading": "Loading..",

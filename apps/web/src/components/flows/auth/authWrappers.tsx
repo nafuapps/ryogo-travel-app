@@ -1,6 +1,4 @@
 import Image from "next/image"
-import Link from "next/link"
-import RyoGoLogo from "@/components/logo"
 
 export function AuthMainWrapper({
   children,
@@ -10,7 +8,7 @@ export function AuthMainWrapper({
   src?: string
 }) {
   return (
-    <div className="relative flex flex-col gap-10 md:gap-12 min-h-full overflow-scroll no-scrollbar items-center bg-slate-50 dark:bg-slate-900 w-full md:w-1/2 p-6 md:p-8 lg:p-10">
+    <div className="relative flex flex-col gap-8 md:gap-10 min-h-full overflow-scroll no-scrollbar items-center bg-slate-50 dark:bg-slate-900 w-full md:w-1/2 p-6 md:p-8 lg:p-10">
       {src ? (
         <>
           <div
@@ -20,11 +18,8 @@ export function AuthMainWrapper({
           <div className="absolute inset-0 bg-white/70 dark:bg-slate-800/70 md:hidden" />
         </>
       ) : null}
-      <div className="z-10 flex w-full h-full flex-col items-center justify-between gap-6 md:gap-8 mt-24 md:mt-28 mb-4 md:mb-5">
+      <div className="z-10 flex w-full h-full flex-col items-center justify-between gap-6 md:gap-8 pt-16 md:pt-20 pb-4 md:pb-5">
         {children}
-        <Link href="/">
-          <RyoGoLogo />
-        </Link>
       </div>
     </div>
   )
@@ -38,9 +33,18 @@ export function AuthSideWrapper({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-export function AuthPageWrapper({ children }: { children: React.ReactNode }) {
+export function AuthPageWrapper({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
   return (
-    <div className="flex flex-col justify-center w-full rounded-lg shadow bg-white dark:bg-slate-800 p-6 md:p-8 gap-3 lg:gap-4">
+    <div
+      id="authPage"
+      className={`flex flex-col justify-center my-auto animate-zoom-in w-full rounded-lg shadow bg-white dark:bg-slate-800 p-6 md:p-8 gap-3 lg:gap-4 ${className ?? ""}`}
+    >
       {children}
     </div>
   )

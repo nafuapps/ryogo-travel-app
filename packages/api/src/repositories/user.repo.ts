@@ -38,6 +38,7 @@ export const userRepository = {
     return await db.query.users.findFirst({
       columns: {
         password: false,
+        verificationCode: false,
       },
       with: {
         agency: {

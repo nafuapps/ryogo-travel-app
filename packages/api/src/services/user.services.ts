@@ -658,7 +658,9 @@ export const userServices = {
       userId,
       passwordHash,
       status:
-        user.status === UserStatusEnum.NEW ? UserStatusEnum.ACTIVE : undefined,
+        user.status === UserStatusEnum.NEW
+          ? UserStatusEnum.ACTIVE
+          : user.status,
     })
 
     return newUserData
@@ -898,7 +900,7 @@ export const userServices = {
     userId: string
     code: string
   }) {
-    const user = await userRepository.readUserById(userId)
+    const user = await userRepository.readUserWithPasswordById(userId)
     if (
       !user ||
       user.status === UserStatusEnum.SUSPENDED ||

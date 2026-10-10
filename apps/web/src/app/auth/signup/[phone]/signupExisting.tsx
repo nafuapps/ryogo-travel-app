@@ -1,8 +1,9 @@
-//Existing Account page
+"use client"
+
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
@@ -15,20 +16,24 @@ import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import { ChevronRight } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 /*
   If no owner account found, show account details and nudge user to login (but also an extra option to create account)
   If some owner account found, show a list and nudge to login (with callout to contact support for creating account)
 */
 
-export default async function SignupExistingPageComponent({
+export default function SignupExistingPageComponent({
   accounts,
   phone,
 }: {
   accounts: FindUserAccountsByPhoneType
   phone: string
 }) {
-  const t = await getTranslations("Auth.SignupPage.Step2")
+  const t = useTranslations("Auth.SignupPage.Step2")
+  const router = useRouter()
+  const [clicked, setClicked] = useState<string | null>(null)
 
   const hasOwnerAccount = accounts.some(
     (p) => p.userRole === UserRolesEnum.OWNER,
@@ -44,14 +49,21 @@ export default async function SignupExistingPageComponent({
       </RyogoSmall>
       <SectionColWrapper>
         {accounts.map((account) => (
-          <Link href={`/auth/login/password/${account.id}`} key={account.id}>
+          <Link
+            href={`/auth/login/password/${account.id}`}
+            key={account.id}
+            onClick={() => setClicked(account.id)}
+            className={`${clicked === account.id && "animate-zoom-out"}`}
+          >
             <AuthAccountCard user={account} isLink />
           </Link>
         ))}
       </SectionColWrapper>
-      <Link href={"/auth/signup"}>
-        <RyogoOutlineButton className="w-full" label={t("BackCTA")} />
-      </Link>
+      <RyogoOutlineButton
+        className="w-full"
+        label={t("BackCTA")}
+        onClick={() => router.back()}
+      />
       <Separator />
       {hasOwnerAccount ? (
         <>

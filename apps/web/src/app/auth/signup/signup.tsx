@@ -52,9 +52,11 @@ export default function SignupPageComponent() {
   }
 
   return (
-    <AuthPageWrapper>
+    <AuthPageWrapper
+      className={`${form.formState.isSubmitted && "animate-zoom-out"}`}
+    >
+      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
       <FormWrapper<SchemaType> id="SignupForm" form={form}>
-        <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
         <RyogoOTPInput
           name={"phoneNumber"}
           label={t("Input.Title")}

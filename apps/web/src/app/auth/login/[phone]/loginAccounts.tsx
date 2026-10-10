@@ -1,18 +1,24 @@
+"use client"
+
 import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
-export default async function LoginAccountsPageComponent({
+export default function LoginAccountsPageComponent({
   accounts,
 }: {
   accounts: FindUserAccountsByPhoneType
 }) {
-  const t = await getTranslations("Auth.LoginPage.Step2")
+  const t = useTranslations("Auth.LoginPage.Step2")
+  const router = useRouter()
+  const [clicked, setClicked] = useState<string | null>(null)
 
   return (
     <AuthPageWrapper>
@@ -20,18 +26,21 @@ export default async function LoginAccountsPageComponent({
       <RyogoSmall weight="font-bold">{t("Info")}</RyogoSmall>
       <SectionColWrapper>
         {accounts.map((account) => (
-          <Link href={`/auth/login/password/${account.id}`} key={account.id}>
+          <Link
+            href={`/auth/login/password/${account.id}`}
+            key={account.id}
+            onClick={() => setClicked(account.id)}
+            className={`${clicked === account.id && "animate-zoom-out"}`}
+          >
             <AuthAccountCard user={account} isLink />
           </Link>
         ))}
       </SectionColWrapper>
-      <Link href={"/auth/login"}>
-        <RyogoOutlineButton
-          label={t("SecondaryCTA")}
-          size="lg"
-          className="w-full"
-        />
-      </Link>
+      <RyogoOutlineButton
+        label={t("SecondaryCTA")}
+        className="w-full"
+        onClick={() => router.back()}
+      />
     </AuthPageWrapper>
   )
 }

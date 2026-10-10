@@ -23,6 +23,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 import { FormWrapper } from "@/components/page/pageWrappers"
+import { useState } from "react"
 
 export default function LoginPasswordPageComponent({
   user,
@@ -32,6 +33,7 @@ export default function LoginPasswordPageComponent({
   const t = useTranslations("Auth.LoginPage.Step3")
   const router = useRouter()
   const { checkBotActivity, isBot } = useBotDetection()
+  const [formSuccess, setFormSuccess] = useState<boolean | null>(null)
 
   const formSchema = z.object({
     password: z.string().min(MIN_PASSWORD_LENGTH, t("Error1")),
@@ -55,28 +57,37 @@ export default function LoginPasswordPageComponent({
       userId: user.id,
       password: data.password,
     })
-    if (loginResponse.error === "invalidPassword") {
-      // Show password mismatch error
-      form.setError("password", {
-        type: "manual",
-        message: t("APIError1"),
-      })
-    } else if (loginResponse.error === "userNotFound") {
-      // Show user not found error
-      form.setError("password", {
-        type: "manual",
-        message: t("APIError2"),
-      })
-    } else if (loginResponse.error === "userSuspended") {
-      // Show user suspended error
-      form.setError("password", {
-        type: "manual",
-        message: t("APIError3"),
-      })
-    } else if (!loginResponse.data) {
-      // Unknown error
-      toast.error(t("APIError4"))
+    if (loginResponse.error || !loginResponse.data) {
+      setFormSuccess(false)
+      setTimeout(() => {
+        setFormSuccess(null)
+        form.setValue("password", "")
+        form.clearErrors("password")
+      }, 2000) //Clear the field after 2s
+      if (loginResponse.error === "invalidPassword") {
+        // Show password mismatch error
+        form.setError("password", {
+          type: "manual",
+          message: t("APIError1"),
+        })
+      } else if (loginResponse.error === "userNotFound") {
+        // Show user not found error
+        form.setError("password", {
+          type: "manual",
+          message: t("APIError2"),
+        })
+      } else if (loginResponse.error === "userSuspended") {
+        // Show user suspended error
+        form.setError("password", {
+          type: "manual",
+          message: t("APIError3"),
+        })
+      } else if (!loginResponse.data) {
+        // Unknown error
+        toast.error(t("APIError4"))
+      }
     } else {
+      setFormSuccess(true)
       //SUCCESS: Login user
       if (loginResponse.data.userRole === UserRolesEnum.DRIVER) {
         //Redirect to Rider page
@@ -89,14 +100,17 @@ export default function LoginPasswordPageComponent({
   }
 
   return (
-    <AuthPageWrapper>
+    <AuthPageWrapper
+      className={`${formSuccess === true && "animate-zoom-out"}`}
+    >
+      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+      <AuthAccountCard user={user} />
       <FormWrapper<SchemaType>
         id="LoginPasswordForm"
         onSubmit={form.handleSubmit(onSubmit)}
         form={form}
+        className={`${formSuccess === false && "animate-shake"}`}
       >
-        <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
-        <AuthAccountCard user={user} />
         <RyogoInput
           name={"password"}
           type="password"
@@ -113,7 +127,6 @@ export default function LoginPasswordPageComponent({
         />
         <RyogoOutlineButton
           label={t("Back")}
-          size="lg"
           type="button"
           onClick={() => {
             router.back()

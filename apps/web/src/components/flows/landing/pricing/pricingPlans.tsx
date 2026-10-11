@@ -1,4 +1,10 @@
-import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
+import {
+  RyogoCaption,
+  RyogoH1,
+  RyogoH4,
+  RyogoP,
+  RyogoSmall,
+} from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
@@ -16,6 +22,9 @@ import {
   RyogoBrandButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function PricingPlansSection() {
   const t = await getTranslations("Landing.Pricing.Plans")
@@ -23,7 +32,7 @@ export default async function PricingPlansSection() {
     <LandingSectionWrapper id="pricing" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 md:px-10 lg:px-16 pt-24 pb-12 md:pt-32 md:pb-18 rounded-lg bg-linear-to-b from-blue-200 dark:from-blue-800 to-cyan-100 dark:to-cyan-900"
+        className="h-full px-5 md:px-10 lg:px-16 pt-24 pb-12 md:pt-32 md:pb-18 rounded-lg bg-linear-to-b from-blue-200 dark:from-blue-900 to-cyan-50 dark:to-cyan-950"
       >
         <RyogoH1 weight="font-bold" color="brand" className="text-center">
           {t("Title")}
@@ -45,13 +54,15 @@ export default async function PricingPlansSection() {
               t("Basic.F6"),
             ]}
           >
-            <Link href="/auth/signup" className="w-full">
-              <RyogoDefaultButton
-                size="lg"
-                className="w-full"
-                label={t("Basic.CTA")}
-              />
-            </Link>
+            <ClickZoomOut>
+              <Link href="/auth/signup" className="w-full">
+                <RyogoDefaultButton
+                  size="lg"
+                  className="w-full"
+                  label={t("Basic.CTA")}
+                />
+              </Link>
+            </ClickZoomOut>
           </PricingPlanCard>
           <PricingPlanCard
             title={t("Premium.Title")}
@@ -70,14 +81,16 @@ export default async function PricingPlansSection() {
             ]}
             everything={t("Premium.Everything")}
           >
-            <Link href="/onboarding" className="w-full">
-              <RyogoBrandButton
-                size="lg"
-                labelColor="white"
-                className="w-full"
-                label={t("Premium.CTA", { days: PREMIUM_TRIAL_DAYS })}
-              />
-            </Link>
+            <ClickZoomOut>
+              <Link href="/onboarding" className="w-full">
+                <RyogoBrandButton
+                  size="lg"
+                  labelColor="white"
+                  className="w-full"
+                  label={t("Premium.CTA", { days: PREMIUM_TRIAL_DAYS })}
+                />
+              </Link>
+            </ClickZoomOut>
           </PricingPlanCard>
         </div>
         <Link href="#comparision">
@@ -111,27 +124,27 @@ function PricingPlanCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-4 lg:gap-5 p-6 lg:p-8 bg-white dark:bg-slate-800 shadow-lg rounded-lg">
+    <ScrollZoomIn className="flex flex-col gap-4 lg:gap-5 p-6 lg:p-8 bg-white dark:bg-slate-800 shadow-lg rounded-lg">
       <RyogoP weight="font-bold" color={everything ? "brand" : "slate"}>
         {title}
       </RyogoP>
       <RyogoSmall color="light">{description}</RyogoSmall>
       <RyogoH4 weight="font-medium">{price}</RyogoH4>
       {children}
-      <div className="flex flex-col gap-2 lg:gap-3 mb-2">
-        {everything && <RyogoSmall>{everything}</RyogoSmall>}
+      <SectionColWrapper className="mb-2">
+        {everything && <RyogoCaption>{everything}</RyogoCaption>}
         {features.map((feature) => (
-          <li key={feature} className="flex gap-3">
+          <li key={feature} className="flex gap-2 md:gap-3 items-center">
             <RyogoIcon
               icon={Check}
-              size="sm"
+              size="xs"
               color={everything ? "brand" : "slate"}
               thick
             />
-            <RyogoSmall>{feature}</RyogoSmall>
+            <RyogoCaption>{feature}</RyogoCaption>
           </li>
         ))}
-      </div>
-    </div>
+      </SectionColWrapper>
+    </ScrollZoomIn>
   )
 }

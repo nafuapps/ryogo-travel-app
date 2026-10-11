@@ -87,7 +87,11 @@ export default function LoginPageComponent() {
         <RyogoOTPInput
           name={"phoneNumber"}
           label={t("Input.Title")}
-          description={t("Input.Description")}
+          description={
+            form.formState.isSubmitting
+              ? t("Input.Loading")
+              : t("Input.Description")
+          }
           length={10}
           onSubmit={form.handleSubmit(onSubmit)}
           disabled={form.formState.isSubmitting || isBot}

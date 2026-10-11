@@ -24,6 +24,8 @@ import {
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
 import { Separator } from "@/components/ui/separator"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 
 export default async function ResourcesSupportSection() {
   const t = await getTranslations("Landing.Resources.Support")
@@ -51,50 +53,52 @@ export default async function ResourcesSupportSection() {
 async function HelpBlock() {
   const t = await getTranslations("Landing.Resources.Support.HelpBlock")
   return (
-    <div className="flex flex-col gap-4 md:gap-5 w-full bg-linear-to-b from-slate-950 dark:from-white to-slate-800 dark:to-slate-200 p-6 lg:p-8 rounded-lg">
+    <ScrollZoomIn className="flex flex-col gap-5 md:gap-6 w-full bg-linear-to-b from-slate-950 dark:from-white to-slate-800 dark:to-slate-200 p-6 lg:p-8 rounded-lg">
       <RyogoH4 color="white" weight="font-bold">
         {t("Title")}
       </RyogoH4>
-      <RyogoCaption color="light">{t("Description")}</RyogoCaption>
+      <RyogoCaption color="white">{t("Description")}</RyogoCaption>
       <HelpItem label={t("Help1")} />
       <HelpItem label={t("Help2")} />
       <HelpItem label={t("Help3")} />
       <HelpItem label={t("Help4")} />
-      <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`} className=" mt-auto">
-        <RyogoWhiteButton size="lg" label={t("CallCTA")} className="w-full">
-          <RyogoIcon icon={Phone} size="sm" color="slate" thick />
-        </RyogoWhiteButton>
-      </Link>
-      <Link href={`mailto:${SUPPORT_EMAIL}`} className="w-full">
-        <RyogoOutlineButton
-          size="lg"
-          label={t("EmailCTA")}
-          labelColor="white"
+      <SectionColWrapper className="mt-4 md:mt-auto">
+        <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`}>
+          <RyogoWhiteButton label={t("CallCTA")} className="w-full">
+            <RyogoIcon icon={Phone} size="xs" color="slate" thick />
+          </RyogoWhiteButton>
+        </Link>
+        <Link href={`mailto:${SUPPORT_EMAIL}`} className="w-full">
+          <RyogoOutlineButton
+            // size="lg"
+            label={t("EmailCTA")}
+            labelColor="white"
+            className="w-full"
+          >
+            <RyogoIcon icon={Mail} size="xs" color="white" thick />
+          </RyogoOutlineButton>
+        </Link>
+        <Link
+          href={`https://wa.me/91${SUPPORT_CHAT_NUMBER}`}
           className="w-full"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <RyogoIcon icon={Mail} size="sm" color="white" thick />
-        </RyogoOutlineButton>
-      </Link>
-      <Link
-        href={`https://wa.me/91${SUPPORT_CHAT_NUMBER}`}
-        className="w-full"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <RyogoOutlineButton
-          size="lg"
-          label={t("ChatCTA")}
-          labelColor="white"
-          className="w-full"
-        >
-          <RyogoIcon icon={MessageSquare} size="sm" color="white" thick />
-        </RyogoOutlineButton>
-      </Link>
+          <RyogoOutlineButton
+            // size="lg"
+            label={t("ChatCTA")}
+            labelColor="white"
+            className="w-full"
+          >
+            <RyogoIcon icon={MessageSquare} size="xs" color="white" thick />
+          </RyogoOutlineButton>
+        </Link>
+      </SectionColWrapper>
       <Separator className="bg-slate-500 dark:bg-slate-400" />
       <RyogoCaption color="light" className="text-center">
         {t("Disclaimer")}
       </RyogoCaption>
-    </div>
+    </ScrollZoomIn>
   )
 }
 

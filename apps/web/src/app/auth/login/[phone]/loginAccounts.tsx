@@ -1,6 +1,6 @@
 "use client"
 
-import { RyogoH3, RyogoSmall } from "@/components/typography"
+import { RyogoH3, RyogoCaption } from "@/components/typography"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
@@ -23,7 +23,7 @@ export default function LoginAccountsPageComponent({
   return (
     <AuthPageWrapper>
       <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
-      <RyogoSmall weight="font-bold">{t("Info")}</RyogoSmall>
+      <RyogoCaption weight="font-bold">{t("Info")}</RyogoCaption>
       <SectionColWrapper>
         {accounts.map((account) => (
           <Link

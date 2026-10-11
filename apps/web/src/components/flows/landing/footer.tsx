@@ -70,14 +70,14 @@ export default async function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="border-t border-sky-700 dark:border-sky-300 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-sky-700 dark:border-sky-300 pt-8 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-3">
           <RyogoCaption color="light">
             {t("Copyright", { year: new Date().getFullYear() })}
           </RyogoCaption>
           <Link
             href={NAFUAPPS_LINK}
             target="_blank"
-            className="hover:underline transition"
+            className="hover:opacity-70 transition"
           >
             <RyogoCaption color="light">{t("Developer")}</RyogoCaption>
           </Link>

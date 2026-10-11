@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { usePagination } from "@/hooks/usePagination"
-import { PaginationControls } from "../pagination/paginationControls"
+import { PaginationControls } from "@/components/pagination/paginationControls"
 import ReminderCard from "./reminderCard"
 import RemindersFiltersCard from "@/components/filter/remindersFiltersCard"
 

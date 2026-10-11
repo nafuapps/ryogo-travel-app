@@ -8,7 +8,7 @@ export function AuthMainWrapper({
   src?: string
 }) {
   return (
-    <div className="relative flex flex-col gap-8 md:gap-10 min-h-full overflow-scroll no-scrollbar items-center bg-slate-50 dark:bg-slate-900 w-full md:w-1/2 p-6 md:p-8 lg:p-10">
+    <div className="relative flex flex-col gap-8 md:gap-10 pb-4 md:pb-5 min-h-full overflow-scroll no-scrollbar items-center bg-slate-50 dark:bg-slate-900 w-full md:w-1/2 p-6 md:p-8 lg:p-10">
       {src ? (
         <>
           <div
@@ -43,7 +43,7 @@ export function AuthPageWrapper({
   return (
     <div
       id="authPage"
-      className={`flex flex-col justify-center my-auto animate-zoom-in w-full rounded-lg shadow bg-white dark:bg-slate-800 p-6 md:p-8 gap-3 lg:gap-4 ${className ?? ""}`}
+      className={`flex flex-col justify-center max-w-md md:max-w-xl m-auto animate-zoom-in w-full rounded-lg shadow bg-white dark:bg-slate-800 p-6 md:p-8 gap-3 lg:gap-4 ${className ?? ""}`}
     >
       {children}
     </div>

@@ -13,6 +13,8 @@ import {
   RyogoOutlineButton,
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function PricingCTASection() {
   const t = await getTranslations("Landing.Pricing.CTA")
@@ -26,16 +28,23 @@ export default async function PricingCTASection() {
         <RyogoH1 color="white" weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <div className="flex flex-col gap-4 justify-center items-center">
+        <ScrollZoomIn className="flex flex-col gap-4 justify-center items-center">
           <RyogoP color="white" className="max-w-4xl text-center opacity-80">
             {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
           </RyogoP>
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center w-full">
-            <Link href="/onboarding">
-              <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
-                <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
-              </RyogoWhiteButton>
-            </Link>
+            <ClickZoomOut>
+              <Link href="/onboarding">
+                <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
+                  <RyogoIcon
+                    icon={ChevronRight}
+                    color="black"
+                    size="sm"
+                    thick
+                  />
+                </RyogoWhiteButton>
+              </Link>
+            </ClickZoomOut>
             {/* //TODO: Demo video source*/}
             <RyogoDialogVideo
               src="https://www.youtube.com/embed/1MobY_vR7-g"
@@ -51,7 +60,7 @@ export default async function PricingCTASection() {
               </RyogoOutlineButton>
             </RyogoDialogVideo>
           </div>
-        </div>
+        </ScrollZoomIn>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

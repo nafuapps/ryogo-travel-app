@@ -12,6 +12,7 @@ import {
   RyogoDefaultButton,
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function FeaturesHeroSection() {
   const t = await getTranslations("Landing.Features.Hero")
@@ -37,14 +38,16 @@ export default async function FeaturesHeroSection() {
               <RyogoIcon icon={ChevronDown} color="white" size="sm" thick />
             </RyogoDefaultButton>
           </Link>
-          <Link href="/auth/signup">
-            <RyogoWhiteButton
-              size="lg"
-              label={t("SecondaryCTA")}
-              labelColor="slate"
-              className="w-full gap-1 lg:gap-2 md:w-auto"
-            />
-          </Link>
+          <ClickZoomOut>
+            <Link href="/auth/signup">
+              <RyogoWhiteButton
+                size="lg"
+                label={t("SecondaryCTA")}
+                labelColor="slate"
+                className="w-full gap-1 lg:gap-2 md:w-auto"
+              />
+            </Link>
+          </ClickZoomOut>
         </div>
         <div className="bg-white dark:bg-slate-800 mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
           <Image

@@ -12,6 +12,8 @@ import {
   RyogoOutlineButton,
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function ResourcesCTASection() {
   const t = await getTranslations("Landing.Resources.CTA")
@@ -19,7 +21,7 @@ export default async function ResourcesCTASection() {
     <LandingSectionWrapper
       id="cta"
       shrink
-      className="bg-linear-to-b from-slate-600 dark:from-slate-300 to-sky-900 dark:to-slate-50"
+      className="bg-linear-to-b from-slate-500 dark:from-slate-400 to-slate-800 dark:to-slate-50"
     >
       <LandingContentWrapper>
         <RyogoH1 color="white" weight="font-bold" className="text-center">
@@ -28,20 +30,24 @@ export default async function ResourcesCTASection() {
         <RyogoP color="white" className="max-w-4xl text-center opacity-80">
           {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
         </RyogoP>
-        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          <Link href="/onboarding">
-            <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
-              <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
-            </RyogoWhiteButton>
-          </Link>
-          <Link href="/features">
-            <RyogoOutlineButton
-              size="lg"
-              labelColor="white"
-              label={t("SecondaryCTA")}
-            />
-          </Link>
-        </div>
+        <ScrollZoomIn className="flex flex-col md:flex-row gap-4 justify-center items-center">
+          <ClickZoomOut>
+            <Link href="/onboarding">
+              <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
+                <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
+              </RyogoWhiteButton>
+            </Link>
+          </ClickZoomOut>
+          <ClickZoomOut>
+            <Link href="/features">
+              <RyogoOutlineButton
+                size="lg"
+                labelColor="white"
+                label={t("SecondaryCTA")}
+              />
+            </Link>
+          </ClickZoomOut>
+        </ScrollZoomIn>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

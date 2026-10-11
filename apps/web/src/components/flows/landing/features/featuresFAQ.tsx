@@ -9,6 +9,7 @@ import {
 import { FAQItem, FAQWrapper } from "@/components/flows/landing/faqWrapper"
 import { getTranslations } from "next-intl/server"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function FeaturesFAQSection() {
   const t = await getTranslations("Landing.Features.FAQ")
@@ -80,15 +81,17 @@ export default async function FeaturesFAQSection() {
             answer={t("DataPrivacy.Answer")}
           />
         </FAQWrapper>
-        <Link href="/resources">
-          <RyogoDefaultButton
-            size="lg"
-            label={t("MoreCTA")}
-            className="w-full md:w-auto"
-          >
-            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </RyogoDefaultButton>
-        </Link>
+        <ClickZoomOut>
+          <Link href="/resources">
+            <RyogoDefaultButton
+              size="lg"
+              label={t("MoreCTA")}
+              className="w-full md:w-auto"
+            >
+              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+            </RyogoDefaultButton>
+          </Link>
+        </ClickZoomOut>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

@@ -3,8 +3,9 @@
 import {
   RyogoCaption,
   RyogoH1,
-  RyogoP,
+  RyogoH4,
   RyogoSmall,
+  RyogoTiny,
 } from "@/components/typography"
 import {
   AtSign,
@@ -25,7 +26,10 @@ import Link from "next/link"
 import RyoGoLogo from "@/components/logo"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { PhoneRegex } from "@/lib/regex"
-import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoBrandButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { Separator } from "@/components/ui/separator"
 import {
   SectionColWrapper,
@@ -33,6 +37,7 @@ import {
   SectionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export const metadata: Metadata = {
   title: `Onboarding - ${pageTitle}`,
@@ -57,7 +62,7 @@ export default async function OnboardingHomePage({
         <RyogoH1 weight="font-bold">{t("Header.Title")}</RyogoH1>
         <RyogoSmall color="light">{t("Header.Description")}</RyogoSmall>
       </SectionColWrapper>
-      <div id="OnboardingHomeCTA" className="w-full md:w-1/2">
+      <ClickZoomOut className="w-full max-w-xl">
         <Link
           href={
             PhoneRegex.safeParse(phone).success
@@ -68,13 +73,19 @@ export default async function OnboardingHomePage({
           <RyogoBrandButton
             size={"lg"}
             className="w-full"
-            label={t("Footer.PrimaryCTA")}
+            label={t("PrimaryCTA")}
           />
         </Link>
-      </div>
+      </ClickZoomOut>
       <TileGridWrapper>
-        <SectionWrapper id="OnboardingHomeSteps">
-          <RyogoP weight="font-bold"> {t("BodySteps.Title")}</RyogoP>
+        <SectionWrapper
+          id="OnboardingHomeSteps"
+          className="animate-zoom-in max-w-xl mx-auto lg:ml-auto lg:mr-0"
+        >
+          <RyogoH4 color="light" weight="font-bold">
+            {" "}
+            {t("BodySteps.Title")}
+          </RyogoH4>
           <div className="flex flex-col">
             <OnboardingHomeStepItem
               label={t("BodySteps.Step1")}
@@ -97,8 +108,14 @@ export default async function OnboardingHomePage({
             />
           </div>
         </SectionWrapper>
-        <SectionWrapper id="OnboardingHomeChecklist">
-          <RyogoP weight="font-bold"> {t("BodyChecklist.Title")}</RyogoP>
+        <SectionWrapper
+          id="OnboardingHomeChecklist"
+          className="animate-zoom-in max-w-xl mx-auto lg:mr-auto lg:ml-0"
+        >
+          <RyogoH4 color="light" weight="font-bold">
+            {" "}
+            {t("BodyChecklist.Title")}
+          </RyogoH4>
           <OnboardingHomeDocumentItem
             label={t("BodyChecklist.Item1")}
             icon={Image}
@@ -120,12 +137,18 @@ export default async function OnboardingHomePage({
             icon={User}
           />
           <Separator />
-          <RyogoCaption color="light">
-            {t("BodyChecklist.Optional")}
-          </RyogoCaption>
-          <RyogoCaption color="light">{t("BodyChecklist.Format")}</RyogoCaption>
+          <RyogoTiny color="light">{t("BodyChecklist.Optional")}</RyogoTiny>
+          <RyogoTiny color="light">{t("BodyChecklist.Format")}</RyogoTiny>
         </SectionWrapper>
       </TileGridWrapper>
+      <Link href={"/"}>
+        <RyogoOutlineButton
+          size="lg"
+          className="w-full"
+          label={t("BackCTA")}
+          labelColor="light"
+        />
+      </Link>
     </div>
   )
 }
@@ -140,7 +163,7 @@ function OnboardingHomeDocumentItem({
   return (
     <SectionRowWrapper className="items-center">
       <RyogoEnclosedIcon icon={icon} color="brand" bgColor="brand" size="sm" />
-      <RyogoSmall color="slate">{label}</RyogoSmall>
+      <RyogoCaption color="slate">{label}</RyogoCaption>
     </SectionRowWrapper>
   )
 }
@@ -160,12 +183,12 @@ function OnboardingHomeStepItem({
     <SectionRowWrapper className="items-center">
       <div className="flex flex-col items-center">
         <div
-          className={`w-1 h-2 md:h-3 ${!first && `bg-slate-50 dark:bg-slate-900`}`}
-        ></div>
-        <RyogoEnclosedIcon icon={icon} size="md" color="light" circular />
+          className={`w-1 h-2 md:h-3 ${!first && `bg-slate-100 dark:bg-slate-700`}`}
+        />
+        <RyogoEnclosedIcon icon={icon} size="sm" color="light" circular />
         <div
-          className={`w-1 h-2 md:h-3 ${!last && `bg-slate-50 dark:bg-slate-900`}`}
-        ></div>
+          className={`w-1 h-2 md:h-3 ${!last && `bg-slate-100 dark:bg-slate-700`}`}
+        />
       </div>
       <RyogoSmall color="slate">{label}</RyogoSmall>
     </SectionRowWrapper>

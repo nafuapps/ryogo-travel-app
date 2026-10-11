@@ -129,10 +129,10 @@ export default function Navbar({
               </Link>
             ))}
             <div className="flex flex-col gap-2 pt-4 border-t">
-              <Link href="/auth/login">
+              <Link href="/auth/login" onClick={() => setIsOpen(false)}>
                 <RyogoOutlineButton label={t("Login")} className="w-full" />
               </Link>
-              <Link href="/auth/signup">
+              <Link href="/auth/signup" onClick={() => setIsOpen(false)}>
                 <RyogoBrandButton label={t("Signup")} className="w-full" />
               </Link>
             </div>

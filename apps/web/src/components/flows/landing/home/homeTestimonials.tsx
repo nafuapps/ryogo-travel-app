@@ -1,7 +1,7 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
+  SectionColWrapper,
   SectionRowWrapper,
-  SectionWrapper,
 } from "@/components/page/pageWrappers"
 import {
   RyogoH1,
@@ -17,6 +17,8 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function HomeTestimonialsSection() {
   const t = await getTranslations("Landing.Home.Testimonials")
@@ -52,15 +54,17 @@ export default async function HomeTestimonialsSection() {
             rating={5}
           />
         </div>
-        <Link href="/resources">
-          <RyogoDefaultButton
-            size="lg"
-            label={t("MoreCTA")}
-            className="w-full md:w-auto"
-          >
-            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </RyogoDefaultButton>
-        </Link>
+        <ClickZoomOut>
+          <Link href="/resources">
+            <RyogoDefaultButton
+              size="lg"
+              label={t("MoreCTA")}
+              className="w-full md:w-auto"
+            >
+              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+            </RyogoDefaultButton>
+          </Link>{" "}
+        </ClickZoomOut>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )
@@ -80,31 +84,35 @@ function TestimonialCard({
   rating: number
 }) {
   return (
-    <SectionWrapper id={name}>
-      <SectionRowWrapper>
-        <div className="flex gap-1">
-          {Array.from({ length: rating }).map((_, i) => (
-            <span key={i} className="text-yellow-400">
-              ⭐
-            </span>
-          ))}
-        </div>
-        <RyogoIcon icon={Quote} size="md" color="slate" />
-      </SectionRowWrapper>
-      <RyogoSmall color="slate" className="italic ">
-        {testimonial}
-      </RyogoSmall>
-      <div className="mt-auto flex items-center gap-4">
-        <div className="size-12 shrink-0 rounded-full bg-sky-600 dark:bg-sky-300 text-white flex items-center justify-center font-bold">
-          <RyogoP weight="font-bold" color="white">
-            {initial}
-          </RyogoP>
-        </div>
-        <div className="flex flex-col gap-0.5">
-          <RyogoSmall>{name}</RyogoSmall>
-          <RyogoCaption color="light">{role}</RyogoCaption>
-        </div>
-      </div>
-    </SectionWrapper>
+    <ScrollZoomIn>
+      <SectionColWrapper className="border p-4 md:p-5 rounded-lg gap-2 md:gap-3">
+        <SectionRowWrapper className="justify-between">
+          <div className="flex gap-1">
+            {Array.from({ length: rating }).map((_, i) => (
+              <span key={i} className="text-yellow-400">
+                ⭐
+              </span>
+            ))}
+          </div>
+          <RyogoIcon icon={Quote} size="md" color="light" />
+        </SectionRowWrapper>
+        <RyogoSmall color="slate" className="italic">
+          {testimonial}
+        </RyogoSmall>
+        <SectionRowWrapper className="mt-auto items-center justify-between">
+          <div className="size-12 shrink-0 rounded-full bg-sky-600 dark:bg-sky-300 text-white flex items-center justify-center font-bold">
+            <RyogoP weight="font-bold" color="white">
+              {initial}
+            </RyogoP>
+          </div>
+          <SectionColWrapper small className="w-full">
+            <RyogoSmall color="slate" weight="font-medium">
+              {name}
+            </RyogoSmall>
+            <RyogoCaption color="light">{role}</RyogoCaption>
+          </SectionColWrapper>
+        </SectionRowWrapper>
+      </SectionColWrapper>
+    </ScrollZoomIn>
   )
 }

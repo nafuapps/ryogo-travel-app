@@ -9,6 +9,8 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 //TODO: Add product images
 export default async function HomeFeaturesSection() {
@@ -48,15 +50,17 @@ export default async function HomeFeaturesSection() {
             // imageSrc="/images/homeF4.png"
           />
         </div>
-        <Link href="/features">
-          <RyogoDefaultButton
-            size="lg"
-            label={t("MoreCTA")}
-            className="w-full md:w-auto"
-          >
-            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </RyogoDefaultButton>
-        </Link>
+        <ClickZoomOut>
+          <Link href="/features">
+            <RyogoDefaultButton
+              size="lg"
+              label={t("MoreCTA")}
+              className="w-full md:w-auto"
+            >
+              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+            </RyogoDefaultButton>
+          </Link>
+        </ClickZoomOut>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )
@@ -72,7 +76,7 @@ function FeatureCard({
   imageSrc: string
 }) {
   return (
-    <div className="flex flex-col gap-4 lg:gap-5 w-full rounded-lg bg-sky-50 dark:bg-sky-950 p-6 lg:p-8">
+    <ScrollZoomIn className="flex flex-col gap-4 lg:gap-5 w-full rounded-lg bg-sky-50 dark:bg-sky-950 p-5 lg:p-6">
       <div className="w-full aspect-video rounded overflow-hidden relative">
         <Image
           className="object-cover w-full"
@@ -85,6 +89,6 @@ function FeatureCard({
       </div>
       <RyogoH4 weight="font-bold">{title}</RyogoH4>
       <RyogoSmall color="slate">{description}</RyogoSmall>
-    </div>
+    </ScrollZoomIn>
   )
 }

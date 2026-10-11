@@ -27,6 +27,7 @@ import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 
 export default function QueryForm() {
   const t = useTranslations("Landing.Resources.Support.QueryForm")
@@ -87,7 +88,7 @@ export default function QueryForm() {
   }
 
   return (
-    <div className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 md:gap-5 w-full shadow-md bg-white dark:bg-sky-950">
+    <ScrollZoomIn className="flex flex-col border rounded-lg p-6 md:p-8 gap-4 md:gap-5 w-full shadow-md bg-white dark:bg-sky-950">
       <FormWrapper
         form={form}
         id={"queryForm"}
@@ -96,7 +97,7 @@ export default function QueryForm() {
         <RyogoH4 color="brand" weight="font-bold">
           {t("Title")}
         </RyogoH4>
-        <RyogoCaption color="light">{t("Description")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
         <RyogoInput
           name={"name"}
           type="text"
@@ -152,6 +153,6 @@ export default function QueryForm() {
           {t("Disclaimer")}
         </RyogoCaption>
       </FormWrapper>
-    </div>
+    </ScrollZoomIn>
   )
 }

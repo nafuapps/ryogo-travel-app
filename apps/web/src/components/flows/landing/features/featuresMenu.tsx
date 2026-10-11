@@ -7,16 +7,15 @@ import Link from "next/link"
 import {
   RyogoCaption,
   RyogoH1,
-  RyogoP,
+  RyogoH4,
   RyogoSmall,
 } from "@/components/typography"
 import Image from "next/image"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronDown } from "lucide-react"
-import {
-  SectionColWrapper,
-  TileGridWrapper,
-} from "@/components/page/pageWrappers"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { FeatureGrid } from "./featureWrappers"
 
 //TODO: Add product images
 export default async function FeaturesMenuSection() {
@@ -25,12 +24,13 @@ export default async function FeaturesMenuSection() {
     <LandingSectionWrapper id="menu" shrink>
       <LandingContentWrapper justifyStart>
         <RyogoH1 weight="font-bold">{t("Title")}</RyogoH1>
-        <TileGridWrapper doubleMd>
+        <FeatureGrid>
           <FeaturesMenuItem
             title={t("M1")}
             subtitle={t("M1Subtitle")}
             href="#management"
             imageSrc="/logoPWA.png"
+
             // imageSrc="/featureMenu1.png"
           />
           <FeaturesMenuItem
@@ -38,6 +38,7 @@ export default async function FeaturesMenuSection() {
             subtitle={t("M2Subtitle")}
             href="#scheduling"
             imageSrc="/logoPWA.png"
+
             // imageSrc="/featureMenu2.png"
           />
           <FeaturesMenuItem
@@ -45,6 +46,7 @@ export default async function FeaturesMenuSection() {
             subtitle={t("M3Subtitle")}
             href="#communication"
             imageSrc="/logoPWA.png"
+
             // imageSrc="/featureMenu3.png"
           />
           <FeaturesMenuItem
@@ -52,6 +54,7 @@ export default async function FeaturesMenuSection() {
             subtitle={t("M4Subtitle")}
             href="#analytics"
             imageSrc="/logoPWA.png"
+
             // imageSrc="/featureMenu4.png"
           />
           <FeaturesMenuItem
@@ -59,6 +62,7 @@ export default async function FeaturesMenuSection() {
             subtitle={t("M5Subtitle")}
             href="#alerts"
             imageSrc="/logoPWA.png"
+
             // imageSrc="/featureMenu5.png"
           />
           <FeaturesMenuItem
@@ -66,9 +70,10 @@ export default async function FeaturesMenuSection() {
             subtitle={t("M6Subtitle")}
             href="#security"
             imageSrc="/logoPWA.png"
+
             // imageSrc="/featureMenu6.png"
           />
-        </TileGridWrapper>
+        </FeatureGrid>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )
@@ -87,30 +92,32 @@ async function FeaturesMenuItem({
 }) {
   const t = await getTranslations("Landing.Features.Menu")
   return (
-    <Link
-      className="group relative flex flex-col w-full bg-slate-100 dark:bg-slate-700 shadow rounded-lg overflow-hidden"
-      href={href}
-    >
-      <SectionColWrapper small className="mx-5 md:mx-6 my-4 md:my-5">
-        <RyogoP weight="font-bold" color="brand">
-          {title}
-        </RyogoP>
-        <RyogoCaption color="light">{subtitle}</RyogoCaption>
-      </SectionColWrapper>
-      <div className="w-full max-w-3xl relative aspect-video overflow-hidden transition-transform duration-300 md:hover:scale-105">
-        <Image
-          className="object-cover"
-          loading="eager"
-          src={imageSrc}
-          alt={title}
-          fill
-          sizes="768px"
-        />
-      </div>
-      <div className="absolute left-0 right-0 bottom-0 p-2.5 lg:p-3 flex items-center justify-center gap-1 lg:gap-1.5 bg-slate-100 dark:bg-slate-700 rounded-b-lg transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
-        <RyogoSmall color="brand">{t("LearnMore")}</RyogoSmall>
-        <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
-      </div>
-    </Link>
+    <ScrollZoomIn>
+      <Link
+        className="group relative flex flex-col w-full overflow-hidden max-w-2xl mx-auto h-full"
+        href={href}
+      >
+        <SectionColWrapper small className="mb-4 md:mb-5">
+          <RyogoH4 weight="font-bold" color="brand">
+            {title}
+          </RyogoH4>
+          <RyogoCaption color="light">{subtitle}</RyogoCaption>
+        </SectionColWrapper>
+        <div className="mt-auto w-full max-w-2xl relative aspect-video rounded-lg overflow-hidden transition-transform duration-300 md:group-hover:scale-105">
+          <Image
+            className="object-cover"
+            loading="eager"
+            src={imageSrc}
+            alt={title}
+            fill
+            sizes="672px"
+          />
+        </div>
+        <div className="absolute left-0 right-0 bottom-0 rounded-b-lg md:rounded-b-none opacity-80 p-2.5 lg:p-3 flex items-center justify-center gap-1 lg:gap-1.5 bg-slate-100 dark:bg-slate-700 transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
+          <RyogoSmall color="brand">{t("LearnMore")}</RyogoSmall>
+          <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
+        </div>
+      </Link>
+    </ScrollZoomIn>
   )
 }

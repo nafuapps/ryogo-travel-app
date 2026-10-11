@@ -26,6 +26,7 @@ import {
   RyogoDefaultButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default function HowItWorksBookingsSection() {
   const t = useTranslations("Landing.HowItWorks.Bookings")
@@ -86,13 +87,15 @@ export default function HowItWorksBookingsSection() {
           {t("Subtitle")}
         </RyogoP>
         <SlideshowWrapper items={items} reverse />
-        <Link href="/auth/signup">
-          <RyogoDefaultButton
-            size="lg"
-            label={t("MoreCTA")}
-            className="w-full md:w-auto"
-          />
-        </Link>
+        <ClickZoomOut>
+          <Link href="/auth/signup">
+            <RyogoDefaultButton
+              size="lg"
+              label={t("MoreCTA")}
+              className="w-full md:w-auto"
+            />
+          </Link>
+        </ClickZoomOut>
         <Link href="#entities">
           <RyogoGhostButton
             size="lg"

@@ -7,7 +7,8 @@
         "PageTitle": "Log into RyoGo",
         "Input": {
           "Title": "Enter phone number",
-          "Description": "Provide your 10-digit phone number to login"
+          "Description": "Provide your 10-digit phone number to login",
+          "Loading": "Authenticating.. please wait"
         },
         "PrimaryCTA": "Continue",
         "Loading": "Loading",
@@ -104,7 +105,8 @@
         "PageTitle": "Welcome to RyoGo!",
         "Input": {
           "Title": "Enter phone number",
-          "Description": "Provide your 10-digit phone number to signup"
+          "Description": "Provide your 10-digit phone number to signup",
+          "Loading": "Checking.. please wait"
         },
         "PrimaryCTA": "Create account",
         "Loading": "Loading..",
@@ -131,8 +133,8 @@
       },
       "BodySteps": {
         "Title": "Onboarding Journey",
-        "Step1": "1. Create an owner account for your agency",
-        "Step2": "2. Verify your account",
+        "Step1": "1. Create an owner account",
+        "Step2": "2. Verify account with OTP",
         "Step3": "3. Add a vehicle",
         "Step4": "4. Onboard a driver",
         "Step5": "5. Add an agent (optional)"
@@ -147,9 +149,8 @@
         "Optional": "* All the above documents are optional. However, we recommend uploading them for better app experience",
         "Format": "** Image format must be either: .jpg/jpeg, .png, .avif, .webp"
       },
-      "Footer": {
-        "PrimaryCTA": "Get Started"
-      }
+      "PrimaryCTA": "Get Started",
+      "BackCTA": "Back to Homepage"
     },
     "CreateAccountPage": {
       "Title": "Create Account",
@@ -6760,7 +6761,8 @@
       },
       "CTA": {
         "Title": "Ready to grow your business?",
-        "Subtitle": "Join hundreds of travel agencies automating their daily workflows. Sign up today to get a free {days}-day Premium trial",
+        "Subtitle1": "Join hundreds of travel agencies automating their daily workflows.",
+        "Subtitle2": "Sign up today to get a free {days}-day Premium trial.",
         "PrimaryCTA": "Create Free Account Now",
         "SecondaryCTA": "Talk To Our Team",
         "Prop1": "Lifetime free account",
@@ -6992,7 +6994,8 @@
       },
       "CTA": {
         "Title": "Want to grow your business faster?",
-        "Subtitle": "Scale your travel agency operations rapidly with RyoGo. Create a forever free Basic account or get a {days}-day free Premium trial now.",
+        "Subtitle1": "Scale your travel agency operations rapidly with RyoGo.",
+        "Subtitle2": "Create a forever free Basic account or get a {days}-day free Premium trial now.",
         "PrimaryCTA": "Get Started Now",
         "SecondaryCTA": "Understand How RyoGo Works"
       }
@@ -7481,24 +7484,24 @@
         "Mission": {
           "Title": "Our Mission",
           "Desc": "To enable small scale travel businesses in India to manage their daily operations efficiently, by providing an easy-to-use, all-in-one digital platform.",
-          "Subtitle": "\"We want to help agency owners and fleet operators in running and collaborating across their businesses, ensuring growth and a seamless customer experience.\"",
+          "Subtitle": "We want to help agency owners and fleet operators in running and collaborating across their businesses, ensuring growth and a seamless customer experience.",
           "Quote": "- Founder of RyoGo Travel App",
           "M1": {
             "Value": "40+",
             "Label": "Companies use RyoGo"
           },
           "M2": {
-            "Value": "1000+",
+            "Value": "100+",
             "Label": "Man hours saved per month"
           },
           "M3": {
-            "Value": "30%",
-            "Label": "Revenue increase"
+            "Value": "15%",
+            "Label": "Expected revenue increase"
           }
         },
         "Founder": {
           "Title": "Meet the founder",
-          "Description": "RyoGo was founded in 2023 by Nitin Gautam, an industry veteran with over 13 years of experience in running and managing travel, automobile, logistics and finance related products at various startups. He has a deep understanding of the challenges faced by travel businesses and is passionate about leveraging technology to simplify operations and enhance customer experiences.",
+          "Description": "RyoGo was founded in 2023 by Nitin Gautam, an industry veteran with over 13 years of experience in running and managing travel, automobile, logistics and finance related products at various startups. He has a deep understanding of the challenges faced by travel businesses and is passionate about leveraging technology to simplify operations and enhance customer experience.",
           "Company1": "Ola Electric",
           "Company2": "PharmEasy",
           "Company3": "Park Plus"

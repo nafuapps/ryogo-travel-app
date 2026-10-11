@@ -1,5 +1,6 @@
 import { RyogoSmall, RyogoH4 } from "@/components/typography"
 import Image from "next/image"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 
 export function FeatureGrid({ children }: { children: React.ReactNode }) {
   return (
@@ -25,7 +26,7 @@ export function FeatureItem({
   longReverse?: boolean
 }) {
   return (
-    <div
+    <ScrollZoomIn
       className={`w-full group flex flex-col ${long ? "md:flex-row md:col-span-2 md:items-center" : ""} ${longReverse ? "md:flex-row-reverse md:col-span-2 md:items-center" : ""} border rounded-lg p-6 md:p-8 bg-white dark:bg-slate-800 gap-6 lg:gap-8 ${className ?? ""}`}
     >
       <div className="flex flex-col gap-3 lg:gap-4 w-full">
@@ -34,7 +35,7 @@ export function FeatureItem({
       </div>
       <div className="border-8 md:border-10 mt-auto border-slate-100/50 dark:border-slate-700/50 w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
         <Image
-          className="object-cover md:transition-transform md:duration-300 md:group-hover:scale-105"
+          className="object-cover rounded-md md:transition-transform md:duration-300 md:group-hover:scale-105"
           loading="eager"
           src={src}
           alt=""
@@ -42,6 +43,6 @@ export function FeatureItem({
           sizes="672px"
         />
       </div>
-    </div>
+    </ScrollZoomIn>
   )
 }

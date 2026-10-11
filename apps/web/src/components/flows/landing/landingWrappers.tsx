@@ -1,3 +1,5 @@
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+
 export function LandingSectionWrapper({
   id,
   children,
@@ -14,7 +16,7 @@ export function LandingSectionWrapper({
   return (
     <section
       id={id}
-      className={`${shrink ? "" : "min-h-lvh"} flex flex-col ${hero ? "p-4 md:p-5 lg:p-6" : "py-24 md:py-32 px-5 md:px-6 lg:px-8"} ${className ?? ""}`}
+      className={`${shrink ? "" : "min-h-lvh"} flex flex-col ${hero ? "p-4 md:p-5 lg:p-6" : "py-24 md:py-32 px-6 md:px-7 lg:px-8"} ${className ?? ""}`}
     >
       {children}
     </section>
@@ -31,10 +33,10 @@ export function LandingContentWrapper({
   justifyStart?: boolean
 }) {
   return (
-    <div
+    <ScrollZoomIn
       className={`flex-1 max-w-6xl w-full flex flex-col items-center ${justifyStart ? "justify-start" : "justify-center"} mx-auto gap-8 md:gap-10 ${className ?? ""}`}
     >
       {children}
-    </div>
+    </ScrollZoomIn>
   )
 }

@@ -5,6 +5,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { RyogoCaption } from "@/components/typography"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
 
 export function RyogoCarouselWrapper({
   children,
@@ -15,18 +17,18 @@ export function RyogoCarouselWrapper({
 }) {
   return (
     <Carousel className="w-full" opts={{}}>
-      <div className="flex w-full items-center justify-center gap-2 lg:gap-3 mb-3">
-        <CarouselPrevious className="static translate-y-0 translate-x-0 rounded-lg" />
-        {count && (
-          <RyogoCaption weight="font-bold" color="slate">
-            {count}
-          </RyogoCaption>
-        )}
-        <CarouselNext className="static translate-y-0 translate-x-0 rounded-lg" />
-      </div>
-      <CarouselContent className="m-0.5 gap-3 lg:gap-4 w-full">
-        {children}
-      </CarouselContent>
+      <ScrollZoomIn className="w-full">
+        <SectionRowWrapper className="items-center justify-center mb-4 md:mb-5">
+          <CarouselPrevious className="static translate-y-0 translate-x-0 rounded-lg" />
+          {count && (
+            <RyogoCaption weight="font-bold" color="slate">
+              {count}
+            </RyogoCaption>
+          )}
+          <CarouselNext className="static translate-y-0 translate-x-0 rounded-lg" />
+        </SectionRowWrapper>
+        <CarouselContent className="mx-0 w-full">{children}</CarouselContent>
+      </ScrollZoomIn>
     </Carousel>
   )
 }

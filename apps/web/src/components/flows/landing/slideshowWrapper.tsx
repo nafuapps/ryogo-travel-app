@@ -6,6 +6,7 @@ import { useSlideshow } from "@/hooks/useSlideshow"
 import { SLIDESHOW_TIMER_MS } from "@/lib/uiConfig"
 import { LucideIcon } from "lucide-react"
 import Image from "next/image"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 
 export type SlideshowItemType = {
   src: string
@@ -24,7 +25,7 @@ export function SlideshowWrapper({
   const { activeIndex, timeLeft, setActiveIndex } = useSlideshow(items.length)
 
   return (
-    <div
+    <ScrollZoomIn
       className={`mt-4 flex flex-col items-center gap-6 w-full ${reverse ? "md:flex-row-reverse" : "md:flex-row"}`}
     >
       <SlideshowSideImageWrapper
@@ -36,7 +37,7 @@ export function SlideshowWrapper({
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
       />
-    </div>
+    </ScrollZoomIn>
   )
 }
 

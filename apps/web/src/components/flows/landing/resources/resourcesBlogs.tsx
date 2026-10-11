@@ -4,21 +4,17 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { BlogCarouselItem } from "@/components/flows/landing/carouselWrapper"
+import {
+  BlogCarouselItem,
+  BlogCarouselItemType,
+} from "@/components/flows/landing/carouselWrapper"
 import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
-
-type BlogItemType = {
-  blogId: string
-  title: string
-  imageSrc: string
-  type: string
-}
 
 export default async function ResourcesBlogsSection() {
   const t = await getTranslations("Landing.Resources.Blogs")
 
   //TODO: Replace with actual blog data
-  const items: BlogItemType[] = [
+  const items: BlogCarouselItemType[] = [
     {
       blogId: "1",
       title: t("Blog1.Title"),

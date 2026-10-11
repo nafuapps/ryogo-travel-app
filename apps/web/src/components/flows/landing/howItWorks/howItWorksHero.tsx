@@ -12,6 +12,7 @@ import {
   RyogoWhiteButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function HowItWorksHeroSection() {
   const t = await getTranslations("Landing.HowItWorks.Hero")
@@ -37,14 +38,16 @@ export default async function HowItWorksHeroSection() {
               <RyogoIcon icon={ChevronDown} color="slate" size="sm" thick />
             </RyogoWhiteButton>
           </Link>
-          <Link href="/resources#support">
-            <RyogoOutlineButton
-              size="lg"
-              label={t("SecondaryCTA")}
-              labelColor="white"
-              className="w-full md:w-auto"
-            />
-          </Link>
+          <ClickZoomOut>
+            <Link href="/resources#support">
+              <RyogoOutlineButton
+                size="lg"
+                label={t("SecondaryCTA")}
+                labelColor="white"
+                className="w-full md:w-auto"
+              />
+            </Link>
+          </ClickZoomOut>
         </div>
         <div className="bg-white dark:bg-slate-800 mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
           <Image

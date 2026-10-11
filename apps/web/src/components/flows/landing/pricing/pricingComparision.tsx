@@ -20,6 +20,8 @@ import {
 } from "@ryogo-travel-app/api/apiConfig"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function PricingComparisionSection() {
   const t = await getTranslations("Landing.Pricing.Comparision")
@@ -217,15 +219,17 @@ export default async function PricingComparisionSection() {
             premiumItem={<BrandCheckIcon />}
           />
         </ComparisionGroup>
-        <Link href="/features">
-          <RyogoDefaultButton
-            size="lg"
-            className="w-full md:w-auto"
-            label={t("MoreCTA")}
-          >
-            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </RyogoDefaultButton>
-        </Link>
+        <ClickZoomOut>
+          <Link href="/features">
+            <RyogoDefaultButton
+              size="lg"
+              className="w-full md:w-auto"
+              label={t("MoreCTA")}
+            >
+              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+            </RyogoDefaultButton>
+          </Link>
+        </ClickZoomOut>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )
@@ -270,7 +274,7 @@ function ComparisionRow({
   premiumItem: React.ReactNode
 }) {
   return (
-    <div className="w-full grid grid-cols-4 md:grid-cols-5 gap-1.5 md:gap-2">
+    <ScrollZoomIn className="w-full grid grid-cols-4 md:grid-cols-5 gap-1.5 md:gap-2">
       <div className="col-span-2 md:col-span-3 py-3 md:py-4 flex items-center">
         {title}
       </div>
@@ -280,6 +284,6 @@ function ComparisionRow({
       <div className="col-span-1 rounded px-1 md:px-1.5 py-3 md:py-4 bg-sky-100 dark:bg-sky-900 flex items-center justify-center">
         {premiumItem}
       </div>
-    </div>
+    </ScrollZoomIn>
   )
 }

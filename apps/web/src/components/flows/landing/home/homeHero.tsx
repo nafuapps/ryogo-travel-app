@@ -14,6 +14,7 @@ import {
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { ClickZoomOut } from "../clickZoomOut"
 
 export default async function HomeHeroSection() {
   const t = await getTranslations("Landing.Home.Hero")
@@ -21,7 +22,7 @@ export default async function HomeHeroSection() {
     <LandingSectionWrapper id="hero" hero>
       <LandingContentWrapper
         justifyStart
-        className="h-full px-5 sm:px-8 md:px-10 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-sky-400 dark:from-sky-500 to-sky-50 dark:to-sky-950"
+        className="h-full px-5 sm:px-8 md:px-10 pt-24 md:pt-32 rounded-lg bg-linear-to-b from-sky-400 dark:from-sky-600 to-sky-50 dark:to-sky-950"
       >
         <SectionColWrapper small className="items-center">
           <RyogoH1 weight="font-bold" className="text-center">
@@ -39,15 +40,17 @@ export default async function HomeHeroSection() {
           {t("Subtitle")}
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <Link href="/auth/signup">
-            <RyogoBrandButton
-              size="lg"
-              label={t("PrimaryCTA")}
-              className="w-full md:w-auto"
-            >
-              <RyogoIcon icon={ChevronRight} color="white" size="sm" thick />
-            </RyogoBrandButton>
-          </Link>
+          <ClickZoomOut>
+            <Link href="/auth/signup">
+              <RyogoBrandButton
+                size="lg"
+                label={t("PrimaryCTA")}
+                className="w-full md:w-auto"
+              >
+                <RyogoIcon icon={ChevronRight} color="white" size="sm" thick />
+              </RyogoBrandButton>
+            </Link>
+          </ClickZoomOut>
           {/* // TODO: Demo video source */}
           <RyogoDialogVideo
             src="https://www.youtube.com/embed/1MobY_vR7-g"

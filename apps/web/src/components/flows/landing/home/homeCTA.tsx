@@ -13,6 +13,8 @@ import {
   RyogoWhiteButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function HomeCTASection() {
   const t = await getTranslations("Landing.Home.CTA")
@@ -26,17 +28,24 @@ export default async function HomeCTASection() {
         <RyogoH1 color="white" weight="font-bold" className="text-center">
           {t("Title")}
         </RyogoH1>
-        <RyogoP color="white" className="max-w-4xl text-center opacity-80">
-          {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
-        </RyogoP>
+        <SectionColWrapper small>
+          <RyogoP color="white" className="max-w-4xl text-center opacity-80">
+            {t("Subtitle1")}
+          </RyogoP>
+          <RyogoP color="white" className="max-w-4xl text-center opacity-80">
+            {t("Subtitle2", { days: PREMIUM_TRIAL_DAYS })}
+          </RyogoP>
+        </SectionColWrapper>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <Link href="/onboarding">
-            <RyogoWhiteButton
-              size="lg"
-              label={t("PrimaryCTA")}
-              className="w-full md:w-auto"
-            />
-          </Link>
+          <ClickZoomOut>
+            <Link href="/onboarding">
+              <RyogoWhiteButton
+                size="lg"
+                label={t("PrimaryCTA")}
+                className="w-full md:w-auto"
+              />
+            </Link>
+          </ClickZoomOut>
           <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`}>
             <RyogoOutlineButton
               size="lg"

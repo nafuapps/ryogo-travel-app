@@ -46,6 +46,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/forgot-password",
+        destination: "/auth/login",
+        permanent: true,
+      },
+      {
+        source: "/auth/forgot-password",
+        destination: "/auth/login",
+        permanent: true,
+      },
+      {
         source: "/dashboard",
         destination: "/dashboard/home",
         permanent: true,

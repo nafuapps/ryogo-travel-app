@@ -24,6 +24,7 @@ import {
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 import { FormWrapper } from "@/components/page/pageWrappers"
 import { useState } from "react"
+import { Separator } from "@/components/ui/separator"
 
 export default function LoginPasswordPageComponent({
   user,
@@ -132,6 +133,7 @@ export default function LoginPasswordPageComponent({
             router.back()
           }}
         />
+        <Separator />
         <Link href={`/auth/forgot-password/${user.id}`}>
           <RyogoGhostButton
             label={t("ForgotCTA")}

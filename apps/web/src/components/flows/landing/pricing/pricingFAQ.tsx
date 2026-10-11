@@ -10,6 +10,7 @@ import {
 import { FAQItem, FAQWrapper } from "@/components/flows/landing/faqWrapper"
 import { getTranslations } from "next-intl/server"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function PricingFAQSection() {
   const t = await getTranslations("Landing.Pricing.FAQ")
@@ -48,15 +49,17 @@ export default async function PricingFAQSection() {
             answer={t("SpecialPricing.Answer", { contact: SUPPORT_EMAIL })}
           />
         </FAQWrapper>
-        <Link href="/resources">
-          <RyogoDefaultButton
-            size="lg"
-            label={t("MoreCTA")}
-            className="w-full md:w-auto"
-          >
-            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-          </RyogoDefaultButton>
-        </Link>
+        <ClickZoomOut>
+          <Link href="/resources">
+            <RyogoDefaultButton
+              size="lg"
+              label={t("MoreCTA")}
+              className="w-full md:w-auto"
+            >
+              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+            </RyogoDefaultButton>
+          </Link>
+        </ClickZoomOut>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

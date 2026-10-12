@@ -84,8 +84,8 @@ function TestimonialCard({
   rating: number
 }) {
   return (
-    <ScrollZoomIn>
-      <SectionColWrapper className="border p-4 md:p-5 rounded-lg gap-2 md:gap-3">
+    <ScrollZoomIn className="w-full h-full">
+      <SectionColWrapper className="border p-4 md:p-5 rounded-lg gap-2 md:gap-3 h-full">
         <SectionRowWrapper className="justify-between">
           <div className="flex gap-1">
             {Array.from({ length: rating }).map((_, i) => (

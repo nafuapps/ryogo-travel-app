@@ -16,7 +16,11 @@ export async function locateUserAction({
   long: number
 }) {
   const currentUser = await getCurrentUser()
-  if (!currentUser || currentUser.agencyId !== agencyId) {
+  if (
+    !currentUser ||
+    currentUser.userId !== userId ||
+    currentUser.agencyId !== agencyId
+  ) {
     return
   }
 

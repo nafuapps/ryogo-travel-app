@@ -28,7 +28,7 @@ export function ScrollZoomIn({
           observer.disconnect()
         }
       },
-      { threshold: 0.15, rootMargin: "-100px" },
+      { threshold: 0, rootMargin: "-10% 0px -10% 0px" },
     )
 
     observer.observe(element)

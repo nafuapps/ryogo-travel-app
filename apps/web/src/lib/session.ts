@@ -41,7 +41,7 @@ async function encrypt(payload: SessionPayloadType) {
 }
 
 //Decrypt session JWT to get session data
-export async function decrypt(session: string = "") {
+export async function decrypt(session: string) {
   const { payload } = await jwtVerify(session, encodedKey, {
     algorithms: ["HS256"],
   })

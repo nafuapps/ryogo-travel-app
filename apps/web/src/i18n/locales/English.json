@@ -7076,6 +7076,111 @@
         "SupportTicket": "Raise support tickets for quick resolution",
         "MoreCTA": "Explore All Features"
       },
+      "ROI": {
+        "Title": "Calculate your savings",
+        "Subtitle": "Find out how much time and money you can save with RyoGo every month",
+        "Input": {
+          "Vehicles": "Vehicles",
+          "Agents": "Agents",
+          "Leads": "Monthly booking leads",
+          "Bookings": "Monthly completed bookings",
+          "Advanced": "Advanced configuration",
+          "City": "City of operation",
+          "TimeSpent": "Daily time spent per booking (mins)",
+          "MonthlyWage": "Monthly wage per agent (₹)",
+          "MonthlyCost": "Monhtly avoidable cost per vehicle (₹)",
+          "BookingLeakage": "Leakage due to mistakes in a booking (₹)",
+          "Reset": "Reset defaults"
+        },
+        "Output": {
+          "Total": "Estimated Monthly Savings",
+          "TimeSaved": {
+            "Label": "Time saved every month",
+            "Value": "{value} hrs"
+          },
+          "TotalTimeValueSavings": "Value of time saved",
+          "CostSavings": "Vehicle costs avoided",
+          "LeakageSavings": "Booking leakages avoided",
+          "TotalMoneySavings": "Money saved",
+          "Return": "Return on investment in",
+          "ReturnDays": "{days, plural, =1 {1 day} other {# days}}",
+          "PrimaryCTA": "Try RyoGo Premium for Free",
+          "DownloadCTA": "Download Report"
+        },
+        "Dialog": {
+          "Help": "How are these values calculated?",
+          "Title": "Understanding ROI",
+          "Subtitle": "Let's find out how we are calculating your ROI with RyoGo",
+          "Vehicles": {
+            "Title": "Vehicles",
+            "Description": "The number of vehicles you have in your fleet. On average, an agency in India operates with 3 vehicles."
+          },
+          "CompletedBookings": {
+            "Title": "Completed Bookings",
+            "Description": "The number of bookings you confirm and fulfill in a month. An average travel agency in India completes 15-20 bookings per month."
+          },
+          "Leads": {
+            "Title": "Booking Leads",
+            "Description": "The number of customer leads you receive every month. An average mid-sized travel agency in India receives roughly 80-100 leads per month."
+          },
+          "TimeSpent": {
+            "Title": "Time Spent per Booking",
+            "Description": "The average time spent in managing a booking from start to finish. An average agent spends about 25 minutes dealing with an ongoing booking or chasing a new lead. This includes:",
+            "Line1": "1. Time spent in creating a new booking lead and quoting a price",
+            "Line2": "2. Time spent in confirming and finalizing a booking",
+            "Line3": "3. Time spent in calling and coordinating between driver and customer during a trip",
+            "Line4": "4. Time spent in managing expenses and transactions in a booking",
+            "Line5": "5. Time spent in invoicing and following up with customers for collecting payments"
+          },
+          "MonthlyWage": {
+            "Title": "Monthly Wage per Agent",
+            "Description": "The average monthly wage for an agent. An average travel agency staff in India makes around ₹12,000 per month.",
+            "Subtitle": "Because an agent has to deal with multiple bookings, the time spent on each booking should be minimized with the help of technology to get the most out of your agents daily wage."
+          },
+          "MonthlyVehicleCost": {
+            "Title": "Monthly Vehicle Cost",
+            "Description": "The average cost spent on a vehicle which could have been easily avoided with a system in place. For example, getting a challan due to expired documentation, not keeping track of regular maintenance, etc.",
+            "Subtitle": "A fleet operator spends around ₹2,000 per vehicle on such expenses every month. By using RyoGo, you can avoid these expenses and save money in the long run."
+          },
+          "Leakages": {
+            "Title": "Booking Revenue Leakages",
+            "Description": "The average amount of money lost due to mistakes. For example, not keeping track of all transactions and expenses, human errors in calculations, etc.",
+            "Subtitle": "An average travel agency in India loses roughly ₹1,000 per booking due to such manual errors which can be simply avoided with an automated system. "
+          },
+          "City": {
+            "Title": "City of Operation",
+            "Description": "The place where your agency operates can increase or decrease all these costs depending on the cost in the city."
+          },
+          "TimeSaved": {
+            "Title": "Time Saved",
+            "Description": "For calculating time saved, we have assumes that you  need to spend less than 10 minutes to manage a booking in RyoGo.",
+            "Subtitle": "Therefore, the time saved is simply, time saved with RyoGo (your manual time spent - RyoGo time spent) multiplied by total bookings and leads in a month."
+          },
+          "TimeValue": {
+            "Title": "Value of Time Saved",
+            "Description": "The value of time saved is the time saved (in hours) multiplied by the average hourly wage of an agent."
+          },
+          "CostSavings": {
+            "Title": "Vehicle Cost Savings",
+            "Description": "The cost savings is the avoidable cost per vehicle multiplied by the number of vehicles in your fleet."
+          },
+          "LeakageSavings": {
+            "Title": "Leakage Savings",
+            "Description": "The leakage savings is the leakage cost per booking multiplied by the number of bookings per month."
+          },
+          "TotalSavings": {
+            "Title": "Estimated Monthly Savings",
+            "Description": "The total savings is the sum of all the savings calculated above."
+          },
+          "Return": {
+            "Title": "Return on Investment",
+            "Description": "The return on investment is the number of days it takes for your RyoGo subscription to break even with your total savings",
+            "Subtitle": "For example, if your estimated savings when using RyoGo is ₹5,000 (for 30 days in a month) and RyoGo subscription costs ₹500 per month, then your return on investment is in just 3 days."
+          }
+        },
+        "PrimaryCTA": "Create Free Account Now",
+        "SecondaryCTA": "Check pricing"
+      },
       "FAQ": {
         "Title": "Frequently Asked Questions",
         "Subtitle": "Get answers to all your pricing related queries here",

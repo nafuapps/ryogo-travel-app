@@ -125,11 +125,13 @@ function PricingPlanCard({
 }) {
   return (
     <ScrollZoomIn className="flex flex-col gap-4 lg:gap-5 p-6 lg:p-8 bg-white dark:bg-slate-800 shadow-lg rounded-lg">
-      <RyogoP weight="font-bold" color={everything ? "brand" : "slate"}>
+      <RyogoH4 weight="font-bold" color={everything ? "brand" : "slate"}>
         {title}
-      </RyogoP>
+      </RyogoH4>
       <RyogoSmall color="light">{description}</RyogoSmall>
-      <RyogoH4 weight="font-medium">{price}</RyogoH4>
+      <RyogoH4 weight="font-medium" color="slate">
+        {price}
+      </RyogoH4>
       {children}
       <SectionColWrapper className="mb-2">
         {everything && <RyogoCaption>{everything}</RyogoCaption>}

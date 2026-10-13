@@ -1,9 +1,15 @@
 import { Font, StyleSheet } from "@react-pdf/renderer"
+
+const sourceRegular = "/fonts/NotoSans-Regular.ttf"
+const sourceMedium = "/fonts/NotoSans-Medium.ttf"
+const sourceBold = "/fonts/NotoSans-Bold.ttf"
+
 Font.register({
-  family: "Helvetica",
+  family: "Noto Sans",
   fonts: [
-    { src: "path/to/helvetica.ttf" }, // Normal
-    { src: "path/to/helvetica-bold.ttf", fontWeight: 700 }, // Bold
+    { src: sourceRegular, fontWeight: 400 },
+    { src: sourceMedium, fontWeight: 500 },
+    { src: sourceBold, fontWeight: 700 },
   ],
 })
 export const styles = StyleSheet.create({
@@ -13,7 +19,11 @@ export const styles = StyleSheet.create({
     gap: 20,
     padding: 32,
   },
-  header: { flexDirection: "row", justifyContent: "space-between", gap: 4 },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 4,
+  },
   headerLeft: { flexDirection: "column", gap: 4 },
   agencyLogo: {
     height: 64,
@@ -25,6 +35,14 @@ export const styles = StyleSheet.create({
     gap: 2,
     alignItems: "flex-end",
     marginLeft: "auto",
+  },
+  borderContent: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 2,
+    border: "1px solid #ddd",
+    borderRadius: 8,
+    padding: "8px 12px",
   },
   bookingDetails: { flexDirection: "column", gap: 8 },
   detailsSection: {
@@ -135,27 +153,34 @@ export const styles = StyleSheet.create({
   h1: {
     fontSize: 24,
     fontWeight: "bold",
+    fontFamily: "Noto Sans",
   },
   h2: {
     fontSize: 20,
     fontWeight: "bold",
+    fontFamily: "Noto Sans",
   },
   p: {
     fontSize: 12,
+    fontFamily: "Noto Sans",
   },
   pBold: {
     fontSize: 12,
     fontWeight: "bold",
+    fontFamily: "Noto Sans",
   },
   caption: {
     fontSize: 10,
+    fontFamily: "Noto Sans",
   },
   captionLight: {
     fontSize: 10,
     color: "#666",
+    fontFamily: "Noto Sans",
   },
   xs: {
     fontSize: 8,
     color: "#666",
+    fontFamily: "Noto Sans",
   },
 })

@@ -32,19 +32,19 @@ export default async function ResourcesCTASection() {
         </RyogoP>
         <ScrollZoomIn className="flex flex-col md:flex-row gap-4 justify-center items-center">
           <ClickZoomOut>
-            <Link href="/onboarding">
-              <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
-                <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
-              </RyogoWhiteButton>
-            </Link>
-          </ClickZoomOut>
-          <ClickZoomOut>
-            <Link href="/features">
+            <Link href="/pricing#roi">
               <RyogoOutlineButton
                 size="lg"
                 labelColor="white"
                 label={t("SecondaryCTA")}
               />
+            </Link>
+          </ClickZoomOut>
+          <ClickZoomOut>
+            <Link href="/onboarding">
+              <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
+                <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
+              </RyogoWhiteButton>
             </Link>
           </ClickZoomOut>
         </ScrollZoomIn>

@@ -26,6 +26,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export function formatIndianCurrency(amount: number, showDecimal = false) {
+  return amount.toLocaleString("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: showDecimal ? 2 : 0,
+  })
+}
+
 export function getLang(locale: UserLangEnum) {
   switch (locale) {
     case UserLangEnum.HINDI:

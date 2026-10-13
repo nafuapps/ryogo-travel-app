@@ -4,9 +4,11 @@ import ReactPDF, {
   Image,
   Text,
   View,
+  Link,
 } from "@react-pdf/renderer"
 import { styles } from "./commonStyles"
 import {
+  HOMEPAGE_URL,
   RyogoLogoSrc,
   SUPPORT_EMAIL,
   SUPPORT_HELPLINE_NUMBER,
@@ -16,6 +18,7 @@ import {
   FindOrderByRPIdType,
 } from "@ryogo-travel-app/api/services/order.services"
 import { format } from "date-fns"
+import { formatIndianCurrency } from "@/lib/utils"
 // import { GST_PERCENTAGE } from "@ryogo-travel-app/api/apiConfig"
 
 export function SubscriptionInvoiceDocument({
@@ -38,6 +41,9 @@ export function SubscriptionInvoiceDocument({
             <Text id="CompanyEmailPhone" style={styles.p}>
               {SUPPORT_EMAIL} | {SUPPORT_HELPLINE_NUMBER}
             </Text>
+            <Link id="CompanyURL" style={styles.p}>
+              {HOMEPAGE_URL}
+            </Link>
           </View>
           <View id="headerRight" style={styles.headerRight}>
             <Text style={styles.h1}>SUBSCRIPTION</Text>
@@ -77,16 +83,20 @@ export function SubscriptionInvoiceDocument({
             <Text style={styles.p}>
               RyoGo Travel App - Subscription ({order.orderType})
             </Text>
-            {/* <Text style={styles.p}>{priceBeforeTax.toFixed(2)}</Text> */}
-            <Text style={styles.p}>{order.amount.toFixed(2)}</Text>
+            {/* <Text style={styles.p}>{formatIndianCurrency(priceBeforeTax,true)}</Text> */}
+            <Text style={styles.p}>
+              {formatIndianCurrency(order.amount, true)}
+            </Text>
           </View>
           {/* <View id="taxRow" style={styles.tableRow}>
             <Text style={styles.p}>Tax ({GST_PERCENTAGE}%)</Text>
-            <Text style={styles.p}>{taxAmount.toFixed(2)}</Text>
+            <Text style={styles.p}>{formatIndianCurrency(taxAmount,true)}</Text>
           </View> */}
           <View id="tableFooter" style={styles.tableFooter}>
             <Text style={styles.pBold}>Final Amount</Text>
-            <Text style={styles.pBold}>{order.amount.toFixed(2)}</Text>
+            <Text style={styles.pBold}>
+              {formatIndianCurrency(order.amount, true)}
+            </Text>
           </View>
         </View>
         <View style={styles.divider} />

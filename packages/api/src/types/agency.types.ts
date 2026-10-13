@@ -6,3 +6,21 @@ export type ModifyAgencyRequestType = {
   agencyState?: string
   agencyCity?: string
 }
+
+export type ROIReportType = {
+  vehicles: number
+  leads: number
+  bookings: number
+  timeSpent: number
+  monthlyWage: string
+  monthlyCost: string
+  bookingLeakage: string
+  cityTier: string
+  monthlyTimeSavedHours: number
+  totalTimeSavings: string
+  totalSavingsVehicleCost: string
+  totalSavingsBookingLeakages: string
+  totalMoneySavings: string
+  totalSavings: string
+  roiDays: number
+}

@@ -1,7 +1,7 @@
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP } from "@/components/typography"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import { ChevronRight, Video } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
@@ -34,15 +34,12 @@ export default async function HowItWorksCTASection() {
               </RyogoWhiteButton>
             </Link>
           </ClickZoomOut>
-          {/* //TODO: Demo video */}
           <Link href="/resources#videos">
             <RyogoOutlineButton
               size="lg"
               label={t("SecondaryCTA")}
               labelColor="white"
-            >
-              <RyogoIcon icon={Video} color="white" size="sm" thick />
-            </RyogoOutlineButton>
+            />
           </Link>
         </ScrollZoomIn>
       </LandingContentWrapper>

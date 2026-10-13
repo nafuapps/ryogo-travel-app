@@ -9,7 +9,7 @@ import {
 } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { FormWrapper } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoH4 } from "@/components/typography"
+import { RyogoCaption, RyogoH4, RyogoTiny } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import {
@@ -149,9 +149,9 @@ export default function QueryForm() {
           )}
         </RyogoBrandButton>
         <Separator />
-        <RyogoCaption color="light" className="text-center">
+        <RyogoTiny color="light" className="text-center">
           {t("Disclaimer")}
-        </RyogoCaption>
+        </RyogoTiny>
       </FormWrapper>
     </ScrollZoomIn>
   )

@@ -107,6 +107,8 @@ export default async function OnboardingHomePage({
               last
             />
           </div>
+          <Separator />
+          <RyogoTiny color="light">{t("BodySteps.Warning")}</RyogoTiny>
         </SectionWrapper>
         <SectionWrapper
           id="OnboardingHomeChecklist"

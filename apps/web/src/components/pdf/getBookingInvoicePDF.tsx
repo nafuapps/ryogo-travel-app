@@ -11,7 +11,7 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
 import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
-import { getBookingTrackingLink } from "@/lib/utils"
+import { formatIndianCurrency, getBookingTrackingLink } from "@/lib/utils"
 import {
   TransactionPartiesEnum,
   TransactionTypesEnum,
@@ -167,49 +167,55 @@ export function BookingInvoiceDocument({
           <View id="vehicleRow" style={styles.tableRow}>
             <Text style={styles.p}>Vehicle Charge</Text>
             <Text style={styles.p}>
-              {(
+              {formatIndianCurrency(
                 booking.actualTotalVehicleRate ??
-                booking.estimatedTotalVehicleRate
-              ).toFixed(2)}
+                  booking.estimatedTotalVehicleRate,
+                true,
+              )}
             </Text>
           </View>
           <View id="driverRow" style={styles.tableRow}>
             <Text style={styles.p}>Driver Allowance</Text>
             <Text style={styles.p}>
-              {(
+              {formatIndianCurrency(
                 booking.actualTotalDriverAllowance ??
-                booking.estimatedTotalDriverAllowance
-              ).toFixed(2)}
+                  booking.estimatedTotalDriverAllowance,
+                true,
+              )}
             </Text>
           </View>
           <View id="acRow" style={styles.tableRow}>
             <Text style={styles.p}>AC Charge</Text>
             <Text style={styles.p}>
-              {(
-                booking.actualTotalAcCharge ?? booking.estimatedTotalAcCharge
-              ).toFixed(2)}
+              {formatIndianCurrency(
+                booking.actualTotalAcCharge ?? booking.estimatedTotalAcCharge,
+                true,
+              )}
             </Text>
           </View>
           <View id="commissionRow" style={styles.tableRow}>
             <Text style={styles.p}>Service charge</Text>
             <Text style={styles.p}>
-              {(
+              {formatIndianCurrency(
                 booking.actualCommissionAmount ??
-                booking.estimatedCommissionAmount
-              ).toFixed(2)}
+                  booking.estimatedCommissionAmount,
+                true,
+              )}
             </Text>
           </View>
           {booking.actualExpensesAmount && (
             <View id="ExpensesRow" style={styles.tableRow}>
               <Text style={styles.p}>Added Trip Expenses</Text>
               <Text style={styles.p}>
-                {booking.actualExpensesAmount.toFixed(2)}
+                {formatIndianCurrency(booking.actualExpensesAmount, true)}
               </Text>
             </View>
           )}
           <View id="tableFooter" style={styles.tableFooter}>
             <Text style={styles.pBold}>Final Amount</Text>
-            <Text style={styles.pBold}>{finalAmount.toFixed(2)}</Text>
+            <Text style={styles.pBold}>
+              {formatIndianCurrency(finalAmount, true)}
+            </Text>
           </View>
         </View>
         {approvedExpenses.length > 0 && (
@@ -225,13 +231,15 @@ export function BookingInvoiceDocument({
                   {expense.type}
                   {expense.remarks ? " (" + expense.remarks + ")" : ""}
                 </Text>
-                <Text style={styles.p}>{expense.amount.toFixed(2)}</Text>
+                <Text style={styles.p}>
+                  {formatIndianCurrency(expense.amount, true)}
+                </Text>
               </View>
             ))}
             <View id="expenseTableFooter" style={styles.tableFooter}>
               <Text style={styles.pBold}>Total Expenses</Text>
               <Text style={styles.pBold}>
-                {totalApprovedExpensesAmount.toFixed(2)}
+                {formatIndianCurrency(totalApprovedExpensesAmount, true)}
               </Text>
             </View>
           </View>
@@ -248,13 +256,15 @@ export function BookingInvoiceDocument({
                   {format(txn.transactionDate, "dd MMM") + " - "}
                   {(txn.type ? "Received " : "Sent ") + txn.mode}
                 </Text>
-                <Text style={styles.p}>{txn.amount.toFixed(2)}</Text>
+                <Text style={styles.p}>
+                  {formatIndianCurrency(txn.amount, true)}
+                </Text>
               </View>
             ))}
             <View id="transactionTableFooter" style={styles.tableFooter}>
               <Text style={styles.pBold}>Amount received</Text>
               <Text style={styles.pBold}>
-                {totalTransactionAmount.toFixed(2)}
+                {formatIndianCurrency(totalTransactionAmount, true)}
               </Text>
             </View>
           </View>
@@ -262,7 +272,7 @@ export function BookingInvoiceDocument({
         <View id="PendingAmount" style={styles.detailsSection}>
           <Text style={styles.pBold}>Pending Amount: </Text>
           <Text style={styles.p}>
-            {(finalAmount - totalTransactionAmount).toFixed(2)}
+            {formatIndianCurrency(finalAmount - totalTransactionAmount, true)}
           </Text>
         </View>
         <View id="footer" style={styles.footer} wrap={false}>

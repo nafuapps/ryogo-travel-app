@@ -56,7 +56,7 @@ import { Separator } from "@/components/ui/separator"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import BookingInvoicePDFViewerButton from "@/components/pdf/bookingInvoicePDFViewerButton"
-import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewer"
+import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewerButton"
 import BookingQuotePDFViewerButton from "@/components/pdf/bookingQuotePDFViewerButton"
 import BookingTimeline from "@/components/flows/bookings/details/bookingTimeline"
 

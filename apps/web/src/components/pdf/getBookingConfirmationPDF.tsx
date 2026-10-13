@@ -11,7 +11,7 @@ import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booki
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
 import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
-import { getBookingTrackingLink } from "@/lib/utils"
+import { formatIndianCurrency, getBookingTrackingLink } from "@/lib/utils"
 import { format } from "date-fns"
 
 export function BookingConfirmationDocument({
@@ -143,31 +143,34 @@ export function BookingConfirmationDocument({
           <View id="vehicleRow" style={styles.tableRow}>
             <Text style={styles.p}>Vehicle Charge</Text>
             <Text style={styles.p}>
-              {booking.estimatedTotalVehicleRate.toFixed(2)}
+              {formatIndianCurrency(booking.estimatedTotalVehicleRate, true)}
             </Text>
           </View>
           <View id="driverRow" style={styles.tableRow}>
             <Text style={styles.p}>Driver Allowance</Text>
             <Text style={styles.p}>
-              {booking.estimatedTotalDriverAllowance.toFixed(2)}
+              {formatIndianCurrency(
+                booking.estimatedTotalDriverAllowance,
+                true,
+              )}
             </Text>
           </View>
           <View id="acRow" style={styles.tableRow}>
             <Text style={styles.p}>AC Charge</Text>
             <Text style={styles.p}>
-              {booking.estimatedTotalAcCharge.toFixed(2)}
+              {formatIndianCurrency(booking.estimatedTotalAcCharge, true)}
             </Text>
           </View>
           <View id="commissionRow" style={styles.tableRow}>
             <Text style={styles.p}>Service charge</Text>
             <Text style={styles.p}>
-              {booking.estimatedCommissionAmount.toFixed(2)}
+              {formatIndianCurrency(booking.estimatedCommissionAmount, true)}
             </Text>
           </View>
           <View id="tableFooter" style={styles.tableFooter}>
             <Text style={styles.pBold}>Estimated Amount</Text>
             <Text style={styles.pBold}>
-              {booking.estimatedTotalAmount.toFixed(2)}
+              {formatIndianCurrency(booking.estimatedTotalAmount, true)}
             </Text>
           </View>
         </View>

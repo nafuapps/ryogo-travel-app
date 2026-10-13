@@ -5,6 +5,7 @@ import HomeTestimonialsSection from "@/components/flows/landing/home/homeTestimo
 import HomeCTASection from "@/components/flows/landing/home/homeCTA"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
+import HomeROICard from "@/components/flows/landing/home/homeROICard"
 
 export const metadata: Metadata = {
   title: `Home - ${pageTitle}`,
@@ -18,6 +19,7 @@ export default async function HomePage() {
       <HomeFeaturesSection />
       <HomeWorkingSection />
       <HomeTestimonialsSection />
+      <HomeROICard />
       <HomeCTASection />
     </>
   )

@@ -1,7 +1,6 @@
 "use client"
 
 import {
-  RyogoBrandButton,
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
@@ -11,6 +10,7 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
+import ROIReportPDFDownloadButton from "@/components/pdf/roiReportPDFDownloadButton"
 import {
   RyogoCaption,
   RyogoH1,
@@ -31,11 +31,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Slider } from "@/components/ui/slider"
+import { formatIndianCurrency } from "@/lib/utils"
 import {
   MONTHLY_SUBSCRIPTION_DAYS,
   MONTHLY_SUBSCRIPTION_FINAL_PRICE,
 } from "@ryogo-travel-app/api/apiConfig"
-import { Download, HelpCircle } from "lucide-react"
+import { ROIReportType } from "@ryogo-travel-app/api/types/agency.types"
+import { HelpCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useMemo, useState } from "react"
 
@@ -142,8 +144,31 @@ export default function ROICard() {
   const totalSavings = totalTimeSavings + totalMoneySavings
 
   const roiDays =
+    1 +
     (MONTHLY_SUBSCRIPTION_FINAL_PRICE * MONTHLY_SUBSCRIPTION_DAYS) /
-    totalSavings
+      totalSavings
+
+  const report: ROIReportType = {
+    vehicles: vehicles[0] ?? VEHICLE_DEFAULT,
+    leads: leads[0] ?? LEADS_DEFAULT,
+    bookings: bookings[0] ?? BOOKINGS_DEFAULT,
+    timeSpent: timeSpent[0] ?? TIME_SPENT_DEFAULT,
+    monthlyWage: formatIndianCurrency(monthlyWage[0] ?? MONTHLY_WAGE_DEFAULT),
+    monthlyCost: formatIndianCurrency(monthlyCost[0] ?? MONTHLY_COST_DEFAULT),
+    bookingLeakage: formatIndianCurrency(
+      bookingLeakage[0] ?? BOOKING_LEAKAGE_DEFAULT,
+    ),
+    cityTier: cityTier,
+    monthlyTimeSavedHours: monthlyTimeSavedHours,
+    totalTimeSavings: formatIndianCurrency(totalTimeSavings),
+    totalSavingsVehicleCost: formatIndianCurrency(totalSavingsVehicleCost),
+    totalSavingsBookingLeakages: formatIndianCurrency(
+      totalSavingsBookingLeakages,
+    ),
+    totalMoneySavings: formatIndianCurrency(totalMoneySavings),
+    totalSavings: formatIndianCurrency(totalSavings),
+    roiDays: roiDays,
+  }
 
   return (
     <ScrollZoomIn className="flex flex-col md:flex-row shadow w-full rounded-lg overflow-hidden">
@@ -235,7 +260,9 @@ export default function ROICard() {
       >
         <SectionColWrapper small className="items-center">
           <RyogoP color="slate">{t("Output.Total")}</RyogoP>
-          <RyogoH1 color="brand">{formatIndianCurrency(totalSavings)}</RyogoH1>
+          <RyogoH1 color="brand" weight="font-bold">
+            {formatIndianCurrency(totalSavings)}
+          </RyogoH1>
         </SectionColWrapper>
         <div className="w-full lg:w-3/4 flex flex-col rounded-md gap-2 lg:gap-3 bg-white dark:bg-slate-800 p-3 md:p-4">
           <OutputRow
@@ -260,32 +287,22 @@ export default function ROICard() {
             label={t("Output.TotalMoneySavings")}
             value={formatIndianCurrency(totalMoneySavings)}
           />
-          {roiDays < MONTHLY_SUBSCRIPTION_DAYS && (
+          {roiDays <= MONTHLY_SUBSCRIPTION_DAYS && (
             <OutputRow
               label={t("Output.Return")}
               value={t("Output.ReturnDays", { days: roiDays.toFixed(0) })}
             />
           )}
         </div>
-        <RyogoBrandButton
-          size="lg"
-          label={t("Output.DownloadCTA")}
-          className="w-full"
-        >
-          {/* //TODO: Download PDF */}
-          <RyogoIcon icon={Download} size="sm" color="white" thick />
-        </RyogoBrandButton>
+        {totalSavings > 0 && roiDays <= MONTHLY_SUBSCRIPTION_DAYS && (
+          <ROIReportPDFDownloadButton
+            label={t("Output.DownloadCTA")}
+            report={report}
+          />
+        )}
       </div>
     </ScrollZoomIn>
   )
-}
-
-function formatIndianCurrency(amount: number) {
-  return amount.toLocaleString("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  })
 }
 
 function getCityAdjustment(cityTier: string) {

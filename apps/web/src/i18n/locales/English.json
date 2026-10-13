@@ -73,7 +73,7 @@
           "Error2": "Code does not match our records"
         },
         "Field2": {
-          "Title": "New Password",
+          "Title": "Set a new Password",
           "Placeholder": "********",
           "Description": "Choose a new password",
           "Error1": "Password must be at least 8 characters",
@@ -137,17 +137,18 @@
         "Step2": "2. Verify account with OTP",
         "Step3": "3. Add a vehicle",
         "Step4": "4. Onboard a driver",
-        "Step5": "5. Add an agent (optional)"
+        "Step5": "5. Add an agent (optional)",
+        "Warning": "* Make sure you are not using private or incognito browsing mode. Or you will not be able to login to your account."
       },
       "BodyChecklist": {
         "Title": "Document checklist",
         "Item1": "Your agency/business logo and payment QR code",
         "Item2": "Photo of the vehicle (preferrably with visible number plate)",
-        "Item3": "Document photocopy of vehicle RC, Insurance policy and PUC certificate",
-        "Item4": "Driver's license photocopy of the driver",
-        "Item5": "User photos (owner, driver and agent)",
-        "Optional": "* All the above documents are optional. However, we recommend uploading them for better app experience",
-        "Format": "** Image format must be either: .jpg/jpeg, .png, .avif, .webp"
+        "Item3": "Photo of vehicle documents: RC, Insurance policy and PUC certificate",
+        "Item4": "Photo of the driver's license",
+        "Item5": "Photo of users (owner, driver and agent)",
+        "Optional": "* All the above documents are optional. However, we highly recommend you upload them for better app experience",
+        "Format": "** Image format must be either .jpg/jpeg .png .avif or .webp"
       },
       "PrimaryCTA": "Get Started",
       "BackCTA": "Back to Homepage"
@@ -232,7 +233,7 @@
           "Error2": "Only image files are allowed (.jpg, .jpeg, .png )"
         },
         "Field2": {
-          "Title": "Commission rate (in %)",
+          "Title": "Default Commission rate (in %)",
           "Placeholder": "15",
           "Description": "The extra commission that will be added to every booking quote. (Don't worry, you can leave it blank and change it later. Default 15% will be set)",
           "Error1": "Rate must be a number",
@@ -279,9 +280,9 @@
         "Field3": {
           "Title": "Choose Account Type",
           "BasicTitle": "BASIC",
-          "BasicDesc": "Start with Basic account (Try Premium later)",
+          "BasicDesc": "Start with Basic account (You can try Premium later)",
           "PremiumTitle": "PREMIUM TRIAL",
-          "PremiumDesc": "Start with {day}-day free Premium account"
+          "PremiumDesc": "Start with a free {day}-day Premium account"
         },
         "PrimaryCTA": "Continue",
         "SecondaryCTA": "Back",
@@ -294,12 +295,12 @@
         "AgencyPhone": "Business Phone",
         "AgencyEmail": "Business Email",
         "AgencyAddress": "Business Address",
-        "CommissionRate": "Commission Rate (%)",
+        "CommissionRate": "Default Commission Rate (%)",
         "Location": "Location",
         "Owner": "Owner details",
-        "OwnerName": "Owner Name",
-        "OwnerPhone": "Owner Phone",
-        "OwnerEmail": "Owner Email",
+        "OwnerName": "Name",
+        "OwnerPhone": "Phone",
+        "OwnerEmail": "Email",
         "Warning": "You must agree to the terms and conditions to create an account with RyoGo.",
         "PrimaryCTA": "Confirm and Create Account",
         "SecondaryCTA": "Back",
@@ -6759,6 +6760,11 @@
         },
         "MoreCTA": "Explore More Resources"
       },
+      "ROICard": {
+        "Title": "Calculate your savings",
+        "Subtitle": "Find out the amount of time and money you can save with RyoGo every month and get a free report",
+        "PrimaryCTA": "Try ROI Calculator now"
+      },
       "CTA": {
         "Title": "Ready to grow your business?",
         "Subtitle1": "Join hundreds of travel agencies automating their daily workflows.",
@@ -6779,6 +6785,7 @@
       },
       "Menu": {
         "Title": "Browse Features",
+        "Subtitle": "Explore the list of features that RyoGo has to offer. Select a feature to learn more about it.",
         "M1": "Agency Management",
         "M1Subtitle": "Manage your entire travel business operations with ease",
         "M2": "Booking Scheduling",
@@ -7013,7 +7020,7 @@
           "F3": "Standard support via email and phone",
           "F4": "Driver web app access",
           "F5": "Get expiry alerts and notifications",
-          "F6": "Communicate with customers via WhatsApp",
+          "F6": "Communicate and share documents with customers via WhatsApp",
           "CTA": "Get Started"
         },
         "Premium": {
@@ -7064,7 +7071,7 @@
         "GetAlerts": "Get real-time actionable alerts",
         "Feed": "Receive agency-wide activity notifications",
         "MultipleOwners": "Multiple owner accounts",
-        "Search": "Data search range (recent days)",
+        "Search": "Data search and display range (in days)",
         "NewFeatures": "Priority access to new features",
         "CustomerReminders": "Set custom reminders",
         "SafetyPrivacy": "SAFETY & PRIVACY",
@@ -7088,7 +7095,7 @@
           "City": "City of operation",
           "TimeSpent": "Daily time spent per booking (mins)",
           "MonthlyWage": "Monthly wage per agent (₹)",
-          "MonthlyCost": "Monhtly avoidable cost per vehicle (₹)",
+          "MonthlyCost": "Monthly avoidable cost per vehicle (₹)",
           "BookingLeakage": "Leakage due to mistakes in a booking (₹)",
           "Reset": "Reset defaults"
         },
@@ -7588,8 +7595,8 @@
         "Subtitle": "Learn more about RyoGo, its mission and the incredible team behind it.",
         "Mission": {
           "Title": "Our Mission",
-          "Desc": "To enable small scale travel businesses in India to manage their daily operations efficiently, by providing an easy-to-use, all-in-one digital platform.",
-          "Subtitle": "We want to help agency owners and fleet operators in running and collaborating across their businesses, ensuring growth and a seamless customer experience.",
+          "Desc": "To enable every travel business in India to effectively manage their daily operations and improve their internal processes, by providing an easy-to-use, all-in-one digital platform.",
+          "Subtitle": "We want to help tour providers and fleet operators go online. We want to support them in running their businesses efficiently, save on time & cost, and collaborate seamlessly with their stakeholders, to ensure growth and a superior customer experience.",
           "Quote": "- Founder of RyoGo Travel App",
           "M1": {
             "Value": "40+",
@@ -7600,8 +7607,8 @@
             "Label": "Man hours saved per month"
           },
           "M3": {
-            "Value": "15%",
-            "Label": "Expected revenue increase"
+            "Value": "25%",
+            "Label": "Expected cost reduction"
           }
         },
         "Founder": {
@@ -7613,10 +7620,10 @@
         }
       },
       "CTA": {
-        "Title": "Want to get onboard RyoGo?",
+        "Title": "Interested in trying RyoGo?",
         "Subtitle": "No payment details. No complicated setup. Just your phone number and 5 minutes to get started.",
         "PrimaryCTA": "Create Free Account Now",
-        "SecondaryCTA": "Explore All Features"
+        "SecondaryCTA": "Calculate ROI and Savings"
       }
     }
   },

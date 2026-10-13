@@ -27,7 +27,7 @@ export function FeatureItem({
 }) {
   return (
     <ScrollZoomIn
-      className={`w-full group flex flex-col ${long ? "md:flex-row md:col-span-2 md:items-center" : ""} ${longReverse ? "md:flex-row-reverse md:col-span-2 md:items-center" : ""} border rounded-lg p-6 md:p-8 bg-white dark:bg-slate-800 gap-6 lg:gap-8 ${className ?? ""}`}
+      className={`w-full group flex flex-col ${long ? "md:flex-row md:col-span-2 md:items-center" : ""} ${longReverse ? "md:flex-row-reverse md:col-span-2 md:items-center" : ""} border rounded-lg p-6 md:p-8 bg-white dark:bg-slate-800 gap-5 lg:gap-6 ${className ?? ""}`}
     >
       <div className="flex flex-col gap-3 lg:gap-4 w-full">
         <RyogoH4 weight="font-bold">{title}</RyogoH4>

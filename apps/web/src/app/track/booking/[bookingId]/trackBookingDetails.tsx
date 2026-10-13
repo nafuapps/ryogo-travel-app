@@ -46,7 +46,7 @@ import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import Link from "next/link"
 import { differenceInDays } from "date-fns"
 import { BOOKING_RATING_LIMIT_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewer"
+import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewerButton"
 import BookingInvoicePDFViewerButton from "@/components/pdf/bookingInvoicePDFViewerButton"
 
 // A page to display booking details for tracking by customer

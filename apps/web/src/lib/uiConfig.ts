@@ -81,7 +81,7 @@ export const LEGAL_ADDRESS =
 export const LEGAL_PHONE = "9840774089"
 //RyoGo logo in email and pdf footer
 export const RyogoLogoSrc =
-  "https://uxlvdjfgmmorufabopzd.supabase.co/storage/v1/object/public/ryogoDocs/ryogo/logo/logo.png"
+  "https://uxlvdjfgmmorufabopzd.supabase.co/storage/v1/object/public/ryogoDocs/ryogo/logo/logo.png" //To be used in email and pdf
 
 //TODO: Social Media Links
 export const YT_LINK = "https://www.youtube.com/@ryogoapp"

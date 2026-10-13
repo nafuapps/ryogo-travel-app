@@ -61,37 +61,30 @@ export default function OrderCard({
           </SectionColWrapper>
         </SectionRowWrapper>
       </SectionRowWrapper>
-      {!collapsed && (
-        <>
-          {order.orderInvoiceUrl && (
-            <SectionRowWrapper small className="items-center justify-end">
-              <a
-                href={getFileUrl(order.orderInvoiceUrl) + "?download"}
-                download
+      <SectionColWrapper className={`${collapsed ? "hidden" : ""}`}>
+        {order.orderInvoiceUrl && (
+          <SectionRowWrapper small className="items-center justify-end">
+            <a href={getFileUrl(order.orderInvoiceUrl) + "?download"} download>
+              <RyogoOutlineButton
+                label={t("DownloadInvoice")}
+                labelColor="light"
+                className="w-full"
               >
-                <RyogoOutlineButton
-                  label={t("DownloadInvoice")}
-                  labelColor="light"
-                  className="w-full"
-                >
-                  <RyogoIcon size="sm" icon={Download} color="slate" />
-                </RyogoOutlineButton>
-              </a>
-              <ViewInvoiceDialog order={order} />
-            </SectionRowWrapper>
-          )}
-          {order.payments.length > 0 && (
-            <>
-              <Separator />
-              <SectionColWrapper>
-                {order.payments.map((p) => {
-                  return <PaymentCard payment={p} key={p.id} />
-                })}
-              </SectionColWrapper>
-            </>
-          )}
-        </>
-      )}
+                <RyogoIcon size="sm" icon={Download} color="slate" />
+              </RyogoOutlineButton>
+            </a>
+            <ViewInvoiceDialog order={order} />
+          </SectionRowWrapper>
+        )}
+        {order.payments.length > 0 && (
+          <>
+            <Separator />
+            {order.payments.map((p) => {
+              return <PaymentCard payment={p} key={p.id} />
+            })}
+          </>
+        )}
+      </SectionColWrapper>
     </SectionWrapper>
   )
 }

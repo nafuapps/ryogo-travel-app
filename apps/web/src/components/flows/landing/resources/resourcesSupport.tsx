@@ -4,6 +4,7 @@ import {
   RyogoSmall,
   RyogoH4,
   RyogoCaption,
+  RyogoTiny,
 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import {
@@ -95,9 +96,9 @@ async function HelpBlock() {
         </Link>
       </SectionColWrapper>
       <Separator className="bg-slate-500 dark:bg-slate-400" />
-      <RyogoCaption color="light" className="text-center">
+      <RyogoTiny color="light" className="text-center">
         {t("Disclaimer")}
-      </RyogoCaption>
+      </RyogoTiny>
     </ScrollZoomIn>
   )
 }

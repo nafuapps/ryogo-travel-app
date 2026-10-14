@@ -250,7 +250,11 @@ export const userRepository = {
   async updateLastLoginAndSeen(userId: string) {
     return await db
       .update(users)
-      .set({ lastLogin: new Date(), lastSeen: new Date() })
+      .set({
+        lastLogin: new Date(),
+        lastSeen: new Date(),
+        verificationCode: null,
+      })
       .where(eq(users.id, userId))
   },
 
@@ -378,7 +382,7 @@ export const userRepository = {
   },
 
   //Update user verification status
-  async updatePasswordVerificationAndStatus({
+  async updatePasswordAndVerificationStatus({
     userId,
     passwordHash,
   }: {

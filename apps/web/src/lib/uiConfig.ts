@@ -83,9 +83,9 @@ export const LEGAL_PHONE = "9840774089"
 export const RyogoLogoSrc =
   "https://uxlvdjfgmmorufabopzd.supabase.co/storage/v1/object/public/ryogoDocs/ryogo/logo/logo.png" //To be used in email and pdf
 
-//TODO: Social Media Links
-export const YT_LINK = "https://www.youtube.com/@ryogoapp"
-export const IG_LINK = "https://www.instagram.com/ryogoapp/"
-export const FB_LINK = "https://www.facebook.com/ryogoapp/"
-export const LI_LINK = "https://www.linkedin.com/ryogoapp/"
+//Social Media Links
+export const YT_LINK = "https://www.youtube.com/@RyoGoTravelApp"
+export const IG_LINK = "https://www.instagram.com/ryogo.travel.app/"
+export const FB_LINK = "https://www.facebook.com/RyoGoTravelApp/"
+export const LI_LINK = "https://www.linkedin.com/company/ryogo-travel-app/"
 export const NAFUAPPS_LINK = "https://nafuapps.online/"

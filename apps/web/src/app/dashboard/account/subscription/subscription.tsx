@@ -1,10 +1,4 @@
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  PageWrapper,
-  SectionRowWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoP } from "@/components/typography"
+import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
 import { Separator } from "@/components/ui/separator"
 import { SUBSCRIPTION_EXPIRY_REMINDER_DAYS } from "@/lib/uiConfig"
 import {
@@ -18,23 +12,14 @@ import {
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
-import {
-  Infinity as InfinityIcon,
-  ChartSpline,
-  Zap,
-  Expand,
-  Sparkle,
-  Brush,
-  Timeline,
-} from "lucide-react"
-import { getTranslations } from "next-intl/server"
+
 import BuySubscriptionComponent from "@/components/flows/susbcription/buySubscription"
 import TryPremiumComponent from "@/components/flows/susbcription/tryPremium"
 import PlanExpiryDetails from "@/components/flows/susbcription/planExpiryDetails"
 import PremiumNudge from "@/components/flows/susbcription/premiumNudge"
-import PremiumAdvantageCard from "@/components/flows/susbcription/premiumAdvantageCard"
 import PlanUsageCard from "@/components/flows/susbcription/planUsageCard"
 import CurrentPlanDetails from "@/components/flows/susbcription/currentPlanDetails"
+import PremiumAdvantageSection from "@/components/flows/susbcription/premiumAdvantageSection"
 
 export default async function SubscriptionPageComponent({
   userDetails,
@@ -49,8 +34,6 @@ export default async function SubscriptionPageComponent({
   confirmedBookingsLength: number
   lastPaidOrder: FindLastPaidOrderType
 }) {
-  const t = await getTranslations("Dashboard.AccountSubscription")
-
   const isOwner = userDetails.userRole === UserRolesEnum.OWNER
 
   const isBasic = agencyDetails.subscriptionPlan === SubscriptionPlanEnum.BASIC
@@ -63,7 +46,7 @@ export default async function SubscriptionPageComponent({
 
   return (
     <PageWrapper id="AccountSubscriptionPage">
-      <SectionWrapper id="AccountSubscriptionInfo">
+      <SectionWrapper id="AccountSubscriptionInfo" className="lg:flex-row">
         <CurrentPlanDetails
           isBasic={isBasic}
           isOwner={isOwner}
@@ -105,63 +88,7 @@ export default async function SubscriptionPageComponent({
             userId={userDetails.id}
           />
         ))}
-      <div
-        id="PremiumAdvantageInfo"
-        className="w-full shrink-0 shadow rounded-lg overflow-hidden bg-white dark:bg-slate-800 relative flex flex-col gap-4 md:gap-6 items-center px-6 md:px-8 py-12 md:py-16"
-      >
-        <div className="bg-linear-to-b from-sky-900 dark:from-sky-100 to-sky-700 dark:to-sky-300 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -top-10 md:-left-14 md:-top-14 lg:-left-16 lg:-top-16"></div>
-        <div className="bg-linear-to-b from-sky-900 dark:from-sky-100 to-sky-700 dark:to-sky-300 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -top-10 md:-right-14 md:-top-14 lg:-right-16 lg:-top-16"></div>
-        <div className="bg-linear-to-b from-sky-700 dark:from-sky-300 to-sky-500 dark:to-sky-500 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -bottom-10 md:-left-14 md:-bottom-14 lg:-left-16 lg:-bottom-16"></div>
-        <div className="bg-linear-to-b from-sky-700 dark:from-sky-300 to-sky-500 dark:to-sky-500 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -bottom-10 md:-right-14 md:-bottom-14 lg:-right-16 lg:-bottom-16"></div>
-        <SectionRowWrapper small className="items-center">
-          <div className="w-6 lg:w-8 grow-0 h-px bg-sky-700 dark:bg-sky-300" />
-          <RyogoIcon color="brand" size="sm" icon={Sparkle} thick />
-          <RyogoP
-            color="brand"
-            weight="font-bold"
-            className="text-center text-nowrap"
-          >
-            {t("PremiumAdvantage")}
-          </RyogoP>
-          <RyogoIcon color="brand" size="sm" icon={Sparkle} thick />
-          <div className="w-6 lg:w-8 grow-0 h-px bg-sky-700 dark:bg-sky-300" />
-        </SectionRowWrapper>
-        <RyogoCaption color="slate" className="text-center">
-          {t("PremiumSubtitle")}
-        </RyogoCaption>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 w-full">
-          <PremiumAdvantageCard
-            icon={InfinityIcon}
-            title={t("UnlimitedBookings.Title")}
-            subtitle={t("UnlimitedBookings.Subtitle")}
-          />
-          <PremiumAdvantageCard
-            icon={Expand}
-            title={t("FullAccess.Title")}
-            subtitle={t("FullAccess.Subtitle")}
-          />
-          <PremiumAdvantageCard
-            icon={ChartSpline}
-            title={t("AdvancedAnalytics.Title")}
-            subtitle={t("AdvancedAnalytics.Subtitle")}
-          />
-          <PremiumAdvantageCard
-            icon={Zap}
-            title={t("LiveSupport.Title")}
-            subtitle={t("LiveSupport.Subtitle")}
-          />
-          <PremiumAdvantageCard
-            icon={Brush}
-            title={t("Customization.Title")}
-            subtitle={t("Customization.Subtitle")}
-          />
-          <PremiumAdvantageCard
-            icon={Timeline}
-            title={t("WiderDataAccess.Title")}
-            subtitle={t("WiderDataAccess.Subtitle")}
-          />
-        </div>
-      </div>
+      <PremiumAdvantageSection />
     </PageWrapper>
   )
 }

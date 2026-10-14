@@ -35,7 +35,7 @@ export default async function PlanExpiryDetails({
   return (
     <div
       id="PlanExpiry"
-      className="flex flex-col border p-5 lg:p-6 gap-3 lg:gap-4 rounded-lg items-center justify-center text-center"
+      className="flex flex-col w-full border p-5 lg:p-6 gap-3 lg:gap-4 rounded-lg items-center justify-center text-center"
     >
       {needExpiryReminder ? (
         <>

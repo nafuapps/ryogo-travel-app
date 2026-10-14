@@ -4,7 +4,6 @@ import { FindMissionByIdType } from "@ryogo-travel-app/api/services/mission.serv
 import {
   RyogoDatePicker,
   RyogoInput,
-  RyogoSelect,
   RyogoSwitch,
   RyogoTextarea,
   RyogoTimePicker,
@@ -26,9 +25,9 @@ import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoH3 } from "@/components/typography"
 import { modifyReminderAction } from "@/app/actions/missions/modifyReminderAction"
 import {
-  regexCheckIDByEntityType,
   getDateTime,
   extractTimeFromDate,
+  getEntityType,
 } from "@/components/missions/missionCommons"
 import {
   RyogoDefaultButton,
@@ -37,7 +36,6 @@ import {
 import {
   MIN_FIELD_TITLE_LENGTH,
   MAX_FIELD_TITLE_LENGTH,
-  MIN_FIELD_DESC_LENGTH,
   MAX_FIELD_DESC_LENGTH,
   MAX_ENTITY_ID_LENGTH,
   MIN_ENTITY_ID_LENGTH,
@@ -57,7 +55,6 @@ export default function ModifyReminderPageComponent({
 
   const modifyReminderSchema = z
     .object({
-      entityType: z.enum(EntityTypeEnum).nonoptional(t("Field1.Error1")),
       entityId: z
         .string()
         .min(MIN_ENTITY_ID_LENGTH)
@@ -69,21 +66,11 @@ export default function ModifyReminderPageComponent({
         .max(MAX_FIELD_TITLE_LENGTH, t("Field3.Error2")),
       messageKey: z
         .string()
-        .min(MIN_FIELD_DESC_LENGTH, t("Field4.Error2"))
         .max(MAX_FIELD_DESC_LENGTH, t("Field4.Error1"))
         .optional(),
       dueDate: z.date(t("Field5.Error1")).nonoptional(t("Field5.Error1")),
       dueTime: z.iso.time(t("Field6.Error1")).nonempty(t("Field6.Error1")),
       isCritical: z.boolean(),
-    })
-    .superRefine(({ entityType, entityId }, ctx) => {
-      if (entityId && !regexCheckIDByEntityType(entityType, entityId)) {
-        ctx.addIssue({
-          code: "custom",
-          message: t("Field2.Error2"),
-          path: ["entityId"],
-        })
-      }
     })
     .superRefine(({ dueDate, dueTime }, ctx) => {
       //Check that the date is in the future
@@ -99,7 +86,6 @@ export default function ModifyReminderPageComponent({
   const form = useForm<ModifyReminderType>({
     resolver: zodResolver(modifyReminderSchema),
     defaultValues: {
-      entityType: mission.entityType,
       entityId: mission.entityId,
       titleKey: mission.titleKey,
       messageKey: mission.messageKey ?? undefined,
@@ -110,12 +96,13 @@ export default function ModifyReminderPageComponent({
   })
 
   async function onSubmit(values: ModifyReminderType) {
+    const entityType = getEntityType(values.entityId)
     const updatedReminder = await modifyReminderAction({
       missionId: mission.id,
       userId: mission.userId,
       agencyId: mission.agencyId,
-      entityType: values.entityType,
-      entityId: values.entityId,
+      entityType: entityType ?? EntityTypeEnum.USER,
+      entityId: entityType ? values.entityId : mission.userId,
       titleKey: values.titleKey,
       messageKey: values.messageKey,
       dueDate: getDateTime(values.dueDate, values.dueTime),
@@ -150,22 +137,6 @@ export default function ModifyReminderPageComponent({
           />
         </SectionRowWrapper>
         <FormContentWrapper>
-          <RyogoSelect
-            name="entityType"
-            title={t("Field1.Title")}
-            register={form.register("entityType")}
-            array={Object.values(EntityTypeEnum)}
-            placeholder={t("Field1.Placeholder")}
-            description={t("Field1.Description")}
-          />
-          <RyogoInput
-            name="entityId"
-            label={t("Field2.Title")}
-            placeholder={t("Field2.Placeholder")}
-            description={t("Field2.Description")}
-            type="text"
-          />
-          <RyogoSwitch name={"isCritical"} label={t("Field7.Title")} />
           <RyogoInput
             name="titleKey"
             label={t("Field3.Title")}
@@ -185,6 +156,14 @@ export default function ModifyReminderPageComponent({
             description={t("Field5.Description")}
           />
           <RyogoTimePicker name="dueTime" label={t("Field6.Title")} />
+          <RyogoSwitch name={"isCritical"} label={t("Field7.Title")} />
+          <RyogoInput
+            name="entityId"
+            label={t("Field2.Title")}
+            placeholder={t("Field2.Placeholder")}
+            description={t("Field2.Description")}
+            type="text"
+          />
         </FormContentWrapper>
         <StickyActionWrapper>
           <RyogoDefaultButton

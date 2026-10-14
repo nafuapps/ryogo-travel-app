@@ -45,11 +45,7 @@ export const missionServices = {
   },
 
   async modifyMission(data: ModifyMissionRequestType) {
-    const [updatedMission] = await missionRepository.updateMission({
-      ...data,
-      entityType: data.entityId ? data.entityType : EntityTypeEnum.USER, //If no entity id, default to type User with userId
-      entityId: data.entityId ?? data.userId,
-    })
+    const [updatedMission] = await missionRepository.updateMission(data)
     return updatedMission
   },
 

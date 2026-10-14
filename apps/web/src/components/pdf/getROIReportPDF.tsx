@@ -41,10 +41,11 @@ function ROIReportDocument({ report }: { report: ROIReportType }) {
         </View>
         <Text style={styles.p}>Hello,</Text>
         <Text style={styles.p}>
-          Thank you for showing interest in RyoGo. This is an ROI calculation
-          report that will help you understand how much time and money you can
-          save with our service. The report is based on the details provided by
-          you. Feel free to contact us if you have any queries.
+          Thank you for showing interest in RyoGo. This is a Return On
+          Investment calculation report that will help you understand how much
+          time and money you can save with our platform. The report is based on
+          the details provided by you. Feel free to contact us if you have any
+          queries.
         </Text>
         <View id="reportInputs" style={styles.bookingDetails} wrap={false}>
           <View id="Vehicles" style={styles.detailsSection}>

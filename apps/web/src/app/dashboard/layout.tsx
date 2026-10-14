@@ -70,7 +70,7 @@ export default async function DashboardLayout({
         <DashboardSidebar isOwner={isOwner} />
         <LayoutSectionWrapper id="DashboardMainSection">
           {children}
-          {/* //TODO <CommandCenter /> */}
+          {/* <CommandCenter /> */}
         </LayoutSectionWrapper>
         <UserLocationTracker
           userId={currentUser.userId}

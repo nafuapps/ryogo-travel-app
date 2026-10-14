@@ -1325,8 +1325,9 @@
     },
     "BookingTransactions": {
       "Reconciled": "Booking reconciled.. no transactions changes allowed",
-      "TotalTxnAmount": "Total Transactions",
-      "ApprovedTxnAmount": "Approved Transactions",
+      "TotalTxnAmount": "Total",
+      "ApprovedTxnAmount": "Approved",
+      "Filters": "TRANSACTION FILTERS",
       "TypeFilter": "Type Filter",
       "ModeFilter": "Mode Filter",
       "ApprovalFilter": "Approval Filter",
@@ -1347,8 +1348,9 @@
     },
     "BookingExpenses": {
       "Closed": "Booking closed.. no expense changes allowed",
-      "TotalAmount": "Total Expenses",
-      "ApprovedAmount": "Approved Expenses",
+      "TotalAmount": "Total",
+      "ApprovedAmount": "Approved",
+      "Filters": "EXPENSE FILTERS",
       "TypeFilter": "Type Filter",
       "RoleFilter": "Role Filter",
       "ApprovalFilter": "Approval Filter",
@@ -1365,7 +1367,7 @@
       "RejectError": "Could not remove approval.. try again later"
     },
     "BookingTripLogs": {
-      "FilteredLogs": "Filtered Trip Logs",
+      "FilteredLogs": "Trip Logs",
       "ShowOther": "Show system logs",
       "NoTriplogs": "No trip logs found",
       "Km": "- {km} Km"
@@ -2724,7 +2726,7 @@
         "Warning": "Some entities exceed Basic plan limits and will not be available for booking assignments."
       },
       "PremiumAdvantage": "THE PREMIUM ADVANTAGE",
-      "PremiumSubtitle": "Unlock the full potential of RyoGo with unlimited bookings & entities, complete app access, advanced features like analytics and priority live support.",
+      "PremiumSubtitle": "Unlock the full potential of RyoGo with unlimited usage, unrestricted app access, and advanced features like analytics and priority support.",
       "UnlimitedBookings": {
         "Title": "Unlimited Bookings",
         "Subtitle": "Scale your travel operations without worrying about any booking volume limits."
@@ -2911,16 +2913,10 @@
     },
     "AddSupportTicket": {
       "Title": "Add New Support Ticket",
-      "Field1": {
-        "Title": "Entity Type",
-        "Placeholder": "Select Entity Type",
-        "Description": "Select type of entity for which ticket is being created. Select User, if not sure",
-        "Error1": "Entity type is required"
-      },
       "Field2": {
-        "Title": "Entity ID",
+        "Title": "Entity ID (Optional)",
         "Placeholder": "U1000001",
-        "Description": "Enter the entity ID for which ticket is being created. Leave it blank, if not sure",
+        "Description": "Enter the ID of the entity for which ticket is being created. Leave it blank, if not sure",
         "Error1": "Entity Id must be less than 12 characters",
         "Error2": "Not a valid Entity ID. Leave blank if not sure."
       },
@@ -4759,16 +4755,10 @@
     },
     "AddReminder": {
       "Title": "Set a reminder",
-      "Field1": {
-        "Title": "Entity Type",
-        "Placeholder": "Select Entity Type",
-        "Description": "Select type of entity for which reminder is being created. Select User if not sure",
-        "Error1": "Entity type is required"
-      },
       "Field2": {
-        "Title": "Entity ID",
-        "Placeholder": "U1000001",
-        "Description": "Enter the entity ID for which reminder is being created. Leave blank if not sure",
+        "Title": "Entity ID (Optional)",
+        "Placeholder": "B1000001",
+        "Description": "Enter the ID of the entity for which reminder is being created. Leave blank if not sure",
         "Error1": "Entity Id must be less than 12 characters",
         "Error2": "Not a valid Entity ID. Leave blank if not sure."
       },
@@ -4780,10 +4770,9 @@
         "Error2": "Title must be less than 100 characters"
       },
       "Field4": {
-        "Title": "Message",
-        "Placeholder": "Enter details (Optional)",
-        "Error1": "Description must be less than 300 characters",
-        "Error2": "Description must be atleast 10 characters"
+        "Title": "Message (Optional)",
+        "Placeholder": "Enter details about the reminder ",
+        "Error1": "Description must be less than 300 characters"
       },
       "Field5": {
         "Title": "Due Date",
@@ -4807,16 +4796,10 @@
     },
     "ModifyReminder": {
       "Title": "Edit reminder",
-      "Field1": {
-        "Title": "Entity Type",
-        "Placeholder": "Select Entity Type",
-        "Description": "Select type of entity for which reminder is being created. Select User if not sure",
-        "Error1": "Entity type is required"
-      },
       "Field2": {
-        "Title": "Entity ID",
-        "Placeholder": "U1000001",
-        "Description": "Enter the entity ID for which reminder is being created. Leave blank if not sure",
+        "Title": "Entity ID (Optional)",
+        "Placeholder": "B1000001",
+        "Description": "Enter the ID of the entity for which reminder is being edited. Leave blank if not sure",
         "Error1": "Entity Id must be less than 12 characters",
         "Error2": "Not a valid Entity ID. Leave blank if not sure."
       },
@@ -4828,10 +4811,9 @@
         "Error2": "Title must be less than 100 characters"
       },
       "Field4": {
-        "Title": "Message",
-        "Placeholder": "Enter details (Optional)",
-        "Error1": "Description must be less than 300 characters",
-        "Error2": "Description must be atleast 10 characters"
+        "Title": "Message (Optional)",
+        "Placeholder": "Enter details about the reminder",
+        "Error1": "Description must be less than 300 characters"
       },
       "Field5": {
         "Title": "Due Date",
@@ -6653,7 +6635,7 @@
       "Signup": "Sign up"
     },
     "Footer": {
-      "LogoCaption": "Digitalizing travel agency operations for modern India",
+      "LogoCaption": "Modernizing travel agency operations for digital India",
       "InstallPWA": "Install RyoGo App",
       "Product": {
         "Title": "PRODUCT",
@@ -7613,7 +7595,7 @@
         },
         "Founder": {
           "Title": "Meet the founder",
-          "Description": "RyoGo was founded in 2023 by Nitin Gautam, an industry veteran with over 13 years of experience in running and managing travel, automobile, logistics and finance related products at various startups. He has a deep understanding of the challenges faced by travel businesses and is passionate about leveraging technology to simplify operations and enhance customer experience.",
+          "Description": "RyoGo was founded in 2025 by Nitin Gautam, an industry veteran with over 13 years of experience in running and managing travel, automobile, logistics and finance related products at various startups. He has a deep understanding of the challenges faced by travel businesses and is passionate about leveraging technology to simplify operations and enhance customer experience.",
           "Company1": "Ola Electric",
           "Company2": "PharmEasy",
           "Company3": "Park Plus"

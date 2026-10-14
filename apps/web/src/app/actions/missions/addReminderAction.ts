@@ -3,7 +3,6 @@
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { AddMissionRequestType } from "@ryogo-travel-app/api/types/mission.types"
-import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function addReminderAction({
   data,
@@ -27,8 +26,8 @@ export async function addReminderAction({
     {
       agencyId: currentUser.agencyId,
       userId: currentUser.userId,
-      entityType: data.entityId ? data.entityType : EntityTypeEnum.USER, //If no entity id, default to type User with userId
       entityId: data.entityId ?? currentUser.userId,
+      entityType: data.entityType,
       titleKey: data.title,
       messageKey: data.message,
       dueDate: data.dueDate,

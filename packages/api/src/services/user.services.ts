@@ -260,7 +260,6 @@ export const userServices = {
     }
   },
 
-  //TODO: New user can login with verification code (in email) and then change password
   //Create Agent
   async addAgentUser(data: AddUserRequestType) {
     //Step1: Check if agent with same phone already exists in this agency
@@ -631,7 +630,7 @@ export const userServices = {
     const passwordHash = await generatePasswordHash(newPassword)
 
     const [newUserData] =
-      await userRepository.updatePasswordVerificationAndStatus({
+      await userRepository.updatePasswordAndVerificationStatus({
         userId,
         passwordHash,
       })

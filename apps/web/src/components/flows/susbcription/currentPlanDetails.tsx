@@ -1,4 +1,4 @@
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoH2 } from "@/components/typography"
 import {
   SectionColWrapper,
@@ -8,7 +8,7 @@ import {
   OrderTypeEnum,
   SubscriptionPlanEnum,
 } from "@ryogo-travel-app/db/schema"
-import { Disc, BadgeCheck, ChevronRight } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import { RyogoPill } from "@/components/pills/ryogoPills"
@@ -33,11 +33,6 @@ export default async function CurrentPlanDetails({
         <RyogoH2 color={isBasic ? "slate" : "brand"} weight="font-bold">
           {subscriptionPlan}
         </RyogoH2>
-        <RyogoEnclosedIcon
-          icon={isBasic ? Disc : BadgeCheck}
-          size="sm"
-          color="black"
-        />
       </SectionRowWrapper>
       <RyogoPill
         label={isBasic ? t("FreeForever") : (lastPaidPlan ?? t("Trial"))}

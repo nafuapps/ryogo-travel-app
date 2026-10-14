@@ -16,7 +16,10 @@ import { changeIsReadMissionAction } from "@/app/actions/missions/changeIsReadMi
 import { toast } from "sonner"
 import { CircleCheckBig, ChevronRight } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 
 export default function ReminderCard({
   reminder,
@@ -109,7 +112,7 @@ export default function ReminderCard({
             <RyogoIcon icon={CircleCheckBig} size="xs" color="light" />
           </RyogoOutlineButton>
         ) : (
-          <RyogoOutlineButton
+          <RyogoDefaultButton
             label={t("Card.MarkDone")}
             onClick={markRead}
             className="grow"

@@ -31,13 +31,11 @@ export default async function LandingLayout({
   return (
     <main
       id="LandingLayout"
-      className="flex flex-col bg-white dark:bg-slate-800"
+      className="flex flex-col bg-white dark:bg-slate-800 h-full"
     >
-      <div className="flex flex-col h-full">
-        <Navbar isDarkMode={isDarkMode} locale={locale} />
-        {children}
-        <Footer />
-      </div>
+      <Navbar isDarkMode={isDarkMode} locale={locale} />
+      {children}
+      <Footer />
     </main>
   )
 }

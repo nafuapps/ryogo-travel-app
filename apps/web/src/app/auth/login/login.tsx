@@ -4,16 +4,22 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
-import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { toast } from "sonner"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { PHONE_LENGTH } from "@/lib/uiConfig"
-import { FormWrapper } from "@/components/page/pageWrappers"
+import {
+  FormWrapper,
+  SectionColWrapper,
+  AuthPageWrapper,
+} from "@/components/page/pageWrappers"
 import { useState } from "react"
+import { Separator } from "@/components/ui/separator"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import Link from "next/link"
 
 /*
 1. Find user by phone number
@@ -97,6 +103,13 @@ export default function LoginPageComponent() {
           disabled={form.formState.isSubmitting || isBot}
         />
       </FormWrapper>
+      <Separator />
+      <SectionColWrapper>
+        <RyogoCaption color="light">{t("SignupTitle")}</RyogoCaption>
+        <Link href={"/auth/signup"}>
+          <RyogoOutlineButton label={t("SignupCTA")} labelColor="slate" />
+        </Link>
+      </SectionColWrapper>
     </AuthPageWrapper>
   )
 }

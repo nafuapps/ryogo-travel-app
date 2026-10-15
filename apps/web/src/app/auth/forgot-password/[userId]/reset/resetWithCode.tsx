@@ -8,7 +8,6 @@ import { useTranslations } from "next-intl"
 import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { resetMyPasswordAction } from "@/app/actions/users/resetMyPasswordAction"
 import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { useBotDetection } from "@/hooks/useBotDetection"
@@ -23,6 +22,7 @@ import {
   FormContentWrapper,
   FormWrapper,
   SectionRowWrapper,
+  AuthPageWrapper,
 } from "@/components/page/pageWrappers"
 import { useState, useTransition } from "react"
 import { checkVerificationCodeAction } from "@/app/actions/users/checkVerificationCodeAction"

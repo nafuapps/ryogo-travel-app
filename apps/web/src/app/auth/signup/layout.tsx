@@ -1,7 +1,7 @@
 import {
-  AuthMainWrapper,
-  AuthSideWrapper,
-} from "@/components/flows/auth/authWrappers"
+  LandingSectionWrapper,
+  LandingContentWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 export default async function SignupLayout({
   children,
@@ -9,9 +9,13 @@ export default async function SignupLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <AuthMainWrapper src={"/signupBG.png"}>{children}</AuthMainWrapper>
-      <AuthSideWrapper src={"/signupBG.png"} alt="Signup Page Cover Image" />
-    </>
+    <LandingSectionWrapper id="hero" hero>
+      <LandingContentWrapper
+        justifyStart
+        className="h-full px-5 sm:px-8 md:px-10 py-20 md:py-24 rounded-lg bg-linear-to-b from-sky-400 dark:from-sky-600 to-sky-50 dark:to-sky-950"
+      >
+        {children}
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }

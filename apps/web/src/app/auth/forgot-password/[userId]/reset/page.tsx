@@ -1,5 +1,3 @@
-//Confirm Email page
-
 import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"

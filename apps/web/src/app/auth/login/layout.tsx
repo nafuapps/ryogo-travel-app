@@ -1,7 +1,7 @@
 import {
-  AuthMainWrapper,
-  AuthSideWrapper,
-} from "@/components/flows/auth/authWrappers"
+  LandingSectionWrapper,
+  LandingContentWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 export default async function LoginLayout({
   children,
@@ -9,9 +9,13 @@ export default async function LoginLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <AuthSideWrapper src={"/loginBG.png"} alt="Login Page Cover Image" />
-      <AuthMainWrapper src={"/loginBG.png"}>{children}</AuthMainWrapper>
-    </>
+    <LandingSectionWrapper id="hero" hero>
+      <LandingContentWrapper
+        justifyStart
+        className="h-full px-5 sm:px-8 md:px-10 py-20 md:py-24 rounded-lg bg-linear-to-b from-sky-700 dark:from-blue-200 to-blue-200 dark:to-sky-700"
+      >
+        {children}
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }

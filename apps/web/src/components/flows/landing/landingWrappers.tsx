@@ -16,7 +16,7 @@ export function LandingSectionWrapper({
   return (
     <section
       id={id}
-      className={`${shrink ? "" : "min-h-lvh"} flex flex-col ${hero ? "p-4 md:p-5 lg:p-6" : "py-24 md:py-32 px-6 md:px-7 lg:px-8"} ${className ?? ""}`}
+      className={`${shrink ? "" : "min-h-lvh"} flex flex-col w-full ${hero ? "p-4 md:p-5 lg:p-6" : "py-24 md:py-32 px-6 md:px-7 lg:px-8"} ${className ?? ""}`}
     >
       {children}
     </section>

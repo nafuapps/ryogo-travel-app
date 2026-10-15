@@ -1,13 +1,13 @@
 import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
-import { LayoutWrapper } from "@/components/layout/layoutWrappers"
 import Navbar from "@/components/flows/landing/nav"
 import {
   DARK_MODE_COOKIE_NAME,
   LOCALE_COOKIE_NAME,
 } from "@ryogo-travel-app/api/apiConfig"
 import { cookies } from "next/headers"
+import Footer from "@/components/flows/landing/footer"
 
 export default async function AuthLayout({
   children,
@@ -29,9 +29,13 @@ export default async function AuthLayout({
   const locale = cookieStore.get(LOCALE_COOKIE_NAME)?.value
 
   return (
-    <LayoutWrapper id="AuthLayout">
+    <main
+      id="AuthLayout"
+      className="flex flex-col bg-white dark:bg-slate-800 h-full"
+    >
       <Navbar isDarkMode={isDarkMode} locale={locale} />
       {children}
-    </LayoutWrapper>
+      <Footer />
+    </main>
   )
 }

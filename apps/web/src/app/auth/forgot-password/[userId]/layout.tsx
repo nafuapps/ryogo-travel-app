@@ -1,15 +1,10 @@
 import { redirect, RedirectType } from "next/navigation"
-import {
-  AuthMainWrapper,
-  AuthSideWrapper,
-} from "@/components/flows/auth/authWrappers"
 import { UserIdRegex } from "@/lib/regex"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { RyogoCaption } from "@/components/typography"
-import Link from "next/link"
-import { getTranslations } from "next-intl/server"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
+import {
+  LandingSectionWrapper,
+  LandingContentWrapper,
+} from "@/components/flows/landing/landingWrappers"
 
 export default async function LoginLayout({
   children,
@@ -28,23 +23,15 @@ export default async function LoginLayout({
   if (!user) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const t = await getTranslations("Auth.ForgotPassword")
 
   return (
-    <>
-      <AuthMainWrapper src={"/forgotPasswordBG.png"}>
+    <LandingSectionWrapper id="hero" hero>
+      <LandingContentWrapper
+        justifyStart
+        className="h-full px-5 sm:px-8 md:px-10 py-20 md:py-24 rounded-lg bg-linear-to-b from-sky-900 dark:from-sky-100 to-sky-100 dark:to-sky-900"
+      >
         {children}
-        <SectionColWrapper className="items-center">
-          <RyogoCaption color="slate">{t("RememberTitle")}</RyogoCaption>
-          <Link href={`/auth/login/password/${userId}`}>
-            <RyogoOutlineButton label={t("RememberCTA")} />
-          </Link>
-        </SectionColWrapper>
-      </AuthMainWrapper>
-      <AuthSideWrapper
-        src={"/forgotPasswordBG.png"}
-        alt="Forgot Password Page Cover Image"
-      />
-    </>
+      </LandingContentWrapper>
+    </LandingSectionWrapper>
   )
 }

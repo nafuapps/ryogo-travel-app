@@ -4,15 +4,21 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { useRouter } from "next/navigation"
-import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
 import { toast } from "sonner"
 import { useBotDetection } from "@/hooks/useBotDetection"
 import { PHONE_LENGTH } from "@/lib/uiConfig"
-import { FormWrapper } from "@/components/page/pageWrappers"
+import {
+  FormWrapper,
+  SectionColWrapper,
+  AuthPageWrapper,
+} from "@/components/page/pageWrappers"
+import { Separator } from "@/components/ui/separator"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import Link from "next/link"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -70,6 +76,13 @@ export default function SignupPageComponent() {
           disabled={form.formState.isSubmitting || isBot}
         />
       </FormWrapper>
+      <Separator />
+      <SectionColWrapper>
+        <RyogoCaption color="light">{t("LoginTitle")}</RyogoCaption>
+        <Link href={"/auth/login"}>
+          <RyogoOutlineButton label={t("LoginCTA")} />
+        </Link>
+      </SectionColWrapper>
     </AuthPageWrapper>
   )
 }

@@ -1,4 +1,3 @@
-//Existing Account page
 import { Metadata } from "next"
 import { PhoneRegex } from "@/lib/regex"
 import { redirect, RedirectType } from "next/navigation"

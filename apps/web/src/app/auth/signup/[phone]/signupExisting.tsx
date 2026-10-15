@@ -5,7 +5,6 @@ import Link from "next/link"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -15,7 +14,10 @@ import {
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import { ChevronRight } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionColWrapper,
+  AuthPageWrapper,
+} from "@/components/page/pageWrappers"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 

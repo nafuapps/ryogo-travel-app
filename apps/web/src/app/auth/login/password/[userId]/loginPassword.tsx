@@ -10,7 +10,6 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
-import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
@@ -22,7 +21,7 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
-import { FormWrapper } from "@/components/page/pageWrappers"
+import { FormWrapper, AuthPageWrapper } from "@/components/page/pageWrappers"
 import { useState } from "react"
 import { Separator } from "@/components/ui/separator"
 

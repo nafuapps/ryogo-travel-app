@@ -6,7 +6,6 @@ import {
   DriverStatusEnum,
   OrderStatusEnum,
   PaymentStatusEnum,
-  SubscriptionPlanEnum,
   TicketStatusEnum,
   TripLogTypesEnum,
   UserRolesEnum,
@@ -280,18 +279,6 @@ export function SupportTicketStatusPill(
       return <RyogoPill {...props} label={label} bgColor={"yellow"} />
     case TicketStatusEnum.OPEN:
       return <RyogoPill {...props} label={label} bgColor={"slate"} />
-  }
-}
-
-export function SubscriptionPlanPill(
-  props: { plan: SubscriptionPlanEnum } & RyogoPillType,
-) {
-  const label = props.plan
-  switch (props.plan) {
-    case SubscriptionPlanEnum.BASIC:
-      return <RyogoPill {...props} label={label} bgColor={"slate"} />
-    case SubscriptionPlanEnum.PREMIUM:
-      return <RyogoPill {...props} label={label} bgColor={"brand"} />
   }
 }
 

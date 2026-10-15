@@ -1,9 +1,9 @@
 {
   "Auth": {
     "LoginPage": {
-      "SignupTitle": "Want to create a new agency account?",
-      "SignupCTA": "Sign up for free",
       "Step1": {
+        "SignupTitle": "Don't have a RyoGo account?",
+        "SignupCTA": "Sign up for free",
         "PageTitle": "Log into RyoGo",
         "Input": {
           "Title": "Enter phone number",
@@ -41,8 +41,6 @@
       }
     },
     "ForgotPassword": {
-      "RememberTitle": "Remember your password?",
-      "RememberCTA": "Go to login page",
       "Step1": {
         "PageTitle": "Forgot password?",
         "Input": {
@@ -96,9 +94,9 @@
       }
     },
     "SignupPage": {
-      "LoginTitle": "Already have an account?",
-      "LoginCTA": "Login Now",
       "Step1": {
+        "LoginTitle": "Already have a RyoGo account?",
+        "LoginCTA": "Login Now",
         "PageTitle": "Welcome to RyoGo!",
         "Input": {
           "Title": "Enter phone number",

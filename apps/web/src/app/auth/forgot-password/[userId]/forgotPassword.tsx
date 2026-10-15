@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useState } from "react"
 import { forgotPasswordAction } from "@/app/actions/users/forgotPasswordAction"
-import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { differenceInMinutes } from "date-fns"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
@@ -23,7 +22,7 @@ import {
   RyogoDefaultButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
-import { FormWrapper } from "@/components/page/pageWrappers"
+import { AuthPageWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import Link from "next/link"
 import { Separator } from "@/components/ui/separator"
 

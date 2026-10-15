@@ -4,10 +4,12 @@ import { RyogoH3, RyogoCaption } from "@/components/typography"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
-import { AuthPageWrapper } from "@/components/flows/auth/authWrappers"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
+import {
+  SectionColWrapper,
+  AuthPageWrapper,
+} from "@/components/page/pageWrappers"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 

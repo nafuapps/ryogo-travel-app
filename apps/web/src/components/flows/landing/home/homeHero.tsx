@@ -14,7 +14,7 @@ import {
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { ClickZoomOut } from "../clickZoomOut"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function HomeHeroSection() {
   const t = await getTranslations("Landing.Home.Hero")

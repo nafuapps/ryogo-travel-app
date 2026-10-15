@@ -1,5 +1,3 @@
-//Confirm Email page
-
 import { redirect, RedirectType } from "next/navigation"
 import ForgotPasswordPageComponent from "./forgotPassword"
 import { Metadata } from "next"

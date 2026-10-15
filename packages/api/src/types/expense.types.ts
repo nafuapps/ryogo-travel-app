@@ -8,6 +8,7 @@ export type AddExpenseRequestType = {
   type: ExpenseTypesEnum
   amount: number
   expenseDate: Date
+  isPaidByDriver: boolean
   isApproved?: boolean
   remarks?: string | undefined
   expensePhoto?: FileList | undefined
@@ -19,6 +20,7 @@ export type UpdateExpenseRequestType = {
   type: ExpenseTypesEnum
   amount: number
   expenseDate: Date
+  isPaidByDriver: boolean
   remarks?: string | undefined
   expensePhoto?: FileList | undefined
   expensePhotoUrl?: string

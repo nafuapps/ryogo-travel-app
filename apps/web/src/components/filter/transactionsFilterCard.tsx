@@ -5,7 +5,6 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import {
   TransactionTypesEnum,
   TransactionModesEnum,
-  TransactionPartiesEnum,
 } from "@ryogo-travel-app/db/schema"
 import {
   SectionRowWrapper,
@@ -27,7 +26,6 @@ export default function TransactionFiltersCard() {
   const searchParams = useSearchParams()
   const type = searchParams.get("type")
   const mode = searchParams.get("mode")
-  const party = searchParams.get("party")
   const approved = searchParams.get("approved")
 
   const updateFilters = (updates: Record<string, string | null>) => {
@@ -61,7 +59,7 @@ export default function TransactionFiltersCard() {
         />
       </SectionRowWrapper>
       <div
-        className={`grid gap-4 lg:gap-5 grid-cols-2 lg:grid-cols-4 w-full ${isOpen ? "" : "hidden"}`}
+        className={`grid gap-4 lg:gap-5 grid-cols-2 lg:grid-cols-3 w-full ${isOpen ? "" : "hidden"}`}
       >
         <SelectFilter
           label={t("TypeFilter")}
@@ -82,13 +80,6 @@ export default function TransactionFiltersCard() {
           enumList={["True", "False"]}
           value={approved ?? "All"}
           onValueChange={(value) => updateFilters({ approved: value })}
-          disabled={isPending}
-        />
-        <SelectFilter
-          label={t("PartyFilter")}
-          enumList={Object.values(TransactionPartiesEnum)}
-          value={party ?? "All"}
-          onValueChange={(value: string) => updateFilters({ party: value })}
           disabled={isPending}
         />
       </div>

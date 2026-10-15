@@ -47,9 +47,16 @@ export default function ExpenseItem({
           <RyogoSmall color="slate" weight="font-bold">
             {expense.type}
           </RyogoSmall>
-          <RyogoTiny color="light">
-            {format(expense.expenseDate, "dd MMM")}
-          </RyogoTiny>
+          <SectionRowWrapper small className="items-center">
+            <RyogoTiny color="light">
+              {format(expense.expenseDate, "dd MMM")}
+            </RyogoTiny>
+            {expense.isPaidByDriver && (
+              <RyogoTiny color="light" className="text-nowrap">
+                {t("PaidByDriver")}
+              </RyogoTiny>
+            )}
+          </SectionRowWrapper>
         </SectionColWrapper>
         <RyogoH3 color={expense.isApproved ? "green" : "slate"}>
           {expense.amount}

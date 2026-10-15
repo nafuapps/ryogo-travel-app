@@ -54,9 +54,8 @@ export async function closeBookingAction({
 
   //Generate and store invoice pdf
   const invoiceFile = await getBookingInvoicePDF(bookingDetails)
-  const invoiceUrl = (
-    await uploadFile(invoiceFile, generateBookingInvoicePathName(bookingId))
-  ).path
+  const fileName = generateBookingInvoicePathName(bookingId)
+  const invoiceUrl = (await uploadFile(invoiceFile, fileName)).path
   await bookingServices.addInvoiceUrl({ bookingId, invoiceUrl })
 
   //Send invoice over email to customer
@@ -66,6 +65,7 @@ export async function closeBookingAction({
     const protocol = headerList.get("x-forwarded-proto") || "http"
     const trackingUrl = `${protocol}://${host}/track/booking/${bookingDetails.id}`
 
+    const fileUrl = getFileUrl(invoiceUrl)
     //Send invoice over email to the customer
     const result = await sendEmail({
       receipientEmail: [bookingDetails.customer.email],
@@ -73,11 +73,12 @@ export async function closeBookingAction({
       element: BookingCompletedInvoiceEmailTemplate({
         name: bookingDetails.customer.name,
         bookingId: bookingDetails.id,
-        downloadUrl: getFileUrl(invoiceUrl),
+        downloadUrl: fileUrl,
         route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
         trackUrl: trackingUrl,
         code: bookingDetails.secretCode,
       }),
+      attachments: [{ filename: fileName, path: fileUrl }],
     })
     if (result.data) {
       await bookingServices.changeSecretCodeSentOn(bookingId)

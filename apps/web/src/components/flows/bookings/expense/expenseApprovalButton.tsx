@@ -40,7 +40,7 @@ export function ExpenseApprovalButton({
       ) {
         toast.success(t("ApproveSuccess"))
       } else {
-        toast.success(t("ApproveError"))
+        toast.error(t("ApproveError"))
       }
       router.refresh()
     })
@@ -57,7 +57,7 @@ export function ExpenseApprovalButton({
       ) {
         toast.info(t("RejectSuccess"))
       } else {
-        toast.success(t("RejectError"))
+        toast.error(t("RejectError"))
       }
       router.refresh()
     })

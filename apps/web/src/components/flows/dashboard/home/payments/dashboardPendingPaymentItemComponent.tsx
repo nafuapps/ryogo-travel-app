@@ -23,8 +23,6 @@ export default async function DashboardPendingPaymentComponent({
   const customerImageUrl = trip.customer.photoUrl
 
   // const dueDate = trip.actualEndDate ?? trip.endDate
-  const totalAmount = trip.actualTotalAmount ?? trip.estimatedTotalAmount
-  const pendingAmount = totalAmount - trip.customerPaidAmount
 
   return (
     <Link href={`/dashboard/bookings/${trip.id}/transactions`}>
@@ -37,7 +35,7 @@ export default async function DashboardPendingPaymentComponent({
             {moment(dueDate).fromNow()}
           </RyogoCaption> */}
           <RyogoCaption color="light">
-            {t("Total", { amount: totalAmount })}
+            {t("Total", { amount: trip.totalAmount })}
           </RyogoCaption>
         </SectionRowWrapper>
         {/* <SectionRowWrapper>
@@ -51,7 +49,9 @@ export default async function DashboardPendingPaymentComponent({
             label={trip.customer.name}
           />
           <SectionColWrapper small className="items-end">
-            <RyogoP color="dark">{t("Due", { amount: pendingAmount })}</RyogoP>
+            <RyogoP color="dark">
+              {t("Due", { amount: trip.pendingAmount })}
+            </RyogoP>
           </SectionColWrapper>
         </SectionRowWrapper>
       </DashboardBoxItemWrapper>

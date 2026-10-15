@@ -29,7 +29,7 @@ export default async function Footer() {
             <InstallPWAButton label={t("InstallPWA")} />
           </SectionColWrapper>
 
-          {/* Product //TODO: Add Download PWA Link */}
+          {/* Product */}
           <SectionColWrapper>
             <FooterTitle title={t("Product.Title")} />
             <FooterLink href="/features" label={t("Product.Features")} />

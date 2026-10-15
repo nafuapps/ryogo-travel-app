@@ -7,12 +7,14 @@ import { redirect, RedirectType } from "next/navigation"
 import {
   BookingStatusEnum,
   ProductFeedbackTypeEnum,
+  SubscriptionPlanEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
 import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: `Booking Details - ${pageTitle}`,
@@ -40,6 +42,11 @@ export default async function BookingDetailsPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]"} />
@@ -57,6 +64,7 @@ export default async function BookingDetailsPage({
         bookingDetails={bookingDetails}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         isAssignedUser={bookingDetails.assignedUser.id === currentUser.userId}
+        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
       />
     </MainWrapper>
   )

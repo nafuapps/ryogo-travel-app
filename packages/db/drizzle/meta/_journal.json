@@ -456,6 +456,27 @@
       "when": 1791538082462,
       "tag": "0064_natural_vulture",
       "breakpoints": true
+    },
+    {
+      "idx": 65,
+      "version": "7",
+      "when": 1791955309339,
+      "tag": "0065_orange_maggott",
+      "breakpoints": true
+    },
+    {
+      "idx": 66,
+      "version": "7",
+      "when": 1791967766692,
+      "tag": "0066_polite_puff_adder",
+      "breakpoints": true
+    },
+    {
+      "idx": 67,
+      "version": "7",
+      "when": 1792039077262,
+      "tag": "0067_complex_thaddeus_ross",
+      "breakpoints": true
     }
   ]
 }

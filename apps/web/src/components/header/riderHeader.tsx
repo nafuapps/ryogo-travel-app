@@ -1,5 +1,3 @@
-import Link from "next/link"
-import HeaderButton from "./headerButton"
 import RyogoHeader from "./ryogoHeader"
 import { getTranslations } from "next-intl/server"
 
@@ -11,11 +9,5 @@ export default async function RiderHeader({ pathName }: { pathName: string }) {
   >[0]
   const title = t(titleKey)
 
-  return (
-    <RyogoHeader title={title}>
-      <Link href="/rider/myMissions">
-        <HeaderButton label={t("Missions")} type="missions" />
-      </Link>
-    </RyogoHeader>
-  )
+  return <RyogoHeader title={title} />
 }

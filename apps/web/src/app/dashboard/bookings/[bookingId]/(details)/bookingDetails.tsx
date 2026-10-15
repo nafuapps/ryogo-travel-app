@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import {
   BookingStatusEnum,
-  TransactionPartiesEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import CancelBookingAlertButton from "@/components/buttons/alert/cancelBookingAlertButton"
@@ -45,7 +44,6 @@ import BookingStartTimeCard from "@/components/flows/bookings/details/bookingSta
 import BookingDropAddressCard from "@/components/flows/bookings/details/bookingDropAddressCard"
 import BookingPickupAddressCard from "@/components/flows/bookings/details/bookingPickupAddressCard"
 import BookingRemarksCard from "@/components/flows/bookings/details/bookingRemarksCard"
-import BookingReconcileCard from "@/components/flows/bookings/details/bookingReconcileCard"
 import BookingIDWrapper from "@/components/flows/bookings/details/bookingIDWrapper"
 import SendQuoteAlertButton from "@/components/buttons/alert/sendQuoteAlertButton"
 import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
@@ -64,10 +62,12 @@ export default async function BookingDetailsPageComponent({
   bookingDetails,
   isOwner,
   isAssignedUser,
+  isPremium,
 }: {
   bookingDetails: NonNullable<FindBookingDetailsByIdType>
   isOwner: boolean
   isAssignedUser: boolean
+  isPremium: boolean
 }) {
   const t = await getTranslations("Dashboard.BookingDetails")
 
@@ -116,7 +116,8 @@ export default async function BookingDetailsPageComponent({
     isOwner &&
     isCompleted &&
     bookingDetails.closedAt &&
-    !bookingDetails.reconciledAt
+    !bookingDetails.reconciledAt &&
+    isPremium
 
   const totalDistance =
     isCompleted && bookingDetails.actualTotalDistance
@@ -139,19 +140,31 @@ export default async function BookingDetailsPageComponent({
       ? bookingDetails.actualTotalAcCharge
       : bookingDetails.estimatedTotalAcCharge
   const totalAmount =
-    isCompleted && bookingDetails.actualTotalAmount
-      ? bookingDetails.actualTotalAmount
-      : bookingDetails.estimatedTotalAmount
+    bookingDetails.finalInvoiceAmount ??
+    bookingDetails.actualTotalAmount ??
+    bookingDetails.estimatedTotalAmount
 
-  const receivedAmount = bookingDetails.transactions
-    .filter((txn) => txn.otherParty === TransactionPartiesEnum.CUSTOMER)
-    .reduce((total, txn) => {
-      if (txn.type === TransactionTypesEnum.CREDIT) {
-        return total + txn.amount
-      } else {
-        return total - txn.amount
-      }
-    }, 0)
+  //Received amount should be calculated from transactions
+  const receivedAmount = bookingDetails.transactions.reduce((acc, curr) => {
+    if (
+      [
+        TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER,
+        TransactionTypesEnum.CUSTOMER_HANDED_TO_DRIVER,
+      ].includes(curr.type)
+    ) {
+      return acc + curr.amount
+    }
+    if (
+      [
+        TransactionTypesEnum.DRIVER_HANDED_TO_CUSTOMER,
+        TransactionTypesEnum.SENT_TO_CUSTOMER,
+      ].includes(curr.type)
+    ) {
+      return acc - curr.amount
+    }
+    return acc
+  }, 0)
+
   const pendingAmount = totalAmount - receivedAmount
 
   return (
@@ -173,12 +186,6 @@ export default async function BookingDetailsPageComponent({
             />
           )}
           <BookingActionWrapper>
-            {canReconcileBooking && (
-              <BookingReconcileCard
-                id={bookingDetails.id}
-                reconciledAt={bookingDetails.reconciledAt}
-              />
-            )}
             {canCancelBooking && (
               <CancelBookingAlertButton
                 bookingId={bookingDetails.id}
@@ -510,6 +517,11 @@ export default async function BookingDetailsPageComponent({
             agencyId={bookingDetails.agencyId}
             assignedUserId={bookingDetails.assignedUserId}
           />
+        )}
+        {canReconcileBooking && (
+          <Link href={`/dashboard/bookings/${bookingDetails.id}/reconcile`}>
+            <RyogoDefaultButton label={t("Reconcile")} className="w-full" />
+          </Link>
         )}
         <HelpIconButton
           href={"/dashboard/support/help-bookings"}

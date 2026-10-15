@@ -1,4 +1,4 @@
-import { ExpenseTypesEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
 import {
   SectionRowWrapper,
   SectionWrapper,
@@ -22,7 +22,7 @@ export default function ExpensesFiltersCard() {
 
   const searchParams = useSearchParams()
   const type = searchParams.get("type")
-  const role = searchParams.get("role")
+  const paidByDriver = searchParams.get("paidByDriver")
   const approved = searchParams.get("approved")
 
   const updateFilters = (updates: Record<string, string | null>) => {
@@ -66,10 +66,12 @@ export default function ExpensesFiltersCard() {
           disabled={isPending}
         />
         <SelectFilter
-          label={t("RoleFilter")}
-          enumList={Object.values(UserRolesEnum)}
-          value={role ?? "All"}
-          onValueChange={(value: string) => updateFilters({ role: value })}
+          label={t("PaidByDriverFilter")}
+          enumList={["True", "False"]}
+          value={paidByDriver ?? "All"}
+          onValueChange={(value: string) =>
+            updateFilters({ paidByDriver: value })
+          }
           disabled={isPending}
         />
         <SelectFilter

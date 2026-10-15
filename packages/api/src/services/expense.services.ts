@@ -24,6 +24,7 @@ export const expenseServices = {
       type: data.type,
       amount: data.amount,
       remarks: data.remarks,
+      isPaidByDriver: data.isPaidByDriver,
       isApproved: data.isApproved,
       expenseDate: data.expenseDate,
       agencyId: data.agencyId,

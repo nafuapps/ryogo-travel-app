@@ -1,0 +1,3 @@
+ALTER TABLE "bookings" ADD COLUMN "final_invoice_amount" integer;--> statement-breakpoint
+ALTER TABLE "bookings" ADD CONSTRAINT "actual_expenses_amount >= 0 and <= 1000000" CHECK ("bookings"."actual_expenses_amount" >= 0 AND "bookings"."actual_expenses_amount" <= 1000000);--> statement-breakpoint
+ALTER TABLE "bookings" ADD CONSTRAINT "final_invoiceAmount >= 0 and <= 1000000" CHECK ("bookings"."final_invoice_amount" >= 0 AND "bookings"."final_invoice_amount" <= 1000000);

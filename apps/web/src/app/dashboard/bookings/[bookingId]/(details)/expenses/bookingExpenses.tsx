@@ -13,7 +13,7 @@ import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo } from "react"
 import { Route } from "next"
-import { ExpenseTypesEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationControls } from "@/components/pagination/paginationControls"
 import { BanknoteX } from "lucide-react"
@@ -52,13 +52,14 @@ export default function BookingExpensesPageComponent({
 
   const searchParams = useSearchParams()
   const type = searchParams.get("type")
-  const role = searchParams.get("role")
+  const paidByDriver = searchParams.get("paidByDriver")
   const approved = searchParams.get("approved")
 
   const filteredExpenses = bookingExpenses.filter((expense) => {
     return (
       (!type || expense.type === (type as ExpenseTypesEnum)) &&
-      (!role || expense.addedByUser.userRole === (role as UserRolesEnum)) &&
+      (paidByDriver === null ||
+        expense.isPaidByDriver === (paidByDriver === "True")) &&
       (approved === null || expense.isApproved === (approved === "True"))
     )
   })

@@ -1040,7 +1040,8 @@ export const bookings = pgTable(
       .notNull()
       .default(0), // in currency (estimated at the time of booking creation)
     actualTotalAmount: integer("actual_total_amount"), // in currency (updated at the end of the trip)
-    actualExpensesAmount: integer("actual_expenses_amount"), // in currency (updated at the end of the trip)
+    actualExpensesAmount: integer("actual_expenses_amount"), // in currency (calculated when invoice is generated)
+    finalInvoiceAmount: integer("final_invoice_amount"), // in currency (calculated when invoice is generated)
     ratingByDriver: integer("rating_by_driver"), // 1 to 5
     ratingByCustomer: integer("rating_by_customer"), // 1 to 5
     quoteSentOn: timestamp("quote_sent_on", { withTimezone: true }),
@@ -1109,6 +1110,14 @@ export const bookings = pgTable(
     check(
       "actual_total_amount >= 0 and <= 1000000",
       sql`${t.actualTotalAmount} >= 0 AND ${t.actualTotalAmount} <= 1000000`,
+    ),
+    check(
+      "actual_expenses_amount >= 0 and <= 1000000",
+      sql`${t.actualExpensesAmount} >= 0 AND ${t.actualExpensesAmount} <= 1000000`,
+    ),
+    check(
+      "final_invoiceAmount >= 0 and <= 1000000",
+      sql`${t.finalInvoiceAmount} >= 0 AND ${t.finalInvoiceAmount} <= 1000000`,
     ),
     check(
       "driver rating >=1 and rating <=5",
@@ -1222,6 +1231,7 @@ export const expenses = pgTable(
       .notNull(),
     type: expenseTypes().notNull().default(ExpenseTypesEnum.OTHER),
     amount: integer("amount").notNull(), // in currency units
+    isPaidByDriver: boolean("is_paid_by_driver").notNull().default(false),
     remarks: text("remarks"),
     expenseDate: date("expense_date", { mode: "date" }).notNull().defaultNow(),
     expensePhotoUrl: text("expense_photo_url"),
@@ -1338,21 +1348,22 @@ export const tripLogsRelations = relations(tripLogs, ({ one }) => ({
 }))
 
 export enum TransactionTypesEnum {
-  DEBIT = "Debit",
-  CREDIT = "Credit",
+  RECEIVED_PAYMENT_FROM_CUSTOMER = "Received payment from customer",
+  SENT_TO_CUSTOMER = "Sent to customer",
+  CUSTOMER_HANDED_TO_DRIVER = "Customer handed to driver",
+  DRIVER_HANDED_TO_CUSTOMER = "Driver handed to customer",
+  RECEIVED_FROM_DRIVER = "Received from driver",
+  PAYOUT_TO_DRIVER = "Payout to driver",
 }
 export const transactionTypes = pgEnum("transaction_types", [
-  TransactionTypesEnum.DEBIT,
-  TransactionTypesEnum.CREDIT,
+  TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER,
+  TransactionTypesEnum.SENT_TO_CUSTOMER,
+  TransactionTypesEnum.CUSTOMER_HANDED_TO_DRIVER,
+  TransactionTypesEnum.DRIVER_HANDED_TO_CUSTOMER,
+  TransactionTypesEnum.RECEIVED_FROM_DRIVER,
+  TransactionTypesEnum.PAYOUT_TO_DRIVER,
 ])
-export enum TransactionPartiesEnum {
-  DRIVER = "Driver",
-  CUSTOMER = "Customer",
-}
-export const transactionParties = pgEnum("transaction_parties", [
-  TransactionPartiesEnum.DRIVER,
-  TransactionPartiesEnum.CUSTOMER,
-])
+
 export enum TransactionModesEnum {
   CASH = "Cash",
   CARD = "Card",
@@ -1393,10 +1404,9 @@ export const transactions = pgTable(
         onDelete: "no action",
       }),
     amount: integer("amount").notNull(), // in currency units
-    otherParty: transactionParties()
+    type: transactionTypes()
       .notNull()
-      .default(TransactionPartiesEnum.CUSTOMER),
-    type: transactionTypes().notNull().default(TransactionTypesEnum.CREDIT),
+      .default(TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER),
     mode: transactionModes().notNull().default(TransactionModesEnum.CASH),
     remarks: text("remarks"),
     transactionDate: timestamp("transaction_date", { mode: "date" })
@@ -1413,7 +1423,6 @@ export const transactions = pgTable(
     ),
     index("transactions_booking_idx").on(t.bookingId), // to quickly filter transactions by booking
     index("transactions_booking_type_idx").on(t.type, t.bookingId), // to quickly filter transactions by type in a booking
-    index("transactions_booking_party_idx").on(t.otherParty, t.bookingId), // to quickly filter transactions by other party in a booking
     index("transactions_booking_approved_idx").on(t.isApproved, t.bookingId), // to quickly filter transactions by approval status in a booking
     index("transactions_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter transactions added by a user in an agency
   ],

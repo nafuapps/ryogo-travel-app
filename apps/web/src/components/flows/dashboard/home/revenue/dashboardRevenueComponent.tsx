@@ -96,7 +96,12 @@ function calculateTotalAmount(
 ) {
   if (bookings.length < 1) return 0
   return bookings.reduce((total, booking) => {
-    return total + (booking.actualTotalAmount ?? booking.estimatedTotalAmount)
+    return (
+      total +
+      (booking.finalInvoiceAmount ??
+        booking.actualTotalAmount ??
+        booking.estimatedTotalAmount)
+    )
   }, 0)
 }
 

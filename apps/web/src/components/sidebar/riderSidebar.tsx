@@ -8,6 +8,7 @@ import {
   CircleQuestionMark,
   UserCog,
   TreePalm,
+  BellDot,
 } from "lucide-react"
 import RyogoSidebar, { MenuItemType } from "./ryogoSidebar"
 
@@ -40,6 +41,11 @@ export default function RiderSidebar() {
 
   //Footer menu items
   const footerItems: MenuItemType[] = [
+    {
+      title: t("Missions"),
+      url: "/rider/myMissions",
+      icon: BellDot,
+    },
     {
       title: t("Support"),
       url: "/rider/mySupport",

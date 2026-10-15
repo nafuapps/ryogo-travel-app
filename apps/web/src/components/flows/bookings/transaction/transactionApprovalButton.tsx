@@ -15,10 +15,12 @@ import {
 export function TransactionApprovalButton({
   transactionId,
   isApproved,
+  assignedUserId,
   agencyId,
 }: {
   transactionId: string
   isApproved: boolean
+  assignedUserId: string
   agencyId: string
 }) {
   const t = useTranslations("Dashboard.BookingTransactions")
@@ -31,12 +33,13 @@ export function TransactionApprovalButton({
         await changeTransactionApprovalAction({
           transactionId,
           isApproved: true,
+          assignedUserId,
           agencyId,
         })
       ) {
         toast.success(t("ApproveSuccess"))
       } else {
-        toast.success(t("ApproveError"))
+        toast.error(t("ApproveError"))
       }
       router.refresh()
     })
@@ -47,12 +50,13 @@ export function TransactionApprovalButton({
       await changeTransactionApprovalAction({
         transactionId,
         isApproved: false,
+        assignedUserId,
         agencyId,
       })
     ) {
       toast.info(t("RejectSuccess"))
     } else {
-      toast.success(t("RejectError"))
+      toast.error(t("RejectError"))
     }
     router.refresh()
   }

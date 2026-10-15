@@ -8,16 +8,19 @@ import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 export async function changeTransactionApprovalAction({
   transactionId,
   isApproved,
+  assignedUserId,
   agencyId,
 }: {
   transactionId: string
   isApproved: boolean
+  assignedUserId: string
   agencyId: string
 }) {
   const currentUser = await getCurrentUser()
   if (
     !currentUser ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
+    (currentUser.userRole !== UserRolesEnum.OWNER &&
+      currentUser.userId !== assignedUserId) ||
     currentUser.agencyId !== agencyId
   ) {
     return

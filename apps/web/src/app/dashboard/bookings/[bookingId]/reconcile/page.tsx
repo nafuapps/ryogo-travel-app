@@ -39,7 +39,7 @@ export default async function ReconcileBookingPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  //Only owner can reconcile booking (which must be closed but not reconciled yet)
+  //Only owner can reconcile a booking (which must be closed but not reconciled yet)
   if (
     currentUser.userRole !== UserRolesEnum.OWNER ||
     booking.status !== BookingStatusEnum.COMPLETED ||

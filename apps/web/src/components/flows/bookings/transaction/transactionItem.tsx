@@ -6,6 +6,7 @@ import {
   ChevronDown,
   ChevronRight,
   ChevronUp,
+  CreditCard,
   CreditCardMinus,
   CreditCardPlus,
   MessageSquareQuote,
@@ -31,33 +32,47 @@ import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 export default function TransactionItem({
   transaction,
   canModifyTransaction,
-  isOwner,
+  assignedUserId,
 }: {
   transaction: NonNullable<FindBookingTransactionsByIdType>[number]
   canModifyTransaction: boolean
-  isOwner: boolean
+  assignedUserId: string
 }) {
   const t = useTranslations("Dashboard.BookingTransactions")
   const [open, setOpen] = useState(false)
 
-  const isDebit = transaction.type === TransactionTypesEnum.DEBIT
+  const isCredit = [
+    TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER,
+    TransactionTypesEnum.CUSTOMER_HANDED_TO_DRIVER,
+  ].includes(transaction.type)
+
+  const isDebit = [
+    TransactionTypesEnum.SENT_TO_CUSTOMER,
+    TransactionTypesEnum.DRIVER_HANDED_TO_CUSTOMER,
+  ].includes(transaction.type)
 
   return (
     <SectionWrapper id={transaction.id}>
       <SectionRowWrapper className="items-center">
         <RyogoEnclosedIcon
-          icon={isDebit ? CreditCardMinus : CreditCardPlus}
+          icon={
+            isDebit ? CreditCardMinus : isCredit ? CreditCardPlus : CreditCard
+          }
           size="md"
-          color={isDebit ? "slate" : "brand"}
+          color={isDebit ? "red" : isCredit ? "brand" : "slate"}
+          bgColor={isDebit ? "red" : isCredit ? "brand" : "slate"}
         />
         <SectionColWrapper small className="w-full">
-          <RyogoCaption weight="font-bold" color={isDebit ? "slate" : "brand"}>
-            {transaction.mode +
-              (isDebit ? t("To") : t("From")) +
-              transaction.otherParty}
+          <RyogoCaption
+            weight="font-bold"
+            color={isDebit ? "red" : isCredit ? "brand" : "slate"}
+          >
+            {transaction.type}
           </RyogoCaption>
           <RyogoTiny color="light">
-            {format(transaction.transactionDate, "dd MMM")}
+            {format(transaction.transactionDate, "dd MMM") +
+              " - " +
+              transaction.mode}
           </RyogoTiny>
         </SectionColWrapper>
         <RyogoH3 color={transaction.isApproved ? "green" : "slate"}>
@@ -102,13 +117,12 @@ export default function TransactionItem({
         )}
         {canModifyTransaction && (
           <SectionRowWrapper className="items-center mt-auto">
-            {isOwner && (
-              <TransactionApprovalButton
-                transactionId={transaction.id}
-                isApproved={transaction.isApproved}
-                agencyId={transaction.agencyId}
-              />
-            )}
+            <TransactionApprovalButton
+              transactionId={transaction.id}
+              isApproved={transaction.isApproved}
+              assignedUserId={assignedUserId}
+              agencyId={transaction.agencyId}
+            />
             <Link
               href={`/dashboard/bookings/${transaction.bookingId}/transactions/modify/${transaction.id}`}
               className="grow"

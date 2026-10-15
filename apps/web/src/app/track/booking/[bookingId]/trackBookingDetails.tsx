@@ -24,7 +24,6 @@ import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import {
   BookingStatusEnum,
-  TransactionPartiesEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
@@ -82,19 +81,31 @@ export default async function TrackBookingDetailsPageComponent({
       ? bookingDetails.actualTotalAcCharge
       : bookingDetails.estimatedTotalAcCharge
   const totalAmount =
-    isCompleted && bookingDetails.actualTotalAmount
-      ? bookingDetails.actualTotalAmount
-      : bookingDetails.estimatedTotalAmount
+    bookingDetails.finalInvoiceAmount ??
+    bookingDetails.actualTotalAmount ??
+    bookingDetails.estimatedTotalAmount
 
-  const receivedAmount = bookingDetails.transactions
-    .filter((txn) => txn.otherParty === TransactionPartiesEnum.CUSTOMER)
-    .reduce((total, txn) => {
-      if (txn.type === TransactionTypesEnum.CREDIT) {
-        return total + txn.amount
-      } else {
-        return total - txn.amount
-      }
-    }, 0)
+  //Calculate received amount from transactions
+  const receivedAmount = bookingDetails.transactions.reduce((acc, curr) => {
+    if (
+      [
+        TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER,
+        TransactionTypesEnum.CUSTOMER_HANDED_TO_DRIVER,
+      ].includes(curr.type)
+    ) {
+      return acc + curr.amount
+    }
+    if (
+      [
+        TransactionTypesEnum.DRIVER_HANDED_TO_CUSTOMER,
+        TransactionTypesEnum.SENT_TO_CUSTOMER,
+      ].includes(curr.type)
+    ) {
+      return acc - curr.amount
+    }
+    return acc
+  }, 0)
+
   const pendingAmount = totalAmount - receivedAmount
 
   return (

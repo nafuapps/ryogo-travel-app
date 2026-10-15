@@ -1,17 +1,16 @@
 "use client"
 
 import {
-  RyogoRadio,
   RyogoInput,
   RyogoSelect,
   RyogoTextarea,
   RyogoFileInput,
   RyogoDatePicker,
+  RyogoSwitch,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   TransactionModesEnum,
-  TransactionPartiesEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
@@ -62,7 +61,7 @@ export default function ModifyTransactionPageComponent({
       .multipleOf(1, t("Field2.Error4"))
       .positive(t("Field2.Error5")),
     mode: z.enum(TransactionModesEnum).nonoptional(t("Field3.Error1")),
-    otherParty: z.enum(TransactionPartiesEnum).nonoptional(t("Field4.Error1")),
+    isApproved: z.boolean(),
     remarks: z
       .string()
       .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error1"))
@@ -87,8 +86,8 @@ export default function ModifyTransactionPageComponent({
     defaultValues: {
       type: transactionDetails.type,
       mode: transactionDetails.mode,
-      otherParty: transactionDetails.otherParty,
       amount: transactionDetails.amount,
+      isApproved: transactionDetails.isApproved,
       remarks: transactionDetails.remarks ?? undefined,
       transactionDate: transactionDetails.transactionDate,
     },
@@ -127,13 +126,12 @@ export default function ModifyTransactionPageComponent({
           <HelpIconButton href="/dashboard/support/help-bookings#transactions" />
         </SectionRowWrapper>
         <FormContentWrapper>
-          <RyogoRadio
+          <RyogoSelect
             name="type"
             title={t("Field1.Title")}
             register={form.register("type")}
-            defaultValue={TransactionTypesEnum.CREDIT}
             array={Object.values(TransactionTypesEnum)}
-            description={t("Field1.Description")}
+            placeholder={t("Field1.Placeholder")}
           />
           <RyogoInput
             name="amount"
@@ -148,13 +146,7 @@ export default function ModifyTransactionPageComponent({
             array={Object.values(TransactionModesEnum)}
             placeholder={t("Field3.Placeholder")}
           />
-          <RyogoSelect
-            name="otherParty"
-            register={form.register("otherParty")}
-            title={t("Field4.Title")}
-            array={Object.values(TransactionPartiesEnum)}
-            placeholder={t("Field4.Placeholder")}
-          />
+          <RyogoSwitch name="isApproved" label={t("Field4.Title")} />
           <RyogoTextarea
             name="remarks"
             label={t("Field5.Title")}

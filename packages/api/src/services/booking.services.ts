@@ -3,7 +3,6 @@ import {
   BookingTypeEnum,
   DriverStatusEnum,
   InsertBookingType,
-  TransactionPartiesEnum,
   TransactionTypesEnum,
   TripLogTypesEnum,
   UserRolesEnum,
@@ -66,21 +65,44 @@ export const bookingServices = {
   async findDashboardPendingPayments(agencyId: string) {
     const bookings =
       await bookingRepository.readPendingPaymentBookings(agencyId)
-    return bookings.map((booking) => {
-      return {
-        ...booking,
-        customerPaidAmount: booking.transactions.reduce((acc, curr) => {
-          if (curr.otherParty === TransactionPartiesEnum.CUSTOMER) {
-            if (curr.type === TransactionTypesEnum.CREDIT) {
-              return acc + curr.amount
-            } else {
-              return acc - curr.amount
-            }
+
+    return bookings
+      .filter(
+        (booking) =>
+          booking.finalInvoiceAmount !== null ||
+          booking.actualTotalAmount !== null,
+      )
+      .map((booking) => {
+        const totalAmount =
+          booking.finalInvoiceAmount ??
+          booking.actualTotalAmount ??
+          booking.estimatedTotalAmount
+        const customerPaidAmount = booking.transactions.reduce((acc, curr) => {
+          if (
+            [
+              TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER,
+              TransactionTypesEnum.CUSTOMER_HANDED_TO_DRIVER,
+            ].includes(curr.type)
+          ) {
+            return acc + curr.amount
+          }
+          if (
+            [
+              TransactionTypesEnum.DRIVER_HANDED_TO_CUSTOMER,
+              TransactionTypesEnum.SENT_TO_CUSTOMER,
+            ].includes(curr.type)
+          ) {
+            return acc - curr.amount
           }
           return acc
-        }, 0),
-      }
-    })
+        }, 0)
+
+        return {
+          ...booking,
+          totalAmount: totalAmount,
+          pendingAmount: totalAmount - customerPaidAmount,
+        }
+      })
   },
 
   //Find bookings created in last N days which are accountable for revenue (atleast confirmed)
@@ -786,6 +808,13 @@ export const bookingServices = {
     }
 
     const [updatedBooking] = await bookingRepository.deleteClosedAt(bookingId)
+    return updatedBooking
+  },
+
+  //Reconcile a booking
+  async reconcileBooking(bookingId: string) {
+    const [updatedBooking] =
+      await bookingRepository.updateReconciledAt(bookingId)
     return updatedBooking
   },
 

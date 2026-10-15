@@ -1,19 +1,30 @@
 import { Font, StyleSheet } from "@react-pdf/renderer"
 
-const sourceRegular = "/fonts/NotoSans-Regular.ttf"
-const sourceMedium = "/fonts/NotoSans-Medium.ttf"
-const sourceBold = "/fonts/NotoSans-Bold.ttf"
+const fontSource = (fileName: string) => {
+  if (
+    typeof process === "undefined" ||
+    (process.env.NEXT_RUNTIME !== "nodejs" && process.release?.name !== "node")
+  ) {
+    return `/fonts/${fileName}`
+  }
+  return `${process.cwd()}/apps/web/public/fonts/${fileName}`
+}
+
+const sourceRegular = fontSource("NotoSans-Regular.ttf")
+const sourceMedium = fontSource("NotoSans-Medium.ttf")
+const sourceBold = fontSource("NotoSans-Bold.ttf")
 
 Font.register({
   family: "Noto Sans",
   fonts: [
-    { src: sourceRegular, fontWeight: 400 },
-    { src: sourceMedium, fontWeight: 500 },
-    { src: sourceBold, fontWeight: 700 },
+    { src: sourceRegular, fontWeight: "normal" },
+    { src: sourceMedium, fontWeight: "medium" },
+    { src: sourceBold, fontWeight: "bold" },
   ],
 })
 export const styles = StyleSheet.create({
   page: {
+    fontFamily: "Noto Sans",
     flexDirection: "column",
     backgroundColor: "#fff",
     gap: 20,
@@ -153,34 +164,27 @@ export const styles = StyleSheet.create({
   h1: {
     fontSize: 24,
     fontWeight: "bold",
-    fontFamily: "Noto Sans",
   },
   h2: {
     fontSize: 20,
     fontWeight: "bold",
-    fontFamily: "Noto Sans",
   },
   p: {
     fontSize: 12,
-    fontFamily: "Noto Sans",
   },
   pBold: {
     fontSize: 12,
     fontWeight: "bold",
-    fontFamily: "Noto Sans",
   },
   caption: {
     fontSize: 10,
-    fontFamily: "Noto Sans",
   },
   captionLight: {
     fontSize: 10,
     color: "#666",
-    fontFamily: "Noto Sans",
   },
   xs: {
     fontSize: 8,
     color: "#666",
-    fontFamily: "Noto Sans",
   },
 })

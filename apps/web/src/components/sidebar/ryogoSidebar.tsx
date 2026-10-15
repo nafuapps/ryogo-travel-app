@@ -38,7 +38,7 @@ export default function RyogoSidebar({
   const { isMobile, open, openMobile } = useSidebar()
   const pathname = usePathname()
 
-  const sidebarOpen = open || openMobile
+  const sidebarOpen = open || (isMobile && openMobile)
 
   return (
     <Sidebar

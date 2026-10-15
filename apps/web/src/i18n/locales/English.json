@@ -10,8 +10,6 @@
           "Description": "Provide your 10-digit phone number to login",
           "Loading": "Authenticating.. please wait"
         },
-        "PrimaryCTA": "Continue",
-        "Loading": "Loading",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric and without spaces",
         "NotFoundError": "Phone number not registered.. Check and try again!",
@@ -87,7 +85,6 @@
           "Error2": "Password should not contain spaces",
           "Error3": "Both passwords do not match"
         },
-        "VerifyCTA": "Verify Code",
         "CodeVerified": "Code verified!",
         "PrimaryCTA": "Reset Password and Login",
         "Loading": "Loading",
@@ -108,8 +105,6 @@
           "Description": "Provide your 10-digit phone number to signup",
           "Loading": "Checking.. please wait"
         },
-        "PrimaryCTA": "Create account",
-        "Loading": "Loading..",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric",
         "BotError": "Bot/Fraud activity detected."
@@ -174,7 +169,6 @@
         },
         "Field3": {
           "Title": "Enter your phone number",
-          "Placeholder": "9876543210",
           "Description": "Provide owner's phone number (to be used for login)",
           "Error1": "Phone number must be 10 digits"
         },
@@ -193,7 +187,6 @@
       "Step2": {
         "Field1": {
           "Title": "Enter agency phone number",
-          "Placeholder": "9876543210",
           "Description": "Provide agency's business phone number",
           "Checkbox": "Same as owner's phone number",
           "Error1": "Phone number must be 10 digits"
@@ -535,7 +528,6 @@
         },
         "Field2": {
           "Title": "Driver phone number",
-          "Placeholder": "9876543210",
           "Description": "Enter the driver's phone number (to be used for login). You can provide owner's phone number for now and change this later.",
           "Error1": "Phone number must be 10 digits"
         },
@@ -652,7 +644,6 @@
         },
         "Field2": {
           "Title": "Agent phone number",
-          "Placeholder": "9988776655",
           "Description": "Enter the agent's phone number (to be used for login)",
           "Error1": "Phone number must be 10 digits"
         },
@@ -755,12 +746,12 @@
       "Analytics": "Analytics",
       "Search": "Search",
       "Feed": "Feed",
+      "Missions": "Missions",
       "Support": "Support",
       "Account": "Account"
     },
     "Header": {
       "NewBooking": "New Booking",
-      "Missions": "Missions",
       "Title": {
         "/dashboard/home": "Home",
         "/dashboard/account": "Account",
@@ -984,7 +975,6 @@
         },
         "Field2": {
           "Title": "Customer Phone number",
-          "Placeholder": "9876543210",
           "Error1": "Phone number must be 10 digits",
           "Error2": "Invalid phone number"
         },
@@ -1218,7 +1208,33 @@
       "ReconcileExpiredAction": "Please renew your subscription plan to reconcile bookings!",
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
-      "RenewCTA": "Renew Subscription"
+      "RenewCTA": "Renew Subscription",
+      "Title": "Reconcile Booking",
+      "Description": "Review all the transactions to settle customer and driver payments",
+      "CustomerTransactions": "Customer Settlement",
+      "BookingAmount": "Booking amount",
+      "ExpenseAmount": "Added expenses",
+      "FinalInvoiceAmount": "Final invoice amount",
+      "ReceivedFromCustomer": "Received from customer",
+      "SentToCustomer": "Sent to customer",
+      "CustomerHandedToDriver": "Customer handed To driver",
+      "DriverHandedToCustomer": "Driver handed To customer",
+      "TotalReceived": "Total amount received from customer",
+      "PendingPayment": "Pending payment from customer",
+      "RefundToCustomer": "Refund to customer",
+      "CustomerSettled": "Customer Settled",
+      "DriverTransactions": "Driver Settlement",
+      "DriverAllowance": "Driver allowance",
+      "DriverExpenses": "Expenses paid by driver",
+      "FinalDriverPayout": "Final driver payout amount",
+      "PaidToDriver": "Paid to driver",
+      "ReceivedFromDriver": "Received from driver",
+      "ReachedDriver": "Total amount reached driver",
+      "DriverSettled": "Driver Settled",
+      "CollectFromDriver": "Pending collection from driver",
+      "PendingPayoutToDriver": "Pending payout to driver",
+      "AddTransaction": "Add Transaction",
+      "ViewAllTransactions": "View All Transactions"
     },
     "BookingDetails": {
       "BookingInfo": "BASIC DETAILS",
@@ -1302,18 +1318,13 @@
       "TotalAmount": "Total Amount",
       "ReceivedAmount": "Received Amount",
       "PendingAmount": "Pending Amount",
-      "ReconciledAt": "Reconciled at",
-      "Reconcile": {
-        "Title": "Reconcile Booking",
-        "Subtitle": "Review the booking transactions and expenses and make sure everything is correct"
-      },
+      "Reconcile": "Reconcile Booking",
       "ShareTrackingLink": {
         "Title": "Share Tracking Link",
         "Subtitle": "Send a link to the customer on Whatsapp to track their trip"
       },
       "TrackAnother": "Track another booking",
       "Timeline": {
-        "CreatedBy": "Created by",
         "Created": "Lead created",
         "Confirmed": "Booking confirmed",
         "Cancelled": "Booking cancelled",
@@ -1331,11 +1342,9 @@
       "TypeFilter": "Type Filter",
       "ModeFilter": "Mode Filter",
       "ApprovalFilter": "Approval Filter",
-      "PartyFilter": "Other Party Filter",
       "ClearFilters": "Clear Filters",
+      "AllTransactions": "All Transactions",
       "FilteredTransactions": "Filtered Transactions",
-      "To": " to ",
-      "From": " from ",
       "AddTransaction": "Add Transaction",
       "NoTransactions": "No transactions found",
       "Modify": "Edit",
@@ -1351,11 +1360,12 @@
       "TotalAmount": "Total",
       "ApprovedAmount": "Approved",
       "Filters": "EXPENSE FILTERS",
-      "TypeFilter": "Type Filter",
-      "RoleFilter": "Role Filter",
-      "ApprovalFilter": "Approval Filter",
+      "TypeFilter": "Expense Type",
+      "PaidByDriverFilter": "Paid By Driver",
+      "ApprovalFilter": "Approved",
       "ClearFilters": "Clear Filters",
       "FilteredExpenses": "Filtered Expenses",
+      "PaidByDriver": "- Paid By Driver",
       "AddExpense": "Add Expense",
       "NoExpenses": "No expenses found",
       "Modify": "Edit",
@@ -1383,7 +1393,7 @@
       "Subtitle": "Add a money transaction for this booking",
       "Field1": {
         "Title": "Transaction type",
-        "Description": "Debit: Money paid out. Credit: Money received.",
+        "Placeholder": "Select the type of transaction",
         "Error1": "Transaction type is required"
       },
       "Field2": {
@@ -1401,9 +1411,7 @@
         "Error1": "Payment mode is required"
       },
       "Field4": {
-        "Title": "Transaction party",
-        "Placeholder": "Select other party",
-        "Error1": "Transaction party is required"
+        "Title": "Transaction has been approved?"
       },
       "Field5": {
         "Title": "Remarks (optional)",
@@ -1431,7 +1439,7 @@
       "Title": "Modify Transaction",
       "Field1": {
         "Title": "Transaction type",
-        "Description": "Debit: Money paid out. Credit: Money received.",
+        "Placeholder": "Select the type of transaction",
         "Error1": "Transaction type is required"
       },
       "Field2": {
@@ -1449,9 +1457,7 @@
         "Error1": "Payment mode is required"
       },
       "Field4": {
-        "Title": "Transaction party",
-        "Placeholder": "Select other party",
-        "Error1": "Transaction party is required"
+        "Title": "Transaction has been approved?"
       },
       "Field5": {
         "Title": "Remarks (optional)",
@@ -1508,6 +1514,9 @@
         "Title": "Date",
         "Placeholder": "Select expense date"
       },
+      "Field6": {
+        "Title": "Paid By Driver?"
+      },
       "PrimaryCTA": "Create Expense",
       "Loading": "Loading..",
       "CancelCTA": "Cancel",
@@ -1545,6 +1554,9 @@
       "Field5": {
         "Title": "Date",
         "Placeholder": "Select expense date"
+      },
+      "Field6": {
+        "Title": "Paid By Driver?"
       },
       "PrimaryCTA": "Save changes",
       "Loading": "Loading..",
@@ -2107,7 +2119,6 @@
         },
         "Field2": {
           "Title": "Driver phone number",
-          "Placeholder": "9876543210",
           "Description": "Enter the driver's phone number (to be used for login).",
           "Error1": "Phone number must be 10 digits"
         },
@@ -2391,7 +2402,6 @@
       },
       "Field2": {
         "Title": "Enter customer phone number",
-        "Placeholder": "9876543210",
         "Description": "Provide customer's phone number",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Invalid phone number"
@@ -2647,7 +2657,6 @@
         "Subtitle": "Business phone number is used in booking documents sent to customers",
         "Field1": {
           "Title": "Enter new business phone",
-          "Placeholder": "9876543210",
           "Description": "Provide agency's phone number to be used for communication",
           "Error1": "Phone number must be 10 digits",
           "Error2": "New phone cannot be the same as previous phone",
@@ -2917,8 +2926,7 @@
         "Title": "Entity ID (Optional)",
         "Placeholder": "U1000001",
         "Description": "Enter the ID of the entity for which ticket is being created. Leave it blank, if not sure",
-        "Error1": "Entity Id must be less than 12 characters",
-        "Error2": "Not a valid Entity ID. Leave blank if not sure."
+        "Error1": "Entity Id must be less than 12 characters"
       },
       "Field3": {
         "Title": "Issue",
@@ -4471,7 +4479,6 @@
         "Subtitle": "User phone number is crucial for account login and communication",
         "Field1": {
           "Title": "Enter new phone",
-          "Placeholder": "9876543210",
           "Description": "Provide user's new phone number",
           "Error1": "Phone number must be 10 digits",
           "Error2": "New phone cannot be the same as previous phone",
@@ -4502,7 +4509,6 @@
       },
       "Field2": {
         "Title": "Phone number",
-        "Placeholder": "9988776655",
         "Description": "Enter the user's phone number (to be used for login)",
         "Error1": "Phone number must be 10 digits"
       },
@@ -4546,7 +4552,6 @@
       },
       "Field2": {
         "Title": "Agent phone number",
-        "Placeholder": "9988776655",
         "Description": "Enter the agent's phone number (to be used for login)",
         "Error1": "Phone number must be 10 digits"
       },
@@ -4591,7 +4596,9 @@
       "AnalyticsExpiredAction": "Please renew your subscription plan to access analytics!",
       "BuyCTA": "Buy Premium",
       "TryCTA": "Try Premium",
-      "RenewCTA": "Renew Subscription"
+      "RenewCTA": "Renew Subscription",
+      "ComingSoon": "We are working on rolling out this feature. Stay tuned!",
+      "Back": "Back to Homepage"
     },
     "Search": {
       "BasicWarning": "Showing {basicDays} days search results. Subscribe to search {premiumDays} days data.",
@@ -4759,8 +4766,7 @@
         "Title": "Entity ID (Optional)",
         "Placeholder": "B1000001",
         "Description": "Enter the ID of the entity for which reminder is being created. Leave blank if not sure",
-        "Error1": "Entity Id must be less than 12 characters",
-        "Error2": "Not a valid Entity ID. Leave blank if not sure."
+        "Error1": "Entity Id must be less than 12 characters"
       },
       "Field3": {
         "Title": "Title",
@@ -4800,8 +4806,7 @@
         "Title": "Entity ID (Optional)",
         "Placeholder": "B1000001",
         "Description": "Enter the ID of the entity for which reminder is being edited. Leave blank if not sure",
-        "Error1": "Entity Id must be less than 12 characters",
-        "Error2": "Not a valid Entity ID. Leave blank if not sure."
+        "Error1": "Entity Id must be less than 12 characters"
       },
       "Field3": {
         "Title": "Title",
@@ -4895,7 +4900,8 @@
         "PickupAddressChanged": "Booking #{bookingId} pickup address has been changed by {userName}",
         "DropAddressChanged": "Booking #{bookingId} drop address has been changed by {userName}",
         "BookingRemarksChanged": "Booking #{bookingId} remarks have been changed by {userName}",
-        "BookingClosed": "Booking #{bookingId} has been reviewd and closed by {userName}",
+        "BookingClosed": "Booking #{bookingId} has been closed by {userName} and invoice has been generated.",
+        "BookingReconciled": "Booking #{bookingId} has been reviewed and reconciled by {userName}.",
         "ExpenseAdded": "New expense #{expenseId} has been added for booking #{bookingId} by {userName}",
         "ExpenseApproved": "Expense #{expenseId} has been approved for booking #{bookingId} by {userName}",
         "ExpenseRejected": "Expense #{expenseId} has been rejected  for booking #{bookingId} by {userName}",
@@ -4954,6 +4960,17 @@
         "Error": "Cannot add driver.. Try again later!",
         "Loading": "Loading..",
         "YesCTA": "Yes, Add Driver without details"
+      },
+      "ReconcileBooking": {
+        "Label": "Reconcile Booking",
+        "Title": "Are you sure you want to reconcile this booking?",
+        "Desc": "This action will permanently close the booking and no further changes can be done. This action cannot be undone.",
+        "NoCTA": "No",
+        "Success": "Booking reconciled!",
+        "Error": "Cannot reconcile booking now.. Try again later!",
+        "Loading": "Loading..",
+        "Review": "Review Transactions",
+        "YesCTA": "Yes, Reconcile Booking"
       },
       "CloseBooking": {
         "Label": "Close booking and generate invoice",
@@ -5287,6 +5304,7 @@
       "Bookings": "Bookings",
       "Vehicle": "Vehicle",
       "Leaves": "Leaves",
+      "Missions": "Missions",
       "Profile": "Profile",
       "Support": "Support"
     },
@@ -5327,7 +5345,6 @@
       }
     },
     "Home": {
-      "Upcoming": "Upcoming bookings",
       "Continue": "Continue",
       "Start": "Start Trip"
     },
@@ -7070,7 +7087,6 @@
         "Subtitle": "Find out how much time and money you can save with RyoGo every month",
         "Input": {
           "Vehicles": "Vehicles",
-          "Agents": "Agents",
           "Leads": "Monthly booking leads",
           "Bookings": "Monthly completed bookings",
           "Advanced": "Advanced configuration",
@@ -7093,7 +7109,6 @@
           "TotalMoneySavings": "Money saved",
           "Return": "Return on investment in",
           "ReturnDays": "{days, plural, =1 {1 day} other {# days}}",
-          "PrimaryCTA": "Try RyoGo Premium for Free",
           "DownloadCTA": "Download Report"
         },
         "Dialog": {
@@ -7167,8 +7182,7 @@
             "Subtitle": "For example, if your estimated savings when using RyoGo is ₹5,000 (for 30 days in a month) and RyoGo subscription costs ₹500 per month, then your return on investment is in just 3 days."
           }
         },
-        "PrimaryCTA": "Create Free Account Now",
-        "SecondaryCTA": "Check pricing"
+        "PrimaryCTA": "Create Free Account Now"
       },
       "FAQ": {
         "Title": "Frequently Asked Questions",
@@ -7525,7 +7539,6 @@
           },
           "Field2": {
             "Title": "Your Phone Number",
-            "Placeholder": "9876543210",
             "Error1": "Phone number is required and must be 10 digits long"
           },
           "Field3": {

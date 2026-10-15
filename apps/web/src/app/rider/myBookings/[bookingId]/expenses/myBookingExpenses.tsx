@@ -9,7 +9,7 @@ import {
 import ExpenseItem from "@/components/flows/bookings/expense/expenseItem"
 import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { ExpenseTypesEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
 import { usePagination } from "@/hooks/usePagination"
 import { RyogoCaption } from "@/components/typography"
 import { BanknoteX } from "lucide-react"
@@ -33,13 +33,14 @@ export default function MyBookingExpensesPageComponent({
 
   const searchParams = useSearchParams()
   const type = searchParams.get("type")
-  const role = searchParams.get("role")
+  const paidByDriver = searchParams.get("paidByDriver")
   const approved = searchParams.get("approved")
 
   const filteredExpenses = bookingExpenses.filter((expense) => {
     return (
       (!type || expense.type === (type as ExpenseTypesEnum)) &&
-      (!role || expense.addedByUser.userRole === (role as UserRolesEnum)) &&
+      (paidByDriver === null ||
+        expense.isPaidByDriver === (paidByDriver === "True")) &&
       (approved === null || expense.isApproved === (approved === "True"))
     )
   })

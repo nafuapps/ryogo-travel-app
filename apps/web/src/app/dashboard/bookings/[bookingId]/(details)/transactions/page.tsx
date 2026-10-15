@@ -64,7 +64,7 @@ export default async function BookingTransactionsPage({
         <BookingTransactionsPageComponent
           bookingTransactions={bookingTransactions}
           canCreateTransaction={canCreateTransaction}
-          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+          assignedUserId={booking.assignedUserId}
         />
         <StickyActionWrapper>
           {canCreateTransaction && (

@@ -47,7 +47,6 @@ export const transactionServices = {
       type: data.type,
       amount: data.amount,
       mode: data.mode,
-      otherParty: data.otherParty,
       remarks: data.remarks,
       transactionDate: data.transactionDate,
       agencyId: data.agencyId,

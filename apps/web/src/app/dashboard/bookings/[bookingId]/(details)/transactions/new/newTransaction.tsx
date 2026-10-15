@@ -4,14 +4,13 @@ import {
   RyogoDatePicker,
   RyogoFileInput,
   RyogoInput,
-  RyogoRadio,
   RyogoSelect,
+  RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   TransactionModesEnum,
-  TransactionPartiesEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
@@ -46,13 +45,11 @@ export default function NewTransactionPageComponent({
   userId,
   agencyId,
   assignedUserId,
-  isOwner,
 }: {
   bookingId: string
   userId: string
   agencyId: string
   assignedUserId: string
-  isOwner: boolean
 }) {
   const t = useTranslations("Dashboard.NewTransaction")
   const router = useRouter()
@@ -66,7 +63,7 @@ export default function NewTransactionPageComponent({
       .multipleOf(1, t("Field2.Error4"))
       .positive(t("Field2.Error5")),
     mode: z.enum(TransactionModesEnum).nonoptional(t("Field3.Error1")),
-    otherParty: z.enum(TransactionPartiesEnum).nonoptional(t("Field4.Error1")),
+    isApproved: z.boolean(),
     remarks: z
       .string()
       .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error1"))
@@ -88,9 +85,9 @@ export default function NewTransactionPageComponent({
   const form = useForm<NewTransactionType>({
     resolver: zodResolver(newTransactionSchema),
     defaultValues: {
-      type: TransactionTypesEnum.CREDIT,
+      type: TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER,
       mode: TransactionModesEnum.CASH,
-      otherParty: TransactionPartiesEnum.CUSTOMER,
+      isApproved: true,
       transactionDate: new Date(),
     },
   })
@@ -102,7 +99,6 @@ export default function NewTransactionPageComponent({
       bookingId,
       userId,
       assignedUserId,
-      isApproved: isOwner,
       ...values,
     })
     if (addedTransaction) {
@@ -126,13 +122,12 @@ export default function NewTransactionPageComponent({
         </SectionRowWrapper>
         <RyogoCaption color="slate">{t("Subtitle")}</RyogoCaption>
         <FormContentWrapper>
-          <RyogoRadio
+          <RyogoSelect
             name="type"
             title={t("Field1.Title")}
             register={form.register("type")}
-            defaultValue={TransactionTypesEnum.CREDIT}
             array={Object.values(TransactionTypesEnum)}
-            description={t("Field1.Description")}
+            placeholder={t("Field1.Placeholder")}
           />
           <RyogoInput
             name="amount"
@@ -147,13 +142,7 @@ export default function NewTransactionPageComponent({
             array={Object.values(TransactionModesEnum)}
             placeholder={t("Field3.Placeholder")}
           />
-          <RyogoSelect
-            name="otherParty"
-            register={form.register("otherParty")}
-            title={t("Field4.Title")}
-            array={Object.values(TransactionPartiesEnum)}
-            placeholder={t("Field4.Placeholder")}
-          />
+          <RyogoSwitch name="isApproved" label={t("Field4.Title")} />
           <RyogoTextarea
             name="remarks"
             label={t("Field5.Title")}

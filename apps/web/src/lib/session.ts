@@ -61,9 +61,9 @@ export async function verifyWebSessionInDB(token: string, userId: string) {
     return
   }
 
-  //Check if current user exists in DB and is not suspended
+  //Check if current user exists in DB and is active
   const user = await userServices.findUserDetailsById(userId)
-  if (!user || user.status === UserStatusEnum.SUSPENDED) return
+  if (!user || user.status !== UserStatusEnum.ACTIVE) return
 
   return sessionDB
 }

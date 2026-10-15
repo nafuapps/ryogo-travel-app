@@ -54,6 +54,7 @@ export const expenseRepository = {
     type,
     expenseDate,
     remarks,
+    isPaidByDriver,
     expensePhotoUrl,
   }: UpdateExpenseRequestType) {
     return await db
@@ -64,6 +65,7 @@ export const expenseRepository = {
         expenseDate,
         remarks,
         expensePhotoUrl,
+        isPaidByDriver,
       })
       .where(eq(expenses.id, expenseId))
       .returning()

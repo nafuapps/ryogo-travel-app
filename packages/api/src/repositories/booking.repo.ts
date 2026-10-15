@@ -19,9 +19,9 @@ import {
   lte,
   inArray,
   sql,
-  isNull,
   not,
   lt,
+  isNotNull,
 } from "drizzle-orm"
 import { addDays, subDays } from "date-fns"
 import {
@@ -152,18 +152,15 @@ export const bookingRepository = {
         type: true,
         actualStartDate: true,
         actualEndDate: true,
+        actualExpensesAmount: true,
         estimatedTotalAmount: true,
         actualTotalAmount: true,
+        finalInvoiceAmount: true,
       },
       where: and(
         eq(bookings.agencyId, agencyId),
-        or(
-          eq(bookings.status, BookingStatusEnum.IN_PROGRESS),
-          and(
-            eq(bookings.status, BookingStatusEnum.COMPLETED),
-            isNull(bookings.closedAt),
-          ),
-        ),
+        eq(bookings.status, BookingStatusEnum.COMPLETED),
+        isNotNull(bookings.closedAt),
       ),
       with: {
         assignedUser: {
@@ -175,7 +172,6 @@ export const bookingRepository = {
         transactions: {
           columns: {
             id: true,
-            otherParty: true,
             type: true,
             amount: true,
             isApproved: true,
@@ -330,6 +326,7 @@ export const bookingRepository = {
         createdAt: true,
         estimatedTotalAmount: true,
         actualTotalAmount: true,
+        finalInvoiceAmount: true,
         estimatedCommissionAmount: true,
         actualCommissionAmount: true,
       },
@@ -1719,6 +1716,7 @@ export const bookingRepository = {
             amount: true,
             expensePhotoUrl: true,
             isApproved: true,
+            isPaidByDriver: true,
             type: true,
             remarks: true,
             expenseDate: true,
@@ -1729,9 +1727,9 @@ export const bookingRepository = {
           columns: {
             id: true,
             type: true,
-            otherParty: true,
             amount: true,
             mode: true,
+            isApproved: true,
             transactionDate: true,
           },
         },
@@ -2235,7 +2233,7 @@ export const bookingRepository = {
       })
   },
 
-  //Close booking and update actual expenses amount and add it to total amount
+  //Close booking and update actual expenses amount and calculate final invoice amount
   async addClosedAt({
     bookingId,
     actualExpensesAmount,
@@ -2247,8 +2245,8 @@ export const bookingRepository = {
       .update(bookings)
       .set({
         closedAt: new Date(),
-        actualTotalAmount: sql`${bookings.actualTotalAmount} + ${actualExpensesAmount}`,
         actualExpensesAmount,
+        finalInvoiceAmount: sql`${bookings.actualTotalAmount} + ${actualExpensesAmount}`,
       })
       .where(eq(bookings.id, bookingId))
       .returning({
@@ -2256,10 +2254,11 @@ export const bookingRepository = {
         closedAt: bookings.closedAt,
         actualExpensesAmount: bookings.actualExpensesAmount,
         actualTotalAmount: bookings.actualTotalAmount,
+        finalInvoiceAmount: bookings.finalInvoiceAmount,
       })
   },
 
-  //Reopen booking (only by owner) and delete invoice and readjust actual total
+  //Reopen booking (only by owner) and delete invoice data
   async deleteClosedAt(bookingId: string) {
     return await db
       .update(bookings)
@@ -2267,15 +2266,29 @@ export const bookingRepository = {
         invoiceSentOn: null,
         invoiceUrl: null,
         closedAt: null,
-        actualTotalAmount: sql`${bookings.actualTotalAmount} - ${bookings.actualExpensesAmount}`,
         actualExpensesAmount: null,
+        finalInvoiceAmount: null,
       })
       .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         closedAt: bookings.closedAt,
         actualExpensesAmount: bookings.actualExpensesAmount,
-        actualTotalAmount: bookings.actualTotalAmount,
+        finalInvoiceAmount: bookings.finalInvoiceAmount,
+      })
+  },
+
+  //Update reconciledAt
+  async updateReconciledAt(bookingId: string) {
+    return await db
+      .update(bookings)
+      .set({
+        reconciledAt: new Date(),
+      })
+      .where(eq(bookings.id, bookingId))
+      .returning({
+        id: bookings.id,
+        reconciledAt: bookings.reconciledAt,
       })
   },
 

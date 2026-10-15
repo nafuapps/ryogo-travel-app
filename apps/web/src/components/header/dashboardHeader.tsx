@@ -22,11 +22,6 @@ export default async function DashboardHeader({
           <HeaderButton label={t("NewBooking")} type="newBooking" />
         </Link>
       )}
-      {pathName !== "/dashboard/missions" && (
-        <Link href="/dashboard/missions">
-          <HeaderButton label={t("Missions")} type="missions" />
-        </Link>
-      )}
     </RyogoHeader>
   )
 }

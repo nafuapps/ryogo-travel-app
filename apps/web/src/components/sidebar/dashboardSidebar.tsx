@@ -13,6 +13,7 @@ import {
   Megaphone,
   UserCog,
   CircleQuestionMark,
+  BellDot,
 } from "lucide-react"
 import RyogoSidebar, { MenuItemType } from "./ryogoSidebar"
 
@@ -58,14 +59,19 @@ export default function DashboardSidebar({ isOwner }: { isOwner: boolean }) {
       icon: ChartLine,
       onlyOwner: true,
     },
+    {
+      title: t("Search"),
+      url: "/dashboard/search",
+      icon: Search,
+    },
   ]
 
   //Footer menu items
   const footerItems: MenuItemType[] = [
     {
-      title: t("Search"),
-      url: "/dashboard/search",
-      icon: Search,
+      title: t("Missions"),
+      url: "/dashboard/missions",
+      icon: BellDot,
     },
     {
       title: t("Feed"),

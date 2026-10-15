@@ -5,6 +5,7 @@ import {
   RyogoFileInput,
   RyogoInput,
   RyogoSelect,
+  RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -74,6 +75,7 @@ export default function NewExpensePageComponent({
       }, t("Field4.Error2"))
       .optional(),
     expenseDate: z.date(),
+    isPaidByDriver: z.boolean(),
   })
   type NewExpenseType = z.infer<typeof newExpenseSchema>
 
@@ -83,6 +85,7 @@ export default function NewExpensePageComponent({
     defaultValues: {
       type: ExpenseTypesEnum.FUEL,
       expenseDate: new Date(),
+      isPaidByDriver: isRider ?? false,
     },
   })
 
@@ -162,6 +165,9 @@ export default function NewExpensePageComponent({
             description={t("Field5.Placeholder")}
             pastAllowed
           />
+          {!isRider && (
+            <RyogoSwitch name="isPaidByDriver" label={t("Field6.Title")} />
+          )}
         </FormContentWrapper>
         <StickyActionWrapper>
           <RyogoDefaultButton

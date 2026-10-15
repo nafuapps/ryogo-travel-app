@@ -12,10 +12,7 @@ import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { styles } from "./commonStyles"
 import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
 import { formatIndianCurrency, getBookingTrackingLink } from "@/lib/utils"
-import {
-  TransactionPartiesEnum,
-  TransactionTypesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
 import { format } from "date-fns"
 
 export function BookingInvoiceDocument({
@@ -26,7 +23,10 @@ export function BookingInvoiceDocument({
   const agencyLogoUrl = booking.agency.logoUrl
   const bookingLink = getBookingTrackingLink(booking.id)
 
-  const finalAmount = booking.actualTotalAmount ?? booking.estimatedTotalAmount
+  const finalAmount =
+    booking.finalInvoiceAmount ??
+    booking.actualTotalAmount ??
+    booking.estimatedTotalAmount
 
   //Show approved expenses in a table
   const approvedExpenses = booking.expenses.filter(
@@ -37,17 +37,35 @@ export function BookingInvoiceDocument({
     0,
   )
 
-  //Show customer transactions in a table
-  const customerTransactions = booking.transactions.filter(
-    (txn) => txn.otherParty === TransactionPartiesEnum.CUSTOMER,
+  // Show customer transactions in a table
+  const customerTransactions = booking.transactions.filter((txn) =>
+    [
+      TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER,
+      TransactionTypesEnum.SENT_TO_CUSTOMER,
+      TransactionTypesEnum.DRIVER_HANDED_TO_CUSTOMER,
+      TransactionTypesEnum.CUSTOMER_HANDED_TO_DRIVER,
+    ].includes(txn.type),
   )
-  const totalTransactionAmount = customerTransactions.reduce(
-    (total, txn) =>
-      txn.type === TransactionTypesEnum.CREDIT
-        ? total + txn.amount
-        : total - txn.amount,
-    0,
-  )
+
+  const totalTransactionAmount = customerTransactions.reduce((acc, curr) => {
+    if (
+      [
+        TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER,
+        TransactionTypesEnum.CUSTOMER_HANDED_TO_DRIVER,
+      ].includes(curr.type)
+    ) {
+      return acc + curr.amount
+    }
+    if (
+      [
+        TransactionTypesEnum.DRIVER_HANDED_TO_CUSTOMER,
+        TransactionTypesEnum.SENT_TO_CUSTOMER,
+      ].includes(curr.type)
+    ) {
+      return acc - curr.amount
+    }
+    return acc
+  }, 0)
 
   return (
     <Document>
@@ -254,7 +272,7 @@ export function BookingInvoiceDocument({
               <View id={txn.id} key={txn.id} style={styles.tableRow}>
                 <Text style={styles.p}>
                   {format(txn.transactionDate, "dd MMM") + " - "}
-                  {(txn.type ? "Received " : "Sent ") + txn.mode}
+                  {txn.type + " (" + txn.mode + ")"}
                 </Text>
                 <Text style={styles.p}>
                   {formatIndianCurrency(txn.amount, true)}
@@ -262,16 +280,16 @@ export function BookingInvoiceDocument({
               </View>
             ))}
             <View id="transactionTableFooter" style={styles.tableFooter}>
-              <Text style={styles.pBold}>Amount received</Text>
+              <Text style={styles.pBold}>Total amount received</Text>
               <Text style={styles.pBold}>
                 {formatIndianCurrency(totalTransactionAmount, true)}
               </Text>
             </View>
           </View>
         )}
-        <View id="PendingAmount" style={styles.detailsSection}>
-          <Text style={styles.pBold}>Pending Amount: </Text>
-          <Text style={styles.p}>
+        <View id="PendingAmount" style={styles.borderContent}>
+          <Text style={styles.p}>Pending Amount: </Text>
+          <Text style={styles.pBold}>
             {formatIndianCurrency(finalAmount - totalTransactionAmount, true)}
           </Text>
         </View>

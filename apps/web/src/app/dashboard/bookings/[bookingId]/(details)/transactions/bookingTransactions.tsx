@@ -11,7 +11,6 @@ import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import {
   TransactionModesEnum,
-  TransactionPartiesEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { Route } from "next"
@@ -29,11 +28,11 @@ const TRANSACTIONS_PER_PAGE = 5
 export default function BookingTransactionsPageComponent({
   bookingTransactions,
   canCreateTransaction,
-  isOwner,
+  assignedUserId,
 }: {
   bookingTransactions: FindBookingTransactionsByIdType
   canCreateTransaction: boolean
-  isOwner: boolean
+  assignedUserId: string
 }) {
   const t = useTranslations("Dashboard.BookingTransactions")
   const router = useRouter()
@@ -59,14 +58,12 @@ export default function BookingTransactionsPageComponent({
   const searchParams = useSearchParams()
   const type = searchParams.get("type")
   const mode = searchParams.get("mode")
-  const party = searchParams.get("party")
   const approved = searchParams.get("approved")
 
   const filteredTransactions = bookingTransactions.filter((txn) => {
     return (
       (!type || txn.type === (type as TransactionTypesEnum)) &&
       (!mode || txn.mode === (mode as TransactionModesEnum)) &&
-      (!party || txn.otherParty === (party as TransactionPartiesEnum)) &&
       (approved === null || txn.isApproved === (approved === "True"))
     )
   })
@@ -106,7 +103,9 @@ export default function BookingTransactionsPageComponent({
           <TransactionFiltersCard />
           <SectionRowWrapper className="w-full items-center justify-between">
             <RyogoCaption color="light">
-              {t("FilteredTransactions") +
+              {(searchParams.size === 0
+                ? t("AllTransactions")
+                : t("FilteredTransactions")) +
                 " (" +
                 filteredTransactions.length +
                 ")"}
@@ -123,7 +122,7 @@ export default function BookingTransactionsPageComponent({
               key={transaction.id}
               transaction={transaction}
               canModifyTransaction={canCreateTransaction}
-              isOwner={isOwner}
+              assignedUserId={assignedUserId}
             />
           ))}
           <PaginationControls

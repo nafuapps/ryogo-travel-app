@@ -71,7 +71,7 @@ export function RyogoInput({
         <FormItem className="w-full relative">
           <FormLabel>
             <RyogoCaption
-              weight="font-bold"
+              weight="font-medium"
               color={disabled ? "light" : "dark"}
             >
               {label}
@@ -119,7 +119,7 @@ export function RyogoOTPInput({
         <FormItem className="w-full relative">
           <FormLabel>
             <RyogoCaption
-              weight="font-bold"
+              weight="font-medium"
               color={disabled ? "light" : "dark"}
             >
               {label}
@@ -171,7 +171,7 @@ export function RyogoFileInput({
       render={() => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoCaption weight="font-bold" color={"dark"}>
+            <RyogoCaption weight="font-medium" color={"dark"}>
               {label}
             </RyogoCaption>
           </FormLabel>
@@ -205,7 +205,7 @@ export function RyogoTextarea({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoCaption weight="font-bold" color={"dark"}>
+            <RyogoCaption weight="font-medium" color={"dark"}>
               {label}
             </RyogoCaption>
           </FormLabel>
@@ -244,7 +244,7 @@ export function RyogoSelect({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoCaption weight="font-bold" color={"dark"}>
+            <RyogoCaption weight="font-medium" color={"dark"}>
               {title}
             </RyogoCaption>
           </FormLabel>
@@ -307,7 +307,7 @@ export function RyogoCombobox({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoCaption weight="font-bold" color={"dark"}>
+            <RyogoCaption weight="font-medium" color={"dark"}>
               {title}
             </RyogoCaption>
           </FormLabel>
@@ -361,7 +361,7 @@ export function RyogoRadio({
       render={({ field }) => (
         <FormItem className="w-full relative">
           <FormLabel>
-            <RyogoCaption weight="font-bold" color={"dark"}>
+            <RyogoCaption weight="font-medium" color={"dark"}>
               {title}
             </RyogoCaption>
           </FormLabel>
@@ -407,7 +407,7 @@ export function RyogoCheckbox({
               />
             </FormControl>
             <FormLabel>
-              <RyogoCaption weight="font-bold" color={"dark"}>
+              <RyogoCaption weight="font-medium" color={"dark"}>
                 {label}
               </RyogoCaption>
             </FormLabel>
@@ -433,7 +433,7 @@ export function RyogoMultipleCheckbox({
       render={() => (
         <FormItem className="flex flex-col gap-2 lg:gap-3 w-full">
           <FormLabel>
-            <RyogoCaption weight="font-bold" color={"dark"}>
+            <RyogoCaption weight="font-medium" color={"dark"}>
               {label}
             </RyogoCaption>
           </FormLabel>
@@ -498,7 +498,7 @@ export function RyogoDatePicker({
         <FormItem className="flex flex-col gap-1.5 lg:gap-2 w-full">
           <FormLabel>
             <RyogoCaption
-              weight="font-bold"
+              weight="font-medium"
               color={disabled ? "light" : "dark"}
             >
               {label}
@@ -551,7 +551,7 @@ export function RyogoSwitch({ name, label }: { name: string; label: string }) {
       render={({ field }) => (
         <FormItem className="flex flex-row items-center justify-between gap-2 lg:gap-3 w-full py-1.5 lg:py-2">
           <FormLabel>
-            <RyogoCaption weight="font-bold" color={"dark"}>
+            <RyogoCaption weight="font-medium" color={"dark"}>
               {label}
             </RyogoCaption>
           </FormLabel>
@@ -579,7 +579,7 @@ export function RyogoTimePicker({
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1 lg:gap-1.5 w-full">
           <FormLabel>
-            <RyogoCaption weight="font-bold" color={"dark"}>
+            <RyogoCaption weight="font-medium" color={"dark"}>
               {label}
             </RyogoCaption>
           </FormLabel>
@@ -622,7 +622,7 @@ export function RyogoRatingInput({
         <FormItem className="flex flex-row justify-between items-center gap-1 lg:gap-1.5 w-full">
           <FormLabel>
             <RyogoCaption
-              weight="font-bold"
+              weight="font-medium"
               color={disabled ? "light" : "dark"}
             >
               {label}
@@ -673,7 +673,7 @@ export function RyogoThumbsInput({
         <FormItem className="flex flex-col justify-between items-center gap-2 lg:gap-3 w-full my-3 lg:my-4">
           <FormLabel>
             <RyogoCaption
-              weight="font-bold"
+              weight="font-medium"
               color={disabled ? "light" : "dark"}
               className="text-center"
             >

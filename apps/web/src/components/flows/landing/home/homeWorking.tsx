@@ -83,7 +83,7 @@ export default function HomeWorkingSection() {
             >
               <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
             </RyogoDefaultButton>
-          </Link>{" "}
+          </Link>
         </ClickZoomOut>
       </LandingContentWrapper>
     </LandingSectionWrapper>

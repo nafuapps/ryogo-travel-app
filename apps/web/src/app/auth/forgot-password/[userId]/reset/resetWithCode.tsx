@@ -23,6 +23,7 @@ import {
   FormWrapper,
   SectionRowWrapper,
   AuthPageWrapper,
+  SectionColWrapper,
 } from "@/components/page/pageWrappers"
 import { useState, useTransition } from "react"
 import { checkVerificationCodeAction } from "@/app/actions/users/checkVerificationCodeAction"
@@ -124,7 +125,12 @@ export default function ResetWithCodePageComponent({
     <AuthPageWrapper
       className={`${formSuccess === true && "animate-zoom-out"}`}
     >
-      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+      <SectionColWrapper>
+        <RyogoH3 color="slate" weight="font-bold">
+          {t("PageTitle")}
+        </RyogoH3>
+        <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
+      </SectionColWrapper>
       <AuthAccountCard user={user} />
       <FormWrapper<SchemaType>
         id="ForgorPasswordForm"
@@ -133,7 +139,7 @@ export default function ResetWithCodePageComponent({
       >
         <FormContentWrapper
           asCard={false}
-          className={`px-1 overflow-hidden transition-transform duration-500 ease-in-out ${
+          className={`p-1 overflow-hidden transition-transform duration-500 ease-in-out ${
             codeSuccess === true
               ? "-translate-x-full absolute top-0 left-0 size-0"
               : codeSuccess === false
@@ -144,7 +150,6 @@ export default function ResetWithCodePageComponent({
           <RyogoOTPInput
             name={"code"}
             label={t("Field1.Title")}
-            description={t("Field1.Description")}
             length={6}
             onSubmit={() => verifyCode(form.getValues("code"))}
           />

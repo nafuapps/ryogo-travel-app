@@ -4,7 +4,7 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
@@ -17,8 +17,10 @@ import {
   AuthPageWrapper,
 } from "@/components/page/pageWrappers"
 import { Separator } from "@/components/ui/separator"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 import Link from "next/link"
+import { Check } from "lucide-react"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -61,28 +63,48 @@ export default function SignupPageComponent() {
     <AuthPageWrapper
       className={`${form.formState.isSubmitted && "animate-zoom-out"}`}
     >
-      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+      <SectionColWrapper>
+        <RyogoH3 color="slate" weight="font-bold">
+          {t("PageTitle")}
+        </RyogoH3>
+        <RyogoSmall color="light">{t("PageSubtitle")} </RyogoSmall>
+      </SectionColWrapper>
       <FormWrapper<SchemaType> id="SignupForm" form={form}>
         <RyogoOTPInput
           name={"phoneNumber"}
           label={t("Input.Title")}
-          description={
-            form.formState.isSubmitting
-              ? t("Input.Loading")
-              : t("Input.Description")
-          }
           length={10}
           onSubmit={form.handleSubmit(onSubmit)}
           disabled={form.formState.isSubmitting || isBot}
         />
+        {form.formState.isSubmitting && (
+          <RyogoCaption color="light">{t("Input.Loading")}</RyogoCaption>
+        )}
       </FormWrapper>
+      <SectionColWrapper>
+        <PropItem label={t("Prop1")} />
+        <PropItem label={t("Prop2")} />
+        <PropItem label={t("Prop3")} />
+      </SectionColWrapper>
       <Separator />
       <SectionColWrapper>
-        <RyogoCaption color="light">{t("LoginTitle")}</RyogoCaption>
         <Link href={"/auth/login"}>
-          <RyogoOutlineButton label={t("LoginCTA")} />
+          <RyogoGhostButton
+            label={t("LoginTitle")}
+            labelColor="light"
+            className="w-full"
+          />
         </Link>
       </SectionColWrapper>
     </AuthPageWrapper>
+  )
+}
+
+function PropItem({ label }: { label: string }) {
+  return (
+    <div className="flex gap-0.5 md:gap-1 items-center">
+      <RyogoIcon icon={Check} size="sm" color="brand" thick />
+      <RyogoCaption color="light">{label}</RyogoCaption>
+    </div>
   )
 }

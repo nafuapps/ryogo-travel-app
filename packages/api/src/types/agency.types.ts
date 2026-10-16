@@ -16,7 +16,7 @@ export type ROIReportType = {
   monthlyCost: string
   bookingLeakage: string
   cityTier: string
-  monthlyTimeSavedHours: number
+  monthlyTimeSavedHours: string
   totalTimeSavings: string
   totalSavingsVehicleCost: string
   totalSavingsBookingLeakages: string

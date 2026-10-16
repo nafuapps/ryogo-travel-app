@@ -4,7 +4,7 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
@@ -84,7 +84,12 @@ export default function LoginPageComponent() {
     <AuthPageWrapper
       className={`${formSuccess === true && "animate-zoom-out"}`}
     >
-      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+      <SectionColWrapper>
+        <RyogoH3 color="slate" weight="font-bold">
+          {t("PageTitle")}
+        </RyogoH3>
+        <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
+      </SectionColWrapper>
       <FormWrapper<SchemaType>
         id="LoginForm"
         form={form}
@@ -93,15 +98,13 @@ export default function LoginPageComponent() {
         <RyogoOTPInput
           name={"phoneNumber"}
           label={t("Input.Title")}
-          description={
-            form.formState.isSubmitting
-              ? t("Input.Loading")
-              : t("Input.Description")
-          }
           length={10}
           onSubmit={form.handleSubmit(onSubmit)}
           disabled={form.formState.isSubmitting || isBot}
         />
+        {form.formState.isSubmitting && (
+          <RyogoCaption color="light">{t("Input.Loading")}</RyogoCaption>
+        )}
       </FormWrapper>
       <Separator />
       <SectionColWrapper>

@@ -142,7 +142,6 @@ export default function MidTripSheet({
           onSubmit={form.handleSubmit(onSubmit)}
           form={form}
         >
-          {" "}
           <FormContentWrapper asCard={false} className="px-4 lg:px-5">
             <RyogoInput
               name={"odometerReading"}

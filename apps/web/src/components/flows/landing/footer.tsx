@@ -23,14 +23,16 @@ export default async function Footer() {
         {/* Main footer content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           {/* Brand section */}
-          <SectionColWrapper>
+          <SectionColWrapper className="items-center">
             <RyoGoLightLogo />
-            <RyogoSmall color="light">{t("LogoCaption")}</RyogoSmall>
+            <RyogoSmall color="light" className="text-center">
+              {t("LogoCaption")}
+            </RyogoSmall>
             <InstallPWAButton label={t("InstallPWA")} />
           </SectionColWrapper>
 
           {/* Product */}
-          <SectionColWrapper>
+          <SectionColWrapper className="items-center">
             <FooterTitle title={t("Product.Title")} />
             <FooterLink href="/features" label={t("Product.Features")} />
             <FooterLink href="/pricing" label={t("Product.Pricing")} />
@@ -39,7 +41,7 @@ export default async function Footer() {
           </SectionColWrapper>
 
           {/* Support */}
-          <SectionColWrapper>
+          <SectionColWrapper className="items-center">
             <FooterTitle title={t("Support.Title")} />
             <FooterLink href="/resources#faq" label={t("Support.FAQ")} />
             <FooterLink
@@ -60,7 +62,7 @@ export default async function Footer() {
           </SectionColWrapper>
 
           {/* Social Media */}
-          <SectionColWrapper>
+          <SectionColWrapper className="items-center">
             <FooterTitle title={t("Social.Title")} />
             <FooterLink href={YT_LINK} label={t("Social.YouTube")} otherTab />
             <FooterLink href={IG_LINK} label={t("Social.Instagram")} otherTab />
@@ -107,7 +109,7 @@ function FooterLink({
   return (
     <Link
       href={href}
-      className="self-start hover:opacity-70 transition"
+      className="self-center hover:opacity-70 transition"
       target={otherTab ? "_blank" : "_self"}
     >
       <RyogoSmall color="white">{label}</RyogoSmall>

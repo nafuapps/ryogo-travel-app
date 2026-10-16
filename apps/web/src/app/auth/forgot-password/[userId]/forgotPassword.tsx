@@ -5,7 +5,7 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useState } from "react"
@@ -22,7 +22,11 @@ import {
   RyogoDefaultButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
-import { AuthPageWrapper, FormWrapper } from "@/components/page/pageWrappers"
+import {
+  AuthPageWrapper,
+  FormWrapper,
+  SectionColWrapper,
+} from "@/components/page/pageWrappers"
 import Link from "next/link"
 import { Separator } from "@/components/ui/separator"
 
@@ -81,7 +85,12 @@ export default function ForgotPasswordPageComponent({
 
   return (
     <AuthPageWrapper>
-      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+      <SectionColWrapper>
+        <RyogoH3 color="slate" weight="font-bold">
+          {t("PageTitle")}
+        </RyogoH3>
+        <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
+      </SectionColWrapper>
       <AuthAccountCard user={user} />
       <FormWrapper<SchemaType>
         id="ForgorPasswordForm"
@@ -94,7 +103,6 @@ export default function ForgotPasswordPageComponent({
           type="email"
           label={t("Input.Title")}
           placeholder={t("Input.Placeholder")}
-          description={t("Input.Description")}
         />
         {giveHelp && maskedEmail && (
           <div className="bg-yellow-50 dark:bg-yellow-900 p-2 rounded-lg flex gap-2 lg:gap-3 items-center">

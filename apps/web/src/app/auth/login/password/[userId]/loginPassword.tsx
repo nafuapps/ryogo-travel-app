@@ -5,7 +5,7 @@ import z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { RyogoH3 } from "@/components/typography"
+import { RyogoH3, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -21,7 +21,11 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
-import { FormWrapper, AuthPageWrapper } from "@/components/page/pageWrappers"
+import {
+  FormWrapper,
+  AuthPageWrapper,
+  SectionColWrapper,
+} from "@/components/page/pageWrappers"
 import { useState } from "react"
 import { Separator } from "@/components/ui/separator"
 
@@ -103,7 +107,12 @@ export default function LoginPasswordPageComponent({
     <AuthPageWrapper
       className={`${formSuccess === true && "animate-zoom-out"}`}
     >
-      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
+      <SectionColWrapper>
+        <RyogoH3 color="slate" weight="font-bold">
+          {t("PageTitle")}
+        </RyogoH3>
+        <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
+      </SectionColWrapper>
       <AuthAccountCard user={user} />
       <FormWrapper<SchemaType>
         id="LoginPasswordForm"
@@ -116,7 +125,6 @@ export default function LoginPasswordPageComponent({
           type="password"
           label={t("Input.Title")}
           placeholder={t("Input.Placeholder")}
-          description={t("Input.Description")}
         />
         <RyogoDefaultButton
           label={form.formState.isSubmitting ? t("Loading") : t("PrimaryCTA")}
@@ -132,16 +140,16 @@ export default function LoginPasswordPageComponent({
             router.back()
           }}
         />
-        <Separator />
-        <Link href={`/auth/forgot-password/${user.id}`}>
-          <RyogoGhostButton
-            label={t("ForgotCTA")}
-            type="button"
-            className="w-full"
-            labelColor="light"
-          />
-        </Link>
       </FormWrapper>
+      <Separator />
+      <Link href={`/auth/forgot-password/${user.id}`}>
+        <RyogoGhostButton
+          label={t("ForgotCTA")}
+          type="button"
+          className="w-full"
+          labelColor="light"
+        />
+      </Link>
     </AuthPageWrapper>
   )
 }

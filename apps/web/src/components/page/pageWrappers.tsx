@@ -123,7 +123,7 @@ export function FormContentWrapper({
 }) {
   return (
     <div
-      className={`empty:hidden flex flex-col relative gap-4 lg:gap-5 ${asCard ? "bg-white dark:bg-slate-800 rounded-lg shadow p-4 lg:p-5" : ""}  ${className ?? ""}`}
+      className={`empty:hidden flex flex-col relative gap-5 lg:gap-6 ${asCard ? "bg-white dark:bg-slate-800 rounded-lg shadow p-4 lg:p-5" : ""}  ${className ?? ""}`}
     >
       {children}
     </div>
@@ -132,13 +132,13 @@ export function FormContentWrapper({
 
 export function HeaderWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div
+    <header
       className={
         "flex flex-row gap-3 lg:gap-4 pb-3 lg:pb-4 justify-between items-center border-b border-slate-300 dark:border-slate-700"
       }
     >
       {children}
-    </div>
+    </header>
   )
 }
 

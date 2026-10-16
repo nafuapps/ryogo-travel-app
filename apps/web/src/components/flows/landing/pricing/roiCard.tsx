@@ -159,7 +159,7 @@ export default function ROICard() {
       bookingLeakage[0] ?? BOOKING_LEAKAGE_DEFAULT,
     ),
     cityTier: cityTier,
-    monthlyTimeSavedHours: monthlyTimeSavedHours,
+    monthlyTimeSavedHours: monthlyTimeSavedHours.toFixed(0),
     totalTimeSavings: formatIndianCurrency(totalTimeSavings),
     totalSavingsVehicleCost: formatIndianCurrency(totalSavingsVehicleCost),
     totalSavingsBookingLeakages: formatIndianCurrency(

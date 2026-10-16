@@ -4,10 +4,10 @@
       "Step1": {
         "SignupTitle": "Don't have a RyoGo account?",
         "SignupCTA": "Sign up for free",
-        "PageTitle": "Log into RyoGo",
+        "PageTitle": "Log in",
+        "Subtitle": "Access your account with your phone number",
         "Input": {
           "Title": "Enter phone number",
-          "Description": "Provide your 10-digit phone number to login",
           "Loading": "Authenticating.. please wait"
         },
         "Error1": "Phone number must be 10 digits",
@@ -17,16 +17,16 @@
         "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
-        "PageTitle": "Welcome!",
-        "Info": "Select the account you want to log into:",
+        "PageTitle": "Welcome, back!",
+        "Info": "Select your login account",
         "SecondaryCTA": "Back"
       },
       "Step3": {
         "PageTitle": "Hello!",
+        "Subtitle": "Provide your password to login safely",
         "Input": {
-          "Title": "Enter your password",
-          "Placeholder": "********",
-          "Description": "Provide password to login safely"
+          "Title": "Enter password",
+          "Placeholder": "********"
         },
         "PrimaryCTA": "Login",
         "Loading": "Loading",
@@ -43,10 +43,10 @@
     "ForgotPassword": {
       "Step1": {
         "PageTitle": "Forgot password?",
+        "Subtitle": "Don't worry.. We will send you a code to reset password",
         "Input": {
           "Title": "Confirm your email address",
-          "Placeholder": "abcd@gmail.com",
-          "Description": "We will verify your identity and send you a code to reset password"
+          "Placeholder": "abcd@gmail.com"
         },
         "GiveHelp": "Your email looks something like: {maskedEmail}",
         "PrimaryCTA": "Get verification code",
@@ -62,9 +62,9 @@
       },
       "Step2": {
         "PageTitle": "Reset your password",
+        "Subtitle": "Provide the verification code sent to your email",
         "Field1": {
           "Title": "Enter verification code",
-          "Description": "Provide the verification code sent to your email address",
           "Error1": "Code must be 6 digits",
           "Error2": "Code does not match our records"
         },
@@ -95,34 +95,36 @@
     },
     "SignupPage": {
       "Step1": {
-        "LoginTitle": "Already have a RyoGo account?",
-        "LoginCTA": "Login Now",
-        "PageTitle": "Welcome to RyoGo!",
+        "PageTitle": "Welcome!",
+        "PageSubtitle": "Create a RyoGo account with your phone number",
+        "Prop1": "Lifetime free account",
+        "Prop2": "No credit card required",
+        "Prop3": "No hidden fees",
         "Input": {
-          "Title": "Enter phone number",
-          "Description": "Provide your 10-digit phone number to signup",
+          "Title": "Enter phone number to signup",
           "Loading": "Checking.. please wait"
         },
+        "LoginTitle": "Already have a RyoGo account?",
         "Error1": "Phone number must be 10 digits",
         "Error2": "Phone number must be numeric",
         "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
         "PageTitle": "Hello there!",
-        "InfoYes": "You already have an owner account with us:",
-        "InfoNo": "{count, plural, =1 {You already have an account with us:} other {You already have # accounts with us:}}",
+        "InfoYes": "You already have an owner account",
+        "InfoNo": "{count, plural, =1 {You already have an account} other {You already have # accounts}}",
         "BackCTA": "Back",
-        "Description": "To create another owner account, reach out to our support team.",
+        "Description": "To create another agency account, reach out to our support team.",
         "SecondaryCTAYes": "Contact Support",
-        "SecondaryCTANo": "I want to create new agency account as owner"
+        "SecondaryCTANo": "I want to create new agency account"
       }
     }
   },
   "Onboarding": {
     "HomePage": {
       "Header": {
-        "Title": "Welcome!",
-        "Description": "Let's setup your agency account. It will take just a few minutes."
+        "Title": "Let's setup your agency account!",
+        "Subtitle": "ONBOARDING HOMEPAGE"
       },
       "BodySteps": {
         "Title": "Onboarding Journey",
@@ -131,7 +133,7 @@
         "Step3": "3. Add a vehicle",
         "Step4": "4. Onboard a driver",
         "Step5": "5. Add an agent (optional)",
-        "Warning": "* Make sure you are not using private or incognito browsing mode. Or you will not be able to login to your account."
+        "Warning": "* Make sure you are not using private or incognito browsing mode as login might not work."
       },
       "BodyChecklist": {
         "Title": "Document checklist",
@@ -143,8 +145,7 @@
         "Optional": "* All the above documents are optional. However, we highly recommend you upload them for better app experience",
         "Format": "** Image format must be either .jpg/jpeg .png .avif or .webp"
       },
-      "PrimaryCTA": "Get Started",
-      "BackCTA": "Back to Homepage"
+      "PrimaryCTA": "Get Started"
     },
     "CreateAccountPage": {
       "Title": "Create Account",

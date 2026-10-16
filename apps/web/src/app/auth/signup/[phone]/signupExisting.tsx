@@ -1,6 +1,6 @@
 "use client"
 
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import Link from "next/link"
 import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
@@ -43,12 +43,16 @@ export default function SignupExistingPageComponent({
 
   return (
     <AuthPageWrapper>
-      <RyogoH3 color="light">{t("PageTitle")} </RyogoH3>
-      <RyogoCaption weight="font-bold">
-        {hasOwnerAccount
-          ? t("InfoYes")
-          : t("InfoNo", { count: accounts.length })}
-      </RyogoCaption>
+      <SectionColWrapper>
+        <RyogoH3 color="slate" weight="font-bold">
+          {t("PageTitle")}
+        </RyogoH3>
+        <RyogoSmall color="light">
+          {hasOwnerAccount
+            ? t("InfoYes")
+            : t("InfoNo", { count: accounts.length })}
+        </RyogoSmall>
+      </SectionColWrapper>
       <SectionColWrapper>
         {accounts.map((account) => (
           <Link
@@ -78,7 +82,7 @@ export default function SignupExistingPageComponent({
               label={t("SecondaryCTAYes")}
               labelColor="light"
             >
-              <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
+              <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
             </RyogoGhostButton>
           </Link>
         </>
@@ -89,7 +93,7 @@ export default function SignupExistingPageComponent({
             label={t("SecondaryCTANo")}
             labelColor="light"
           >
-            <RyogoIcon icon={ChevronRight} size="sm" color="light" thick />
+            <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
           </RyogoGhostButton>
         </Link>
       )}

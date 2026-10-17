@@ -2,8 +2,8 @@ import {
   RyogoP,
   RyogoH1,
   RyogoSmall,
-  RyogoH4,
   RyogoCaption,
+  RyogoH3,
 } from "@/components/typography"
 import { getTranslations } from "next-intl/server"
 import {
@@ -37,13 +37,13 @@ export default async function ResourcesAboutSection() {
           <div className="bg-linear-to-b from-sky-900 dark:from-sky-50 to-sky-700 dark:to-sky-200 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -top-10 md:-right-14 md:-top-14 lg:-right-16 lg:-top-16"></div>
           <div className="bg-linear-to-b from-sky-700 dark:from-sky-200 to-sky-500 dark:to-sky-400 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -bottom-10 md:-left-14 md:-bottom-14 lg:-left-16 lg:-bottom-16"></div>
           <div className="bg-linear-to-b from-sky-700 dark:from-sky-200 to-sky-500 dark:to-sky-400 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -bottom-10 md:-right-14 md:-bottom-14 lg:-right-16 lg:-bottom-16"></div>
-          <RyogoH4 weight="font-bold" color="slate">
+          <RyogoH3 weight="font-bold" color="light">
             {t("Mission.Title")}
-          </RyogoH4>
+          </RyogoH3>
           <RyogoP
             color="brand"
             weight="font-medium"
-            className="text-center max-w-3xl"
+            className="text-center max-w-3xl my-2 md:my-3"
           >
             {t("Mission.Desc")}
           </RyogoP>
@@ -66,7 +66,9 @@ export default async function ResourcesAboutSection() {
         </ScrollZoomIn>
         <div className="grid grid-cols-1 md:grid-cols-2 my-3 md:my-4 gap-8 lg:gap-10">
           <div className="flex flex-col gap-5 md:gap-6 justify-center items-center md:items-end">
-            <RyogoH4 weight="font-bold">{t("Founder.Title")}</RyogoH4>
+            <RyogoH3 color="light" weight="font-bold">
+              {t("Founder.Title")}
+            </RyogoH3>
             <RyogoSmall
               color="slate"
               className="text-center md:text-end md:max-w-md"
@@ -102,28 +104,30 @@ export default async function ResourcesAboutSection() {
             />
           </div>
         </div>
-        <ScrollZoomIn className="flex flex-col gap-4 lg:gap-5 p-5 md:p-6 my-3 md:my-4 bg-white dark:bg-slate-700 shadow w-full max-w-4xl rounded-lg">
+        <ScrollZoomIn className="flex flex-col gap-4 lg:gap-5 p-5 md:p-6 my-3 md:my-4 bg-linear-to-br from-sky-900 dark:from-sky-50 to-sky-700 dark:to-sky-200 shadow w-full max-w-4xl rounded-lg">
           <RyogoIcon
             icon={Quote}
             size="sm"
-            color="light"
+            color="white"
             className="self-end"
-            thick
           />
-          <RyogoP color="slate" className="text-center w-full italic">
+          <RyogoP
+            color="white"
+            weight="font-normal"
+            className="text-center w-full italic"
+          >
             {t("Mission.Subtitle")}
           </RyogoP>
           <SectionRowWrapper className="items-center justify-between">
             <RyogoIcon
               icon={Quote}
               size="sm"
-              color="light"
+              color="white"
               className="rotate-180"
-              thick
             />
             <RyogoSmall
-              weight="font-medium"
-              color="light"
+              color="white"
+              weight="font-bold"
               className="text-center"
             >
               {t("Mission.Quote")}
@@ -138,7 +142,9 @@ export default async function ResourcesAboutSection() {
 function MissionSuccess({ value, label }: { value: string; label: string }) {
   return (
     <div className="w-full flex flex-col gap-2 md:gap-3 items-center border rounded-lg p-4 md:p-5 lg:p-6">
-      <RyogoH1 weight="font-bold">{value}</RyogoH1>
+      <RyogoH1 color="slate" weight="font-bold">
+        {value}
+      </RyogoH1>
       <RyogoSmall color="light" className="text-center">
         {label}
       </RyogoSmall>

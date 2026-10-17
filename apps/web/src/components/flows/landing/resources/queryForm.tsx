@@ -97,7 +97,7 @@ export default function QueryForm() {
         <RyogoH4 color="brand" weight="font-bold">
           {t("Title")}
         </RyogoH4>
-        <RyogoCaption color="slate">{t("Description")}</RyogoCaption>
+        <RyogoCaption color="light">{t("Description")}</RyogoCaption>
         <RyogoInput
           name={"name"}
           type="text"

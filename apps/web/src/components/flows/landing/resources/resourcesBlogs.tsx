@@ -13,25 +13,27 @@ import { RyogoCarouselWrapper } from "@/components/carousel/ryogoCarousel"
 export default async function ResourcesBlogsSection() {
   const t = await getTranslations("Landing.Resources.Blogs")
 
-  //TODO: Replace with actual blog data
+  const b = await getTranslations("Blogs")
+
+  //Replace with actual blog data
   const items: BlogCarouselItemType[] = [
     {
-      blogId: "1",
-      title: t("Blog1.Title"),
+      blogId: b("Blog1.Id"),
+      title: b("Blog1.Heading"),
       imageSrc: "/logoPWA.png",
-      type: t("Blog1.Type"),
+      type: b("Blog1.Category"),
     },
     {
-      blogId: "2",
-      title: t("Blog2.Title"),
+      blogId: b("Blog2.Id"),
+      title: b("Blog2.Heading"),
       imageSrc: "/logoPWA.png",
-      type: t("Blog2.Type"),
+      type: b("Blog2.Category"),
     },
     {
-      blogId: "3",
-      title: t("Blog3.Title"),
+      blogId: b("Blog3.Id"),
+      title: b("Blog3.Heading"),
       imageSrc: "/logoPWA.png",
-      type: t("Blog3.Type"),
+      type: b("Blog3.Category"),
     },
   ]
 

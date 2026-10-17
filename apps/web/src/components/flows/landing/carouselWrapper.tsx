@@ -8,6 +8,7 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
+import { Route } from "next"
 
 export type VideoCarouselItemType = {
   src: string
@@ -56,7 +57,7 @@ export function BlogCarouselItem({
   return (
     <CarouselItem className="group px-2 md:px-2.5 w-full md:w-1/2 lg:w-1/3">
       <Link
-        href={`/resources/blog/${blogId}`}
+        href={`/resources/blog/${blogId}` as Route}
         className="flex flex-col gap-2 md:gap-3 hover:opacity-80"
       >
         <div className="border-8 md:border-10 border-slate-100/50 dark:border-slate-700/50 w-full max-w-2xl relative rounded-lg aspect-video overflow-hidden">

@@ -5,12 +5,15 @@ import {
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import {
+  MainWrapper,
+  PageWrapper,
+  TileGridWrapper,
+} from "@/components/page/pageWrappers"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 
 /*
-  TODO: Blogs support page
   - Blogs
 */
 
@@ -22,12 +25,26 @@ export const metadata: Metadata = {
 export default async function SupportHelpBlogsPage() {
   const t = await getTranslations("Dashboard.SupportBlogsHelp")
 
-  //TODO: Replace with actual blog data
+  const b = await getTranslations("Blogs")
+
+  //TODO: Add blog images
   const blogItems: SupportBlogItemType[] = [
     {
-      blogId: "1",
-      type: t("Blog1.Type"),
-      title: t("Blog1.Title"),
+      blogId: b("Blog1.Id"),
+      type: b("Blog1.Category"),
+      title: b("Blog1.Heading"),
+      imageSrc: "/logoPWA.png",
+    },
+    {
+      blogId: b("Blog2.Id"),
+      type: b("Blog2.Category"),
+      title: b("Blog2.Heading"),
+      imageSrc: "/logoPWA.png",
+    },
+    {
+      blogId: b("Blog3.Id"),
+      type: b("Blog3.Category"),
+      title: b("Blog3.Heading"),
       imageSrc: "/logoPWA.png",
     },
   ]
@@ -40,11 +57,11 @@ export default async function SupportHelpBlogsPage() {
           title={t("Title")}
           description={t("Description")}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
+        <TileGridWrapper>
           {blogItems.map((item) => (
             <SupportBlogItem key={item.blogId} {...item} />
           ))}
-        </div>
+        </TileGridWrapper>
       </PageWrapper>
     </MainWrapper>
   )

@@ -5,7 +5,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoPill } from "@/components/pills/ryogoPills"
 import {
-  RyogoH2,
+  RyogoH3,
   RyogoH4,
   RyogoSmall,
   RyogoTiny,
@@ -14,7 +14,7 @@ import { Dot } from "lucide-react"
 import Image from "next/image"
 
 export function BlogHeading({ label }: { label: string }) {
-  return <RyogoH2 weight="font-bold">{label}</RyogoH2>
+  return <RyogoH3 weight="font-bold">{label}</RyogoH3>
 }
 
 export function BlogImage({ src, alt }: { src: string; alt: string }) {

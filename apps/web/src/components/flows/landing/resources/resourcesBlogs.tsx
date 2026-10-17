@@ -15,7 +15,7 @@ export default async function ResourcesBlogsSection() {
 
   const b = await getTranslations("Blogs")
 
-  //Replace with actual blog data
+  //TODO: Add blog images
   const items: BlogCarouselItemType[] = [
     {
       blogId: b("Blog1.Id"),

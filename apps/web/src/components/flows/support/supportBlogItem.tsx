@@ -18,10 +18,10 @@ export function SupportBlogItem({
   type,
 }: SupportBlogItemType) {
   return (
-    <SectionWrapper id={title}>
+    <SectionWrapper id={title} className="max-w-2xl mx-auto">
       <Link
         href={`/dashboard/support/help-blogs/${blogId}`}
-        className="flex flex-col gap-1.5 md:gap-2"
+        className="flex flex-col gap-1.5 md:gap-2 items-center"
       >
         <div className="w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
           <Image
@@ -33,7 +33,9 @@ export function SupportBlogItem({
           />
         </div>
         <RyogoPill label={type} bgColor={"light"} />
-        <RyogoP weight="font-bold">{title}</RyogoP>
+        <RyogoP weight="font-bold" color="slate" className="text-center">
+          {title}
+        </RyogoP>
       </Link>
     </SectionWrapper>
   )

@@ -23,9 +23,9 @@ export default async function Footer() {
         {/* Main footer content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           {/* Brand section */}
-          <SectionColWrapper className="items-center">
+          <SectionColWrapper className="items-center mb-3 md:mb-0">
             <RyoGoLightLogo />
-            <RyogoSmall color="light" className="text-center">
+            <RyogoSmall color="light" className="text-center max-w-3/4">
               {t("LogoCaption")}
             </RyogoSmall>
             <InstallPWAButton label={t("InstallPWA")} />

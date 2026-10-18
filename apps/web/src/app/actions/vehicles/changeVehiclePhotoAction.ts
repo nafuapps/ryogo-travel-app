@@ -14,7 +14,7 @@ export async function changeVehiclePhotoAction({
 }: {
   vehicleId: string
   agencyId: string
-  photo: FileList
+  photo: File
 }) {
   const currentUser = await getCurrentUser()
   if (
@@ -31,12 +31,9 @@ export async function changeVehiclePhotoAction({
     return
   }
 
-  const [file] = photo || []
-  if (!file) return
-
   const uploadedPhoto = await uploadFile(
-    file,
-    generateVehiclePhotoPathName(vehicleId, file),
+    photo,
+    generateVehiclePhotoPathName(vehicleId),
   )
   const updatedVehicle = await vehicleServices.renewVehiclePhotoURL({
     vehicleId,

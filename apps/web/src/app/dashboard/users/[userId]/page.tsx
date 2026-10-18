@@ -22,7 +22,7 @@ export default async function UserDetailsPage({
   searchParams,
 }: {
   params: Promise<{ userId: string }>
-  searchParams: Promise<{ feedback?: string | undefined }>
+  searchParams: Promise<{ feedback?: string }>
 }) {
   const { userId } = await params
 

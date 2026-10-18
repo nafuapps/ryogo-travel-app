@@ -36,6 +36,7 @@ import {
 import { RyogoH3, RyogoCaption } from "@/components/typography"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function NewExpensePageComponent({
   bookingId,
@@ -93,12 +94,13 @@ export default function NewExpensePageComponent({
   async function onSubmit(values: NewExpenseType) {
     const addedExpense = await addExpenseAction(
       {
+        ...values,
+        expensePhoto: await compressImage(values.expensePhoto),
         bookingId,
         userId,
         agencyId,
         assignedUserId,
         isApproved: !isRider,
-        ...values,
       },
       isRider,
     )

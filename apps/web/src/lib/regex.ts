@@ -36,4 +36,5 @@ export const SupportedImageFormats = [
   "image/png",
   "image/gif",
   "image/webp",
+  "image/bmp",
 ]

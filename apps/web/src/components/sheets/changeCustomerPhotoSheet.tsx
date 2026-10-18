@@ -24,6 +24,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function ChangeCustomerPhotoSheet({
   customerId,
@@ -57,11 +58,16 @@ export default function ChangeCustomerPhotoSheet({
   })
 
   const onSubmit = async (data: SchemaType) => {
+    const compressedImage = await compressImage(data.customerPhotos)
+    if (!compressedImage) {
+      toast.error(t("Error1"))
+      return
+    }
     setOpen(false)
     const updatedCustomer = await changeCustomerPhotoAction({
       customerId,
       agencyId,
-      photo: data.customerPhotos,
+      photo: compressedImage,
     })
     if (updatedCustomer) {
       toast.success(t("Success"))

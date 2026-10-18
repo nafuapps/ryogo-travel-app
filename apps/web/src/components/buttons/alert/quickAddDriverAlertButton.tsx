@@ -7,9 +7,10 @@ import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import {
-  RyogoOutlineButton,
   RyogoDefaultButton,
+  RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
+import compressImage from "@/lib/imageCompression"
 
 export default function QuickAddDriverAlertButton({
   agencyId,
@@ -46,7 +47,7 @@ export default function QuickAddDriverAlertButton({
           name: name,
           email: email,
           phone: phone,
-          userPhotos: photo,
+          userPhotos: await compressImage(photo),
         },
         agencyName,
       })
@@ -71,7 +72,7 @@ export default function QuickAddDriverAlertButton({
       desc={t("Desc")}
       noCTA={t("NoCTA")}
       labelChild={
-        <RyogoOutlineButton
+        <RyogoWhiteButton
           disabled={disabled}
           label={t("Label")}
           labelColor="brand"

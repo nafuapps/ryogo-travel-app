@@ -29,6 +29,7 @@ import {
 } from "@/components/page/pageWrappers"
 import FormStepHeader from "@/components/form/formStepHeader"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function NewDriverStep2({
   onNext,
@@ -47,7 +48,8 @@ export function NewDriverStep2({
       .string()
       .trim()
       .min(MIN_LICENSE_LENGTH, t("Field1.Error1"))
-      .max(MAX_LICENSE_LENGTH, t("Field1.Error2")),
+      .max(MAX_LICENSE_LENGTH, t("Field1.Error2"))
+      .nonoptional(t("Field1.Error1")),
     licenseExpiresOn: z
       .date(t("Field2.Error1"))
       .min(new Date(), t("Field2.Error2"))
@@ -70,17 +72,16 @@ export function NewDriverStep2({
     defaultValues: {
       licenseNumber: newDriverFormData.licenseNumber,
       licenseExpiresOn: newDriverFormData.licenseExpiresOn,
-      licensePhotos: newDriverFormData.licensePhotos,
     },
   })
 
   //Submit actions
-  const onSubmit = (data: Step2Type) => {
+  const onSubmit = async (data: Step2Type) => {
     setNewDriverFormData({
       ...newDriverFormData,
       licenseNumber: data.licenseNumber,
       licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: data.licensePhotos,
+      licensePhotos: await compressImage(data.licensePhotos),
     })
     onNext()
   }

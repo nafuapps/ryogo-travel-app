@@ -39,6 +39,7 @@ import {
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function NewTransactionPageComponent({
   bookingId,
@@ -69,11 +70,9 @@ export default function NewTransactionPageComponent({
       .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error1"))
       .optional(),
     txnPhoto: FileRegex.refine((file) => {
-      if (file.length < 1) return true
       return checkImageFileSize(file)
     }, t("Field6.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
         return checkImageFileType(file)
       }, t("Field6.Error2"))
       .optional(),
@@ -95,11 +94,12 @@ export default function NewTransactionPageComponent({
   //Form submit
   async function onSubmit(values: NewTransactionType) {
     const addedTransaction = await addTransactionAction({
+      ...values,
+      txnPhoto: await compressImage(values.txnPhoto),
       agencyId,
       bookingId,
       userId,
       assignedUserId,
-      ...values,
     })
     if (addedTransaction) {
       toast.success(t("Success"))

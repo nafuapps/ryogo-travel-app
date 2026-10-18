@@ -28,11 +28,11 @@ export async function changeDriverLicenseAction(
   let licensePhotoUrl
 
   // Upload files to Supabase Storage
-  const [licenseFile] = data.licensePhotos || []
+  const licenseFile = data.licensePhotos
   if (licenseFile) {
     const uploadedFile = await uploadFile(
       licenseFile,
-      generateLicensePhotoPathName(data.id, licenseFile),
+      generateLicensePhotoPathName(data.id),
     )
     licensePhotoUrl = uploadedFile.path
   }

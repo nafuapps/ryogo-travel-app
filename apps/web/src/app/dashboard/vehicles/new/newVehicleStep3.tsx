@@ -24,6 +24,7 @@ import {
 } from "@/components/page/pageWrappers"
 import FormStepHeader from "@/components/form/formStepHeader"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function NewVehicleStep3({
   onNext,
@@ -74,20 +75,18 @@ export function NewVehicleStep3({
     resolver: zodResolver(step3Schema),
     defaultValues: {
       insuranceExpiresOn: newVehicleFormData.insuranceExpiresOn,
-      insurancePhotos: newVehicleFormData.insurancePhotos,
       pucExpiresOn: newVehicleFormData.pucExpiresOn,
-      pucPhotos: newVehicleFormData.pucPhotos,
     },
   })
 
   //Submit actions
-  const onSubmit = (data: Step3Type) => {
+  const onSubmit = async (data: Step3Type) => {
     setNewVehicleFormData({
       ...newVehicleFormData,
       insuranceExpiresOn: data.insuranceExpiresOn,
-      insurancePhotos: data.insurancePhotos,
+      insurancePhotos: await compressImage(data.insurancePhotos),
       pucExpiresOn: data.pucExpiresOn,
-      pucPhotos: data.pucPhotos,
+      pucPhotos: await compressImage(data.pucPhotos),
     })
     onNext()
   }
@@ -123,6 +122,7 @@ export function NewVehicleStep3({
             label={t("Field2.Title")}
             placeholder={t("Field2.Placeholder")}
             description={t("Field2.Description")}
+            existingFile={newVehicleFormData.insurancePhotos}
           />
         </FormContentWrapper>
         <FormContentWrapper>
@@ -138,6 +138,7 @@ export function NewVehicleStep3({
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
+            existingFile={newVehicleFormData.pucPhotos}
           />
         </FormContentWrapper>
         <StickyActionWrapper>

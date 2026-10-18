@@ -24,6 +24,7 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function ChangeQRCodeSheet({
   agencyId,
@@ -55,10 +56,15 @@ export default function ChangeQRCodeSheet({
   })
 
   const onSubmit = async (data: SchemaType) => {
+    const compressedImage = await compressImage(data.qrCode)
+    if (!compressedImage) {
+      toast.error(t("Error1"))
+      return
+    }
     setOpen(false)
     const updatedAgency = await changeAgencyQRCodeAction({
       agencyId,
-      qrCode: data.qrCode,
+      qrCode: compressedImage,
     })
     if (updatedAgency) {
       toast.success(t("Success"))

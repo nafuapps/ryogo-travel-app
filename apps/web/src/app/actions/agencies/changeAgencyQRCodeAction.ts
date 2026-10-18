@@ -12,7 +12,7 @@ export async function changeAgencyQRCodeAction({
   qrCode,
 }: {
   agencyId: string
-  qrCode: FileList
+  qrCode: File
 }) {
   const currentUser = await getCurrentUser()
   if (
@@ -27,13 +27,9 @@ export async function changeAgencyQRCodeAction({
     return
   }
 
-  const [qrCodeFile] = qrCode
-  if (!qrCodeFile) {
-    return
-  }
   const uploadedFile = await uploadFile(
-    qrCodeFile,
-    generateAgencyQRCodePathName(agencyId, qrCodeFile),
+    qrCode,
+    generateAgencyQRCodePathName(agencyId),
   )
   const updatedAgency = await agencyServices.updateAgencyQRCode({
     agencyId,

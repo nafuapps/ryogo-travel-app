@@ -41,6 +41,7 @@ import {
 import { RyogoH3 } from "@/components/typography"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function ModifyTransactionPageComponent({
   transactionDetails,
@@ -80,7 +81,6 @@ export default function ModifyTransactionPageComponent({
 
   type ModifyTransactionType = z.infer<typeof modifyTransactionSchema>
 
-  //Form init
   const form = useForm<ModifyTransactionType>({
     resolver: zodResolver(modifyTransactionSchema),
     defaultValues: {
@@ -93,11 +93,11 @@ export default function ModifyTransactionPageComponent({
     },
   })
 
-  //Form submit
   async function onSubmit(values: ModifyTransactionType) {
     const updatedTransaction = await modifyTransactionAction({
       data: {
         ...values,
+        txnPhoto: await compressImage(values.txnPhoto),
         transactionId: transactionDetails.id,
         bookingId: transactionDetails.bookingId,
         agencyId: transactionDetails.agencyId,

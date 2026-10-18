@@ -31,14 +31,14 @@ export async function changeVehicleDocumentAction(
 
   let fileUrl
 
-  const [file] = data.photo || []
+  const file = data.photo
   if (file) {
     const pathName =
       data.type === "rc"
-        ? generateRCPhotoPathName(data.vehicleId, file)
+        ? generateRCPhotoPathName(data.vehicleId)
         : data.type === "puc"
-          ? generatePUCPhotoPathName(data.vehicleId, file)
-          : generateInsurancePhotoPathName(data.vehicleId, file)
+          ? generatePUCPhotoPathName(data.vehicleId)
+          : generateInsurancePhotoPathName(data.vehicleId)
     const uploadedPhoto = await uploadFile(file, pathName)
     fileUrl = uploadedPhoto.path
   }

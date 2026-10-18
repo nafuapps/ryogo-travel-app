@@ -26,15 +26,11 @@ export async function midTripAction({ data }: { data: AddTripLogRequestType }) {
   if (!newTripLog) return
 
   //Upload triplog photo if attached
-  const [tripLogPhotoFile] = data.tripLogPhoto || []
+  const tripLogPhotoFile = data.tripLogPhoto
   if (tripLogPhotoFile) {
     const uploadedFile = await uploadFile(
       tripLogPhotoFile,
-      generateTripLogPhotoPathName(
-        data.bookingId,
-        newTripLog.id,
-        tripLogPhotoFile,
-      ),
+      generateTripLogPhotoPathName(data.bookingId, newTripLog.id),
     )
     await tripLogServices.changeTripLogPhotoUrl({
       tripLogId: newTripLog.id,

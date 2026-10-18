@@ -29,15 +29,11 @@ export async function modifyTransactionAction({
 
   let transactionPhotoUrl
   //If there is a transaction photo, upload it to cloud storage
-  const [file] = data.txnPhoto || []
+  const file = data.txnPhoto
   if (file) {
     const uploadResult = await uploadFile(
       file,
-      generateTransactionPhotoPathName(
-        data.bookingId,
-        data.transactionId,
-        file,
-      ),
+      generateTransactionPhotoPathName(data.bookingId, data.transactionId),
     )
     transactionPhotoUrl = uploadResult.path
   }

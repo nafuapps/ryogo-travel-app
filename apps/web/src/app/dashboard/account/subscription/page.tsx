@@ -24,8 +24,8 @@ export default async function SubscriptionPage({
   searchParams,
 }: {
   searchParams: Promise<{
-    feedback?: string | undefined
-    orderId?: string | undefined
+    feedback?: string
+    orderId?: string
   }>
 }) {
   const currentUser = await getCurrentUser()

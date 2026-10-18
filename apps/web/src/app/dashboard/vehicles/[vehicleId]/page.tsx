@@ -23,7 +23,7 @@ export default async function VehicleDetailsPage({
   searchParams,
 }: {
   params: Promise<{ vehicleId: string }>
-  searchParams: Promise<{ feedback?: string | undefined }>
+  searchParams: Promise<{ feedback?: string }>
 }) {
   const { vehicleId } = await params
 

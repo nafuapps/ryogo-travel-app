@@ -38,38 +38,38 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   let vehiclePhotoUrl
 
   // Upload files to Supabase Storage
-  const [rcFile] = data.rcPhotos || []
+  const rcFile = data.rcPhotos
   if (rcFile) {
     const uploadedFile = await uploadFile(
       rcFile,
-      generateRCPhotoPathName(vehicle.id, rcFile),
+      generateRCPhotoPathName(vehicle.id),
     )
     rcPhotoUrl = uploadedFile.path
   }
 
-  const [pucFile] = data.pucPhotos || []
+  const pucFile = data.pucPhotos
   if (pucFile) {
     const uploadedFile = await uploadFile(
       pucFile,
-      generatePUCPhotoPathName(vehicle.id, pucFile),
+      generatePUCPhotoPathName(vehicle.id),
     )
     pucPhotoUrl = uploadedFile.path
   }
 
-  const [insuranceFile] = data.insurancePhotos || []
+  const insuranceFile = data.insurancePhotos
   if (insuranceFile) {
     const uploadedFile = await uploadFile(
       insuranceFile,
-      generateInsurancePhotoPathName(vehicle.id, insuranceFile),
+      generateInsurancePhotoPathName(vehicle.id),
     )
     insurancePhotoUrl = uploadedFile.path
   }
 
-  const [vehiclePhotoFile] = data.vehiclePhotos || []
+  const vehiclePhotoFile = data.vehiclePhotos
   if (vehiclePhotoFile) {
     const uploadedFile = await uploadFile(
       vehiclePhotoFile,
-      generateVehiclePhotoPathName(vehicle.id, vehiclePhotoFile),
+      generateVehiclePhotoPathName(vehicle.id),
     )
     vehiclePhotoUrl = uploadedFile.path
   }

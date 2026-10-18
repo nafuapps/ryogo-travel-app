@@ -29,6 +29,7 @@ import {
 import { MIN_LICENSE_LENGTH, MAX_LICENSE_LENGTH } from "@/lib/uiConfig"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function ChangeDriverPhotoSheet({
   driverId,
@@ -93,7 +94,7 @@ export default function ChangeDriverPhotoSheet({
       addedByUserId,
       licenseNumber: data.licenseNumber,
       licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: data.licensePhotos,
+      licensePhotos: await compressImage(data.licensePhotos),
     })
     if (updatedDriver) {
       toast.success(t("Success"))

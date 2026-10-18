@@ -24,6 +24,7 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function CreateAccountStep3({
   onNext,
@@ -78,26 +79,22 @@ export function CreateAccountStep3({
   const formData = useForm<Step3Type>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      agencyLogo: finalData.agency.logo,
       commissionRate: finalData.agency.commissionRate,
       agencyState: finalData.agency.agencyState,
       agencyCity: finalData.agency.agencyCity,
-      qrCode: finalData.agency.qrCode,
     },
   })
 
   //Submit actions
-  const onSubmit = (data: Step3Type) => {
+  const onSubmit = async (data: Step3Type) => {
     updateFinalData({
+      ...finalData,
       agency: {
         ...finalData.agency,
-        logo: data.agencyLogo,
+        logo: await compressImage(data.agencyLogo),
         commissionRate: data.commissionRate,
         agencyState: data.agencyState,
         agencyCity: data.agencyCity,
-      },
-      owner: {
-        ...finalData.owner,
       },
     })
     onNext()
@@ -123,6 +120,7 @@ export function CreateAccountStep3({
           label={t("Field1.Title")}
           placeholder={t("Field1.Placeholder")}
           description={t("Field1.Description")}
+          existingFile={finalData.agency.logo}
         />
         <RyogoInput
           name={"commissionRate"}
@@ -154,6 +152,7 @@ export function CreateAccountStep3({
           label={t("Field5.Title")}
           placeholder={t("Field5.Placeholder")}
           description={t("Field5.Description")}
+          existingFile={finalData.agency.qrCode}
         />
       </FormContentWrapper>
       <StickyActionWrapper bgTransparent>

@@ -35,6 +35,7 @@ import {
 } from "@/lib/uiConfig"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import { getEntityType } from "@/components/missions/missionCommons"
+import compressImage from "@/lib/imageCompression"
 
 export default function AddSupportTicketPageComponent({
   userId,
@@ -93,7 +94,7 @@ export default function AddSupportTicketPageComponent({
         entityId: entityType ? values.entityId : userId,
         issue: values.issue,
         details: values.details,
-        photo: values.photo,
+        photo: await compressImage(values.photo),
       },
     })
     if (newTicket) {

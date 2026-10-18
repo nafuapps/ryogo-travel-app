@@ -39,6 +39,7 @@ import {
 import { RyogoH3 } from "@/components/typography"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function NewCustomerForm({
   agencyId,
@@ -122,7 +123,7 @@ export default function NewCustomerForm({
           email: values.email,
           address: values.address,
           remarks: values.remarks,
-          photo: values.photo,
+          photo: await compressImage(values.photo),
         },
       })
       if (createdCustomer) {

@@ -24,8 +24,12 @@ import {
   PopoverContent,
 } from "@/components/ui/popover"
 import { CalendarIcon, Star, ThumbsDown, ThumbsUp } from "lucide-react"
-import React, { Dispatch, SetStateAction } from "react"
-import { UseFormRegisterReturn } from "react-hook-form"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
+import {
+  UseFormRegisterReturn,
+  useFormContext,
+  useWatch,
+} from "react-hook-form"
 import { getLangDisplay } from "@/lib/utils"
 import { format } from "date-fns"
 import { Switch } from "@/components/ui/switch"
@@ -48,6 +52,8 @@ import {
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
 
 export function RyogoInput({
   name,
@@ -158,33 +164,63 @@ export function RyogoFileInput({
   placeholder,
   description,
   register,
+  existingFile,
 }: {
   name: string
   label: string
   placeholder: string
   description?: string
   register: UseFormRegisterReturn<string>
+  existingFile?: File
 }) {
+  const { control } = useFormContext()
+  const fieldValue = useWatch({ control, name })
+  const selectedFile =
+    typeof FileList !== "undefined" && fieldValue instanceof FileList
+      ? fieldValue.item(0)
+      : typeof File !== "undefined" && fieldValue instanceof File
+        ? fieldValue
+        : undefined
+  const previewFile = selectedFile ?? existingFile
+  const [previewUrl, setPreviewUrl] = useState<string>()
+
+  useEffect(() => {
+    if (!previewFile) {
+      setPreviewUrl(undefined)
+      return
+    }
+
+    const url = URL.createObjectURL(previewFile)
+    setPreviewUrl(url)
+
+    return () => URL.revokeObjectURL(url)
+  }, [previewFile])
+
   return (
     <FormField
       name={name}
       render={() => (
-        <FormItem className="w-full relative">
-          <FormLabel>
-            <RyogoCaption weight="font-medium" color={"dark"}>
-              {label}
-            </RyogoCaption>
-          </FormLabel>
-          <FormControl>
-            <Input {...register} type="file" placeholder={placeholder} />
-          </FormControl>
-          {description && (
-            <FormDescription>
-              <RyogoCaption color="light">{description}</RyogoCaption>
-            </FormDescription>
+        <SectionRowWrapper>
+          <FormItem className="w-full relative">
+            <FormLabel>
+              <RyogoCaption weight="font-medium" color={"dark"}>
+                {label}
+              </RyogoCaption>
+            </FormLabel>
+            <FormControl>
+              <Input {...register} type="file" placeholder={placeholder} />
+            </FormControl>
+            {description && (
+              <FormDescription>
+                <RyogoCaption color="light">{description}</RyogoCaption>
+              </FormDescription>
+            )}
+            <FormMessage />
+          </FormItem>
+          {previewUrl && (
+            <RyogoImage src={previewUrl} alt={label} imageSize="md" />
           )}
-          <FormMessage />
-        </FormItem>
+        </SectionRowWrapper>
       )}
     />
   )

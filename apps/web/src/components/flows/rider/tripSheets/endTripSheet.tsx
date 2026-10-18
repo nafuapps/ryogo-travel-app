@@ -42,6 +42,7 @@ import {
 import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
 import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function EndTripSheet({
   booking,
@@ -117,7 +118,7 @@ export default function EndTripSheet({
         type: TripLogTypesEnum.ENDED,
         odometerReading: values.odometerReading,
         remarks: values.remarks,
-        tripLogPhoto: values.tripLogPhoto,
+        tripLogPhoto: await compressImage(values.tripLogPhoto),
         lat: latLong.latitude,
         long: latLong.longitude,
       },

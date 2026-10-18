@@ -26,6 +26,7 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function AddAgentStep1({
   onNext,
@@ -65,7 +66,6 @@ export function AddAgentStep1({
       agentName: finalData.name,
       agentPhone: finalData.phone,
       agentEmail: finalData.email,
-      agentPhotos: finalData.photos,
     },
   })
 
@@ -88,7 +88,7 @@ export function AddAgentStep1({
         name: data.agentName,
         phone: data.agentPhone,
         email: data.agentEmail,
-        photos: data.agentPhotos,
+        photos: await compressImage(data.agentPhotos),
       })
       onNext()
     }
@@ -127,6 +127,7 @@ export function AddAgentStep1({
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}
           description={t("Field4.Description")}
+          existingFile={finalData.photos}
         />
       </FormContentWrapper>
       <StickyActionWrapper bgTransparent>

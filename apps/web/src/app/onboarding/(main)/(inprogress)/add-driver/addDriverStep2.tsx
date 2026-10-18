@@ -23,6 +23,7 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function AddDriverStep2({
   onNext,
@@ -64,17 +65,16 @@ export function AddDriverStep2({
     defaultValues: {
       licenseNumber: finalData.licenseNumber,
       licenseExpiresOn: finalData.licenseExpiresOn,
-      licensePhotos: finalData.licensePhotos,
     },
   })
 
   //Submit actions
-  const onSubmit = (data: Step2Type) => {
+  const onSubmit = async (data: Step2Type) => {
     updateFinalData({
       ...finalData,
       licenseNumber: data.licenseNumber,
       licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: data.licensePhotos,
+      licensePhotos: await compressImage(data.licensePhotos),
     })
     onNext()
   }

@@ -38,11 +38,11 @@ export async function addAgentAction({
   if (!agent) return
 
   //Upload agent photo if attached
-  const [photoFile] = data.photos || []
+  const photoFile = data.photos
   if (photoFile) {
     const uploadedPhoto = await uploadFile(
       photoFile,
-      generateUserPhotoPathName(agent.id, photoFile),
+      generateUserPhotoPathName(agent.id),
     )
     await userServices.updateUserPhoto({
       userId: agent.id,

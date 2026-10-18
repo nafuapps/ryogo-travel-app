@@ -21,6 +21,7 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function AddVehicleStep3({
   onNext,
@@ -71,20 +72,18 @@ export function AddVehicleStep3({
     resolver: zodResolver(step3Schema),
     defaultValues: {
       insuranceExpiresOn: finalData.insuranceExpiresOn,
-      insurancePhotos: finalData.insurancePhotos,
       pucExpiresOn: finalData.pucExpiresOn,
-      pucPhotos: finalData.pucPhotos,
     },
   })
 
   //Submit actions
-  const onSubmit = (data: Step3Type) => {
+  const onSubmit = async (data: Step3Type) => {
     updateFinalData({
       ...finalData,
       insuranceExpiresOn: data.insuranceExpiresOn,
-      insurancePhotos: data.insurancePhotos,
+      insurancePhotos: await compressImage(data.insurancePhotos),
       pucExpiresOn: data.pucExpiresOn,
-      pucPhotos: data.pucPhotos,
+      pucPhotos: await compressImage(data.pucPhotos),
     })
     onNext()
   }
@@ -108,6 +107,7 @@ export function AddVehicleStep3({
           label={t("Field2.Title")}
           placeholder={t("Field2.Placeholder")}
           description={t("Field2.Description")}
+          existingFile={finalData.insurancePhotos}
         />
         <RyogoDatePicker
           name="pucExpiresOn"
@@ -121,6 +121,7 @@ export function AddVehicleStep3({
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}
           description={t("Field4.Description")}
+          existingFile={finalData.pucPhotos}
         />
       </FormContentWrapper>
       <StickyActionWrapper bgTransparent>

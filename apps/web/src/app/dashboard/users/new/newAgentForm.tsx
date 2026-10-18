@@ -33,6 +33,7 @@ import {
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { RyogoH3 } from "@/components/typography"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function NewAgentForm({
   agencyId,
@@ -99,7 +100,7 @@ export default function NewAgentForm({
           name: values.agentName,
           phone: values.agentPhone,
           email: values.agentEmail,
-          photos: values.agentPhotos,
+          photos: await compressImage(values.agentPhotos),
         },
         agencyName,
       })

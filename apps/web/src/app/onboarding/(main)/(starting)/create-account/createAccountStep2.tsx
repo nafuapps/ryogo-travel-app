@@ -31,6 +31,7 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function CreateAccountStep2({
   onNext,
@@ -77,7 +78,6 @@ export function CreateAccountStep2({
       agencyEmail: finalData.agency.businessEmail,
       sameAsOwnerEmail: false,
       agencyAddress: finalData.agency.businessAddress,
-      ownerPhoto: finalData.owner.photos,
     },
   })
 
@@ -131,7 +131,7 @@ export function CreateAccountStep2({
         },
         owner: {
           ...finalData.owner,
-          photos: data.ownerPhoto,
+          photos: await compressImage(data.ownerPhoto),
         },
       })
       onNext()
@@ -171,6 +171,7 @@ export function CreateAccountStep2({
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}
           description={t("Field4.Description")}
+          existingFile={finalData.owner.photos}
         />
       </FormContentWrapper>
       <StickyActionWrapper bgTransparent>

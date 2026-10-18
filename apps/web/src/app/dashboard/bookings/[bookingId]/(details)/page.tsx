@@ -26,7 +26,7 @@ export default async function BookingDetailsPage({
   searchParams,
 }: {
   params: Promise<{ bookingId: string }>
-  searchParams: Promise<{ feedback?: string | undefined }>
+  searchParams: Promise<{ feedback?: string }>
 }) {
   const { bookingId } = await params
 

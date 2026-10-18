@@ -12,7 +12,7 @@ export async function changeAgencyLogoAction({
   logo,
 }: {
   agencyId: string
-  logo: FileList
+  logo: File
 }) {
   const currentUser = await getCurrentUser()
   if (
@@ -27,14 +27,9 @@ export async function changeAgencyLogoAction({
     return
   }
 
-  const [logoFile] = logo
-
-  if (!logoFile) {
-    return
-  }
   const uploadedFile = await uploadFile(
-    logoFile,
-    generateAgencyLogoPathName(agencyId, logoFile),
+    logo,
+    generateAgencyLogoPathName(agencyId),
   )
   const updatedAgency = await agencyServices.updateAgencyLogo({
     agencyId,

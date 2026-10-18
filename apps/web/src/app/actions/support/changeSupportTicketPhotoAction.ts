@@ -12,7 +12,7 @@ export async function changeSupportTicketPhotoAction({
 }: {
   ticketId: string
   userId: string
-  photo: FileList
+  photo: File
 }) {
   const currentUser = await getCurrentUser()
   if (!currentUser || currentUser.userId !== userId) {
@@ -23,11 +23,9 @@ export async function changeSupportTicketPhotoAction({
     return
   }
 
-  const [file] = photo
-  if (!file) return
   const uploadedPhoto = await uploadFile(
-    file,
-    generateUserSupportTicketPhotoPathName(userId, ticketId, file),
+    photo,
+    generateUserSupportTicketPhotoPathName(userId, ticketId),
   )
   const photoUrl = uploadedPhoto.path
   const ticket = await supportServices.updateSupportTicketPhoto({

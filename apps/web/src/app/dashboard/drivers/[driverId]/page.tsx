@@ -25,7 +25,7 @@ export default async function DriverDetailsPage({
   searchParams,
 }: {
   params: Promise<{ driverId: string }>
-  searchParams: Promise<{ feedback?: string | undefined }>
+  searchParams: Promise<{ feedback?: string }>
 }) {
   const { driverId } = await params
 

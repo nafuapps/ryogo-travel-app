@@ -17,7 +17,7 @@ export default async function PremiumNudge({
 }: {
   userDetails: NonNullable<FindUserDetailsByIdType>
   agencyDetails: NonNullable<FindAgencyByIdType>
-  lastOrderType: OrderTypeEnum | undefined
+  lastOrderType?: OrderTypeEnum
 }) {
   const t = await getTranslations("Dashboard.AccountSubscription.PremiumNudge")
   return (

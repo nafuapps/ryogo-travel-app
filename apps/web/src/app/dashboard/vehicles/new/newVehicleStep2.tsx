@@ -31,6 +31,7 @@ import {
 } from "@/components/page/pageWrappers"
 import FormStepHeader from "@/components/form/formStepHeader"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function NewVehicleStep2({
   onNext,
@@ -91,20 +92,18 @@ export function NewVehicleStep2({
     defaultValues: {
       capacity: newVehicleFormData.capacity,
       odometerReading: newVehicleFormData.odometerReading,
-      rcPhotos: newVehicleFormData.rcPhotos,
-      vehiclePhotos: newVehicleFormData.vehiclePhotos,
       rcExpiresOn: newVehicleFormData.rcExpiresOn,
     },
   })
 
   //Submit actions
-  const onSubmit = (values: Step2Type) => {
+  const onSubmit = async (values: Step2Type) => {
     setNewVehicleFormData({
       ...newVehicleFormData,
       capacity: values.capacity,
       odometerReading: values.odometerReading,
-      rcPhotos: values.rcPhotos,
-      vehiclePhotos: values.vehiclePhotos,
+      rcPhotos: await compressImage(values.rcPhotos),
+      vehiclePhotos: await compressImage(values.vehiclePhotos),
       rcExpiresOn: values.rcExpiresOn,
     })
     onNext()
@@ -148,6 +147,7 @@ export function NewVehicleStep2({
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
+            existingFile={newVehicleFormData.vehiclePhotos}
           />
         </FormContentWrapper>
         <FormContentWrapper>
@@ -157,6 +157,7 @@ export function NewVehicleStep2({
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
+            existingFile={newVehicleFormData.rcPhotos}
           />
           <RyogoDatePicker
             name="rcExpiresOn"

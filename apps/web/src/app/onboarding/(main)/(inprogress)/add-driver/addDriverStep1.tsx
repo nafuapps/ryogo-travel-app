@@ -27,6 +27,7 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function AddDriverStep1({
   onNext,
@@ -84,7 +85,6 @@ export function AddDriverStep1({
       driverName: finalData.name,
       driverPhone: finalData.phone,
       driverEmail: finalData.email,
-      driverPhotos: finalData.userPhotos,
     },
   })
 
@@ -95,7 +95,7 @@ export function AddDriverStep1({
       name: data.driverName,
       phone: data.driverPhone,
       email: data.driverEmail,
-      userPhotos: data.driverPhotos,
+      userPhotos: await compressImage(data.driverPhotos),
     })
     onNext()
   }
@@ -133,6 +133,7 @@ export function AddDriverStep1({
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}
           description={t("Field4.Description")}
+          existingFile={finalData.userPhotos}
         />
       </FormContentWrapper>
       <StickyActionWrapper bgTransparent>

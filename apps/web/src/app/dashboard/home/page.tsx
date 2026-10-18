@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 export default async function DashboardHomePage({
   searchParams,
 }: {
-  searchParams: Promise<{ feedback?: string | undefined }>
+  searchParams: Promise<{ feedback?: string }>
 }) {
   const { feedback } = await searchParams
 

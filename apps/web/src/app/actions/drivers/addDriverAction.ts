@@ -45,11 +45,11 @@ export async function addDriverAction({
 
   if (driver.id) {
     // Upload files to Supabase Storage
-    const [licenseFile] = data.licensePhotos || []
+    const licenseFile = data.licensePhotos
     if (licenseFile) {
       const uploadedLicense = await uploadFile(
         licenseFile,
-        generateLicensePhotoPathName(driver.id, licenseFile),
+        generateLicensePhotoPathName(driver.id),
       )
       await driverServices.updateDriverLicensePhoto({
         driverId: driver.id,
@@ -57,11 +57,11 @@ export async function addDriverAction({
       })
     }
 
-    const [userPhotoFile] = data.userPhotos || []
+    const userPhotoFile = data.userPhotos
     if (userPhotoFile) {
       const uploadedPhoto = await uploadFile(
         userPhotoFile,
-        generateUserPhotoPathName(driver.userId, userPhotoFile),
+        generateUserPhotoPathName(driver.userId),
       )
       await userServices.updateUserPhoto({
         userId: driver.userId,

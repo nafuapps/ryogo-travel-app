@@ -28,6 +28,7 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function AddVehicleStep2({
   onNext,
@@ -88,20 +89,18 @@ export function AddVehicleStep2({
     defaultValues: {
       capacity: finalData.capacity,
       odometerReading: finalData.odometerReading,
-      rcPhotos: finalData.rcPhotos,
-      vehiclePhotos: finalData.vehiclePhotos,
       rcExpiresOn: finalData.rcExpiresOn,
     },
   })
 
   //Submit actions
-  const onSubmit = (data: Step2Type) => {
+  const onSubmit = async (data: Step2Type) => {
     updateFinalData({
       ...finalData,
       capacity: data.capacity,
       odometerReading: data.odometerReading,
-      rcPhotos: data.rcPhotos,
-      vehiclePhotos: data.vehiclePhotos,
+      rcPhotos: await compressImage(data.rcPhotos),
+      vehiclePhotos: await compressImage(data.vehiclePhotos),
       rcExpiresOn: data.rcExpiresOn,
     })
     onNext()
@@ -141,6 +140,7 @@ export function AddVehicleStep2({
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}
           description={t("Field4.Description")}
+          existingFile={finalData.vehiclePhotos}
         />
         <RyogoDatePicker
           name="rcExpiresOn"

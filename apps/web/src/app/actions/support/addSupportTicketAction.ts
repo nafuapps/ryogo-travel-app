@@ -20,7 +20,7 @@ export async function addSupportTicketAction({
     issue: string
     details?: string
     entityId?: string
-    photo?: FileList
+    photo?: File
   }
 }) {
   const currentUser = await getCurrentUser()
@@ -51,14 +51,13 @@ export async function addSupportTicketAction({
   }
 
   //If there is a ticket photo, upload it
-  const [ticketPhotoFile] = data.photo || []
+  const ticketPhotoFile = data.photo
   if (ticketPhotoFile) {
     const uploadedTicketPhoto = await uploadFile(
       ticketPhotoFile,
       generateUserSupportTicketPhotoPathName(
         currentUser.userId,
         newSupportTicket.id,
-        ticketPhotoFile,
       ),
     )
     await supportServices.updateSupportTicketPhoto({

@@ -26,6 +26,7 @@ import {
 
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export default function ChangeTicketPhotoSheet({
   ticketId,
@@ -55,11 +56,16 @@ export default function ChangeTicketPhotoSheet({
   })
 
   const onSubmit = async (data: SchemaType) => {
+    const compressedImage = await compressImage(data.photo)
+    if (!compressedImage) {
+      toast.error(t("Error1"))
+      return
+    }
     setOpen(false)
     const updatedTicket = await changeSupportTicketPhotoAction({
       ticketId,
       userId,
-      photo: data.photo,
+      photo: compressedImage,
     })
     if (updatedTicket) {
       toast.success(t("Success"))

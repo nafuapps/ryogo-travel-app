@@ -66,9 +66,7 @@ export function CreateAccountStep4({
   //Submit actions
   const onSubmit = (data: Step4Type) => {
     updateFinalData({
-      agency: {
-        ...finalData.agency,
-      },
+      ...finalData,
       owner: {
         ...finalData.owner,
         password: data.password,
@@ -104,12 +102,10 @@ export function CreateAccountStep4({
           type={SubscriptionPlanEnum.PREMIUM}
           onClick={() => {
             updateFinalData({
+              ...finalData,
               agency: {
                 ...finalData.agency,
                 tryPremium: true,
-              },
-              owner: {
-                ...finalData.owner,
               },
             })
           }}
@@ -122,12 +118,10 @@ export function CreateAccountStep4({
           type={SubscriptionPlanEnum.BASIC}
           onClick={() => {
             updateFinalData({
+              ...finalData,
               agency: {
                 ...finalData.agency,
                 tryPremium: false,
-              },
-              owner: {
-                ...finalData.owner,
               },
             })
           }}

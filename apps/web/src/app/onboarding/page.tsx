@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 export default async function OnboardingHomePage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | undefined }>
+  searchParams: Promise<{ phone?: string }>
 }) {
   const { phone } = await searchParams
 

@@ -36,7 +36,7 @@ async function encrypt(payload: SessionPayloadType) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("14d")
+    .setExpirationTime(`${SESSION_COOKIE_EXPIRATION_DAYS.toString()}d`)
     .sign(encodedKey)
 }
 

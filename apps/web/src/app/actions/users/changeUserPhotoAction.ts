@@ -14,7 +14,7 @@ export async function changeUserPhotoAction({
 }: {
   userId: string
   agencyId: string
-  photo: FileList
+  photo: File
 }) {
   const currentUser = await getCurrentUser()
   if (
@@ -32,11 +32,9 @@ export async function changeUserPhotoAction({
     return
   }
 
-  const [file] = photo
-  if (!file) return
   const uploadedPhoto = await uploadFile(
-    file,
-    generateUserPhotoPathName(userId, file),
+    photo,
+    generateUserPhotoPathName(userId),
   )
   const user = await userServices.updateUserPhoto({
     userId,

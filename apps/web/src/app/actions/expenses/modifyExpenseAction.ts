@@ -37,11 +37,11 @@ export async function modifyExpenseAction({
 
   //If there is an expense photo, upload it to storage
   let expensePhotoUrl
-  const [file] = data.expensePhoto || []
+  const file = data.expensePhoto
   if (file) {
     const uploadResult = await uploadFile(
       file,
-      generateExpensePhotoPathName(data.bookingId, data.expenseId, file),
+      generateExpensePhotoPathName(data.bookingId, data.expenseId),
     )
     expensePhotoUrl = uploadResult.path
   }

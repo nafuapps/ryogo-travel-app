@@ -27,6 +27,7 @@ import {
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 import { changeVehicleDocumentAction } from "@/app/actions/vehicles/changeVehicleDocumentAction"
+import compressImage from "@/lib/imageCompression"
 
 export default function ChangeVehiclePhotoSheet({
   vehicleId,
@@ -84,7 +85,7 @@ export default function ChangeVehiclePhotoSheet({
       addedByUserId,
       type: documentType,
       expiresOn: data.documentExpiresOn,
-      photo: data.documentPhoto,
+      photo: await compressImage(data.documentPhoto),
     })
     if (updatedVehicle) {
       toast.success(t("Success"))

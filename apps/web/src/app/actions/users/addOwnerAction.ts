@@ -42,11 +42,11 @@ export async function addOwnerAction({
   if (!addedOwner) return
 
   //Upload user photo if attached
-  const [photoFile] = data.photos || []
+  const photoFile = data.photos
   if (photoFile) {
     const uploadedPhoto = await uploadFile(
       photoFile,
-      generateUserPhotoPathName(addedOwner.id, photoFile),
+      generateUserPhotoPathName(addedOwner.id),
     )
     await userServices.updateUserPhoto({
       userId: addedOwner.id,

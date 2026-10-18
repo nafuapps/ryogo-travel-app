@@ -29,7 +29,7 @@ export default function NewDriverForm({
       phone: "",
       email: "",
       userPhotos: undefined,
-      licenseNumber: undefined,
+      licenseNumber: "",
       licenseExpiresOn: undefined,
       licensePhotos: undefined,
       address: "",

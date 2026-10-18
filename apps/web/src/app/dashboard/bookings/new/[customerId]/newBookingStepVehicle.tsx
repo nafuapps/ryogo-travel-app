@@ -66,7 +66,7 @@ export default function NewBookingStepVehicle({
   })
 
   //Save selected vehicle
-  function onSelectVehicle(selectedVehicleId: string | undefined) {
+  function onSelectVehicle(selectedVehicleId?: string) {
     form.setValue("assignedVehicleId", selectedVehicleId)
     const selectedVehicle = vehicles.find(
       (vehicle) => vehicle.id === selectedVehicleId,

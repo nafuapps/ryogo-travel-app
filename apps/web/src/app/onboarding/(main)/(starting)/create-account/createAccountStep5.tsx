@@ -67,9 +67,7 @@ export function CreateAccountConfirm({
     if (createdOwnerAccount) {
       //If success, update userid and move to next success page
       updateFinalData({
-        agency: {
-          ...finalData.agency,
-        },
+        ...finalData,
         owner: {
           ...finalData.owner,
           id: createdOwnerAccount.userId,

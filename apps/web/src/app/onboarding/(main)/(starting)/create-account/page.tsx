@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default async function CreateAccountPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<{ phone?: string }>
 }) {
   const { phone } = await searchParams
 
@@ -27,11 +27,7 @@ export default async function CreateAccountPage({
     <CreateAccountPageComponent
       allOwners={allOwners}
       allAgencies={allAgencies}
-      phone={
-        typeof phone === "string" && PhoneRegex.safeParse(phone).success
-          ? phone
-          : undefined
-      }
+      phone={PhoneRegex.safeParse(phone).success ? phone : undefined}
     />
   )
 }

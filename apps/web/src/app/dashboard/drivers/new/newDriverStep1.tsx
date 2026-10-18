@@ -30,6 +30,7 @@ import {
 } from "@/components/page/pageWrappers"
 import FormStepHeader from "@/components/form/formStepHeader"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import compressImage from "@/lib/imageCompression"
 
 export function NewDriverStep1({
   onNext,
@@ -101,7 +102,6 @@ export function NewDriverStep1({
       driverName: newDriverFormData.name,
       driverPhone: newDriverFormData.phone,
       driverEmail: newDriverFormData.email,
-      driverPhotos: newDriverFormData.userPhotos,
     },
   })
 
@@ -112,7 +112,7 @@ export function NewDriverStep1({
       name: data.driverName,
       phone: data.driverPhone,
       email: data.driverEmail,
-      userPhotos: data.driverPhotos,
+      userPhotos: await compressImage(data.driverPhotos),
     })
     onNext()
   }
@@ -162,6 +162,7 @@ export function NewDriverStep1({
             label={t("Field4.Title")}
             placeholder={t("Field4.Placeholder")}
             description={t("Field4.Description")}
+            existingFile={newDriverFormData.userPhotos}
           />
         </FormContentWrapper>
         <StickyActionWrapper>

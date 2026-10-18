@@ -150,91 +150,87 @@ export function getDisplayEndDate(
 // }
 
 //Generating file upload path names
-export function generateAgencyLogoPathName(agencyId: string, logo: File) {
-  return `agencies/${agencyId}/logo/${Date.now()}-${logo.name}`
+export function generateAgencyLogoPathName(agencyId: string) {
+  return `agencies/${agencyId}/${agencyId}-logo`
 }
 
-export function generateAgencyQRCodePathName(agencyId: string, qrCode: File) {
-  return `agencies/${agencyId}/qrCode/${Date.now()}-${qrCode.name}`
+export function generateAgencyQRCodePathName(agencyId: string) {
+  return `agencies/${agencyId}/${agencyId}-qrCode`
 }
 
-export function generateUserPhotoPathName(userId: string, photo: File) {
-  return `users/${userId}/photo/${Date.now()}-${photo.name}`
+export function generateUserPhotoPathName(userId: string) {
+  return `users/${userId}/${userId}-photo`
 }
 
 export function generateUserSupportTicketPhotoPathName(
   userId: string,
   ticketId: string,
-  photo: File,
 ) {
-  return `users/${userId}/supportTickets/${ticketId}/photo/${Date.now()}-${photo.name}`
+  return `users/${userId}/supportTickets/${ticketId}/${ticketId}-photo`
 }
 
-export function generateInsurancePhotoPathName(vehicleId: string, photo: File) {
-  return `vehicles/${vehicleId}/insurancePhoto/${Date.now()}-${photo.name}`
+export function generateInsurancePhotoPathName(vehicleId: string) {
+  return `vehicles/${vehicleId}/${vehicleId}-insurancePhoto`
 }
 
-export function generateRCPhotoPathName(vehicleId: string, photo: File) {
-  return `vehicles/${vehicleId}/rcPhoto/${Date.now()}-${photo.name}`
+export function generateRCPhotoPathName(vehicleId: string) {
+  return `vehicles/${vehicleId}/${vehicleId}-rcPhoto`
 }
 
-export function generatePUCPhotoPathName(vehicleId: string, photo: File) {
-  return `vehicles/${vehicleId}/pucPhoto/${Date.now()}-${photo.name}`
+export function generatePUCPhotoPathName(vehicleId: string) {
+  return `vehicles/${vehicleId}/${vehicleId}-pucPhoto`
 }
 
-export function generateVehiclePhotoPathName(vehicleId: string, photo: File) {
-  return `vehicles/${vehicleId}/vehiclePhoto/${Date.now()}-${photo.name}`
+export function generateVehiclePhotoPathName(vehicleId: string) {
+  return `vehicles/${vehicleId}/${vehicleId}-vehiclePhoto`
 }
 
-export function generateLicensePhotoPathName(driverId: string, photo: File) {
-  return `drivers/${driverId}/licensePhoto/${Date.now()}-${photo.name}`
+export function generateLicensePhotoPathName(driverId: string) {
+  return `drivers/${driverId}/${driverId}-licensePhoto`
 }
 
-export function generateCustomerPhotoPathName(customerId: string, photo: File) {
-  return `customers/${customerId}/photo/${Date.now()}-${photo.name}`
+export function generateCustomerPhotoPathName(customerId: string) {
+  return `customers/${customerId}/${customerId}-photo`
 }
 
 export function generateExpensePhotoPathName(
   bookingId: string,
   expenseId: string,
-  photo: File,
 ) {
-  return `bookings/${bookingId}/expenses/${expenseId}/photo/${Date.now()}-${photo.name}`
+  return `bookings/${bookingId}/expenses/${expenseId}/${expenseId}-photo`
 }
 
 export function generateTransactionPhotoPathName(
   bookingId: string,
   txnId: string,
-  photo: File,
 ) {
-  return `bookings/${bookingId}/transactions/${txnId}/photo/${Date.now()}-${photo.name}`
+  return `bookings/${bookingId}/transactions/${txnId}/${txnId}-photo`
 }
 
 export function generateTripLogPhotoPathName(
   bookingId: string,
   tripLogId: string,
-  photo: File,
 ) {
-  return `bookings/${bookingId}/tripLogs/${tripLogId}/photo/${Date.now()}-${photo.name}`
+  return `bookings/${bookingId}/tripLogs/${tripLogId}/${tripLogId}-photo`
 }
 
 export function generateBookingQuotePathName(bookingId: string) {
-  return `bookings/${bookingId}/quotes/${bookingId}-quote.pdf`
+  return `bookings/${bookingId}/${bookingId}-quote`
 }
 
 export function generateBookingConfirmationPathName(bookingId: string) {
-  return `bookings/${bookingId}/confirmations/${bookingId}-confirmation.pdf`
+  return `bookings/${bookingId}/${bookingId}-confirmation`
 }
 
 export function generateBookingInvoicePathName(bookingId: string) {
-  return `bookings/${bookingId}/invoices/${bookingId}-invoice.pdf`
+  return `bookings/${bookingId}/${bookingId}-invoice`
 }
 
 export function generateSubscriptionInvoicePathName(
   agencyId: string,
   orderId: string,
 ) {
-  return `agencies/${agencyId}/orders/${orderId}/${orderId}-ryogo-invoice.pdf`
+  return `agencies/${agencyId}/orders/${orderId}/${orderId}-ryogo-invoice`
 }
 
 export function getBookingTrackingLink(id: string, hostUrl?: string) {

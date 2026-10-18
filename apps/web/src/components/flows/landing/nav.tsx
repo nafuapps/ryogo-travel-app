@@ -42,7 +42,7 @@ export default function Navbar({
   locale,
 }: {
   isDarkMode: boolean
-  locale: string | undefined
+  locale?: string
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const t = useTranslations("Landing.Navbar")

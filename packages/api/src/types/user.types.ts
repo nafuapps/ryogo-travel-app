@@ -9,16 +9,16 @@ export type CreateOwnerAccountRequestType = {
     agencyCity: string
     agencyState: string
     tryPremium: boolean
-    commissionRate?: number | undefined
-    logo?: FileList
-    qrCode?: FileList
+    commissionRate?: number
+    logo?: File
+    qrCode?: File
   }
   owner: {
     email: string
     phone: string
     name: string
     password: string
-    photos?: FileList
+    photos?: File
     id?: string
   }
 }
@@ -33,9 +33,9 @@ export type AddDriverRequestType = {
   licenseExpiresOn?: Date
   address?: string
   canDriveVehicleTypes?: VehicleTypesEnum[]
-  defaultAllowancePerDay?: number | undefined
-  licensePhotos?: FileList
-  userPhotos?: FileList
+  defaultAllowancePerDay?: number
+  licensePhotos?: File
+  userPhotos?: File
 }
 
 export type AddUserRequestType = {
@@ -43,5 +43,5 @@ export type AddUserRequestType = {
   name: string
   phone: string
   email: string
-  photos?: FileList
+  photos?: File
 }

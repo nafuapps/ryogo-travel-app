@@ -20,10 +20,10 @@ export type AddVehicleRequestType = {
   hasAC?: boolean
   defaultRatePerKm?: number
   defaultAcChargePerDay?: number
-  rcPhotos?: FileList
-  vehiclePhotos?: FileList
-  insurancePhotos?: FileList
-  pucPhotos?: FileList
+  rcPhotos?: File
+  vehiclePhotos?: File
+  insurancePhotos?: File
+  pucPhotos?: File
 }
 
 export type ModifyVehicleRequestType = {
@@ -46,5 +46,5 @@ export type ChangeVehicleDocumentRequestType = {
   addedByUserId: string
   type: "rc" | "insurance" | "puc"
   expiresOn?: Date
-  photo?: FileList
+  photo?: File
 }

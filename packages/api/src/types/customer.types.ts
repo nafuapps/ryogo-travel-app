@@ -8,7 +8,7 @@ export type NewCustomerRequestType = {
   email?: string
   address?: string
   remarks?: string
-  photo?: FileList
+  photo?: File
 }
 export type ModifyCustomerRequestType = {
   customerId: string

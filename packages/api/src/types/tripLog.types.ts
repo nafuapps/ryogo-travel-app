@@ -10,5 +10,5 @@ export type AddTripLogRequestType = {
   remarks?: string
   lat?: number | null
   long?: number | null
-  tripLogPhoto?: FileList
+  tripLogPhoto?: File
 }

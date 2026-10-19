@@ -1,6 +1,12 @@
+import {
+  AgencyStatusEnum,
+  EntityTypeEnum,
+  InsertMissionType,
+  SubscriptionPlanEnum,
+} from "@ryogo-travel-app/db/schema"
+import { APP_TRIAL_MODE, READ_MISSION_WINDOW_DAYS } from "../apiConfig"
+import { agencyRepository } from "../repositories/agency.repo"
 import { missionRepository } from "../repositories/mission.repo"
-import { READ_MISSION_WINDOW_DAYS } from "../apiConfig"
-import { EntityTypeEnum, InsertMissionType } from "@ryogo-travel-app/db/schema"
 import { ModifyMissionRequestType } from "../types/mission.types"
 
 export const missionServices = {
@@ -32,6 +38,20 @@ export const missionServices = {
     mission: InsertMissionType,
     deletePreviousMissions: boolean = true,
   ) {
+    const agency = await agencyRepository.readAgencyById(mission.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      return
+    }
+    //SUBSCRIPTION CHECK: Only premium agency can create custom reminders
+    if (mission.isCustom) {
+      if (
+        !APP_TRIAL_MODE &&
+        (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+          agency.subscriptionExpiresOn < new Date())
+      ) {
+        return
+      }
+    }
     if (deletePreviousMissions) {
       await missionRepository.deleteMissionsByEntityTitleKey({
         agencyId: mission.agencyId,
@@ -45,6 +65,20 @@ export const missionServices = {
   },
 
   async modifyMission(data: ModifyMissionRequestType) {
+    const agency = await agencyRepository.readAgencyById(data.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      return
+    }
+
+    //SUBSCRIPTION CHECK: Only premium agency can modify custom reminders
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        agency.subscriptionExpiresOn < new Date())
+    ) {
+      return
+    }
+
     const [updatedMission] = await missionRepository.updateMission(data)
     return updatedMission
   },

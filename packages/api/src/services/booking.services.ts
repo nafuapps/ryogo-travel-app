@@ -1,41 +1,47 @@
+import { getActualTotalPrice, getEstimatedTotalPrice } from "@/lib/utils"
 import {
+  AgencyStatusEnum,
   BookingStatusEnum,
   BookingTypeEnum,
   DriverStatusEnum,
   InsertBookingType,
+  SubscriptionPlanEnum,
   TransactionTypesEnum,
   TripLogTypesEnum,
   UserRolesEnum,
   UserStatusEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
+import crypto from "crypto"
+import { addDays, differenceInDays, subDays } from "date-fns"
+import {
+  APP_TRIAL_MODE,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
+  BASIC_SEARCH_LIMIT_DAYS,
+  BOOKING_SCHEDULE_DEFAULT_DAYS,
+  DASHBOARD_FETCH_DAYS,
+  UPDATE_PRICE_DISTANCE_FACTOR,
+} from "../apiConfig"
+import { agencyRepository } from "../repositories/agency.repo"
 import { bookingRepository } from "../repositories/booking.repo"
+import { customerRepository } from "../repositories/customer.repo"
+import { driverRepository } from "../repositories/driver.repo"
+import { driverLeaveRepository } from "../repositories/driverLeave.repo"
+import { expenseRepository } from "../repositories/expense.repo"
+import { locationRepository } from "../repositories/location.repo"
+import { transactionRepository } from "../repositories/transaction.repo"
+import { tripLogRepository } from "../repositories/tripLog.repo"
+import { userRepository } from "../repositories/user.repo"
+import { vehicleRepository } from "../repositories/vehicle.repo"
+import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import {
   ConfirmBookingRequestType,
   NewBookingRequestDataType,
   RateBookingByCustomerType,
   RateBookingByDriverType,
 } from "../types/booking.types"
-import { locationRepository } from "../repositories/location.repo"
 import { routeServices } from "./route.services"
-import { customerRepository } from "../repositories/customer.repo"
-import { expenseRepository } from "../repositories/expense.repo"
-import { tripLogRepository } from "../repositories/tripLog.repo"
-import { transactionRepository } from "../repositories/transaction.repo"
-import { driverRepository } from "../repositories/driver.repo"
-import { vehicleRepository } from "../repositories/vehicle.repo"
-import {
-  BASIC_SEARCH_LIMIT_DAYS,
-  BOOKING_SCHEDULE_DEFAULT_DAYS,
-  DASHBOARD_FETCH_DAYS,
-  UPDATE_PRICE_DISTANCE_FACTOR,
-} from "../apiConfig"
-import { getEstimatedTotalPrice, getActualTotalPrice } from "@/lib/utils"
-import { userRepository } from "../repositories/user.repo"
-import { addDays, subDays } from "date-fns"
-import { driverLeaveRepository } from "../repositories/driverLeave.repo"
-import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
-import crypto from "crypto"
 
 const SUPER_CODE = process.env.SUPER_CODE
 
@@ -333,6 +339,39 @@ export const bookingServices = {
 
   //Create a new Booking
   async addNewBooking(data: NewBookingRequestDataType) {
+    const agency = await agencyRepository.readAgencyById(data.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+
+    //SUBSCRIPTION CHECK: Check if basic plan has reached weekly confirmed bookings limit
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        //Check if premium expired more than X days ago
+        differenceInDays(new Date(), agency.subscriptionExpiresOn) >
+          BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS)
+    ) {
+      const confirmedBookings =
+        await bookingRepository.readCreatedBookingsByStatusDateRange({
+          agencyId: data.agencyId,
+          queryStartDate: subDays(
+            new Date(),
+            BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
+          ),
+          queryEndDate: new Date(),
+          status: [
+            BookingStatusEnum.CONFIRMED,
+            BookingStatusEnum.IN_PROGRESS,
+            BookingStatusEnum.COMPLETED,
+          ],
+        })
+
+      if (
+        confirmedBookings.length >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT
+      ) {
+        return
+      }
+    }
+
     //Step1: Get trip sourceId and destinationId from city & state
     let sourceId = data.sourceId
     if (!sourceId) {
@@ -762,11 +801,14 @@ export const bookingServices = {
       !user ||
       user.status === UserStatusEnum.SUSPENDED ||
       user.userRole === UserRolesEnum.DRIVER
-    )
+    ) {
       return
+    }
 
     const booking = await bookingRepository.readBookingById(bookingId)
-    if (!booking || booking.status === BookingStatusEnum.CANCELLED) return
+    if (!booking || booking.status === BookingStatusEnum.CANCELLED) {
+      return
+    }
 
     const [updatedBooking] = await bookingRepository.updateAssignedUser({
       bookingId,
@@ -813,6 +855,16 @@ export const bookingServices = {
 
   //Reconcile a booking
   async reconcileBooking(bookingId: string) {
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
+    if (
+      !booking ||
+      booking.status !== BookingStatusEnum.COMPLETED ||
+      !booking.closedAt ||
+      booking.reconciledAt
+    ) {
+      return
+    }
+
     const [updatedBooking] =
       await bookingRepository.updateReconciledAt(bookingId)
     return updatedBooking

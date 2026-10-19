@@ -9,7 +9,11 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  EntityTypeEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 
@@ -37,31 +41,34 @@ export async function newBookingAction({
   const booking = await bookingServices.addNewBooking(data)
   if (!booking) return
 
-  const leadBooking = await bookingServices.findBookingDetailsById(booking.id)
-  if (!leadBooking) return
+  const bookingDetails = await bookingServices.findBookingDetailsById(
+    booking.id,
+  )
+  if (!bookingDetails || bookingDetails.status !== BookingStatusEnum.LEAD)
+    return
 
-  if (leadBooking.customer.email) {
-    //Generate and upload quote
-    const quoteFile = await getLeadQuotePDF(leadBooking)
+  //Generate and upload quote
+  const quoteFile = await getLeadQuotePDF(bookingDetails)
 
-    const quoteUrl = (
-      await uploadFile(quoteFile, generateBookingQuotePathName(leadBooking.id))
-    ).path
-    if (!quoteUrl) return
+  const quoteUrl = (
+    await uploadFile(quoteFile, generateBookingQuotePathName(bookingDetails.id))
+  ).path
+  if (!quoteUrl) return
 
-    //Update quote url in DB
-    await bookingServices.addQuoteUrl({ bookingId: leadBooking.id, quoteUrl })
+  //Update quote url in DB
+  await bookingServices.addQuoteUrl({ bookingId: bookingDetails.id, quoteUrl })
 
-    // Share quote over email to customer
+  // Share quote over email to customer
+  if (bookingDetails.customer.email) {
     await sendEmail({
-      receipientEmail: [leadBooking.customer.email],
+      receipientEmail: [bookingDetails.customer.email],
       subject: "Booking Quotation | RyoGo",
       element: LeadBookingEmailTemplate({
-        name: leadBooking.customer.name,
-        bookingId: leadBooking.id,
+        name: bookingDetails.customer.name,
+        bookingId: bookingDetails.id,
         downloadUrl: getFileUrl(quoteUrl),
-        route: `${leadBooking.source.city} - ${leadBooking.destination.city}`,
-        date: format(leadBooking.startDate, "dd MMM"),
+        route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
+        date: format(bookingDetails.startDate, "dd MMM"),
       }),
     })
   }

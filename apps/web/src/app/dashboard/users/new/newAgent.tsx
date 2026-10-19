@@ -4,7 +4,8 @@ import {
   SubscriptionPlanEnum,
   UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { BASIC_PLAN_AGENT_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
+import { BASIC_PLAN_AGENT_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import { getTranslations } from "next-intl/server"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"

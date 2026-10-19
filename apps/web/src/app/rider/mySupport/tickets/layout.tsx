@@ -5,7 +5,7 @@ import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import RiderHeader from "@/components/header/riderHeader"
-import { APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 
 export default async function MySupportTicketsLayout({

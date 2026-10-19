@@ -5,7 +5,8 @@ import {
   SubscriptionPlanEnum,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { APP_TRIAL_MODE, BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
+import { BASIC_PLAN_VEHICLE_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { redirect, RedirectType } from "next/navigation"
 import { getTranslations } from "next-intl/server"

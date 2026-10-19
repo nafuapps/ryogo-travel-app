@@ -9,11 +9,11 @@ import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle
 import AssignVehicleTile from "@/components/flows/bookings/assign/assignVehicleTile"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
-  BASIC_PLAN_VEHICLE_LIMIT,
   NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
   NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
   NewBookingTotalSteps,
 } from "@/lib/uiConfig"
+import { BASIC_PLAN_VEHICLE_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,

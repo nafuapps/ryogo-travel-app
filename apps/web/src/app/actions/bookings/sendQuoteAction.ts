@@ -1,5 +1,7 @@
 "use server"
 
+import { LeadBookingEmailTemplate } from "@/components/email/leadBookingEmailTemplate"
+import sendEmail from "@/components/email/sendEmail"
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
@@ -55,6 +57,21 @@ export async function sendQuoteAction({
   } else {
     //Else, just update quote sent time in DB
     await bookingServices.changeQuoteSent(bookingId)
+  }
+
+  // Share quote over email to customer
+  if (bookingDetails.customer.email) {
+    await sendEmail({
+      receipientEmail: [bookingDetails.customer.email],
+      subject: "Booking Quotation | RyoGo",
+      element: LeadBookingEmailTemplate({
+        name: bookingDetails.customer.name,
+        bookingId: bookingDetails.id,
+        downloadUrl: getFileUrl(quoteUrl),
+        route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
+        date: format(bookingDetails.startDate, "dd MMM"),
+      }),
+    })
   }
 
   //Send quote pdf to customer over whatsapp

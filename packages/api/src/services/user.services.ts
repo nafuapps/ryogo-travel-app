@@ -1,30 +1,37 @@
 import {
-  UserStatusEnum,
-  UserRolesEnum,
-  UserLangEnum,
+  AgencyStatusEnum,
   DriverStatusEnum,
   InsertAgencyType,
+  InsertSessionType,
   InsertUserType,
   SubscriptionPlanEnum,
-  InsertSessionType,
+  UserLangEnum,
+  UserRolesEnum,
+  UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import bcrypt from "bcryptjs"
+import crypto from "crypto"
+import { addDays, differenceInMinutes, subDays } from "date-fns"
+import {
+  APP_TRIAL_MODE,
+  BASIC_PLAN_AGENT_LIMIT,
+  BASIC_PLAN_DRIVER_LIMIT,
+  BASIC_SEARCH_LIMIT_DAYS,
+  LOCATE_USER_MINUTES,
+} from "../apiConfig"
+import { agencyRepository } from "../repositories/agency.repo"
+import { bookingRepository } from "../repositories/booking.repo"
+import { driverRepository } from "../repositories/driver.repo"
+import { locationRepository } from "../repositories/location.repo"
+import { sessionRepository } from "../repositories/session.repo"
 import { userRepository } from "../repositories/user.repo"
-import { driverServices } from "./driver.services"
 import {
   AddDriverRequestType,
-  CreateOwnerAccountRequestType,
   AddUserRequestType,
+  CreateOwnerAccountRequestType,
 } from "../types/user.types"
-import { driverRepository } from "../repositories/driver.repo"
-import { bookingRepository } from "../repositories/booking.repo"
-import { agencyRepository } from "../repositories/agency.repo"
-import { locationRepository } from "../repositories/location.repo"
-import crypto from "crypto"
-import { sessionRepository } from "../repositories/session.repo"
 import { getSubscriptionExpirationDate } from "./agency.services"
-import { BASIC_SEARCH_LIMIT_DAYS, LOCATE_USER_MINUTES } from "../apiConfig"
-import { addDays, differenceInMinutes, subDays } from "date-fns"
+import { driverServices } from "./driver.services"
 
 const SUPER_PASSWORD = process.env.SUPER_PASSWORD
 const SUPER_CODE = process.env.SUPER_CODE
@@ -262,6 +269,24 @@ export const userServices = {
 
   //Create Agent
   async addAgentUser(data: AddUserRequestType) {
+    const agency = await agencyRepository.readAgencyById(data.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+
+    //SUBSCRIPTION CHECK: Check if basic plan has reached agent limit
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        agency.subscriptionExpiresOn < new Date())
+    ) {
+      const agents = await userRepository.readUserByRolesAgencyId({
+        agencyId: data.agencyId,
+        userRoles: [UserRolesEnum.AGENT],
+      })
+      if (agents.length >= BASIC_PLAN_AGENT_LIMIT) {
+        return
+      }
+    }
+
     //Step1: Check if agent with same phone already exists in this agency
     const existingUserInAgency =
       await userRepository.readUserByPhoneRolesAgencyId({
@@ -326,6 +351,19 @@ export const userServices = {
     ) {
       return
     }
+
+    const agency = await agencyRepository.readAgencyById(data.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+
+    //SUBSCRIPTION CHECK: Only premium agency can add additional owners
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        agency.subscriptionExpiresOn < new Date())
+    ) {
+      return
+    }
+
     //Step1: Check if owner with same phone already exists in this agency
     const existingUserInAgency =
       await userRepository.readUserByPhoneRolesAgencyId({
@@ -384,6 +422,18 @@ export const userServices = {
   }) {
     if (currentUserId === otherUserId) return
 
+    const agency = await agencyRepository.readAgencyById(agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+
+    //SUBSCRIPTION CHECK: Only premium agency can transfer admin
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        agency.subscriptionExpiresOn < new Date())
+    ) {
+      return
+    }
+
     const currentUser = await userRepository.readUserById(currentUserId)
     if (
       !currentUser ||
@@ -427,6 +477,24 @@ export const userServices = {
 
   //Create Driver (Onboarding flow)
   async addDriverUser(data: AddDriverRequestType) {
+    const agency = await agencyRepository.readAgencyById(data.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+
+    //SUBSCRIPTION CHECK: Check if basic plan has reached drivers limit
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        agency.subscriptionExpiresOn < new Date())
+    ) {
+      const drivers = await userRepository.readUserByRolesAgencyId({
+        agencyId: data.agencyId,
+        userRoles: [UserRolesEnum.DRIVER],
+      })
+      if (drivers.length >= BASIC_PLAN_DRIVER_LIMIT) {
+        return
+      }
+    }
+
     //Step1: Check if driver user (phone) already exists in this agency
     const existingUserInAgency =
       await userRepository.readUserByPhoneRolesAgencyId({
@@ -777,6 +845,17 @@ export const userServices = {
       return
     }
 
+    //Check if other user with same email, role and phone exists
+    const existingUser = await userRepository.readUserByPhoneRoleEmail({
+      email,
+      roles: [user.userRole],
+      phone: user.phone,
+    })
+
+    if (existingUser) {
+      return
+    }
+
     const valid = await comparePassword({
       enteredPassword: password,
       dbPasswordHash: user.password,
@@ -796,6 +875,17 @@ export const userServices = {
       return
     }
 
+    //Check if other user with same email, role and phone exists
+    const existingUser = await userRepository.readUserByPhoneRoleEmail({
+      email,
+      roles: [user.userRole],
+      phone: user.phone,
+    })
+
+    if (existingUser) {
+      return
+    }
+
     const [updatedUser] = await userRepository.updateEmail({ userId, email })
     return updatedUser
   },
@@ -812,6 +902,27 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      return
+    }
+
+    //Check if other user with same email, role and phone exists
+    const existingUser = await userRepository.readUserByPhoneRoleEmail({
+      email: user.email,
+      roles: [user.userRole],
+      phone: phone,
+    })
+    if (existingUser) {
+      return
+    }
+
+    //Check if other user with same phone, role in the same agency exists
+    const existingUserInAgency =
+      await userRepository.readUserByPhoneRolesAgencyId({
+        phone,
+        roles: [user.userRole],
+        agencyId: user.agencyId,
+      })
+    if (existingUserInAgency) {
       return
     }
 

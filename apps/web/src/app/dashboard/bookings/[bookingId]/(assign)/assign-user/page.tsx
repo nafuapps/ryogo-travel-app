@@ -12,7 +12,8 @@ import {
 import { redirect, RedirectType } from "next/navigation"
 import AssignUserPageComponent from "./assignUser"
 import { Metadata } from "next"
-import { BASIC_PLAN_AGENT_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
+import { BASIC_PLAN_AGENT_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 

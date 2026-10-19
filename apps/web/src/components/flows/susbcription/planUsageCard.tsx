@@ -8,10 +8,10 @@ import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import {
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
-  BASIC_PLAN_DRIVER_LIMIT,
   BASIC_PLAN_VEHICLE_LIMIT,
-  BASIC_PLAN_AGENT_LIMIT,
-} from "@/lib/uiConfig"
+} from "@ryogo-travel-app/api/apiConfig"
+import { BASIC_PLAN_AGENT_LIMIT } from "@ryogo-travel-app/api/apiConfig"
+import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import { FindAgencyDataType } from "@ryogo-travel-app/api/services/agency.services"
 import { Info } from "lucide-react"
 import { getTranslations } from "next-intl/server"

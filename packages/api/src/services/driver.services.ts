@@ -1,21 +1,28 @@
 import {
+  AgencyStatusEnum,
   DriverLeaveStatusEnum,
   DriverStatusEnum,
   InsertDriverLeaveType,
   InsertDriverType,
+  SubscriptionPlanEnum,
   UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
+import { addDays, subDays } from "date-fns"
+import {
+  APP_TRIAL_MODE,
+  BASIC_PLAN_DRIVER_LIMIT,
+  BASIC_SEARCH_LIMIT_DAYS,
+} from "../apiConfig"
+import { agencyRepository } from "../repositories/agency.repo"
+import { bookingRepository } from "../repositories/booking.repo"
 import { driverRepository } from "../repositories/driver.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
-import { bookingRepository } from "../repositories/booking.repo"
 import { userRepository } from "../repositories/user.repo"
 import {
-  ModifyDriverRequestType,
   ChangeDriverLicenseRequestType,
+  ModifyDriverRequestType,
 } from "../types/driver.types"
-import { addDays, subDays } from "date-fns"
 import { ModifyDriverLeaveRequestType } from "../types/driverLeave.types"
-import { BASIC_SEARCH_LIMIT_DAYS } from "../apiConfig"
 
 export const driverServices = {
   async findDashboardDrivers(agencyId: string) {
@@ -103,6 +110,23 @@ export const driverServices = {
 
   //Create driver
   async addDriver(data: InsertDriverType) {
+    const agency = await agencyRepository.readAgencyById(data.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+
+    //SUBSCRIPTION CHECK: Check if basic plan has reached drivers limit
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        agency.subscriptionExpiresOn < new Date())
+    ) {
+      const drivers = await driverRepository.readDriversByAgencyId(
+        data.agencyId,
+      )
+      if (drivers.length >= BASIC_PLAN_DRIVER_LIMIT) {
+        return
+      }
+    }
+
     //Step1: Check if driver (userId) already exists in the system
     const existingDriverUser = await driverRepository.readDriverByUserId(
       data.userId,
@@ -139,6 +163,9 @@ export const driverServices = {
 
   //Change driver license details
   async changeDriverLicense(data: ChangeDriverLicenseRequestType) {
+    const driver = await driverRepository.readDriverById(data.id)
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+
     const [updatedDriver] =
       await driverRepository.updateDriverLicenseDetails(data)
     return updatedDriver
@@ -222,6 +249,9 @@ export const driverServices = {
     driverId: string
     licensePhotoUrl: string
   }) {
+    const driver = await driverRepository.readDriverById(driverId)
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+
     await driverRepository.updateDriverLicenseUrl({ driverId, licensePhotoUrl })
   },
 
@@ -244,7 +274,12 @@ export const driverServices = {
     }
 
     const driver = await driverRepository.readDriverById(driverId)
-    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+    if (
+      !driver ||
+      driver.status === DriverStatusEnum.SUSPENDED ||
+      driver.status === DriverStatusEnum.AVAILABLE
+    )
+      return
 
     const [updatedDriver] = await driverRepository.updateStatus({
       driverId,
@@ -266,7 +301,12 @@ export const driverServices = {
       return
     }
     const driver = await driverRepository.readDriverById(driverId)
-    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+    if (
+      !driver ||
+      driver.status === DriverStatusEnum.SUSPENDED ||
+      driver.status === DriverStatusEnum.INACTIVE
+    )
+      return
 
     const [updatedDriver] = await driverRepository.updateStatus({
       driverId,

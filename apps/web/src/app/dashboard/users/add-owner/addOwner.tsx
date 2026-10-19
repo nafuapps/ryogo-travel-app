@@ -1,6 +1,6 @@
 import { PageWrapper } from "@/components/page/pageWrappers"
 import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
-import { APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import { getTranslations } from "next-intl/server"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"

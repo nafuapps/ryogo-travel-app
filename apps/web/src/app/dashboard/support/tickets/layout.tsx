@@ -8,7 +8,7 @@ import {
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { getTranslations } from "next-intl/server"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 
 export default async function SupportTicketsLayout({

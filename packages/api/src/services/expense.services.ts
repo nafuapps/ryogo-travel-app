@@ -2,12 +2,12 @@ import {
   BookingStatusEnum,
   InsertExpenseType,
 } from "@ryogo-travel-app/db/schema"
+import { bookingRepository } from "../repositories/booking.repo"
 import { expenseRepository } from "../repositories/expense.repo"
 import {
   AddExpenseRequestType,
   UpdateExpenseRequestType,
 } from "../types/expense.types"
-import { bookingRepository } from "../repositories/booking.repo"
 
 export const expenseServices = {
   //Get expense details by expense id
@@ -18,6 +18,18 @@ export const expenseServices = {
 
   //Add a expense
   async addExpense(data: AddExpenseRequestType) {
+    const booking = await bookingRepository.readBookingStatusById(
+      data.bookingId,
+    )
+    if (
+      !booking ||
+      [BookingStatusEnum.LEAD, BookingStatusEnum.CANCELLED].includes(
+        booking.status,
+      ) ||
+      booking.closedAt
+    ) {
+      return
+    }
     const newExpenseData: InsertExpenseType = {
       bookingId: data.bookingId,
       addedByUserId: data.userId,
@@ -40,7 +52,7 @@ export const expenseServices = {
     )
     if (
       !booking ||
-      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      [BookingStatusEnum.LEAD, BookingStatusEnum.CANCELLED].includes(
         booking.status,
       ) ||
       booking.closedAt
@@ -68,7 +80,7 @@ export const expenseServices = {
     )
     if (
       !booking ||
-      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      [BookingStatusEnum.LEAD, BookingStatusEnum.CANCELLED].includes(
         booking.status,
       ) ||
       booking.closedAt
@@ -108,7 +120,7 @@ export const expenseServices = {
     )
     if (
       !booking ||
-      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      [BookingStatusEnum.LEAD, BookingStatusEnum.CANCELLED].includes(
         booking.status,
       ) ||
       booking.closedAt

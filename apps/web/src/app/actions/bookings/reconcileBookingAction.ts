@@ -3,11 +3,7 @@
 import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import {
-  BookingStatusEnum,
-  EntityTypeEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function reconcileBookingAction({
   bookingId,
@@ -29,15 +25,6 @@ export async function reconcileBookingAction({
     return
   }
 
-  const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
-  if (
-    !bookingDetails ||
-    bookingDetails.status !== BookingStatusEnum.COMPLETED ||
-    !bookingDetails.closedAt ||
-    bookingDetails.reconciledAt
-  )
-    return
-
   const updatedBooking = await bookingServices.reconcileBooking(bookingId)
   if (!updatedBooking) {
     return
@@ -48,14 +35,14 @@ export async function reconcileBookingAction({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.BOOKING,
-    entityId: bookingDetails.id,
+    entityId: updatedBooking.id,
     isFeed: true,
     textKey: "BookingReconciled",
     textObject: {
-      bookingId: bookingDetails.id,
+      bookingId: updatedBooking.id,
       userName: currentUser.name,
     },
-    link: `/dashboard/bookings/${bookingDetails.id}`,
+    link: `/dashboard/bookings/${updatedBooking.id}`,
   })
 
   return updatedBooking

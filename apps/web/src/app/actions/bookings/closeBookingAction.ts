@@ -72,7 +72,7 @@ export async function closeBookingAction({
       subject: "Booking Completed - Invoice | RyoGo",
       element: BookingCompletedInvoiceEmailTemplate({
         name: bookingDetails.customer.name,
-        bookingId: bookingDetails.id,
+        bookingId: updatedBooking.id,
         downloadUrl: fileUrl,
         route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
         trackUrl: trackingUrl,
@@ -90,14 +90,14 @@ export async function closeBookingAction({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.BOOKING,
-    entityId: bookingDetails.id,
+    entityId: updatedBooking.id,
     isFeed: true,
     textKey: "BookingClosed",
     textObject: {
-      bookingId: bookingDetails.id,
+      bookingId: updatedBooking.id,
       userName: currentUser.name,
     },
-    link: `/dashboard/bookings/${bookingDetails.id}`,
+    link: `/dashboard/bookings/${updatedBooking.id}`,
   })
 
   //Remove trip ended mission

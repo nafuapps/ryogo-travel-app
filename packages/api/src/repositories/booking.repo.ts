@@ -11,19 +11,19 @@ import {
   vehicles,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import {
-  eq,
-  and,
-  or,
-  gte,
-  lte,
-  inArray,
-  sql,
-  not,
-  lt,
-  isNotNull,
-} from "drizzle-orm"
 import { addDays, subDays } from "date-fns"
+import {
+  and,
+  eq,
+  gte,
+  inArray,
+  isNotNull,
+  lt,
+  lte,
+  not,
+  or,
+  sql,
+} from "drizzle-orm"
 import {
   RateBookingByCustomerType,
   RateBookingByDriverType,

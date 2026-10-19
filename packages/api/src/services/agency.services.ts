@@ -3,20 +3,20 @@ import {
   SubscriptionPlanEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { agencyRepository } from "../repositories/agency.repo"
-import { locationRepository } from "../repositories/location.repo"
-import { vehicleRepository } from "../repositories/vehicle.repo"
-import { driverRepository } from "../repositories/driver.repo"
-import { userRepository } from "../repositories/user.repo"
-import { bookingRepository } from "../repositories/booking.repo"
-import { customerRepository } from "../repositories/customer.repo"
+import { addDays, differenceInDays, subDays } from "date-fns"
 import {
   BASIC_SEARCH_LIMIT_DAYS,
   EXPIRATION_ALERT_WINDOW_DAYS,
   PREMIUM_TRIAL_DAYS,
 } from "../apiConfig"
+import { agencyRepository } from "../repositories/agency.repo"
+import { bookingRepository } from "../repositories/booking.repo"
+import { customerRepository } from "../repositories/customer.repo"
+import { driverRepository } from "../repositories/driver.repo"
+import { locationRepository } from "../repositories/location.repo"
+import { userRepository } from "../repositories/user.repo"
+import { vehicleRepository } from "../repositories/vehicle.repo"
 import { ModifyAgencyRequestType } from "../types/agency.types"
-import { addDays, differenceInDays, subDays } from "date-fns"
 
 export const agencyServices = {
   //Find all agencies
@@ -127,11 +127,6 @@ export const agencyServices = {
 
   //Modify agency details
   async modifyAgency(data: ModifyAgencyRequestType) {
-    const agency = await agencyRepository.readAgencyById(data.agencyId)
-    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-      return
-    }
-
     //Step1: Get location id from city, state (if provided)
     let locationId
     if (data.agencyCity && data.agencyState) {
@@ -139,10 +134,7 @@ export const agencyServices = {
         city: data.agencyCity,
         state: data.agencyState,
       })
-      if (!location) {
-        return
-      }
-      locationId = location.id
+      locationId = location?.id
     }
 
     //Step2: Update agency details
@@ -231,6 +223,17 @@ export const agencyServices = {
     agencyId: string
     businessPhone: string
   }) {
+    const agency = await agencyRepository.readAgencyById(agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      return
+    }
+    const existingAgencyWithPhoneEmail =
+      await agencyRepository.readAgencyByPhoneEmail({
+        businessPhone,
+        businessEmail: agency.businessEmail,
+      })
+    if (existingAgencyWithPhoneEmail) return
+
     const [updatedAgency] = await agencyRepository.updateAgencyPhone({
       agencyId,
       businessPhone,
@@ -246,6 +249,16 @@ export const agencyServices = {
     agencyId: string
     businessEmail: string
   }) {
+    const agency = await agencyRepository.readAgencyById(agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      return
+    }
+    const existingAgencyWithPhoneEmail =
+      await agencyRepository.readAgencyByPhoneEmail({
+        businessPhone: agency.businessPhone,
+        businessEmail,
+      })
+    if (existingAgencyWithPhoneEmail) return
     const [updatedAgency] = await agencyRepository.updateAgencyEmail({
       agencyId,
       businessEmail,

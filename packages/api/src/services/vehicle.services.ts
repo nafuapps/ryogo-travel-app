@@ -1,21 +1,28 @@
-import { vehicleRepository } from "../repositories/vehicle.repo"
-import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import {
+  AgencyStatusEnum,
   InsertVehicleRepairType,
   InsertVehicleType,
+  SubscriptionPlanEnum,
   VehicleRepairStatusEnum,
   VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
+import { addDays, subDays } from "date-fns"
+import {
+  APP_TRIAL_MODE,
+  BASIC_PLAN_VEHICLE_LIMIT,
+  BASIC_SEARCH_LIMIT_DAYS,
+} from "../apiConfig"
+import { agencyRepository } from "../repositories/agency.repo"
+import { bookingRepository } from "../repositories/booking.repo"
+import { vehicleRepository } from "../repositories/vehicle.repo"
+import { vehicleRepairRepository } from "../repositories/vehicleRepair.repo"
 import {
   AddVehicleRequestType,
   ChangeVehicleDocumentRequestType,
   ModifyVehicleRequestType,
 } from "../types/vehicle.types"
-import { bookingRepository } from "../repositories/booking.repo"
-import { addDays, subDays } from "date-fns"
 import { ModifyVehicleRepairRequestType } from "../types/vehicleRepair.types"
-import { BASIC_SEARCH_LIMIT_DAYS } from "../apiConfig"
 
 export const vehicleServices = {
   async findDashboardVehicles(agencyId: string) {
@@ -125,6 +132,23 @@ export const vehicleServices = {
 
   //Add vehicle to agency
   async addVehicle(data: AddVehicleRequestType) {
+    const agency = await agencyRepository.readAgencyById(data.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+
+    //SUBSCRIPTION CHECK: Check if basic plan has reached vehicles limit
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        agency.subscriptionExpiresOn < new Date())
+    ) {
+      const vehicles = await vehicleRepository.readVehiclesByAgencyId(
+        data.agencyId,
+      )
+      if (vehicles.length >= BASIC_PLAN_VEHICLE_LIMIT) {
+        return
+      }
+    }
+
     //Step1: Check if the vehicle already exists in this agency
     const existingVehicleInAgency =
       await vehicleRepository.readVehicleByNumberInAgency({
@@ -238,11 +262,24 @@ export const vehicleServices = {
     vehicleId: string
     vehicleNumber: string
   }) {
-    const [vehicle] = await vehicleRepository.updateVehicleNumber({
+    const vehicle = await vehicleRepository.readVehicleById(vehicleId)
+    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+
+    const existingVehicle = await vehicleRepository.readVehicleByNumberInAgency(
+      {
+        agencyId: vehicle.agencyId,
+        vehicleNumber: vehicleNumber.toUpperCase(),
+      },
+    )
+    if (existingVehicle) {
+      return
+    }
+
+    const [updatedVehicle] = await vehicleRepository.updateVehicleNumber({
       vehicleId,
       vehicleNumber,
     })
-    return vehicle
+    return updatedVehicle
   },
 
   //Modify vehicle details
@@ -268,6 +305,9 @@ export const vehicleServices = {
     insurancePhotoUrl?: string
     vehiclePhotoUrl?: string
   }) {
+    const vehicle = await vehicleRepository.readVehicleById(vehicleId)
+    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+
     await vehicleRepository.updateDocUrls({
       vehicleId,
       rcPhotoUrl,
@@ -281,6 +321,9 @@ export const vehicleServices = {
     data: ChangeVehicleDocumentRequestType,
     photoUrl?: string,
   ) {
+    const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
+    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+
     if (data.type === "rc") {
       const [updatedVehicle] = await vehicleRepository.updateRCDetails({
         vehicleId: data.vehicleId,
@@ -323,7 +366,12 @@ export const vehicleServices = {
   //Activate Vehicle
   async activateVehicle(vehicleId: string) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
-    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+    if (
+      !vehicle ||
+      vehicle.status === VehicleStatusEnum.SUSPENDED ||
+      vehicle.status === VehicleStatusEnum.AVAILABLE
+    )
+      return
 
     const [updatedVehicle] = await vehicleRepository.updateStatus({
       vehicleId,
@@ -335,7 +383,12 @@ export const vehicleServices = {
   //Inctivate Vehicle
   async inactivateVehicle(vehicleId: string) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
-    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+    if (
+      !vehicle ||
+      vehicle.status === VehicleStatusEnum.SUSPENDED ||
+      vehicle.status === VehicleStatusEnum.INACTIVE
+    )
+      return
 
     const [updatedVehicle] = await vehicleRepository.updateStatus({
       vehicleId,
@@ -349,12 +402,11 @@ function getDefaultCapacityByVehicleType(type: VehicleTypesEnum) {
   switch (type) {
     case VehicleTypesEnum.BIKE:
       return 1
-    case VehicleTypesEnum.CAR:
-      return 4
     case VehicleTypesEnum.BUS:
       return 30
+    case VehicleTypesEnum.CAR:
     default:
-      return
+      return 4
   }
 }
 

@@ -1,14 +1,19 @@
-import { cookies, headers } from "next/headers"
-import { jwtVerify, SignJWT } from "jose"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   DARK_MODE_COOKIE_NAME,
   LOCALE_COOKIE_NAME,
   SESSION_COOKIE_EXPIRATION_DAYS,
   SESSION_COOKIE_NAME,
 } from "@ryogo-travel-app/api/apiConfig"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import {
+  AgencyStatusEnum,
+  UserRolesEnum,
+  UserStatusEnum,
+} from "@ryogo-travel-app/db/schema"
 import { addDays } from "date-fns"
+import { jwtVerify, SignJWT } from "jose"
+import { cookies, headers } from "next/headers"
 
 const secretKey = process.env.AUTH_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
@@ -64,6 +69,10 @@ export async function verifyWebSessionInDB(token: string, userId: string) {
   //Check if current user exists in DB and is active
   const user = await userServices.findUserDetailsById(userId)
   if (!user || user.status !== UserStatusEnum.ACTIVE) return
+
+  //Check if current user's agency exists in DB and is not suspended
+  const agency = await agencyServices.findAgencyById(user.agencyId)
+  if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
 
   return sessionDB
 }

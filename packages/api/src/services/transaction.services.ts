@@ -2,13 +2,13 @@ import {
   BookingStatusEnum,
   InsertTransactionType,
 } from "@ryogo-travel-app/db/schema"
+import { subDays } from "date-fns"
+import { bookingRepository } from "../repositories/booking.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
 import {
   AddTransactionRequestType,
   UpdateTransactionRequestType,
 } from "../types/transaction.types"
-import { subDays } from "date-fns"
-import { bookingRepository } from "../repositories/booking.repo"
 
 export const transactionServices = {
   //Get previous N days transactions
@@ -41,6 +41,18 @@ export const transactionServices = {
 
   //Add a transaction
   async addTransaction(data: AddTransactionRequestType) {
+    const booking = await bookingRepository.readBookingStatusById(
+      data.bookingId,
+    )
+    if (
+      !booking ||
+      [BookingStatusEnum.LEAD, BookingStatusEnum.CANCELLED].includes(
+        booking.status,
+      ) ||
+      booking.closedAt
+    ) {
+      return
+    }
     const newTransactionData: InsertTransactionType = {
       bookingId: data.bookingId,
       addedByUserId: data.userId,
@@ -65,7 +77,7 @@ export const transactionServices = {
     )
     if (
       !booking ||
-      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      [BookingStatusEnum.LEAD, BookingStatusEnum.CANCELLED].includes(
         booking.status,
       ) ||
       booking.reconciledAt
@@ -95,7 +107,7 @@ export const transactionServices = {
     )
     if (
       !booking ||
-      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      [BookingStatusEnum.LEAD, BookingStatusEnum.CANCELLED].includes(
         booking.status,
       ) ||
       booking.reconciledAt
@@ -138,7 +150,7 @@ export const transactionServices = {
     )
     if (
       !booking ||
-      ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
+      [BookingStatusEnum.LEAD, BookingStatusEnum.CANCELLED].includes(
         booking.status,
       ) ||
       booking.reconciledAt

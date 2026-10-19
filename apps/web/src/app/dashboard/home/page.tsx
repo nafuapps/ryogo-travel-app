@@ -8,8 +8,8 @@ import { MainWrapper } from "@/components/page/pageWrappers"
 import {
   SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS,
   SUBSCRIPTION_EXPIRY_REMINDER_DAYS,
-  APP_TRIAL_MODE,
 } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { differenceInDays } from "date-fns"
 import { RyogoCaption } from "@/components/typography"

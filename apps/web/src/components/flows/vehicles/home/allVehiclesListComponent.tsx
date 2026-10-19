@@ -22,7 +22,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
-import { BASIC_PLAN_VEHICLE_LIMIT } from "@/lib/uiConfig"
+import { BASIC_PLAN_VEHICLE_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import SubscriptionWarningCard from "@/components/flows/susbcription/subscriptionWarningCard"
 import { RyogoTagWithoutBG } from "@/components/tags/ryogoTag"
 import { getAverageRating } from "@/lib/utils"

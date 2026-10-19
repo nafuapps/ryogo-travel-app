@@ -1,11 +1,11 @@
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
-import { Truck, Bus, Car, Motorbike, Tractor, LucideIcon } from "lucide-react"
 import {
   RyogoEnclosedIcon,
   RyogoIcon,
   RyogoIconType,
 } from "@/components/icons/ryogoIcon"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { Bus, Car, LucideIcon, Motorbike, Tractor, Truck } from "lucide-react"
 
 export function getVehicleIcon(vehicleType: VehicleTypesEnum) {
   switch (vehicleType) {

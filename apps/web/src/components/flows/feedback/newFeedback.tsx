@@ -15,7 +15,7 @@ import {
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoH3, RyogoCaption } from "@/components/typography"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import {
   MAX_FIELD_DESC_LENGTH,
@@ -24,9 +24,9 @@ import {
 } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
+import type { Route } from "next"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
-import type { Route } from "next"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -78,7 +78,7 @@ export default function NewFeedbackComponent({
       return
     }
     const result = await addFeedbackAction({
-      rating: rating === 0 ? null : rating,
+      rating: rating === 0 ? undefined : rating,
       liked: isLiked,
       remarks: data.remarks,
       entityId: entityId,

@@ -12,7 +12,7 @@ import ReconcileBookingPageComponent from "./reconcileBooking"
 import { Metadata } from "next"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import { getTranslations } from "next-intl/server"
 import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 

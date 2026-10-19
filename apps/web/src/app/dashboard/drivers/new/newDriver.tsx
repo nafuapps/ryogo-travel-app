@@ -8,7 +8,8 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { BASIC_PLAN_DRIVER_LIMIT, APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
+import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import { getTranslations } from "next-intl/server"
 import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 

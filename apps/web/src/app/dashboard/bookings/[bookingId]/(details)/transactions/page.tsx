@@ -1,24 +1,24 @@
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import BookingTransactionsPageComponent from "./bookingTransactions"
-import { getCurrentUser } from "@/lib/auth"
-import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
+import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   MainWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import {
-  RyogoDefaultButton,
-  RyogoGhostButton,
-} from "@/components/buttons/ryogoButtons"
+import { getCurrentUser } from "@/lib/auth"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
+import { redirect, RedirectType } from "next/navigation"
+import BookingTransactionsPageComponent from "./bookingTransactions"
 
 export const metadata: Metadata = {
   title: `Booking Transactions - ${pageTitle}`,
@@ -43,14 +43,16 @@ export default async function BookingTransactionsPage({
 
   const t = await getTranslations("Dashboard.BookingTransactions")
 
-  //Txn can be created for in-progress or completed bookings only
+  //Txn can be created for confirmed, in-progress or completed bookings only
   //Only owner or assigned user can create  (for bookings that are not reconciled yet)
   const canCreateTransaction =
     (currentUser.userRole === UserRolesEnum.OWNER ||
       currentUser.userId === booking.assignedUserId) &&
-    [BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
-      booking.status,
-    ) &&
+    [
+      BookingStatusEnum.CONFIRMED,
+      BookingStatusEnum.IN_PROGRESS,
+      BookingStatusEnum.COMPLETED,
+    ].includes(booking.status) &&
     !booking.reconciledAt
 
   const bookingTransactions =

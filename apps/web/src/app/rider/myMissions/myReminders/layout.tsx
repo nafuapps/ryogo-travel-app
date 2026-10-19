@@ -5,7 +5,7 @@ import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
 import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 import RiderHeader from "@/components/header/riderHeader"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { APP_TRIAL_MODE } from "@/lib/uiConfig"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import { getTranslations } from "next-intl/server"
 import MyMissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/myMissionDetailHeaderTabs"
 

@@ -32,6 +32,14 @@ export const MONTHLY_SUBSCRIPTION_DAYS = 30
 export const QUARTERLY_SUBSCRIPTION_DAYS = 90
 export const ANNUAL_SUBSCRIPTION_DAYS = 365
 
+export const APP_TRIAL_MODE = false //If this is true, all Premium features are unlocked for every user
+
+export const BASIC_PLAN_DRIVER_LIMIT = 3
+export const BASIC_PLAN_AGENT_LIMIT = 3
+export const BASIC_PLAN_VEHICLE_LIMIT = 3
+export const BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT = 20
+export const BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS = 7
+
 //Billing
 //MRP just for display (before discount)
 export const MONTHLY_SUBSCRIPTION_MRP = 499
@@ -59,3 +67,4 @@ export const LOCATE_USER_MINUTES = 15
 
 //Dashboard
 export const DASHBOARD_FETCH_DAYS = 7
+

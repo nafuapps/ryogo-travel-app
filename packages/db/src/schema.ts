@@ -3,8 +3,10 @@ import {
   boolean,
   check,
   date,
+  geometry,
   index,
   integer,
+  jsonb,
   pgEnum,
   pgSequence,
   pgTable,
@@ -14,8 +16,6 @@ import {
   unique,
   uniqueIndex,
   varchar,
-  geometry,
-  jsonb,
 } from "drizzle-orm/pg-core"
 
 //ID initials
@@ -129,6 +129,10 @@ export const agencies = pgTable(
       "commission_rate >= 0 AND commission_rate <= 100",
       sql`${t.defaultCommissionRate} >= 0 AND ${t.defaultCommissionRate} <= 100`,
     ),
+    uniqueIndex("agencies_phone_email_idx").on(
+      t.businessPhone,
+      t.businessEmail,
+    ),
     index("agencies_subscription_expiry_idx").on(t.subscriptionExpiresOn), // to quickly find agencies with expired subscriptions
     index("agencies_status_idx").on(t.status), // to quickly filter agencies by status
     index("agencies_location_idx").on(t.locationId), // to quickly filter agencies by location
@@ -212,6 +216,7 @@ export const orders = pgTable(
       "amount >= 1 AND amount <= 10000",
       sql`${t.amount} >= 1 AND ${t.amount} <= 10000`,
     ),
+    uniqueIndex("orders_rp_order_id_idx").on(t.rpOrderId),
     index("orders_agency_idx").on(t.agencyId), // to quickly filter all orders in an agency
     index("orders_user_idx").on(t.userId), // to quickly filter all orders in an agency
     index("orders_agency_user_idx").on(t.agencyId, t.userId), // to quickly filter all orders by a user in an agency
@@ -304,6 +309,7 @@ export const payments = pgTable(
       "amount >= 1 AND amount <= 10000",
       sql`${t.amount} >= 1 AND ${t.amount} <= 10000`,
     ),
+    uniqueIndex("payments_rp_payment_id_idx").on(t.rpPaymentId),
     index("payments_agency_idx").on(t.agencyId), // to quickly filter all payments in an agency
     index("payments_user_idx").on(t.userId), // to quickly filter all payments in an agency
     index("payments_order_idx").on(t.orderId), // to quickly filter all payments by order
@@ -502,6 +508,7 @@ export const sessions = pgTable(
     ...timestamps,
   },
   (t) => [
+    uniqueIndex("sessions_token_idx").on(t.token),
     index("sessions_user_idx").on(t.userId), // to quickly filter sessions by user
   ],
 )
@@ -677,6 +684,10 @@ export const vehicles = pgTable(
       "ac charge >= 0 and < 10000",
       sql`${t.defaultAcChargePerDay} >= 0 AND ${t.defaultAcChargePerDay} < 10000`,
     ),
+    uniqueIndex("vehicles_agency_vehicle_number_idx").on(
+      t.vehicleNumber,
+      t.agencyId,
+    ),
     index("vehicles_agency_idx").on(t.agencyId), // to quickly filter all vehicles in an agency
     index("vehicles_agency_status_idx").on(t.status, t.agencyId), // to quickly filter vehicles by status in an agency
     index("vehicles_agency_type_idx").on(t.type, t.agencyId), // to quickly filter vehicles by type in an agency
@@ -781,6 +792,8 @@ export const drivers = pgTable(
       "can_drive_atleast_one_vehicle_type",
       sql`array_length(${t.canDriveVehicleTypes}, 1) > 0`,
     ),
+    uniqueIndex("drivers_agency_phone_number_idx").on(t.phone, t.agencyId),
+    uniqueIndex("drivers_user_id_idx").on(t.userId),
     index("drivers_agency_idx").on(t.agencyId), // to quickly filter all drivers in an agency
     index("drivers_agency_status_idx").on(t.status, t.agencyId), // to quickly filter drivers by status in an agency
     index("drivers_agency_drive_type_idx").on(
@@ -847,6 +860,10 @@ export const routes = pgTable(
       sql`${t.estimatedTime} > 0 AND ${t.estimatedTime} < 10000`,
     ),
     unique().on(t.sourceId, t.destinationId), //same route can be added in reverse direction but not in the same direction
+    uniqueIndex("routes_source_destination_idx").on(
+      t.sourceId,
+      t.destinationId,
+    ),
     index("routes_source_idx").on(t.sourceId), // to quickly filter routes by source
     index("routes_destination_idx").on(t.destinationId), // to quickly filter routes by destination
     index("routes_active_idx").on(t.isActive), // to quickly filter active/inactive routes
@@ -909,6 +926,7 @@ export const customers = pgTable(
   },
   (t) => [
     unique().on(t.phone, t.agencyId), //same customer can be added to different agencies
+    uniqueIndex("customers_agency_phone_idx").on(t.agencyId, t.phone),
     index("customers_agency_idx").on(t.agencyId), // to quickly filter all customers in an agency
     index("customers_agency_user_idx").on(t.addedByUserId, t.agencyId), // to quickly filter customers added by a user in an agency
     index("customers_agency_status_idx").on(t.status, t.agencyId), // to quickly filter customers by status in an agency
@@ -1467,6 +1485,7 @@ export const locations = pgTable(
   },
   (t) => [
     unique().on(t.city, t.state), //same location cannot be added twice
+    uniqueIndex("locations_city_state_idx").on(t.city, t.state),
     index("locations_active_idx").on(t.isActive), // to quickly filter active/inactive locations
     index("locations_spatial_idx").using("gist", t.geolocation), // to quickly filter locations by spatial queries
   ],
@@ -1704,6 +1723,7 @@ export const notifications = pgTable(
   },
   (t) => [
     index("notifications_agency_idx").on(t.agencyId),
+    index("notifications_user_idx").on(t.userId),
     index("notifications_entity_id_idx").on(t.entityId),
     index("notifications_entity_type_idx").on(t.entityType),
   ],
@@ -1723,20 +1743,27 @@ export const notificationRelations = relations(notifications, ({ one }) => ({
 export const supportQueryIdSequence = pgSequence("support_query_id_seq", {
   ...sequenceValues,
 })
-export const supportQueries = pgTable("support_queries", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => {
-      return sql`${supportQueryInitial} || nextval(${"support_query_id_seq"})`
-    }),
-  name: varchar("name", { length: 30 }).notNull(),
-  phone: varchar("phone", { length: 10 }).notNull(),
-  email: varchar("phone", { length: 60 }).notNull(),
-  message: varchar("message", { length: 300 }).notNull(),
-  businessName: varchar("business_name", { length: 30 }),
-  isSolved: boolean("is_solved").notNull().default(false),
-  ...timestamps,
-})
+export const supportQueries = pgTable(
+  "support_queries",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => {
+        return sql`${supportQueryInitial} || nextval(${"support_query_id_seq"})`
+      }),
+    name: varchar("name", { length: 30 }).notNull(),
+    phone: varchar("phone", { length: 10 }).notNull(),
+    email: varchar("phone", { length: 60 }).notNull(),
+    message: varchar("message", { length: 300 }).notNull(),
+    businessName: varchar("business_name", { length: 30 }),
+    isSolved: boolean("is_solved").notNull().default(false),
+    ...timestamps,
+  },
+  (t) => [
+    index("support_queries_solved_idx").on(t.isSolved),
+    index("support_queries_phone_idx").on(t.phone),
+  ],
+)
 
 export enum TicketStatusEnum {
   OPEN = "Open",
@@ -1788,6 +1815,10 @@ export const supportTickets = pgTable(
     ),
     index("support_tickets_agency_idx").on(t.agencyId), // to quickly filter tickets by agency
     index("support_tickets_user_idx").on(t.userId), // to quickly filter tickets by user
+    index("support_tickets_entity_id_idx").on(t.entityId),
+    index("support_tickets_entity_type_idx").on(t.entityType),
+    index("support_tickets_status_idx").on(t.status),
+    index("support_tickets_user_status_idx").on(t.userId, t.status),
   ],
 )
 export const supportTicketRelations = relations(supportTickets, ({ one }) => ({
@@ -1862,6 +1893,7 @@ export const productFeedbacks = pgTable(
     index("product_feedbacks_agency_idx").on(t.agencyId), // to quickly filter feedbacks by agency
     index("product_feedbacks_user_idx").on(t.userId), // to quickly filter feedbacks by user
     index("product_feedbacks_type_idx").on(t.feedbackType), // to quickly filter feedbacks by type
+    index("product_feedbacks_entity_idx").on(t.entityId),
   ],
 )
 export const productFeedbackRelations = relations(

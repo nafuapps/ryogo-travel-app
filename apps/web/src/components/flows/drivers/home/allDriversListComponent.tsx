@@ -15,7 +15,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { BASIC_PLAN_DRIVER_LIMIT } from "@/lib/uiConfig"
+import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import SubscriptionWarningCard from "@/components/flows/susbcription/subscriptionWarningCard"
 import { RyogoTagWithoutBG } from "@/components/tags/ryogoTag"
 import { getAverageRating } from "@/lib/utils"

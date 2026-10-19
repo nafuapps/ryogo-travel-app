@@ -19,7 +19,7 @@ import {
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { BASIC_PLAN_DRIVER_LIMIT } from "@/lib/uiConfig"
+import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import Link from "next/link"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { getTranslations } from "next-intl/server"

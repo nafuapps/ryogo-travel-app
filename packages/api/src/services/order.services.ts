@@ -4,7 +4,7 @@ import {
   OrderTypeEnum,
   SubscriptionPlanEnum,
 } from "@ryogo-travel-app/db/schema"
-import { orderRepository } from "../repositories/order.repo"
+import { addDays, max } from "date-fns"
 import {
   ANNUAL_SUBSCRIPTION_DAYS,
   EXISTING_ORDER_SEARCH_HOURS,
@@ -12,7 +12,7 @@ import {
   QUARTERLY_SUBSCRIPTION_DAYS,
 } from "../apiConfig"
 import { agencyRepository } from "../repositories/agency.repo"
-import { addDays, max } from "date-fns"
+import { orderRepository } from "../repositories/order.repo"
 
 export const orderServices = {
   async findAllOrdersByAgencyId(agencyId: string) {
@@ -158,9 +158,14 @@ export const orderServices = {
 }
 
 function getSubscriptionDays(orderType: OrderTypeEnum) {
-  if (orderType === OrderTypeEnum.ANNUAL) return ANNUAL_SUBSCRIPTION_DAYS
-  if (orderType === OrderTypeEnum.QUARTERLY) return QUARTERLY_SUBSCRIPTION_DAYS
-  return MONTHLY_SUBSCRIPTION_DAYS
+  switch (orderType) {
+    case OrderTypeEnum.ANNUAL:
+      return ANNUAL_SUBSCRIPTION_DAYS
+    case OrderTypeEnum.QUARTERLY:
+      return QUARTERLY_SUBSCRIPTION_DAYS
+    case OrderTypeEnum.MONTHLY:
+      return MONTHLY_SUBSCRIPTION_DAYS
+  }
 }
 
 export type FindAllOrdersByAgencyIdType = Awaited<

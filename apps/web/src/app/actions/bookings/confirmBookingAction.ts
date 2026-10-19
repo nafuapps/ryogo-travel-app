@@ -10,7 +10,11 @@ import { bookingServices } from "@ryogo-travel-app/api/services/booking.services
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { ConfirmBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  EntityTypeEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
@@ -40,7 +44,11 @@ export async function confirmBookingAction({
 
   //Get booking details
   const bookingDetails = await bookingServices.findBookingDetailsById(data.id)
-  if (!bookingDetails || !bookingDetails.startTime) {
+  if (
+    !bookingDetails ||
+    !bookingDetails.startTime ||
+    bookingDetails.status !== BookingStatusEnum.CONFIRMED
+  ) {
     return
   }
 

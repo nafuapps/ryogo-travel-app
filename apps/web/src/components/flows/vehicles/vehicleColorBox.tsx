@@ -43,7 +43,6 @@ export default function VehicleColorBox({
       colorClassName = "bg-mist-500"
       break
     case VehicleColorEnum.GRAY:
-    default:
       colorClassName = "bg-gray-500"
   }
   return (

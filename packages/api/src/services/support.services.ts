@@ -1,8 +1,12 @@
 import {
+  AgencyStatusEnum,
   InsertSupportQueryType,
   InsertSupportTicketType,
+  SubscriptionPlanEnum,
   TicketStatusEnum,
 } from "@ryogo-travel-app/db/schema"
+import { APP_TRIAL_MODE } from "../apiConfig"
+import { agencyRepository } from "../repositories/agency.repo"
 import { supportQueryRepository } from "../repositories/supportQuery.repo"
 import { supportTicketRepository } from "../repositories/supportTicket.repo"
 
@@ -13,6 +17,19 @@ export const supportServices = {
   },
 
   async addSupportTicket(ticket: InsertSupportTicketType) {
+    const agency = await agencyRepository.readAgencyById(ticket.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      return
+    }
+    //SUBSCRIPTION CHECK: Only premium agency can create custom reminders
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        agency.subscriptionExpiresOn < new Date())
+    ) {
+      return
+    }
+
     const [newTicket] =
       await supportTicketRepository.createSupportTicket(ticket)
     return newTicket
@@ -58,6 +75,19 @@ export const supportServices = {
   }) {
     const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
     if (!ticket || ticket.status !== TicketStatusEnum.RESOLVED) return
+
+    const agency = await agencyRepository.readAgencyById(ticket.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      return
+    }
+    //SUBSCRIPTION CHECK: Only premium agency can close ticket
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        agency.subscriptionExpiresOn < new Date())
+    ) {
+      return
+    }
 
     const [closedTicket] =
       await supportTicketRepository.updateTicketStatusWithRating({

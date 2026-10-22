@@ -28,6 +28,9 @@ export const expenseServices = {
       ) ||
       booking.closedAt
     ) {
+      console.error(
+        `Booking not found, is lead or cancelled or already closed: ${data.bookingId}`,
+      )
       return
     }
     const newExpenseData: InsertExpenseType = {
@@ -57,6 +60,9 @@ export const expenseServices = {
       ) ||
       booking.closedAt
     ) {
+      console.error(
+        `Booking not found, is lead or cancelled or already closed: ${data.bookingId}`,
+      )
       return
     }
 
@@ -73,7 +79,12 @@ export const expenseServices = {
     isApproved: boolean
   }) {
     const expense = await expenseRepository.readExpenseById(expenseId)
-    if (!expense || expense.isApproved === isApproved) return
+    if (!expense || expense.isApproved === isApproved) {
+      console.error(
+        `Expense not found or already has the same approval status: ${expenseId} ${isApproved}`,
+      )
+      return
+    }
 
     const booking = await bookingRepository.readBookingStatusById(
       expense.bookingId,
@@ -85,6 +96,9 @@ export const expenseServices = {
       ) ||
       booking.closedAt
     ) {
+      console.error(
+        `Booking not found, is lead or cancelled or already closed: ${expense.bookingId}`,
+      )
       return
     }
 
@@ -113,7 +127,10 @@ export const expenseServices = {
   //Delete a expense
   async removeExpense(expenseId: string) {
     const expense = await expenseRepository.readExpenseById(expenseId)
-    if (!expense) return
+    if (!expense) {
+      console.error(`Expense not found: ${expenseId}`)
+      return
+    }
 
     const booking = await bookingRepository.readBookingStatusById(
       expense.bookingId,
@@ -125,6 +142,9 @@ export const expenseServices = {
       ) ||
       booking.closedAt
     ) {
+      console.error(
+        `Booking not found, is lead or cancelled or already closed: ${expense.bookingId}`,
+      )
       return
     }
 

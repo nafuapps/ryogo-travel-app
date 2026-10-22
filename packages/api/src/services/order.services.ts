@@ -1,4 +1,5 @@
 import {
+  AgencyStatusEnum,
   InsertOrderType,
   OrderStatusEnum,
   OrderTypeEnum,
@@ -85,14 +86,22 @@ export const orderServices = {
     attempts?: number
   }) {
     const order = await orderRepository.readOrderByRPId(rpOrderId)
-    if (!order) return
+    if (!order) {
+      console.error(`Order not found with RPId: ${rpOrderId}`)
+      return
+    }
 
     const agency = await agencyRepository.readAgencyById(order.agencyId)
-    if (!agency) return
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${order.agencyId}`)
+      return
+    }
 
     //If already paid and webhook confirmed, do nothing
-    if (order.status === OrderStatusEnum.PAID && order.isWebhookConfirmed)
+    if (order.status === OrderStatusEnum.PAID && order.isWebhookConfirmed) {
+      console.warn(`Order already paid and webhook confirmed: ${order.id}`)
       return
+    }
 
     //Update order in DB
     const [updatedOrder] = await orderRepository.updateOrderStatusbyRPId({
@@ -103,10 +112,18 @@ export const orderServices = {
     })
     // If for some reason, order update failed, should we proceed with subscription upgrade?
     // -> NO (Confirm in bank account first and then manually upgrade)
-    if (!updatedOrder) return
+    if (!updatedOrder) {
+      console.error(
+        `Order status could not be updated: ${rpOrderId}. Check transaction in the bank account`,
+      )
+      return
+    }
 
     //If it was already paid, return now (no need to upgrade subscription again)
-    if (order.status === OrderStatusEnum.PAID) return
+    if (order.status === OrderStatusEnum.PAID) {
+      console.warn(`Order already paid: ${order.id}`)
+      return
+    }
 
     //Trigger subscription upgrade
     const orderSubscriptionDays = getSubscriptionDays(order.orderType)

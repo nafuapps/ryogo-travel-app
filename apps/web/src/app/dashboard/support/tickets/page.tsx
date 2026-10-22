@@ -1,13 +1,12 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import SupportTicketsPageComponent from "./tickets"
 import { getCurrentUser } from "@/lib/auth"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { redirect, RedirectType } from "next/navigation"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import SupportTicketsPageComponent from "./tickets"
 
 export const metadata: Metadata = {
   title: `All Support Tickets - ${pageTitle}`,
@@ -19,12 +18,6 @@ export default async function SupportTicketsPage() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   let tickets

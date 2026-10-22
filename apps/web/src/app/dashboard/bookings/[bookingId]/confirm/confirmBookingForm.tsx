@@ -8,8 +8,8 @@ import {
 } from "@/components/buttons/ryogoButtons"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import {
-  RyogoTextarea,
   RyogoCheckbox,
+  RyogoTextarea,
   RyogoTimePicker,
 } from "@/components/form/ryogoFormFields"
 import {
@@ -20,7 +20,7 @@ import {
   StickyActionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoH3, RyogoCaption } from "@/components/typography"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { MAX_FIELD_DESC_LENGTH, MIN_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
@@ -70,7 +70,7 @@ export default function ConfirmBookingPageComponent({
   async function submit(values: ConfirmBookingType) {
     const confirmedBookingMessage = await confirmBookingAction({
       data: {
-        id: booking.id,
+        bookingId: booking.id,
         startTime: values.startTime,
         pickupAddress: values.pickupAddress,
         dropAddress: values.dropAddress,

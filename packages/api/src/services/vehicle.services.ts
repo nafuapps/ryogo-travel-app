@@ -100,6 +100,7 @@ export const vehicleServices = {
       booking =
         await bookingRepository.readFirstAssignedBookingByDriverId(driverId)
       if (!booking || booking.assignedVehicleId === null) {
+        console.error(`No assigned vehicle found for the driver: ${driverId}`)
         return
       }
     }
@@ -133,7 +134,10 @@ export const vehicleServices = {
   //Add vehicle to agency
   async addVehicle(data: AddVehicleRequestType) {
     const agency = await agencyRepository.readAgencyById(data.agencyId)
-    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${data.agencyId}`)
+      return
+    }
 
     //SUBSCRIPTION CHECK: Check if basic plan has reached vehicles limit
     if (
@@ -145,6 +149,7 @@ export const vehicleServices = {
         data.agencyId,
       )
       if (vehicles.length >= BASIC_PLAN_VEHICLE_LIMIT) {
+        console.error(`Basic plan vehicle limit reached: ${data.agencyId}`)
         return
       }
     }
@@ -156,6 +161,9 @@ export const vehicleServices = {
         vehicleNumber: data.vehicleNumber.toUpperCase(),
       })
     if (existingVehicleInAgency) {
+      console.error(
+        `Existing vehicle number in the agency: ${data.agencyId} ${data.vehicleNumber}`,
+      )
       return
     }
 
@@ -185,10 +193,16 @@ export const vehicleServices = {
   //Add vehicle repair
   async addVehicleRepair(data: InsertVehicleRepairType) {
     const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
-    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
+      console.error(`Vehicle not found or suspended: ${data.vehicleId}`)
+      return
+    }
 
     const [repair] = await vehicleRepairRepository.createRepair(data)
-    if (!repair) return
+    if (!repair) {
+      console.error(`Vehicle repair could not be created: ${data}`)
+      return
+    }
 
     return { ...repair, vehicleNumber: vehicle.vehicleNumber }
   },
@@ -196,10 +210,16 @@ export const vehicleServices = {
   //Modify vehicle repair
   async modifyVehicleRepair(data: ModifyVehicleRepairRequestType) {
     const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
-    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
+      console.error(`Vehicle not found or suspended: ${data.vehicleId}`)
+      return
+    }
 
     const [repair] = await vehicleRepairRepository.updateRepairDetails(data)
-    if (!repair) return
+    if (!repair) {
+      console.error(`Vehicle repair could not be updated: ${data}`)
+      return
+    }
 
     return { ...repair, vehicleNumber: vehicle.vehicleNumber }
   },
@@ -219,10 +239,18 @@ export const vehicleServices = {
     vehicleId: string
   }) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
-    if (!vehicle || vehicle.status !== VehicleStatusEnum.AVAILABLE) return
+    if (!vehicle || vehicle.status !== VehicleStatusEnum.AVAILABLE) {
+      console.error(
+        `Vehicle not found or not available to start repair: ${vehicleId}`,
+      )
+      return
+    }
 
     const repair = await vehicleRepairRepository.readRepairById(repairId)
-    if (!repair || repair.status !== VehicleRepairStatusEnum.PENDING) return
+    if (!repair || repair.status !== VehicleRepairStatusEnum.PENDING) {
+      console.error(`Vehicle repair not found or not pending: ${repairId}`)
+      return
+    }
 
     const startedRepair = await vehicleRepairRepository.updateRepairToStarted({
       repairId,
@@ -241,10 +269,16 @@ export const vehicleServices = {
     vehicleId: string
   }) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
-    if (!vehicle || vehicle.status !== VehicleStatusEnum.REPAIR) return
+    if (!vehicle || vehicle.status !== VehicleStatusEnum.REPAIR) {
+      console.error(`Vehicle not found or not in repair to end: ${vehicleId}`)
+      return
+    }
 
     const repair = await vehicleRepairRepository.readRepairById(repairId)
-    if (!repair || repair.status !== VehicleRepairStatusEnum.ONGOING) return
+    if (!repair || repair.status !== VehicleRepairStatusEnum.ONGOING) {
+      console.error(`Vehicle repair not found or not ongoing: ${repairId}`)
+      return
+    }
 
     const endedRepair = await vehicleRepairRepository.updateRepairToEnded({
       repairId,
@@ -263,7 +297,10 @@ export const vehicleServices = {
     vehicleNumber: string
   }) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
-    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
+      console.error(`Vehicle not found or suspended: ${vehicleId}`)
+      return
+    }
 
     const existingVehicle = await vehicleRepository.readVehicleByNumberInAgency(
       {
@@ -272,6 +309,9 @@ export const vehicleServices = {
       },
     )
     if (existingVehicle) {
+      console.error(
+        `Existing vehicle number in the agency: ${vehicle.agencyId} ${vehicleNumber}`,
+      )
       return
     }
 
@@ -285,7 +325,10 @@ export const vehicleServices = {
   //Modify vehicle details
   async modifyVehicle(data: ModifyVehicleRequestType) {
     const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
-    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
+      console.error(`Vehicle not found or suspended: ${data.vehicleId}`)
+      return
+    }
 
     const [updatedVehicle] = await vehicleRepository.updateVehicleDetails(data)
     return updatedVehicle

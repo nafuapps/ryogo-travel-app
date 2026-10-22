@@ -22,14 +22,7 @@ export const transactionServices = {
         queryStartDate,
         queryEndDate,
       })
-    return transactions.map((transaction) => {
-      return {
-        id: transaction.id,
-        createdAt: transaction.createdAt,
-        type: transaction.type,
-        amount: transaction.amount,
-      }
-    })
+    return transactions
   },
 
   //Get transaction details by transaction id
@@ -49,8 +42,11 @@ export const transactionServices = {
       [BookingStatusEnum.LEAD, BookingStatusEnum.CANCELLED].includes(
         booking.status,
       ) ||
-      booking.closedAt
+      booking.reconciledAt
     ) {
+      console.error(
+        `Booking not found, is lead or cancelled or already reconciled: ${data.bookingId}`,
+      )
       return
     }
     const newTransactionData: InsertTransactionType = {
@@ -82,6 +78,9 @@ export const transactionServices = {
       ) ||
       booking.reconciledAt
     ) {
+      console.error(
+        `Booking not found, is lead or cancelled or already reconciled: ${data.bookingId} ${data.transactionId}`,
+      )
       return
     }
 
@@ -100,7 +99,12 @@ export const transactionServices = {
   }) {
     const transaction =
       await transactionRepository.readTransactionById(transactionId)
-    if (!transaction || transaction.isApproved === isApproved) return
+    if (!transaction || transaction.isApproved === isApproved) {
+      console.error(
+        `Transaction not found or already has the same approval status: ${transactionId} ${isApproved}`,
+      )
+      return
+    }
 
     const booking = await bookingRepository.readBookingStatusById(
       transaction.bookingId,
@@ -112,6 +116,9 @@ export const transactionServices = {
       ) ||
       booking.reconciledAt
     ) {
+      console.error(
+        `Booking not found, is lead or cancelled or already reconciled: ${transaction.bookingId} ${transactionId}`,
+      )
       return
     }
 
@@ -143,7 +150,11 @@ export const transactionServices = {
   async removeTransaction(transactionId: string) {
     const transaction =
       await transactionRepository.readTransactionById(transactionId)
-    if (!transaction) return
+    if (!transaction) {
+      console.error(`Transaction not found: ${transactionId}`)
+
+      return
+    }
 
     const booking = await bookingRepository.readBookingStatusById(
       transaction.bookingId,
@@ -155,6 +166,9 @@ export const transactionServices = {
       ) ||
       booking.reconciledAt
     ) {
+      console.error(
+        `Booking not found, is lead or cancelled or already reconciled: ${transaction.bookingId} ${transactionId}`,
+      )
       return
     }
 

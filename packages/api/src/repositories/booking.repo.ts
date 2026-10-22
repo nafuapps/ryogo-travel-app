@@ -1739,12 +1739,12 @@ export const bookingRepository = {
   },
 
   async updateBookingToConfirmed({
-    id,
+    bookingId,
     startTime,
     pickupAddress,
     dropAddress,
   }: {
-    id: string
+    bookingId: string
     startTime: string
     pickupAddress: string
     dropAddress?: string
@@ -1758,7 +1758,7 @@ export const bookingRepository = {
         pickupAddress: pickupAddress,
         dropAddress: dropAddress,
       })
-      .where(eq(bookings.id, id))
+      .where(eq(bookings.id, bookingId))
       .returning({
         id: bookings.id,
         status: bookings.status,

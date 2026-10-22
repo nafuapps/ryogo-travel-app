@@ -1,7 +1,7 @@
 import {
-  MIN_USER_DISTANCE_RATIO,
-  MAX_USER_DISTANCE_RATIO,
   DISTANCE_RATIO_CHECK_THRESHOLD,
+  MAX_USER_DISTANCE_RATIO,
+  MIN_USER_DISTANCE_RATIO,
 } from "../apiConfig"
 import { locationRepository } from "../repositories/location.repo"
 import { routeRepository } from "../repositories/route.repo"
@@ -19,18 +19,28 @@ export const routeServices = {
     destinationState: string
   }) {
     if (sourceCity === destinationCity && sourceState === destinationState) {
+      console.error(
+        `Same source and destination location provided: ${sourceCity},${sourceState}`,
+      )
       return
     }
     const source = await locationRepository.readLocationByCityState({
       city: sourceCity,
       state: sourceState,
     })
+    if (!source) {
+      console.error(`Source not found: ${sourceCity},${sourceState}`)
+      return
+    }
     const destination = await locationRepository.readLocationByCityState({
       city: destinationCity,
       state: destinationState,
     })
 
-    if (!source || !destination) {
+    if (!destination) {
+      console.error(
+        `Destination not found: ${destinationCity},${destinationState}`,
+      )
       return
     }
 
@@ -48,6 +58,9 @@ export const routeServices = {
       destinationId: destination.id,
     })
     if (!newDistance || newDistance < 1) {
+      console.error(
+        `Could not get distance or distance < 1 for new route: ${source.id} - ${destination.id}`,
+      )
       return
     }
 
@@ -71,6 +84,9 @@ export const routeServices = {
     distance: number
   }) {
     if (sourceId === destinationId) {
+      console.error(
+        `Same source and destination Id provided: ${sourceId} ${destinationId}`,
+      )
       return
     }
 

@@ -2,6 +2,8 @@ import {
   CustomerStatusEnum,
   InsertCustomerType,
 } from "@ryogo-travel-app/db/schema"
+import { addDays, subDays } from "date-fns"
+import { BASIC_SEARCH_LIMIT_DAYS } from "../apiConfig"
 import { bookingRepository } from "../repositories/booking.repo"
 import { customerRepository } from "../repositories/customer.repo"
 import { locationRepository } from "../repositories/location.repo"
@@ -9,8 +11,6 @@ import {
   ModifyCustomerRequestType,
   NewCustomerRequestType,
 } from "../types/customer.types"
-import { addDays, subDays } from "date-fns"
-import { BASIC_SEARCH_LIMIT_DAYS } from "../apiConfig"
 
 export const customerServices = {
   async findCustomersInAgency(agencyId: string) {
@@ -60,6 +60,9 @@ export const customerServices = {
         agencyId: data.agencyId,
       })
     if (existingCustomer.length > 0) {
+      console.error(
+        `Customer already exists with this phone: ${data.agencyId} ${data.phone}`,
+      )
       return
     }
 
@@ -68,6 +71,9 @@ export const customerServices = {
       state: data.state,
     })
     if (!location) {
+      console.error(
+        `Location not found: ${data.agencyId} ${data.city},${data.state}`,
+      )
       return
     }
     const newCustomerData: InsertCustomerType = {
@@ -90,6 +96,7 @@ export const customerServices = {
   async modifyCustomer(data: ModifyCustomerRequestType) {
     const customer = await customerRepository.readCustomerById(data.customerId)
     if (!customer || customer.status === CustomerStatusEnum.SUSPENDED) {
+      console.error(`Customer not found or suspended: ${data.customerId}`)
       return
     }
 
@@ -99,6 +106,9 @@ export const customerServices = {
       state: data.state,
     })
     if (!location) {
+      console.error(
+        `Location not found: ${data.customerId} ${data.city},${data.state}`,
+      )
       return
     }
 
@@ -122,6 +132,7 @@ export const customerServices = {
   async activateCustomer(customerId: string) {
     const customer = await customerRepository.readCustomerById(customerId)
     if (!customer || customer.status !== CustomerStatusEnum.INACTIVE) {
+      console.error(`Customer not found or not inactive: ${customerId}`)
       return
     }
 
@@ -136,6 +147,7 @@ export const customerServices = {
   async inactivateCustomer(customerId: string) {
     const customer = await customerRepository.readCustomerById(customerId)
     if (!customer || customer.status !== CustomerStatusEnum.ACTIVE) {
+      console.error(`Customer not found or not active: ${customerId}`)
       return
     }
 

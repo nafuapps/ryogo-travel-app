@@ -1,33 +1,32 @@
 "use client"
-//Login password page
 
-import z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { useTranslations } from "next-intl"
-import { RyogoH3, RyogoSmall } from "@/components/typography"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { loginAction } from "@/app/actions/users/loginAction"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import AuthAccountCard from "@/components/flows/auth/authAccountCard"
-import { useBotDetection } from "@/hooks/useBotDetection"
-import { toast } from "sonner"
 import {
   RyogoDefaultButton,
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import AuthAccountCard from "@/components/flows/auth/authAccountCard"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import {
-  FormWrapper,
   AuthPageWrapper,
+  FormWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
-import { useState } from "react"
+import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { useBotDetection } from "@/hooks/useBotDetection"
+import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function LoginPasswordPageComponent({
   user,
@@ -86,9 +85,15 @@ export default function LoginPasswordPageComponent({
           type: "manual",
           message: t("APIError3"),
         })
+      } else if (loginResponse.error === "basicPlanOwnerLimit") {
+        // Show basic plan owner limit error
+        form.setError("password", {
+          type: "manual",
+          message: t("APIError4"),
+        })
       } else if (!loginResponse.data) {
         // Unknown error
-        toast.error(t("APIError4"))
+        toast.error(t("APIError5"))
       }
     } else {
       setFormSuccess(true)

@@ -31,7 +31,7 @@ export type NewBookingRequestDataType = {
 }
 
 export type ConfirmBookingRequestType = {
-  id: string
+  bookingId: string
   agencyId: string
   assignedUserId: string
   startTime: string

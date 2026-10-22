@@ -14,7 +14,6 @@ import {
   BASIC_SEARCH_LIMIT_DAYS,
   PREMIUM_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
@@ -32,10 +31,6 @@ export default async function MyBookingsPage() {
 
   const driver = await driverServices.findDriverByUserId(currentUser.userId)
   if (!driver) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
   const isSubscribed = currentUser.isSubscribed

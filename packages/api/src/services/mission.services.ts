@@ -40,6 +40,7 @@ export const missionServices = {
   ) {
     const agency = await agencyRepository.readAgencyById(mission.agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${mission.agencyId}`)
       return
     }
     //SUBSCRIPTION CHECK: Only premium agency can create custom reminders
@@ -49,6 +50,7 @@ export const missionServices = {
         (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
           agency.subscriptionExpiresOn < new Date())
       ) {
+        console.error(`Basic plan cannot create custom reminders: ${agency.id}`)
         return
       }
     }
@@ -67,6 +69,7 @@ export const missionServices = {
   async modifyMission(data: ModifyMissionRequestType) {
     const agency = await agencyRepository.readAgencyById(data.agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${data.agencyId}`)
       return
     }
 
@@ -76,6 +79,7 @@ export const missionServices = {
       (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
         agency.subscriptionExpiresOn < new Date())
     ) {
+      console.error(`Basic plan cannot modify custom reminders: ${agency.id}`)
       return
     }
 

@@ -14,7 +14,6 @@ import {
   BASIC_SEARCH_LIMIT_DAYS,
   PREMIUM_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
@@ -29,11 +28,6 @@ export default async function CompletedBookingsPage() {
   const currentUser = await getCurrentUser()
 
   if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-  const agencyId = currentUser.agencyId
-  const agency = await agencyServices.findAgencyById(agencyId)
-  if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
   const isSubscribed = currentUser.isSubscribed

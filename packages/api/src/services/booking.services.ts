@@ -298,7 +298,10 @@ export const bookingServices = {
   //Get assigned user id by booking id
   async findAssignedUserIdByBookingId(bookingId: string) {
     const booking = await bookingRepository.readBookingStatusById(bookingId)
-    if (!booking) return
+    if (!booking) {
+      console.error(`Booking doesn't exist: ${bookingId}`)
+      return
+    }
     return booking.assignedUserId
   },
 
@@ -338,7 +341,10 @@ export const bookingServices = {
   //Create a new Booking
   async addNewBooking(data: NewBookingRequestDataType) {
     const agency = await agencyRepository.readAgencyById(data.agencyId)
-    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency doesn't exist or suspended: ${data.agencyId}`)
+      return
+    }
 
     //SUBSCRIPTION CHECK: Check if basic plan has reached weekly confirmed bookings limit
     if (
@@ -366,6 +372,7 @@ export const bookingServices = {
       if (
         confirmedBookings.length >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT
       ) {
+        console.error(`Basic plan booking limit reached: ${agency.id}`)
         return
       }
     }
@@ -377,7 +384,12 @@ export const bookingServices = {
         city: data.source.city,
         state: data.source.state,
       })
-      if (!source) return
+      if (!source) {
+        console.error(
+          `No source location found for new booking: ${agency.id} ${data.source.city},${data.source.state}`,
+        )
+        return
+      }
       sourceId = source.id
     }
     let destinationId = data.destinationId
@@ -386,7 +398,12 @@ export const bookingServices = {
         city: data.destination.city,
         state: data.destination.state,
       })
-      if (!destination) return
+      if (!destination) {
+        console.error(
+          `No destination location found for new booking: ${agency.id} ${data.destination.city},${data.destination.state}`,
+        )
+        return
+      }
       destinationId = destination.id
     }
 
@@ -399,6 +416,9 @@ export const bookingServices = {
         distance: data.citydistance,
       })
       if (!newRoute) {
+        console.error(
+          `Route could not be created for new booking: ${agency.id} ${sourceId} - ${destinationId} ${data.citydistance}`,
+        )
         return
       }
       routeId = newRoute.id
@@ -444,15 +464,16 @@ export const bookingServices = {
 
   //Confirm a booking
   async confirmBooking({
-    id,
+    bookingId,
     startTime,
     pickupAddress,
     dropAddress,
     updateCustomerAddress,
     customerId,
   }: ConfirmBookingRequestType) {
-    const booking = await bookingRepository.readBookingStatusById(id)
+    const booking = await bookingRepository.readBookingStatusById(bookingId)
     if (!booking || booking.status !== BookingStatusEnum.LEAD) {
+      console.error(`Booking not found or not a lead: ${bookingId}`)
       return
     }
 
@@ -463,7 +484,7 @@ export const bookingServices = {
       })
     }
     const [updatedBooking] = await bookingRepository.updateBookingToConfirmed({
-      id,
+      bookingId,
       startTime,
       pickupAddress,
       dropAddress,
@@ -484,11 +505,13 @@ export const bookingServices = {
     //Check if the booking is confirmed
     const booking = await bookingRepository.readBookingStatusById(bookingId)
     if (!booking || booking.status !== BookingStatusEnum.CONFIRMED) {
+      console.error(`Booking not found or not confirmed: ${bookingId}`)
       return
     }
     //Check if the driver is available
     const driverStatus = await driverRepository.readDriverById(driverId)
     if (!driverStatus || driverStatus.status !== DriverStatusEnum.AVAILABLE) {
+      console.error(`Driver not found or not available: ${driverId}`)
       return
     }
     //Check if the vehicle is available
@@ -497,6 +520,7 @@ export const bookingServices = {
       !vehicleStatus ||
       vehicleStatus.status !== VehicleStatusEnum.AVAILABLE
     ) {
+      console.error(`Vehicle not found or not available: ${vehicleId}`)
       return
     }
 
@@ -512,6 +536,7 @@ export const bookingServices = {
       !updatedBooking ||
       updatedBooking.status !== BookingStatusEnum.IN_PROGRESS
     ) {
+      console.error(`Booking not found or not in progress: ${bookingId}`)
       return
     }
     return {
@@ -525,7 +550,10 @@ export const bookingServices = {
   //Update booking values on trip completion like total distance, total amount etc
   async updateBookingActualValues(bookingId: string) {
     const booking = await bookingRepository.readBookingDetailsById(bookingId)
-    if (!booking || booking.status !== BookingStatusEnum.COMPLETED) return
+    if (!booking || booking.status !== BookingStatusEnum.COMPLETED) {
+      console.error(`Booking not found or not completed: ${bookingId}`)
+      return
+    }
 
     let actualStartDate = booking.actualStartDate
     let actualEndDate = booking.actualEndDate
@@ -533,7 +561,14 @@ export const bookingServices = {
     const logs = await tripLogRepository.readTripLogsByBookingId(bookingId)
     const startLog = logs.find((log) => log.type === TripLogTypesEnum.STARTED)
     const endLog = logs.find((log) => log.type === TripLogTypesEnum.ENDED)
-    if (!startLog || !endLog) return
+    if (!startLog) {
+      console.error(`Started trip log not found: ${bookingId}`)
+      return
+    }
+    if (!endLog) {
+      console.error(`Ended trip log not found: ${bookingId}`)
+      return
+    }
     if (!actualStartDate) {
       actualStartDate = startLog.createdAt
     }
@@ -598,16 +633,19 @@ export const bookingServices = {
       !bookingStatus ||
       bookingStatus.status !== BookingStatusEnum.IN_PROGRESS
     ) {
+      console.error(`Booking not found or not in-progress: ${bookingId}`)
       return
     }
     //Check if the driver is on trip
     const driverStatus = await driverRepository.readDriverById(driverId)
     if (!driverStatus || driverStatus.status !== DriverStatusEnum.ON_TRIP) {
+      console.error(`Driver not found or not on-trip: ${driverId}`)
       return
     }
     //Check if the vehicle is on trip
     const vehicleStatus = await vehicleRepository.readVehicleById(vehicleId)
     if (!vehicleStatus || vehicleStatus.status !== VehicleStatusEnum.ON_TRIP) {
+      console.error(`Vehicle not found or not on-trip: ${vehicleId}`)
       return
     }
 
@@ -633,6 +671,7 @@ export const bookingServices = {
       !completedBooking ||
       completedBooking.status !== BookingStatusEnum.COMPLETED
     ) {
+      console.error(`Booking could not be updated to completed: ${bookingId}`)
       return
     }
     return {
@@ -655,6 +694,9 @@ export const bookingServices = {
       booking.assignedDriver.userId !== data.userId ||
       booking.ratingByDriver
     ) {
+      console.error(
+        `Booking not found, not completed, no assigned driver or already rated by driver: ${data.bookingId}`,
+      )
       return
     }
     const updatedBooking =
@@ -673,6 +715,9 @@ export const bookingServices = {
       booking.ratingByCustomer ||
       !booking.secretCode
     ) {
+      console.error(
+        `Booking not found, not completed, has no secret code or already rated by customer: ${data.bookingId}`,
+      )
       return
     }
 
@@ -711,6 +756,7 @@ export const bookingServices = {
         booking.status,
       )
     ) {
+      console.error(`Booking not found or not lead or confirmed: ${bookingId}`)
       return
     }
 
@@ -729,7 +775,10 @@ export const bookingServices = {
     assignedDriverId: string
   }) {
     const driver = await driverRepository.readDriverById(assignedDriverId)
-    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) {
+      console.error(`Driver not found or suspended: ${assignedDriverId}`)
+      return
+    }
 
     const booking = await bookingRepository.readBookingStatusById(bookingId)
     if (
@@ -738,6 +787,7 @@ export const bookingServices = {
         booking.status,
       )
     ) {
+      console.error(`Booking not found or not lead or confirmed: ${bookingId}`)
       return
     }
 
@@ -762,7 +812,10 @@ export const bookingServices = {
     assignedVehicleId: string
   }) {
     const vehicle = await vehicleRepository.readVehicleById(assignedVehicleId)
-    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
+    if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
+      console.error(`Vehicle not found or suspended: ${assignedVehicleId}`)
+      return
+    }
 
     const booking = await bookingRepository.readBookingById(bookingId)
     if (
@@ -771,6 +824,7 @@ export const bookingServices = {
         booking.status,
       )
     ) {
+      console.error(`Booking not found or not lead or confirmed: ${bookingId}`)
       return
     }
 
@@ -800,11 +854,15 @@ export const bookingServices = {
       user.status === UserStatusEnum.SUSPENDED ||
       user.userRole === UserRolesEnum.DRIVER
     ) {
+      console.error(
+        `User not found or suspended or role mismatch: ${assignedUserId}`,
+      )
       return
     }
 
     const booking = await bookingRepository.readBookingById(bookingId)
     if (!booking || booking.status === BookingStatusEnum.CANCELLED) {
+      console.error(`Booking not found or is cancelled: ${bookingId}`)
       return
     }
 
@@ -844,6 +902,9 @@ export const bookingServices = {
       booking.status !== BookingStatusEnum.COMPLETED ||
       !booking.closedAt
     ) {
+      console.error(
+        `Booking not found or not completed or not closed yet: ${bookingId}`,
+      )
       return
     }
 
@@ -860,6 +921,9 @@ export const bookingServices = {
       !booking.closedAt ||
       booking.reconciledAt
     ) {
+      console.error(
+        `Booking not found or not completed or not closed yet or already reconciled: ${bookingId}`,
+      )
       return
     }
 
@@ -930,6 +994,7 @@ export const bookingServices = {
   async changeStartTime(bookingId: string, startTime: string) {
     const booking = await bookingRepository.readBookingStatusById(bookingId)
     if (!booking || booking.status !== BookingStatusEnum.CONFIRMED) {
+      console.error(`Booking not found or not confirmed: ${bookingId}`)
       return
     }
     const [updatedBooking] = await bookingRepository.updateStartTime({
@@ -950,6 +1015,7 @@ export const bookingServices = {
   async changePickupAddress(bookingId: string, pickupAddress: string) {
     const booking = await bookingRepository.readBookingStatusById(bookingId)
     if (!booking || booking.status !== BookingStatusEnum.CONFIRMED) {
+      console.error(`Booking not found or not confirmed: ${bookingId}`)
       return
     }
     const [updatedBooking] = await bookingRepository.updatePickupAddress({
@@ -962,6 +1028,7 @@ export const bookingServices = {
   async changeDropAddress(bookingId: string, dropAddress: string) {
     const booking = await bookingRepository.readBookingStatusById(bookingId)
     if (!booking || booking.status !== BookingStatusEnum.CONFIRMED) {
+      console.error(`Booking not found or not confirmed: ${bookingId}`)
       return
     }
     const [updatedBooking] = await bookingRepository.updateDropAddress({

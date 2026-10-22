@@ -43,7 +43,9 @@ export async function confirmBookingAction({
   if (!confirmedBooking) return
 
   //Get booking details
-  const bookingDetails = await bookingServices.findBookingDetailsById(data.id)
+  const bookingDetails = await bookingServices.findBookingDetailsById(
+    data.bookingId,
+  )
   if (
     !bookingDetails ||
     !bookingDetails.startTime ||

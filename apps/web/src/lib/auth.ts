@@ -1,10 +1,12 @@
-import {
-  deleteWebSession,
-  createWebSession,
-  verifyWebSessionInDB,
-  getSessionPayloadFromCookie,
-} from "./session"
+"server only"
+
 import { cache } from "react"
+import {
+  createWebSession,
+  deleteWebSession,
+  getSessionPayloadFromCookie,
+  verifyWebSessionInDB,
+} from "./session"
 
 //Get current user session from cookie - for optimistic checks before DB reads
 export const getCurrentUser = cache(async () => {
@@ -14,7 +16,10 @@ export const getCurrentUser = cache(async () => {
 //Verify User session in DB - For strict checking before any DB writes
 export const verifyCurrentUser = cache(async () => {
   const payload = await getSessionPayloadFromCookie()
-  if (!payload) return
+  if (!payload) {
+    console.error(`No payload found in session cookie`)
+    return
+  }
 
   return await verifyWebSessionInDB(payload.token, payload.userId)
 })

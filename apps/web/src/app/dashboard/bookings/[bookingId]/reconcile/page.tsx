@@ -4,7 +4,6 @@ import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
@@ -22,12 +21,13 @@ export default async function ReconcileBookingPage({
 }: {
   params: Promise<{ bookingId: string }>
 }) {
-  const { bookingId } = await params
-
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const isSubscribed = currentUser.isSubscribed
+
+  const { bookingId } = await params
 
   //Get booking data
   const booking = await bookingServices.findBookingDetailsById(bookingId)
@@ -45,17 +45,10 @@ export default async function ReconcileBookingPage({
     redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
   }
 
-  //Get agency data
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-  const isSubscribed = currentUser.isSubscribed
-
   //SUBSCRIPTION BLOCKER: Only premium agencies can reconcile booking
   if (
     !APP_TRIAL_MODE &&
-    (!isSubscribed || agency.subscriptionExpiresOn < new Date())
+    (!isSubscribed || currentUser.subscriptionExpiresOn < new Date())
   ) {
     const t = await getTranslations("Dashboard.ReconcileBooking")
     return (

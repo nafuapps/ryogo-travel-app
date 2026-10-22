@@ -1,19 +1,12 @@
 import {
-  AgencyStatusEnum,
   DriverLeaveStatusEnum,
   DriverStatusEnum,
   InsertDriverLeaveType,
   InsertDriverType,
-  SubscriptionPlanEnum,
   UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { addDays, subDays } from "date-fns"
-import {
-  APP_TRIAL_MODE,
-  BASIC_PLAN_DRIVER_LIMIT,
-  BASIC_SEARCH_LIMIT_DAYS,
-} from "../apiConfig"
-import { agencyRepository } from "../repositories/agency.repo"
+import { BASIC_SEARCH_LIMIT_DAYS } from "../apiConfig"
 import { bookingRepository } from "../repositories/booking.repo"
 import { driverRepository } from "../repositories/driver.repo"
 import { driverLeaveRepository } from "../repositories/driverLeave.repo"
@@ -110,52 +103,25 @@ export const driverServices = {
 
   //Create driver
   async addDriver(data: InsertDriverType) {
-    const agency = await agencyRepository.readAgencyById(data.agencyId)
-    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
-
-    //SUBSCRIPTION CHECK: Check if basic plan has reached drivers limit
-    if (
-      !APP_TRIAL_MODE &&
-      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-        agency.subscriptionExpiresOn < new Date())
-    ) {
-      const drivers = await driverRepository.readDriversByAgencyId(
-        data.agencyId,
-      )
-      if (drivers.length >= BASIC_PLAN_DRIVER_LIMIT) {
-        return
-      }
-    }
-
-    //Step1: Check if driver (userId) already exists in the system
     const existingDriverUser = await driverRepository.readDriverByUserId(
       data.userId,
     )
     if (existingDriverUser) {
+      console.error(`Driver with user Id already exists: ${data.userId}`)
       return
     }
 
-    //Step2: Prepare driver data
-    const newDriverData: InsertDriverType = {
-      agencyId: data.agencyId,
-      userId: data.userId,
-      addedByUserId: data.addedByUserId,
-      name: data.name,
-      phone: data.phone,
-      address: data.address,
-      licenseNumber: data.licenseNumber,
-      licenseExpiresOn: data.licenseExpiresOn,
-      defaultAllowancePerDay: data.defaultAllowancePerDay,
-      canDriveVehicleTypes: data.canDriveVehicleTypes,
-    }
-    const [newDriver] = await driverRepository.createDriver(newDriverData)
+    const [newDriver] = await driverRepository.createDriver(data)
     return newDriver
   },
 
   //Modify driver details
   async modifyDriver(data: ModifyDriverRequestType) {
     const driver = await driverRepository.readDriverById(data.id)
-    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) {
+      console.error(`Driver not found or suspended: ${data.id}`)
+      return
+    }
 
     const [updatedDriver] = await driverRepository.updateDriverDetails(data)
     return updatedDriver
@@ -164,7 +130,10 @@ export const driverServices = {
   //Change driver license details
   async changeDriverLicense(data: ChangeDriverLicenseRequestType) {
     const driver = await driverRepository.readDriverById(data.id)
-    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) {
+      console.error(`Driver not found or suspended: ${data.id}`)
+      return
+    }
 
     const [updatedDriver] =
       await driverRepository.updateDriverLicenseDetails(data)
@@ -174,10 +143,16 @@ export const driverServices = {
   //Add driver leave
   async addDriverLeave(data: InsertDriverLeaveType) {
     const driver = await driverRepository.readDriverById(data.driverId)
-    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) {
+      console.error(`Driver not found or suspended: ${data.driverId}`)
+      return
+    }
 
     const [leave] = await driverLeaveRepository.createLeave(data)
-    if (!leave) return
+    if (!leave) {
+      console.error(`Could not create driver leave: ${data}`)
+      return
+    }
 
     return { ...leave, driverName: driver.name }
   },
@@ -185,10 +160,16 @@ export const driverServices = {
   //Modify driver leave
   async modifyDriverLeave(data: ModifyDriverLeaveRequestType) {
     const driver = await driverRepository.readDriverById(data.driverId)
-    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) {
+      console.error(`Driver not found or suspended: ${data.driverId}`)
+      return
+    }
 
     const [leave] = await driverLeaveRepository.updateLeave(data)
-    if (!leave) return
+    if (!leave) {
+      console.error(`Could not update driver leave: ${data}`)
+      return
+    }
 
     return { ...leave, driverName: driver.name }
   },
@@ -208,10 +189,18 @@ export const driverServices = {
     driverId: string
   }) {
     const driver = await driverRepository.readDriverById(driverId)
-    if (!driver || driver.status !== DriverStatusEnum.AVAILABLE) return
+    if (!driver || driver.status !== DriverStatusEnum.AVAILABLE) {
+      console.error(
+        `Driver not found or not available to start leave: ${driverId}`,
+      )
+      return
+    }
 
     const leave = await driverLeaveRepository.readLeaveById(leaveId)
-    if (!leave || leave.status !== DriverLeaveStatusEnum.PENDING) return
+    if (!leave || leave.status !== DriverLeaveStatusEnum.PENDING) {
+      console.error(`Driver leave not found or not pending: ${leaveId}`)
+      return
+    }
 
     const startedLeave = await driverLeaveRepository.updateLeaveToStarted({
       leaveId,
@@ -229,10 +218,16 @@ export const driverServices = {
     driverId: string
   }) {
     const driver = await driverRepository.readDriverById(driverId)
-    if (!driver || driver.status !== DriverStatusEnum.LEAVE) return
+    if (!driver || driver.status !== DriverStatusEnum.LEAVE) {
+      console.error(`Driver not found or not on leave to end: ${driverId}`)
+      return
+    }
 
     const leave = await driverLeaveRepository.readLeaveById(leaveId)
-    if (!leave || leave.status !== DriverLeaveStatusEnum.ONGOING) return
+    if (!leave || leave.status !== DriverLeaveStatusEnum.ONGOING) {
+      console.error(`Driver leave not found or not ongoing: ${leaveId}`)
+      return
+    }
 
     const endedLeave = await driverLeaveRepository.updateLeaveToEnded({
       leaveId,
@@ -250,7 +245,10 @@ export const driverServices = {
     licensePhotoUrl: string
   }) {
     const driver = await driverRepository.readDriverById(driverId)
-    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) return
+    if (!driver || driver.status === DriverStatusEnum.SUSPENDED) {
+      console.error(`Driver not found or suspended: ${driverId}`)
+      return
+    }
 
     await driverRepository.updateDriverLicenseUrl({ driverId, licensePhotoUrl })
   },
@@ -270,6 +268,9 @@ export const driverServices = {
       user.status === UserStatusEnum.INACTIVE ||
       user.status === UserStatusEnum.SUSPENDED
     ) {
+      console.error(
+        `Driver user not found or inactive or suspended: ${driverId} ${userId}`,
+      )
       return
     }
 
@@ -278,8 +279,12 @@ export const driverServices = {
       !driver ||
       driver.status === DriverStatusEnum.SUSPENDED ||
       driver.status === DriverStatusEnum.AVAILABLE
-    )
+    ) {
+      console.error(
+        `Driver not found or suspended or already available: ${driverId}`,
+      )
       return
+    }
 
     const [updatedDriver] = await driverRepository.updateStatus({
       driverId,
@@ -298,6 +303,7 @@ export const driverServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`Driver user not found or suspended: ${driverId} ${userId}`)
       return
     }
     const driver = await driverRepository.readDriverById(driverId)
@@ -305,8 +311,12 @@ export const driverServices = {
       !driver ||
       driver.status === DriverStatusEnum.SUSPENDED ||
       driver.status === DriverStatusEnum.INACTIVE
-    )
+    ) {
+      console.error(
+        `Driver not found or suspended or already inactive: ${driverId}`,
+      )
       return
+    }
 
     const [updatedDriver] = await driverRepository.updateStatus({
       driverId,

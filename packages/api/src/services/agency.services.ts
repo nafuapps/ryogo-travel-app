@@ -156,6 +156,9 @@ export const agencyServices = {
       agency.status === AgencyStatusEnum.SUSPENDED ||
       agency.status === AgencyStatusEnum.ACTIVE
     ) {
+      console.error(
+        `Agency doesn't exist, suspended or already active: ${agencyId}`,
+      )
       return
     }
 
@@ -177,6 +180,9 @@ export const agencyServices = {
       agency.status === AgencyStatusEnum.SUSPENDED ||
       agency.status === AgencyStatusEnum.INACTIVE
     ) {
+      console.error(
+        `Agency doesn't exist, suspended or already inactive: ${agencyId}`,
+      )
       return
     }
 
@@ -225,6 +231,7 @@ export const agencyServices = {
   }) {
     const agency = await agencyRepository.readAgencyById(agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency doesn't exist or suspended: ${agencyId}`)
       return
     }
     const existingAgencyWithPhoneEmail =
@@ -232,7 +239,12 @@ export const agencyServices = {
         businessPhone,
         businessEmail: agency.businessEmail,
       })
-    if (existingAgencyWithPhoneEmail) return
+    if (existingAgencyWithPhoneEmail) {
+      console.error(
+        `Agency already exists with same phone and email: ${businessPhone} ${agency.businessEmail}`,
+      )
+      return
+    }
 
     const [updatedAgency] = await agencyRepository.updateAgencyPhone({
       agencyId,
@@ -251,6 +263,7 @@ export const agencyServices = {
   }) {
     const agency = await agencyRepository.readAgencyById(agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency doesn't exist or suspended: ${agencyId}`)
       return
     }
     const existingAgencyWithPhoneEmail =
@@ -258,7 +271,13 @@ export const agencyServices = {
         businessPhone: agency.businessPhone,
         businessEmail,
       })
-    if (existingAgencyWithPhoneEmail) return
+    if (existingAgencyWithPhoneEmail) {
+      console.error(
+        `Agency already exists with same phone and email: ${agency.businessPhone} ${businessEmail}`,
+      )
+      return
+    }
+
     const [updatedAgency] = await agencyRepository.updateAgencyEmail({
       agencyId,
       businessEmail,
@@ -273,6 +292,9 @@ export const agencyServices = {
       agency.status === AgencyStatusEnum.SUSPENDED ||
       agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
     ) {
+      console.error(
+        `Agency doesn't exist, suspended or is already Basic: ${agencyId}`,
+      )
       return
     }
 
@@ -291,9 +313,11 @@ export const agencyServices = {
     if (
       !agency ||
       agency.status === AgencyStatusEnum.SUSPENDED ||
-      agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC ||
       agency.hasTriedSubscription
     ) {
+      console.error(
+        `Agency doesn't exist, suspended, or has already tried Premium: ${agencyId}`,
+      )
       return
     }
 

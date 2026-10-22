@@ -3,7 +3,7 @@ import {
   InsertTransactionType,
   transactions,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, gte, lte } from "drizzle-orm"
+import { and, eq, gte, lte } from "drizzle-orm"
 import { UpdateTransactionRequestType } from "../types/transaction.types"
 
 export const transactionRepository = {
@@ -18,6 +18,12 @@ export const transactionRepository = {
     queryEndDate: Date
   }) {
     return await db.query.transactions.findMany({
+      columns: {
+        id: true,
+        createdAt: true,
+        type: true,
+        amount: true,
+      },
       where: and(
         eq(transactions.agencyId, agencyId),
         gte(transactions.createdAt, queryStartDate),

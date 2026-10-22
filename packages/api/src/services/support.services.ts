@@ -19,6 +19,7 @@ export const supportServices = {
   async addSupportTicket(ticket: InsertSupportTicketType) {
     const agency = await agencyRepository.readAgencyById(ticket.agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${ticket.agencyId}`)
       return
     }
     //SUBSCRIPTION CHECK: Only premium agency can create custom reminders
@@ -27,6 +28,9 @@ export const supportServices = {
       (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
         agency.subscriptionExpiresOn < new Date())
     ) {
+      console.error(
+        `Basic plan cannot create support tickets: ${ticket.agencyId}`,
+      )
       return
     }
 
@@ -74,10 +78,14 @@ export const supportServices = {
     resolutionRating?: number
   }) {
     const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
-    if (!ticket || ticket.status !== TicketStatusEnum.RESOLVED) return
+    if (!ticket || ticket.status !== TicketStatusEnum.RESOLVED) {
+      console.error(`Ticket not found or not resolved: ${ticketId}`)
+      return
+    }
 
     const agency = await agencyRepository.readAgencyById(ticket.agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${ticket.agencyId}`)
       return
     }
     //SUBSCRIPTION CHECK: Only premium agency can close ticket
@@ -86,6 +94,9 @@ export const supportServices = {
       (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
         agency.subscriptionExpiresOn < new Date())
     ) {
+      console.error(
+        `Basic plan cannot update support tickets: ${ticket.agencyId} ${ticketId}`,
+      )
       return
     }
 
@@ -115,7 +126,10 @@ export const supportServices = {
 
   async removeTicket(ticketId: string) {
     const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
-    if (!ticket || ticket.status !== TicketStatusEnum.OPEN) return
+    if (!ticket || ticket.status !== TicketStatusEnum.OPEN) {
+      console.error(`Ticket not found or not open to be removed: ${ticketId}`)
+      return
+    }
 
     const [removedTicket] =
       await supportTicketRepository.deleteSupportTicket(ticketId)

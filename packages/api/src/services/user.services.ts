@@ -2,6 +2,7 @@ import {
   AgencyStatusEnum,
   DriverStatusEnum,
   InsertAgencyType,
+  InsertDriverType,
   InsertSessionType,
   InsertUserType,
   SubscriptionPlanEnum,
@@ -164,13 +165,17 @@ export const userServices = {
       booking =
         await bookingRepository.readFirstAssignedBookingByDriverId(driverId)
       if (!booking) {
+        console.error(`No assigned booking found for the driver: ${driverId}`)
         return
       }
     }
     const assignedUser = await userRepository.readUserById(
       booking.assignedUserId,
     )
-    if (!assignedUser) return
+    if (!assignedUser) {
+      console.error(`No assigned user found for the booking: ${booking.id}`)
+      return
+    }
     return {
       id: assignedUser.id,
       name: assignedUser.name,
@@ -194,6 +199,9 @@ export const userServices = {
       email: data.owner.email,
     })
     if (existingUsers) {
+      console.error(
+        `Existing owner user with phone and email: ${data.owner.phone} ${data.owner.email}`,
+      )
       return
     }
 
@@ -203,6 +211,9 @@ export const userServices = {
       businessEmail: data.agency.businessEmail,
     })
     if (existingAgencies) {
+      console.error(
+        `Existing agency with phone and email: ${data.agency.businessPhone} ${data.agency.businessEmail}`,
+      )
       return
     }
 
@@ -212,6 +223,9 @@ export const userServices = {
       state: data.agency.agencyState,
     })
     if (!location) {
+      console.error(
+        `No location found for creating account: ${data.agency.agencyCity},${data.agency.agencyState}`,
+      )
       return
     }
 
@@ -233,6 +247,7 @@ export const userServices = {
     //Step5: Create new agency
     const [newAgency] = await agencyRepository.createAgency(createAgencyData)
     if (!newAgency) {
+      console.error(`Agency could not be created: ${createAgencyData}`)
       return
     }
 
@@ -254,6 +269,7 @@ export const userServices = {
     //Step7: Create the owner user
     const [owner] = await userRepository.createUser(ownerData)
     if (!owner) {
+      console.error(`Owner acccount could not be created: ${ownerData}`)
       return
     }
 
@@ -270,7 +286,10 @@ export const userServices = {
   //Create Agent
   async addAgentUser(data: AddUserRequestType) {
     const agency = await agencyRepository.readAgencyById(data.agencyId)
-    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${data.agencyId}`)
+      return
+    }
 
     //SUBSCRIPTION CHECK: Check if basic plan has reached agent limit
     if (
@@ -283,6 +302,9 @@ export const userServices = {
         userRoles: [UserRolesEnum.AGENT],
       })
       if (agents.length >= BASIC_PLAN_AGENT_LIMIT) {
+        console.error(
+          `Basic plan limit reached for adding agents: ${data.agencyId}`,
+        )
         return
       }
     }
@@ -295,6 +317,9 @@ export const userServices = {
         phone: data.phone,
       })
     if (existingUserInAgency) {
+      console.error(
+        `Existing agent with phone in agency: ${data.agencyId} ${data.phone}`,
+      )
       return
     }
 
@@ -305,6 +330,9 @@ export const userServices = {
       email: data.email,
     })
     if (existingUserInSystem) {
+      console.error(
+        `Existing agent with phone and email in the system: ${data.phone} ${data.email}`,
+      )
       return
     }
 
@@ -313,19 +341,22 @@ export const userServices = {
     const passwordHash = await generatePasswordHash(newPassword)
 
     //Step4: Create the agent user
-    const [newUser] = await userRepository.createUser({
+    const newUserData: InsertUserType = {
+      agencyId: data.agencyId,
       name: data.name,
       email: data.email,
       phone: data.phone,
       userRole: UserRolesEnum.AGENT,
       status: UserStatusEnum.NEW,
-      agencyId: data.agencyId,
       password: passwordHash,
       isAdmin: false,
-    })
+    }
+    const [newUser] = await userRepository.createUser(newUserData)
     if (!newUser) {
+      console.error(`Agent could not be created: ${newUserData}`)
       return
     }
+
     return {
       id: newUser.id,
       email: newUser.email,
@@ -349,11 +380,17 @@ export const userServices = {
       !currentUser.isAdmin ||
       currentUser.userRole !== UserRolesEnum.OWNER
     ) {
+      console.error(
+        `Current User not found or is not admin or owner: ${currentUserId}`,
+      )
       return
     }
 
     const agency = await agencyRepository.readAgencyById(data.agencyId)
-    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${data.agencyId}`)
+      return
+    }
 
     //SUBSCRIPTION CHECK: Only premium agency can add additional owners
     if (
@@ -361,6 +398,7 @@ export const userServices = {
       (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
         agency.subscriptionExpiresOn < new Date())
     ) {
+      console.error(`Basic plan cannot add owners: ${data.agencyId}`)
       return
     }
 
@@ -372,6 +410,9 @@ export const userServices = {
         phone: data.phone,
       })
     if (existingUserInAgency) {
+      console.error(
+        `Existing owner with same phone in agency: ${data.agencyId} ${data.phone}`,
+      )
       return
     }
 
@@ -382,6 +423,9 @@ export const userServices = {
       email: data.email,
     })
     if (existingUserInSystem) {
+      console.error(
+        `Existing owner with same phone and email in the system: ${data.phone} ${data.email}`,
+      )
       return
     }
 
@@ -390,7 +434,7 @@ export const userServices = {
     const passwordHash = await generatePasswordHash(newPassword)
 
     //Step4: Create the owner user
-    const [newUser] = await userRepository.createUser({
+    const newUserData: InsertUserType = {
       name: data.name,
       email: data.email,
       phone: data.phone,
@@ -399,8 +443,10 @@ export const userServices = {
       agencyId: data.agencyId,
       password: passwordHash,
       isAdmin: false,
-    })
+    }
+    const [newUser] = await userRepository.createUser(newUserData)
     if (!newUser) {
+      console.error(`Owner could not be created: ${newUserData}`)
       return
     }
     return {
@@ -423,7 +469,10 @@ export const userServices = {
     if (currentUserId === otherUserId) return
 
     const agency = await agencyRepository.readAgencyById(agencyId)
-    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${agencyId}`)
+      return
+    }
 
     //SUBSCRIPTION CHECK: Only premium agency can transfer admin
     if (
@@ -431,6 +480,7 @@ export const userServices = {
       (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
         agency.subscriptionExpiresOn < new Date())
     ) {
+      console.error(`Basic plan cannot transfer admin: ${agencyId}`)
       return
     }
 
@@ -442,17 +492,25 @@ export const userServices = {
       currentUser.agencyId !== agencyId ||
       currentUser.status !== UserStatusEnum.SUSPENDED
     ) {
+      console.error(
+        `Current user not found, is suspended or is not admin or owner: ${agencyId} ${currentUserId}`,
+      )
       return
     }
-    const otherUser = await userRepository.readUserById(currentUserId)
+
+    const otherUser = await userRepository.readUserById(otherUserId)
     if (
       !otherUser ||
       [UserStatusEnum.NEW, UserStatusEnum.SUSPENDED].includes(
         otherUser.status,
       ) ||
+      otherUser.isAdmin ||
       otherUser.userRole !== UserRolesEnum.OWNER ||
       otherUser.agencyId !== agencyId
     ) {
+      console.error(
+        `Other user not found, is suspended, is not owner or is already an admin: ${agencyId} ${otherUserId}`,
+      )
       return
     }
 
@@ -461,6 +519,7 @@ export const userServices = {
       isAdmin: false,
     })
     if (!updatedCurrentUser) {
+      console.error(`Could not update current User: ${currentUserId}`)
       return
     }
 
@@ -469,6 +528,7 @@ export const userServices = {
       isAdmin: true,
     })
     if (!updatedOtherUser) {
+      console.error(`Could not update other User: ${otherUserId}`)
       return
     }
 
@@ -478,7 +538,10 @@ export const userServices = {
   //Create Driver (Onboarding flow)
   async addDriverUser(data: AddDriverRequestType) {
     const agency = await agencyRepository.readAgencyById(data.agencyId)
-    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error(`Agency not found or suspended: ${data.agencyId}`)
+      return
+    }
 
     //SUBSCRIPTION CHECK: Check if basic plan has reached drivers limit
     if (
@@ -491,6 +554,9 @@ export const userServices = {
         userRoles: [UserRolesEnum.DRIVER],
       })
       if (drivers.length >= BASIC_PLAN_DRIVER_LIMIT) {
+        console.error(
+          `Basic plan limited reached for drivers: ${data.agencyId}`,
+        )
         return
       }
     }
@@ -503,6 +569,9 @@ export const userServices = {
         roles: [UserRolesEnum.DRIVER],
       })
     if (existingUserInAgency) {
+      console.error(
+        `Existing driver user with phone in the agency: ${data.agencyId} ${data.email}`,
+      )
       return
     }
 
@@ -513,6 +582,9 @@ export const userServices = {
       email: data.email,
     })
     if (existingUserInSystem) {
+      console.error(
+        `Existing driver user with phone and email in the system: ${data.phone} ${data.email}`,
+      )
       return
     }
 
@@ -521,7 +593,7 @@ export const userServices = {
     const passwordHash = await generatePasswordHash(newPassword)
 
     //Step4: Create the driver user
-    const [newUser] = await userRepository.createUser({
+    const newUserData: InsertUserType = {
       name: data.name,
       email: data.email,
       phone: data.phone,
@@ -530,13 +602,15 @@ export const userServices = {
       agencyId: data.agencyId,
       password: passwordHash,
       isAdmin: false,
-    })
+    }
+    const [newUser] = await userRepository.createUser(newUserData)
     if (!newUser) {
+      console.error(`Driver user could not be created: ${newUserData}`)
       return
     }
 
     //Step5: Create a driver
-    const newDriver = await driverServices.addDriver({
+    const newDriverData: InsertDriverType = {
       agencyId: data.agencyId,
       addedByUserId: data.addedByUserId,
       userId: newUser.id,
@@ -547,8 +621,10 @@ export const userServices = {
       licenseExpiresOn: data.licenseExpiresOn,
       canDriveVehicleTypes: data.canDriveVehicleTypes,
       defaultAllowancePerDay: data.defaultAllowancePerDay,
-    })
+    }
+    const newDriver = await driverServices.addDriver(newDriverData)
     if (!newDriver) {
+      console.error(`Driver could not be created: ${newDriverData}`)
       return
     }
 
@@ -572,7 +648,7 @@ export const userServices = {
   }) {
     //Step1: Find user with userID
     const user = await userRepository.readUserWithPasswordById(userId)
-    // If no user found, cannot login
+
     if (!user) {
       return {
         error: "userNotFound",
@@ -582,6 +658,17 @@ export const userServices = {
     if (user.status === UserStatusEnum.SUSPENDED) {
       return {
         error: "userSuspended",
+      }
+    }
+
+    //SUBSCRIPTION CHECK: Additional owners cannot login in Basic plan
+    if (
+      user.userRole === UserRolesEnum.OWNER &&
+      !user.isAdmin &&
+      user.agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+    ) {
+      return {
+        error: "basicPlanOwnerLimit",
       }
     }
 
@@ -606,7 +693,10 @@ export const userServices = {
   //Create user session
   async addUserSession(data: InsertSessionType) {
     const user = await userRepository.readUserById(data.userId)
-    if (!user || user.status === UserStatusEnum.SUSPENDED) return
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${data.userId}`)
+      return
+    }
 
     const [newSession] = await sessionRepository.createSession(data)
     return newSession
@@ -623,7 +713,10 @@ export const userServices = {
     expiresAt: Date
   }) {
     const user = await userRepository.readUserById(userId)
-    if (!user || user.status === UserStatusEnum.SUSPENDED) return
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
+      return
+    }
 
     await sessionRepository.updateSessionExpiringTime({ sessionId, expiresAt })
   },
@@ -638,11 +731,13 @@ export const userServices = {
   async logOutInDB({ sessionId }: { sessionId: string }) {
     const session = await sessionRepository.readSessionById(sessionId)
     if (!session || session.expiresAt < new Date()) {
+      console.error(`Session not found or already expired: ${sessionId}`)
       return
     }
 
     const [sessionDeleted] = await sessionRepository.deleteSession(sessionId)
     if (!sessionDeleted) {
+      console.error(`Session could not be deleted: ${sessionId}`)
       return
     }
 
@@ -656,6 +751,7 @@ export const userServices = {
   async resetUserPassword(userId: string) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -669,6 +765,7 @@ export const userServices = {
       passwordHash,
     })
     if (!newUserData) {
+      console.error(`User password could not be updated: ${userId}`)
       return
     }
 
@@ -691,6 +788,9 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status !== UserStatusEnum.NEW || user.isVerified) {
+      console.error(
+        `User not found, is not new or is already verified: ${userId}`,
+      )
       return
     }
 
@@ -716,6 +816,7 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -747,6 +848,7 @@ export const userServices = {
     const user = await userRepository.readUserWithPasswordById(userId)
     // If no user found, cannot change password
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -756,6 +858,7 @@ export const userServices = {
       dbPasswordHash: user.password,
     })
     if (!valid) {
+      console.error(`Password does not match: ${userId}`)
       return
     }
 
@@ -797,6 +900,7 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -819,6 +923,7 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -842,6 +947,7 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserWithPasswordById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -853,6 +959,9 @@ export const userServices = {
     })
 
     if (existingUser) {
+      console.error(
+        `Existing user with phone and email in the system: ${userId} ${email} ${user.phone}`,
+      )
       return
     }
 
@@ -861,6 +970,7 @@ export const userServices = {
       dbPasswordHash: user.password,
     })
     if (!valid) {
+      console.error(`Password does not match: ${userId}`)
       return
     }
 
@@ -872,6 +982,7 @@ export const userServices = {
   async changeUserEmail({ userId, email }: { userId: string; email: string }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -883,6 +994,9 @@ export const userServices = {
     })
 
     if (existingUser) {
+      console.error(
+        `Existing user with phone and email in the system: ${userId} ${email} ${user.phone}`,
+      )
       return
     }
 
@@ -902,6 +1016,7 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -912,6 +1027,9 @@ export const userServices = {
       phone: phone,
     })
     if (existingUser) {
+      console.error(
+        `Existing user with phone and email in the system: ${userId} ${user.email} ${phone}`,
+      )
       return
     }
 
@@ -923,6 +1041,9 @@ export const userServices = {
         agencyId: user.agencyId,
       })
     if (existingUserInAgency) {
+      console.error(
+        `Existing user with phone in the agency: ${userId} ${user.phone}`,
+      )
       return
     }
 
@@ -943,6 +1064,7 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -969,6 +1091,7 @@ export const userServices = {
   }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -995,6 +1118,9 @@ export const userServices = {
       user.userRole !== UserRolesEnum.OWNER ||
       !user.isAdmin
     ) {
+      console.error(
+        `User not found, is suspended, is not owner or admin, or is already verified : ${userId}`,
+      )
       return
     }
 
@@ -1016,6 +1142,9 @@ export const userServices = {
       user.status === UserStatusEnum.SUSPENDED ||
       !user.verificationCode
     ) {
+      console.error(
+        `User not found or suspended, or does not have a verification code: ${userId}`,
+      )
       return
     }
 
@@ -1033,6 +1162,9 @@ export const userServices = {
       user.userRole !== UserRolesEnum.OWNER ||
       !user.isAdmin
     ) {
+      console.error(
+        `User not found, is suspended, is not owner or admin, or is already verified : ${userId}`,
+      )
       return
     }
 
@@ -1046,6 +1178,7 @@ export const userServices = {
   async generateAndSendCode(userId: string) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 
@@ -1066,12 +1199,16 @@ export const userServices = {
     long: number
   }) {
     const user = await userRepository.readUserById(userId)
-    if (!user) return
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
+      return
+    }
 
     if (
       user.locatedAt &&
       differenceInMinutes(new Date(), user.locatedAt) < LOCATE_USER_MINUTES
     ) {
+      console.warn(`Located quite recently: ${userId} ${user.locatedAt}`)
       return
     }
 

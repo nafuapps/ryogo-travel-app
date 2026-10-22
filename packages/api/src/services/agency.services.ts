@@ -139,12 +139,13 @@ export const agencyServices = {
 
     //Step2: Update agency details
     const [updatedAgency] = await agencyRepository.updateAgencyDetails({
-      id: data.agencyId,
-      businessName: data.businessName,
-      businessAddress: data.businessAddress,
-      defaultCommissionRate: data.defaultCommissionRate,
+      ...data,
       locationId: locationId,
     })
+    if (!updatedAgency) {
+      console.error(`Could not update agency details: ${data}`)
+      return
+    }
     return updatedAgency
   },
 
@@ -169,6 +170,10 @@ export const agencyServices = {
         ? getSubscriptionExpirationDate()
         : undefined,
     })
+    if (!updatedAgency) {
+      console.error(`Could not update agency status to active: ${agencyId}`)
+      return
+    }
     return updatedAgency
   },
 
@@ -190,6 +195,10 @@ export const agencyServices = {
       id: agencyId,
       status: AgencyStatusEnum.INACTIVE,
     })
+    if (!updatedAgency) {
+      console.error(`Could not update agency to inactive: ${agencyId}`)
+      return
+    }
     return updatedAgency
   },
 
@@ -204,6 +213,10 @@ export const agencyServices = {
       agencyId,
       logoUrl,
     })
+    if (!updatedAgency) {
+      console.error(`Could not update agency logo: ${agencyId} ${logoUrl}`)
+      return
+    }
     return updatedAgency
   },
 
@@ -218,6 +231,10 @@ export const agencyServices = {
       agencyId,
       qrCodeUrl,
     })
+    if (!updatedAgency) {
+      console.error(`Could not update agency QR code: ${agencyId} ${qrCodeUrl}`)
+      return
+    }
     return updatedAgency
   },
 
@@ -250,6 +267,12 @@ export const agencyServices = {
       agencyId,
       businessPhone,
     })
+    if (!updatedAgency) {
+      console.error(
+        `Could not update agency phone: ${agencyId} ${businessPhone}`,
+      )
+      return
+    }
     return updatedAgency
   },
 
@@ -282,6 +305,11 @@ export const agencyServices = {
       agencyId,
       businessEmail,
     })
+    if (!updatedAgency) {
+      console.error(
+        `Could not update agency email: ${agencyId} ${businessEmail}`,
+      )
+    }
     return updatedAgency
   },
 
@@ -305,6 +333,12 @@ export const agencyServices = {
         subscriptionExpiresOn: getSubscriptionExpirationDate(),
       },
     )
+    if (!updatedAgency) {
+      console.error(
+        `Could not update agency subscription plan downgrade to Basic: ${agencyId}`,
+      )
+      return
+    }
     return updatedAgency
   },
 
@@ -328,6 +362,12 @@ export const agencyServices = {
         subscriptionExpiresOn: getSubscriptionExpirationDate(),
       },
     )
+    if (!updatedAgency) {
+      console.error(
+        `Could not update agency trial subscription plan: ${agencyId}`,
+      )
+      return
+    }
     return updatedAgency
   },
 }

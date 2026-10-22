@@ -25,6 +25,7 @@ import {
   sql,
 } from "drizzle-orm"
 import {
+  ConfirmBookingRequestType,
   RateBookingByCustomerType,
   RateBookingByDriverType,
 } from "../types/booking.types"
@@ -1743,12 +1744,7 @@ export const bookingRepository = {
     startTime,
     pickupAddress,
     dropAddress,
-  }: {
-    bookingId: string
-    startTime: string
-    pickupAddress: string
-    dropAddress?: string
-  }) {
+  }: ConfirmBookingRequestType) {
     return await db
       .update(bookings)
       .set({

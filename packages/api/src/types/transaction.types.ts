@@ -6,7 +6,7 @@ import {
 export type AddTransactionRequestType = {
   agencyId: string
   bookingId: string
-  userId: string
+  addedByUserId: string
   assignedUserId: string
   type: TransactionTypesEnum
   amount: number

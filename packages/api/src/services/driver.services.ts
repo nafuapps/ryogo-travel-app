@@ -124,6 +124,10 @@ export const driverServices = {
     }
 
     const [updatedDriver] = await driverRepository.updateDriverDetails(data)
+    if (!updatedDriver) {
+      console.error(`Driver details could not be modified: ${data}`)
+      return
+    }
     return updatedDriver
   },
 
@@ -137,6 +141,10 @@ export const driverServices = {
 
     const [updatedDriver] =
       await driverRepository.updateDriverLicenseDetails(data)
+    if (!updatedDriver) {
+      console.error(`Driver license details could not be updated: ${data}`)
+      return
+    }
     return updatedDriver
   },
 
@@ -177,6 +185,10 @@ export const driverServices = {
   //Remove driver leave
   async removeDriverLeave(leaveId: string) {
     const [deletedLeave] = await driverLeaveRepository.deleteLeave(leaveId)
+    if (!deletedLeave) {
+      console.error(`Driver leave could not be removed: ${leaveId}`)
+      return
+    }
     return deletedLeave
   },
 
@@ -206,6 +218,10 @@ export const driverServices = {
       leaveId,
       driverId,
     })
+    if (!startedLeave) {
+      console.error(`Driver leave could not be started: ${driverId} ${leaveId}`)
+      return
+    }
     return startedLeave
   },
 
@@ -233,6 +249,10 @@ export const driverServices = {
       leaveId,
       driverId,
     })
+    if (!endedLeave) {
+      console.error(`Driver leave could not be ended: ${driverId} ${leaveId}`)
+      return
+    }
     return endedLeave
   },
 
@@ -290,6 +310,10 @@ export const driverServices = {
       driverId,
       status: DriverStatusEnum.AVAILABLE,
     })
+    if (!updatedDriver) {
+      console.error(`Driver could not be activated: ${driverId}`)
+      return
+    }
     return updatedDriver
   },
 
@@ -322,6 +346,10 @@ export const driverServices = {
       driverId,
       status: DriverStatusEnum.INACTIVE,
     })
+    if (!updatedDriver) {
+      console.error(`Driver could not be inactivated: ${driverId} `)
+      return
+    }
     return updatedDriver
   },
 }

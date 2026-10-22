@@ -1,5 +1,11 @@
 "use client"
 
+import { addTransactionAction } from "@/app/actions/transactions/addTransactionAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import {
   RyogoDatePicker,
   RyogoFileInput,
@@ -8,6 +14,22 @@ import {
   RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
+import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
+import {
+  MAX_AMOUNT_LIMIT,
+  MAX_FIELD_DESC_LENGTH,
+  MIN_AMOUNT_LIMIT,
+} from "@/lib/uiConfig"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   TransactionModesEnum,
@@ -16,30 +38,8 @@ import {
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
-import z from "zod"
-import { addTransactionAction } from "@/app/actions/transactions/addTransactionAction"
 import { toast } from "sonner"
-import {
-  FormContentWrapper,
-  FormWrapper,
-  PageWrapper,
-  SectionRowWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import {
-  MAX_AMOUNT_LIMIT,
-  MAX_FIELD_DESC_LENGTH,
-  MIN_AMOUNT_LIMIT,
-} from "@/lib/uiConfig"
-import { RyogoCaption, RyogoH3 } from "@/components/typography"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import z from "zod"
 
 export default function NewTransactionPageComponent({
   bookingId,
@@ -98,7 +98,7 @@ export default function NewTransactionPageComponent({
       txnPhoto: await compressImage(values.txnPhoto),
       agencyId,
       bookingId,
-      userId,
+      addedByUserId: userId,
       assignedUserId,
     })
     if (addedTransaction) {

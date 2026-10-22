@@ -5,6 +5,7 @@ export type ModifyAgencyRequestType = {
   defaultCommissionRate?: number
   agencyState?: string
   agencyCity?: string
+  locationId?: string
 }
 
 export type ROIReportType = {

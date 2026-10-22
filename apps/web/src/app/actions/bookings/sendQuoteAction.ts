@@ -37,8 +37,9 @@ export async function sendQuoteAction({
 
   //Get lead booking details
   const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
-  if (!bookingDetails || bookingDetails.status !== BookingStatusEnum.LEAD)
+  if (!bookingDetails || bookingDetails.status !== BookingStatusEnum.LEAD) {
     return
+  }
 
   let quoteUrl = bookingDetails.quoteUrl
 

@@ -65,12 +65,17 @@ export const routeServices = {
     }
 
     //Create new route with this distance
-    const [newRoute] = await routeRepository.createRoute({
+    const newRouteData = {
       sourceId: source.id,
       destinationId: destination.id,
       distance: newDistance,
       estimatedTime: newDistance,
-    })
+    }
+    const [newRoute] = await routeRepository.createRoute(newRouteData)
+    if (!newRoute) {
+      console.error(`Route could not be added: ${newRouteData}`)
+      return
+    }
     return newRoute
   },
 

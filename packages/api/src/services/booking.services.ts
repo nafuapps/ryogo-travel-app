@@ -463,32 +463,27 @@ export const bookingServices = {
   },
 
   //Confirm a booking
-  async confirmBooking({
-    bookingId,
-    startTime,
-    pickupAddress,
-    dropAddress,
-    updateCustomerAddress,
-    customerId,
-  }: ConfirmBookingRequestType) {
-    const booking = await bookingRepository.readBookingStatusById(bookingId)
+  async confirmBooking(data: ConfirmBookingRequestType) {
+    const booking = await bookingRepository.readBookingStatusById(
+      data.bookingId,
+    )
     if (!booking || booking.status !== BookingStatusEnum.LEAD) {
-      console.error(`Booking not found or not a lead: ${bookingId}`)
+      console.error(`Booking not found or not a lead: ${data.bookingId}`)
       return
     }
 
-    if (updateCustomerAddress && pickupAddress && customerId) {
+    if (data.updateCustomerAddress && data.pickupAddress && data.customerId) {
       await customerRepository.updateCustomerAddress({
-        customerId,
-        address: pickupAddress,
+        customerId: data.customerId,
+        address: data.pickupAddress,
       })
     }
-    const [updatedBooking] = await bookingRepository.updateBookingToConfirmed({
-      bookingId,
-      startTime,
-      pickupAddress,
-      dropAddress,
-    })
+    const [updatedBooking] =
+      await bookingRepository.updateBookingToConfirmed(data)
+    if (!updatedBooking) {
+      console.error(`Could not update booking status to confirmed: ${data}`)
+      return
+    }
     return updatedBooking
   },
 
@@ -536,7 +531,9 @@ export const bookingServices = {
       !updatedBooking ||
       updatedBooking.status !== BookingStatusEnum.IN_PROGRESS
     ) {
-      console.error(`Booking not found or not in progress: ${bookingId}`)
+      console.error(
+        `Booking could not be updated to in-progress: ${bookingId} ${driverId} ${vehicleId}`,
+      )
       return
     }
     return {
@@ -701,6 +698,10 @@ export const bookingServices = {
     }
     const updatedBooking =
       await bookingRepository.updateBookingRatingByDriver(data)
+    if (!updatedBooking) {
+      console.error(`Could not change booking rating by driver: ${data}`)
+      return
+    }
     return updatedBooking
   },
 
@@ -728,6 +729,10 @@ export const bookingServices = {
 
     const updatedBooking =
       await bookingRepository.updateBookingRatingByCustomer(data)
+    if (!updatedBooking) {
+      console.error(`Could not change booking rating by customer: ${data}`)
+      return
+    }
     return updatedBooking
   },
 
@@ -737,12 +742,22 @@ export const bookingServices = {
       bookingId,
       secretCode,
     })
+    if (!updatedBooking) {
+      console.error(
+        `Could not update booking secret code: ${bookingId} ${secretCode}`,
+      )
+      return
+    }
     return updatedBooking
   },
 
   //update secret code resend timestamp
   async changeSecretCodeSentOn(bookingId: string) {
     const [updatedBooking] = await bookingRepository.updateCodeSentOn(bookingId)
+    if (!updatedBooking) {
+      console.error(`Could not update booking codeSentOn: ${bookingId}`)
+      return
+    }
     return updatedBooking
   },
 
@@ -763,6 +778,10 @@ export const bookingServices = {
     //remove assigned vehicle and driver also
     const [updatedBooking] =
       await bookingRepository.updateBookingToCancel(bookingId)
+    if (!updatedBooking) {
+      console.error(`Could not cancel booking: ${bookingId}`)
+      return
+    }
     return updatedBooking
   },
 
@@ -795,6 +814,13 @@ export const bookingServices = {
       bookingId,
       assignedDriverId,
     })
+    if (!updatedBooking) {
+      console.error(
+        `Could not update assignedDriver for the booking: ${bookingId} ${assignedDriverId}`,
+      )
+      return
+    }
+
     return {
       ...updatedBooking,
       driverUserId: driver.userId,
@@ -832,6 +858,12 @@ export const bookingServices = {
       bookingId,
       assignedVehicleId,
     })
+    if (!updatedBooking) {
+      console.error(
+        `Could not update assignedVehicle for the booking: ${bookingId} ${assignedVehicleId}`,
+      )
+      return
+    }
 
     return {
       ...updatedBooking,
@@ -870,6 +902,12 @@ export const bookingServices = {
       bookingId,
       assignedUserId,
     })
+    if (!updatedBooking) {
+      console.error(
+        `Could not update assignedUser for the booking: ${bookingId} ${assignedUserId}`,
+      )
+      return
+    }
     return {
       ...updatedBooking,
       assignedUserName: user.name,
@@ -891,6 +929,10 @@ export const bookingServices = {
       bookingId,
       actualExpensesAmount,
     })
+    if (!updatedBooking) {
+      console.error(`Could not update booking closedAt: ${bookingId}`)
+      return
+    }
     return updatedBooking
   },
 
@@ -909,6 +951,10 @@ export const bookingServices = {
     }
 
     const [updatedBooking] = await bookingRepository.deleteClosedAt(bookingId)
+    if (!updatedBooking) {
+      console.error(`Could not reopen booking closedAt: ${bookingId}`)
+      return
+    }
     return updatedBooking
   },
 
@@ -929,6 +975,10 @@ export const bookingServices = {
 
     const [updatedBooking] =
       await bookingRepository.updateReconciledAt(bookingId)
+    if (!updatedBooking) {
+      console.error(`Could not update booking reconciledAt: ${bookingId}`)
+      return
+    }
     return updatedBooking
   },
 
@@ -1001,6 +1051,12 @@ export const bookingServices = {
       bookingId,
       startTime,
     })
+    if (!updatedBooking) {
+      console.error(
+        `Could not update booking start time: ${bookingId} ${startTime}`,
+      )
+      return
+    }
     return updatedBooking
   },
 
@@ -1009,6 +1065,10 @@ export const bookingServices = {
       bookingId,
       remarks,
     })
+    if (!updatedBooking) {
+      console.error(`Could not update booking remarks: ${bookingId} ${remarks}`)
+      return
+    }
     return updatedBooking
   },
 
@@ -1022,6 +1082,12 @@ export const bookingServices = {
       bookingId,
       pickupAddress,
     })
+    if (!updatedBooking) {
+      console.error(
+        `Could not update booking pickup address: ${bookingId} ${pickupAddress}`,
+      )
+      return
+    }
     return updatedBooking
   },
 
@@ -1035,6 +1101,12 @@ export const bookingServices = {
       bookingId,
       dropAddress,
     })
+    if (!updatedBooking) {
+      console.error(
+        `Could not update booking drop address: ${bookingId} ${dropAddress}`,
+      )
+      return
+    }
     return updatedBooking
   },
 }

@@ -1,7 +1,4 @@
-import {
-  BookingStatusEnum,
-  InsertTransactionType,
-} from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { subDays } from "date-fns"
 import { bookingRepository } from "../repositories/booking.repo"
 import { transactionRepository } from "../repositories/transaction.repo"
@@ -49,20 +46,12 @@ export const transactionServices = {
       )
       return
     }
-    const newTransactionData: InsertTransactionType = {
-      bookingId: data.bookingId,
-      addedByUserId: data.userId,
-      type: data.type,
-      amount: data.amount,
-      mode: data.mode,
-      remarks: data.remarks,
-      transactionDate: data.transactionDate,
-      agencyId: data.agencyId,
-      isApproved: data.isApproved,
-    }
     const [addedTransaction] =
-      await transactionRepository.createTransaction(newTransactionData)
-
+      await transactionRepository.createTransaction(data)
+    if (!addedTransaction) {
+      console.error(`Transaction could not be created: ${data}`)
+      return
+    }
     return addedTransaction
   },
 
@@ -86,6 +75,10 @@ export const transactionServices = {
 
     const [updatedTransaction] =
       await transactionRepository.updateTransactionDetails(data)
+    if (!updatedTransaction) {
+      console.error(`Transaction could not be updated: ${data}`)
+      return
+    }
     return updatedTransaction
   },
 
@@ -127,6 +120,12 @@ export const transactionServices = {
         transactionId,
         isApproved,
       })
+    if (!updatedTransaction) {
+      console.error(
+        `Transaction approval status could not be updated: ${transactionId} ${isApproved}`,
+      )
+      return
+    }
     return updatedTransaction
   },
 
@@ -172,9 +171,13 @@ export const transactionServices = {
       return
     }
 
-    const [updatedTransaction] =
+    const [removedTransaction] =
       await transactionRepository.deleteTransaction(transactionId)
-    return updatedTransaction
+    if (!removedTransaction) {
+      console.error(`Transaction could not be removed: ${transactionId}`)
+      return
+    }
+    return removedTransaction
   },
 }
 

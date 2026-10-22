@@ -45,6 +45,10 @@ export const expenseServices = {
       agencyId: data.agencyId,
     }
     const [addedExpense] = await expenseRepository.createExpense(newExpenseData)
+    if (!addedExpense) {
+      console.error(`Expense could not be added: ${data}`)
+      return
+    }
     return addedExpense
   },
 
@@ -67,6 +71,10 @@ export const expenseServices = {
     }
 
     const [updatedExpense] = await expenseRepository.updateExpenseDetails(data)
+    if (!updatedExpense) {
+      console.error(`Expense could not be modified: ${data}`)
+      return
+    }
     return updatedExpense
   },
 
@@ -107,6 +115,12 @@ export const expenseServices = {
         expenseId,
         isApproved,
       })
+    if (!updatedExpense) {
+      console.error(
+        `Expense approval status could not be updated: ${expenseId} ${isApproved}`,
+      )
+      return
+    }
     return updatedExpense
   },
 
@@ -149,6 +163,10 @@ export const expenseServices = {
     }
 
     const [deletedExpense] = await expenseRepository.deleteExpense(expenseId)
+    if (!deletedExpense) {
+      console.error(`Expense could not be removed: ${expenseId}`)
+      return
+    }
     return deletedExpense
   },
 }

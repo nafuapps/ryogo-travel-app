@@ -39,13 +39,16 @@ export async function newBookingAction({
   }
 
   const booking = await bookingServices.addNewBooking(data)
-  if (!booking) return
+  if (!booking) {
+    return
+  }
 
   const bookingDetails = await bookingServices.findBookingDetailsById(
     booking.id,
   )
-  if (!bookingDetails || bookingDetails.status !== BookingStatusEnum.LEAD)
+  if (!bookingDetails || bookingDetails.status !== BookingStatusEnum.LEAD) {
     return
+  }
 
   //Generate and upload quote
   const quoteFile = await getLeadQuotePDF(bookingDetails)
@@ -53,10 +56,12 @@ export async function newBookingAction({
   const quoteUrl = (
     await uploadFile(quoteFile, generateBookingQuotePathName(bookingDetails.id))
   ).path
-  if (!quoteUrl) return
 
   //Update quote url in DB
-  await bookingServices.addQuoteUrl({ bookingId: bookingDetails.id, quoteUrl })
+  await bookingServices.addQuoteUrl({
+    bookingId: bookingDetails.id,
+    quoteUrl,
+  })
 
   // Share quote over email to customer
   if (bookingDetails.customer.email) {

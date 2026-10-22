@@ -744,6 +744,12 @@ export const userServices = {
     const [updatedUser] = await userRepository.updateLastLogout(
       sessionDeleted.userId,
     )
+    if (!updatedUser) {
+      console.error(
+        `User logout could not be updated: ${sessionDeleted.userId}`,
+      )
+      return
+    }
     return updatedUser
   },
 
@@ -760,21 +766,21 @@ export const userServices = {
 
     //Store new password in DB
     const passwordHash = await generatePasswordHash(newPassword)
-    const [newUserData] = await userRepository.updatePassword({
+    const [updatedUser] = await userRepository.updatePassword({
       userId,
       passwordHash,
     })
-    if (!newUserData) {
+    if (!updatedUser) {
       console.error(`User password could not be updated: ${userId}`)
       return
     }
 
     //Return user details for reset password confirmation mail
     return {
-      id: newUserData.id,
-      name: newUserData.name,
+      id: updatedUser.id,
+      name: updatedUser.name,
       password: newPassword,
-      email: newUserData.email,
+      email: updatedUser.email,
     }
   },
 
@@ -797,13 +803,18 @@ export const userServices = {
     //Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
 
-    const [newUserData] =
+    const [updatedUser] =
       await userRepository.updatePasswordAndVerificationStatus({
         userId,
         passwordHash,
       })
-
-    return newUserData
+    if (!updatedUser) {
+      console.error(
+        `User password could not be updated: ${userId} ${newPassword}`,
+      )
+      return
+    }
+    return updatedUser
   },
 
   //Change new password (by user - forgot password flow)
@@ -822,7 +833,7 @@ export const userServices = {
 
     //Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
-    const [newUserData] = await userRepository.updatePassword({
+    const [updatedUser] = await userRepository.updatePassword({
       userId,
       passwordHash,
       status:
@@ -830,8 +841,13 @@ export const userServices = {
           ? UserStatusEnum.ACTIVE
           : user.status,
     })
-
-    return newUserData
+    if (!updatedUser) {
+      console.error(
+        `User password could not be updated: ${userId} ${newPassword}`,
+      )
+      return
+    }
+    return updatedUser
   },
 
   // Change password (by user - account details flow)
@@ -864,13 +880,18 @@ export const userServices = {
 
     //Step3: Set a new password
     const passwordHash = await generatePasswordHash(newPassword)
-    const [newUserData] = await userRepository.updatePassword({
+    const [updatedUser] = await userRepository.updatePassword({
       userId,
       passwordHash,
     })
-
+    if (!updatedUser) {
+      console.error(
+        `User password could not be updated: ${userId} ${newPassword}`,
+      )
+      return
+    }
     //Return userId as reset confirmation
-    return newUserData
+    return updatedUser
   },
 
   //Update user photo url
@@ -885,6 +906,12 @@ export const userServices = {
       userId,
       photoUrl,
     })
+    if (!updatedUser) {
+      console.error(
+        `User photo url could not be updated: ${userId} ${photoUrl}`,
+      )
+      return
+    }
     return updatedUser
   },
 
@@ -907,6 +934,10 @@ export const userServices = {
     const [updatedUser] = await userRepository.updateName({ userId, name })
     if (userRole === UserRolesEnum.DRIVER) {
       await driverRepository.updateNameByUserId({ userId, name })
+    }
+    if (!updatedUser) {
+      console.error(`User name could not be updated: ${userId} ${name}`)
+      return
     }
     return updatedUser
   },
@@ -932,6 +963,12 @@ export const userServices = {
       prefersDarkTheme,
       languagePref,
     })
+    if (!updatedUser) {
+      console.error(
+        `User preferences could not be updated: ${userId} ${prefersDarkTheme} ${languagePref}`,
+      )
+      return
+    }
     return updatedUser
   },
 
@@ -975,6 +1012,10 @@ export const userServices = {
     }
 
     const [updatedUser] = await userRepository.updateEmail({ userId, email })
+    if (!updatedUser) {
+      console.error(`User email could not be updated: ${userId} ${email}`)
+      return
+    }
     return updatedUser
   },
 
@@ -1001,6 +1042,10 @@ export const userServices = {
     }
 
     const [updatedUser] = await userRepository.updateEmail({ userId, email })
+    if (!updatedUser) {
+      console.error(`User email could not be updated: ${userId} ${email}`)
+      return
+    }
     return updatedUser
   },
 
@@ -1051,6 +1096,10 @@ export const userServices = {
     if (role === UserRolesEnum.DRIVER) {
       await driverRepository.updatePhoneByUserId({ userId, phone })
     }
+    if (!updatedUser) {
+      console.error(`User phone could not be updated: ${userId} ${phone}`)
+      return
+    }
     return updatedUser
   },
 
@@ -1077,6 +1126,10 @@ export const userServices = {
         userId,
         status: DriverStatusEnum.AVAILABLE,
       })
+    }
+    if (!updatedUser) {
+      console.error(`User could not be activated: ${userId} ${role}`)
+      return
     }
     return updatedUser
   },
@@ -1105,6 +1158,10 @@ export const userServices = {
         status: DriverStatusEnum.INACTIVE,
       })
     }
+    if (!updatedUser) {
+      console.error(`User could not be inactivated: ${userId} ${role}`)
+      return
+    }
     return updatedUser
   },
 
@@ -1125,6 +1182,10 @@ export const userServices = {
     }
 
     const [verifiedUser] = await userRepository.updateVerificationStatus(userId)
+    if (!verifiedUser) {
+      console.error(`Owner could not be verified: ${userId}`)
+      return
+    }
     return verifiedUser
   },
 
@@ -1168,10 +1229,17 @@ export const userServices = {
       return
     }
 
+    const verificationCode = generateVerificationCode()
     const [updatedUser] = await userRepository.updateVerificationCode({
       userId,
-      verificationCode: generateVerificationCode(),
+      verificationCode,
     })
+    if (!updatedUser) {
+      console.error(
+        `User verification code could not be updated: ${userId} ${verificationCode}`,
+      )
+      return
+    }
     return updatedUser
   },
 
@@ -1182,10 +1250,17 @@ export const userServices = {
       return
     }
 
+    const verificationCode = generateVerificationCode()
     const [updatedUser] = await userRepository.updateVerificationCode({
       userId,
-      verificationCode: generateVerificationCode(),
+      verificationCode,
     })
+    if (!updatedUser) {
+      console.error(
+        `User verification code could not be updated: ${userId} ${verificationCode}`,
+      )
+      return
+    }
     return updatedUser
   },
 
@@ -1217,6 +1292,12 @@ export const userServices = {
       lat,
       long,
     })
+    if (!updatedUser) {
+      console.error(
+        `User location could not be updated: ${userId} ${lat} ${long}`,
+      )
+      return
+    }
     return updatedUser
   },
 }

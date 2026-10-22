@@ -4,7 +4,8 @@ import {
   CustomerStatusEnum,
   InsertCustomerType,
 } from "@ryogo-travel-app/db/schema"
-import { eq, inArray, and, not } from "drizzle-orm"
+import { and, eq, inArray, not } from "drizzle-orm"
+import { ModifyCustomerRequestType } from "../types/customer.types"
 
 export const customerRepository = {
   async readAllCustomersByAgencyId(agencyId: string) {
@@ -90,14 +91,7 @@ export const customerRepository = {
     email,
     address,
     remarks,
-  }: {
-    customerId: string
-    locationId: string
-    name?: string
-    email?: string
-    address?: string
-    remarks?: string
-  }) {
+  }: ModifyCustomerRequestType) {
     return await db
       .update(customers)
       .set({

@@ -53,18 +53,26 @@ export const orderServices = {
       orderType,
       hours: EXISTING_ORDER_SEARCH_HOURS,
     })
+    if (!existingOrder) {
+      console.warn(`Existing order not found: ${agencyId} ${orderType}`)
+      return
+    }
     return existingOrder
   },
 
   async addOrder(data: InsertOrderType) {
-    const [order] = await orderRepository.createOrder({
+    const [newOrder] = await orderRepository.createOrder({
       agencyId: data.agencyId,
       userId: data.userId,
       amount: data.amount,
       rpOrderId: data.rpOrderId,
       status: OrderStatusEnum.CREATED,
     })
-    return order
+    if (!newOrder) {
+      console.error(`New order could not be created: ${data}`)
+      return
+    }
+    return newOrder
   },
 
   async changeOrderToAttempted(rpOrderId: string) {

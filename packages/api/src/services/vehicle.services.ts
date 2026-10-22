@@ -187,6 +187,10 @@ export const vehicleServices = {
     }
     //Step3: Create vehicle in DB
     const [newVehicle] = await vehicleRepository.createVehicle(newVehicleData)
+    if (!newVehicle) {
+      console.error(`Vehicle could not be added: ${data}`)
+      return
+    }
     return newVehicle
   },
 
@@ -227,6 +231,10 @@ export const vehicleServices = {
   //Remove vehicle repair
   async removeVehicleRepair(repairId: string) {
     const [deletedRepair] = await vehicleRepairRepository.deleteRepair(repairId)
+    if (!deletedRepair) {
+      console.error(`Vehicle repair could not be removed: ${repairId}`)
+      return
+    }
     return deletedRepair
   },
 
@@ -256,7 +264,12 @@ export const vehicleServices = {
       repairId,
       vehicleId,
     })
-
+    if (!startedRepair) {
+      console.error(
+        `Vehicle repair could not be started: ${vehicleId} ${repairId}`,
+      )
+      return
+    }
     return startedRepair
   },
 
@@ -284,7 +297,12 @@ export const vehicleServices = {
       repairId,
       vehicleId,
     })
-
+    if (!endedRepair) {
+      console.error(
+        `Vehicle repair could not be ended: ${vehicleId} ${repairId}`,
+      )
+      return
+    }
     return endedRepair
   },
 
@@ -319,6 +337,12 @@ export const vehicleServices = {
       vehicleId,
       vehicleNumber,
     })
+    if (!updatedVehicle) {
+      console.error(
+        `Vehicle number could not be updated: ${vehicleId} ${vehicleNumber}`,
+      )
+      return
+    }
     return updatedVehicle
   },
 
@@ -331,6 +355,10 @@ export const vehicleServices = {
     }
 
     const [updatedVehicle] = await vehicleRepository.updateVehicleDetails(data)
+    if (!updatedVehicle) {
+      console.error(`Vehicle details could not be modified: ${data}`)
+      return
+    }
     return updatedVehicle
   },
 
@@ -367,27 +395,33 @@ export const vehicleServices = {
     const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
     if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) return
 
+    let updatedVehicle
     if (data.type === "rc") {
-      const [updatedVehicle] = await vehicleRepository.updateRCDetails({
+      const [v] = await vehicleRepository.updateRCDetails({
         vehicleId: data.vehicleId,
         rcExpiresOn: data.expiresOn,
         rcPhotoUrl: photoUrl,
       })
-      return updatedVehicle
-    }
-    if (data.type === "puc") {
-      const [updatedVehicle] = await vehicleRepository.updatePUCDetails({
+      updatedVehicle = v
+    } else if (data.type === "puc") {
+      const [v] = await vehicleRepository.updatePUCDetails({
         vehicleId: data.vehicleId,
         pucExpiresOn: data.expiresOn,
         pucPhotoUrl: photoUrl,
       })
-      return updatedVehicle
+      updatedVehicle = v
+    } else {
+      const [v] = await vehicleRepository.updateInsuranceDetails({
+        vehicleId: data.vehicleId,
+        insuranceExpiresOn: data.expiresOn,
+        insurancePhotoUrl: photoUrl,
+      })
+      updatedVehicle = v
     }
-    const [updatedVehicle] = await vehicleRepository.updateInsuranceDetails({
-      vehicleId: data.vehicleId,
-      insuranceExpiresOn: data.expiresOn,
-      insurancePhotoUrl: photoUrl,
-    })
+    if (!updatedVehicle) {
+      console.error(`Vehicle document could not be updated: ${data}`)
+      return
+    }
     return updatedVehicle
   },
 
@@ -403,6 +437,12 @@ export const vehicleServices = {
       vehicleId,
       vehiclePhotoUrl,
     })
+    if (!updatedVehicle) {
+      console.error(
+        `Vehicle photo url could not be activated: ${vehicleId} ${vehiclePhotoUrl}`,
+      )
+      return
+    }
     return updatedVehicle
   },
 
@@ -420,6 +460,10 @@ export const vehicleServices = {
       vehicleId,
       status: VehicleStatusEnum.AVAILABLE,
     })
+    if (!updatedVehicle) {
+      console.error(`Vehicle could not be activated: ${vehicleId}`)
+      return
+    }
     return updatedVehicle
   },
 
@@ -437,6 +481,10 @@ export const vehicleServices = {
       vehicleId,
       status: VehicleStatusEnum.INACTIVE,
     })
+    if (!updatedVehicle) {
+      console.error(`Vehicle could not be inactivated: ${vehicleId}`)
+      return
+    }
     return updatedVehicle
   },
 }

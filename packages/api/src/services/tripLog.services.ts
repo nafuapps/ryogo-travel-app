@@ -1,9 +1,9 @@
 import { InsertTripLogType } from "@ryogo-travel-app/db/schema"
-import { tripLogRepository } from "../repositories/tripLog.repo"
 import { sql } from "drizzle-orm"
-import { AddTripLogRequestType } from "../types/tripLog.types"
-import { vehicleRepository } from "../repositories/vehicle.repo"
 import { driverRepository } from "../repositories/driver.repo"
+import { tripLogRepository } from "../repositories/tripLog.repo"
+import { vehicleRepository } from "../repositories/vehicle.repo"
+import { AddTripLogRequestType } from "../types/tripLog.types"
 
 export const tripLogServices = {
   //Add a trip log
@@ -53,6 +53,10 @@ export const tripLogServices = {
         latLong,
         geolocation,
       })
+    }
+    if (!tripLog) {
+      console.error(`Could not add trip log: ${data}`)
+      return
     }
     return tripLog
   },

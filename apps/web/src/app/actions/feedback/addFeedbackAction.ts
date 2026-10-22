@@ -19,7 +19,9 @@ export async function addFeedbackAction(data: InsertProductFeedbackType) {
   }
 
   const feedback = await feedbackServices.addProductFeedback(data)
-  if (!feedback) return
+  if (!feedback) {
+    return
+  }
 
   return feedback
 }

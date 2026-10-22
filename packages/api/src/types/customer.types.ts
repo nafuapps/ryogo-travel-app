@@ -19,4 +19,5 @@ export type ModifyCustomerRequestType = {
   remarks?: string
   state: string
   city: string
+  locationId?: string
 }

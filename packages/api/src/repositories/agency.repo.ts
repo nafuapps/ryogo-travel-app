@@ -5,7 +5,8 @@ import {
   InsertAgencyType,
   SubscriptionPlanEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
+import { ModifyAgencyRequestType } from "../types/agency.types"
 
 export const agencyRepository = {
   //get all agencies
@@ -75,18 +76,12 @@ export const agencyRepository = {
 
   //Update agency details by Id
   async updateAgencyDetails({
-    id,
+    agencyId,
     businessName,
     businessAddress,
     defaultCommissionRate,
     locationId,
-  }: {
-    id: string
-    businessName?: string
-    businessAddress?: string
-    defaultCommissionRate?: number
-    locationId?: string
-  }) {
+  }: ModifyAgencyRequestType) {
     return await db
       .update(agencies)
       .set({
@@ -95,7 +90,7 @@ export const agencyRepository = {
         defaultCommissionRate,
         locationId,
       })
-      .where(eq(agencies.id, id))
+      .where(eq(agencies.id, agencyId))
       .returning({
         id: agencies.id,
         businessName: agencies.businessName,

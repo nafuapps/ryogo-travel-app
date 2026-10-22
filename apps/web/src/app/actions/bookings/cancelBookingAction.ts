@@ -42,6 +42,7 @@ export async function cancelBookingAction({
     return
   }
 
+  //Get booking status before cancellation
   const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
   if (!bookingDetails) return
 

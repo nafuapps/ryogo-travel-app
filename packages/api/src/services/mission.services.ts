@@ -63,6 +63,10 @@ export const missionServices = {
       })
     }
     const [newMission] = await missionRepository.createMission(mission)
+    if (!newMission) {
+      console.error(`Mission could not be added: ${mission}`)
+      return
+    }
     return newMission
   },
 
@@ -84,12 +88,20 @@ export const missionServices = {
     }
 
     const [updatedMission] = await missionRepository.updateMission(data)
+    if (!updatedMission) {
+      console.error(`Mission could not be updated: ${data}`)
+      return
+    }
     return updatedMission
   },
 
   async removeMissionById(missionId: string) {
     const [deletedMission] =
       await missionRepository.deleteMissionById(missionId)
+    if (!deletedMission) {
+      console.error(`Mission could not be removed: ${missionId}`)
+      return
+    }
     return deletedMission
   },
 
@@ -143,6 +155,12 @@ export const missionServices = {
       missionId,
       isRead,
     })
+    if (!updatedMission) {
+      console.error(
+        `Mission read status could not be updated: ${missionId} ${isRead}`,
+      )
+      return
+    }
     return updatedMission
   },
 }

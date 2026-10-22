@@ -13,6 +13,10 @@ import { supportTicketRepository } from "../repositories/supportTicket.repo"
 export const supportServices = {
   async addSupportQuery(query: InsertSupportQueryType) {
     const [newQuery] = await supportQueryRepository.createSupportQuery(query)
+    if (!newQuery) {
+      console.error(`Support query could not be added: ${query}`)
+      return
+    }
     return newQuery
   },
 
@@ -36,6 +40,10 @@ export const supportServices = {
 
     const [newTicket] =
       await supportTicketRepository.createSupportTicket(ticket)
+    if (!newTicket) {
+      console.error(`Ticket could not be created: ${ticket}`)
+      return
+    }
     return newTicket
   },
 
@@ -67,6 +75,12 @@ export const supportServices = {
       ticketId,
       photoUrl,
     })
+    if (!updatedTicket) {
+      console.error(
+        `Ticket photo url could not be updated: ${ticketId} ${photoUrl}`,
+      )
+      return
+    }
     return updatedTicket
   },
 
@@ -106,6 +120,10 @@ export const supportServices = {
         status: TicketStatusEnum.CLOSED,
         resolutionRating,
       })
+    if (!closedTicket) {
+      console.error(`Ticket could not be closed: ${ticketId}`)
+      return
+    }
     return closedTicket
   },
 
@@ -121,6 +139,10 @@ export const supportServices = {
         ticketId,
         comment,
       })
+    if (!updatedTicket) {
+      console.error(`Ticket comment could not be added: ${ticketId} ${comment}`)
+      return
+    }
     return updatedTicket
   },
 
@@ -133,6 +155,10 @@ export const supportServices = {
 
     const [removedTicket] =
       await supportTicketRepository.deleteSupportTicket(ticketId)
+    if (!removedTicket) {
+      console.error(`Ticket could not be removed: ${ticketId}`)
+      return
+    }
     return removedTicket
   },
 }

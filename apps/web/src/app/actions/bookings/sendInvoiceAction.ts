@@ -39,8 +39,9 @@ export async function sendInvoiceAction({
     !bookingDetails ||
     bookingDetails.status !== BookingStatusEnum.COMPLETED ||
     !bookingDetails.closedAt
-  )
+  ) {
     return
+  }
 
   let invoiceUrl = bookingDetails.invoiceUrl
 

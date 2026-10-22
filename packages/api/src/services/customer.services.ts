@@ -89,6 +89,10 @@ export const customerServices = {
     }
     const [newCustomer] =
       await customerRepository.createCustomer(newCustomerData)
+    if (!newCustomer) {
+      console.error(`Customer could not be added: ${newCustomerData}`)
+      return
+    }
     return newCustomer
   },
 
@@ -116,6 +120,10 @@ export const customerServices = {
       ...data,
       locationId: location.id,
     })
+    if (!updatedCustomer) {
+      console.error(`Customer details could not be updated: ${data}`)
+      return
+    }
     return updatedCustomer
   },
 
@@ -125,6 +133,12 @@ export const customerServices = {
       customerId,
       photoUrl,
     })
+    if (!updatedCustomer) {
+      console.error(
+        `Customer photo url not be updated: ${customerId} ${photoUrl}`,
+      )
+      return
+    }
     return updatedCustomer
   },
 
@@ -140,6 +154,10 @@ export const customerServices = {
       customerId,
       status: CustomerStatusEnum.ACTIVE,
     })
+    if (!updatedCustomer) {
+      console.error(`Customer could not be activated: ${customerId}`)
+      return
+    }
     return updatedCustomer
   },
 
@@ -155,6 +173,10 @@ export const customerServices = {
       customerId,
       status: CustomerStatusEnum.INACTIVE,
     })
+    if (!updatedCustomer) {
+      console.error(`Customer could not be inactivated: ${customerId}`)
+      return
+    }
     return updatedCustomer
   },
 }

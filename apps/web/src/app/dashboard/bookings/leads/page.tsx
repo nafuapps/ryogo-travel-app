@@ -1,18 +1,23 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import LeadBookingsComponent from "@/components/flows/bookings/home/leadBookingsComponent"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
+import AllBookingsHeaderTabs from "@/components/header/detailHeaderTabs/allBookingsHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   MainWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import {
+  APP_TRIAL_MODE,
+  BASIC_SEARCH_LIMIT_DAYS,
+  PREMIUM_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import LeadBookingsComponent from "@/components/flows/bookings/home/leadBookingsComponent"
-import AllBookingsHeaderTabs from "@/components/header/detailHeaderTabs/allBookingsHeaderTabs"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `Booking Leads - ${pageTitle}`,
@@ -28,7 +33,9 @@ export default async function LeadBookingsPage() {
 
   const leadBookings = await bookingServices.findLeadBookingsNextDays(
     currentUser.agencyId,
-    30,
+    currentUser.isSubscribed || APP_TRIAL_MODE
+      ? PREMIUM_SEARCH_DAYS
+      : BASIC_SEARCH_LIMIT_DAYS,
   )
 
   return (

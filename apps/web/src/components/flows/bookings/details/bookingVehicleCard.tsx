@@ -5,7 +5,7 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { ClipboardX } from "lucide-react"
@@ -33,7 +33,7 @@ export default function BookingVehicleCard({
         href={
           isRider ? `/rider/myVehicle` : `/dashboard/vehicles/${vehicle.id}`
         }
-        className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg"
+        className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg lg:transition lg:duration-300"
       >
         <VehicleCard vehicle={vehicle} />
       </Link>

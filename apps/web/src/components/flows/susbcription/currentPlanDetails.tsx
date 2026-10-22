@@ -1,9 +1,11 @@
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption, RyogoH2 } from "@/components/typography"
 import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoPill } from "@/components/pills/ryogoPills"
+import { RyogoCaption, RyogoH2 } from "@/components/typography"
 import {
   OrderTypeEnum,
   SubscriptionPlanEnum,
@@ -11,18 +13,16 @@ import {
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { RyogoPill } from "@/components/pills/ryogoPills"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default async function CurrentPlanDetails({
   subscriptionPlan,
   isOwner,
-  isBasic,
+  isSubscribed,
   lastPaidPlan,
 }: {
   subscriptionPlan: SubscriptionPlanEnum
   isOwner: boolean
-  isBasic: boolean
+  isSubscribed: boolean
   lastPaidPlan?: OrderTypeEnum
 }) {
   const t = await getTranslations("Dashboard.AccountSubscription.CurrentPlan")
@@ -30,13 +30,13 @@ export default async function CurrentPlanDetails({
     <SectionColWrapper className="items-center w-full">
       <RyogoCaption color="light">{t("Header")}</RyogoCaption>
       <SectionRowWrapper className="items-center justify-start">
-        <RyogoH2 color={isBasic ? "slate" : "brand"} weight="font-bold">
+        <RyogoH2 color={isSubscribed ? "brand" : "slate"} weight="font-bold">
           {subscriptionPlan}
         </RyogoH2>
       </SectionRowWrapper>
       <RyogoPill
-        label={isBasic ? t("FreeForever") : (lastPaidPlan ?? t("Trial"))}
-        bgColor={isBasic ? "light" : "black"}
+        label={!isSubscribed ? t("FreeForever") : (lastPaidPlan ?? t("Trial"))}
+        bgColor={isSubscribed ? "black" : "light"}
       />
       {isOwner && lastPaidPlan && (
         <Link href="/dashboard/account/subscription/orders">

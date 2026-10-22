@@ -1,13 +1,19 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import UserCompletedPageComponent from "./userCompletedBookings"
+import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import {
+  APP_TRIAL_MODE,
+  BASIC_SEARCH_LIMIT_DAYS,
+  PREMIUM_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
+import { redirect, RedirectType } from "next/navigation"
+import UserCompletedPageComponent from "./userCompletedBookings"
 
 export const metadata: Metadata = {
   title: `User Completed Bookings - ${pageTitle}`,
@@ -19,6 +25,12 @@ export default async function UserCompletedBookingsPage({
 }: {
   params: Promise<{ userId: string }>
 }) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+  const isSubscribed = currentUser.isSubscribed
+
   const { userId } = await params
   const user = await userServices.findUserDetailsById(userId)
   if (!user) {
@@ -27,9 +39,19 @@ export default async function UserCompletedBookingsPage({
 
   let bookings
   if (user.userRole === UserRolesEnum.DRIVER) {
-    bookings = await driverServices.findDriverCompletedBookingsById(userId)
+    bookings = await driverServices.findDriverCompletedBookingsById(
+      userId,
+      isSubscribed || APP_TRIAL_MODE
+        ? PREMIUM_SEARCH_DAYS
+        : BASIC_SEARCH_LIMIT_DAYS,
+    )
   } else {
-    bookings = await userServices.findUserCompletedBookingsById(userId)
+    bookings = await userServices.findUserCompletedBookingsById(
+      userId,
+      isSubscribed || APP_TRIAL_MODE
+        ? PREMIUM_SEARCH_DAYS
+        : BASIC_SEARCH_LIMIT_DAYS,
+    )
   }
 
   return (

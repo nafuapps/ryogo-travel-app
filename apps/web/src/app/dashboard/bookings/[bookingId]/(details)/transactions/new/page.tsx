@@ -1,12 +1,12 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import NewTransactionPageComponent from "./newTransaction"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { redirect, RedirectType } from "next/navigation"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { redirect, RedirectType } from "next/navigation"
+import NewTransactionPageComponent from "./newTransaction"
 
 export const metadata: Metadata = {
   title: `New Booking Transaction - ${pageTitle}`,
@@ -30,12 +30,14 @@ export default async function NewTransactionPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  //Txn can be added for in-progress or completed bookings only
+  //Txn can be added for confirmed, in-progress or completed bookings only
   //Only owner or assigned user can add transactions (for bookings that are not reconciled yet)
   if (
-    ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
-      booking.status,
-    ) ||
+    ![
+      BookingStatusEnum.CONFIRMED,
+      BookingStatusEnum.IN_PROGRESS,
+      BookingStatusEnum.COMPLETED,
+    ].includes(booking.status) ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
       currentUser.userId !== booking.assignedUserId) ||
     booking.reconciledAt

@@ -1,13 +1,18 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import CustomerUpcomingBookingsPageComponent from "./customerUpcomingBookings"
-import { Metadata } from "next"
+import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import {
+  APP_TRIAL_MODE,
+  BASIC_SEARCH_LIMIT_DAYS,
+  PREMIUM_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
+import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import CustomerUpcomingBookingsPageComponent from "./customerUpcomingBookings"
 
 export const metadata: Metadata = {
   title: `Customer Upcoming Bookings - ${pageTitle}`,
@@ -26,8 +31,12 @@ export default async function CustomerUpcomingBookingsPage({
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const bookings =
-    await customerServices.findCustomerUpcomingBookingsById(customerId)
+  const bookings = await customerServices.findCustomerUpcomingBookingsById(
+    customerId,
+    currentUser.isSubscribed || APP_TRIAL_MODE
+      ? PREMIUM_SEARCH_DAYS
+      : BASIC_SEARCH_LIMIT_DAYS,
+  )
 
   return (
     <MainWrapper>

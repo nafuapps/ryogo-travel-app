@@ -6,12 +6,12 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import {
-  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
-  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
+  BASIC_PLAN_AGENT_LIMIT,
+  BASIC_PLAN_DRIVER_LIMIT,
   BASIC_PLAN_VEHICLE_LIMIT,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
-import { BASIC_PLAN_AGENT_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import { FindAgencyDataType } from "@ryogo-travel-app/api/services/agency.services"
 import { Info } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -19,12 +19,12 @@ import { getTranslations } from "next-intl/server"
 export default async function PlanUsageCard({
   agencyData,
   confirmedBookingsLength,
-  isBasic,
+  isSubscribed,
   daysToExpiry,
 }: {
   agencyData: FindAgencyDataType
   confirmedBookingsLength: number
-  isBasic: boolean
+  isSubscribed: boolean
   daysToExpiry: number
 }) {
   const t = await getTranslations("Dashboard.AccountSubscription.PlanUsage")
@@ -45,7 +45,7 @@ export default async function PlanUsageCard({
 
   return (
     <SectionWrapper id="UsageSection">
-      {(isBasic ||
+      {(!isSubscribed ||
         daysToExpiry +
           BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS <
           0) && (

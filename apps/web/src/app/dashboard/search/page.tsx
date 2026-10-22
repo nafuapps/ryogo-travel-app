@@ -1,16 +1,16 @@
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import SearchPageComponent from "./search"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import {
+  APP_TRIAL_MODE,
+  BASIC_SEARCH_LIMIT_DAYS,
+  PREMIUM_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
-import {
-  BASIC_SEARCH_LIMIT_DAYS,
-  PREMIUM_BOOKINGS_SEARCH_DAYS,
-} from "@ryogo-travel-app/api/apiConfig"
+import { redirect, RedirectType } from "next/navigation"
+import SearchPageComponent from "./search"
 
 export const metadata: Metadata = {
   title: `Search - ${pageTitle}`,
@@ -23,24 +23,22 @@ export default async function SearchPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
-  const isSubscribed =
-    agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC &&
-    agency.subscriptionExpiresOn > new Date()
-
   const searchData = await agencyServices.findAgencySearchData(
     currentUser.agencyId,
-    isSubscribed ? PREMIUM_BOOKINGS_SEARCH_DAYS : BASIC_SEARCH_LIMIT_DAYS,
+    currentUser.isSubscribed || APP_TRIAL_MODE
+      ? PREMIUM_SEARCH_DAYS
+      : BASIC_SEARCH_LIMIT_DAYS,
   )
 
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/search"} />
-      <SearchPageComponent searchData={searchData} agency={agency} />
+      <SearchPageComponent
+        searchData={searchData}
+        isPremium={currentUser.isSubscribed}
+        subscriptionExpiresOn={currentUser.subscriptionExpiresOn}
+        hasTriedSubscription={currentUser.hasTriedSubscription}
+      />
     </MainWrapper>
   )
 }

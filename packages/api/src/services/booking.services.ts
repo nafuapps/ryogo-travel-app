@@ -217,13 +217,11 @@ export const bookingServices = {
     agencyId: string,
     days: number = BASIC_SEARCH_LIMIT_DAYS,
   ) {
-    const queryEndDate = new Date()
-    const queryStartDate = subDays(queryEndDate, days)
+    const queryStartDate = subDays(new Date(), days)
 
     const bookings = await bookingRepository.readCompletedBookingsData({
       agencyId,
       queryStartDate,
-      queryEndDate,
     })
     return bookings
   },

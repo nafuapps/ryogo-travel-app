@@ -1,15 +1,20 @@
 //Users/new page (only accessible to owner)
 
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import NewAgentPageComponent from "./newAgent"
-import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import {
+  APP_TRIAL_MODE,
+  BASIC_PLAN_AGENT_LIMIT,
+} from "@ryogo-travel-app/api/apiConfig"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
+import { redirect, RedirectType } from "next/navigation"
+import NewAgentPageComponent from "./newAgent"
 
 export const metadata: Metadata = {
   title: `New User - ${pageTitle}`,
@@ -21,18 +26,56 @@ export default async function NewUserPage() {
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const isSubscribed = currentUser.isSubscribed
+  const hasTriedSubscription = currentUser.hasTriedSubscription
+  const subscriptionExpiresOn = currentUser.subscriptionExpiresOn
 
   const allAgents = await userServices.findAllUsersByRole([UserRolesEnum.AGENT])
+
+  const currentAgentUsers = allAgents.filter(
+    (agent) =>
+      agent.agencyId === currentUser.agencyId &&
+      agent.status !== UserStatusEnum.SUSPENDED,
+  ).length
+
+  //SUBSCRIPTION BLOCKER: Only Premium agencies can add more than X agents
+  if (
+    !APP_TRIAL_MODE &&
+    currentAgentUsers >= BASIC_PLAN_AGENT_LIMIT &&
+    (!isSubscribed || subscriptionExpiresOn < new Date())
+  ) {
+    const t = await getTranslations("Dashboard.NewAgent")
+
+    return (
+      <MainWrapper>
+        <DashboardHeader pathName={"/dashboard/users/new"} />
+        <PageWrapper id="NewAgentPage">
+          <SubscriptionBlockerSection
+            warningText={
+              !isSubscribed ? t("TrialWarning") : t("ExpiredWarning")
+            }
+            actionText={!isSubscribed ? t("TrialAction") : t("ExpiredAction")}
+            isOwner
+            ctaLabel={
+              !isSubscribed
+                ? hasTriedSubscription
+                  ? t("BuyCTA")
+                  : t("TryCTA")
+                : t("RenewCTA")
+            }
+          />
+        </PageWrapper>
+      </MainWrapper>
+    )
+  }
 
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/new"} />
-      <NewAgentPageComponent agency={agency} allAgents={allAgents} />
+      <NewAgentPageComponent
+        agencyId={currentUser.agencyId}
+        allAgents={allAgents}
+      />
     </MainWrapper>
   )
 }

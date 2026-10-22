@@ -410,11 +410,9 @@ export const bookingRepository = {
   async readCompletedBookingsData({
     agencyId,
     queryStartDate,
-    queryEndDate,
   }: {
     agencyId: string
     queryStartDate: Date
-    queryEndDate: Date
   }) {
     return await db.query.bookings.findMany({
       orderBy: (bookings, { desc }) => [
@@ -424,7 +422,6 @@ export const bookingRepository = {
         eq(bookings.agencyId, agencyId),
         eq(bookings.status, BookingStatusEnum.COMPLETED),
         gte(bookings.completedAt ?? bookings.endDate, queryStartDate),
-        lte(bookings.completedAt ?? bookings.endDate, queryEndDate),
       ),
       columns: {
         actualStartDate: true,

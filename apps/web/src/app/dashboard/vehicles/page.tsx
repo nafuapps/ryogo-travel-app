@@ -1,28 +1,27 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import AllVehiclesListComponent from "@/components/flows/vehicles/home/allVehiclesListComponent"
+import OnTripVehiclesComponent from "@/components/flows/vehicles/home/onTripVehiclesComponent"
+import VehiclesScheduleChartComponent from "@/components/flows/vehicles/home/vehiclesScheduleChartComponent"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   MainWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import VehiclesScheduleChartComponent from "@/components/flows/vehicles/home/vehiclesScheduleChartComponent"
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import OnTripVehiclesComponent from "@/components/flows/vehicles/home/onTripVehiclesComponent"
-import AllVehiclesListComponent from "@/components/flows/vehicles/home/allVehiclesListComponent"
+import { getCurrentUser } from "@/lib/auth"
 import {
-  SubscriptionPlanEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+  APP_TRIAL_MODE,
+  BASIC_PLAN_VEHICLE_LIMIT,
+} from "@ryogo-travel-app/api/apiConfig"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { BASIC_PLAN_VEHICLE_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import Link from "next/link"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import Link from "next/link"
+import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `Vehicles - ${pageTitle}`,
@@ -31,16 +30,11 @@ export const metadata: Metadata = {
 
 export default async function AllVehiclesPage() {
   const currentUser = await getCurrentUser()
-
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const isSubscribed = currentUser.isSubscribed
   const agencyId = currentUser.agencyId
-  const agency = await agencyServices.findAgencyById(agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
 
   const t = await getTranslations("Dashboard.Vehicles.All")
 
@@ -60,8 +54,8 @@ export default async function AllVehiclesPage() {
         )}
         <AllVehiclesListComponent
           allVehicles={allVehicles}
-          isBasic={isBasic}
-          hasTriedSubscription={agency.hasTriedSubscription}
+          isSubscribed={isSubscribed}
+          hasTriedSubscription={currentUser.hasTriedSubscription}
         />
         <VehiclesScheduleChartComponent
           vehicleSchedule14Days={vehicleSchedule14Days}
@@ -70,7 +64,9 @@ export default async function AllVehiclesPage() {
         />
       </PageWrapper>
       <StickyActionWrapper>
-        {(!isBasic || allVehicles.length < BASIC_PLAN_VEHICLE_LIMIT) && (
+        {(isSubscribed ||
+          APP_TRIAL_MODE ||
+          allVehicles.length < BASIC_PLAN_VEHICLE_LIMIT) && (
           <Link href={`/dashboard/vehicles/new`} className="w-full">
             <RyogoDefaultButton
               size="lg"

@@ -1,20 +1,17 @@
-import { getCurrentUser } from "@/lib/auth"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import {
-  BookingStatusEnum,
-  SubscriptionPlanEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import AssignDriverPageComponent from "./assignDriver"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { Metadata } from "next"
-import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
-import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { getCurrentUser } from "@/lib/auth"
+import {
+  APP_TRIAL_MODE,
+  BASIC_PLAN_DRIVER_LIMIT,
+} from "@ryogo-travel-app/api/apiConfig"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import AssignDriverPageComponent from "./assignDriver"
 
 export const metadata: Metadata = {
   title: `Assign Driver - ${pageTitle}`,
@@ -56,13 +53,7 @@ export default async function AssignDriverBookingPage({
   ) {
     redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
   }
-
-  //Get agency details from DB
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+  const isSubscribed = currentUser.isSubscribed
 
   //Get driver data with their bookings and leaves from DB
   const allDrivers = await driverServices.findDriversByAgency(
@@ -75,7 +66,7 @@ export default async function AssignDriverBookingPage({
   //SUBSCRIPTION BLOCKER: Limit the drivers available for assignment
   if (
     !APP_TRIAL_MODE &&
-    (isBasic || agency.subscriptionExpiresOn < new Date()) &&
+    (!isSubscribed || currentUser.subscriptionExpiresOn < new Date()) &&
     allDrivers.length > BASIC_PLAN_DRIVER_LIMIT
   ) {
     limited = true
@@ -101,8 +92,8 @@ export default async function AssignDriverBookingPage({
         drivers={limited ? drivers : allDrivers}
         booking={booking}
         limited={limited}
-        isSubscribed={!isBasic}
-        hasTriedSubscription={agency.hasTriedSubscription}
+        isSubscribed={isSubscribed}
+        hasTriedSubscription={currentUser.hasTriedSubscription}
       />
     </MainWrapper>
   )

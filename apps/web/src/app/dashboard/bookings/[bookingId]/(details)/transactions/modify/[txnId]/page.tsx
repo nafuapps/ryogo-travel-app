@@ -1,14 +1,14 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
+import { TransactionIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
-import { redirect, RedirectType } from "next/navigation"
-import ModifyTransactionPageComponent from "./modifyTransaction"
-import { TransactionIdRegex } from "@/lib/regex"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { redirect, RedirectType } from "next/navigation"
+import ModifyTransactionPageComponent from "./modifyTransaction"
 
 export const metadata: Metadata = {
   title: `Modify Booking Transaction - ${pageTitle}`,
@@ -56,12 +56,14 @@ export default async function ModifyTransactionPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  //Txn can be modified for in-progress or completed bookings only
+  //Txn can be modified for confirmed, in-progress or completed bookings only
   //Only owner or booking assigned user can modify transactions (for bookings that are not reconciled yet)
   if (
-    ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
-      booking.status,
-    ) ||
+    ![
+      BookingStatusEnum.CONFIRMED,
+      BookingStatusEnum.IN_PROGRESS,
+      BookingStatusEnum.COMPLETED,
+    ].includes(booking.status) ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
       currentUser.userId !== booking.assignedUserId) ||
     booking.reconciledAt

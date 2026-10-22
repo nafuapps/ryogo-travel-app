@@ -1,13 +1,13 @@
 import { db } from "@ryogo-travel-app/db"
 import {
-  users,
-  UserRolesEnum,
-  InsertUserType,
-  UserStatusEnum,
   BookingStatusEnum,
+  InsertUserType,
   UserLangEnum,
+  UserRolesEnum,
+  users,
+  UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, inArray, not, sql } from "drizzle-orm"
+import { and, eq, inArray, not, sql } from "drizzle-orm"
 
 export const userRepository = {
   //Get all users by role
@@ -87,6 +87,15 @@ export const userRepository = {
   async readUserWithPasswordById(id: string) {
     return await db.query.users.findFirst({
       where: eq(users.id, id),
+      with: {
+        agency: {
+          columns: {
+            subscriptionPlan: true,
+            subscriptionExpiresOn: true,
+            hasTriedSubscription: true,
+          },
+        },
+      },
     })
   },
 

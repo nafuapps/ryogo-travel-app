@@ -2512,7 +2512,7 @@
       "Completed": "Completed"
     },
     "CustomerCompletedBookings": {
-      "Title": "CUSTOMER COMPLETED BOOKING",
+      "Title": "CUSTOMER COMPLETED BOOKINGS",
       "NoTrips": "No completed trips"
     },
     "CustomerUpcomingBookings": {

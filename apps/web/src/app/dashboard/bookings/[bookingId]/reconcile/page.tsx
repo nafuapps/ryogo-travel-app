@@ -1,20 +1,16 @@
+import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import {
-  BookingStatusEnum,
-  SubscriptionPlanEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
 import ReconcileBookingPageComponent from "./reconcileBooking"
-import { Metadata } from "next"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
-import { getTranslations } from "next-intl/server"
-import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 
 export const metadata: Metadata = {
   title: `Reconcile Booking - ${pageTitle}`,
@@ -54,12 +50,12 @@ export default async function ReconcileBookingPage({
   if (!agency) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+  const isSubscribed = currentUser.isSubscribed
 
   //SUBSCRIPTION BLOCKER: Only premium agencies can reconcile booking
   if (
     !APP_TRIAL_MODE &&
-    (isBasic || agency.subscriptionExpiresOn < new Date())
+    (!isSubscribed || agency.subscriptionExpiresOn < new Date())
   ) {
     const t = await getTranslations("Dashboard.ReconcileBooking")
     return (
@@ -68,20 +64,22 @@ export default async function ReconcileBookingPage({
         <PageWrapper id="ReconcileBookingPage">
           <SubscriptionBlockerSection
             warningText={
-              isBasic
-                ? t("ReconcileTrialWarning")
-                : t("ReconcileExpiredWarning")
+              isSubscribed
+                ? t("ReconcileExpiredWarning")
+                : t("ReconcileTrialWarning")
             }
             actionText={
-              isBasic ? t("ReconcileTrialAction") : t("ReconcileExpiredAction")
+              isSubscribed
+                ? t("ReconcileExpiredAction")
+                : t("ReconcileTrialAction")
             }
             isOwner
             ctaLabel={
-              isBasic
-                ? agency.hasTriedSubscription
+              isSubscribed
+                ? t("RenewCTA")
+                : currentUser.hasTriedSubscription
                   ? t("BuyCTA")
                   : t("TryCTA")
-                : t("RenewCTA")
             }
           />
         </PageWrapper>

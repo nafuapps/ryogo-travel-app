@@ -1,29 +1,29 @@
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
+import { downgradeAgencyToBasicAction } from "@/app/actions/agencies/downgradeAgencyToBasicAction"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import DashboardHomePageComponent from "./dashboardHome"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
+import { getCurrentUser } from "@/lib/auth"
 import {
   SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS,
   SUBSCRIPTION_EXPIRY_REMINDER_DAYS,
 } from "@/lib/uiConfig"
-import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { differenceInDays } from "date-fns"
-import { RyogoCaption } from "@/components/typography"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
+import {
+  APP_TRIAL_MODE,
+  PREMIUM_TRIAL_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
 import {
   ProductFeedbackTypeEnum,
-  SubscriptionPlanEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { downgradeAgencyToBasicAction } from "@/app/actions/agencies/downgradeAgencyToBasicAction"
-import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
+import { differenceInDays } from "date-fns"
+import { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
+import { redirect, RedirectType } from "next/navigation"
+import DashboardHomePageComponent from "./dashboardHome"
 
 export const metadata: Metadata = {
   title: `Dashboard - ${pageTitle}`,
@@ -43,21 +43,15 @@ export default async function DashboardHomePage({
   }
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
-  //Get agency Data
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
-  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+  const isSubscribed = currentUser.isSubscribed
 
   const daysToExpiry = differenceInDays(
-    agency.subscriptionExpiresOn,
+    currentUser.subscriptionExpiresOn,
     new Date(),
   )
 
   if (
-    !isBasic &&
+    isSubscribed &&
     daysToExpiry + SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS < 0
   ) {
     await downgradeAgencyToBasicAction({
@@ -66,15 +60,15 @@ export default async function DashboardHomePage({
     })
   }
 
-  //Subscribed agency which is about to expire, show reminder strip
+  //Subscribed agency which is about to expire, show recharge reminder strip
   const showReminderStrip =
     !APP_TRIAL_MODE &&
-    !isBasic &&
+    isSubscribed &&
     daysToExpiry <= SUBSCRIPTION_EXPIRY_REMINDER_DAYS
 
   //Basic agency which has not tried premium, show trial strip
   const showTrialStrip =
-    !APP_TRIAL_MODE && isBasic && !agency.hasTriedSubscription
+    !APP_TRIAL_MODE && !isSubscribed && !currentUser.hasTriedSubscription
 
   return (
     <>

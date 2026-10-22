@@ -1,15 +1,13 @@
 //All Users page (only accesssible by owner)
 
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import UsersPageComponent from "./users"
-import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import UsersPageComponent from "./users"
 
 export const metadata: Metadata = {
   title: `Users - ${pageTitle}`,
@@ -23,11 +21,6 @@ export default async function AllUsersPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
   const allUsers = await userServices.findAllUsersInAgency(currentUser.agencyId)
 
   return (
@@ -35,8 +28,8 @@ export default async function AllUsersPage() {
       <DashboardHeader pathName={"/dashboard/users"} />
       <UsersPageComponent
         allUsers={allUsers}
-        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
-        hasTriedSubscription={agency.hasTriedSubscription}
+        isPremium={currentUser.isSubscribed}
+        hasTriedSubscription={currentUser.hasTriedSubscription}
       />
     </MainWrapper>
   )

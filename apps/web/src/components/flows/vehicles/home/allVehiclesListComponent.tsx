@@ -1,18 +1,7 @@
-import { RyogoCaption, RyogoP } from "@/components/typography"
-import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
-import {
-  Rows3,
-  AirVent,
-  Armchair,
-  BadgeIndianRupee,
-  CircleGauge,
-  Star,
-} from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { VehicleStatusPill } from "@/components/pills/ryogoPills"
+import SubscriptionWarningCard from "@/components/flows/susbcription/subscriptionWarningCard"
+import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
 import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionHeaderWrapper,
@@ -20,20 +9,31 @@ import {
   SectionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import VehicleColorBox from "@/components/flows/vehicles/vehicleColorBox"
-import { BASIC_PLAN_VEHICLE_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import SubscriptionWarningCard from "@/components/flows/susbcription/subscriptionWarningCard"
+import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoTagWithoutBG } from "@/components/tags/ryogoTag"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { getAverageRating } from "@/lib/utils"
+import { BASIC_PLAN_VEHICLE_LIMIT } from "@ryogo-travel-app/api/apiConfig"
+import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import {
+  AirVent,
+  Armchair,
+  BadgeIndianRupee,
+  CircleGauge,
+  Rows3,
+  Star,
+} from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function AllVehiclesListComponent({
   allVehicles,
-  isBasic,
+  isSubscribed,
   hasTriedSubscription,
 }: {
   allVehicles: FindVehiclesByAgencyType
-  isBasic: boolean
+  isSubscribed: boolean
   hasTriedSubscription: boolean
 }) {
   const t = await getTranslations("Dashboard.Vehicles.All")
@@ -49,7 +49,7 @@ export default async function AllVehiclesListComponent({
         {allVehicles.map((vehicle) => (
           <VehicleItemComponent key={vehicle.id} vehicle={vehicle} />
         ))}
-        {isBasic && allVehicles.length >= BASIC_PLAN_VEHICLE_LIMIT && (
+        {!isSubscribed && allVehicles.length >= BASIC_PLAN_VEHICLE_LIMIT && (
           <SubscriptionWarningCard
             warningText={t("Warning")}
             ctaText={hasTriedSubscription ? t("BuyCTA") : t("TryCTA")}

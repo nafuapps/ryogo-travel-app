@@ -1,16 +1,35 @@
 import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
+import { getVehicleIcon } from "@/components/icons/vehicleIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import {
   SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
+import { TripLogStatusPill } from "@/components/pills/ryogoPills"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import RyogoTag from "@/components/tags/ryogoTag"
 import {
   RyogoCaption,
   RyogoH4,
-  RyogoSmall,
   RyogoP,
+  RyogoSmall,
 } from "@/components/typography"
-import moment from "moment"
-import Link from "next/link"
+import { getDisplayTime } from "@/lib/utils"
+import {
+  FindBookingHistoryLastDaysType,
+  FindBookingScheduleNextDaysType,
+  FindCancelledBookingsPreviousDaysType,
+  FindCompletedBookingsPreviousDaysType,
+  FindLeadBookingsType,
+  FindOngoingTripsType,
+  FindUpcomingBookingsNextDaysType,
+} from "@ryogo-travel-app/api/services/booking.services"
 import {
   FindCustomerCompletedBookingsByIdType,
   FindCustomerUpcomingBookingsByIdType,
@@ -21,17 +40,16 @@ import {
   FindDriversScheduleNextDaysType,
 } from "@ryogo-travel-app/api/services/driver.services"
 import {
+  FindUserAssignedBookingsByIdType,
+  FindUserCompletedBookingsByIdType,
+} from "@ryogo-travel-app/api/services/user.services"
+import {
   FindVehicleAssignedBookingsByIdType,
   FindVehicleCompletedBookingsByIdType,
   FindVehiclesScheduleNextDaysType,
 } from "@ryogo-travel-app/api/services/vehicle.services"
-import {
-  FindUserAssignedBookingsByIdType,
-  FindUserCompletedBookingsByIdType,
-} from "@ryogo-travel-app/api/services/user.services"
-import { TripLogStatusPill } from "@/components/pills/ryogoPills"
-import { getDisplayTime } from "@/lib/utils"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { BookingTypeEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import {
   Ban,
   Car,
@@ -43,27 +61,9 @@ import {
   MapPin,
   User,
 } from "lucide-react"
-import {
-  FindBookingHistoryLastDaysType,
-  FindBookingScheduleNextDaysType,
-  FindCancelledBookingsPreviousDaysType,
-  FindCompletedBookingsPreviousDaysType,
-  FindLeadBookingsType,
-  FindOngoingTripsType,
-  FindUpcomingBookingsNextDaysType,
-} from "@ryogo-travel-app/api/services/booking.services"
-import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
-import { getVehicleIcon } from "@/components/icons/vehicleIcon"
-import { BookingTypeEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import moment from "moment"
 import { useTranslations } from "next-intl"
-import RyogoTag from "@/components/tags/ryogoTag"
-import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import Link from "next/link"
 
 function BookingCardWrapper({
   bookingId,
@@ -393,11 +393,7 @@ export function UpcomingBookingCard({
         )}
         {booking.startTime && (
           <RyogoTag
-            label={
-              moment(booking.startDate).format("DD MMM") +
-              " - " +
-              getDisplayTime(booking.startTime)
-            }
+            label={getDisplayTime(booking.startTime)}
             icon={Clock}
             className="flex-row-reverse"
           />

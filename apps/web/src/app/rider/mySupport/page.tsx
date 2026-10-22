@@ -1,14 +1,13 @@
 //Account/help page
 
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import MySupportPageComponent from "./riderSupport"
 import RiderHeader from "@/components/header/riderHeader"
-import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { redirect, RedirectType } from "next/navigation"
 import { getCurrentUser } from "@/lib/auth"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import MySupportPageComponent from "./riderSupport"
 
 export const metadata: Metadata = {
   title: `Support - ${pageTitle}`,
@@ -26,12 +25,10 @@ export default async function MySupportPage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
-  const isPremium = agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC
-
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport"} />
-      <MySupportPageComponent isPremium={isPremium} />
+      <MySupportPageComponent isPremium={currentUser.isSubscribed} />
     </MainWrapper>
   )
 }

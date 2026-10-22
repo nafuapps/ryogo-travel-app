@@ -8,6 +8,7 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import {
   AgencyStatusEnum,
+  SubscriptionPlanEnum,
   UserRolesEnum,
   UserStatusEnum,
 } from "@ryogo-travel-app/db/schema"
@@ -29,6 +30,9 @@ export type SessionPayloadType = {
   phone: string
   isAdmin: boolean
   isVerified: boolean
+  isSubscribed: boolean
+  subscriptionExpiresOn: Date
+  hasTriedSubscription: boolean
   status: UserStatusEnum
   createdAt: Date
   updatedAt: Date
@@ -122,6 +126,10 @@ export async function createWebSession({
     agencyId: userData.agencyId,
     isAdmin: userData.isAdmin,
     isVerified: userData.isVerified,
+    isSubscribed:
+      userData.agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC,
+    subscriptionExpiresOn: userData.agency.subscriptionExpiresOn,
+    hasTriedSubscription: userData.agency.hasTriedSubscription,
     userRole: userData.userRole,
     name: userData.name,
     phone: userData.phone,
@@ -167,7 +175,10 @@ export async function createWebSession({
 //Update session from DB
 export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
   const user = await userServices.changeUserLastSeen(payload.userId)
-  if (!user) return
+  if (!user || user.status === UserStatusEnum.SUSPENDED) return
+
+  const agency = await agencyServices.findAgencyById(user.agencyId)
+  if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) return
 
   const updatedPayload: SessionPayloadType = {
     sessionId: payload.sessionId,
@@ -175,6 +186,9 @@ export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
     token: payload.token,
     expiresAt: payload.expiresAt,
     createdAt: payload.createdAt,
+    isSubscribed: agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC,
+    subscriptionExpiresOn: agency.subscriptionExpiresOn,
+    hasTriedSubscription: agency.hasTriedSubscription,
     agencyId: user.agencyId,
     isAdmin: user.isAdmin,
     isVerified: user.isVerified,

@@ -1,38 +1,36 @@
-import { PageWrapper } from "@/components/page/pageWrappers"
-import NewDriverForm from "./newDriverForm"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import {
-  SubscriptionPlanEnum,
-  UserRolesEnum,
-  UserStatusEnum,
-} from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
-import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import { getTranslations } from "next-intl/server"
 import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
+import { PageWrapper } from "@/components/page/pageWrappers"
+import {
+  APP_TRIAL_MODE,
+  BASIC_PLAN_DRIVER_LIMIT,
+} from "@ryogo-travel-app/api/apiConfig"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { getTranslations } from "next-intl/server"
+import { redirect, RedirectType } from "next/navigation"
+import NewDriverForm from "./newDriverForm"
 
 export default async function NewDriverPageComponent({
   agencyId,
   userId,
   isOwner,
+  isSubscribed,
+  hasTriedSubscription,
+  subscriptionExpiresOn,
 }: {
   agencyId: string
   userId: string
   isOwner: boolean
+  isSubscribed: boolean
+  hasTriedSubscription: boolean
+  subscriptionExpiresOn: Date
 }) {
   const t = await getTranslations("Dashboard.NewDriver")
 
   const allDriverUsers = await userServices.findAllUsersByRole([
     UserRolesEnum.DRIVER,
   ])
-
-  const agency = await agencyServices.findAgencyById(agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
 
   const currentDriverUsers = allDriverUsers.filter(
     (driver) =>
@@ -44,17 +42,17 @@ export default async function NewDriverPageComponent({
   if (
     !APP_TRIAL_MODE &&
     currentDriverUsers >= BASIC_PLAN_DRIVER_LIMIT &&
-    (isBasic || agency.subscriptionExpiresOn < new Date())
+    (!isSubscribed || subscriptionExpiresOn < new Date())
   ) {
     return (
       <PageWrapper id="NewDriverPage">
         <SubscriptionBlockerSection
-          warningText={isBasic ? t("TrialWarning") : t("ExpiredWarning")}
-          actionText={isBasic ? t("TrialAction") : t("ExpiredAction")}
+          warningText={!isSubscribed ? t("TrialWarning") : t("ExpiredWarning")}
+          actionText={!isSubscribed ? t("TrialAction") : t("ExpiredAction")}
           isOwner={isOwner}
           ctaLabel={
-            isBasic
-              ? agency.hasTriedSubscription
+            !isSubscribed
+              ? hasTriedSubscription
                 ? t("BuyCTA")
                 : t("TryCTA")
               : t("RenewCTA")
@@ -62,6 +60,11 @@ export default async function NewDriverPageComponent({
         />
       </PageWrapper>
     )
+  }
+
+  const agency = await agencyServices.findAgencyById(agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
   }
 
   return (

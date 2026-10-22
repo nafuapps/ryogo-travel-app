@@ -1,13 +1,19 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import DriverAssignedBookingsPageComponent from "./driverAssignedBookings"
-import { Metadata } from "next"
+import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import {
+  APP_TRIAL_MODE,
+  BASIC_SEARCH_LIMIT_DAYS,
+  PREMIUM_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import DriverAssignedBookingsPageComponent from "./driverAssignedBookings"
 
 export const metadata: Metadata = {
   title: `Driver Assigned Bookings - ${pageTitle}`,
@@ -24,8 +30,18 @@ export default async function DriverAssignedBookingsPage({
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
+  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+  const isSubscribed = currentUser.isSubscribed
 
-  const bookings = await driverServices.findDriverAssignedBookingsById(driverId)
+  const bookings = await driverServices.findDriverAssignedBookingsById(
+    driverId,
+    isSubscribed || APP_TRIAL_MODE
+      ? PREMIUM_SEARCH_DAYS
+      : BASIC_SEARCH_LIMIT_DAYS,
+  )
 
   return (
     <MainWrapper>

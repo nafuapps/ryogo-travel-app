@@ -9,14 +9,10 @@ import {
   BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import {
-  SubscriptionPlanEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
@@ -25,55 +21,49 @@ import NewBookingForm from "./newBookingForm"
 export default async function NewBookingWithCustomerPageComponent({
   userId,
   agencyId,
+  confirmedBookingsLength,
   isOwner,
   customerId,
+  isSubscribed,
+  hasTriedSubscription,
+  subscriptionExpiresOn,
 }: {
   userId: string
   agencyId: string
+  confirmedBookingsLength: number
   isOwner: boolean
   customerId: string
+  isSubscribed: boolean
+  hasTriedSubscription: boolean
+  subscriptionExpiresOn: Date
 }) {
   const t = await getTranslations("Dashboard.NewBookingWithCustomer")
-
-  const agency = await agencyServices.findAgencyById(agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
-  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
-
-  //Find last X days confirmed bookings
-  const confirmedBookings =
-    await bookingServices.findAccountableBookingsPreviousDays(
-      agencyId,
-      BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
-    )
 
   //SUBSCRIPTION BLOCKER: Monthly booking limit reached
   if (
     !APP_TRIAL_MODE &&
-    confirmedBookings.length >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT &&
-    (isBasic ||
+    confirmedBookingsLength >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT &&
+    (!isSubscribed ||
       //Check if premium expired more than X days ago
-      differenceInDays(new Date(), agency.subscriptionExpiresOn) >
+      differenceInDays(new Date(), subscriptionExpiresOn) >
         BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS)
   ) {
     return (
       <PageWrapper id="NewBookingLimitBlockerPage">
         <SubscriptionBlockerSection
           warningText={
-            isBasic ? t("BookingTrialWarning") : t("BookingExpiredWarning")
+            isSubscribed ? t("BookingExpiredWarning") : t("BookingTrialWarning")
           }
           actionText={
-            isBasic ? t("BookingTrialAction") : t("BookingExpiredAction")
+            isSubscribed ? t("BookingExpiredAction") : t("BookingTrialAction")
           }
           isOwner={isOwner}
           ctaLabel={
-            isBasic
-              ? agency.hasTriedSubscription
+            isSubscribed
+              ? t("RenewCTA")
+              : hasTriedSubscription
                 ? t("BuyCTA")
                 : t("TryCTA")
-              : t("RenewCTA")
           }
         />
       </PageWrapper>
@@ -93,7 +83,7 @@ export default async function NewBookingWithCustomerPageComponent({
   //SUBSCRIPTION BLOCKER: Limited agents can creating bookings (preference for owners first and then oldest agents)
   if (
     !APP_TRIAL_MODE &&
-    (isBasic || agency.subscriptionExpiresOn < new Date())
+    (!isSubscribed || subscriptionExpiresOn < new Date())
   ) {
     if (allUsers.length > BASIC_PLAN_AGENT_LIMIT) {
       const owners = allUsers.filter((u) => u.userRole === UserRolesEnum.OWNER)
@@ -111,18 +101,18 @@ export default async function NewBookingWithCustomerPageComponent({
           <PageWrapper id="NewBookingLimitBlockerPage">
             <SubscriptionBlockerSection
               warningText={
-                isBasic ? t("AgentTrialWarning") : t("AgentExpiredWarning")
+                isSubscribed ? t("AgentExpiredWarning") : t("AgentTrialWarning")
               }
               actionText={
-                isBasic ? t("AgentTrialAction") : t("AgentExpiredAction")
+                isSubscribed ? t("AgentExpiredAction") : t("AgentTrialAction")
               }
               isOwner={isOwner}
               ctaLabel={
-                isBasic
-                  ? agency.hasTriedSubscription
+                isSubscribed
+                  ? t("RenewCTA")
+                  : hasTriedSubscription
                     ? t("BuyCTA")
                     : t("TryCTA")
-                  : t("RenewCTA")
               }
             />
           </PageWrapper>
@@ -140,6 +130,11 @@ export default async function NewBookingWithCustomerPageComponent({
       .slice(0, BASIC_PLAN_DRIVER_LIMIT)
   }
 
+  const agency = await agencyServices.findAgencyById(agencyId)
+  if (!agency) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+
   return (
     <NewBookingForm
       agency={agency}
@@ -148,8 +143,8 @@ export default async function NewBookingWithCustomerPageComponent({
       vehicles={vehicles}
       drivers={drivers}
       limited={limited}
-      isSubscribed={!isBasic}
-      hasTriedSubscription={agency.hasTriedSubscription}
+      isSubscribed={isSubscribed}
+      hasTriedSubscription={hasTriedSubscription}
     />
   )
 }

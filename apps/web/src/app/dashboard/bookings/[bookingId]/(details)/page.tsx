@@ -1,20 +1,18 @@
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import BookingDetailsPageComponent from "./bookingDetails"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import {
   BookingStatusEnum,
   ProductFeedbackTypeEnum,
-  SubscriptionPlanEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
-import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { redirect, RedirectType } from "next/navigation"
+import BookingDetailsPageComponent from "./bookingDetails"
 
 export const metadata: Metadata = {
   title: `Booking Details - ${pageTitle}`,
@@ -42,11 +40,6 @@ export default async function BookingDetailsPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/bookings/[id]"} />
@@ -64,7 +57,7 @@ export default async function BookingDetailsPage({
         bookingDetails={bookingDetails}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         isAssignedUser={bookingDetails.assignedUser.id === currentUser.userId}
-        isPremium={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
+        isPremium={currentUser.isSubscribed}
       />
     </MainWrapper>
   )

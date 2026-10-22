@@ -2,23 +2,23 @@
 "use client"
 
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import NewBookingStepTripDetails from "./newBookingStepTripDetails"
-import NewBookingStepVehicle from "./newBookingStepVehicle"
-import NewBookingStepDriver from "./newBookingStepDriver"
-import NewBookingStepPrice from "./newBookingStepPrice"
-import NewBookingFinal from "./newBookingFinal"
-import { useState } from "react"
-import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
-import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
-import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import {
   NEW_BOOKING_DEFAULT_DISTANCE,
-  NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
   NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
   NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
+  NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
 } from "@/lib/uiConfig"
+import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
+import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
+import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
+import { useState } from "react"
+import NewBookingFinal from "./newBookingFinal"
+import NewBookingStepDriver from "./newBookingStepDriver"
+import NewBookingStepPrice from "./newBookingStepPrice"
+import NewBookingStepTripDetails from "./newBookingStepTripDetails"
+import NewBookingStepVehicle from "./newBookingStepVehicle"
 
 export default function NewBookingForm({
   agency,

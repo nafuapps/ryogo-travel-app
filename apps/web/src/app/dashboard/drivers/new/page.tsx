@@ -1,11 +1,11 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import NewDriverPageComponent from "./newDriver"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import NewDriverPageComponent from "./newDriver"
 
 export const metadata: Metadata = {
   title: `New Driver - ${pageTitle}`,
@@ -25,6 +25,9 @@ export default async function NewDriverPage() {
         agencyId={currentUser.agencyId}
         isOwner={currentUser.userRole === UserRolesEnum.OWNER}
         userId={currentUser.userId}
+        isSubscribed={currentUser.isSubscribed}
+        hasTriedSubscription={currentUser.hasTriedSubscription}
+        subscriptionExpiresOn={currentUser.subscriptionExpiresOn}
       />
     </MainWrapper>
   )

@@ -6,7 +6,7 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { User, UserX } from "lucide-react"
@@ -30,7 +30,7 @@ export default function BookingDriverCard({
     return (
       <Link
         href={`/dashboard/drivers/${driver.id}`}
-        className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg"
+        className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg lg:transition lg:duration-300"
       >
         <DriverCard driver={driver} />
       </Link>

@@ -1,20 +1,17 @@
-import { getCurrentUser } from "@/lib/auth"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import {
-  BookingStatusEnum,
-  SubscriptionPlanEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import AssignVehiclePageComponent from "./assignVehicle"
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { Metadata } from "next"
-import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
-import { BASIC_PLAN_VEHICLE_LIMIT } from "@ryogo-travel-app/api/apiConfig"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { getCurrentUser } from "@/lib/auth"
+import {
+  APP_TRIAL_MODE,
+  BASIC_PLAN_VEHICLE_LIMIT,
+} from "@ryogo-travel-app/api/apiConfig"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
+import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import AssignVehiclePageComponent from "./assignVehicle"
 
 export const metadata: Metadata = {
   title: `Assign Vehicle - ${pageTitle}`,
@@ -57,12 +54,7 @@ export default async function AssignVehicleBookingPage({
     redirect(`/dashboard/bookings/${bookingId}`, RedirectType.replace)
   }
 
-  //Get agency details from DB
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
+  const isSubscribed = currentUser.isSubscribed
 
   //Get vehicle data with their bookings and repairs
   const allVehicles = await vehicleServices.findVehiclesByAgency(
@@ -75,7 +67,7 @@ export default async function AssignVehicleBookingPage({
   //SUBSCRIPTION BLOCKER: Limit the vehicles available for assignment
   if (
     !APP_TRIAL_MODE &&
-    (isBasic || agency.subscriptionExpiresOn < new Date()) &&
+    (!isSubscribed || currentUser.subscriptionExpiresOn < new Date()) &&
     allVehicles.length > BASIC_PLAN_VEHICLE_LIMIT
   ) {
     limited = true
@@ -101,8 +93,8 @@ export default async function AssignVehicleBookingPage({
         vehicles={limited ? vehicles : allVehicles}
         booking={booking}
         limited={limited}
-        isSubscribed={!isBasic}
-        hasTriedSubscription={agency.hasTriedSubscription}
+        isSubscribed={isSubscribed}
+        hasTriedSubscription={currentUser.hasTriedSubscription}
       />
     </MainWrapper>
   )

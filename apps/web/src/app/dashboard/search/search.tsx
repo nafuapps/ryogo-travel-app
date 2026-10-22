@@ -1,31 +1,22 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import z from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { History, Search, User } from "lucide-react"
 import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
+import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import GetVehicleEnclosedIcon, {
+  GetCanDriveIcons,
+} from "@/components/icons/vehicleIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
 import {
-  FindAgencyByIdType,
-  FindAgencySearchDataType,
-} from "@ryogo-travel-app/api/services/agency.services"
-import {
-  BookingIdRegex,
-  CustomerIdRegex,
-  DriverIdRegex,
-  VehicleIdRegex,
-} from "@/lib/regex"
-import Link from "next/link"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { usePagination } from "@/hooks/usePagination"
+  FormWrapper,
+  GridItemWrapper,
+  HoverGridWrapper,
+  PageWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
 import { PaginationControls } from "@/components/pagination/paginationControls"
 import {
   BookingStatusPill,
@@ -33,28 +24,33 @@ import {
   DriverStatusPill,
   VehicleStatusPill,
 } from "@/components/pills/ryogoPills"
-import GetVehicleEnclosedIcon, {
-  GetCanDriveIcons,
-} from "@/components/icons/vehicleIcon"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { FormField, FormItem, FormMessage } from "@/components/ui/form"
 import {
-  SectionWrapper,
-  GridItemWrapper,
-  HoverGridWrapper,
-  PageWrapper,
-  FormWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group"
+import { usePagination } from "@/hooks/usePagination"
+import {
+  BookingIdRegex,
+  CustomerIdRegex,
+  DriverIdRegex,
+  VehicleIdRegex,
+} from "@/lib/regex"
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
   BASIC_SEARCH_LIMIT_DAYS,
-  PREMIUM_BOOKINGS_SEARCH_DAYS,
+  PREMIUM_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
-import {
-  RyogoGhostButton,
-  RyogoDefaultButton,
-} from "@/components/buttons/ryogoButtons"
-import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
+import { FindAgencySearchDataType } from "@ryogo-travel-app/api/services/agency.services"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { History, Search, User } from "lucide-react"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 const SEARCH_KEY = "recent_searches"
 const MAX_SEARCHES = 5
@@ -70,16 +66,16 @@ enum SearchTypeEnum {
 }
 export default function SearchPageComponent({
   searchData,
-  agency,
+  isPremium,
+  subscriptionExpiresOn,
+  hasTriedSubscription,
 }: {
   searchData: SearchDataType
-  agency: NonNullable<FindAgencyByIdType>
+  isPremium: boolean
+  subscriptionExpiresOn: Date
+  hasTriedSubscription: boolean
 }) {
   const t = useTranslations("Dashboard.Search")
-
-  const isPremium = agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC
-  const isSubscribed = isPremium && agency.subscriptionExpiresOn > new Date()
-  const hasTriedSubscription = agency.hasTriedSubscription
 
   const [selectedSearchType, setSelectedSearchType] = useState<SearchTypeEnum>(
     SearchTypeEnum.Bookings,
@@ -257,11 +253,11 @@ export default function SearchPageComponent({
 
   return (
     <PageWrapper id="SearchPage">
-      {!isSubscribed && (
+      {(!isPremium || subscriptionExpiresOn < new Date()) && (
         <SubscriptionReminderButton
           warningText={t("BasicWarning", {
             basicDays: BASIC_SEARCH_LIMIT_DAYS,
-            premiumDays: PREMIUM_BOOKINGS_SEARCH_DAYS,
+            premiumDays: PREMIUM_SEARCH_DAYS,
           })}
           ctaText={
             isPremium

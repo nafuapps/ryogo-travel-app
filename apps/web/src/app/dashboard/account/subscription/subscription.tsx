@@ -1,3 +1,10 @@
+import BuySubscriptionComponent from "@/components/flows/susbcription/buySubscription"
+import CurrentPlanDetails from "@/components/flows/susbcription/currentPlanDetails"
+import PlanExpiryDetails from "@/components/flows/susbcription/planExpiryDetails"
+import PlanUsageCard from "@/components/flows/susbcription/planUsageCard"
+import PremiumAdvantageSection from "@/components/flows/susbcription/premiumAdvantageSection"
+import PremiumNudge from "@/components/flows/susbcription/premiumNudge"
+import TryPremiumComponent from "@/components/flows/susbcription/tryPremium"
 import { PageWrapper, SectionWrapper } from "@/components/page/pageWrappers"
 import { Separator } from "@/components/ui/separator"
 import { SUBSCRIPTION_EXPIRY_REMINDER_DAYS } from "@/lib/uiConfig"
@@ -12,14 +19,6 @@ import {
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
-
-import BuySubscriptionComponent from "@/components/flows/susbcription/buySubscription"
-import TryPremiumComponent from "@/components/flows/susbcription/tryPremium"
-import PlanExpiryDetails from "@/components/flows/susbcription/planExpiryDetails"
-import PremiumNudge from "@/components/flows/susbcription/premiumNudge"
-import PlanUsageCard from "@/components/flows/susbcription/planUsageCard"
-import CurrentPlanDetails from "@/components/flows/susbcription/currentPlanDetails"
-import PremiumAdvantageSection from "@/components/flows/susbcription/premiumAdvantageSection"
 
 export default async function SubscriptionPageComponent({
   userDetails,
@@ -36,7 +35,8 @@ export default async function SubscriptionPageComponent({
 }) {
   const isOwner = userDetails.userRole === UserRolesEnum.OWNER
 
-  const isBasic = agencyDetails.subscriptionPlan === SubscriptionPlanEnum.BASIC
+  const isSubscribed =
+    agencyDetails.subscriptionPlan !== SubscriptionPlanEnum.BASIC
   const daysToExpiry = differenceInDays(
     agencyDetails.subscriptionExpiresOn,
     new Date(),
@@ -48,12 +48,12 @@ export default async function SubscriptionPageComponent({
     <PageWrapper id="AccountSubscriptionPage">
       <SectionWrapper id="AccountSubscriptionInfo" className="lg:flex-row">
         <CurrentPlanDetails
-          isBasic={isBasic}
+          isSubscribed={isSubscribed}
           isOwner={isOwner}
           subscriptionPlan={agencyDetails.subscriptionPlan}
           lastPaidPlan={lastOrderType}
         />
-        {isBasic ? (
+        {!isSubscribed ? (
           isOwner ? (
             <PremiumNudge
               userDetails={userDetails}
@@ -69,17 +69,17 @@ export default async function SubscriptionPageComponent({
           />
         )}
       </SectionWrapper>
-      {(isBasic || daysToExpiry < 0) && (
+      {(!isSubscribed || daysToExpiry < 0) && (
         <PlanUsageCard
           agencyData={agencyData}
           confirmedBookingsLength={confirmedBookingsLength}
-          isBasic={isBasic}
+          isSubscribed={isSubscribed}
           daysToExpiry={daysToExpiry}
         />
       )}
       <Separator />
       {isOwner &&
-        (isBasic || needExpiryReminder) &&
+        (!isSubscribed || needExpiryReminder) &&
         (agencyDetails.hasTriedSubscription ? (
           <BuySubscriptionComponent userDetails={userDetails} />
         ) : (

@@ -1,16 +1,16 @@
-import { SubmitEventHandler, Suspense } from "react"
-import { FieldValues, UseFormReturn } from "react-hook-form"
-import { Form } from "@/components/ui/form"
-import { PageSkeleton } from "./loadingWrappers"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   RyogoCaption,
   RyogoH3,
   RyogoSmall,
   RyogoTiny,
 } from "@/components/typography"
+import { Form } from "@/components/ui/form"
 import { format } from "date-fns"
 import { LucideIcon, SquarePen } from "lucide-react"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { SubmitEventHandler, Suspense } from "react"
+import { FieldValues, UseFormReturn } from "react-hook-form"
+import { PageSkeleton } from "./loadingWrappers"
 
 export function OnboardingPageWrapper({
   id,
@@ -31,7 +31,7 @@ export function OnboardingPageWrapper({
 
 export function MainWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full h-dvh min-h-0 bg-slate-50 dark:bg-slate-900 px-5 lg:px-6 pt-3 lg:pt-4 pb-6 lg:pb-7">
+    <div className="flex flex-col w-full h-dvh min-h-0 bg-slate-50 dark:bg-slate-900 px-5 lg:px-6 pt-3 lg:pt-4 pb-6 lg:pb-7 overflow-y-visible">
       {children}
     </div>
   )
@@ -50,7 +50,7 @@ export function PageWrapper({
     <Suspense fallback={<PageSkeleton />}>
       <div
         id={id}
-        className={`w-full flex flex-col gap-3 lg:gap-4 lg:max-w-5xl ${disableScrollInMobile ? "lg:overflow-y-scroll" : "h-full overflow-y-scroll mt-3 lg:mt-4 py-1 self-center"} no-scrollbar`}
+        className={`w-full flex flex-col gap-3 lg:gap-4 lg:max-w-5xl ${disableScrollInMobile ? "lg:overflow-y-scroll" : "h-full overflow-y-scroll mt-3 lg:mt-4 self-center"} no-scrollbar`}
       >
         {children}
       </div>

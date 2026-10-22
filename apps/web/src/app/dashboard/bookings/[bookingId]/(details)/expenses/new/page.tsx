@@ -1,12 +1,12 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import NewExpensePageComponent from "@/components/flows/bookings/expense/newExpensePage"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { redirect, RedirectType } from "next/navigation"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import NewExpensePageComponent from "@/components/flows/bookings/expense/newExpensePage"
+import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `New Booking Expense - ${pageTitle}`,
@@ -30,12 +30,14 @@ export default async function NewExpensePage({
     redirect("/dashboard/bookings")
   }
 
-  //Expense can be added for in-progress or completed bookings only
+  //Expense can be added for confirmed, in-progress or completed bookings only
   //Only owner or assigned user can add expense
   if (
-    ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
-      booking.status,
-    ) ||
+    ![
+      BookingStatusEnum.CONFIRMED,
+      BookingStatusEnum.IN_PROGRESS,
+      BookingStatusEnum.COMPLETED,
+    ].includes(booking.status) ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
       currentUser.userId !== booking.assignedUserId)
   ) {

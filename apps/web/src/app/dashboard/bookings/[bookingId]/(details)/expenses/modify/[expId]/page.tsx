@@ -1,14 +1,14 @@
+import ModifyExpensePageComponent from "@/components/flows/bookings/expense/modifyExpensePage"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
+import { ExpenseIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
-import { redirect, RedirectType } from "next/navigation"
-import { ExpenseIdRegex } from "@/lib/regex"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import ModifyExpensePageComponent from "@/components/flows/bookings/expense/modifyExpensePage"
+import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `Modify Booking Expense - ${pageTitle}`,
@@ -49,12 +49,14 @@ export default async function ModifyExpensePage({
     redirect(`/dashboard/bookings`, RedirectType.replace)
   }
 
-  //Expense can be modified for in-progress or completed bookings only
+  //Expense can be modified for confirmed, in-progress or completed bookings only
   //Only owner or booking assigned user can modify expenses (irrespective of who created the expense)
   if (
-    ![BookingStatusEnum.IN_PROGRESS, BookingStatusEnum.COMPLETED].includes(
-      booking.status,
-    ) ||
+    ![
+      BookingStatusEnum.CONFIRMED,
+      BookingStatusEnum.IN_PROGRESS,
+      BookingStatusEnum.COMPLETED,
+    ].includes(booking.status) ||
     (currentUser.userRole !== UserRolesEnum.OWNER &&
       currentUser.userId !== booking.assignedUserId) ||
     booking.closedAt

@@ -1,27 +1,25 @@
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
-import {
-  BASIC_PLAN_VEHICLE_LIMIT,
-  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
-  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
-} from "@ryogo-travel-app/api/apiConfig"
-import { BASIC_PLAN_AGENT_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import { ChevronRight, CircleCheckBig, X } from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import {
-  BASIC_SEARCH_LIMIT_DAYS,
-  PREMIUM_BOOKINGS_SEARCH_DAYS,
-} from "@ryogo-travel-app/api/apiConfig"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
+import {
+  BASIC_PLAN_AGENT_LIMIT,
+  BASIC_PLAN_DRIVER_LIMIT,
+  BASIC_PLAN_VEHICLE_LIMIT,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
+  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
+  BASIC_SEARCH_LIMIT_DAYS,
+  PREMIUM_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
+import { ChevronRight, CircleCheckBig, X } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function PricingComparisionSection() {
   const t = await getTranslations("Landing.Pricing.Comparision")
@@ -185,7 +183,7 @@ export default async function PricingComparisionSection() {
             }
             premiumItem={
               <RyogoSmall weight="font-bold" color="brand">
-                {PREMIUM_BOOKINGS_SEARCH_DAYS}
+                {PREMIUM_SEARCH_DAYS}
               </RyogoSmall>
             }
           />

@@ -22,7 +22,7 @@ export default function BookingAssignedUserCard({
     return (
       <Link
         href={`/dashboard/users/${user.id}`}
-        className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg"
+        className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg lg:transition lg:duration-300"
       >
         <AssignedUserCard user={user} />
       </Link>

@@ -9,7 +9,7 @@ export const SESSION_COOKIE_REFRESH_INTERVAL_MINUTES = 15
 
 //Bookings
 export const BASIC_SEARCH_LIMIT_DAYS = 30
-export const PREMIUM_BOOKINGS_SEARCH_DAYS = 365
+export const PREMIUM_SEARCH_DAYS = 365
 
 export const UPDATE_PRICE_DISTANCE_FACTOR = 1.1 //Actual distance = 1.1x estimated distance
 
@@ -67,4 +67,3 @@ export const LOCATE_USER_MINUTES = 15
 
 //Dashboard
 export const DASHBOARD_FETCH_DAYS = 7
-

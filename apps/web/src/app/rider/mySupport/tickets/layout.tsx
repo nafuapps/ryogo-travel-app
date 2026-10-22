@@ -1,12 +1,10 @@
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
-import { getTranslations } from "next-intl/server"
-import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import RiderHeader from "@/components/header/riderHeader"
-import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
+import RiderHeader from "@/components/header/riderHeader"
+import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
+import { getTranslations } from "next-intl/server"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function MySupportTicketsLayout({
   children,
@@ -17,17 +15,12 @@ export default async function MySupportTicketsLayout({
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const isSubscribed = currentUser.isSubscribed
 
   //SUBSCRIPTION BLOCKER: Only premium users can access support tickets
-  const isBasic = agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
   if (
     !APP_TRIAL_MODE &&
-    (isBasic || agency.subscriptionExpiresOn < new Date())
+    (!isSubscribed || currentUser.subscriptionExpiresOn < new Date())
   ) {
     const t = await getTranslations("Rider.MySupportTickets")
     return (
@@ -36,10 +29,14 @@ export default async function MySupportTicketsLayout({
         <PageWrapper id="SupportTicketsBlockerPage">
           <SubscriptionBlockerSection
             warningText={
-              isBasic ? t("TicketsTrialWarning") : t("TicketsExpiredWarning")
+              !isSubscribed
+                ? t("TicketsTrialWarning")
+                : t("TicketsExpiredWarning")
             }
             actionText={
-              isBasic ? t("TicketsTrialAction") : t("TicketsExpiredAction")
+              !isSubscribed
+                ? t("TicketsTrialAction")
+                : t("TicketsExpiredAction")
             }
           />
         </PageWrapper>

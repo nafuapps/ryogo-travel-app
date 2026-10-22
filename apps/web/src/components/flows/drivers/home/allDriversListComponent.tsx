@@ -1,11 +1,7 @@
-import { RyogoCaption, RyogoP } from "@/components/typography"
-import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
-import { Rows3, User, BadgeIndianRupee, Star } from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { DriverStatusPill } from "@/components/pills/ryogoPills"
+import SubscriptionWarningCard from "@/components/flows/susbcription/subscriptionWarningCard"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionHeaderWrapper,
@@ -13,20 +9,24 @@ import {
   SectionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import SubscriptionWarningCard from "@/components/flows/susbcription/subscriptionWarningCard"
+import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoTagWithoutBG } from "@/components/tags/ryogoTag"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { getAverageRating } from "@/lib/utils"
+import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
+import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { BadgeIndianRupee, Rows3, Star, User } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function AllDriversListComponent({
   allDrivers,
-  isBasic,
+  isSubscribed,
   hasTriedSubscription,
 }: {
   allDrivers: FindDriversByAgencyType
-  isBasic: boolean
+  isSubscribed: boolean
   hasTriedSubscription: boolean
 }) {
   const t = await getTranslations("Dashboard.Drivers.All")
@@ -42,7 +42,7 @@ export default async function AllDriversListComponent({
         {allDrivers.map((driver) => (
           <DriverItemComponent key={driver.id} driver={driver} />
         ))}
-        {isBasic && allDrivers.length >= BASIC_PLAN_DRIVER_LIMIT && (
+        {!isSubscribed && allDrivers.length >= BASIC_PLAN_DRIVER_LIMIT && (
           <SubscriptionWarningCard
             warningText={t("Warning")}
             ctaText={hasTriedSubscription ? t("BuyCTA") : t("TryCTA")}

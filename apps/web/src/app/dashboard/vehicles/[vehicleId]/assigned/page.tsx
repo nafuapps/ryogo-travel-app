@@ -1,13 +1,18 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import VehicleAssignedBookingsPageComponent from "./vehicleAssignedBookings"
-import { Metadata } from "next"
+import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { getCurrentUser } from "@/lib/auth"
+import {
+  APP_TRIAL_MODE,
+  BASIC_SEARCH_LIMIT_DAYS,
+  PREMIUM_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
-import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
+import VehicleAssignedBookingsPageComponent from "./vehicleAssignedBookings"
 
 export const metadata: Metadata = {
   title: `Vehicle Assigned Bookings - ${pageTitle}`,
@@ -19,14 +24,20 @@ export default async function VehicleAssignedBookingsPage({
 }: {
   params: Promise<{ vehicleId: string }>
 }) {
-  const { vehicleId } = await params
-
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect("/auth/login", RedirectType.replace)
   }
-  const bookings =
-    await vehicleServices.findVehicleAssignedBookingsById(vehicleId)
+  const isSubscribed = currentUser.isSubscribed
+
+  const { vehicleId } = await params
+
+  const bookings = await vehicleServices.findVehicleAssignedBookingsById(
+    vehicleId,
+    isSubscribed || APP_TRIAL_MODE
+      ? PREMIUM_SEARCH_DAYS
+      : BASIC_SEARCH_LIMIT_DAYS,
+  )
 
   return (
     <MainWrapper>

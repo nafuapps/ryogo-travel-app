@@ -1,12 +1,18 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import {
+  APP_TRIAL_MODE,
+  BASIC_SEARCH_LIMIT_DAYS,
+  PREMIUM_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
 import UserActivityPageComponent from "./userActivity"
-import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 
 export const metadata: Metadata = {
   title: `User Activity - ${pageTitle}`,
@@ -18,15 +24,25 @@ export default async function UserActivityPage({
 }: {
   params: Promise<{ userId: string }>
 }) {
-  const { userId } = await params
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    redirect("/auth/login", RedirectType.replace)
+  }
+  const isSubscribed = currentUser.isSubscribed
 
+  const { userId } = await params
   const user = await userServices.findUserDetailsById(userId)
   if (!user) {
     redirect("/dashboard/users", RedirectType.replace)
   }
 
-  const activities =
-    await notificationServices.findNotificationsByUserId(userId)
+  const activities = await notificationServices.findNotificationsByUserId(
+    userId,
+    isSubscribed || APP_TRIAL_MODE
+      ? PREMIUM_SEARCH_DAYS
+      : BASIC_SEARCH_LIMIT_DAYS,
+  )
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/users/[id]/activity"} />

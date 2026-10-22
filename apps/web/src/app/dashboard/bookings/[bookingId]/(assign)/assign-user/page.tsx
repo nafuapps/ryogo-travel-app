@@ -1,21 +1,19 @@
 //Bookings/id/assign-user page (only for owner)
 
-import { getCurrentUser } from "@/lib/auth"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
 import {
-  SubscriptionPlanEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+  APP_TRIAL_MODE,
+  BASIC_PLAN_AGENT_LIMIT,
+} from "@ryogo-travel-app/api/apiConfig"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
 import AssignUserPageComponent from "./assignUser"
-import { Metadata } from "next"
-import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
-import { BASIC_PLAN_AGENT_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 
 export const metadata: Metadata = {
   title: `Assign User - ${pageTitle}`,
@@ -46,11 +44,7 @@ export default async function AssignUserBookingPage({
     redirect("/dashboard/bookings", RedirectType.replace)
   }
 
-  //Get agency details
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const isSubscribed = currentUser.isSubscribed
 
   //Get users data with their bookings and leaves (for available users and allowance per day)
   const allUsers = await userServices.findOwnerAndAgentsByAgency(
@@ -63,8 +57,7 @@ export default async function AssignUserBookingPage({
   //SUBSCRIPTION BLOCKER: Limit the agents available for assignment
   if (
     !APP_TRIAL_MODE &&
-    (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-      agency.subscriptionExpiresOn < new Date()) &&
+    (!isSubscribed || currentUser.subscriptionExpiresOn < new Date()) &&
     allUsers.length > BASIC_PLAN_AGENT_LIMIT
   ) {
     limited = true
@@ -99,8 +92,8 @@ export default async function AssignUserBookingPage({
         users={limited ? users : allUsers}
         booking={booking}
         limited={limited}
-        isSubscribed={agency.subscriptionPlan !== SubscriptionPlanEnum.BASIC}
-        hasTriedSubscription={agency.hasTriedSubscription}
+        isSubscribed={isSubscribed}
+        hasTriedSubscription={currentUser.hasTriedSubscription}
       />
     </MainWrapper>
   )

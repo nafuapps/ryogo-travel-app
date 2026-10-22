@@ -1,14 +1,19 @@
 //Rider home page
 
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import RiderHeader from "@/components/header/riderHeader"
-import RiderHomePageComponent from "./riderHome"
-import { redirect, RedirectType } from "next/navigation"
-import { getCurrentUser } from "@/lib/auth"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { getCurrentUser } from "@/lib/auth"
+import {
+  APP_TRIAL_MODE,
+  BASIC_SEARCH_LIMIT_DAYS,
+  PREMIUM_SEARCH_DAYS,
+} from "@ryogo-travel-app/api/apiConfig"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import RiderHomePageComponent from "./riderHome"
 
 export const metadata: Metadata = {
   title: `Rider Home - ${pageTitle}`,
@@ -26,8 +31,11 @@ export default async function RiderHomePage() {
     redirect("/auth/login", RedirectType.replace)
   }
 
+  const isSubscribed = currentUser.isSubscribed
+
   const assignedBookings = await driverServices.findDriverAssignedBookingsById(
     driver.id,
+    isSubscribed ? PREMIUM_SEARCH_DAYS : BASIC_SEARCH_LIMIT_DAYS,
   )
 
   const driverLeaves = await driverServices.findAllDriverLeavesByDriverId(
@@ -36,6 +44,9 @@ export default async function RiderHomePage() {
 
   const driverActivities = await notificationServices.findNotificationsByUserId(
     driver.userId,
+    isSubscribed || APP_TRIAL_MODE
+      ? PREMIUM_SEARCH_DAYS
+      : BASIC_SEARCH_LIMIT_DAYS,
   )
 
   return (

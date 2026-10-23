@@ -2,7 +2,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   APP_TRIAL_MODE,
   BASIC_SEARCH_LIMIT_DAYS,
@@ -11,7 +11,6 @@ import {
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
 import VehicleAssignedBookingsPageComponent from "./vehicleAssignedBookings"
 
 export const metadata: Metadata = {
@@ -24,10 +23,7 @@ export default async function VehicleAssignedBookingsPage({
 }: {
   params: Promise<{ vehicleId: string }>
 }) {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isSubscribed = currentUser.isSubscribed
 
   const { vehicleId } = await params

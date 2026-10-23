@@ -1,12 +1,11 @@
-import { Metadata } from "next"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { redirect, RedirectType } from "next/navigation"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import ExpiryAlertsPageComponent from "./expiryAlerts"
 import MissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/missionDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { Metadata } from "next"
+import ExpiryAlertsPageComponent from "./expiryAlerts"
 
 export const metadata: Metadata = {
   title: `Expiry Alerts - ${pageTitle}`,
@@ -14,11 +13,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ExpiryAlertsPage() {
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const expiryAlerts = await agencyServices.findAgencyExpiryAlerts({
     agencyId: currentUser.agencyId,

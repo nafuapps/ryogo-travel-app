@@ -8,7 +8,7 @@ import {
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   APP_TRIAL_MODE,
   BASIC_SEARCH_LIMIT_DAYS,
@@ -16,7 +16,7 @@ import {
 } from "@ryogo-travel-app/api/apiConfig"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
+import { notFound } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `My Completed Bookings - ${pageTitle}`,
@@ -24,16 +24,13 @@ export const metadata: Metadata = {
 }
 
 export default async function MyCompletedBookingsPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
+  const isSubscribed = currentUser.isSubscribed
 
   const driver = await driverServices.findDriverByUserId(currentUser.userId)
   if (!driver) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
-  const isSubscribed = currentUser.isSubscribed
 
   const completedBookings =
     await driverServices.findDriverCompletedBookingsById(

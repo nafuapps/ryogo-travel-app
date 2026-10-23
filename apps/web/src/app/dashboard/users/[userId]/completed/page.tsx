@@ -2,7 +2,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   APP_TRIAL_MODE,
   BASIC_SEARCH_LIMIT_DAYS,
@@ -25,13 +25,11 @@ export default async function UserCompletedBookingsPage({
 }: {
   params: Promise<{ userId: string }>
 }) {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isSubscribed = currentUser.isSubscribed
 
   const { userId } = await params
+
   const user = await userServices.findUserDetailsById(userId)
   if (!user) {
     redirect("/dashboard/users", RedirectType.replace)

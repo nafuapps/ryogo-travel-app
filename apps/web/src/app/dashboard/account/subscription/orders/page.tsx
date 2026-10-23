@@ -2,13 +2,13 @@
 
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import OrdersPageComponent from "./orders"
+import { readPermissions } from "@/lib/permissions"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import OrdersPageComponent from "./orders"
 
 export const metadata: Metadata = {
   title: `Orders - ${pageTitle}`,
@@ -16,13 +16,9 @@ export const metadata: Metadata = {
 }
 
 export default async function OrdersPage() {
-  const currentUser = await getCurrentUser()
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
-  //Only owner can access
+  //Only owner can access orders page
   if (currentUser.userRole !== UserRolesEnum.OWNER) {
     redirect("/dashboard/account", RedirectType.replace)
   }

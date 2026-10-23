@@ -1,9 +1,9 @@
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import { readPermissions } from "@/lib/permissions"
 import { BookingIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function RiderMyBookingLayout({
   children,
@@ -12,12 +12,9 @@ export default async function RiderMyBookingLayout({
   children: React.ReactNode
   params: Promise<{ bookingId: string }>
 }) {
-  const { bookingId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { bookingId } = await params
 
   //Invalid booking id regex check
   if (!BookingIdRegex.safeParse(bookingId).success) {

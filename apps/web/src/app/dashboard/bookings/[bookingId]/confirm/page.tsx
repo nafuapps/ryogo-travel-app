@@ -1,18 +1,18 @@
 //bookings/id/confirm page (for lead booking)
 
+import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
+import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
+import DashboardHeader from "@/components/header/dashboardHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
-import { getCurrentUser } from "@/lib/auth"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import DashboardHeader from "@/components/header/dashboardHeader"
-import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
 import { differenceInDays } from "date-fns"
-import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
-import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
 import ConfirmBookingPageComponent from "./confirmBookingForm"
-import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
 
 export const metadata: Metadata = {
   title: `Confirm Lead Booking - ${pageTitle}`,
@@ -24,13 +24,9 @@ export default async function ConfirmBookingPage({
 }: {
   params: Promise<{ bookingId: string }>
 }) {
-  const { bookingId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  //Get current user
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { bookingId } = await params
 
   //Get lead booking details from DB
   const booking = await bookingServices.findBookingDetailsById(bookingId)

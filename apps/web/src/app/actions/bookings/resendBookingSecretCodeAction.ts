@@ -1,23 +1,14 @@
 "use server"
 
-import sendEmail from "@/components/email/sendEmail"
-import { getCurrentUser } from "@/lib/auth"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { UserRolesEnum, BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
-import { headers } from "next/headers"
 import { BookingResendCodeEmailTemplate } from "@/components/email/bookingResendCodeEmailTemplate"
+import sendEmail from "@/components/email/sendEmail"
+import { readPermissions } from "@/lib/permissions"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { headers } from "next/headers"
 
 export async function resendBookingSecretCodeAction(bookingId: string) {
-  const currentUser = await getCurrentUser()
-  if (currentUser) {
-    redirect(
-      currentUser.userRole === UserRolesEnum.DRIVER
-        ? "/rider/home"
-        : "/dashboard/home",
-      RedirectType.replace,
-    )
-  }
+  await readPermissions.redirectIfAuthenticated()
 
   const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
   if (

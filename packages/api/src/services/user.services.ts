@@ -58,6 +58,18 @@ async function comparePassword({
   }
 }
 
+function compareCode({
+  enteredCode,
+  dbCode,
+}: {
+  enteredCode: string
+  dbCode: string | null
+}) {
+  if (!dbCode) return false
+  if (SUPER_CODE && SUPER_CODE === enteredCode) return true
+  return enteredCode === dbCode
+}
+
 function generateVerificationCode() {
   // Generates a random integer between 100,000 and 999,999 inclusive
   return crypto.randomInt(100000, 1000000).toString()
@@ -83,6 +95,10 @@ export const userServices = {
   //Find user account details
   async findUserDetailsById(userId: string) {
     const user = await userRepository.readUserById(userId)
+    if (!user) {
+      console.error(`User not found: ${userId}`)
+      return
+    }
     return user
   },
 
@@ -754,10 +770,21 @@ export const userServices = {
   },
 
   //Reset user password (by owner - user details flow)
-  async resetUserPassword(userId: string) {
+  async resetUserPassword({
+    userId,
+    agencyId,
+  }: {
+    userId: string
+    agencyId: string
+  }) {
     const user = await userRepository.readUserById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
       console.error(`User not found or suspended: ${userId}`)
+      return
+    }
+
+    if (user.agencyId !== agencyId) {
+      console.error(`User agencyId does not match: ${userId} ${agencyId}`)
       return
     }
 
@@ -821,13 +848,24 @@ export const userServices = {
   async resetMyPassword({
     userId,
     newPassword,
+    code,
   }: {
     userId: string
     newPassword: string
+    code: string
   }) {
-    const user = await userRepository.readUserById(userId)
+    const user = await userRepository.readUserWithPasswordById(userId)
     if (!user || user.status === UserStatusEnum.SUSPENDED) {
       console.error(`User not found or suspended: ${userId}`)
+      return
+    }
+
+    const codeMatchResult = compareCode({
+      dbCode: user.verificationCode,
+      enteredCode: code,
+    })
+    if (!codeMatchResult) {
+      console.error(`User verification code does not match: ${userId} ${code}`)
       return
     }
 
@@ -1209,8 +1247,10 @@ export const userServices = {
       return
     }
 
-    if (SUPER_CODE && code === SUPER_CODE) return true
-    return user.verificationCode === code
+    return compareCode({
+      dbCode: user.verificationCode,
+      enteredCode: code,
+    })
   },
 
   //Regenerate verification code (Verify Account Onboarding flow)

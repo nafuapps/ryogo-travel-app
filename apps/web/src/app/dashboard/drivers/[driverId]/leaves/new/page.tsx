@@ -1,10 +1,9 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import NewDriverLeavePageComponent from "./newDriverLeave"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { Metadata } from "next"
+import NewDriverLeavePageComponent from "./newDriverLeave"
 
 export const metadata: Metadata = {
   title: `New Driver Leave - ${pageTitle}`,
@@ -18,10 +17,7 @@ export default async function NewDriverLeavePage({
 }) {
   const { driverId } = await params
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   return (
     <MainWrapper>

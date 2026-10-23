@@ -1,28 +1,18 @@
-import { getCurrentUser } from "@/lib/auth"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
+import Footer from "@/components/flows/landing/footer"
 import Navbar from "@/components/flows/landing/nav"
+import { readPermissions } from "@/lib/permissions"
 import {
   DARK_MODE_COOKIE_NAME,
   LOCALE_COOKIE_NAME,
 } from "@ryogo-travel-app/api/apiConfig"
 import { cookies } from "next/headers"
-import Footer from "@/components/flows/landing/footer"
 
 export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const currentUser = await getCurrentUser()
-
-  // Redirect to private route if the user is already authenticated
-  if (currentUser) {
-    if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider/home", RedirectType.replace)
-    }
-    redirect("/dashboard/home", RedirectType.replace)
-  }
+  await readPermissions.redirectIfAuthenticated()
 
   const cookieStore = await cookies()
   const isDarkMode = cookieStore.get(DARK_MODE_COOKIE_NAME)?.value === "true"

@@ -1,12 +1,12 @@
-import { Metadata } from "next"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { redirect, RedirectType } from "next/navigation"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import ChangeVehicleNumberPageComponent from "./changeVehicleNumber"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { UserRolesEnum, VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import ChangeVehicleNumberPageComponent from "./changeVehicleNumber"
 
 export const metadata: Metadata = {
   title: `Change Vehicle Number - ${pageTitle}`,
@@ -18,12 +18,9 @@ export default async function ChangeVehicleNumberPage({
 }: {
   params: Promise<{ vehicleId: string }>
 }) {
-  const { vehicleId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { vehicleId } = await params
 
   const vehicle = await vehicleServices.findVehicleDetailsById(vehicleId)
 

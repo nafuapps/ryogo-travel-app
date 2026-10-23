@@ -4,10 +4,9 @@ import {
   DoubleContentWrapper,
   MainWrapper,
 } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
 import SupportPageComponent from "./support"
 import SupportSideComponent from "./supportSide"
 
@@ -17,20 +16,16 @@ export const metadata: Metadata = {
 }
 
 export default async function SupportPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
+  const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/support"} />
       <DoubleContentWrapper>
-        <SupportPageComponent
-          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
-        />
+        <SupportPageComponent isOwner={isOwner} />
         <SupportSideComponent
-          isOwner={currentUser.userRole === UserRolesEnum.OWNER}
+          isOwner={isOwner}
           isPremium={currentUser.isSubscribed}
         />
       </DoubleContentWrapper>

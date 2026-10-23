@@ -1,19 +1,19 @@
-import DashboardHeader from "@/components/header/dashboardHeader"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import SubscriptionPageComponent from "./subscription"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import { orderServices } from "@ryogo-travel-app/api/services/order.services"
-import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
-import { OrderIdRegex } from "@/lib/regex"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { OrderIdRegex } from "@/lib/regex"
+import { BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { orderServices } from "@ryogo-travel-app/api/services/order.services"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+import SubscriptionPageComponent from "./subscription"
 
 export const metadata: Metadata = {
   title: `Subscription - ${pageTitle}`,
@@ -28,13 +28,9 @@ export default async function SubscriptionPage({
     orderId?: string
   }>
 }) {
-  const currentUser = await getCurrentUser()
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const { feedback, orderId } = await searchParams
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   const userDetails = await userServices.findUserDetailsById(currentUser.userId)
   const agencyDetails = await agencyServices.findAgencyById(
@@ -42,10 +38,13 @@ export default async function SubscriptionPage({
   )
 
   if (!userDetails || !agencyDetails) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
+  if (!agencyData) {
+    notFound()
+  }
 
   //Find last X days confirmed bookings
   const confirmedBookings =

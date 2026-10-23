@@ -11,7 +11,7 @@ import {
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
@@ -30,12 +30,9 @@ export default async function BookingExpensesPage({
 }: {
   params: Promise<{ bookingId: string }>
 }) {
-  const { bookingId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { bookingId } = await params
 
   const booking = await bookingServices.findBookingStatusById(bookingId)
   if (!booking) {

@@ -1,6 +1,4 @@
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
 } from "@/components/flows/support/supportContentHeader"
@@ -9,12 +7,26 @@ import {
   SupportFAQItemType,
   SupportFAQWrapper,
 } from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import SupportTableOfContentLinkButton, {
   SupportContentItemType,
 } from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableStatusRow,
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -22,35 +34,23 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
+import { UserStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
-  Telescope,
-  SquarePen,
+  ChevronRight,
   PhoneCall,
   Plus,
-  ChevronRight,
-  UserShield,
+  SquarePen,
+  Telescope,
   Tickets,
+  UserShield,
 } from "lucide-react"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import { Metadata } from "next"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import {
-  SupportTableWrapper,
-  SupportTableTextRow,
-  SupportTableStatusRow,
-} from "@/components/flows/support/supportTableWrapper"
-import { UserStatusPill } from "@/components/pills/ryogoPills"
-import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
 
 /*
   - User overview
@@ -66,10 +66,7 @@ export const metadata: Metadata = {
 }
 
 export default async function SupportHelpUsersPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   // Only owner can access this page
   if (currentUser.userRole !== UserRolesEnum.OWNER) {

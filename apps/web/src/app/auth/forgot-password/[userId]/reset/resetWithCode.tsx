@@ -1,35 +1,35 @@
 //Confirm Email page
 "use client"
 
-import z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { useTranslations } from "next-intl"
-import { RyogoH3, RyogoSmall } from "@/components/typography"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
+import { checkVerificationCodeAction } from "@/app/actions/users/checkVerificationCodeAction"
 import { resetMyPasswordAction } from "@/app/actions/users/resetMyPasswordAction"
-import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
-import { useBotDetection } from "@/hooks/useBotDetection"
 import {
   RyogoDefaultButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
-import { CODE_LENGTH, MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
-import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
+import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
+  AuthPageWrapper,
   FormContentWrapper,
   FormWrapper,
-  SectionRowWrapper,
-  AuthPageWrapper,
   SectionColWrapper,
+  SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { useState, useTransition } from "react"
-import { checkVerificationCodeAction } from "@/app/actions/users/checkVerificationCodeAction"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { CheckCircle } from "lucide-react"
+import { RyogoH3, RyogoSmall } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { useBotDetection } from "@/hooks/useBotDetection"
+import { CODE_LENGTH, MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
+import { CheckCircle } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useState, useTransition } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function ResetWithCodePageComponent({
   user,
@@ -112,6 +112,7 @@ export default function ResetWithCodePageComponent({
     const updatedUser = await resetMyPasswordAction({
       userId: user.id,
       newPassword: data.password,
+      code: data.code,
     })
     if (updatedUser) {
       setFormSuccess(true)

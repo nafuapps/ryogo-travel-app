@@ -2,11 +2,10 @@
 
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import NewVehicleRepairPageComponent from "./newVehicleRepair"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { Metadata } from "next"
+import NewVehicleRepairPageComponent from "./newVehicleRepair"
 
 export const metadata: Metadata = {
   title: `New Vehicle Repair - ${pageTitle}`,
@@ -18,11 +17,9 @@ export default async function NewVehicleRepairPage({
 }: {
   params: Promise<{ vehicleId: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { vehicleId } = await params
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   return (
     <MainWrapper>

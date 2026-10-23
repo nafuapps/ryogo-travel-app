@@ -1,15 +1,15 @@
 //New agent/driver/added owner logging in for the first time
 
-import { getCurrentUser } from "@/lib/auth"
+import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { redirect, RedirectType } from "next/navigation"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
 import { getTranslations } from "next-intl/server"
+import { redirect, RedirectType } from "next/navigation"
 import { ChangePasswordStepComponent } from "./changePasswordStep"
-import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
-import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export const metadata: Metadata = {
   title: `Change Password - ${pageTitle}`,
@@ -17,11 +17,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ChangePasswordPage() {
-  const currentUser = await getCurrentUser()
-  //If no user logged in, go to login page
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   // Owner
   if (currentUser.userRole === UserRolesEnum.OWNER) {
@@ -40,10 +36,10 @@ export default async function ChangePasswordPage() {
       redirect("/dashboard/home", RedirectType.replace)
     }
   } else {
-    // Verified user
+    //Non owner
     if (currentUser.isVerified) {
       if (currentUser.userRole === UserRolesEnum.DRIVER) {
-        //If driver, go to rider
+        //If driver, go to rider home
         redirect("/rider/home", RedirectType.replace)
       } else {
         //If not driver, go to dashboard

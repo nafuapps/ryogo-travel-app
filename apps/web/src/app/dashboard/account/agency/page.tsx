@@ -1,15 +1,13 @@
-//Account/agency details page
-
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import AgencyDetailsPageComponent from "./agencyDetails"
-import { getCurrentUser } from "@/lib/auth"
+import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
+import { notFound } from "next/navigation"
+import AgencyDetailsPageComponent from "./agencyDetails"
 
 export const metadata: Metadata = {
   title: `Agency - ${pageTitle}`,
@@ -17,14 +15,11 @@ export const metadata: Metadata = {
 }
 
 export default async function AgencyDetailsPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const agency = await agencyServices.findAgencyById(currentUser.agencyId)
   if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER

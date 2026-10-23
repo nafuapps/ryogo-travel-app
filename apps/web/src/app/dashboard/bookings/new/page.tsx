@@ -1,11 +1,11 @@
+import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
-import DashboardHeader from "@/components/header/dashboardHeader"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
 import NewBookingPageComponent from "./newBooking"
 
 export const metadata: Metadata = {
@@ -14,14 +14,11 @@ export const metadata: Metadata = {
 }
 
 export default async function NewBookingPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const agency = await agencyServices.findAgencyById(currentUser.agencyId)
   if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   const customers = await customerServices.findCustomersInAgency(agency.id)

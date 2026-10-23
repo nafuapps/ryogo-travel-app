@@ -1,15 +1,15 @@
 //Driver Leaves page
 
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import AllDriverLeavesPageComponent from "./allDriverLeaves"
+import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import DriverDetailHeaderTabs from "@/components/header/detailHeaderTabs/driverDetailHeaderTabs"
+import { redirect, RedirectType } from "next/navigation"
+import AllDriverLeavesPageComponent from "./allDriverLeaves"
 
 export const metadata: Metadata = {
   title: `Driver Leaves - ${pageTitle}`,
@@ -21,11 +21,9 @@ export default async function AllDriverLeavesPage({
 }: {
   params: Promise<{ driverId: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { driverId } = await params
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   const driver = await driverServices.findDriverDetailsById(driverId)
   if (!driver) {

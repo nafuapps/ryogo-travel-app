@@ -1,31 +1,27 @@
 "use server"
 
-import { login, getCurrentUser } from "@/lib/auth"
+import { login } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { redirect } from "next/navigation"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 //Forgot password reset flow (by user)
 export async function resetMyPasswordAction({
   userId,
   newPassword,
+  code,
 }: {
   userId: string
   newPassword: string
+  code: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (currentUser) {
-    if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider/home")
-    } else {
-      redirect("/dashboard/home")
-    }
-  }
+  await readPermissions.redirectIfAuthenticated()
 
   const user = await userServices.resetMyPassword({
     userId,
     newPassword,
+    code,
   })
   if (!user) return
 

@@ -1,5 +1,21 @@
 //Onboarding home page
 
+import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
+import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
+import Footer from "@/components/flows/landing/footer"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
+import Navbar from "@/components/flows/landing/nav"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+  SectionWrapper,
+  TileGridWrapper,
+} from "@/components/page/pageWrappers"
 import {
   RyogoCaption,
   RyogoH2,
@@ -7,6 +23,13 @@ import {
   RyogoSmall,
   RyogoTiny,
 } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
+import { readPermissions } from "@/lib/permissions"
+import { PhoneRegex } from "@/lib/regex"
+import {
+  DARK_MODE_COOKIE_NAME,
+  LOCALE_COOKIE_NAME,
+} from "@ryogo-travel-app/api/apiConfig"
 import {
   AtSign,
   Camera,
@@ -22,33 +45,8 @@ import {
 } from "lucide-react"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import Link from "next/link"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { PhoneRegex } from "@/lib/regex"
-import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
-import { Separator } from "@/components/ui/separator"
-import {
-  SectionColWrapper,
-  SectionRowWrapper,
-  SectionWrapper,
-  TileGridWrapper,
-} from "@/components/page/pageWrappers"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 import { cookies } from "next/headers"
-import {
-  DARK_MODE_COOKIE_NAME,
-  LOCALE_COOKIE_NAME,
-} from "@ryogo-travel-app/api/apiConfig"
-import Navbar from "@/components/flows/landing/nav"
-import Footer from "@/components/flows/landing/footer"
-import { getCurrentUser } from "@/lib/auth"
-import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
-import {
-  LandingSectionWrapper,
-  LandingContentWrapper,
-} from "@/components/flows/landing/landingWrappers"
+import Link from "next/link"
 
 export const metadata: Metadata = {
   title: `Onboarding - ${pageTitle}`,
@@ -60,32 +58,9 @@ export default async function OnboardingHomePage({
 }: {
   searchParams: Promise<{ phone?: string }>
 }) {
+  await readPermissions.redirectIfAuthenticated()
+
   const { phone } = await searchParams
-
-  const currentUser = await getCurrentUser()
-
-  //Redirect to private route
-  if (currentUser) {
-    if (currentUser.userRole !== UserRolesEnum.OWNER) {
-      if (currentUser.status === UserStatusEnum.NEW) {
-        redirect("/onboarding/change-password", RedirectType.replace)
-      }
-      if (currentUser.userRole === UserRolesEnum.DRIVER) {
-        redirect("/rider/home", RedirectType.replace)
-      }
-      redirect("/dashboard/home", RedirectType.replace)
-    }
-    if (!currentUser.isAdmin) {
-      redirect("/onboarding/change-password", RedirectType.replace)
-    }
-    if (!currentUser.isVerified) {
-      redirect("/onboarding/verify-account", RedirectType.replace)
-    }
-    if (currentUser.status === UserStatusEnum.NEW) {
-      redirect("/onboarding/add-vehicle", RedirectType.replace)
-    }
-    redirect("/dashboard/home", RedirectType.replace)
-  }
 
   const cookieStore = await cookies()
   const isDarkMode = cookieStore.get(DARK_MODE_COOKIE_NAME)?.value === "true"

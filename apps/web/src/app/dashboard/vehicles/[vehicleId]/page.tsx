@@ -1,17 +1,17 @@
-import VehicleDetailsPageComponent from "./vehicleDetails"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import DashboardHeader from "@/components/header/dashboardHeader"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import {
-  UserRolesEnum,
-  ProductFeedbackTypeEnum,
-} from "@ryogo-travel-app/db/schema"
-import { getCurrentUser } from "@/lib/auth"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
+import {
+  ProductFeedbackTypeEnum,
+  UserRolesEnum,
+} from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import VehicleDetailsPageComponent from "./vehicleDetails"
 
 export const metadata: Metadata = {
   title: `Vehicle Details - ${pageTitle}`,
@@ -25,14 +25,11 @@ export default async function VehicleDetailsPage({
   params: Promise<{ vehicleId: string }>
   searchParams: Promise<{ feedback?: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { vehicleId } = await params
 
   const feedback = (await searchParams).feedback
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   const vehicle = await vehicleServices.findVehicleDetailsById(vehicleId)
 

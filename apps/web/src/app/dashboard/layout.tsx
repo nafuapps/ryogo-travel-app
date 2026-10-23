@@ -1,38 +1,29 @@
-import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
-import { cookies } from "next/headers"
 import DashboardSidebar from "@/components/sidebar/dashboardSidebar"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { cookies } from "next/headers"
+import { redirect, RedirectType } from "next/navigation"
 // import CommandCenter from "@/components/command/commandCenter"
+import UserLocationTracker from "@/components/flows/account/userLocationTracker"
 import {
   LayoutSectionWrapper,
   LayoutWrapper,
 } from "@/components/layout/layoutWrappers"
-import UserLocationTracker from "@/components/flows/account/userLocationTracker"
+import { readPermissions } from "@/lib/permissions"
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const cookieStore = await cookies()
-  const sidebarCookie = cookieStore.get(SIDEBAR_COOKIE_NAME)
-  const defaultOpen = sidebarCookie ? sidebarCookie.value === "true" : false
-  const currentUser = await getCurrentUser()
-
-  // Redirect to auth if the user is not authenticated
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
+  const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   //Driver
   if (currentUser.userRole === UserRolesEnum.DRIVER) {
     //Go to rider page
     redirect("/rider/home", RedirectType.replace)
   }
-
-  const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   //New user
   if (currentUser.status === UserStatusEnum.NEW) {
@@ -53,6 +44,10 @@ export default async function DashboardLayout({
       redirect("/onboarding/change-password", RedirectType.replace)
     }
   }
+
+  const cookieStore = await cookies()
+  const sidebarCookie = cookieStore.get(SIDEBAR_COOKIE_NAME)
+  const defaultOpen = sidebarCookie ? sidebarCookie.value === "true" : false
 
   //Only non-new owner/agent can come to dashboard
   return (

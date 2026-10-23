@@ -1,12 +1,12 @@
 //(Onboarding) Add vehicle page
 
-import { Metadata } from "next"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import VerifyAccountPageComponent from "./verifyAccount"
+import { readPermissions } from "@/lib/permissions"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { notFound, redirect, RedirectType } from "next/navigation"
+import VerifyAccountPageComponent from "./verifyAccount"
 
 export const metadata: Metadata = {
   title: `Onboarding Verify Account - ${pageTitle}`,
@@ -14,12 +14,7 @@ export const metadata: Metadata = {
 }
 
 export default async function VerifyAccountPage() {
-  const currentUser = await getCurrentUser()
-
-  //If not logged in, go to login page
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   //Not owner
   if (currentUser.userRole !== UserRolesEnum.OWNER) {
@@ -47,7 +42,7 @@ export default async function VerifyAccountPage() {
 
   const userDetails = await userServices.findUserDetailsById(currentUser.userId)
   if (!userDetails) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   return (

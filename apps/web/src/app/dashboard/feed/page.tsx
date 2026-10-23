@@ -1,7 +1,7 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   APP_TRIAL_MODE,
   BASIC_SEARCH_LIMIT_DAYS,
@@ -9,7 +9,6 @@ import {
 } from "@ryogo-travel-app/api/apiConfig"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
 import NotificationFeedPageComponent from "./notificationFeed"
 
 export const metadata: Metadata = {
@@ -18,11 +17,7 @@ export const metadata: Metadata = {
 }
 
 export default async function FeedPage() {
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const feed = await notificationServices.findFeedNotificationsByAgencyId(
     currentUser.agencyId,

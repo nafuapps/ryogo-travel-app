@@ -2,7 +2,7 @@ import ModifyExpensePageComponent from "@/components/flows/bookings/expense/modi
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { ExpenseIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
@@ -20,16 +20,13 @@ export default async function ModifyExpensePage({
 }: {
   params: Promise<{ bookingId: string; expId: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { bookingId, expId } = await params
 
   //Invalid expense id regex check
   if (!ExpenseIdRegex.safeParse(expId).success) {
     redirect(`/dashboard/bookings/${bookingId}/expenses`, RedirectType.replace)
-  }
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
   }
 
   //Get expense details from DB

@@ -1,10 +1,9 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
 import NewVehiclePageComponent from "./newVehicle"
 
 export const metadata: Metadata = {
@@ -13,10 +12,8 @@ export const metadata: Metadata = {
 }
 
 export default async function NewVehiclePage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/vehicles/new"} />

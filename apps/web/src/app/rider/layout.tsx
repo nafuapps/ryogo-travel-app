@@ -1,29 +1,21 @@
-import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
-import { cookies } from "next/headers"
-import RiderSidebar from "@/components/sidebar/riderSidebar"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import UserLocationTracker from "@/components/flows/account/userLocationTracker"
 import {
   LayoutSectionWrapper,
   LayoutWrapper,
 } from "@/components/layout/layoutWrappers"
-import UserLocationTracker from "@/components/flows/account/userLocationTracker"
+import RiderSidebar from "@/components/sidebar/riderSidebar"
+import { SIDEBAR_COOKIE_NAME, SidebarProvider } from "@/components/ui/sidebar"
+import { readPermissions } from "@/lib/permissions"
+import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { cookies } from "next/headers"
+import { redirect, RedirectType } from "next/navigation"
 
 export default async function RiderLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const cookieStore = await cookies()
-  const sidebarCookie = cookieStore.get(SIDEBAR_COOKIE_NAME)
-  const defaultOpen = sidebarCookie ? sidebarCookie.value === "true" : false
-  const currentUser = await getCurrentUser()
-
-  //If no user logged in, go to login page
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   //If not driver, go to dashboard
   if (currentUser.userRole !== UserRolesEnum.DRIVER) {
@@ -35,6 +27,10 @@ export default async function RiderLayout({
     //Go to change-password
     redirect("/onboarding/change-password", RedirectType.replace)
   }
+
+  const cookieStore = await cookies()
+  const sidebarCookie = cookieStore.get(SIDEBAR_COOKIE_NAME)
+  const defaultOpen = sidebarCookie ? sidebarCookie.value === "true" : false
 
   //Only non-new driver can come to rider pages
   return (

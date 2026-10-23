@@ -1,10 +1,9 @@
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import RiderHeader from "@/components/header/riderHeader"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import { Metadata } from "next"
 import AddSupportTicketPageComponent from "@/components/flows/support/addTicketPage"
+import RiderHeader from "@/components/header/riderHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: `Add Support Ticket - ${pageTitle}`,
@@ -12,10 +11,7 @@ export const metadata: Metadata = {
 }
 
 export default async function AddMySupportTicketPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   return (
     <MainWrapper>

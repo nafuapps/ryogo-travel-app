@@ -2,13 +2,13 @@
 
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import ChangeAgencyEmailPageComponent from "./changeAgencyEmail"
-import { getCurrentUser } from "@/lib/auth"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { notFound, redirect, RedirectType } from "next/navigation"
+import ChangeAgencyEmailPageComponent from "./changeAgencyEmail"
 
 export const metadata: Metadata = {
   title: `Change Agency Email - ${pageTitle}`,
@@ -16,16 +16,14 @@ export const metadata: Metadata = {
 }
 
 export default async function ChangeAgencyEmailPage() {
-  const currentUser = await getCurrentUser()
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
   const agency = await agencyServices.findAgencyById(currentUser.agencyId)
   if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
+  //Only owners can change agency email
   if (currentUser.userRole !== UserRolesEnum.OWNER) {
     redirect("/dashboard/account/agency", RedirectType.replace)
   }

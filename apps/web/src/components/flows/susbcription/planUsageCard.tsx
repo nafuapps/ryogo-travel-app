@@ -22,7 +22,7 @@ export default async function PlanUsageCard({
   isSubscribed,
   daysToExpiry,
 }: {
-  agencyData: FindAgencyDataType
+  agencyData: NonNullable<FindAgencyDataType>
   confirmedBookingsLength: number
   isSubscribed: boolean
   daysToExpiry: number

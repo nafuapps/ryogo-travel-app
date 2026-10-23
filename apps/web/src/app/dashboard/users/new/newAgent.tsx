@@ -1,7 +1,7 @@
 import { PageWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { redirect, RedirectType } from "next/navigation"
+import { notFound } from "next/navigation"
 import NewAgentForm from "./newAgentForm"
 
 export default async function NewAgentPageComponent({
@@ -13,7 +13,7 @@ export default async function NewAgentPageComponent({
 }) {
   const agency = await agencyServices.findAgencyById(agencyId)
   if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   return (

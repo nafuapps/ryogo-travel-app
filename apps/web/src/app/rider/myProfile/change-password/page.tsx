@@ -1,12 +1,9 @@
-//Change password flow
-
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import ChangePasswordPageComponent from "@/components/flows/account/changePasswordPage"
 import RiderHeader from "@/components/header/riderHeader"
-import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: `Change Password - ${pageTitle}`,
@@ -14,10 +11,8 @@ export const metadata: Metadata = {
 }
 
 export default async function ChangePasswordMyProfilePage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/myProfile/change-password"} />

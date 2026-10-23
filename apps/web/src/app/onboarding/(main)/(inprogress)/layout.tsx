@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 
@@ -7,12 +7,7 @@ export default async function OnboardingInprogressLayout({
 }: {
   children: React.ReactNode
 }) {
-  const currentUser = await getCurrentUser()
-
-  //Redirect to login page
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   //Not owner, needs redirection
   if (currentUser.userRole !== UserRolesEnum.OWNER) {

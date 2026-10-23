@@ -1,17 +1,16 @@
-import { Metadata } from "next"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import MyMissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/myMissionDetailHeaderTabs"
+import RiderHeader from "@/components/header/riderHeader"
+import MissionsPageComponent from "@/components/missions/missions"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
 import {
   MainWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { redirect, RedirectType } from "next/navigation"
+import { readPermissions } from "@/lib/permissions"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
-import RiderHeader from "@/components/header/riderHeader"
-import MyMissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/myMissionDetailHeaderTabs"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import MissionsPageComponent from "@/components/missions/missions"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: `My Missions - ${pageTitle}`,
@@ -19,10 +18,7 @@ export const metadata: Metadata = {
 }
 
 export default async function MyMissionsPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const missions = await missionServices.findMissionsByUserId(
     currentUser.userId,

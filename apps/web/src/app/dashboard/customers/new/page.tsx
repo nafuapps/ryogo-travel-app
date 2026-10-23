@@ -1,10 +1,9 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import NewCustomerPageComponent from "./newCustomer"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { Metadata } from "next"
+import NewCustomerPageComponent from "./newCustomer"
 
 export const metadata: Metadata = {
   title: `New Customer - ${pageTitle}`,
@@ -12,11 +11,8 @@ export const metadata: Metadata = {
 }
 
 export default async function NewCustomerPage() {
-  const currentUser = await getCurrentUser()
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/customers/new"} />

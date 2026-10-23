@@ -11,7 +11,7 @@ import {
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   APP_TRIAL_MODE,
   BASIC_SEARCH_LIMIT_DAYS,
@@ -20,7 +20,6 @@ import {
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `Bookings - ${pageTitle}`,
@@ -28,13 +27,8 @@ export const metadata: Metadata = {
 }
 
 export default async function BookingsPage() {
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const agencyId = currentUser.agencyId
-
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   const ongoingTrips = await bookingServices.findOngoingTrips(agencyId)

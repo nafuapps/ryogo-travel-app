@@ -29,7 +29,7 @@ export default async function SubscriptionPageComponent({
 }: {
   userDetails: NonNullable<FindUserDetailsByIdType>
   agencyDetails: NonNullable<FindAgencyByIdType>
-  agencyData: FindAgencyDataType
+  agencyData: NonNullable<FindAgencyDataType>
   confirmedBookingsLength: number
   lastPaidOrder: FindLastPaidOrderType
 }) {

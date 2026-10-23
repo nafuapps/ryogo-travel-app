@@ -2,7 +2,7 @@ import SubscriptionBlockerSection from "@/components/flows/susbcription/subscrip
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
@@ -15,16 +15,13 @@ export const metadata: Metadata = {
 }
 
 export default async function AddOwnerPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
+  const isSubscribed = currentUser.isSubscribed
 
   //Only agency admin can add more owners
   if (!currentUser.isAdmin) {
     redirect("/dashboard/users", RedirectType.replace)
   }
-  const isSubscribed = currentUser.isSubscribed
 
   //SUBSCRIPTION BLOCKER: Only Premium agencies can add more owners
   if (

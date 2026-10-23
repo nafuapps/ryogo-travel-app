@@ -1,20 +1,32 @@
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
 } from "@/components/flows/support/supportContentHeader"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import {
-  SupportFAQWrapper,
   SupportFAQItem,
   SupportFAQItemType,
+  SupportFAQWrapper,
 } from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import SupportTableOfContentLinkButton, {
   SupportContentItemType,
 } from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableStatusRow,
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -22,9 +34,10 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
+import { AgencyStatusPill, UserStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   PREMIUM_TRIAL_DAYS,
   SESSION_COOKIE_EXPIRATION_DAYS,
@@ -45,22 +58,8 @@ import {
   Settings,
   UserCog,
 } from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import { redirect, RedirectType } from "next/navigation"
-import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import {
-  SupportTableStatusRow,
-  SupportTableTextRow,
-  SupportTableWrapper,
-} from "@/components/flows/support/supportTableWrapper"
-import { AgencyStatusPill, UserStatusPill } from "@/components/pills/ryogoPills"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
+import { getTranslations } from "next-intl/server"
 
 /*
   - Account Overview (Name, Email, Pwd)
@@ -76,10 +75,7 @@ export const metadata: Metadata = {
 }
 
 export default async function SupportHelpAccountPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   const t = await getTranslations("Dashboard.SupportAccountHelp")

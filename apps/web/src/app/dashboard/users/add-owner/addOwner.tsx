@@ -2,7 +2,7 @@ import { PageWrapper } from "@/components/page/pageWrappers"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
+import { notFound } from "next/navigation"
 import AddOwnerForm from "./addOwnerForm"
 
 export default async function AddOwnerPageComponent({
@@ -12,7 +12,7 @@ export default async function AddOwnerPageComponent({
 }) {
   const agency = await agencyServices.findAgencyById(agencyId)
   if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   const allOwners = await userServices.findAllUsersByRole([UserRolesEnum.OWNER])

@@ -1,18 +1,11 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
 
 export async function findLoginUsersAction(phone: string) {
-  const currentUser = await getCurrentUser()
-  if (currentUser) {
-    if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider/home", RedirectType.replace)
-    }
-    redirect("/dashboard/home", RedirectType.replace)
-  }
+  await readPermissions.redirectIfAuthenticated()
+
   const users = await userServices.findValidUsersByPhone(phone)
   return users
 }

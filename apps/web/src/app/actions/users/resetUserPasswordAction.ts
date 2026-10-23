@@ -28,7 +28,7 @@ export async function resetUserPasswordAction({
     return
   }
 
-  const user = await userServices.resetUserPassword(userId)
+  const user = await userServices.resetUserPassword({ userId, agencyId })
   if (!user) return
 
   //Send password reset email to the user
@@ -54,5 +54,7 @@ export async function resetUserPasswordAction({
     link: `/dashboard/users/${userId}`,
   })
 
-  return user
+  const { password, ...userWithoutPassword } = user
+
+  return userWithoutPassword
 }

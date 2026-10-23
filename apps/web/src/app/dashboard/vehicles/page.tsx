@@ -10,7 +10,7 @@ import {
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   APP_TRIAL_MODE,
   BASIC_PLAN_VEHICLE_LIMIT,
@@ -21,7 +21,6 @@ import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `Vehicles - ${pageTitle}`,
@@ -29,10 +28,7 @@ export const metadata: Metadata = {
 }
 
 export default async function AllVehiclesPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isSubscribed = currentUser.isSubscribed
   const agencyId = currentUser.agencyId
 

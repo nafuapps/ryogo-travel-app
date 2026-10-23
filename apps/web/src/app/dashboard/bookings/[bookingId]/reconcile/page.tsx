@@ -2,7 +2,7 @@ import SubscriptionBlockerSection from "@/components/flows/susbcription/subscrip
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
@@ -21,10 +21,7 @@ export default async function ReconcileBookingPage({
 }: {
   params: Promise<{ bookingId: string }>
 }) {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isSubscribed = currentUser.isSubscribed
 
   const { bookingId } = await params

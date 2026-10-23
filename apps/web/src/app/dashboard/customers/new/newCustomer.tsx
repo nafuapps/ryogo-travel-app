@@ -1,8 +1,8 @@
-import NewCustomerForm from "./newCustomerForm"
-import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
-import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { redirect, RedirectType } from "next/navigation"
 import { PageWrapper } from "@/components/page/pageWrappers"
+import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
+import { notFound } from "next/navigation"
+import NewCustomerForm from "./newCustomerForm"
 
 export default async function NewCustomerPageComponent({
   agencyId,
@@ -16,7 +16,7 @@ export default async function NewCustomerPageComponent({
   //Get agency Data (for location)
   const agency = await agencyServices.findAgencyById(agencyId)
   if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   return (

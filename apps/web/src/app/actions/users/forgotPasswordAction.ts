@@ -2,23 +2,17 @@
 
 import { ForgotPasswordCodeTemplate } from "@/components/email/forgotPasswordCodeTemplate"
 import sendEmail from "@/components/email/sendEmail"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { redirect } from "next/navigation"
 import { headers } from "next/headers"
 
 export async function forgotPasswordAction(userId: string) {
-  const currentUser = await getCurrentUser()
-  if (currentUser) {
-    if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider/home")
-    } else {
-      redirect("/dashboard/home")
-    }
-  }
+  await readPermissions.redirectIfAuthenticated()
+
   const user = await userServices.generateAndSendCode(userId)
-  if (!user || !user.verificationCode) return
+  if (!user || !user.verificationCode) {
+    return
+  }
 
   const link = `/auth/forgot-password/${userId}/reset`
 

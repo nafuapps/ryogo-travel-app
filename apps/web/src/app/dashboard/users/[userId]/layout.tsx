@@ -1,4 +1,3 @@
-import { getCurrentUser } from "@/lib/auth"
 import { UserIdRegex } from "@/lib/regex"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -12,11 +11,6 @@ export default async function UserDetailsLayout({
   params: Promise<{ userId: string }>
 }) {
   const { userId } = await params
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   //Invalid user id regex check
   if (!UserIdRegex.safeParse(userId).success) {

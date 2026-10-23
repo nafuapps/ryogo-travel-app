@@ -1,14 +1,14 @@
 //MyProfile page
 
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import RiderHeader from "@/components/header/riderHeader"
-import RiderProfilePageComponent from "./riderProfile"
-import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import MyProfileDetailHeaderTabs from "@/components/header/detailHeaderTabs/myProfileHeaderTabs"
+import RiderHeader from "@/components/header/riderHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+import RiderProfilePageComponent from "./riderProfile"
 
 export const metadata: Metadata = {
   title: `My Profile - ${pageTitle}`,
@@ -16,18 +16,13 @@ export const metadata: Metadata = {
 }
 
 export default async function MyProfilePage() {
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const userDetails = await userServices.findUserDetailsWithDriverById(
     currentUser.userId,
   )
-
   if (!userDetails) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   return (

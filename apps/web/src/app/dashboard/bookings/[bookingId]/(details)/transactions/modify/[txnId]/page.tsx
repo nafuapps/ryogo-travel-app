@@ -1,7 +1,7 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { TransactionIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
@@ -20,6 +20,8 @@ export default async function ModifyTransactionPage({
 }: {
   params: Promise<{ bookingId: string; txnId: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { bookingId, txnId } = await params
 
   //Invalid transaction id regex check
@@ -28,11 +30,6 @@ export default async function ModifyTransactionPage({
       `/dashboard/bookings/${bookingId}/transactions`,
       RedirectType.replace,
     )
-  }
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
   }
 
   //Get txn details from DB

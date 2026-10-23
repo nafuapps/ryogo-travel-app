@@ -3,7 +3,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import BookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/bookingDetailHeaderTabs"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import {
   BookingStatusEnum,
@@ -26,19 +26,16 @@ export default async function BookingDetailsPage({
   params: Promise<{ bookingId: string }>
   searchParams: Promise<{ feedback?: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { bookingId } = await params
-
-  const feedback = (await searchParams).feedback
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
   if (!bookingDetails) {
     redirect("/dashboard/bookings", RedirectType.replace)
   }
+
+  const feedback = (await searchParams).feedback
 
   return (
     <MainWrapper>

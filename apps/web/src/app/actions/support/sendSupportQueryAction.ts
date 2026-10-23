@@ -2,10 +2,9 @@
 
 import sendEmail from "@/components/email/sendEmail"
 import { SupportQueryEmailTemplate } from "@/components/email/supportQueryEmailTemplate"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { supportServices } from "@ryogo-travel-app/api/services/support.services"
+import { readPermissions } from "@/lib/permissions"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
+import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 
 export async function sendSupportQueryAction(data: {
   name: string
@@ -14,10 +13,7 @@ export async function sendSupportQueryAction(data: {
   message: string
   agencyName?: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (currentUser) {
-    redirect("/dashboard/home", RedirectType.replace)
-  }
+  await readPermissions.redirectIfAuthenticated()
 
   //Add the query to the database
   const supportQuery = await supportServices.addSupportQuery({

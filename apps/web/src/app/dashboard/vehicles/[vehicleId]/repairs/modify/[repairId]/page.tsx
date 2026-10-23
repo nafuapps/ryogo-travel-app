@@ -1,16 +1,16 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import ModifyVehicleRepairPageComponent from "./modifyVehicleRepair"
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { VehicleRepairIdRegex } from "@/lib/regex"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
+import { VehicleRepairIdRegex } from "@/lib/regex"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import {
   UserRolesEnum,
   VehicleRepairStatusEnum,
 } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import ModifyVehicleRepairPageComponent from "./modifyVehicleRepair"
 
 export const metadata: Metadata = {
   title: `Modify Vehicle Repair - ${pageTitle}`,
@@ -22,12 +22,10 @@ export default async function ModifyVehicleRepairPage({
 }: {
   params: Promise<{ vehicleId: string; repairId: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { vehicleId, repairId } = await params
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
   //Invalid repair id regex check
   if (!VehicleRepairIdRegex.safeParse(repairId).success) {
     redirect(`/dashboard/vehicles/${vehicleId}/repairs`, RedirectType.replace)

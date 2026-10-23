@@ -1,20 +1,37 @@
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
 } from "@/components/flows/support/supportContentHeader"
 import {
-  SupportFAQWrapper,
   SupportFAQItem,
   SupportFAQItemType,
+  SupportFAQWrapper,
 } from "@/components/flows/support/supportFAQWrapper"
+import {
+  SupportListItem,
+  SupportListWrapper,
+} from "@/components/flows/support/supportListWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import SupportTableOfContentLinkButton, {
   SupportContentItemType,
 } from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableStatusRow,
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import ExpenseIcon from "@/components/icons/expenseIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -22,30 +39,14 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
+import {
+  BookingStatusPill,
+  TripLogStatusPill,
+} from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import {
-  Tickets,
-  Plus,
-  ChevronRight,
-  MapPlus,
-  CalendarCheck,
-  ScanEye,
-  IndianRupee,
-  BanknoteArrowDown,
-  ArrowLeftRight,
-  Logs,
-  PhoneCall,
-  StickyNotes,
-  CalendarX,
-  ListTodo,
-} from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import {
-  SupportTableStatusRow,
-  SupportTableTextRow,
-  SupportTableWrapper,
-} from "@/components/flows/support/supportTableWrapper"
+import { readPermissions } from "@/lib/permissions"
+import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
 import {
   BookingStatusEnum,
   ExpenseTypesEnum,
@@ -53,25 +54,23 @@ import {
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 import {
-  BookingStatusPill,
-  TripLogStatusPill,
-} from "@/components/pills/ryogoPills"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import ExpenseIcon from "@/components/icons/expenseIcon"
-import {
-  SupportListItem,
-  SupportListWrapper,
-} from "@/components/flows/support/supportListWrapper"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+  ArrowLeftRight,
+  BanknoteArrowDown,
+  CalendarCheck,
+  CalendarX,
+  ChevronRight,
+  IndianRupee,
+  ListTodo,
+  Logs,
+  MapPlus,
+  PhoneCall,
+  Plus,
+  ScanEye,
+  StickyNotes,
+  Tickets,
+} from "lucide-react"
 import { Metadata } from "next"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
-import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
+import { getTranslations } from "next-intl/server"
 /*
   - Overview
   - Creation
@@ -93,11 +92,9 @@ export const metadata: Metadata = {
 }
 
 export default async function SupportHelpBookingsPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER
+
   const t = await getTranslations("Dashboard.SupportBookingsHelp")
 
   const contentItems: SupportContentItemType[] = [

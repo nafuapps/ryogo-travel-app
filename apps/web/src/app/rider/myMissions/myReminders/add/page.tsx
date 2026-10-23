@@ -1,10 +1,9 @@
-import { Metadata } from "next"
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { redirect, RedirectType } from "next/navigation"
-import AddReminderPageComponent from "@/components/missions/addReminder"
 import RiderHeader from "@/components/header/riderHeader"
+import AddReminderPageComponent from "@/components/missions/addReminder"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: `Add Reminder - ${pageTitle}`,
@@ -12,10 +11,7 @@ export const metadata: Metadata = {
 }
 
 export default async function AddMyReminderPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   return (
     <MainWrapper>

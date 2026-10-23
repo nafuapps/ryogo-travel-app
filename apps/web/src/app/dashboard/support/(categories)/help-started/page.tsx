@@ -1,20 +1,30 @@
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
 } from "@/components/flows/support/supportContentHeader"
 import {
+  SupportFAQItem,
   SupportFAQItemType,
   SupportFAQWrapper,
-  SupportFAQItem,
 } from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import SupportTableOfContentLinkButton, {
   SupportContentItemType,
 } from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -24,7 +34,8 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import { getCurrentUser } from "@/lib/auth"
+import { RyogoVideo } from "@/components/video/ryogoVideo"
+import { readPermissions } from "@/lib/permissions"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
   BadgeQuestionMark,
@@ -33,20 +44,8 @@ import {
   Play,
   Telescope,
 } from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import { redirect, RedirectType } from "next/navigation"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoVideo } from "@/components/video/ryogoVideo"
-import {
-  SupportTableWrapper,
-  SupportTableTextRow,
-} from "@/components/flows/support/supportTableWrapper"
+import { getTranslations } from "next-intl/server"
 
 /*
   - What and why is ryogo?
@@ -62,10 +61,7 @@ export const metadata: Metadata = {
 }
 
 export default async function SupportHelpStartedPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   const t = await getTranslations("Dashboard.SupportStartedHelp")

@@ -3,7 +3,7 @@
 import RiderHeader from "@/components/header/riderHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   APP_TRIAL_MODE,
   BASIC_SEARCH_LIMIT_DAYS,
@@ -12,7 +12,7 @@ import {
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
+import { notFound } from "next/navigation"
 import RiderHomePageComponent from "./riderHome"
 
 export const metadata: Metadata = {
@@ -21,14 +21,11 @@ export const metadata: Metadata = {
 }
 
 export default async function RiderHomePage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const driver = await driverServices.findDriverByUserId(currentUser.userId)
   if (!driver) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   const isSubscribed = currentUser.isSubscribed

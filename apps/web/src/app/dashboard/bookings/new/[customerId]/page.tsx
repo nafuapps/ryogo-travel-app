@@ -1,7 +1,7 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { CustomerIdRegex } from "@/lib/regex"
 import { BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
@@ -23,15 +23,12 @@ export default async function NewBookingCustomerPage({
     customerId: string
   }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { customerId } = await params
 
   if (CustomerIdRegex.safeParse(customerId).success === false) {
     redirect("/dashboard/bookings/new", RedirectType.replace)
-  }
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
   }
 
   const customer = await customerServices.findCustomerDetailsById(customerId)

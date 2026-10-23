@@ -3164,11 +3164,7 @@
     },
     "SupportBlogsHelp": {
       "Title": "Blogs & News",
-      "Description": "Find latest news, guides and industry insights.",
-      "Blog1": {
-        "Title": "How to grow your travel agency business with RyoGo?",
-        "Type": "PRODUCT GUIDE"
-      }
+      "Description": "Find latest news, guides and industry insights."
     },
     "SupportBookingsHelp": {
       "Title": "Bookings",
@@ -7577,19 +7573,7 @@
       "Blogs": {
         "Title": "Blogs & News",
         "Subtitle": "Get latest product updates, news, industry insights and expert guides from RyoGo.",
-        "Count": "{count} ARTICLES",
-        "Blog1": {
-          "Title": "How to grow your travel agency business with RyoGo",
-          "Type": "News and Updates"
-        },
-        "Blog2": {
-          "Title": "Learn how to manage your travel agency operations with RyoGo",
-          "Type": "Product Guide"
-        },
-        "Blog3": {
-          "Title": "Understand the onboarding flow with RyoGo",
-          "Type": "Product Guide"
-        }
+        "Count": "{count} ARTICLES"
       },
       "About": {
         "Title": "About Us",

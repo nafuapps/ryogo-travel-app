@@ -1,12 +1,12 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import AccountSettingsPageComponent from "./settings"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
 import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+import AccountSettingsPageComponent from "./settings"
 
 export const metadata: Metadata = {
   title: `Settings - ${pageTitle}`,
@@ -14,16 +14,13 @@ export const metadata: Metadata = {
 }
 
 export default async function AccountSettingsPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const userDetails = await userServices.findUserDetailsById(currentUser.userId)
-
   if (!userDetails) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
+
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/settings"} />

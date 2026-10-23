@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
 export async function checkVerificationCodeAction({
@@ -13,10 +13,12 @@ export async function checkVerificationCodeAction({
   loggedIn?: boolean
 }) {
   if (loggedIn) {
-    const currentUser = await getCurrentUser()
-    if (!currentUser || currentUser.userId !== userId) {
+    const currentUser = await readPermissions.getAuthenticatedUser()
+    if (currentUser.userId !== userId) {
       return
     }
+  } else {
+    await readPermissions.redirectIfAuthenticated()
   }
 
   const result = await userServices.checkVerificationCode({

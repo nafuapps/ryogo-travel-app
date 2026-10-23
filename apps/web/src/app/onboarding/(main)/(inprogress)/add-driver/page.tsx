@@ -1,11 +1,11 @@
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import AddDriverPageComponent from "./addDriver"
-import { Metadata } from "next"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { readPermissions } from "@/lib/permissions"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { notFound, redirect, RedirectType } from "next/navigation"
+import AddDriverPageComponent from "./addDriver"
 
 export const metadata: Metadata = {
   title: `Onboarding Add Driver - ${pageTitle}`,
@@ -13,19 +13,13 @@ export const metadata: Metadata = {
 }
 
 export default async function AddDriverPage() {
-  const currentUser = await getCurrentUser()
-  //If no user logged in, go to login page
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   //Check for Onboarding flow
   const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
+  if (!agencyData) {
+    notFound()
+  }
   if (agencyData.vehicles.length < 1) {
     redirect("/onboarding/add-vehicle", RedirectType.replace)
   }
@@ -44,7 +38,7 @@ export default async function AddDriverPage() {
     <AddDriverPageComponent
       agencyId={currentUser.agencyId}
       userId={currentUser.userId}
-      agencyName={agency.businessName}
+      agencyName={agencyData.agencyName}
       allDrivers={allDrivers}
     />
   )

@@ -2,7 +2,7 @@
 
 import { OnboardOwnerEmailTemplate } from "@/components/email/onboardOwnerEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import {
   generateAgencyLogoPathName,
@@ -13,21 +13,14 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { headers } from "next/headers"
-import { redirect, RedirectType } from "next/navigation"
 
 export async function createOwnerAccountAction(
   data: CreateOwnerAccountRequestType,
 ) {
-  const currentUser = await getCurrentUser()
-  if (currentUser) {
-    if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider/home", RedirectType.replace)
-    }
-    redirect("/dashboard/home", RedirectType.replace)
-  }
+  await readPermissions.redirectIfAuthenticated()
 
   //Try to create a new user and agency account
   const user = await userServices.addAgencyAndOwnerAccount(data)

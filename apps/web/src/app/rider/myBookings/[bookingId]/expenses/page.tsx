@@ -1,21 +1,21 @@
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
+import RiderHeader from "@/components/header/riderHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { Metadata } from "next"
-import { getCurrentUser } from "@/lib/auth"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
 import {
   MainWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import MyBookingExpensesPageComponent from "./myBookingExpenses"
-import RiderHeader from "@/components/header/riderHeader"
-import MyBookingDetailHeaderTabs from "@/components/header/detailHeaderTabs/myBookingDetailHeaderTabs"
-import Link from "next/link"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { readPermissions } from "@/lib/permissions"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import Link from "next/link"
+import { redirect, RedirectType } from "next/navigation"
+import MyBookingExpensesPageComponent from "./myBookingExpenses"
 
 export const metadata: Metadata = {
   title: `My Booking Expenses - ${pageTitle}`,
@@ -27,12 +27,9 @@ export default async function MyBookingExpensesPage({
 }: {
   params: Promise<{ bookingId: string }>
 }) {
-  const { bookingId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { bookingId } = await params
 
   const booking = await bookingServices.findBookingStatusById(bookingId)
   if (!booking) {

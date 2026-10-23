@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { DriverIdRegex } from "@/lib/regex"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -11,12 +11,9 @@ export default async function DriverDetailsLayout({
   children: React.ReactNode
   params: Promise<{ driverId: string }>
 }) {
-  const { driverId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { driverId } = await params
 
   //Invalid driver id regex check
   if (!DriverIdRegex.safeParse(driverId).success) {

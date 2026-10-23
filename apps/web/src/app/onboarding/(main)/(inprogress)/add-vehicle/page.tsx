@@ -1,11 +1,11 @@
 //(Onboarding) Add vehicle page
 
-import { Metadata } from "next"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import AddVehiclePageComponent from "./addVehicle"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import { readPermissions } from "@/lib/permissions"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { Metadata } from "next"
+import { notFound, redirect, RedirectType } from "next/navigation"
+import AddVehiclePageComponent from "./addVehicle"
 
 export const metadata: Metadata = {
   title: `Onboarding Add Vehicle - ${pageTitle}`,
@@ -13,14 +13,13 @@ export const metadata: Metadata = {
 }
 
 export default async function AddVehiclePage() {
-  const currentUser = await getCurrentUser()
-  //If not logged in, go to login page
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   //Check for Onboarding flow status
   const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
+  if (!agencyData) {
+    notFound()
+  }
   if (agencyData.vehicles.length > 0) {
     if (agencyData.drivers.length < 1) {
       redirect("/onboarding/add-driver", RedirectType.replace)

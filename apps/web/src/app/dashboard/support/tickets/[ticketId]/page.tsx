@@ -1,13 +1,13 @@
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { supportServices } from "@ryogo-travel-app/api/services/support.services"
-import DashboardHeader from "@/components/header/dashboardHeader"
 import ViewSupportTicketPageComponent from "@/components/flows/support/viewSupportTicketComponent"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import { Metadata } from "next"
+import DashboardHeader from "@/components/header/dashboardHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
 import { SupportTicketIdRegex } from "@/lib/regex"
+import { supportServices } from "@ryogo-travel-app/api/services/support.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `View Support Ticket - ${pageTitle}`,
@@ -19,16 +19,12 @@ export default async function ViewSupportTicketPage({
 }: {
   params: Promise<{ ticketId: string }>
 }) {
-  const { ticketId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
+  const { ticketId } = await params
   //Invalid ticket id regex check
   if (!SupportTicketIdRegex.safeParse(ticketId).success) {
     redirect("/dashboard/support", RedirectType.replace)
-  }
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
   }
 
   const ticket = await supportServices.findSupportTicketById(ticketId)

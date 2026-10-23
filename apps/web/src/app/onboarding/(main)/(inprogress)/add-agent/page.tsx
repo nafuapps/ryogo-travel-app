@@ -1,13 +1,13 @@
 //(Onboarding) Add agent page
 
-import { Metadata } from "next"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import AddAgentPageComponent from "./addAgent"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { readPermissions } from "@/lib/permissions"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { notFound, redirect, RedirectType } from "next/navigation"
+import AddAgentPageComponent from "./addAgent"
 
 export const metadata: Metadata = {
   title: `Onboarding Add Agent - ${pageTitle}`,
@@ -15,19 +15,13 @@ export const metadata: Metadata = {
 }
 
 export default async function AddAgentPage() {
-  const currentUser = await getCurrentUser()
-  //If no user logged in, go to login page
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
-  const agency = await agencyServices.findAgencyById(currentUser.agencyId)
-  if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   //Check for Onboarding flow
   const agencyData = await agencyServices.findAgencyData(currentUser.agencyId)
+  if (!agencyData) {
+    notFound()
+  }
   if (agencyData.vehicles.length < 1) {
     redirect("/onboarding/add-vehicle", RedirectType.replace)
   }
@@ -44,7 +38,7 @@ export default async function AddAgentPage() {
   return (
     <AddAgentPageComponent
       agencyId={currentUser.agencyId}
-      agencyName={agency.businessName}
+      agencyName={agencyData.agencyName}
       allAgents={allAgents}
     />
   )

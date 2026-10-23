@@ -1,18 +1,18 @@
-import { Metadata } from "next"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import MyMissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/myMissionDetailHeaderTabs"
+import RiderHeader from "@/components/header/riderHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
 import {
   MainWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { redirect, RedirectType } from "next/navigation"
+import { readPermissions } from "@/lib/permissions"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
 import MyExpiryAlertsPageComponent from "./myExpiryAlerts"
-import MyMissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/myMissionDetailHeaderTabs"
-import RiderHeader from "@/components/header/riderHeader"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export const metadata: Metadata = {
   title: `My Expiry Alerts - ${pageTitle}`,
@@ -20,15 +20,11 @@ export const metadata: Metadata = {
 }
 
 export default async function ExpiryAlertsPage() {
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const driver = await driverServices.findDriverByUserId(currentUser.userId)
   if (!driver) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   const assignedVehicle = await vehicleServices.findAssignedVehicleByDriverId(

@@ -1,12 +1,12 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { redirect, RedirectType } from "next/navigation"
 import RiderHeader from "@/components/header/riderHeader"
-import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import RiderMyVehiclePageComponent from "./myVehicle"
-import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
+import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+import RiderMyVehiclePageComponent from "./myVehicle"
 
 export const metadata: Metadata = {
   title: `My Vehicle - ${pageTitle}`,
@@ -14,14 +14,11 @@ export const metadata: Metadata = {
 }
 
 export default async function MyVehiclePage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const driver = await driverServices.findDriverByUserId(currentUser.userId)
   if (!driver) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   const assignedVehicle = await vehicleServices.findAssignedVehicleByDriverId(

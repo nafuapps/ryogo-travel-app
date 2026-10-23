@@ -2,22 +2,18 @@ import SubscriptionBlockerSection from "@/components/flows/susbcription/subscrip
 import DashboardHeader from "@/components/header/dashboardHeader"
 import MissionDetailHeaderTabs from "@/components/header/detailHeaderTabs/missionDetailHeaderTabs"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import { getTranslations } from "next-intl/server"
-import { redirect, RedirectType } from "next/navigation"
 
 export default async function RemindersLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isSubscribed = currentUser.isSubscribed
+
   //SUBSCRIPTION BLOCKER: Only Premium agencies can access reminders
   if (
     !APP_TRIAL_MODE &&

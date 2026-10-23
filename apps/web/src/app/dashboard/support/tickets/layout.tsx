@@ -1,23 +1,19 @@
 import SubscriptionBlockerSection from "@/components/flows/susbcription/subscriptionBlockerSection"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { APP_TRIAL_MODE } from "@ryogo-travel-app/api/apiConfig"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
-import { redirect, RedirectType } from "next/navigation"
 
 export default async function SupportTicketsLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
-
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isSubscribed = currentUser.isSubscribed
+
   //SUBSCRIPTION BLOCKER: Only premium users can access support tickets
   if (
     !APP_TRIAL_MODE &&

@@ -2,12 +2,11 @@
 
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import ChangeUserPhonePageComponent from "./changeUserPhone"
-import { getCurrentUser } from "@/lib/auth"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import ChangeUserPhonePageComponent from "./changeUserPhone"
 
 export const metadata: Metadata = {
   title: `Change User Phone - ${pageTitle}`,
@@ -20,12 +19,6 @@ export default async function ChangeUserPhonePage({
   params: Promise<{ userId: string }>
 }) {
   const { userId } = await params
-
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   const user = await userServices.findUserDetailsById(userId)
   if (!user) {

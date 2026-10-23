@@ -2,7 +2,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import CustomerDetailHeaderTabs from "@/components/header/detailHeaderTabs/customerDetailHeaderTabs"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   APP_TRIAL_MODE,
   BASIC_SEARCH_LIMIT_DAYS,
@@ -10,7 +10,6 @@ import {
 } from "@ryogo-travel-app/api/apiConfig"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
 import CustomerCompletedBookingsPageComponent from "./customerCompletedBookings"
 
 export const metadata: Metadata = {
@@ -23,12 +22,9 @@ export default async function CustomerCompletedBookingsPage({
 }: {
   params: Promise<{ customerId: string }>
 }) {
-  const { customerId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { customerId } = await params
 
   const bookings = await customerServices.findCustomerCompletedBookingsById(
     customerId,

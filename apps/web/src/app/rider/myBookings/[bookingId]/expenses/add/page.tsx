@@ -1,12 +1,12 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { redirect, RedirectType } from "next/navigation"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
-import RiderHeader from "@/components/header/riderHeader"
-import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
 import NewExpensePageComponent from "@/components/flows/bookings/expense/newExpensePage"
+import RiderHeader from "@/components/header/riderHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `Add Expense - ${pageTitle}`,
@@ -18,12 +18,9 @@ export default async function RiderAddExpensePage({
 }: {
   params: Promise<{ bookingId: string }>
 }) {
-  const { bookingId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { bookingId } = await params
 
   const bookingDetails = await bookingServices.findBookingStatusById(bookingId)
   if (!bookingDetails || bookingDetails.assignedDriverId === null) {

@@ -1,12 +1,12 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import ModifyCustomerPageComponent from "./modifyCustomer"
-import { getCurrentUser } from "@/lib/auth"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
-import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
+import { redirect, RedirectType } from "next/navigation"
+import ModifyCustomerPageComponent from "./modifyCustomer"
 
 export const metadata: Metadata = {
   title: `Modify Customer - ${pageTitle}`,
@@ -18,13 +18,9 @@ export default async function ModifyCustomerPage({
 }: {
   params: Promise<{ customerId: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { customerId } = await params
-
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   const customer = await customerServices.findCustomerDetailsById(customerId)
   if (!customer) {

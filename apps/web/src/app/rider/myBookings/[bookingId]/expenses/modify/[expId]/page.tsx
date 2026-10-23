@@ -1,14 +1,14 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import ModifyExpensePageComponent from "@/components/flows/bookings/expense/modifyExpensePage"
 import RiderHeader from "@/components/header/riderHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
 import { ExpenseIdRegex } from "@/lib/regex"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { expenseServices } from "@ryogo-travel-app/api/services/expense.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import ModifyExpensePageComponent from "@/components/flows/bookings/expense/modifyExpensePage"
+import { redirect, RedirectType } from "next/navigation"
 
 export const metadata: Metadata = {
   title: `Modify Expense - ${pageTitle}`,
@@ -20,12 +20,9 @@ export default async function RiderModifyExpensePage({
 }: {
   params: Promise<{ bookingId: string; expId: string }>
 }) {
-  const { bookingId, expId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { bookingId, expId } = await params
 
   //Invalid expense id regex check
   if (!ExpenseIdRegex.safeParse(expId).success) {

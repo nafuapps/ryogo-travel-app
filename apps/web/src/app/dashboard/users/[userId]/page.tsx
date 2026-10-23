@@ -1,16 +1,16 @@
 //Users/id (details) page (only accesssible by owner)
 
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import DashboardHeader from "@/components/header/dashboardHeader"
-import UserDetailsPageComponent from "./userDetails"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
 import NewFeedbackComponent from "@/components/flows/feedback/newFeedback"
-import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
+import DashboardHeader from "@/components/header/dashboardHeader"
 import UserDetailHeaderTabs from "@/components/header/detailHeaderTabs/userDetailHeaderTabs"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
+import { userServices } from "@ryogo-travel-app/api/services/user.services"
+import { ProductFeedbackTypeEnum } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import UserDetailsPageComponent from "./userDetails"
 
 export const metadata: Metadata = {
   title: `User Details - ${pageTitle}`,
@@ -24,14 +24,11 @@ export default async function UserDetailsPage({
   params: Promise<{ userId: string }>
   searchParams: Promise<{ feedback?: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { userId } = await params
 
   const feedback = (await searchParams).feedback
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   const user = await userServices.findUserDetailsById(userId)
   if (!user) {

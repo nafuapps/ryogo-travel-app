@@ -1,17 +1,19 @@
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
 import SupportContentHeader from "@/components/flows/support/supportContentHeader"
 import {
   SupportFAQItem,
   SupportFAQItemType,
   SupportFAQWrapper,
 } from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import SupportTableOfContentLinkButton, {
   SupportContentItemType,
 } from "@/components/flows/support/supportTableOfContentLink"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -21,7 +23,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import {
   Car,
@@ -33,11 +35,9 @@ import {
   Tickets,
   TrendingUpDown,
 } from "lucide-react"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { redirect, RedirectType } from "next/navigation"
-import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import { Metadata } from "next"
 
 /*
   - Overview
@@ -55,10 +55,7 @@ export const metadata: Metadata = {
 }
 
 export default async function SupportHelpAnalyticsPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   //Only owners can see analytics help page
   if (currentUser.userRole !== UserRolesEnum.OWNER) {

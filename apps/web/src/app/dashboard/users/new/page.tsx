@@ -4,7 +4,7 @@ import SubscriptionBlockerSection from "@/components/flows/susbcription/subscrip
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper, PageWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   APP_TRIAL_MODE,
   BASIC_PLAN_AGENT_LIMIT,
@@ -13,7 +13,6 @@ import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import { redirect, RedirectType } from "next/navigation"
 import NewAgentPageComponent from "./newAgent"
 
 export const metadata: Metadata = {
@@ -22,13 +21,8 @@ export const metadata: Metadata = {
 }
 
 export default async function NewUserPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isSubscribed = currentUser.isSubscribed
-  const hasTriedSubscription = currentUser.hasTriedSubscription
-  const subscriptionExpiresOn = currentUser.subscriptionExpiresOn
 
   const allAgents = await userServices.findAllUsersByRole([UserRolesEnum.AGENT])
 
@@ -42,7 +36,7 @@ export default async function NewUserPage() {
   if (
     !APP_TRIAL_MODE &&
     currentAgentUsers >= BASIC_PLAN_AGENT_LIMIT &&
-    (!isSubscribed || subscriptionExpiresOn < new Date())
+    (!isSubscribed || currentUser.subscriptionExpiresOn < new Date())
   ) {
     const t = await getTranslations("Dashboard.NewAgent")
 
@@ -58,7 +52,7 @@ export default async function NewUserPage() {
             isOwner
             ctaLabel={
               !isSubscribed
-                ? hasTriedSubscription
+                ? currentUser.hasTriedSubscription
                   ? t("BuyCTA")
                   : t("TryCTA")
                 : t("RenewCTA")

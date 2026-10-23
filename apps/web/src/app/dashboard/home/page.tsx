@@ -5,7 +5,7 @@ import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import {
   SUBSCRIPTION_DOWNGRADE_TO_BASIC_GRACE_DAYS,
   SUBSCRIPTION_EXPIRY_REMINDER_DAYS,
@@ -22,7 +22,6 @@ import { differenceInDays } from "date-fns"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { redirect, RedirectType } from "next/navigation"
 import DashboardHomePageComponent from "./dashboardHome"
 
 export const metadata: Metadata = {
@@ -35,14 +34,8 @@ export default async function DashboardHomePage({
 }: {
   searchParams: Promise<{ feedback?: string }>
 }) {
-  const { feedback } = await searchParams
-
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
   const isOwner = currentUser.userRole === UserRolesEnum.OWNER
-
   const isSubscribed = currentUser.isSubscribed
 
   const daysToExpiry = differenceInDays(
@@ -69,6 +62,8 @@ export default async function DashboardHomePage({
   //Basic agency which has not tried premium, show trial strip
   const showTrialStrip =
     !APP_TRIAL_MODE && !isSubscribed && !currentUser.hasTriedSubscription
+
+  const { feedback } = await searchParams
 
   return (
     <>

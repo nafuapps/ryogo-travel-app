@@ -1,16 +1,16 @@
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import ModifyDriverLeavePageComponent from "./modifyDriverLeave"
-import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
-import { DriverLeaveIdRegex } from "@/lib/regex"
-import { redirect, RedirectType } from "next/navigation"
-import { Metadata } from "next"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
+import { DriverLeaveIdRegex } from "@/lib/regex"
+import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import {
   DriverLeaveStatusEnum,
   UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
+import { Metadata } from "next"
+import { redirect, RedirectType } from "next/navigation"
+import ModifyDriverLeavePageComponent from "./modifyDriverLeave"
 
 export const metadata: Metadata = {
   title: `Modify Driver Leave - ${pageTitle}`,
@@ -22,12 +22,9 @@ export default async function ModifyDriverLeavePage({
 }: {
   params: Promise<{ driverId: string; leaveId: string }>
 }) {
-  const { driverId, leaveId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { driverId, leaveId } = await params
 
   //Invalid leave id regex check
   if (!DriverLeaveIdRegex.safeParse(leaveId).success) {

@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { VehicleIdRegex } from "@/lib/regex"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -11,12 +11,9 @@ export default async function VehicleDetailsLayout({
   children: React.ReactNode
   params: Promise<{ vehicleId: string }>
 }) {
-  const { vehicleId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { vehicleId } = await params
 
   //Invalid vehicle id regex check
   if (!VehicleIdRegex.safeParse(vehicleId).success) {

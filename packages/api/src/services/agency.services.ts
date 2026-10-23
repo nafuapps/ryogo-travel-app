@@ -40,11 +40,20 @@ export const agencyServices = {
   //Find agency by id
   async findAgencyById(agencyId: string) {
     const agency = await agencyRepository.readAgencyById(agencyId)
+    if (!agency) {
+      console.error(`Agency not found: ${agencyId}`)
+      return
+    }
     return agency
   },
 
   //Get agency data (vehicles, drivers, agents)
   async findAgencyData(agencyId: string) {
+    const agency = await agencyRepository.readAgencyById(agencyId)
+    if (!agency) {
+      console.error(`Agency not found: ${agencyId}`)
+      return
+    }
     const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
     const drivers = await driverRepository.readDriversByAgencyId(agencyId)
     const agents = await userRepository.readUserByRolesAgencyId({
@@ -62,6 +71,7 @@ export const agencyServices = {
       agents: agents.map((agent) => {
         return { id: agent.id }
       }),
+      agencyName: agency.businessName,
     }
   },
 

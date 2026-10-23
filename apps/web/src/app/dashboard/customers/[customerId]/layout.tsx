@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { CustomerIdRegex } from "@/lib/regex"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
@@ -11,12 +11,9 @@ export default async function CustomerDetailsLayout({
   children: React.ReactNode
   params: Promise<{ customerId: string }>
 }) {
-  const { customerId } = await params
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const { customerId } = await params
 
   //Invalid customer id regex check
   if (!CustomerIdRegex.safeParse(customerId).success) {

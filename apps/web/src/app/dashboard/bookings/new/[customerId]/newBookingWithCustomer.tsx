@@ -15,7 +15,7 @@ import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 import { getTranslations } from "next-intl/server"
-import { redirect, RedirectType } from "next/navigation"
+import { notFound } from "next/navigation"
 import NewBookingForm from "./newBookingForm"
 
 export default async function NewBookingWithCustomerPageComponent({
@@ -132,7 +132,7 @@ export default async function NewBookingWithCustomerPageComponent({
 
   const agency = await agencyServices.findAgencyById(agencyId)
   if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   return (

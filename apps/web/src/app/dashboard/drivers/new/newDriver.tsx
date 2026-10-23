@@ -8,7 +8,7 @@ import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import { getTranslations } from "next-intl/server"
-import { redirect, RedirectType } from "next/navigation"
+import { notFound } from "next/navigation"
 import NewDriverForm from "./newDriverForm"
 
 export default async function NewDriverPageComponent({
@@ -64,7 +64,7 @@ export default async function NewDriverPageComponent({
 
   const agency = await agencyServices.findAgencyById(agencyId)
   if (!agency) {
-    redirect("/auth/login", RedirectType.replace)
+    notFound()
   }
 
   return (

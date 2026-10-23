@@ -1,19 +1,18 @@
-import { pageDescription, pageTitle } from "@/components/page/pageCommons"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { Metadata } from "next"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   MainWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
-import AllCustomersListComponent from "./allCustomersListComponent"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import Link from "next/link"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import Link from "next/link"
+import AllCustomersListComponent from "./allCustomersListComponent"
 
 export const metadata: Metadata = {
   title: `Customers - ${pageTitle}`,
@@ -21,11 +20,7 @@ export const metadata: Metadata = {
 }
 
 export default async function AllCustomersPage() {
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
 
   const t = await getTranslations("Dashboard.Customers.All")
 

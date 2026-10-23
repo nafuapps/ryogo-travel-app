@@ -3,9 +3,8 @@
 import RiderHeader from "@/components/header/riderHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
-import { getCurrentUser } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { Metadata } from "next"
-import { redirect, RedirectType } from "next/navigation"
 import MySupportPageComponent from "./riderSupport"
 
 export const metadata: Metadata = {
@@ -14,10 +13,8 @@ export const metadata: Metadata = {
 }
 
 export default async function MySupportPage() {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   return (
     <MainWrapper>
       <RiderHeader pathName={"/rider/mySupport"} />

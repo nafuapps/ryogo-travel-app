@@ -1,15 +1,15 @@
 //Vehicle Repairs page
 
 import DashboardHeader from "@/components/header/dashboardHeader"
+import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
+import { MainWrapper } from "@/components/page/pageWrappers"
+import { readPermissions } from "@/lib/permissions"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import AllVehicleRepairsPageComponent from "./allVehicleRepairs"
-import { getCurrentUser } from "@/lib/auth"
-import { redirect, RedirectType } from "next/navigation"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { Metadata } from "next"
-import { MainWrapper } from "@/components/page/pageWrappers"
-import VehicleDetailHeaderTabs from "@/components/header/detailHeaderTabs/vehicleDetailHeaderTabs"
+import { redirect, RedirectType } from "next/navigation"
+import AllVehicleRepairsPageComponent from "./allVehicleRepairs"
 
 export const metadata: Metadata = {
   title: `Vehicle Repairs - ${pageTitle}`,
@@ -21,14 +21,11 @@ export default async function AllVehicleRepairsPage({
 }: {
   params: Promise<{ vehicleId: string }>
 }) {
+  const currentUser = await readPermissions.getAuthenticatedUser()
+
   const { vehicleId } = await params
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect("/auth/login", RedirectType.replace)
-  }
 
   const vehicle = await vehicleServices.findVehicleDetailsById(vehicleId)
-
   if (!vehicle) {
     redirect("/dashboard/vehicles", RedirectType.replace)
   }

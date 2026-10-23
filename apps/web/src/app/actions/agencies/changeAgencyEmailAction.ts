@@ -1,38 +1,27 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function changeAgencyEmailAction({
   agencyId,
-  userId,
   businessEmail,
 }: {
   agencyId: string
-  userId: string
   businessEmail: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
-    currentUser.agencyId !== agencyId
-  ) {
+  const currentUser = await writePermissions.allowOwner(agencyId)
+  if (!currentUser) {
     return
   }
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const agency = await agencyServices.changeAgencyEmail({
+  const changedAgency = await agencyServices.changeAgencyEmail({
     agencyId,
     businessEmail,
   })
-  if (!agency) return
+  if (!changedAgency) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
@@ -47,5 +36,5 @@ export async function changeAgencyEmailAction({
     link: "/dashboard/account/agency",
   })
 
-  return agency
+  return changedAgency
 }

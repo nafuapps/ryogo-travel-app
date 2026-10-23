@@ -1,10 +1,10 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function activateDriverAction({
   agencyId,
@@ -15,49 +15,40 @@ export async function activateDriverAction({
   userId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowDashboardUser(agencyId)
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const driver = await driverServices.activateDriver({ driverId, userId })
-  if (!driver) return
+  const activatedDriver = await driverServices.activateDriver({
+    driverId,
+    userId,
+  })
+  if (!activatedDriver) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER,
-    entityId: driver.id,
+    entityId: activatedDriver.id,
     isFeed: true,
     textKey: "DriverActivated",
     textObject: {
-      driverName: driver.name,
+      driverName: activatedDriver.name,
       userName: currentUser.name,
     },
-    link: `/dashboard/drivers/${driver.id}`,
+    link: `/dashboard/drivers/${activatedDriver.id}`,
   })
 
   await missionServices.removePreviousMissionsByEntityTitleKey({
     agencyId,
     entityType: EntityTypeEnum.USER,
-    entityId: driver.userId,
+    entityId: activatedDriver.userId,
     titleKey: "UserInactivated.Title",
   })
   await missionServices.addMission({
     agencyId: agencyId,
-    userId: driver.userId,
+    userId: activatedDriver.userId,
     entityType: EntityTypeEnum.USER,
-    entityId: driver.userId,
+    entityId: activatedDriver.userId,
     titleKey: "UserActivated.Title",
     titleObject: {
       userName: currentUser.name,
@@ -67,5 +58,5 @@ export async function activateDriverAction({
     link: `/rider/myProfile`,
   })
 
-  return driver
+  return activatedDriver
 }

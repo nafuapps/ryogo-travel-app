@@ -1,31 +1,33 @@
 "use client"
 
-import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { useTranslations } from "next-intl"
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
+import ExpensesFiltersCard from "@/components/filter/expensesFiltersCard"
+import ExpenseItem from "@/components/flows/bookings/expense/expenseItem"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import ExpenseItem from "@/components/flows/bookings/expense/expenseItem"
-import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
-import { usePagination } from "@/hooks/usePagination"
+import { PaginationControls } from "@/components/pagination/paginationControls"
 import { RyogoCaption } from "@/components/typography"
+import { usePagination } from "@/hooks/usePagination"
+import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
 import { BanknoteX } from "lucide-react"
 import { Route } from "next"
-import ExpensesFiltersCard from "@/components/filter/expensesFiltersCard"
-import EmptyStateIcon from "@/components/icons/emptyStateIcon"
-import { PaginationControls } from "@/components/pagination/paginationControls"
+import { useTranslations } from "next-intl"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 const EXPENSES_PER_PAGE = 5
 
 export default function MyBookingExpensesPageComponent({
   userId,
   bookingExpenses,
+  assignedUserId,
 }: {
   userId: string
   bookingExpenses: FindBookingExpensesByIdType
+  assignedUserId: string
 }) {
   const t = useTranslations("Rider.MyBookingExpenses")
   const router = useRouter()
@@ -71,6 +73,7 @@ export default function MyBookingExpensesPageComponent({
                 key={expense.id}
                 expense={expense}
                 canEditExpense={userId === expense.addedByUserId}
+                assignedUserId={assignedUserId}
                 isRider
               />
             )

@@ -1,31 +1,23 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { routeServices } from "@ryogo-travel-app/api/services/route.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function findOrCreateRouteAction({
+  agencyId,
   sourceCity,
   sourceState,
   destinationCity,
   destinationState,
 }: {
+  agencyId: string
   sourceCity: string
   sourceState: string
   destinationCity: string
   destinationState: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(currentUser.userRole)
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowDashboardUser(agencyId)
+  if (!currentUser) return
 
   const route = await routeServices.findOrCreateRouteByLocations({
     sourceCity,

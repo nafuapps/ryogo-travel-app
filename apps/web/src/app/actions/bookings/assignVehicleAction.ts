@@ -1,15 +1,11 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { BOOKING_ASSIGNMENT_CRITICAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import {
-  BookingStatusEnum,
-  EntityTypeEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 
 export async function assignVehicleAction({
@@ -23,17 +19,11 @@ export async function assignVehicleAction({
   agencyId: string
   assignedUserId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      assignedUserId !== currentUser.userId) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId,
+    assignedUserId,
+  })
+  if (!currentUser) {
     return
   }
 

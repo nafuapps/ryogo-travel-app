@@ -1,22 +1,20 @@
 "use client"
 
-import { useTransition } from "react"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
-import RyogoAlertDialog from "./ryogoAlertDialog"
-import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { tryPremiumAction } from "@/app/actions/agencies/tryPremiumAction"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { toast } from "sonner"
+import RyogoAlertDialog from "./ryogoAlertDialog"
 
 export default function TryPremiumAlertButton({
   agencyId,
-  userId,
   days,
   displayButton,
 }: {
   agencyId: string
-  userId: string
   days: number
   displayButton: React.ReactNode
 }) {
@@ -26,7 +24,7 @@ export default function TryPremiumAlertButton({
 
   async function tryPremium() {
     startTransition(async () => {
-      if (await tryPremiumAction({ agencyId, userId, days })) {
+      if (await tryPremiumAction({ agencyId, days })) {
         toast.success(t("Success"))
         router.refresh()
       } else {

@@ -1,9 +1,9 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function changeVehicleNumberAction(
   vehicleId: string,
@@ -12,41 +12,38 @@ export async function changeVehicleNumberAction(
   newVehicleNumber: string,
   oldVehicleNumber: string,
 ) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== addedByUserId) ||
-    currentUser.agencyId !== agencyId ||
-    oldVehicleNumber === newVehicleNumber
-  ) {
+  if (oldVehicleNumber === newVehicleNumber) {
     return
   }
 
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId,
+    assignedUserId: addedByUserId,
+  })
+  if (!currentUser) {
     return
   }
 
-  const vehicle = await vehicleServices.changeVehicleNumber({
+  const changedVehicle = await vehicleServices.changeVehicleNumber({
     vehicleId,
     vehicleNumber: newVehicleNumber,
   })
-  if (!vehicle) return
+  if (!changedVehicle) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE,
-    entityId: vehicle.id,
+    entityId: changedVehicle.id,
     isFeed: true,
     textKey: "VehicleNumberModified",
     textObject: {
       oldVehicleNumber: oldVehicleNumber,
-      newVehicleNumber: vehicle.vehicleNumber,
+      newVehicleNumber: changedVehicle.vehicleNumber,
       userName: currentUser.name,
     },
-    link: `/dashboard/vehicles/${vehicle.id}`,
+    link: `/dashboard/vehicles/${changedVehicle.id}`,
   })
 
-  return vehicle
+  return changedVehicle
 }

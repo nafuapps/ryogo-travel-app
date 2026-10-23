@@ -1,11 +1,11 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateCustomerPhotoPathName } from "@/lib/utils"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { NewCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function newCustomerAction({
@@ -13,48 +13,41 @@ export async function newCustomerAction({
 }: {
   data: NewCustomerRequestType
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== data.addedByUserId ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: data.agencyId,
+    assignedUserId: data.addedByUserId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const customer = await customerServices.addNewCustomer(data)
-  if (!customer) return
+  const addedCustomer = await customerServices.addNewCustomer(data)
+  if (!addedCustomer) return
 
   //Upload customer photo if attached
   const file = data.photo
   if (file) {
     const uploadedPhoto = await uploadFile(
       file,
-      generateCustomerPhotoPathName(customer.id),
+      generateCustomerPhotoPathName(addedCustomer.id),
     )
-    await customerServices.updateCustomerPhoto(customer.id, uploadedPhoto.path)
+    await customerServices.updateCustomerPhoto(
+      addedCustomer.id,
+      uploadedPhoto.path,
+    )
   }
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.CUSTOMER,
-    entityId: customer.id,
+    entityId: addedCustomer.id,
     isFeed: true,
     textKey: "CustomerAdded",
     textObject: {
-      customerName: customer.name,
+      customerName: addedCustomer.name,
       userName: currentUser.name,
     },
-    link: `/dashboard/customers/${customer.id}`,
+    link: `/dashboard/customers/${addedCustomer.id}`,
   })
 
-  return customer
+  return addedCustomer
 }

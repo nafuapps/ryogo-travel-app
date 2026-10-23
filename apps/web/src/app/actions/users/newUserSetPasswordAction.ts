@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import {
   updateUserStatusInWebSession,
   updateUserVerificationInWebSession,
@@ -16,30 +16,25 @@ export async function newUserSetPasswordAction({
   agencyId: string
   newPassword: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId
-  ) {
+  const currentUser = await writePermissions.allowAssignedUser({
+    agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) {
     return
   }
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const user = await userServices.verifyUserAndSetNewPassword({
+  const changedUser = await userServices.verifyUserAndSetNewPassword({
     userId,
     newPassword,
   })
-  if (!user) return
+  if (!changedUser) return
 
   // Update verification status to true in cookies
-  await updateUserVerificationInWebSession(user.isVerified)
+  await updateUserVerificationInWebSession(changedUser.isVerified)
 
   // Update user status to active in cookies
-  await updateUserStatusInWebSession(user.status)
+  await updateUserStatusInWebSession(changedUser.status)
 
-  return user
+  return changedUser
 }

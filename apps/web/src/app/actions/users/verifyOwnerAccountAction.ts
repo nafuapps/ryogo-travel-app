@@ -1,29 +1,21 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { updateUserVerificationInWebSession } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
-export async function verifyOwnerAccountAction() {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
-    !currentUser.isAdmin
-  ) {
+//Onboarding verify account step flow
+export async function verifyOwnerAccountAction(agencyId: string) {
+  const currentUser = await writePermissions.allowOwner(agencyId)
+  if (!currentUser || !currentUser.isAdmin) {
     return
   }
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const user = await userServices.verifyOwner(currentUser.userId)
-  if (!user || !user.isVerified) return
+  const verifiedUser = await userServices.verifyOwner(currentUser.userId)
+  if (!verifiedUser || !verifiedUser.isVerified) return
 
   //Update verification in session cookie
-  await updateUserVerificationInWebSession(user.isVerified)
+  await updateUserVerificationInWebSession(verifiedUser.isVerified)
 
-  return user
+  return verifiedUser
 }

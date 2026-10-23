@@ -1,10 +1,16 @@
 "use client"
 
+import { midTripAction } from "@/app/actions/bookings/midTripAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import {
   RyogoFileInput,
   RyogoInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import {
   Sheet,
   SheetContent,
@@ -13,30 +19,24 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import { midTripAction } from "@/app/actions/bookings/midTripAction"
+import compressImage from "@/lib/imageCompression"
 import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
 import {
   MAX_FIELD_DESC_LENGTH,
   MAX_ODOMETER_LIMIT,
   MIN_ODOMETER_LIMIT,
 } from "@/lib/uiConfig"
-import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
-import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function MidTripSheet({
   booking,
@@ -105,6 +105,7 @@ export default function MidTripSheet({
         lat: latLong.latitude,
         long: latLong.longitude,
       },
+      assignedDriverUserId: booking.assignedDriver?.userId,
     })
     if (result) {
       router.refresh()

@@ -1,9 +1,9 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function reconcileBookingAction({
   bookingId,
@@ -12,16 +12,8 @@ export async function reconcileBookingAction({
   bookingId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowOwner(agencyId)
+  if (!currentUser) {
     return
   }
 

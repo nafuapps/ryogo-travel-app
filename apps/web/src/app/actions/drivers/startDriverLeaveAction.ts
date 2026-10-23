@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
@@ -17,39 +17,34 @@ export async function startDriverLeaveAction({
   leaveId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.agencyId !== agencyId ||
-    (currentUser.userId !== userId &&
-      currentUser.userRole !== UserRolesEnum.OWNER)
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const leave = await driverServices.startDriverLeave({ leaveId, driverId })
-  if (!leave) return
+  const startedLeave = await driverServices.startDriverLeave({
+    leaveId,
+    driverId,
+  })
+  if (!startedLeave) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER_LEAVE,
-    entityId: leave.id,
+    entityId: startedLeave.id,
     isFeed: true,
     textKey:
       currentUser.userRole === UserRolesEnum.DRIVER
         ? "StartedDriverLeave"
         : "DriverLeaveStarted",
     textObject: {
-      startDate: leave.actualStartDate,
+      startDate: startedLeave.actualStartDate,
       userName: currentUser.name,
-      driverName: leave.driver.name,
+      driverName: startedLeave.driver.name,
     },
-    link: `/dashboard/drivers/${leave.driverId}/leaves`,
+    link: `/dashboard/drivers/${startedLeave.driverId}/leaves`,
   })
 
   //Add startedLeave mission for assignedUser if started by driver and vice versa
@@ -57,23 +52,23 @@ export async function startDriverLeaveAction({
     agencyId: agencyId,
     userId:
       currentUser.userRole === UserRolesEnum.DRIVER
-        ? leave.addedByUserId
-        : leave.driver.userId,
+        ? startedLeave.addedByUserId
+        : startedLeave.driver.userId,
     entityType: EntityTypeEnum.DRIVER_LEAVE,
-    entityId: leave.id,
+    entityId: startedLeave.id,
     titleKey: "DriverLeaveStarted.Title",
     titleObject: {
-      driverId: leave.driverId,
+      driverId: startedLeave.driverId,
     },
     messageKey: "DriverLeaveStarted.Message",
     messageObject: {
-      startDate: leave.actualStartDate,
-      endDate: leave.endDate,
+      startDate: startedLeave.actualStartDate,
+      endDate: startedLeave.endDate,
     },
-    dueDate: leave.endDate,
+    dueDate: startedLeave.endDate,
     link:
       currentUser.userRole === UserRolesEnum.DRIVER
-        ? `/dashboard/drivers/${leave.driverId}/leaves`
+        ? `/dashboard/drivers/${startedLeave.driverId}/leaves`
         : "rider/myLeaves",
   })
 
@@ -81,9 +76,9 @@ export async function startDriverLeaveAction({
   await missionServices.removePreviousMissionsByEntityTitleKey({
     agencyId: agencyId,
     entityType: EntityTypeEnum.DRIVER_LEAVE,
-    entityId: leave.id,
+    entityId: startedLeave.id,
     titleKey: "DriverLeaveAdded.Title",
   })
 
-  return leave
+  return startedLeave
 }

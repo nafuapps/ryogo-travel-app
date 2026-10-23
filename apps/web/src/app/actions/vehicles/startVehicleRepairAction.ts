@@ -1,10 +1,10 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function startVehicleRepairAction({
   userId,
@@ -17,67 +17,59 @@ export async function startVehicleRepairAction({
   repairId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.agencyId !== agencyId ||
-    (currentUser.userId !== userId &&
-      currentUser.userRole !== UserRolesEnum.OWNER)
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const repair = await vehicleServices.startVehicleRepair({
+  const startedRepair = await vehicleServices.startVehicleRepair({
     repairId,
     vehicleId,
   })
-  if (!repair) return
+  if (!startedRepair) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE_REPAIR,
-    entityId: repair.id,
+    entityId: startedRepair.id,
     isFeed: true,
     textKey: "VehicleRepairStarted",
     textObject: {
-      startDate: repair.actualStartDate,
+      startDate: startedRepair.actualStartDate,
       userName: currentUser.name,
-      vehicleNumber: repair.vehicle.vehicleNumber,
+      vehicleNumber: startedRepair.vehicle.vehicleNumber,
     },
-    link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
+    link: `/dashboard/vehicles/${startedRepair.vehicleId}/repairs`,
   })
 
   // Add startedRepair mission for assignedUser
   await missionServices.addMission({
     agencyId: agencyId,
-    userId: repair.addedByUserId,
+    userId: startedRepair.addedByUserId,
     entityType: EntityTypeEnum.VEHICLE_REPAIR,
-    entityId: repair.id,
+    entityId: startedRepair.id,
     titleKey: "VehicleRepairStarted.Title",
     titleObject: {
-      vehicleNumber: repair.vehicle.vehicleNumber,
+      vehicleNumber: startedRepair.vehicle.vehicleNumber,
     },
     messageKey: "VehicleRepairStarted.Message",
     messageObject: {
-      startDate: repair.actualStartDate,
-      endDate: repair.endDate,
+      startDate: startedRepair.actualStartDate,
+      endDate: startedRepair.endDate,
     },
-    dueDate: repair.endDate,
-    link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
+    dueDate: startedRepair.endDate,
+    link: `/dashboard/vehicles/${startedRepair.vehicleId}/repairs`,
   })
 
   //Remove newRepair mission
   await missionServices.removePreviousMissionsByEntityTitleKey({
     agencyId: agencyId,
     entityType: EntityTypeEnum.VEHICLE_REPAIR,
-    entityId: repair.id,
+    entityId: startedRepair.id,
     titleKey: "VehicleRepairAdded.Title",
   })
 
-  return repair
+  return startedRepair
 }

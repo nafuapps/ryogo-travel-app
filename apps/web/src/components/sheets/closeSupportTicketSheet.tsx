@@ -1,6 +1,10 @@
 "use client"
 
+import { closeSupportTicketAction } from "@/app/actions/support/closeSupportTicketAction"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import { RyogoRatingInput } from "@/components/form/ryogoFormFields"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 import {
   Sheet,
   SheetContent,
@@ -10,28 +14,21 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { useTranslations } from "next-intl"
-import { useState } from "react"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { closeSupportTicketAction } from "@/app/actions/support/closeSupportTicketAction"
-import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
-import { useForm } from "react-hook-form"
-import { RyogoCaption } from "@/components/typography"
 import { TOTAL_RATING_STARS } from "@/lib/uiConfig"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 export default function CloseSupportTicketSheet({
   ticketId,
   userId,
   agencyId,
-  status,
 }: {
   ticketId: string
   userId: string
   agencyId: string
-  status: TicketStatusEnum
 }) {
   const t = useTranslations("Components.Sheets.CloseSupportTicket")
   const router = useRouter()
@@ -48,7 +45,6 @@ export default function CloseSupportTicketSheet({
       ticketId,
       userId,
       agencyId,
-      status,
       resolutionRating,
     })
     if (closedTicket) {

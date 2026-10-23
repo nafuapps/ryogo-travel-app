@@ -1,6 +1,21 @@
 "use client"
 
+import { changeAgencyEmailAction } from "@/app/actions/agencies/changeAgencyEmailAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoH3 } from "@/components/typography"
+import { MAX_EMAIL_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   FindAgenciesByPhoneType,
@@ -11,30 +26,13 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { changeAgencyEmailAction } from "@/app/actions/agencies/changeAgencyEmailAction"
-import {
-  FormContentWrapper,
-  FormWrapper,
-  PageWrapper,
-  SectionRowWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { MAX_EMAIL_LENGTH } from "@/lib/uiConfig"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { RyogoH3 } from "@/components/typography"
 
 export default function ChangeAgencyEmailPageComponent({
   agency,
   allAgencies,
-  userId,
 }: {
   agency: NonNullable<FindAgencyByIdType>
   allAgencies: FindAgenciesByPhoneType
-  userId: string
 }) {
   const t = useTranslations("Dashboard.AccountAgency.ChangeEmail")
   const router = useRouter()
@@ -75,7 +73,6 @@ export default function ChangeAgencyEmailPageComponent({
       })
     } else {
       const updatedAgency = await changeAgencyEmailAction({
-        userId,
         agencyId: agency.id,
         businessEmail: data.newEmail,
       })

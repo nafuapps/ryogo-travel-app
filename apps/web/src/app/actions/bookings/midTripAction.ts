@@ -1,23 +1,24 @@
 "use server"
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateTripLogPhotoPathName } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { tripLogServices } from "@ryogo-travel-app/api/services/tripLog.services"
 import { AddTripLogRequestType } from "@ryogo-travel-app/api/types/tripLog.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
-export async function midTripAction({ data }: { data: AddTripLogRequestType }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userRole !== UserRolesEnum.DRIVER ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+export async function midTripAction({
+  data,
+  assignedDriverUserId,
+}: {
+  data: AddTripLogRequestType
+  assignedDriverUserId?: string | null
+}) {
+  const currentUser = await writePermissions.allowAssignedDriver({
+    agencyId: data.agencyId,
+    assignedDriverUserId,
+  })
+  if (!currentUser) {
     return
   }
 

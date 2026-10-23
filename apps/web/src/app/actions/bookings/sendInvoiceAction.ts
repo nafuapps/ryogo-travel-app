@@ -2,10 +2,10 @@
 
 import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateBookingInvoicePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
-import { BookingStatusEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
@@ -19,17 +19,11 @@ export async function sendInvoiceAction({
   agencyId: string
   assignedUserId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      assignedUserId !== currentUser.userId) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId,
+    assignedUserId,
+  })
+  if (!currentUser) {
     return
   }
 

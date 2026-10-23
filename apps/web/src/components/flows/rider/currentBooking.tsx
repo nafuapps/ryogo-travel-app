@@ -1,20 +1,20 @@
 "use client"
 
-import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { BookingTypeEnum, TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
+import { otherTripLogAction } from "@/app/actions/bookings/otherTripLogAction"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import EndTripSheet from "@/components/flows/rider/tripSheets/endTripSheet"
 import MidTripSheet from "@/components/flows/rider/tripSheets/midTripSheet"
+import StartTripSheet from "@/components/flows/rider/tripSheets/startTripSheet"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { Navigation } from "lucide-react"
+import { useLocation } from "@/hooks/useLocation"
 import { getTripDuration } from "@/lib/utils"
-import { differenceInDays, differenceInMinutes } from "date-fns"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { OTHER_TRIP_LOG_INTERVAL_MINUTES } from "@ryogo-travel-app/api/apiConfig"
+import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { BookingTypeEnum, TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import { differenceInDays, differenceInMinutes } from "date-fns"
+import { Navigation } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useMemo } from "react"
-import { useLocation } from "@/hooks/useLocation"
-import { otherTripLogAction } from "@/app/actions/bookings/otherTripLogAction"
 
 export default function RiderMyOngoingBookingPageComponent({
   booking,
@@ -81,6 +81,7 @@ export default function RiderMyOngoingBookingPageComponent({
             lat: latLong.latitude,
             long: latLong.longitude,
           },
+          assignedDriverUserId: booking.assignedDriver?.userId,
         })
       }
     }

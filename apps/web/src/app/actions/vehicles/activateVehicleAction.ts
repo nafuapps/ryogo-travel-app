@@ -1,9 +1,9 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function activateVehicleAction({
   vehicleId,
@@ -12,18 +12,8 @@ export async function activateVehicleAction({
   vehicleId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowDashboardUser(agencyId)
+  if (!currentUser) {
     return
   }
 

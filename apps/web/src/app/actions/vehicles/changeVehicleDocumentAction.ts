@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import {
   generateInsurancePhotoPathName,
   generatePUCPhotoPathName,
@@ -9,23 +9,17 @@ import {
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { ChangeVehicleDocumentRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function changeVehicleDocumentAction(
   data: ChangeVehicleDocumentRequestType,
 ) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== data.addedByUserId) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: data.agencyId,
+    assignedUserId: data.addedByUserId,
+  })
+  if (!currentUser) {
     return
   }
 
@@ -43,23 +37,26 @@ export async function changeVehicleDocumentAction(
     fileUrl = uploadedPhoto.path
   }
 
-  const vehicle = await vehicleServices.changeVehicleDocument(data, fileUrl)
-  if (!vehicle) return
+  const changedVehicle = await vehicleServices.changeVehicleDocument(
+    data,
+    fileUrl,
+  )
+  if (!changedVehicle) return
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE,
-    entityId: vehicle.id,
+    entityId: changedVehicle.id,
     isFeed: true,
     textKey: "VehicleDocumentModified",
     textObject: {
-      vehicleNumber: vehicle.vehicleNumber,
+      vehicleNumber: changedVehicle.vehicleNumber,
       type: data.type.toUpperCase(),
       userName: currentUser.name,
     },
-    link: `/dashboard/vehicles/${vehicle.id}`,
+    link: `/dashboard/vehicles/${changedVehicle.id}`,
   })
 
-  return vehicle
+  return changedVehicle
 }

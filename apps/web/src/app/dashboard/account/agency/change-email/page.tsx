@@ -39,7 +39,6 @@ export default async function ChangeAgencyEmailPage() {
       <ChangeAgencyEmailPageComponent
         agency={agency}
         allAgencies={allAgencies}
-        userId={currentUser.userId}
       />
     </MainWrapper>
   )

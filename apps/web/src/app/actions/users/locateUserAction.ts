@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { updateUserLocatedAtInWebSession } from "@/lib/session"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 
@@ -15,18 +15,11 @@ export async function locateUserAction({
   lat: number
   long: number
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUser({
+    agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) return
 
   const result = await userServices.locateUser({ userId, lat, long })
   if (!result || !result.locatedAt) return

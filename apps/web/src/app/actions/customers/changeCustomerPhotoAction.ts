@@ -1,10 +1,10 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateCustomerPhotoPathName } from "@/lib/utils"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function changeCustomerPhotoAction({
@@ -16,44 +16,32 @@ export async function changeCustomerPhotoAction({
   agencyId: string
   photo: File
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowDashboardUser(agencyId)
+  if (!currentUser) return
 
   const uploadedPhoto = await uploadFile(
     photo,
     generateCustomerPhotoPathName(customerId),
   )
-  const customer = await customerServices.updateCustomerPhoto(
+  const changedCustomer = await customerServices.updateCustomerPhoto(
     customerId,
     uploadedPhoto.path,
   )
-  if (!customer) return
+  if (!changedCustomer) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.CUSTOMER,
-    entityId: customer.id,
+    entityId: changedCustomer.id,
     isFeed: true,
     textKey: "CustomerPhotoChanged",
     textObject: {
-      customerName: customer.name,
+      customerName: changedCustomer.name,
       userName: currentUser.name,
     },
-    link: `/dashboard/customers/${customer.id}`,
+    link: `/dashboard/customers/${changedCustomer.id}`,
   })
 
-  return customer
+  return changedCustomer
 }

@@ -1,9 +1,9 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function changeDropAddressAction({
   bookingId,
@@ -16,17 +16,11 @@ export async function changeDropAddressAction({
   assignedUserId: string
   dropAddress: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      assignedUserId !== currentUser.userId) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId,
+    assignedUserId,
+  })
+  if (!currentUser) {
     return
   }
 

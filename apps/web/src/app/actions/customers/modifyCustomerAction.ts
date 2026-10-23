@@ -1,47 +1,35 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { ModifyCustomerRequestType } from "@ryogo-travel-app/api/types/customer.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function modifyCustomerAction({
   data,
 }: {
   data: ModifyCustomerRequestType
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowDashboardUser(data.agencyId)
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const customer = await customerServices.modifyCustomer(data)
-  if (!customer) return
+  const modifiedCustomer = await customerServices.modifyCustomer(data)
+  if (!modifiedCustomer) return
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.CUSTOMER,
-    entityId: customer.id,
+    entityId: modifiedCustomer.id,
     isFeed: true,
     textKey: "CustomerModified",
     textObject: {
-      customerName: customer.name,
+      customerName: modifiedCustomer.name,
       userName: currentUser.name,
     },
-    link: `/dashboard/customers/${customer.id}`,
+    link: `/dashboard/customers/${modifiedCustomer.id}`,
   })
 
-  return customer
+  return modifiedCustomer
 }

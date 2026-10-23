@@ -1,14 +1,14 @@
 "use client"
 
-import { useTransition } from "react"
 import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
-import RyogoAlertDialog from "./ryogoAlertDialog"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { CalendarOff } from "lucide-react"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { CalendarOff } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { toast } from "sonner"
+import RyogoAlertDialog from "./ryogoAlertDialog"
 
 export default function CancelBookingAlertButton({
   bookingId,
@@ -31,7 +31,6 @@ export default function CancelBookingAlertButton({
         bookingId,
         agencyId,
         assignedUserId,
-        isCancelledByUser: true,
       })
       if (cancelMessage) {
         toast.success(t("Success"))

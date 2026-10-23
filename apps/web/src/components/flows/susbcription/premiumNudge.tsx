@@ -1,4 +1,6 @@
 import TryPremiumAlertButton from "@/components/buttons/alert/tryPremiumAlertButton"
+import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
@@ -7,8 +9,6 @@ import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
 import { BadgeCheck } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import PaymentButton from "./paymentButton"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 
 export default async function PremiumNudge({
   userDetails,
@@ -49,7 +49,6 @@ export default async function PremiumNudge({
         <>
           <TryPremiumAlertButton
             agencyId={agencyDetails.id}
-            userId={userDetails.id}
             days={PREMIUM_TRIAL_DAYS}
             displayButton={<RyogoBrandButton label={t("TryPremiumCTA")} />}
           />

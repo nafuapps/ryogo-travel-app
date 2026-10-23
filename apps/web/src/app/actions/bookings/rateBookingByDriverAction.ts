@@ -1,7 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { writePermissions } from "@/lib/permissions"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { RateBookingByDriverType } from "@ryogo-travel-app/api/types/booking.types"
 
@@ -10,17 +9,11 @@ export async function rateBookingByDriverAction({
 }: {
   data: RateBookingByDriverType
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userRole !== UserRolesEnum.DRIVER ||
-    currentUser.userId !== data.userId ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowAssignedDriver({
+    agencyId: data.agencyId,
+    assignedDriverUserId: data.userId,
+  })
+  if (!currentUser) {
     return
   }
 

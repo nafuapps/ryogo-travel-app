@@ -1,25 +1,25 @@
 "use client"
 
-import { FindRemindersByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
+import { changeIsReadMissionAction } from "@/app/actions/missions/changeIsReadMissionAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import getEntityIcon from "@/components/icons/entityIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import moment from "moment"
 import { RyogoCaption, RyogoSmall, RyogoTiny } from "@/components/typography"
+import { FindRemindersByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
+import { ChevronRight, CircleCheckBig } from "lucide-react"
+import moment from "moment"
 import { useTranslations } from "next-intl"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import getEntityIcon from "@/components/icons/entityIcon"
-import { useState, useTransition } from "react"
-import { changeIsReadMissionAction } from "@/app/actions/missions/changeIsReadMissionAction"
-import { toast } from "sonner"
-import { CircleCheckBig, ChevronRight } from "lucide-react"
 import { useRouter } from "next/navigation"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import { useState, useTransition } from "react"
+import { toast } from "sonner"
 
 export default function ReminderCard({
   reminder,
@@ -37,7 +37,7 @@ export default function ReminderCard({
     startTransition(async () => {
       const result = await changeIsReadMissionAction({
         missionId: reminder.id,
-        userId: reminder.userId,
+        assignedUserId: reminder.userId,
         agencyId: reminder.agencyId,
         isRead: true,
       })
@@ -53,7 +53,7 @@ export default function ReminderCard({
     startTransition(async () => {
       const result = await changeIsReadMissionAction({
         missionId: reminder.id,
-        userId: reminder.userId,
+        assignedUserId: reminder.userId,
         agencyId: reminder.agencyId,
         isRead: false,
       })

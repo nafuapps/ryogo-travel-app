@@ -1,7 +1,7 @@
 import TryPremiumAlertButton from "@/components/buttons/alert/tryPremiumAlertButton"
 import {
-  RyogoWhiteButton,
   RyogoOutlineButton,
+  RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption, RyogoH2, RyogoSmall } from "@/components/typography"
@@ -13,10 +13,8 @@ import Link from "next/link"
 
 export default async function TryPremiumComponent({
   agencyId,
-  userId,
 }: {
   agencyId: string
-  userId: string
 }) {
   const t = await getTranslations("Dashboard.AccountSubscription.Try")
   return (
@@ -38,7 +36,6 @@ export default async function TryPremiumComponent({
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 lg:gap-4">
           <TryPremiumAlertButton
             agencyId={agencyId}
-            userId={userId}
             days={PREMIUM_TRIAL_DAYS}
             displayButton={
               <RyogoWhiteButton

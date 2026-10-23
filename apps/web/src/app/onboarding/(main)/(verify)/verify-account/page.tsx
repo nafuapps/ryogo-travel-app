@@ -49,6 +49,7 @@ export default async function VerifyAccountPage() {
     <VerifyAccountPageComponent
       codeSentAt={userDetails.codeSentAt}
       userId={currentUser.userId}
+      agencyId={currentUser.agencyId}
     />
   )
 }

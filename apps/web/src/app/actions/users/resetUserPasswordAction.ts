@@ -2,10 +2,10 @@
 
 import { ResetPasswordEmailTemplate } from "@/components/email/resetPasswordEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 //Owner resetting user's password flow
 export async function resetUserPasswordAction({
@@ -15,16 +15,8 @@ export async function resetUserPasswordAction({
   userId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowOwner(agencyId)
+  if (!currentUser) {
     return
   }
 

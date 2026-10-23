@@ -1,27 +1,19 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateTransactionPhotoPathName } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
 import { AddTransactionRequestType } from "@ryogo-travel-app/api/types/transaction.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addTransactionAction(data: AddTransactionRequestType) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      data.assignedUserId !== currentUser.userId) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: data.agencyId,
+    assignedUserId: data.assignedUserId,
+  })
+  if (!currentUser) return
 
   const addedTransaction = await transactionServices.addTransaction(data)
   if (!addedTransaction) return

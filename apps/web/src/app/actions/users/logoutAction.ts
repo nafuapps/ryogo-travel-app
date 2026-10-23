@@ -1,17 +1,14 @@
 "use server"
 
-import { getCurrentUser, logout, verifyCurrentUser } from "@/lib/auth"
+import { logout } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { redirect, RedirectType } from "next/navigation"
 
 export async function logoutAction() {
-  const currentUser = await getCurrentUser()
+  const currentUser = await writePermissions.allowAllUsers()
   if (!currentUser) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
     return
   }
 

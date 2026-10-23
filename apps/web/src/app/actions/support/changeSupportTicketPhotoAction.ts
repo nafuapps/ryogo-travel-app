@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateUserSupportTicketPhotoPathName } from "@/lib/utils"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
@@ -8,20 +8,19 @@ import { uploadFile } from "@ryogo-travel-app/db/storage"
 export async function changeSupportTicketPhotoAction({
   ticketId,
   userId,
+  agencyId,
   photo,
 }: {
   ticketId: string
   userId: string
+  agencyId: string
   photo: File
 }) {
-  const currentUser = await getCurrentUser()
-  if (!currentUser || currentUser.userId !== userId) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUser({
+    agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) return
 
   const uploadedPhoto = await uploadFile(
     photo,

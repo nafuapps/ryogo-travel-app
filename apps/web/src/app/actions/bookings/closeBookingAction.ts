@@ -3,16 +3,12 @@
 import { BookingCompletedInvoiceEmailTemplate } from "@/components/email/bookingCompletedInvoiceEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateBookingInvoicePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import {
-  BookingStatusEnum,
-  EntityTypeEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { headers } from "next/headers"
 
@@ -25,17 +21,11 @@ export async function closeBookingAction({
   agencyId: string
   assignedUserId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== assignedUserId) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId,
+    assignedUserId,
+  })
+  if (!currentUser) {
     return
   }
 

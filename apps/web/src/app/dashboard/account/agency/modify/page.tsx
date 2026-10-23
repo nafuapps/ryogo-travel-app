@@ -1,5 +1,3 @@
-//Account/agency/modify page (only accessible by owner)
-
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { MainWrapper } from "@/components/page/pageWrappers"
@@ -31,7 +29,7 @@ export default async function ModifyAgencyPage() {
   return (
     <MainWrapper>
       <DashboardHeader pathName={"/dashboard/account/agency/modify"} />
-      <ModifyAgencyPageForm agency={agency} userId={currentUser.userId} />
+      <ModifyAgencyPageForm agency={agency} />
     </MainWrapper>
   )
 }

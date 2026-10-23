@@ -64,6 +64,7 @@ export default async function BookingExpensesPage({
         <BookingExpensesPageComponent
           bookingExpenses={bookingExpenses}
           canEditExpense={canEditExpense}
+          assignedUserId={booking.assignedUserId}
         />
         <StickyActionWrapper>
           {canEditExpense && (

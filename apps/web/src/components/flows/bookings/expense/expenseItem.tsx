@@ -1,38 +1,40 @@
 "use client"
 
-import { RyogoH3, RyogoSmall, RyogoTiny } from "@/components/typography"
-import { format } from "date-fns"
-import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { useTranslations } from "next-intl"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import ExpenseIcon from "@/components/icons/expenseIcon"
-import { ExpenseApprovalButton } from "./expenseApprovalButton"
-import { RyogoDialogImage } from "@/components/images/ryogoImage"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import ExpenseIcon from "@/components/icons/expenseIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoDialogImage } from "@/components/images/ryogoImage"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import RyogoTag from "@/components/tags/ryogoTag"
+import { RyogoH3, RyogoSmall, RyogoTiny } from "@/components/typography"
+import { FindBookingExpensesByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { format } from "date-fns"
 import {
   ChevronDown,
   ChevronRight,
   ChevronUp,
   MessageSquareQuote,
 } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  SectionColWrapper,
-  SectionRowWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
-import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import RyogoTag from "@/components/tags/ryogoTag"
-import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import { useState } from "react"
+import { ExpenseApprovalButton } from "./expenseApprovalButton"
 
 export default function ExpenseItem({
   expense,
   canEditExpense,
+  assignedUserId,
   isRider,
 }: {
   expense: NonNullable<FindBookingExpensesByIdType>[number]
   canEditExpense: boolean
+  assignedUserId: string
   isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.BookingExpenses")
@@ -97,6 +99,7 @@ export default function ExpenseItem({
             expenseId={expense.id}
             isApproved={expense.isApproved}
             agencyId={expense.agencyId}
+            assignedUserId={assignedUserId}
             canEditExpense={canEditExpense}
             isRider={isRider}
           />

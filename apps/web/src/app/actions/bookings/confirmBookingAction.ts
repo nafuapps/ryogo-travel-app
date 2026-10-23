@@ -4,17 +4,13 @@ import { ConfirmBookingEmailTemplate } from "@/components/email/confirmBookingEm
 import sendEmail from "@/components/email/sendEmail"
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateBookingConfirmationPathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { ConfirmBookingRequestType } from "@ryogo-travel-app/api/types/booking.types"
-import {
-  BookingStatusEnum,
-  EntityTypeEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
@@ -25,17 +21,11 @@ export async function confirmBookingAction({
 }: {
   data: ConfirmBookingRequestType
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      data.assignedUserId !== currentUser.userId) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: data.agencyId,
+    assignedUserId: data.assignedUserId,
+  })
+  if (!currentUser) {
     return
   }
 

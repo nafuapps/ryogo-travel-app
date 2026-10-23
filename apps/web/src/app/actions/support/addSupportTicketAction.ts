@@ -1,14 +1,14 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { AddSupportTicketEmailTemplate } from "@/components/email/addSupportTicketEmailTemplate"
+import sendEmail from "@/components/email/sendEmail"
+import { writePermissions } from "@/lib/permissions"
+import { SUPPORT_EMAIL } from "@/lib/uiConfig"
+import { generateUserSupportTicketPhotoPathName } from "@/lib/utils"
+import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
-import { SUPPORT_EMAIL } from "@/lib/uiConfig"
-import sendEmail from "@/components/email/sendEmail"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
-import { generateUserSupportTicketPhotoPathName } from "@/lib/utils"
-import { AddSupportTicketEmailTemplate } from "@/components/email/addSupportTicketEmailTemplate"
-import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 
 export async function addSupportTicketAction({
   data,
@@ -23,18 +23,11 @@ export async function addSupportTicketAction({
     photo?: File
   }
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== data.userId ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUser({
+    agencyId: data.agencyId,
+    assignedUserId: data.userId,
+  })
+  if (!currentUser) return
 
   //Add the ticket to the database
   const newSupportTicket = await supportServices.addSupportTicket({

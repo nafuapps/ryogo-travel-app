@@ -1,8 +1,9 @@
 "use server"
-import { getCurrentUser, login } from "@/lib/auth"
+
+import { login } from "@/lib/auth"
+import { readPermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { redirect, RedirectType } from "next/navigation"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function loginAction({
   userId,
@@ -11,13 +12,8 @@ export async function loginAction({
   userId: string
   password: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (currentUser) {
-    if (currentUser.userRole === UserRolesEnum.DRIVER) {
-      redirect("/rider/home", RedirectType.replace)
-    }
-    redirect("/dashboard/home", RedirectType.replace)
-  }
+  await readPermissions.redirectIfAuthenticated()
+
   const loginResult = await login({ userId, password })
   if (loginResult.error) {
     return loginResult

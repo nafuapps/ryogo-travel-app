@@ -1,9 +1,9 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { customerServices } from "@ryogo-travel-app/api/services/customer.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function inactivateCustomerAction({
   customerId,
@@ -12,37 +12,26 @@ export async function inactivateCustomerAction({
   customerId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowDashboardUser(agencyId)
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const customer = await customerServices.inactivateCustomer(customerId)
-  if (!customer) return
+  const inactivatedCustomer =
+    await customerServices.inactivateCustomer(customerId)
+  if (!inactivatedCustomer) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.CUSTOMER,
-    entityId: customer.id,
+    entityId: inactivatedCustomer.id,
     isFeed: true,
     textKey: "CustomerInactivated",
     textObject: {
-      customerName: customer.name,
+      customerName: inactivatedCustomer.name,
       userName: currentUser.name,
     },
-    link: `/dashboard/customers/${customer.id}`,
+    link: `/dashboard/customers/${inactivatedCustomer.id}`,
   })
 
-  return customer
+  return inactivatedCustomer
 }

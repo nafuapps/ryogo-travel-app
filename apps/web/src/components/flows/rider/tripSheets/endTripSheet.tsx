@@ -1,11 +1,19 @@
 "use client"
 
+import { endTripAction } from "@/app/actions/bookings/endTripAction"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import {
   RyogoFileInput,
   RyogoInput,
   RyogoRatingInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 import {
   Sheet,
   SheetContent,
@@ -15,34 +23,26 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { endTripAction } from "@/app/actions/bookings/endTripAction"
-import Link from "next/link"
-import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
 import {
   MAX_FIELD_DESC_LENGTH,
   MAX_ODOMETER_LIMIT,
   MIN_ODOMETER_LIMIT,
   TOTAL_RATING_STARS,
 } from "@/lib/uiConfig"
-import { RyogoCaption } from "@/components/typography"
-import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoGhostButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
-import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { LatLongType } from "@ryogo-travel-app/api/types/location.types"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function EndTripSheet({
   booking,
@@ -110,6 +110,7 @@ export default function EndTripSheet({
       customerRatingData,
       bookingRatingData,
       customerId: booking.customerId,
+      assignedDriverUserId: booking.assignedDriver?.userId,
       data: {
         agencyId: booking.agencyId,
         bookingId: booking.id,

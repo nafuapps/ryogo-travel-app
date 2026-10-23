@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
@@ -17,46 +17,38 @@ export async function finishDriverLeaveAction({
   leaveId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.agencyId !== agencyId ||
-    (currentUser.userId !== userId &&
-      currentUser.userRole !== UserRolesEnum.OWNER)
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const leave = await driverServices.endDriverLeave({ leaveId, driverId })
-  if (!leave) return
+  const endedLeave = await driverServices.endDriverLeave({ leaveId, driverId })
+  if (!endedLeave) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER_LEAVE,
-    entityId: leave.id,
+    entityId: endedLeave.id,
     isFeed: true,
     textKey:
       currentUser.userRole === UserRolesEnum.DRIVER
         ? "EndedDriverLeave"
         : "DriverLeaveEnded",
     textObject: {
-      endDate: leave.actualEndDate,
+      endDate: endedLeave.actualEndDate,
       userName: currentUser.name,
-      driverName: leave.driver.name,
+      driverName: endedLeave.driver.name,
     },
-    link: `/dashboard/drivers/${leave.driverId}/leaves`,
+    link: `/dashboard/drivers/${endedLeave.driverId}/leaves`,
   })
 
   // Remove previous driverLeave missions
   await missionServices.removePreviousMissionsByEntityId({
     agencyId: agencyId,
-    entityId: leave.id,
+    entityId: endedLeave.id,
   })
 
-  return leave
+  return endedLeave
 }

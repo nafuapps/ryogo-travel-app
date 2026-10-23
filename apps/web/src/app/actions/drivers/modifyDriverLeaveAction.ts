@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
@@ -8,7 +8,6 @@ import { ModifyDriverLeaveRequestType } from "@ryogo-travel-app/api/types/driver
 import {
   DriverLeaveStatusEnum,
   EntityTypeEnum,
-  UserRolesEnum,
 } from "@ryogo-travel-app/db/schema"
 
 export async function modifyDriverLeaveAction({
@@ -16,58 +15,49 @@ export async function modifyDriverLeaveAction({
 }: {
   data: ModifyDriverLeaveRequestType
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: data.agencyId,
+    assignedUserId: data.addedByUserId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const leave = await driverServices.modifyDriverLeave(data)
-  if (!leave) return
+  const modifiedLeave = await driverServices.modifyDriverLeave(data)
+  if (!modifiedLeave) return
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER,
-    entityId: leave.driverId,
+    entityId: modifiedLeave.driverId,
     isFeed: true,
     textKey: "DriverLeaveModified",
     textObject: {
-      driverName: leave.driverName,
+      driverName: modifiedLeave.driverName,
       userName: currentUser.name,
     },
-    link: `/dashboard/drivers/${leave.driverId}/leaves`,
+    link: `/dashboard/drivers/${modifiedLeave.driverId}/leaves`,
   })
 
-  if (leave.status === DriverLeaveStatusEnum.PENDING) {
+  if (modifiedLeave.status === DriverLeaveStatusEnum.PENDING) {
     //Replace previous newLeave mission
     await missionServices.addMission({
       agencyId: data.agencyId,
       userId: currentUser.userId,
       entityType: EntityTypeEnum.DRIVER_LEAVE,
-      entityId: leave.id,
+      entityId: modifiedLeave.id,
       titleKey: "DriverLeaveAdded.Title",
       titleObject: {
-        driverId: leave.driverId,
+        driverId: modifiedLeave.driverId,
       },
       messageKey: "DriverLeaveAdded.Message",
       messageObject: {
-        startDate: leave.startDate,
-        endDate: leave.endDate,
+        startDate: modifiedLeave.startDate,
+        endDate: modifiedLeave.endDate,
       },
-      dueDate: leave.startDate,
-      link: `/dashboard/drivers/${leave.driverId}/leaves`,
+      dueDate: modifiedLeave.startDate,
+      link: `/dashboard/drivers/${modifiedLeave.driverId}/leaves`,
     })
   }
 
-  return leave
+  return modifiedLeave
 }

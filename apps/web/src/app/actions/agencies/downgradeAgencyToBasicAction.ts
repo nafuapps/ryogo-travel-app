@@ -1,32 +1,18 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
-export async function downgradeAgencyToBasicAction({
-  userId,
-  agencyId,
-}: {
-  userId: string
-  agencyId: string
-}) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId
-  ) {
+export async function downgradeAgencyToBasicAction(agencyId: string) {
+  const currentUser = await writePermissions.allowDashboardUser(agencyId)
+  if (!currentUser) {
     return
   }
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const agency = await agencyServices.downgradeAgencyToBasic(agencyId)
-  if (!agency) return
+  const downgradedAgency = await agencyServices.downgradeAgencyToBasic(agencyId)
+  if (!downgradedAgency) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
@@ -37,5 +23,5 @@ export async function downgradeAgencyToBasicAction({
     link: "/dashboard/account/agency",
   })
 
-  return agency
+  return downgradedAgency
 }

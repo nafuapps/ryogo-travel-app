@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
@@ -16,25 +16,18 @@ export async function changeMyPasswordAction({
   oldPassword: string
   newPassword: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUser({
+    agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const user = await userServices.changeMyPassword({
+  const changedUser = await userServices.changeMyPassword({
     userId,
     oldPassword,
     newPassword,
   })
-  if (!user) return
+  if (!changedUser) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
@@ -48,5 +41,5 @@ export async function changeMyPasswordAction({
     link: `/dashboard/users/${userId}`,
   })
 
-  return user
+  return changedUser
 }

@@ -1,28 +1,25 @@
 "use client"
 
+import { deleteSupportTicketAction } from "@/app/actions/support/deleteSupportTicketAction"
+import {
+  RyogoDestructiveButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { useTransition } from "react"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
 import RyogoAlertDialog from "./ryogoAlertDialog"
-import { deleteSupportTicketAction } from "@/app/actions/support/deleteSupportTicketAction"
-import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
-import {
-  RyogoGhostButton,
-  RyogoDestructiveButton,
-} from "@/components/buttons/ryogoButtons"
 
 export default function DeleteSupportTicketAlertButton({
   ticketId,
   userId,
   agencyId,
-  status,
   isRider,
 }: {
   ticketId: string
   userId: string
   agencyId: string
-  status: TicketStatusEnum
   isRider?: boolean
 }) {
   const [isPending, startCancelTransition] = useTransition()
@@ -32,9 +29,7 @@ export default function DeleteSupportTicketAlertButton({
 
   async function deleteCustomMission() {
     startCancelTransition(async () => {
-      if (
-        await deleteSupportTicketAction({ ticketId, userId, agencyId, status })
-      ) {
+      if (await deleteSupportTicketAction({ ticketId, userId, agencyId })) {
         toast.success(t("Success"))
         router.replace(
           isRider ? `/rider/mySupport/tickets` : `/dashboard/support/tickets`,

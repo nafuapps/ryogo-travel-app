@@ -1,11 +1,11 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { updateUserAdminInWebSession } from "@/lib/session"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function transferAdminAction({
   currentUserId,
@@ -18,18 +18,8 @@ export async function transferAdminAction({
 }) {
   if (currentUserId === otherUserId) return
 
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    !currentUser.isAdmin ||
-    currentUser.userId !== currentUserId ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowOwner(agencyId)
+  if (!currentUser || !currentUser.isAdmin) {
     return
   }
 

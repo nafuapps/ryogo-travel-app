@@ -1,28 +1,30 @@
 "use client"
 
-import { useTranslations } from "next-intl"
 import { changeExpenseApprovalAction } from "@/app/actions/expenses/changeExpenseApprovalAction"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { useTransition } from "react"
 import {
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Check, CheckCheck } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { toast } from "sonner"
 
 export function ExpenseApprovalButton({
   expenseId,
   isApproved,
   agencyId,
   canEditExpense,
+  assignedUserId,
   isRider,
 }: {
   expenseId: string
   isApproved: boolean
   agencyId: string
   canEditExpense: boolean
+  assignedUserId: string
   isRider?: boolean
 }) {
   const t = useTranslations("Dashboard.BookingExpenses")
@@ -36,6 +38,7 @@ export function ExpenseApprovalButton({
           expenseId,
           isApproved: true,
           agencyId,
+          assignedUserId,
         })
       ) {
         toast.success(t("ApproveSuccess"))
@@ -53,6 +56,7 @@ export function ExpenseApprovalButton({
           expenseId,
           isApproved: false,
           agencyId,
+          assignedUserId,
         })
       ) {
         toast.info(t("RejectSuccess"))

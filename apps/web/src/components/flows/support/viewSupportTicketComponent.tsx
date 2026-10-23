@@ -13,13 +13,18 @@ import { RyogoSingleRatingDisplay } from "@/components/ratings/ryogoRatingDispla
 import AddSupportTicketCommentSheet from "@/components/sheets/addSupportTicketCommentSheet"
 import ChangeTicketPhotoSheet from "@/components/sheets/changeTicketPhotoSheet"
 import CloseSupportTicketSheet from "@/components/sheets/closeSupportTicketSheet"
-import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
+import {
+  RyogoCaption,
+  RyogoP,
+  RyogoSmall,
+  RyogoTiny,
+} from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { MAX_USER_COMMENTS_PER_TICKET } from "@/lib/uiConfig"
 import { FindSupportTicketByIdType } from "@ryogo-travel-app/api/services/support.services"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { MessageSquareReply, MessageSquare } from "lucide-react"
+import { MessageSquare, MessageSquareReply } from "lucide-react"
 import moment from "moment"
 import { getTranslations } from "next-intl/server"
 
@@ -82,6 +87,7 @@ export default async function ViewSupportTicketPageComponent({
             <ChangeTicketPhotoSheet
               ticketId={ticket.id}
               userId={ticket.userId}
+              agencyId={ticket.agencyId}
               newPhoto={ticket.photoUrl ? false : true}
             />
           )}
@@ -116,28 +122,23 @@ export default async function ViewSupportTicketPageComponent({
       )}
       {ticket.status !== TicketStatusEnum.CLOSED && (
         <SectionWrapper id="TicketActions">
-          {[TicketStatusEnum.OPEN, TicketStatusEnum.IN_PROGRESS].includes(
-            ticket.status,
-          ) &&
-            userCommentsLength < MAX_USER_COMMENTS_PER_TICKET && (
-              <AddSupportTicketCommentSheet
-                ticketId={ticket.id}
-                userId={ticket.userId}
-                agencyId={ticket.agencyId}
-                status={ticket.status}
-              />
-            )}
+          {userCommentsLength < MAX_USER_COMMENTS_PER_TICKET && (
+            <AddSupportTicketCommentSheet
+              ticketId={ticket.id}
+              userId={ticket.userId}
+              agencyId={ticket.agencyId}
+            />
+          )}
           {ticket.status === TicketStatusEnum.RESOLVED && (
             <>
               <CloseSupportTicketSheet
                 ticketId={ticket.id}
                 userId={ticket.userId}
                 agencyId={ticket.agencyId}
-                status={ticket.status}
               />
-              <RyogoCaption color="light" className="text-center mx-auto">
+              <RyogoTiny color="light" className="text-center mx-auto">
                 {t("CloseTicketDesc")}
-              </RyogoCaption>
+              </RyogoTiny>
             </>
           )}
           {ticket.status === TicketStatusEnum.OPEN && (
@@ -145,7 +146,6 @@ export default async function ViewSupportTicketPageComponent({
               ticketId={ticket.id}
               userId={ticket.userId}
               agencyId={ticket.agencyId}
-              status={ticket.status}
               isRider={isRider}
             />
           )}

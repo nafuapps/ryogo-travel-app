@@ -1,33 +1,25 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { refresh } from "next/cache"
 
 export async function changeIsReadMissionAction({
   missionId,
-  userId,
+  assignedUserId,
   agencyId,
   isRead,
 }: {
   missionId: string
-  userId: string
+  assignedUserId: string
   agencyId: string
   isRead: boolean
 }) {
-  const currentUser = await getCurrentUser()
-
-  if (
-    !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUser({
+    agencyId,
+    assignedUserId,
+  })
+  if (!currentUser) return
 
   const mission = await missionServices.changeIsReadMission({
     missionId,

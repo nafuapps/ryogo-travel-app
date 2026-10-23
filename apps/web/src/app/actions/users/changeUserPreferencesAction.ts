@@ -1,9 +1,9 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import {
-  LOCALE_COOKIE_NAME,
   DARK_MODE_COOKIE_NAME,
+  LOCALE_COOKIE_NAME,
 } from "@ryogo-travel-app/api/apiConfig"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { UserLangEnum } from "@ryogo-travel-app/db/schema"
@@ -20,27 +20,22 @@ export async function changeUserPreferencesAction({
   prefersDarkTheme: boolean
   languagePref: UserLangEnum
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUser({
+    agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const user = await userServices.changeUserPreferences({
+  const updatedUser = await userServices.changeUserPreferences({
     userId,
     prefersDarkTheme,
     languagePref,
   })
-  if (!user) return
+  if (!updatedUser) return
+
   const store = await cookies()
   store.set(LOCALE_COOKIE_NAME, languagePref)
   store.set(DARK_MODE_COOKIE_NAME, prefersDarkTheme ? "true" : "false")
-  return user
+
+  return updatedUser
 }

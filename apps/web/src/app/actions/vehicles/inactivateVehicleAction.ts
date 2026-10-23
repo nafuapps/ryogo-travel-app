@@ -1,9 +1,9 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function inactivateVehicleAction({
   vehicleId,
@@ -12,37 +12,25 @@ export async function inactivateVehicleAction({
   vehicleId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowDashboardUser(agencyId)
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const vehicle = await vehicleServices.inactivateVehicle(vehicleId)
-  if (!vehicle) return
+  const inactivatedVehicle = await vehicleServices.inactivateVehicle(vehicleId)
+  if (!inactivatedVehicle) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE,
-    entityId: vehicle.id,
+    entityId: inactivatedVehicle.id,
     isFeed: true,
     textKey: "VehicleInactivated",
     textObject: {
-      vehicleNumber: vehicle.vehicleNumber,
+      vehicleNumber: inactivatedVehicle.vehicleNumber,
       userName: currentUser.name,
     },
-    link: `/dashboard/vehicles/${vehicle.id}`,
+    link: `/dashboard/vehicles/${inactivatedVehicle.id}`,
   })
 
-  return vehicle
+  return inactivatedVehicle
 }

@@ -1,27 +1,15 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { feedbackServices } from "@ryogo-travel-app/api/services/feedback.services"
 import { InsertProductFeedbackType } from "@ryogo-travel-app/db/schema"
 
 export async function addFeedbackAction(data: InsertProductFeedbackType) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== data.userId ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowAllUsers(data.agencyId)
+  if (!currentUser) return
 
   const feedback = await feedbackServices.addProductFeedback(data)
-  if (!feedback) {
-    return
-  }
+  if (!feedback) return
 
   return feedback
 }

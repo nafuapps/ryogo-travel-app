@@ -1,12 +1,11 @@
 "use client"
 
-import { RyogoSmall, RyogoTiny } from "@/components/typography"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { useState } from "react"
-import { useForm, useWatch } from "react-hook-form"
-import z from "zod"
-import stateCityData from "@/lib/states_cities.json"
+import { findOrCreateRouteAction } from "@/app/actions/locations/findOrCreateRouteAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import FormStepHeader from "@/components/form/formStepHeader"
 import {
   RyogoCombobox,
   RyogoDatePicker,
@@ -14,8 +13,7 @@ import {
   RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
-import { findOrCreateRouteAction } from "@/app/actions/locations/findOrCreateRouteAction"
+import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -25,8 +23,8 @@ import {
   StickyActionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
-import { useRouter } from "next/navigation"
+import { RyogoSmall, RyogoTiny } from "@/components/typography"
+import stateCityData from "@/lib/states_cities.json"
 import {
   MAX_FIELD_DESC_LENGTH,
   MAX_VEHICLE_CAPCITY,
@@ -34,13 +32,15 @@ import {
   NEW_BOOKING_DEFAULT_DISTANCE,
   NewBookingTotalSteps,
 } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
-import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import FormStepHeader from "@/components/form/formStepHeader"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm, useWatch } from "react-hook-form"
+import z from "zod"
 
 export default function NewBookingStepTripDetails({
   onNext,
@@ -162,6 +162,7 @@ export default function NewBookingStepTripDetails({
           distance: newBookingFormData.citydistance,
         }
       : await findOrCreateRouteAction({
+          agencyId: newBookingFormData.agencyId,
           sourceCity: values.sourceCity,
           sourceState: values.sourceState,
           destinationCity: values.destinationCity,

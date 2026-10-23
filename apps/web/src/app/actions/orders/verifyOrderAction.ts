@@ -1,11 +1,11 @@
 "use server"
 
 import generateAndSendSubscriptionInvoiceEmail from "@/components/email/generateAndSendSubscriptionInvoiceEmail"
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { orderServices } from "@ryogo-travel-app/api/services/order.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import crypto from "crypto"
 
 export async function verifyOrderAction({
@@ -22,22 +22,12 @@ export async function verifyOrderAction({
   userId: string
 }) {
   if (!rpOrderId || !rpPaymentId || !rpSignature) {
-    throw new Error("Payment verification failed: Missing required parameters")
-  }
-
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId
-  ) {
-    throw new Error("User verification failed")
-  }
-
-  if (!(await verifyCurrentUser())) {
+    console.error("Payment verification failed: Missing required parameters")
     return
   }
+
+  const currentUser = await writePermissions.allowOwner(agencyId)
+  if (!currentUser) return
 
   // 1. Generate the expected signature
   const secret =
@@ -51,7 +41,10 @@ export async function verifyOrderAction({
 
   // 2. Compare signatures
   if (generated_signature !== rpSignature) {
-    throw new Error("Payment verification failed: Invalid signature")
+    console.error(
+      `Payment verification failed: Invalid signature: ${rpOrderId} ${rpPaymentId} ${rpSignature} ${userId}`,
+    )
+    return
   }
 
   // 3. Update the Database

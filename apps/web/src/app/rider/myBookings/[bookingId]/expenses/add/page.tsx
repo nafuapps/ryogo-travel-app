@@ -22,8 +22,8 @@ export default async function RiderAddExpensePage({
 
   const { bookingId } = await params
 
-  const bookingDetails = await bookingServices.findBookingStatusById(bookingId)
-  if (!bookingDetails || bookingDetails.assignedDriverId === null) {
+  const bookingDetails = await bookingServices.findBookingDetailsById(bookingId)
+  if (!bookingDetails || bookingDetails.assignedDriver === null) {
     redirect("/rider/myBookings", RedirectType.replace)
   }
 
@@ -39,7 +39,7 @@ export default async function RiderAddExpensePage({
         bookingId={bookingDetails.id}
         agencyId={bookingDetails.agencyId}
         userId={currentUser.userId}
-        assignedUserId={bookingDetails.assignedUserId}
+        assignedUserId={bookingDetails.assignedDriver.userId}
         isRider
       />
     </MainWrapper>

@@ -1,25 +1,25 @@
 "use client"
 
-import { useTransition } from "react"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
-import RyogoAlertDialog from "./ryogoAlertDialog"
 import { deleteReminderAction } from "@/app/actions/missions/deleteReminderAction"
 import {
-  RyogoGhostButton,
   RyogoDestructiveButton,
+  RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { toast } from "sonner"
+import RyogoAlertDialog from "./ryogoAlertDialog"
 
 export default function DeleteReminderAlertButton({
   missionId,
-  userId,
+  assignedUserId,
   agencyId,
   disabled,
   isRider,
 }: {
   missionId: string
-  userId: string
+  assignedUserId: string
   agencyId: string
   disabled: boolean
   isRider?: boolean
@@ -31,7 +31,7 @@ export default function DeleteReminderAlertButton({
 
   async function deleteReminder() {
     startCancelTransition(async () => {
-      if (await deleteReminderAction({ missionId, userId, agencyId })) {
+      if (await deleteReminderAction({ missionId, assignedUserId, agencyId })) {
         toast.success(t("Success"))
         router.replace(isRider ? `/rider/myMissions` : `/dashboard/missions`)
       } else {

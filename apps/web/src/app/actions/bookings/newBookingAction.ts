@@ -3,17 +3,13 @@
 import { LeadBookingEmailTemplate } from "@/components/email/leadBookingEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateBookingQuotePathName } from "@/lib/utils"
 import { bookingServices } from "@ryogo-travel-app/api/services/booking.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
-import {
-  BookingStatusEnum,
-  EntityTypeEnum,
-  UserRolesEnum,
-} from "@ryogo-travel-app/db/schema"
+import { BookingStatusEnum, EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 
@@ -22,19 +18,8 @@ export async function newBookingAction({
 }: {
   data: NewBookingRequestDataType
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== data.userId ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
+  const currentUser = await writePermissions.allowDashboardUser(data.agencyId)
+  if (!currentUser) {
     return
   }
 

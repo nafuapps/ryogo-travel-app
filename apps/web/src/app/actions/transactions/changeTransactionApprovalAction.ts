@@ -1,9 +1,9 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { transactionServices } from "@ryogo-travel-app/api/services/transaction.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function changeTransactionApprovalAction({
   transactionId,
@@ -16,19 +16,11 @@ export async function changeTransactionApprovalAction({
   assignedUserId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== assignedUserId) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: agencyId,
+    assignedUserId: assignedUserId,
+  })
+  if (!currentUser) return
 
   const updatedTransaction =
     await transactionServices.modifyTransactionApprovalStatus({

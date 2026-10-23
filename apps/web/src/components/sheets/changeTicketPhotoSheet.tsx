@@ -1,5 +1,11 @@
 "use client"
 
+import { changeSupportTicketPhotoAction } from "@/app/actions/support/changeSupportTicketPhotoAction"
+import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { RyogoFileInput } from "@/components/form/ryogoFormFields"
 import {
   Sheet,
@@ -9,32 +15,28 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { FileRegex } from "@/lib/regex"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import z from "zod"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { changeSupportTicketPhotoAction } from "@/app/actions/support/changeSupportTicketPhotoAction"
-import { FileRegex } from "@/lib/regex"
-import {
-  RyogoGhostButton,
-  RyogoOutlineButton,
-  RyogoDefaultButton,
-} from "@/components/buttons/ryogoButtons"
+import z from "zod"
 
-import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
-import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import compressImage from "@/lib/imageCompression"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 
 export default function ChangeTicketPhotoSheet({
   ticketId,
   userId,
+  agencyId,
   newPhoto,
 }: {
   ticketId: string
   userId: string
+  agencyId: string
   newPhoto: boolean
 }) {
   const t = useTranslations("Components.Sheets.ChangeTicketPhoto")
@@ -65,6 +67,7 @@ export default function ChangeTicketPhotoSheet({
     const updatedTicket = await changeSupportTicketPhotoAction({
       ticketId,
       userId,
+      agencyId,
       photo: compressedImage,
     })
     if (updatedTicket) {

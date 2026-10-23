@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import {
   generateInsurancePhotoPathName,
   generatePUCPhotoPathName,
@@ -10,27 +10,17 @@ import {
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function addVehicleAction(data: AddVehicleRequestType) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
+  const currentUser = await writePermissions.allowDashboardUser(data.agencyId)
+  if (!currentUser) {
     return
   }
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const vehicle = await vehicleServices.addVehicle(data)
-  if (!vehicle) return
+  const addedVehicle = await vehicleServices.addVehicle(data)
+  if (!addedVehicle) return
 
   let rcPhotoUrl
   let pucPhotoUrl
@@ -42,7 +32,7 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   if (rcFile) {
     const uploadedFile = await uploadFile(
       rcFile,
-      generateRCPhotoPathName(vehicle.id),
+      generateRCPhotoPathName(addedVehicle.id),
     )
     rcPhotoUrl = uploadedFile.path
   }
@@ -51,7 +41,7 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   if (pucFile) {
     const uploadedFile = await uploadFile(
       pucFile,
-      generatePUCPhotoPathName(vehicle.id),
+      generatePUCPhotoPathName(addedVehicle.id),
     )
     pucPhotoUrl = uploadedFile.path
   }
@@ -60,7 +50,7 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   if (insuranceFile) {
     const uploadedFile = await uploadFile(
       insuranceFile,
-      generateInsurancePhotoPathName(vehicle.id),
+      generateInsurancePhotoPathName(addedVehicle.id),
     )
     insurancePhotoUrl = uploadedFile.path
   }
@@ -69,14 +59,14 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
   if (vehiclePhotoFile) {
     const uploadedFile = await uploadFile(
       vehiclePhotoFile,
-      generateVehiclePhotoPathName(vehicle.id),
+      generateVehiclePhotoPathName(addedVehicle.id),
     )
     vehiclePhotoUrl = uploadedFile.path
   }
 
   if (rcPhotoUrl || pucPhotoUrl || insurancePhotoUrl || vehiclePhotoUrl) {
     await vehicleServices.changeVehicleDocURLs({
-      vehicleId: vehicle.id,
+      vehicleId: addedVehicle.id,
       rcPhotoUrl,
       pucPhotoUrl,
       insurancePhotoUrl,
@@ -88,15 +78,15 @@ export async function addVehicleAction(data: AddVehicleRequestType) {
     agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE,
-    entityId: vehicle.id,
+    entityId: addedVehicle.id,
     isFeed: true,
     textKey: "VehicleAdded",
     textObject: {
-      vehicleNumber: vehicle.vehicleNumber,
+      vehicleNumber: addedVehicle.vehicleNumber,
       userName: currentUser.name,
     },
-    link: `/dashboard/vehicles/${vehicle.id}`,
+    link: `/dashboard/vehicles/${addedVehicle.id}`,
   })
 
-  return vehicle
+  return addedVehicle
 }

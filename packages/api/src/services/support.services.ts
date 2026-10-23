@@ -134,6 +134,12 @@ export const supportServices = {
     ticketId: string
     comment: string
   }) {
+    const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
+    if (!ticket || ticket.status === TicketStatusEnum.CLOSED) {
+      console.error(`Ticket not found or closed: ${ticketId}`)
+      return
+    }
+
     const [updatedTicket] =
       await supportTicketRepository.updateTicketCommentsByUser({
         ticketId,
@@ -149,7 +155,7 @@ export const supportServices = {
   async removeTicket(ticketId: string) {
     const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
     if (!ticket || ticket.status !== TicketStatusEnum.OPEN) {
-      console.error(`Ticket not found or not open to be removed: ${ticketId}`)
+      console.error(`Ticket not found or not open: ${ticketId}`)
       return
     }
 

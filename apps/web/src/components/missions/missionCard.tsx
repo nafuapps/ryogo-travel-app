@@ -1,25 +1,25 @@
 "use client"
 
-import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
+import { changeIsReadMissionAction } from "@/app/actions/missions/changeIsReadMissionAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import getEntityIcon from "@/components/icons/entityIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import moment from "moment"
 import { RyogoCaption, RyogoSmall, RyogoTiny } from "@/components/typography"
+import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
+import { ChevronRight, CircleCheckBig } from "lucide-react"
+import moment from "moment"
 import { useTranslations } from "next-intl"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import getEntityIcon from "@/components/icons/entityIcon"
 import Link from "next/link"
 import { useState, useTransition } from "react"
-import { changeIsReadMissionAction } from "@/app/actions/missions/changeIsReadMissionAction"
 import { toast } from "sonner"
-import { CircleCheckBig, ChevronRight } from "lucide-react"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
 
 export default function MissionCard({
   mission,
@@ -34,7 +34,7 @@ export default function MissionCard({
     startTransition(async () => {
       const result = await changeIsReadMissionAction({
         missionId: mission.id,
-        userId: mission.userId,
+        assignedUserId: mission.userId,
         agencyId: mission.agencyId,
         isRead: true,
       })
@@ -50,7 +50,7 @@ export default function MissionCard({
     startTransition(async () => {
       const result = await changeIsReadMissionAction({
         missionId: mission.id,
-        userId: mission.userId,
+        assignedUserId: mission.userId,
         agencyId: mission.agencyId,
         isRead: false,
       })

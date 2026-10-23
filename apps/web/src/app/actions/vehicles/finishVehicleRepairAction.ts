@@ -1,10 +1,10 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function finishVehicleRepairAction({
   userId,
@@ -17,43 +17,38 @@ export async function finishVehicleRepairAction({
   repairId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.agencyId !== agencyId ||
-    (currentUser.userId !== userId &&
-      currentUser.userRole !== UserRolesEnum.OWNER)
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const repair = await vehicleServices.endVehicleRepair({ repairId, vehicleId })
-  if (!repair) return
+  const endedRepair = await vehicleServices.endVehicleRepair({
+    repairId,
+    vehicleId,
+  })
+  if (!endedRepair) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE_REPAIR,
-    entityId: repair.id,
+    entityId: endedRepair.id,
     isFeed: true,
     textKey: "VehicleRepairEnded",
     textObject: {
-      endDate: repair.actualEndDate,
+      endDate: endedRepair.actualEndDate,
       userName: currentUser.name,
-      vehicleNumber: repair.vehicle.vehicleNumber,
+      vehicleNumber: endedRepair.vehicle.vehicleNumber,
     },
-    link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
+    link: `/dashboard/vehicles/${endedRepair.vehicleId}/repairs`,
   })
 
   // Remove previous vehicleRepair missions
   await missionServices.removePreviousMissionsByEntityId({
     agencyId: agencyId,
-    entityId: repair.id,
+    entityId: endedRepair.id,
   })
 
-  return repair
+  return endedRepair
 }

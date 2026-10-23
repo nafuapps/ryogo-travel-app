@@ -3,13 +3,13 @@
 import { AddOwnerEmailTemplate } from "@/components/email/addOwnerEmailTemplate"
 import sendEmail from "@/components/email/sendEmail"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
 import { generateUserPhotoPathName } from "@/lib/utils"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 import { getTranslations } from "next-intl/server"
 import { headers } from "next/headers"
@@ -21,19 +21,8 @@ export async function addOwnerAction({
   data: AddUserRequestType
   agencyName: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    !currentUser.isAdmin ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowOwner(data.agencyId)
+  if (!currentUser || !currentUser.isAdmin) return
 
   const addedOwner = await userServices.addOwnerUser({
     data,

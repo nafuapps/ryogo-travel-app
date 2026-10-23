@@ -1,51 +1,40 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { supportServices } from "@ryogo-travel-app/api/services/support.services"
-import { EntityTypeEnum, TicketStatusEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 
 export async function deleteSupportTicketAction({
   ticketId,
   userId,
   agencyId,
-  status,
 }: {
   ticketId: string
   userId: string
   agencyId: string
-  status: TicketStatusEnum
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId ||
-    status !== TicketStatusEnum.OPEN
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUser({
+    agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const ticket = await supportServices.removeTicket(ticketId)
-
-  if (!ticket) return
+  const removedTicket = await supportServices.removeTicket(ticketId)
+  if (!removedTicket) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.SUPPORT,
-    entityId: ticket.id,
+    entityId: removedTicket.id,
     textKey: "TicketRemoved",
     textObject: {
-      ticketId: ticket.id,
+      ticketId: removedTicket.id,
       userName: currentUser.name,
     },
-    link: `/dashboard/support/tickets/${ticket.id}`,
+    link: `/dashboard/support/tickets/${removedTicket.id}`,
   })
 
-  return ticket
+  return removedTicket
 }

@@ -1,6 +1,4 @@
-//bookings/id/confirm page (for lead booking)
-
-import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
+import { autoCancelBookingAction } from "@/app/actions/bookings/autoCancelBookingAction"
 import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
 import DashboardHeader from "@/components/header/dashboardHeader"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
@@ -43,10 +41,9 @@ export default async function ConfirmBookingPage({
   if (
     differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
   ) {
-    await cancelBookingAction({
+    await autoCancelBookingAction({
       bookingId: booking.id,
       agencyId: booking.agencyId,
-      assignedUserId: booking.assignedUserId,
     })
   }
 

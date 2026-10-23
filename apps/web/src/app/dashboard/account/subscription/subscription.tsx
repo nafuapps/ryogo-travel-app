@@ -83,10 +83,7 @@ export default async function SubscriptionPageComponent({
         (agencyDetails.hasTriedSubscription ? (
           <BuySubscriptionComponent userDetails={userDetails} />
         ) : (
-          <TryPremiumComponent
-            agencyId={agencyDetails.id}
-            userId={userDetails.id}
-          />
+          <TryPremiumComponent agencyId={agencyDetails.id} />
         ))}
       <PremiumAdvantageSection />
     </PageWrapper>

@@ -1,71 +1,58 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
+import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
+import { ModifyVehicleRepairRequestType } from "@ryogo-travel-app/api/types/vehicleRepair.types"
 import {
   EntityTypeEnum,
-  UserRolesEnum,
   VehicleRepairStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { ModifyVehicleRepairRequestType } from "@ryogo-travel-app/api/types/vehicleRepair.types"
-import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 
 export async function modifyVehicleRepairAction(
   data: ModifyVehicleRepairRequestType,
 ) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    ![UserRolesEnum.OWNER, UserRolesEnum.AGENT].includes(
-      currentUser.userRole,
-    ) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowDashboardUser(data.agencyId)
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const repair = await vehicleServices.modifyVehicleRepair(data)
-  if (!repair) return
+  const modifiedRepair = await vehicleServices.modifyVehicleRepair(data)
+  if (!modifiedRepair) return
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.VEHICLE,
-    entityId: repair.vehicleId,
+    entityId: modifiedRepair.vehicleId,
     isFeed: true,
     textKey: "VehicleRepairModified",
     textObject: {
-      vehicleNumber: repair.vehicleNumber,
+      vehicleNumber: modifiedRepair.vehicleNumber,
       userName: currentUser.name,
     },
-    link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
+    link: `/dashboard/vehicles/${modifiedRepair.vehicleId}/repairs`,
   })
 
-  if (repair.status === VehicleRepairStatusEnum.PENDING) {
+  if (modifiedRepair.status === VehicleRepairStatusEnum.PENDING) {
     //Replace previous newRepair mission
     await missionServices.addMission({
       agencyId: data.agencyId,
       userId: currentUser.userId,
       entityType: EntityTypeEnum.VEHICLE_REPAIR,
-      entityId: repair.id,
+      entityId: modifiedRepair.id,
       titleKey: "VehicleRepairAdded.Title",
       titleObject: {
-        vehicleNumber: repair.vehicleNumber,
+        vehicleNumber: modifiedRepair.vehicleNumber,
       },
       messageKey: "VehicleRepairAdded.Message",
       messageObject: {
-        startDate: repair.startDate,
-        endDate: repair.endDate,
+        startDate: modifiedRepair.startDate,
+        endDate: modifiedRepair.endDate,
       },
-      dueDate: repair.startDate,
-      link: `/dashboard/vehicles/${repair.vehicleId}/repairs`,
+      dueDate: modifiedRepair.startDate,
+      link: `/dashboard/vehicles/${modifiedRepair.vehicleId}/repairs`,
     })
   }
 
-  return repair
+  return modifiedRepair
 }

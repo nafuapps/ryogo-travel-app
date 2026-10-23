@@ -1,8 +1,7 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 
 export async function deleteVehicleRepairAction({
   repairId,
@@ -13,22 +12,16 @@ export async function deleteVehicleRepairAction({
   userId: string
   agencyId: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.agencyId !== agencyId ||
-    (currentUser.userId !== userId &&
-      currentUser.userRole !== UserRolesEnum.OWNER)
-  ) {
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId,
+    assignedUserId: userId,
+  })
+  if (!currentUser) {
     return
   }
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const removedRepair = await vehicleServices.removeVehicleRepair(repairId)
+  if (!removedRepair) return
 
-  const repair = await vehicleServices.removeVehicleRepair(repairId)
-  if (!repair) return
-
-  return repair
+  return removedRepair
 }

@@ -1,19 +1,16 @@
 "use client"
 
+import { modifyAgencyAction } from "@/app/actions/agencies/modifyAgencyAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import {
   RyogoCombobox,
   RyogoInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
-import { useTranslations } from "next-intl"
-import { useForm, useWatch } from "react-hook-form"
-import z from "zod"
-import stateCityData from "@/lib/states_cities.json"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
-import { modifyAgencyAction } from "@/app/actions/agencies/modifyAgencyAction"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -21,27 +18,28 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoH3 } from "@/components/typography"
+import stateCityData from "@/lib/states_cities.json"
 import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import {
-  MIN_NAME_LENGTH,
+  MAX_COMMISSION_RATE,
+  MAX_FIELD_DESC_LENGTH,
   MAX_NAME_LENGTH,
   MIN_COMMISSION_RATE,
-  MAX_COMMISSION_RATE,
   MIN_FIELD_DESC_LENGTH,
-  MAX_FIELD_DESC_LENGTH,
+  MIN_NAME_LENGTH,
 } from "@/lib/uiConfig"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { RyogoH3 } from "@/components/typography"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm, useWatch } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function ModifyAgencyPageForm({
   agency,
-  userId,
 }: {
   agency: NonNullable<FindAgencyByIdType>
-  userId: string
 }) {
   const t = useTranslations("Dashboard.ModifyAgency")
   const router = useRouter()
@@ -80,7 +78,6 @@ export default function ModifyAgencyPageForm({
   //Submit actions
   async function onSubmit(values: SchemaType) {
     const updatedAgency = await modifyAgencyAction({
-      userId,
       agencyId: agency.id,
       businessName: values.agencyName,
       businessAddress: values.agencyAddress,

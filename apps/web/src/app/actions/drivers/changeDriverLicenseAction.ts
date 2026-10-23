@@ -1,29 +1,21 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { generateLicensePhotoPathName } from "@/lib/utils"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { ChangeDriverLicenseRequestType } from "@ryogo-travel-app/api/types/driver.types"
-import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { uploadFile } from "@ryogo-travel-app/db/storage"
 
 export async function changeDriverLicenseAction(
   data: ChangeDriverLicenseRequestType,
 ) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (UserRolesEnum.OWNER !== currentUser.userRole &&
-      data.addedByUserId !== currentUser.userId) ||
-    currentUser.agencyId !== data.agencyId
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId: data.agencyId,
+    assignedUserId: data.addedByUserId,
+  })
+  if (!currentUser) return
 
   let licensePhotoUrl
 
@@ -37,25 +29,25 @@ export async function changeDriverLicenseAction(
     licensePhotoUrl = uploadedFile.path
   }
 
-  const driver = await driverServices.changeDriverLicense({
+  const changedDriver = await driverServices.changeDriverLicense({
     ...data,
     licensePhotoUrl,
   })
-  if (!driver) return
+  if (!changedDriver) return
 
   await notificationServices.addNotification({
     agencyId: data.agencyId,
     userId: currentUser.userId,
     entityType: EntityTypeEnum.DRIVER,
-    entityId: driver.id,
+    entityId: changedDriver.id,
     isFeed: true,
     textKey: "DriverLicenseModified",
     textObject: {
-      driverName: driver.name,
+      driverName: changedDriver.name,
       userName: currentUser.name,
     },
-    link: `/dashboard/drivers/${driver.id}`,
+    link: `/dashboard/drivers/${changedDriver.id}`,
   })
 
-  return driver
+  return changedDriver
 }

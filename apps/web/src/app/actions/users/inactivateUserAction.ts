@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
@@ -15,21 +15,11 @@ export async function inactivateUserAction({
   agencyId: string
   role: UserRolesEnum
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userRole !== UserRolesEnum.OWNER ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowOwner(agencyId)
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const user = await userServices.inactivateUser({ userId, role })
-  if (!user) return
+  const inactivatedUser = await userServices.inactivateUser({ userId, role })
+  if (!inactivatedUser) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
@@ -38,7 +28,7 @@ export async function inactivateUserAction({
     entityId: userId,
     textKey: "UserInactivated",
     textObject: {
-      userName: user.name,
+      userName: inactivatedUser.name,
       adminName: currentUser.name,
     },
     link: `/dashboard/users/${userId}`,
@@ -47,14 +37,14 @@ export async function inactivateUserAction({
   await missionServices.removePreviousMissionsByEntityTitleKey({
     agencyId,
     entityType: EntityTypeEnum.USER,
-    entityId: user.id,
+    entityId: inactivatedUser.id,
     titleKey: "UserActivated.Title",
   })
   await missionServices.addMission({
     agencyId: agencyId,
-    userId: user.id,
+    userId: inactivatedUser.id,
     entityType: EntityTypeEnum.USER,
-    entityId: user.id,
+    entityId: inactivatedUser.id,
     titleKey: "UserInactivated.Title",
     titleObject: {
       userName: currentUser.name,
@@ -65,5 +55,5 @@ export async function inactivateUserAction({
       role === UserRolesEnum.DRIVER ? `/rider/myProfile` : `/dashboard/account`,
   })
 
-  return user
+  return inactivatedUser
 }

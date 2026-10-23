@@ -1,4 +1,4 @@
-import { cancelBookingAction } from "@/app/actions/bookings/cancelBookingAction"
+import { autoCancelBookingAction } from "@/app/actions/bookings/autoCancelBookingAction"
 import { readPermissions } from "@/lib/permissions"
 import { BookingIdRegex } from "@/lib/regex"
 import { OLD_LEAD_AUTO_CANCEL_DAYS } from "@/lib/uiConfig"
@@ -33,10 +33,9 @@ export default async function BookingIdLayout({
     booking.status === BookingStatusEnum.LEAD &&
     differenceInDays(new Date(), booking.startDate) > OLD_LEAD_AUTO_CANCEL_DAYS
   ) {
-    await cancelBookingAction({
+    await autoCancelBookingAction({
       bookingId: booking.id,
       agencyId: booking.agencyId,
-      assignedUserId: booking.assignedUserId,
     })
   }
 

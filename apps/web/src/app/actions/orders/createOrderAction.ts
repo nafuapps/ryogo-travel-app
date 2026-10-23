@@ -1,10 +1,10 @@
 "use server"
 
-import Razorpay from "razorpay"
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
-import { OrderTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { orderServices } from "@ryogo-travel-app/api/services/order.services"
+import { writePermissions } from "@/lib/permissions"
 import { getSubscriptionPlanPrice } from "@/lib/utils"
+import { orderServices } from "@ryogo-travel-app/api/services/order.services"
+import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
+import Razorpay from "razorpay"
 
 const razorpay = new Razorpay({
   key_id:
@@ -26,19 +26,8 @@ export async function createOrderAction({
   userId: string
   orderType: OrderTypeEnum
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    currentUser.userId !== userId ||
-    currentUser.agencyId !== agencyId ||
-    currentUser.userRole !== UserRolesEnum.OWNER
-  ) {
-    return
-  }
-
-  if (!(await verifyCurrentUser())) {
-    return
-  }
+  const currentUser = await writePermissions.allowOwner(agencyId)
+  if (!currentUser) return
 
   const amountInRs = getSubscriptionPlanPrice(orderType)
 

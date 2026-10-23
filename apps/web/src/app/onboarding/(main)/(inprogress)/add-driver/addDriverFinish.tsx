@@ -1,24 +1,24 @@
 "use client"
 
-import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
-import { useTranslations } from "next-intl"
-import Link from "next/link"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { Check, MessageSquareShare } from "lucide-react"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
-import { useRouter } from "next/navigation"
-import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { useForm } from "react-hook-form"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { Check, MessageSquareShare } from "lucide-react"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
 
 export function AddDriverFinish({
   finalData,
@@ -33,7 +33,7 @@ export function AddDriverFinish({
 
   const submit = async () => {
     //Activate user and take to dashboard
-    await onboardingCompleteAction()
+    await onboardingCompleteAction(finalData.agencyId)
     router.replace("/dashboard/home?feedback=true")
   }
 

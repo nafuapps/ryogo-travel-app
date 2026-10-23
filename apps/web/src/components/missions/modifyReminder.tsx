@@ -1,6 +1,12 @@
 "use client"
 
-import { FindMissionByIdType } from "@ryogo-travel-app/api/services/mission.services"
+import { modifyReminderAction } from "@/app/actions/missions/modifyReminderAction"
+import DeleteReminderAlertButton from "@/components/buttons/alert/deleteReminderAlertButton"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import {
   RyogoDatePicker,
   RyogoInput,
@@ -8,12 +14,11 @@ import {
   RyogoTextarea,
   RyogoTimePicker,
 } from "@/components/form/ryogoFormFields"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import { toast } from "sonner"
+import {
+  extractTimeFromDate,
+  getDateTime,
+  getEntityType,
+} from "@/components/missions/missionCommons"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -21,27 +26,22 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { RyogoH3 } from "@/components/typography"
-import { modifyReminderAction } from "@/app/actions/missions/modifyReminderAction"
 import {
-  getDateTime,
-  extractTimeFromDate,
-  getEntityType,
-} from "@/components/missions/missionCommons"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import {
-  MIN_FIELD_TITLE_LENGTH,
-  MAX_FIELD_TITLE_LENGTH,
-  MAX_FIELD_DESC_LENGTH,
   MAX_ENTITY_ID_LENGTH,
+  MAX_FIELD_DESC_LENGTH,
+  MAX_FIELD_TITLE_LENGTH,
   MIN_ENTITY_ID_LENGTH,
+  MIN_FIELD_TITLE_LENGTH,
 } from "@/lib/uiConfig"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import DeleteReminderAlertButton from "@/components/buttons/alert/deleteReminderAlertButton"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindMissionByIdType } from "@ryogo-travel-app/api/services/mission.services"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function ModifyReminderPageComponent({
   mission,
@@ -182,7 +182,7 @@ export default function ModifyReminderPageComponent({
           />
           <DeleteReminderAlertButton
             missionId={mission.id}
-            userId={mission.userId}
+            assignedUserId={mission.userId}
             agencyId={mission.agencyId}
             disabled={form.formState.isSubmitting}
             isRider

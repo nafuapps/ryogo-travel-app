@@ -1,6 +1,6 @@
 "use server"
 
-import { getCurrentUser, verifyCurrentUser } from "@/lib/auth"
+import { writePermissions } from "@/lib/permissions"
 import { updateUserNameInWebSession } from "@/lib/session"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
@@ -19,23 +19,14 @@ export async function changeUserNameAction({
   userRole: UserRolesEnum
   addedByUserId?: string
 }) {
-  const currentUser = await getCurrentUser()
-  if (
-    !currentUser ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== userId &&
-      currentUser.userId !== addedByUserId) ||
-    currentUser.agencyId !== agencyId
-  ) {
-    return
-  }
+  const currentUser = await writePermissions.allowAssignedUserOrOwner({
+    agencyId,
+    assignedUserId: addedByUserId ?? userId,
+  })
+  if (!currentUser) return
 
-  if (!(await verifyCurrentUser())) {
-    return
-  }
-
-  const user = await userServices.changeName({ userId, name, userRole })
-  if (!user) return
+  const changedUser = await userServices.changeName({ userId, name, userRole })
+  if (!changedUser) return
 
   await notificationServices.addNotification({
     agencyId: agencyId,
@@ -54,5 +45,5 @@ export async function changeUserNameAction({
     await updateUserNameInWebSession(name)
   }
 
-  return user
+  return changedUser
 }

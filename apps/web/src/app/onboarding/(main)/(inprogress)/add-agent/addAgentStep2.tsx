@@ -1,12 +1,7 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import { RyogoCaption, RyogoP } from "@/components/typography"
-import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
 import { addAgentAction } from "@/app/actions/users/addAgentAction"
+import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -20,7 +15,12 @@ import {
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
+import { RyogoCaption, RyogoP } from "@/components/typography"
+import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 export function AddAgentConfirm({
   onNext,
@@ -49,7 +49,7 @@ export function AddAgentConfirm({
     })
     if (addAgent) {
       onNext()
-      await onboardingCompleteAction()
+      await onboardingCompleteAction(finalData.agencyId)
     } else {
       //Take to dashboard page and show error
       toast.error(t("APIError"))

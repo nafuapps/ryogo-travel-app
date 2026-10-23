@@ -1,13 +1,12 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { FindDriverLeaveByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import z from "zod"
 import { modifyDriverLeaveAction } from "@/app/actions/drivers/modifyDriverLeaveAction"
+import DeleteDriverLeaveAlertButton from "@/components/buttons/alert/deleteDriverLeaveAlertButton"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import {
   RyogoDatePicker,
   RyogoTextarea,
@@ -19,14 +18,15 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { RyogoH3 } from "@/components/typography"
-import DeleteDriverLeaveAlertButton from "@/components/buttons/alert/deleteDriverLeaveAlertButton"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindDriverLeaveByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { DriverLeaveStatusEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function ModifyDriverLeavePageComponent({
   leave,
@@ -73,6 +73,7 @@ export default function ModifyDriverLeavePageComponent({
         leaveId: leave.id,
         agencyId: leave.agencyId,
         driverId: leave.driverId,
+        addedByUserId: leave.addedByUserId,
         startDate: values.startDate,
         endDate: values.endDate,
         remarks: values.remarks,

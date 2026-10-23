@@ -1,37 +1,39 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
-import { useTransition } from "react"
-import { toast } from "sonner"
+import { checkVerificationCodeAction } from "@/app/actions/users/checkVerificationCodeAction"
 import { resendVerificationCodeAction } from "@/app/actions/users/resendVerificationCodeAction"
-import {
-  CODE_LENGTH,
-  SUPPORT_EMAIL,
-  VERIFY_CODE_TIMEOUT_MINUTES,
-} from "@/lib/uiConfig"
-import Link from "next/link"
 import {
   RyogoDefaultButton,
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { checkVerificationCodeAction } from "@/app/actions/users/checkVerificationCodeAction"
 import { useRefreshPage } from "@/hooks/useRefreshPage"
+import {
+  CODE_LENGTH,
+  SUPPORT_EMAIL,
+  VERIFY_CODE_TIMEOUT_MINUTES,
+} from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { useTransition } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export function VerifyAccountStep1({
   onNext,
   userId,
+  agencyId,
   codeSentAt,
 }: {
   onNext: () => void
   userId: string
+  agencyId: string
   codeSentAt: Date | null
 }) {
   const t = useTranslations("Onboarding.VerifyAccountPage.Step1")
@@ -81,7 +83,7 @@ export function VerifyAccountStep1({
       formData.setValue("userEnteredcode", "")
     }, 1000) //Clear the field after 1s
     startTransition(async () => {
-      if (await resendVerificationCodeAction()) {
+      if (await resendVerificationCodeAction(agencyId)) {
         toast.success(t("ResendSuccess"))
       } else {
         toast.error(t("ResendError"))

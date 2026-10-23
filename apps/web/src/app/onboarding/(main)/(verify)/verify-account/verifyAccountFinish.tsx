@@ -1,25 +1,25 @@
-import { RyogoH4, RyogoSmall, RyogoCaption } from "@/components/typography"
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
 import { verifyOwnerAccountAction } from "@/app/actions/users/verifyOwnerAccountAction"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { useForm } from "react-hook-form"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { RyogoCaption, RyogoH4, RyogoSmall } from "@/components/typography"
 import { Check } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
 
-export function VerifyAccountFinish() {
+export function VerifyAccountFinish({ agencyId }: { agencyId: string }) {
   const t = useTranslations("Onboarding.VerifyAccountPage.Finish")
   const router = useRouter()
   const form = useForm()
 
   const onSubmit = async () => {
     //Verify user in cookies and take to vehicle onboarding
-    await verifyOwnerAccountAction()
+    await verifyOwnerAccountAction(agencyId)
     router.push("/onboarding/add-vehicle")
   }
 

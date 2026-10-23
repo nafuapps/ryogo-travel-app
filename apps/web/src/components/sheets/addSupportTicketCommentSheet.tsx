@@ -1,6 +1,12 @@
 "use client"
 
+import { addUserCommentInSupportTicketAction } from "@/app/actions/support/addUserCommentInSupportTicketAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { RyogoTextarea } from "@/components/form/ryogoFormFields"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import {
   Sheet,
   SheetContent,
@@ -9,32 +15,23 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { useState } from "react"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
-import { useForm } from "react-hook-form"
+import { MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import z from "zod"
-import { addUserCommentInSupportTicketAction } from "@/app/actions/support/addUserCommentInSupportTicketAction"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
-import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
 
 export default function AddSupportTicketCommentSheet({
   ticketId,
   userId,
   agencyId,
-  status,
 }: {
   ticketId: string
   userId: string
   agencyId: string
-  status: TicketStatusEnum
 }) {
   const t = useTranslations("Components.Sheets.AddSupportTicketComment")
   const router = useRouter()
@@ -55,7 +52,6 @@ export default function AddSupportTicketCommentSheet({
       ticketId,
       userId,
       agencyId,
-      status,
       comment: data.comment,
     })
     if (addedComment) {

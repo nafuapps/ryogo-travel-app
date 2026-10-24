@@ -1,11 +1,14 @@
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { UserRolePill } from "@/components/pills/ryogoPills"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { ChevronRight, IdCard, User, UserKey } from "lucide-react"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import { UserRolePill } from "@/components/pills/ryogoPills"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { ChevronRight, IdCard, User, UserKey } from "lucide-react"
 
 export default function AuthAccountCard({
   user,
@@ -29,7 +32,7 @@ export default function AuthAccountCard({
         <RyogoImage
           src={getFileUrl(user.photoUrl)}
           alt={user.name}
-          imageSize="sm"
+          imageSize="md"
         />
       ) : (
         <RyogoEnclosedIcon
@@ -40,16 +43,16 @@ export default function AuthAccountCard({
                 ? IdCard
                 : User
           }
-          size="md"
+          size="lg"
         />
       )}
       <SectionColWrapper small className="grow">
         <RyogoSmall weight="font-bold">{user.name}</RyogoSmall>
         <RyogoCaption color="light">{user.agency.businessName}</RyogoCaption>
-      </SectionColWrapper>
-      <SectionColWrapper small className="items-end">
-        <UserRolePill role={user.userRole} />
-        {isLink && <RyogoIcon icon={ChevronRight} size="xs" color="light" />}
+        <SectionRowWrapper className="items-center justify-between">
+          <UserRolePill role={user.userRole} />
+          {isLink && <RyogoIcon icon={ChevronRight} size="xs" color="light" />}
+        </SectionRowWrapper>
       </SectionColWrapper>
     </div>
   )

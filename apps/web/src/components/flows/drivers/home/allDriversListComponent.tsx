@@ -32,7 +32,7 @@ export default async function AllDriversListComponent({
   const t = await getTranslations("Dashboard.Drivers.All")
 
   return (
-    <SectionWrapper id="AllDriversSection">
+    <>
       <SectionHeaderWrapper
         icon={Rows3}
         label={t("Title")}
@@ -49,7 +49,7 @@ export default async function AllDriversListComponent({
           />
         )}
       </TileGridWrapper>
-    </SectionWrapper>
+    </>
   )
 }
 
@@ -62,7 +62,10 @@ async function DriverItemComponent({
 
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
-      <SectionColWrapper className="h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md">
+      <SectionWrapper
+        id={driver.id}
+        className="transition hover:bg-slate-100 dark:hover:bg-slate-700"
+      >
         <SectionRowWrapper className="items-center justify-between">
           {driver.user.photoUrl ? (
             <RyogoImage
@@ -81,7 +84,7 @@ async function DriverItemComponent({
             <DriverStatusPill status={driver.status} className="self-start" />
           </SectionColWrapper>
         </SectionRowWrapper>
-        <SectionRowWrapper className="p-2 lg:p-3 border rounded-md items-center justify-between">
+        <SectionRowWrapper className="items-center justify-between">
           <RyogoTagWithoutBG
             label={t("AllowancePerDay", {
               allowance: driver.defaultAllowancePerDay,
@@ -96,7 +99,7 @@ async function DriverItemComponent({
           )}
           <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
         </SectionRowWrapper>
-      </SectionColWrapper>
+      </SectionWrapper>
     </Link>
   )
 }

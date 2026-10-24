@@ -11,7 +11,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoTagWithoutBG } from "@/components/tags/ryogoTag"
-import { RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import { getAverageRating } from "@/lib/utils"
 import { BASIC_PLAN_VEHICLE_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import { FindVehiclesByAgencyType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -39,7 +39,7 @@ export default async function AllVehiclesListComponent({
   const t = await getTranslations("Dashboard.Vehicles.All")
 
   return (
-    <SectionWrapper id="AllVehiclesSection">
+    <>
       <SectionHeaderWrapper
         icon={Rows3}
         label={t("Title")}
@@ -56,7 +56,7 @@ export default async function AllVehiclesListComponent({
           />
         )}
       </TileGridWrapper>
-    </SectionWrapper>
+    </>
   )
 }
 
@@ -69,7 +69,10 @@ async function VehicleItemComponent({
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
-      <SectionColWrapper className="h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md">
+      <SectionWrapper
+        id={vehicle.id}
+        className="transition hover:bg-slate-100 dark:hover:bg-slate-700"
+      >
         <SectionRowWrapper className="items-center justify-between">
           {vehicle.vehiclePhotoUrl ? (
             <RyogoImage
@@ -81,7 +84,7 @@ async function VehicleItemComponent({
             <GetVehicleEnclosedIcon vehicleType={vehicle.type} size="lg" />
           )}
           <SectionColWrapper className="w-full">
-            <RyogoP weight="font-bold"> {vehicle.vehicleNumber}</RyogoP>
+            <RyogoSmall weight="font-bold"> {vehicle.vehicleNumber}</RyogoSmall>
             <SectionRowWrapper className="items-center">
               <RyogoCaption color="light" weight="font-medium">
                 {vehicle.brand + " " + vehicle.model}
@@ -91,7 +94,7 @@ async function VehicleItemComponent({
             <VehicleStatusPill status={vehicle.status} className="self-start" />
           </SectionColWrapper>
         </SectionRowWrapper>
-        <SectionRowWrapper className="p-2 lg:p-3 border rounded-md items-center justify-between">
+        <SectionRowWrapper className="items-center justify-between">
           <RyogoTagWithoutBG
             label={t("RatePerKm", { rate: vehicle.defaultRatePerKm })}
             icon={BadgeIndianRupee}
@@ -114,7 +117,7 @@ async function VehicleItemComponent({
             />
           )}
         </SectionRowWrapper>
-      </SectionColWrapper>
+      </SectionWrapper>
     </Link>
   )
 }

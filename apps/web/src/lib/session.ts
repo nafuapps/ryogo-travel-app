@@ -29,7 +29,6 @@ export type SessionPayloadType = {
   agencyId: string
   userRole: UserRolesEnum
   name: string
-  phone: string
   isAdmin: boolean
   isVerified: boolean
   isSubscribed: boolean
@@ -143,7 +142,6 @@ export async function createWebSession({
     hasTriedSubscription: userData.agency.hasTriedSubscription,
     userRole: userData.userRole,
     name: userData.name,
-    phone: userData.phone,
     status: userData.status,
     locatedAt: userData.locatedAt,
     updatedAt: new Date(),
@@ -211,7 +209,6 @@ export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
     isVerified: user.isVerified,
     userRole: user.userRole,
     name: user.name,
-    phone: user.phone,
     status: user.status,
     locatedAt: user.locatedAt,
     updatedAt: user.lastSeen ?? new Date(), //Updated now
@@ -234,18 +231,12 @@ export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
     status: newStatus,
   })
 
-  // Update New expiry in DB
-  const newExpiresAt = await updateSessionExpiryInDB({
-    sessionId: payload.sessionId,
-    userId: payload.userId,
-  })
-
   // Update session in cookie
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
     secure: true,
-    expires: newExpiresAt,
+    expires: new Date(payload.expiresAt),
     sameSite: "lax",
   })
 }
@@ -270,7 +261,7 @@ export async function updateUserVerificationInWebSession(isVerified: boolean) {
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
     secure: true,
-    expires: payload.expiresAt,
+    expires: new Date(payload.expiresAt),
     sameSite: "lax",
   })
 }
@@ -295,7 +286,7 @@ export async function updateUserAdminInWebSession(isAdmin: boolean) {
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
     secure: true,
-    expires: payload.expiresAt,
+    expires: new Date(payload.expiresAt),
     sameSite: "lax",
   })
 }
@@ -317,7 +308,7 @@ export async function updateUserNameInWebSession(name: string) {
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
     secure: true,
-    expires: payload.expiresAt,
+    expires: new Date(payload.expiresAt),
     sameSite: "lax",
   })
 }
@@ -339,7 +330,7 @@ export async function updateUserLocatedAtInWebSession(locatedAt: Date) {
   cookieStore.set(SESSION_COOKIE_NAME, newSession, {
     httpOnly: true,
     secure: true,
-    expires: payload.expiresAt,
+    expires: new Date(payload.expiresAt),
     sameSite: "lax",
   })
 }
@@ -370,17 +361,17 @@ export async function deleteWebSession() {
   return user
 }
 
-async function updateSessionExpiryInDB({
-  sessionId,
-  userId,
-}: {
-  sessionId: string
-  userId: string
-}) {
-  const expiresAt = createNewExpiryDate()
-  await userServices.changeUserSessionExpiry({ sessionId, expiresAt, userId })
-  return expiresAt
-}
+// async function updateSessionExpiryInDB({
+//   sessionId,
+//   userId,
+// }: {
+//   sessionId: string
+//   userId: string
+// }) {
+//   const expiresAt = createNewExpiryDate()
+//   await userServices.changeUserSessionExpiry({ sessionId, expiresAt, userId })
+//   return expiresAt
+// }
 
 //Expiry date is X days from now
 function createNewExpiryDate() {

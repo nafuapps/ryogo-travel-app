@@ -4,10 +4,10 @@
       "Step1": {
         "SignupTitle": "Don't have a RyoGo account?",
         "SignupCTA": "Sign up for free",
-        "PageTitle": "Log in",
-        "Subtitle": "Access your account with your phone number",
+        "PageTitle": "Log in to RyoGo",
+        "Subtitle": "Access your account with phone number",
         "Input": {
-          "Title": "Enter phone number",
+          "Title": "Enter your phone number",
           "Loading": "Authenticating.. please wait"
         },
         "Error1": "Phone number must be 10 digits",
@@ -17,8 +17,8 @@
         "BotError": "Bot/Fraud activity detected."
       },
       "Step2": {
-        "PageTitle": "Welcome, back!",
-        "Info": "Select your login account",
+        "PageTitle": "Welcome back!",
+        "Info": "Select your account to login",
         "SecondaryCTA": "Back"
       },
       "Step3": {
@@ -737,6 +737,7 @@
   },
   "Dashboard": {
     "Sidebar": {
+      "New": "New Booking",
       "Home": "Home",
       "Bookings": "Bookings",
       "Vehicles": "Vehicles",
@@ -791,6 +792,7 @@
         "/dashboard/customers/[id]/completed": "Customer Completed Bookings",
         "/dashboard/customers/[id]/modify": "Modify Customer",
         "/dashboard/drivers": "Drivers",
+        "/dashboard/drivers/schedule": "Drivers Schedule",
         "/dashboard/drivers/new": "New Driver",
         "/dashboard/drivers/[id]": "Driver Details",
         "/dashboard/drivers/[id]/assigned": "Driver Assigned Bookings",
@@ -831,6 +833,7 @@
         "/dashboard/users/[id]/completed": "User Completed Bookings",
         "/dashboard/users/[id]/activity": "User Activity",
         "/dashboard/vehicles": "Vehicles",
+        "/dashboard/vehicles/schedule": "Vehicles Schedule",
         "/dashboard/vehicles/new": "New Vehicle",
         "/dashboard/vehicles/[id]": "Vehicle Details",
         "/dashboard/vehicles/[id]/assigned": "Vehicle Assigned Bookings",
@@ -1630,6 +1633,10 @@
       "Error": "Cannot assign user.. Try again later!",
       "SelectWarning": "Select a user to assign!"
     },
+    "AllVehiclesHeaderTabs": {
+      "Home": "Vehicles",
+      "Schedule": "Schedule"
+    },
     "Vehicles": {
       "All": {
         "Title": "ALL VEHICLES",
@@ -1641,7 +1648,6 @@
         "TryCTA": "Try Premium",
         "BuyCTA": "Buy Premium"
       },
-      "OngoingTrips": "ONGOING TRIPS",
       "Schedule": "VEHICLE SCHEDULE"
     },
     "NewVehicle": {
@@ -2085,6 +2091,10 @@
       "Back": "Back",
       "Success": "Vehicle repair edited successfully!",
       "Error": "Cannot edit repair.. please try again later."
+    },
+    "AllDriversHeaderTabs": {
+      "Home": "Drivers",
+      "Schedule": "Schedule"
     },
     "Drivers": {
       "All": {

@@ -81,7 +81,7 @@ function BookingCardWrapper({
   const t = useTranslations("Components.BookingCards")
   return (
     <SectionColWrapper
-      className={`rounded-sm overflow-hidden bg-white dark:bg-slate-800 border ${className ?? ""}`}
+      className={`rounded-sm bg-white dark:bg-slate-800 border ${className ?? ""}`}
     >
       {children}
       <div className="px-3 lg:px-4 pb-2 lg:pb-3">
@@ -115,7 +115,7 @@ function BookingCardHeaderWrapper({
   children: React.ReactNode
 }) {
   return (
-    <SectionRowWrapper className="items-center justify-between p-3 lg:p-4 bg-slate-100 dark:bg-slate-700">
+    <SectionRowWrapper className="items-center justify-between p-3 lg:p-4 border-b">
       <RyogoCaption color="light" weight="font-bold">
         {bookingId}
       </RyogoCaption>

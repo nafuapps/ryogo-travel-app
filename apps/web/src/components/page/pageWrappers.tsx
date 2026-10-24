@@ -174,7 +174,7 @@ export function AuthPageWrapper({
 }) {
   return (
     <div
-      className={`flex flex-col justify-center md:max-w-lg lg:max-w-xl m-auto w-full rounded-lg shadow-lg bg-white dark:bg-slate-800 p-6 md:p-8 gap-5 lg:gap-6 ${className ?? ""}`}
+      className={`flex flex-col justify-center sm:max-w-lg lg:max-w-xl m-auto w-full rounded-lg shadow-lg bg-white dark:bg-slate-800 p-6 md:p-8 gap-5 lg:gap-6 ${className ?? ""}`}
     >
       {children}
     </div>

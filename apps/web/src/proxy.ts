@@ -2,14 +2,14 @@ import {
   SESSION_COOKIE_NAME,
   SESSION_COOKIE_REFRESH_INTERVAL_MINUTES,
 } from "@ryogo-travel-app/api/apiConfig"
+import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
+import { differenceInMinutes } from "date-fns"
 import { NextRequest, NextResponse } from "next/server"
 import {
   decrypt,
-  SessionPayloadType,
   refreshWebSessionFromDB,
+  SessionPayloadType,
 } from "./lib/session"
-import { differenceInMinutes } from "date-fns"
-import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
 
 export default async function proxy(request: NextRequest) {
   const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME)
@@ -26,7 +26,7 @@ export default async function proxy(request: NextRequest) {
     return response
   }
 
-  //Update session cookie every X minutes
+  //Refresh session cookie every X minutes
   if (
     differenceInMinutes(new Date(), payload.updatedAt) >=
     SESSION_COOKIE_REFRESH_INTERVAL_MINUTES

@@ -2,6 +2,7 @@
 
 import { sendSupportQueryAction } from "@/app/actions/support/sendSupportQueryAction"
 import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import {
   RyogoInput,
   RyogoOTPInput,
@@ -27,7 +28,6 @@ import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
-import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 
 export default function QueryForm() {
   const t = useTranslations("Landing.Resources.Support.QueryForm")
@@ -67,7 +67,7 @@ export default function QueryForm() {
     },
   })
 
-  async function onSubmit(data: FormData) {
+  async function onSubmit(values: FormData) {
     //Check if the honeypot field is filled (indicating bot activity)
     if (honeypotRef.current && honeypotRef.current.value !== "") {
       toast.error(t("BotError"))
@@ -78,7 +78,7 @@ export default function QueryForm() {
       toast.error(t("BotError"))
       return
     }
-    const query = await sendSupportQueryAction(data)
+    const query = await sendSupportQueryAction(values)
     if (query) {
       setMessageSent(true)
       toast.success(t("Success"))

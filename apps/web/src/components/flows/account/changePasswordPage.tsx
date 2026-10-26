@@ -1,13 +1,12 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
-import z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { changeMyPasswordAction } from "@/app/actions/users/changeMyPasswordAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -15,13 +14,14 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 import { RyogoH3 } from "@/components/typography"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function ChangePasswordPageComponent({
   userId,
@@ -70,12 +70,12 @@ export default function ChangePasswordPageComponent({
   })
 
   //Submit actions
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     const result = await changeMyPasswordAction({
       userId,
       agencyId,
-      oldPassword: data.oldPassword,
-      newPassword: data.newPassword,
+      oldPassword: values.oldPassword,
+      newPassword: values.newPassword,
     })
     if (result) {
       //If success, redirect

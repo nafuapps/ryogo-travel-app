@@ -1,30 +1,30 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import {
-  RyogoDatePicker,
-  RyogoFileInput,
-} from "@/components/form/ryogoFormFields"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { AddVehicleTotalSteps } from "@/lib/uiConfig"
+import FormStepHeader from "@/components/form/formStepHeader"
 import {
-  PageWrapper,
-  StickyActionWrapper,
+  RyogoDatePicker,
+  RyogoFileInput,
+} from "@/components/form/ryogoFormFields"
+import {
   FormContentWrapper,
   FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import FormStepHeader from "@/components/form/formStepHeader"
-import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
+import { AddVehicleTotalSteps } from "@/lib/uiConfig"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function NewVehicleStep3({
   onNext,
@@ -80,13 +80,16 @@ export function NewVehicleStep3({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step3Type) => {
+  const onSubmit = async (values: Step3Type) => {
     setNewVehicleFormData({
       ...newVehicleFormData,
-      insuranceExpiresOn: data.insuranceExpiresOn,
-      insurancePhotos: await compressImage(data.insurancePhotos),
-      pucExpiresOn: data.pucExpiresOn,
-      pucPhotos: await compressImage(data.pucPhotos),
+      insuranceExpiresOn: values.insuranceExpiresOn,
+      insurancePhotos:
+        (await compressImage(values.insurancePhotos)) ??
+        newVehicleFormData.insurancePhotos,
+      pucExpiresOn: values.pucExpiresOn,
+      pucPhotos:
+        (await compressImage(values.pucPhotos)) ?? newVehicleFormData.pucPhotos,
     })
     onNext()
   }

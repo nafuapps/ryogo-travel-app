@@ -1,5 +1,21 @@
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
+import { Calendar } from "@/components/ui/calendar"
 import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox"
 import {
   FormControl,
   FormDescription,
@@ -9,7 +25,18 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Calendar } from "@/components/ui/calendar"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
+import { Label } from "@/components/ui/label"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Select,
   SelectContent,
@@ -17,43 +44,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
+import { getLangDisplay } from "@/lib/utils"
+import { UserLangEnum } from "@ryogo-travel-app/db/schema"
+import { format } from "date-fns"
+import { REGEXP_ONLY_DIGITS } from "input-otp"
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover"
-import { CalendarIcon, Star, ThumbsDown, ThumbsUp } from "lucide-react"
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
+  CalendarIcon,
+  Star,
+  ThumbsDown,
+  ThumbsUp,
+  UploadCloud,
+  X,
+} from "lucide-react"
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import {
   UseFormRegisterReturn,
   useFormContext,
   useWatch,
 } from "react-hook-form"
-import { getLangDisplay } from "@/lib/utils"
-import { format } from "date-fns"
-import { Switch } from "@/components/ui/switch"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
-import {
-  Combobox,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxList,
-} from "@/components/ui/combobox"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp"
-import { REGEXP_ONLY_DIGITS } from "input-otp"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { UserLangEnum } from "@ryogo-travel-app/db/schema"
-import { SectionRowWrapper } from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
 
 export function RyogoInput({
   name,
@@ -173,7 +189,9 @@ export function RyogoFileInput({
   register: UseFormRegisterReturn<string>
   existingFile?: File
 }) {
-  const { control } = useFormContext()
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const { control, resetField } = useFormContext()
   const fieldValue = useWatch({ control, name })
   const selectedFile =
     typeof FileList !== "undefined" && fieldValue instanceof FileList
@@ -208,7 +226,25 @@ export function RyogoFileInput({
               </RyogoCaption>
             </FormLabel>
             <FormControl>
-              <Input {...register} type="file" placeholder={placeholder} />
+              <SectionColWrapper>
+                <Input
+                  {...register}
+                  ref={(element) => {
+                    register.ref(element)
+                    inputRef.current = element
+                  }}
+                  type="file"
+                  placeholder={placeholder}
+                  className="hidden"
+                />
+                <RyogoOutlineButton
+                  type="button"
+                  onClick={() => inputRef.current?.click()}
+                  label={placeholder}
+                >
+                  <RyogoIcon icon={UploadCloud} size="xs" />
+                </RyogoOutlineButton>
+              </SectionColWrapper>
             </FormControl>
             {description && (
               <FormDescription>
@@ -216,10 +252,27 @@ export function RyogoFileInput({
               </FormDescription>
             )}
             <FormMessage />
+            {previewFile && (
+              <SectionRowWrapper small className="items-center shrink-0">
+                {previewUrl && (
+                  <RyogoImage src={previewUrl} alt={label} imageSize="sm" />
+                )}
+                <RyogoCaption color="light" className="w-full">
+                  {previewFile.name +
+                    " (" +
+                    (previewFile.size / 1000).toFixed(0) +
+                    "kb)"}
+                </RyogoCaption>
+                <RyogoIcon
+                  icon={X}
+                  size="sm"
+                  color="light"
+                  onClick={() => resetField(name)}
+                  thick
+                />
+              </SectionRowWrapper>
+            )}
           </FormItem>
-          {previewUrl && (
-            <RyogoImage src={previewUrl} alt={label} imageSize="md" />
-          )}
         </SectionRowWrapper>
       )}
     />

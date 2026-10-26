@@ -51,14 +51,14 @@ export default function LoginPasswordPageComponent({
   })
 
   //Submit actions
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     if (checkBotActivity()) {
       toast.error(t("BotError"))
       return
     }
     const loginResponse = await loginAction({
       userId: user.id,
-      password: data.password,
+      password: values.password,
     })
     if (loginResponse.error || !loginResponse.data) {
       setFormSuccess(false)

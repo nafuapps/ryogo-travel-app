@@ -1,30 +1,30 @@
 "use client"
 
+import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import {
+  MAX_NAME_LENGTH,
+  MAX_VEHICLE_NUMBER_LENGTH,
+  MIN_NAME_LENGTH,
+  MIN_VEHICLE_NUMBER_LENGTH,
+} from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import {
+  VehicleBrandEnum,
+  VehicleColorEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
-import { RyogoInput, RyogoSelect } from "@/components/form/ryogoFormFields"
-import { useTranslations } from "next-intl"
-import {
-  VehicleTypesEnum,
-  VehicleBrandEnum,
-  VehicleColorEnum,
-} from "@ryogo-travel-app/db/schema"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import QuickAddVehicleAlertButton from "@/components/buttons/alert/quickAddVehicleAlertButton"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import {
-  MAX_NAME_LENGTH,
-  MIN_NAME_LENGTH,
-  MAX_VEHICLE_NUMBER_LENGTH,
-  MIN_VEHICLE_NUMBER_LENGTH,
-} from "@/lib/uiConfig"
-import {
-  FormWrapper,
-  FormContentWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
 
 export function AddVehicleStep1({
   onNext,
@@ -64,14 +64,14 @@ export function AddVehicleStep1({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step1Type) => {
+  const onSubmit = async (values: Step1Type) => {
     updateFinalData({
       ...finalData,
-      vehicleNumber: data.vehicleNumber,
-      type: data.type,
-      brand: data.brand,
-      color: data.color,
-      model: data.model,
+      vehicleNumber: values.vehicleNumber,
+      type: values.type,
+      brand: values.brand,
+      color: values.color,
+      model: values.model,
     })
     onNext()
   }

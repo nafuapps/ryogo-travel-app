@@ -47,12 +47,12 @@ export default function AddSupportTicketCommentSheet({
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     const addedComment = await addUserCommentInSupportTicketAction({
       ticketId,
       userId,
       agencyId,
-      comment: data.comment,
+      comment: values.comment,
     })
     if (addedComment) {
       setOpen(false)

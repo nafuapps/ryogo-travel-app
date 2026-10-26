@@ -1,21 +1,23 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import FormStepHeader from "@/components/form/formStepHeader"
 import {
   RyogoDatePicker,
   RyogoFileInput,
   RyogoInput,
 } from "@/components/form/ryogoFormFields"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { FileRegex } from "@/lib/regex"
 import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
 import {
   AddVehicleTotalSteps,
   MAX_ODOMETER_LIMIT,
@@ -23,15 +25,13 @@ import {
   MIN_ODOMETER_LIMIT,
   MIN_VEHICLE_CAPCITY,
 } from "@/lib/uiConfig"
-import {
-  PageWrapper,
-  StickyActionWrapper,
-  FormContentWrapper,
-  FormWrapper,
-} from "@/components/page/pageWrappers"
-import FormStepHeader from "@/components/form/formStepHeader"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function NewVehicleStep2({
   onNext,
@@ -102,8 +102,11 @@ export function NewVehicleStep2({
       ...newVehicleFormData,
       capacity: values.capacity,
       odometerReading: values.odometerReading,
-      rcPhotos: await compressImage(values.rcPhotos),
-      vehiclePhotos: await compressImage(values.vehiclePhotos),
+      rcPhotos:
+        (await compressImage(values.rcPhotos)) ?? newVehicleFormData.rcPhotos,
+      vehiclePhotos:
+        (await compressImage(values.vehiclePhotos)) ??
+        newVehicleFormData.vehiclePhotos,
       rcExpiresOn: values.rcExpiresOn,
     })
     onNext()

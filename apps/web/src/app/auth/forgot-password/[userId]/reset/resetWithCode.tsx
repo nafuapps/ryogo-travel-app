@@ -104,15 +104,15 @@ export default function ResetWithCodePageComponent({
   }
 
   //Submit actions
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     if (checkBotActivity()) {
       toast.error(t("BotError"))
       return
     }
     const updatedUser = await resetMyPasswordAction({
       userId: user.id,
-      newPassword: data.password,
-      code: data.code,
+      newPassword: values.password,
+      code: values.code,
     })
     if (updatedUser) {
       setFormSuccess(true)

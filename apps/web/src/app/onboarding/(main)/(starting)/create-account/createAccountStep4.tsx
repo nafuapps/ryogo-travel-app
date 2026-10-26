@@ -64,12 +64,12 @@ export function CreateAccountStep4({
   })
 
   //Submit actions
-  const onSubmit = (data: Step4Type) => {
+  const onSubmit = (values: Step4Type) => {
     updateFinalData({
       ...finalData,
       owner: {
         ...finalData.owner,
-        password: data.password,
+        password: values.password,
       },
     })
     onNext()

@@ -57,8 +57,8 @@ export default function ChangeTicketPhotoSheet({
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = async (data: SchemaType) => {
-    const compressedImage = await compressImage(data.photo)
+  const onSubmit = async (values: SchemaType) => {
+    const compressedImage = await compressImage(values.photo)
     if (!compressedImage) {
       toast.error(t("Error1"))
       return

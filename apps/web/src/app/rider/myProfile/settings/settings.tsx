@@ -1,25 +1,25 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { RyogoSelect, RyogoSwitch } from "@/components/form/ryogoFormFields"
-import { UserLangEnum } from "@ryogo-travel-app/db/schema"
-import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import { toast } from "sonner"
 import { changeUserPreferencesAction } from "@/app/actions/users/changeUserPreferencesAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { RyogoSelect, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
   FormWrapper,
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
+import { UserLangEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function MyProfileSettingsPageComponent({
   userDetails,
@@ -43,12 +43,12 @@ export default function MyProfileSettingsPageComponent({
     },
   })
   //Submit actions
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     const updatedUser = await changeUserPreferencesAction({
       userId: userDetails.id,
       agencyId: userDetails.agencyId,
-      prefersDarkTheme: data.dark,
-      languagePref: data.lang,
+      prefersDarkTheme: values.dark,
+      languagePref: values.lang,
     })
     if (updatedUser) {
       toast.success(t("Success"))

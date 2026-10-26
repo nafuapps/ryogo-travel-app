@@ -1,35 +1,35 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import FormStepHeader from "@/components/form/formStepHeader"
 import {
   RyogoInput,
   RyogoMultipleCheckbox,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import {
-  MIN_PER_DAY_CHARGE,
-  MAX_PER_DAY_CHARGE,
-  MAX_FIELD_DESC_LENGTH,
-  MIN_FIELD_DESC_LENGTH,
-  AddDriverTotalSteps,
-} from "@/lib/uiConfig"
-import {
-  PageWrapper,
-  StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import FormStepHeader from "@/components/form/formStepHeader"
+import {
+  AddDriverTotalSteps,
+  MAX_FIELD_DESC_LENGTH,
+  MAX_PER_DAY_CHARGE,
+  MIN_FIELD_DESC_LENGTH,
+  MIN_PER_DAY_CHARGE,
+} from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function NewDriverStep3({
   onNext,
@@ -69,12 +69,12 @@ export function NewDriverStep3({
   })
 
   //Submit actions
-  const onSubmit = (data: Step3Type) => {
+  const onSubmit = (values: Step3Type) => {
     setNewDriverFormData({
       ...newDriverFormData,
-      address: data.driverAddress,
-      canDriveVehicleTypes: data.canDriveVehicleTypes,
-      defaultAllowancePerDay: data.defaultAllowancePerDay,
+      address: values.driverAddress,
+      canDriveVehicleTypes: values.canDriveVehicleTypes,
+      defaultAllowancePerDay: values.defaultAllowancePerDay,
     })
     onNext()
   }

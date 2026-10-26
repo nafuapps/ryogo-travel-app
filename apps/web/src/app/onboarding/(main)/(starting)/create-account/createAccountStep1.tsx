@@ -1,27 +1,27 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
-import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { useBotDetection } from "@/hooks/useBotDetection"
-import { toast } from "sonner"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { useBotDetection } from "@/hooks/useBotDetection"
 import {
   MAX_EMAIL_LENGTH,
   MAX_NAME_LENGTH,
   MIN_NAME_LENGTH,
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
-import {
-  FormWrapper,
-  FormContentWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export function CreateAccountStep1({
   onNext,
@@ -63,14 +63,14 @@ export function CreateAccountStep1({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step1Type) => {
+  const onSubmit = async (values: Step1Type) => {
     if (checkBotActivity()) {
       toast.error(t("BotError"))
       return
     }
     if (
       allOwners.some(
-        (o) => o.email === data.ownerEmail && o.phone === data.ownerPhone,
+        (o) => o.email === values.ownerEmail && o.phone === values.ownerPhone,
       )
     ) {
       formData.setError("ownerPhone", {
@@ -81,13 +81,13 @@ export function CreateAccountStep1({
       updateFinalData({
         agency: {
           ...finalData.agency,
-          businessName: data.agencyName,
+          businessName: values.agencyName,
         },
         owner: {
           ...finalData.owner,
-          name: data.ownerName,
-          phone: data.ownerPhone,
-          email: data.ownerEmail,
+          name: values.ownerName,
+          phone: values.ownerPhone,
+          email: values.ownerEmail,
         },
       })
       onNext()

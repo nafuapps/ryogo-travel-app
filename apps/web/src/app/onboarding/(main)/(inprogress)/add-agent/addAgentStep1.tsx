@@ -1,32 +1,32 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
   RyogoFileInput,
   RyogoInput,
   RyogoOTPInput,
 } from "@/components/form/ryogoFormFields"
-import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import compressImage from "@/lib/imageCompression"
 import { FileRegex } from "@/lib/regex"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
   MAX_EMAIL_LENGTH,
   MAX_NAME_LENGTH,
   MIN_NAME_LENGTH,
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
-import {
-  FormContentWrapper,
-  FormWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function AddAgentStep1({
   onNext,
@@ -70,10 +70,10 @@ export function AddAgentStep1({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step1Type) => {
+  const onSubmit = async (values: Step1Type) => {
     if (
       allAgents.some(
-        (a) => a.email === data.agentEmail && a.phone === data.agentPhone,
+        (a) => a.email === values.agentEmail && a.phone === values.agentPhone,
       )
     ) {
       //If agent with same phone and email exists in system already, show error
@@ -85,10 +85,10 @@ export function AddAgentStep1({
       //If no errors, move ahead
       updateFinalData({
         ...finalData,
-        name: data.agentName,
-        phone: data.agentPhone,
-        email: data.agentEmail,
-        photos: await compressImage(data.agentPhotos),
+        name: values.agentName,
+        phone: values.agentPhone,
+        email: values.agentEmail,
+        photos: (await compressImage(values.agentPhotos)) ?? finalData.photos,
       })
       onNext()
     }

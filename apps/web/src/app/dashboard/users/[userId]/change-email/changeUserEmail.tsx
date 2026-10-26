@@ -1,6 +1,21 @@
 "use client"
 
+import { changeUserEmailAction } from "@/app/actions/users/changeUserEmailAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoH3 } from "@/components/typography"
+import { MAX_EMAIL_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   FindUserAccountsByPhoneRoleType,
@@ -11,21 +26,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { changeUserEmailAction } from "@/app/actions/users/changeUserEmailAction"
-import {
-  FormContentWrapper,
-  FormWrapper,
-  PageWrapper,
-  SectionRowWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { MAX_EMAIL_LENGTH } from "@/lib/uiConfig"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { RyogoH3 } from "@/components/typography"
 
 export default function ChangeUserEmailPageComponent({
   user,
@@ -51,16 +51,16 @@ export default function ChangeUserEmailPageComponent({
     },
   })
 
-  async function onSubmit(data: ModifyUserType) {
+  async function onSubmit(values: ModifyUserType) {
     //Check if same email has been entered
-    if (data.newEmail === user.email) {
+    if (values.newEmail === user.email) {
       form.setError("newEmail", {
         type: "manual",
         message: t("Field1.Error3"),
       })
     } else if (
       //check if another user has this email
-      allUsers.some((u) => u.email === data.newEmail)
+      allUsers.some((u) => u.email === values.newEmail)
     ) {
       form.setError("newEmail", {
         type: "manual",
@@ -70,7 +70,7 @@ export default function ChangeUserEmailPageComponent({
       const modifiedUser = await changeUserEmailAction({
         userId: user.id,
         agencyId: user.agencyId,
-        email: data.newEmail,
+        email: values.newEmail,
       })
       if (modifiedUser) {
         router.replace(`/dashboard/users/${user.id}`)

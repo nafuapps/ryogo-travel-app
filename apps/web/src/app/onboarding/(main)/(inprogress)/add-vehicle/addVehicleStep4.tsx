@@ -1,26 +1,26 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm, useWatch } from "react-hook-form"
-import z from "zod"
-import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import {
-  MAX_PER_DAY_CHARGE,
-  MAX_VEHICLE_RATE,
-  MIN_VEHICLE_RATE,
-} from "@/lib/uiConfig"
+import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import {
+  MAX_PER_DAY_CHARGE,
+  MAX_VEHICLE_RATE,
+  MIN_VEHICLE_RATE,
+} from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm, useWatch } from "react-hook-form"
+import z from "zod"
 
 export function AddVehicleStep4({
   onNext,
@@ -67,12 +67,12 @@ export function AddVehicleStep4({
   })
 
   //Submit actions
-  const onSubmit = (data: Step4Type) => {
+  const onSubmit = (values: Step4Type) => {
     updateFinalData({
       ...finalData,
-      defaultRatePerKm: data.defaultRatePerKm,
-      hasAC: data.hasAC,
-      defaultAcChargePerDay: data.defaultAcChargePerDay,
+      defaultRatePerKm: values.defaultRatePerKm,
+      hasAC: values.hasAC,
+      defaultAcChargePerDay: values.defaultAcChargePerDay,
     })
     onNext()
   }

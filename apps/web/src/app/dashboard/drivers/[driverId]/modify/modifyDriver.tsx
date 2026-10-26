@@ -2,9 +2,14 @@
 
 import { modifyDriverAction } from "@/app/actions/drivers/modifyDriverAction"
 import {
-  RyogoTextarea,
-  RyogoMultipleCheckbox,
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
   RyogoInput,
+  RyogoMultipleCheckbox,
+  RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
@@ -13,6 +18,13 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoH3 } from "@/components/typography"
+import {
+  MAX_FIELD_DESC_LENGTH,
+  MAX_PER_DAY_CHARGE,
+  MIN_FIELD_DESC_LENGTH,
+  MIN_PER_DAY_CHARGE,
+} from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
@@ -21,18 +33,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import {
-  MAX_FIELD_DESC_LENGTH,
-  MIN_FIELD_DESC_LENGTH,
-  MAX_PER_DAY_CHARGE,
-  MIN_PER_DAY_CHARGE,
-} from "@/lib/uiConfig"
-import { RyogoH3 } from "@/components/typography"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default function ModifyDriverPageComponent({
   driver,
@@ -70,15 +70,15 @@ export default function ModifyDriverPageComponent({
   })
 
   //Submit actions
-  async function onSubmit(data: ModifyDriverType) {
+  async function onSubmit(values: ModifyDriverType) {
     const updatedDriver = await modifyDriverAction({
       data: {
         id: driver.id,
         agencyId: driver.agencyId,
         addedByUserId: driver.addedByUserId,
-        address: data.address,
-        canDriveVehicleTypes: data.canDriveVehicleTypes,
-        defaultAllowancePerDay: data.defaultAllowancePerDay,
+        address: values.address,
+        canDriveVehicleTypes: values.canDriveVehicleTypes,
+        defaultAllowancePerDay: values.defaultAllowancePerDay,
       },
     })
     if (updatedDriver) {

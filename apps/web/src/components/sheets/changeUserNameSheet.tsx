@@ -1,6 +1,13 @@
 "use client"
 
+import { changeUserNameAction } from "@/app/actions/users/changeUserNameAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import {
   Sheet,
   SheetContent,
@@ -9,23 +16,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Type } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import z from "zod"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { changeUserNameAction } from "@/app/actions/users/changeUserNameAction"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import { Type } from "lucide-react"
-import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "@/lib/uiConfig"
-import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
+import z from "zod"
 
 export default function ChangeUserNameSheet({
   userId,
@@ -60,12 +60,12 @@ export default function ChangeUserNameSheet({
     },
   })
 
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     setOpen(false)
     const updatedUser = await changeUserNameAction({
       userId,
       agencyId,
-      name: data.name,
+      name: values.name,
       userRole,
       addedByUserId,
     })

@@ -1,5 +1,6 @@
 "use client"
 
+import { rateBookingByCustomerAction } from "@/app/actions/bookings/rateBookingByCustomerAction"
 import { resendBookingSecretCodeAction } from "@/app/actions/bookings/resendBookingSecretCodeAction"
 import {
   RyogoDefaultButton,
@@ -7,28 +8,31 @@ import {
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
-  RyogoRatingInput,
   RyogoOTPInput,
+  RyogoRatingInput,
 } from "@/components/form/ryogoFormFields"
 import {
-  FormWrapper,
   FormContentWrapper,
+  FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
-import { DialogHeader } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { useBotDetection } from "@/hooks/useBotDetection"
 import { useRefreshPage } from "@/hooks/useRefreshPage"
 import { CODE_LENGTH, TOTAL_RATING_STARS } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { useRouter } from "next/navigation"
-import { rateBookingByCustomerAction } from "@/app/actions/bookings/rateBookingByCustomerAction"
-import { useBotDetection } from "@/hooks/useBotDetection"
 
 export default function RateBookingByCustomerDialog({
   bookingId,
@@ -70,7 +74,7 @@ export default function RateBookingByCustomerDialog({
   })
 
   //Submit action
-  const onSubmit = async (data: RatingType) => {
+  const onSubmit = async (values: RatingType) => {
     if (checkBotActivity()) {
       toast.error(t("BotError"))
       return
@@ -90,7 +94,7 @@ export default function RateBookingByCustomerDialog({
         bookingId,
         driverId,
         vehicleId,
-        code: data.userEnteredcode,
+        code: values.userEnteredcode,
         bookingRatingByCustomer: bookingRating,
         driverRatingByCustomer: driverRating,
         vehicleRatingByCustomer: vehicleRating,

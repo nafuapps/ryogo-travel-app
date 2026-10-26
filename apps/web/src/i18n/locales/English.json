@@ -956,8 +956,8 @@
     },
     "NewBooking": {
       "Title": "Create Booking",
-      "Description": "Finding customer by phone number",
-      "Phone": "Enter customer phone number to search (atleast 3 digits)",
+      "Description": "Find customer by phone number",
+      "Phone": "Enter phone number to search (atleast 3 digits)",
       "Placeholder": "9876543210",
       "Error1": "Enter atleast 3 digits to search customer",
       "Error2": "Phone number cannot be longer than 10 digits",

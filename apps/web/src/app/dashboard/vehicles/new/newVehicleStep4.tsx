@@ -1,30 +1,30 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm, useWatch } from "react-hook-form"
-import z from "zod"
-import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import FormStepHeader from "@/components/form/formStepHeader"
+import { RyogoInput, RyogoSwitch } from "@/components/form/ryogoFormFields"
 import {
-  MIN_VEHICLE_RATE,
-  MAX_VEHICLE_RATE,
-  MAX_PER_DAY_CHARGE,
-  MIN_PER_DAY_CHARGE,
-  AddVehicleTotalSteps,
-} from "@/lib/uiConfig"
-import {
-  PageWrapper,
-  StickyActionWrapper,
   FormContentWrapper,
   FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import FormStepHeader from "@/components/form/formStepHeader"
+import {
+  AddVehicleTotalSteps,
+  MAX_PER_DAY_CHARGE,
+  MAX_VEHICLE_RATE,
+  MIN_PER_DAY_CHARGE,
+  MIN_VEHICLE_RATE,
+} from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm, useWatch } from "react-hook-form"
+import z from "zod"
 
 export function NewVehicleStep4({
   onNext,
@@ -71,12 +71,12 @@ export function NewVehicleStep4({
   })
 
   //Submit actions
-  const onSubmit = (data: Step4Type) => {
+  const onSubmit = (values: Step4Type) => {
     setNewVehicleFormData({
       ...newVehicleFormData,
-      defaultRatePerKm: data.defaultRatePerKm,
-      hasAC: data.hasAC,
-      defaultAcChargePerDay: data.defaultAcChargePerDay,
+      defaultRatePerKm: values.defaultRatePerKm,
+      hasAC: values.hasAC,
+      defaultAcChargePerDay: values.defaultAcChargePerDay,
     })
     onNext()
   }

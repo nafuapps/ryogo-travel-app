@@ -66,7 +66,7 @@ export default function NewFeedbackComponent({
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     if (isLiked === null && rating === 0) {
       form.setError("root", {
         type: "manual",
@@ -80,7 +80,7 @@ export default function NewFeedbackComponent({
     const result = await addFeedbackAction({
       rating: rating === 0 ? undefined : rating,
       liked: isLiked,
-      remarks: data.remarks,
+      remarks: values.remarks,
       entityId: entityId,
       feedbackType: feedbackType,
       userId: userId,

@@ -1,29 +1,29 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import {
   RyogoDatePicker,
   RyogoFileInput,
   RyogoInput,
 } from "@/components/form/ryogoFormFields"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { MAX_LICENSE_LENGTH, MIN_LICENSE_LENGTH } from "@/lib/uiConfig"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
+import { MAX_LICENSE_LENGTH, MIN_LICENSE_LENGTH } from "@/lib/uiConfig"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function AddDriverStep2({
   onNext,
@@ -69,12 +69,12 @@ export function AddDriverStep2({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step2Type) => {
+  const onSubmit = async (values: Step2Type) => {
     updateFinalData({
       ...finalData,
-      licenseNumber: data.licenseNumber,
-      licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: await compressImage(data.licensePhotos),
+      licenseNumber: values.licenseNumber,
+      licenseExpiresOn: values.licenseExpiresOn,
+      licensePhotos: await compressImage(values.licensePhotos),
     })
     onNext()
   }

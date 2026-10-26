@@ -1,21 +1,21 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import { newUserSetPasswordAction } from "@/app/actions/users/newUserSetPasswordAction"
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export function ChangePasswordStepComponent({
   userId,
@@ -50,11 +50,11 @@ export function ChangePasswordStepComponent({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step1Type) => {
+  const onSubmit = async (values: Step1Type) => {
     const result = await newUserSetPasswordAction({
       userId,
       agencyId,
-      newPassword: data.newPassword,
+      newPassword: values.newPassword,
     })
     if (result) {
       //If success, redirect

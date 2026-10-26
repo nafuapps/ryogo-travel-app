@@ -1,6 +1,21 @@
 "use client"
 
+import { changeUserPhoneAction } from "@/app/actions/users/changeUserPhoneAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoH3 } from "@/components/typography"
+import { PHONE_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   FindUserAccountsByPhoneRoleType,
@@ -11,21 +26,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { changeUserPhoneAction } from "@/app/actions/users/changeUserPhoneAction"
-import {
-  FormContentWrapper,
-  FormWrapper,
-  PageWrapper,
-  SectionRowWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { PHONE_LENGTH } from "@/lib/uiConfig"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { RyogoH3 } from "@/components/typography"
 
 export default function ChangeUserPhonePageComponent({
   user,
@@ -49,16 +49,16 @@ export default function ChangeUserPhonePageComponent({
     },
   })
 
-  async function onSubmit(data: ModifyUserType) {
+  async function onSubmit(values: ModifyUserType) {
     //Check if same phone number has been entered
-    if (data.newPhone === user.phone) {
+    if (values.newPhone === user.phone) {
       form.setError("newPhone", {
         type: "manual",
         message: t("Field1.Error2"),
       })
     } else if (
       //check if another user with same role has this phone number already
-      allUsers.some((u) => u.phone === data.newPhone)
+      allUsers.some((u) => u.phone === values.newPhone)
     ) {
       form.setError("newPhone", {
         type: "manual",
@@ -68,7 +68,7 @@ export default function ChangeUserPhonePageComponent({
       const modifiedUser = await changeUserPhoneAction({
         userId: user.id,
         agencyId: user.agencyId,
-        phone: data.newPhone,
+        phone: values.newPhone,
         role: user.userRole,
       })
       if (modifiedUser) {

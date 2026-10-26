@@ -593,8 +593,8 @@ export const vehicleTypes = pgEnum("vehicle_types", [
   VehicleTypesEnum.CAR,
   VehicleTypesEnum.BIKE,
   VehicleTypesEnum.BUS,
-  VehicleTypesEnum.OTHER,
   VehicleTypesEnum.TRUCK,
+  VehicleTypesEnum.OTHER,
 ])
 export enum VehicleStatusEnum {
   AVAILABLE = "Available",

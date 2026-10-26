@@ -1,21 +1,14 @@
 "use client"
 
-import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { useTranslations } from "next-intl"
-import { useForm, useWatch } from "react-hook-form"
-import z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { toast } from "sonner"
-import {
-  VehicleBrandEnum,
-  VehicleColorEnum,
-  VehicleTypesEnum,
-} from "@ryogo-travel-app/db/schema"
-import { useRouter } from "next/navigation"
 import { modifyVehicleAction } from "@/app/actions/vehicles/modifyVehicleAction"
 import {
-  RyogoSelect,
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
   RyogoInput,
+  RyogoSelect,
   RyogoSwitch,
 } from "@/components/form/ryogoFormFields"
 import {
@@ -25,10 +18,7 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoH3 } from "@/components/typography"
 import {
   MAX_NAME_LENGTH,
   MAX_ODOMETER_LIMIT,
@@ -41,8 +31,18 @@ import {
   MIN_VEHICLE_CAPCITY,
   MIN_VEHICLE_RATE,
 } from "@/lib/uiConfig"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { RyogoH3 } from "@/components/typography"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
+import {
+  VehicleBrandEnum,
+  VehicleColorEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm, useWatch } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function ModifyVehiclePageComponent({
   vehicle,
@@ -110,19 +110,19 @@ export default function ModifyVehiclePageComponent({
   })
 
   //Submit actions
-  async function onSubmit(data: ModifyVehicleType) {
+  async function onSubmit(values: ModifyVehicleType) {
     const modifiedVehicle = await modifyVehicleAction({
       vehicleId: vehicle.id,
       agencyId: vehicle.agencyId,
-      type: data.type,
-      brand: data.brand,
-      color: data.color,
-      model: data.model,
-      capacity: data.capacity,
-      odometerReading: data.odometerReading,
-      defaultRatePerKm: data.defaultRatePerKm,
-      hasAC: data.hasAC,
-      defaultAcChargePerDay: data.defaultAcChargePerDay,
+      type: values.type,
+      brand: values.brand,
+      color: values.color,
+      model: values.model,
+      capacity: values.capacity,
+      odometerReading: values.odometerReading,
+      defaultRatePerKm: values.defaultRatePerKm,
+      hasAC: values.hasAC,
+      defaultAcChargePerDay: values.defaultAcChargePerDay,
     })
     if (modifiedVehicle) {
       router.replace(`/dashboard/vehicles/${vehicle.id}`)

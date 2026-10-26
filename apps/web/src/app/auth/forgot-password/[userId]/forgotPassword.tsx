@@ -1,34 +1,34 @@
 //Confirm Email page
 "use client"
 
-import z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { useTranslations } from "next-intl"
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
-import { useState } from "react"
 import { forgotPasswordAction } from "@/app/actions/users/forgotPasswordAction"
-import { differenceInMinutes } from "date-fns"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
-import AuthAccountCard from "@/components/flows/auth/authAccountCard"
-import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { X, Info } from "lucide-react"
-import { useBotDetection } from "@/hooks/useBotDetection"
-import { MAX_EMAIL_LENGTH, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
 import {
   RyogoDefaultButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
+import AuthAccountCard from "@/components/flows/auth/authAccountCard"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   AuthPageWrapper,
   FormWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
-import Link from "next/link"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { useBotDetection } from "@/hooks/useBotDetection"
+import { MAX_EMAIL_LENGTH, VERIFY_CODE_TIMEOUT_MINUTES } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
+import { differenceInMinutes } from "date-fns"
+import { Info, X } from "lucide-react"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function ForgotPasswordPageComponent({
   user,
@@ -60,12 +60,12 @@ export default function ForgotPasswordPageComponent({
   })
 
   //Submit actions
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     if (checkBotActivity()) {
       toast.error(t("BotError"))
       return
     }
-    if (data.email.toLowerCase().trim() !== user.email.toLowerCase().trim()) {
+    if (values.email.toLowerCase().trim() !== user.email.toLowerCase().trim()) {
       setFormSuccess(false)
       form.setError("email", { type: "manual", message: t("APIError") })
       if (form.formState.submitCount > 1) {

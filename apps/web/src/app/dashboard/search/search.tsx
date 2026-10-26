@@ -216,8 +216,8 @@ export default function SearchPageComponent({
     }
   }
 
-  const onSubmit = async (data: SearchType) => {
-    handleSearch(data.searchTerm.toUpperCase())
+  const onSubmit = async (values: SearchType) => {
+    handleSearch(values.searchTerm.toUpperCase())
   }
 
   function handleSearch(searchTerm: string) {

@@ -1,26 +1,26 @@
 "use client"
 
-import z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { useTranslations } from "next-intl"
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
-import { useRouter } from "next/navigation"
-import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
-import { toast } from "sonner"
-import { useBotDetection } from "@/hooks/useBotDetection"
-import { PHONE_LENGTH } from "@/lib/uiConfig"
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
+import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
+  AuthPageWrapper,
   FormWrapper,
   SectionColWrapper,
-  AuthPageWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
-import Link from "next/link"
+import { useBotDetection } from "@/hooks/useBotDetection"
+import { PHONE_LENGTH } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Check } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function SignupPageComponent() {
   const t = useTranslations("Auth.SignupPage.Step1")
@@ -43,19 +43,19 @@ export default function SignupPageComponent() {
   })
 
   //Submit actions
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     if (checkBotActivity()) {
       toast.error(t("BotError"))
       form.setValue("phoneNumber", "")
       return
     }
-    const users = await findLoginUsersAction(data.phoneNumber)
+    const users = await findLoginUsersAction(values.phoneNumber)
     if (users.length > 0) {
       // If atleast 1 user found, go to existing accounts page
-      router.push(`/auth/signup/${data.phoneNumber}`)
+      router.push(`/auth/signup/${values.phoneNumber}`)
     } else {
       // else, go to onboarding page
-      router.push(`/onboarding?phone=${data.phoneNumber}`)
+      router.push(`/onboarding?phone=${values.phoneNumber}`)
     }
   }
 

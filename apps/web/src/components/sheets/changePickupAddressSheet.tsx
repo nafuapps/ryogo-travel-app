@@ -1,6 +1,12 @@
 "use client"
 
+import { changePickupAddressAction } from "@/app/actions/bookings/changePickupAddressAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { RyogoCheckbox, RyogoTextarea } from "@/components/form/ryogoFormFields"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import {
   Sheet,
   SheetContent,
@@ -9,20 +15,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { MAX_FIELD_DESC_LENGTH, MIN_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
-import z from "zod"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { changePickupAddressAction } from "@/app/actions/bookings/changePickupAddressAction"
-import { MIN_FIELD_DESC_LENGTH, MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
-import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
+import z from "zod"
 
 export default function ChangePickupAddressSheet({
   bookingId,
@@ -64,13 +64,13 @@ export default function ChangePickupAddressSheet({
     },
   })
 
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     setOpen(false)
     const updatedBooking = await changePickupAddressAction({
       bookingId,
       agencyId,
       assignedUserId: userId,
-      pickupAddress: data.pickupAddress,
+      pickupAddress: values.pickupAddress,
     })
     if (updatedBooking) {
       toast.success(t("Success"))

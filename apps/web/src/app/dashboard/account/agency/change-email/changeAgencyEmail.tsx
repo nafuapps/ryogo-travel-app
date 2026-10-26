@@ -52,9 +52,9 @@ export default function ChangeAgencyEmailPageComponent({
   })
 
   //Submit actions
-  async function onSubmit(data: ModifyAgencyType) {
+  async function onSubmit(values: ModifyAgencyType) {
     //Check if same emailhas been entered
-    if (data.newEmail === agency.businessEmail) {
+    if (values.newEmail === agency.businessEmail) {
       form.setError("newEmail", {
         type: "manual",
         message: t("Field1.Error3"),
@@ -63,7 +63,7 @@ export default function ChangeAgencyEmailPageComponent({
       //check if another agency has this email and phone
       allAgencies.some(
         (u) =>
-          u.businessEmail === data.newEmail &&
+          u.businessEmail === values.newEmail &&
           u.businessPhone === agency.businessPhone,
       )
     ) {
@@ -74,7 +74,7 @@ export default function ChangeAgencyEmailPageComponent({
     } else {
       const updatedAgency = await changeAgencyEmailAction({
         agencyId: agency.id,
-        businessEmail: data.newEmail,
+        businessEmail: values.newEmail,
       })
       if (updatedAgency) {
         router.replace("/dashboard/account/agency")

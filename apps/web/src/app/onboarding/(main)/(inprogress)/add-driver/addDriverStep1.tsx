@@ -1,33 +1,33 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
+import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
   RyogoFileInput,
   RyogoInput,
   RyogoOTPInput,
 } from "@/components/form/ryogoFormFields"
-import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import QuickAddDriverAlertButton from "@/components/buttons/alert/quickAddDriverAlertButton"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import compressImage from "@/lib/imageCompression"
 import { FileRegex } from "@/lib/regex"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
   MAX_EMAIL_LENGTH,
   MAX_NAME_LENGTH,
   MIN_NAME_LENGTH,
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
-import {
-  FormContentWrapper,
-  FormWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function AddDriverStep1({
   onNext,
@@ -89,13 +89,14 @@ export function AddDriverStep1({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step1Type) => {
+  const onSubmit = async (values: Step1Type) => {
     updateFinalData({
       ...finalData,
-      name: data.driverName,
-      phone: data.driverPhone,
-      email: data.driverEmail,
-      userPhotos: await compressImage(data.driverPhotos),
+      name: values.driverName,
+      phone: values.driverPhone,
+      email: values.driverEmail,
+      userPhotos:
+        (await compressImage(values.driverPhotos)) ?? finalData.userPhotos,
     })
     onNext()
   }

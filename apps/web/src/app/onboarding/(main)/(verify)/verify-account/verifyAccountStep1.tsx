@@ -57,10 +57,10 @@ export function VerifyAccountStep1({
   })
 
   //Submit action
-  const onSubmit = async (data: Step1Type) => {
+  const onSubmit = async (values: Step1Type) => {
     const result = await checkVerificationCodeAction({
       userId,
-      code: data.userEnteredcode,
+      code: values.userEnteredcode,
       loggedIn: true,
     })
     if (result) {

@@ -1,32 +1,32 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import {
-  RyogoInput,
-  RyogoMultipleCheckbox,
-  RyogoTextarea,
-} from "@/components/form/ryogoFormFields"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
-  MIN_PER_DAY_CHARGE,
-  MAX_PER_DAY_CHARGE,
-  MAX_FIELD_DESC_LENGTH,
-  MIN_FIELD_DESC_LENGTH,
-} from "@/lib/uiConfig"
+  RyogoInput,
+  RyogoMultipleCheckbox,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import {
+  MAX_FIELD_DESC_LENGTH,
+  MAX_PER_DAY_CHARGE,
+  MIN_FIELD_DESC_LENGTH,
+  MIN_PER_DAY_CHARGE,
+} from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function AddDriverStep3({
   onNext,
@@ -66,12 +66,12 @@ export function AddDriverStep3({
   })
 
   //Submit actions
-  const onSubmit = (data: Step3Type) => {
+  const onSubmit = (values: Step3Type) => {
     updateFinalData({
       ...finalData,
-      address: data.driverAddress,
-      canDriveVehicleTypes: data.canDriveVehicleTypes,
-      defaultAllowancePerDay: data.defaultAllowancePerDay,
+      address: values.driverAddress,
+      canDriveVehicleTypes: values.canDriveVehicleTypes,
+      defaultAllowancePerDay: values.defaultAllowancePerDay,
     })
     onNext()
   }

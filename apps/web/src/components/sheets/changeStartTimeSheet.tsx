@@ -1,6 +1,12 @@
 "use client"
 
+import { changeStartTimeAction } from "@/app/actions/bookings/changeStartTimeAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { RyogoTimePicker } from "@/components/form/ryogoFormFields"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import {
   Sheet,
   SheetContent,
@@ -11,17 +17,11 @@ import {
 } from "@/components/ui/sheet"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import z from "zod"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { changeStartTimeAction } from "@/app/actions/bookings/changeStartTimeAction"
-import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
+import z from "zod"
 
 export default function ChangeStartTimeSheet({
   bookingId,
@@ -57,13 +57,13 @@ export default function ChangeStartTimeSheet({
     },
   })
 
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     setOpen(false)
     const updatedBooking = await changeStartTimeAction({
       bookingId,
       agencyId,
       assignedUserId: userId,
-      startTime: data.startTime,
+      startTime: values.startTime,
     })
     if (updatedBooking) {
       toast.success(t("Success"))

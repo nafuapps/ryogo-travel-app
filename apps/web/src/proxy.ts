@@ -7,6 +7,7 @@ import { differenceInMinutes } from "date-fns"
 import { NextRequest, NextResponse } from "next/server"
 import {
   decrypt,
+  deleteWebSession,
   refreshWebSessionFromDB,
   SessionPayloadType,
 } from "./lib/session"
@@ -26,30 +27,30 @@ export default async function proxy(request: NextRequest) {
     return response
   }
 
+  //Check for session expiry or suspended user, logout if so
+  if (
+    payload.expiresAt < new Date() ||
+    payload.status === UserStatusEnum.SUSPENDED
+  ) {
+    await deleteWebSession()
+  }
+
   //Refresh session cookie every X minutes
   if (
     differenceInMinutes(new Date(), payload.updatedAt) >=
     SESSION_COOKIE_REFRESH_INTERVAL_MINUTES
   ) {
-    //Check for session expiry or suspended user
-    if (
-      payload.expiresAt < new Date() ||
-      payload.status === UserStatusEnum.SUSPENDED
-    ) {
-      response.cookies.delete(SESSION_COOKIE_NAME)
-    } else {
-      //Else, update last seen and get latest user data into session cookie
-      const newSessionCookie = await refreshWebSessionFromDB(payload)
-      if (!newSessionCookie) {
-        return response
-      }
-      response.cookies.set(SESSION_COOKIE_NAME, newSessionCookie, {
-        httpOnly: true,
-        secure: true,
-        expires: new Date(payload.expiresAt),
-        sameSite: "lax",
-      })
+    // update last seen and get latest user data into session cookie
+    const newSessionCookie = await refreshWebSessionFromDB(payload)
+    if (!newSessionCookie) {
+      return response
     }
+    response.cookies.set(SESSION_COOKIE_NAME, newSessionCookie, {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(payload.expiresAt),
+      sameSite: "lax",
+    })
   }
 
   return response

@@ -1,37 +1,37 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction, useEffect } from "react"
-import { useForm, useWatch } from "react-hook-form"
-import z from "zod"
-import {
-  RyogoInput,
-  RyogoCheckbox,
-  RyogoTextarea,
-  RyogoFileInput,
-  RyogoOTPInput,
-} from "@/components/form/ryogoFormFields"
-import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
-import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  RyogoCheckbox,
+  RyogoFileInput,
+  RyogoInput,
+  RyogoOTPInput,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
 import {
   MAX_EMAIL_LENGTH,
   MAX_FIELD_DESC_LENGTH,
   MIN_FIELD_DESC_LENGTH,
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
-import {
-  FormWrapper,
-  FormContentWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction, useEffect } from "react"
+import { useForm, useWatch } from "react-hook-form"
+import z from "zod"
 
 export function CreateAccountStep2({
   onNext,
@@ -109,12 +109,12 @@ export function CreateAccountStep2({
   }, [emailCopySelection])
 
   //Submit actions
-  const onSubmit = async (data: Step2Type) => {
+  const onSubmit = async (values: Step2Type) => {
     if (
       allAgencies.some(
         (a) =>
-          a.businessEmail === data.agencyEmail &&
-          a.businessPhone === data.agencyPhone,
+          a.businessEmail === values.agencyEmail &&
+          a.businessPhone === values.agencyPhone,
       )
     ) {
       formData.setError("agencyPhone", {
@@ -125,13 +125,14 @@ export function CreateAccountStep2({
       updateFinalData({
         agency: {
           ...finalData.agency,
-          businessPhone: data.agencyPhone,
-          businessEmail: data.agencyEmail,
-          businessAddress: data.agencyAddress,
+          businessPhone: values.agencyPhone,
+          businessEmail: values.agencyEmail,
+          businessAddress: values.agencyAddress,
         },
         owner: {
           ...finalData.owner,
-          photos: await compressImage(data.ownerPhoto),
+          photos:
+            (await compressImage(values.ownerPhoto)) ?? finalData.owner.photos,
         },
       })
       onNext()

@@ -1,35 +1,35 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import FormStepHeader from "@/components/form/formStepHeader"
 import {
   RyogoDatePicker,
   RyogoFileInput,
   RyogoInput,
 } from "@/components/form/ryogoFormFields"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { FileRegex } from "@/lib/regex"
 import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
 import {
   AddDriverTotalSteps,
   MAX_LICENSE_LENGTH,
   MIN_LICENSE_LENGTH,
 } from "@/lib/uiConfig"
-import {
-  PageWrapper,
-  StickyActionWrapper,
-  FormContentWrapper,
-  FormWrapper,
-} from "@/components/page/pageWrappers"
-import FormStepHeader from "@/components/form/formStepHeader"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function NewDriverStep2({
   onNext,
@@ -76,12 +76,14 @@ export function NewDriverStep2({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step2Type) => {
+  const onSubmit = async (values: Step2Type) => {
     setNewDriverFormData({
       ...newDriverFormData,
-      licenseNumber: data.licenseNumber,
-      licenseExpiresOn: data.licenseExpiresOn,
-      licensePhotos: await compressImage(data.licensePhotos),
+      licenseNumber: values.licenseNumber,
+      licenseExpiresOn: values.licenseExpiresOn,
+      licensePhotos:
+        (await compressImage(values.licensePhotos)) ??
+        newDriverFormData.licensePhotos,
     })
     onNext()
   }

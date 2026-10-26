@@ -1,6 +1,12 @@
 "use client"
 
+import { changeAgencyLogoAction } from "@/app/actions/agencies/changeAgencyLogoAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { RyogoFileInput } from "@/components/form/ryogoFormFields"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import {
   Sheet,
   SheetContent,
@@ -9,22 +15,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import z from "zod"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { changeAgencyLogoAction } from "@/app/actions/agencies/changeAgencyLogoAction"
-import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
-import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import z from "zod"
 
 export default function ChangeAgencyLogoSheet({
   agencyId,
@@ -55,8 +55,8 @@ export default function ChangeAgencyLogoSheet({
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = async (data: SchemaType) => {
-    const compressedImage = await compressImage(data.logo)
+  const onSubmit = async (values: SchemaType) => {
+    const compressedImage = await compressImage(values.logo)
     if (!compressedImage) {
       toast.error(t("Error1"))
       return

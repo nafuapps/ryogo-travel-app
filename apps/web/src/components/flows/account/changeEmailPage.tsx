@@ -1,14 +1,12 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
-import z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { changeMyEmailAction } from "@/app/actions/users/changeMyEmailAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -16,13 +14,15 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { MAX_EMAIL_LENGTH, MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
 import { RyogoH3 } from "@/components/typography"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { MAX_EMAIL_LENGTH, MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindUserAccountsByPhoneRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function ChangeEmailPageComponent({
   usersWithPhoneRole,
@@ -58,12 +58,12 @@ export default function ChangeEmailPageComponent({
   })
 
   //Submit actions
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     if (
       usersWithPhoneRole.some(
         (u) =>
           u.id === userId &&
-          u.email.toLowerCase() === data.newEmail.toLowerCase(),
+          u.email.toLowerCase() === values.newEmail.toLowerCase(),
       )
     ) {
       form.setError("newEmail", {
@@ -72,7 +72,7 @@ export default function ChangeEmailPageComponent({
       })
     } else if (
       usersWithPhoneRole.some(
-        (u) => u.email.toLowerCase() === data.newEmail.toLowerCase(),
+        (u) => u.email.toLowerCase() === values.newEmail.toLowerCase(),
       )
     ) {
       form.setError("newEmail", {
@@ -83,8 +83,8 @@ export default function ChangeEmailPageComponent({
       const result = await changeMyEmailAction({
         userId,
         agencyId,
-        password: data.password,
-        email: data.newEmail,
+        password: values.password,
+        email: values.newEmail,
       })
       if (result) {
         //If success, redirect

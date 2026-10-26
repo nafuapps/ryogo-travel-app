@@ -1,25 +1,25 @@
 "use client"
 
-import z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { useTranslations } from "next-intl"
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
-import { useRouter } from "next/navigation"
 import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
-import { toast } from "sonner"
-import { useBotDetection } from "@/hooks/useBotDetection"
-import { PHONE_LENGTH } from "@/lib/uiConfig"
 import {
+  AuthPageWrapper,
   FormWrapper,
   SectionColWrapper,
-  AuthPageWrapper,
 } from "@/components/page/pageWrappers"
-import { useState } from "react"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { useBotDetection } from "@/hooks/useBotDetection"
+import { PHONE_LENGTH } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 /*
 1. Find user by phone number
@@ -49,21 +49,21 @@ export default function LoginPageComponent() {
   })
 
   //Submit actions
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     if (checkBotActivity()) {
       toast.error(t("BotError"))
       form.setValue("phoneNumber", "")
       return
     }
 
-    const users = await findLoginUsersAction(data.phoneNumber)
+    const users = await findLoginUsersAction(values.phoneNumber)
     if (!users) {
       toast.error(t("ServerError")) // Show server error if API call fails
     } else {
       if (users.length > 0) {
         setFormSuccess(true)
         // If atleast 1 user found, go to accounts page
-        router.push(`/auth/login/${data.phoneNumber}`)
+        router.push(`/auth/login/${values.phoneNumber}`)
       } else {
         setFormSuccess(false)
         // Else, Show no user found error

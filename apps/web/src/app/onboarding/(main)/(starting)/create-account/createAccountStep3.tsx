@@ -1,30 +1,30 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm, useWatch } from "react-hook-form"
-import z from "zod"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import {
   RyogoCombobox,
   RyogoFileInput,
   RyogoInput,
 } from "@/components/form/ryogoFormFields"
-import stateCityData from "@/lib/states_cities.json"
-import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { MAX_COMMISSION_RATE, MIN_COMMISSION_RATE } from "@/lib/uiConfig"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
+import stateCityData from "@/lib/states_cities.json"
+import { MAX_COMMISSION_RATE, MIN_COMMISSION_RATE } from "@/lib/uiConfig"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm, useWatch } from "react-hook-form"
+import z from "zod"
 
 export function CreateAccountStep3({
   onNext,
@@ -86,15 +86,16 @@ export function CreateAccountStep3({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step3Type) => {
+  const onSubmit = async (values: Step3Type) => {
     updateFinalData({
       ...finalData,
       agency: {
         ...finalData.agency,
-        logo: await compressImage(data.agencyLogo),
-        commissionRate: data.commissionRate,
-        agencyState: data.agencyState,
-        agencyCity: data.agencyCity,
+        logo: (await compressImage(values.agencyLogo)) ?? finalData.agency.logo,
+        commissionRate: values.commissionRate,
+        agencyState: values.agencyState,
+        agencyCity: values.agencyCity,
+        qrCode: (await compressImage(values.qrCode)) ?? finalData.agency.qrCode,
       },
     })
     onNext()

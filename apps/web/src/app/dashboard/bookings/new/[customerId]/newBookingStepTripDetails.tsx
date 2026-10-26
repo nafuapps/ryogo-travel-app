@@ -24,6 +24,7 @@ import {
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoSmall, RyogoTiny } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
 import stateCityData from "@/lib/states_cities.json"
 import {
   MAX_FIELD_DESC_LENGTH,
@@ -231,7 +232,7 @@ export default function NewBookingStepTripDetails({
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormContentWrapper>
-          <TileGridWrapper>
+          <TileGridWrapper doubleMd>
             <SectionColWrapper>
               <RyogoCombobox
                 name="sourceState"
@@ -250,7 +251,7 @@ export default function NewBookingStepTripDetails({
                 placeholder={t("Field2.Placeholder")}
               />
             </SectionColWrapper>
-            {/* <Separator /> */}
+            <Separator className="md:hidden" />
             <SectionColWrapper>
               <RyogoCombobox
                 name="destinationState"
@@ -372,8 +373,8 @@ function TripTypeSelectionCard({
       onClick={onClick}
       className={`flex border rounded-lg flex-col p-3 lg:p-4 gap-2 lg:gap-3 w-full transition-all ${
         selected
-          ? "bg-slate-700 dark:bg-slate-100"
-          : "border hover:bg-slate-100 dark:hover:bg-slate-700"
+          ? "bg-slate-900 dark:bg-slate-50"
+          : "border hover:bg-slate-50 dark:hover:bg-slate-900"
       }`}
     >
       <SectionRowWrapper className="items-center justify-between">

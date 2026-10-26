@@ -1,27 +1,27 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import {
-  RyogoDatePicker,
-  RyogoFileInput,
-} from "@/components/form/ryogoFormFields"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { FileRegex } from "@/lib/regex"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
+  RyogoDatePicker,
+  RyogoFileInput,
+} from "@/components/form/ryogoFormFields"
+import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function AddVehicleStep3({
   onNext,
@@ -77,13 +77,15 @@ export function AddVehicleStep3({
   })
 
   //Submit actions
-  const onSubmit = async (data: Step3Type) => {
+  const onSubmit = async (values: Step3Type) => {
     updateFinalData({
       ...finalData,
-      insuranceExpiresOn: data.insuranceExpiresOn,
-      insurancePhotos: await compressImage(data.insurancePhotos),
-      pucExpiresOn: data.pucExpiresOn,
-      pucPhotos: await compressImage(data.pucPhotos),
+      insuranceExpiresOn: values.insuranceExpiresOn,
+      insurancePhotos:
+        (await compressImage(values.insurancePhotos)) ??
+        finalData.insurancePhotos,
+      pucExpiresOn: values.pucExpiresOn,
+      pucPhotos: (await compressImage(values.pucPhotos)) ?? finalData.pucPhotos,
     })
     onNext()
   }

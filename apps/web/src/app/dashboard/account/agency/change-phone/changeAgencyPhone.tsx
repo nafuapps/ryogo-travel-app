@@ -50,9 +50,9 @@ export default function ChangeAgencyPhonePageComponent({
   })
 
   //Submit actions
-  async function onSubmit(data: ModifyAgencyType) {
+  async function onSubmit(values: ModifyAgencyType) {
     //Check if same phone has been entered
-    if (data.newPhone === agency.businessPhone) {
+    if (values.newPhone === agency.businessPhone) {
       form.setError("newPhone", {
         type: "manual",
         message: t("Field1.Error2"),
@@ -61,7 +61,7 @@ export default function ChangeAgencyPhonePageComponent({
       //check if another agency has this phone and email
       allAgencies.some(
         (u) =>
-          u.businessPhone === data.newPhone &&
+          u.businessPhone === values.newPhone &&
           u.businessEmail === agency.businessEmail,
       )
     ) {
@@ -72,7 +72,7 @@ export default function ChangeAgencyPhonePageComponent({
     } else {
       const updatedAgency = await changeAgencyPhoneAction({
         agencyId: agency.id,
-        businessPhone: data.newPhone,
+        businessPhone: values.newPhone,
       })
       if (updatedAgency) {
         router.replace(`/dashboard/account/agency`)

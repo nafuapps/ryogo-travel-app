@@ -1,6 +1,12 @@
 "use client"
 
+import { changeBookingRemarksAction } from "@/app/actions/bookings/changeBookingRemarksAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
 import { RyogoTextarea } from "@/components/form/ryogoFormFields"
+import { FormContentWrapper, FormWrapper } from "@/components/page/pageWrappers"
 import {
   Sheet,
   SheetContent,
@@ -9,20 +15,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import z from "zod"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { changeBookingRemarksAction } from "@/app/actions/bookings/changeBookingRemarksAction"
-import { MAX_FIELD_DESC_LENGTH } from "@/lib/uiConfig"
-import { FormWrapper, FormContentWrapper } from "@/components/page/pageWrappers"
+import z from "zod"
 
 export default function ChangeBookingRemarksSheet({
   bookingId,
@@ -58,13 +58,13 @@ export default function ChangeBookingRemarksSheet({
     },
   })
 
-  const onSubmit = async (data: SchemaType) => {
+  const onSubmit = async (values: SchemaType) => {
     setOpen(false)
     const updatedBooking = await changeBookingRemarksAction({
       bookingId,
       agencyId,
       assignedUserId: userId,
-      bookingRemarks: data.remarks,
+      bookingRemarks: values.remarks,
     })
     if (updatedBooking) {
       toast.success(t("Success"))

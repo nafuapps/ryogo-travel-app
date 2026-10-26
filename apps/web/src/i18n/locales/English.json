@@ -737,7 +737,6 @@
   },
   "Dashboard": {
     "Sidebar": {
-      "New": "New Booking",
       "Home": "Home",
       "Bookings": "Bookings",
       "Vehicles": "Vehicles",
@@ -1648,6 +1647,7 @@
         "TryCTA": "Try Premium",
         "BuyCTA": "Buy Premium"
       },
+      "OngoingTrips": "ONGOING TRIPS",
       "Schedule": "VEHICLE SCHEDULE"
     },
     "NewVehicle": {

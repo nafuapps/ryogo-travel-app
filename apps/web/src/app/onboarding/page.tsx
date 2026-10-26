@@ -1,7 +1,6 @@
 //Onboarding home page
 
 import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 import Footer from "@/components/flows/landing/footer"
 import {
   LandingContentWrapper,
@@ -79,30 +78,29 @@ export default async function OnboardingHomePage({
           className="h-full px-5 sm:px-8 md:px-10 py-20 md:py-24 rounded-lg bg-linear-to-b from-sky-100 dark:from-sky-900 via-cyan-400 dark:via-cyan-700 to-sky-700 dark:to-sky-500"
         >
           <SectionColWrapper className="text-center items-center mt-5 md:mt-6">
-            <RyogoCaption color="light" weight="font-medium">
-              {t("Header.Subtitle")}
-            </RyogoCaption>
             <RyogoH2 color="brand" weight="font-bold">
               {t("Header.Title")}
             </RyogoH2>
+            <RyogoSmall color="slate" weight="font-normal">
+              {t("Header.Subtitle")}
+            </RyogoSmall>
           </SectionColWrapper>
-          <ClickZoomOut className="w-full max-w-xl">
-            <Link
-              href={
-                PhoneRegex.safeParse(phone).success
-                  ? `/onboarding/create-account?phone=${phone}`
-                  : "/onboarding/create-account"
-              }
+          <Link
+            href={
+              PhoneRegex.safeParse(phone).success
+                ? `/onboarding/create-account?phone=${phone}`
+                : "/onboarding/create-account"
+            }
+            className="w-full max-w-xl"
+          >
+            <RyogoBrandButton
+              size={"lg"}
+              className="w-full"
+              label={t("PrimaryCTA")}
             >
-              <RyogoBrandButton
-                size={"lg"}
-                className="w-full"
-                label={t("PrimaryCTA")}
-              >
-                <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-              </RyogoBrandButton>
-            </Link>
-          </ClickZoomOut>
+              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+            </RyogoBrandButton>
+          </Link>
           <TileGridWrapper>
             <SectionWrapper
               id="OnboardingHomeSteps"

@@ -1,20 +1,19 @@
+import {
+  RyogoOutlineButton,
+  RyogoWhiteButton,
+} from "@/components/buttons/ryogoButtons"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoSmall, RyogoH1, RyogoP } from "@/components/typography"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { RyogoH1, RyogoP, RyogoSmall } from "@/components/typography"
 import { SUPPORT_HELPLINE_NUMBER } from "@/lib/uiConfig"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { Check } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import {
-  RyogoWhiteButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function HomeCTASection() {
   const t = await getTranslations("Landing.Home.CTA")
@@ -37,15 +36,13 @@ export default async function HomeCTASection() {
           </RyogoP>
         </SectionColWrapper>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <ClickZoomOut>
-            <Link href="/onboarding">
-              <RyogoWhiteButton
-                size="lg"
-                label={t("PrimaryCTA")}
-                className="w-full md:w-auto"
-              />
-            </Link>
-          </ClickZoomOut>
+          <Link href="/onboarding">
+            <RyogoWhiteButton
+              size="lg"
+              label={t("PrimaryCTA")}
+              className="w-full md:w-auto"
+            />
+          </Link>
           <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`}>
             <RyogoOutlineButton
               size="lg"

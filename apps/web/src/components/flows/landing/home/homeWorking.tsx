@@ -1,7 +1,13 @@
 "use client"
 
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
+import { SlideshowWrapper } from "@/components/flows/landing/slideshowWrapper"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP } from "@/components/typography"
-import Link from "next/link"
 import {
   Blocks,
   Car,
@@ -11,15 +17,8 @@ import {
   Tickets,
   Workflow,
 } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import { SlideshowWrapper } from "@/components/flows/landing/slideshowWrapper"
 import { useTranslations } from "next-intl"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
+import Link from "next/link"
 
 export default function HomeWorkingSection() {
   const t = useTranslations("Landing.Home.Working")
@@ -74,17 +73,15 @@ export default function HomeWorkingSection() {
           {t("Subtitle")}
         </RyogoP>
         <SlideshowWrapper items={items} />
-        <ClickZoomOut>
-          <Link href="/how-it-works">
-            <RyogoDefaultButton
-              size="lg"
-              label={t("MoreCTA")}
-              className="w-full md:w-auto"
-            >
-              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-            </RyogoDefaultButton>
-          </Link>
-        </ClickZoomOut>
+        <Link href="/how-it-works">
+          <RyogoDefaultButton
+            size="lg"
+            label={t("MoreCTA")}
+            className="w-full md:w-auto"
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+          </RyogoDefaultButton>
+        </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

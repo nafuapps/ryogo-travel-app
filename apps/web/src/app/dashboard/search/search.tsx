@@ -447,7 +447,7 @@ function SearchOption({
       className={`flex border rounded-lg justify-center items-center p-2 lg:px-3  ${
         selectedSearchType == searchType
           ? "bg-slate-900 dark:bg-slate-50 border-slate-900 dark:border-slate-50"
-          : "border-slate-300 dark:border-slate-700 hover:bg-slate-300 dark:hover:bg-slate-700"
+          : "border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 hover:cursor-pointer"
       }`}
     >
       <RyogoCaption

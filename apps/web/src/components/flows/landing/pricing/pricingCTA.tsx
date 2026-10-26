@@ -1,20 +1,19 @@
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoH1, RyogoP } from "@/components/typography"
-import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import { ChevronRight, Video } from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
 import {
   RyogoOutlineButton,
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
 import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoH1, RyogoP } from "@/components/typography"
+import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
+import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import { ChevronRight, Video } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function PricingCTASection() {
   const t = await getTranslations("Landing.Pricing.CTA")
@@ -33,18 +32,12 @@ export default async function PricingCTASection() {
             {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
           </RyogoP>
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center w-full">
-            <ClickZoomOut>
-              <Link href="/onboarding">
-                <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
-                  <RyogoIcon
-                    icon={ChevronRight}
-                    color="black"
-                    size="sm"
-                    thick
-                  />
-                </RyogoWhiteButton>
-              </Link>
-            </ClickZoomOut>
+            <Link href="/onboarding">
+              <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
+                <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
+              </RyogoWhiteButton>
+            </Link>
+
             {/* //TODO: Demo video source*/}
             <RyogoDialogVideo
               src="https://www.youtube.com/embed/1MobY_vR7-g"

@@ -35,12 +35,6 @@ export default function UserLocationTracker({
       }
     }
     updateLocation()
-
-    // const interval = setInterval(
-    //   updateLocation,
-    //   LOCATE_USER_MINUTES * 60 * 1000,
-    // )
-    // return () => clearInterval(interval)
   }, [location])
 
   return null

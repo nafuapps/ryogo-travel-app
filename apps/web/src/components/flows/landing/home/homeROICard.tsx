@@ -1,15 +1,14 @@
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 import {
-  LandingSectionWrapper,
   LandingContentWrapper,
+  LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 import Image from "next/image"
+import Link from "next/link"
 
 //TODO: Add ROI Calculator and report image
 export default async function HomeROICard() {
@@ -33,17 +32,15 @@ export default async function HomeROICard() {
             sizes="576px"
           />
         </div>
-        <ClickZoomOut>
-          <Link href="/pricing#roi">
-            <RyogoDefaultButton
-              size="lg"
-              label={t("PrimaryCTA")}
-              className="w-full md:w-auto"
-            >
-              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-            </RyogoDefaultButton>
-          </Link>
-        </ClickZoomOut>
+        <Link href="/pricing#roi">
+          <RyogoDefaultButton
+            size="lg"
+            label={t("PrimaryCTA")}
+            className="w-full md:w-auto"
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+          </RyogoDefaultButton>
+        </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

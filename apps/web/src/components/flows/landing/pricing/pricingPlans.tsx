@@ -1,30 +1,29 @@
 import {
+  RyogoBrandButton,
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
+import {
   RyogoCaption,
   RyogoH1,
   RyogoH4,
   RyogoP,
   RyogoSmall,
 } from "@/components/typography"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 import {
   MONTHLY_SUBSCRIPTION_FINAL_PRICE,
   PREMIUM_TRIAL_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { Check, ChevronDown } from "lucide-react"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoBrandButton,
-  RyogoGhostButton,
-} from "@/components/buttons/ryogoButtons"
-import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function PricingPlansSection() {
   const t = await getTranslations("Landing.Pricing.Plans")
@@ -54,15 +53,13 @@ export default async function PricingPlansSection() {
               t("Basic.F6"),
             ]}
           >
-            <ClickZoomOut>
-              <Link href="/auth/signup" className="w-full">
-                <RyogoDefaultButton
-                  size="lg"
-                  className="w-full"
-                  label={t("Basic.CTA")}
-                />
-              </Link>
-            </ClickZoomOut>
+            <Link href="/auth/signup" className="w-full">
+              <RyogoDefaultButton
+                size="lg"
+                className="w-full"
+                label={t("Basic.CTA")}
+              />
+            </Link>
           </PricingPlanCard>
           <PricingPlanCard
             title={t("Premium.Title")}
@@ -81,16 +78,14 @@ export default async function PricingPlansSection() {
             ]}
             everything={t("Premium.Everything")}
           >
-            <ClickZoomOut>
-              <Link href="/onboarding" className="w-full">
-                <RyogoBrandButton
-                  size="lg"
-                  labelColor="white"
-                  className="w-full"
-                  label={t("Premium.CTA", { days: PREMIUM_TRIAL_DAYS })}
-                />
-              </Link>
-            </ClickZoomOut>
+            <Link href="/onboarding" className="w-full">
+              <RyogoBrandButton
+                size="lg"
+                labelColor="white"
+                className="w-full"
+                label={t("Premium.CTA", { days: PREMIUM_TRIAL_DAYS })}
+              />
+            </Link>
           </PricingPlanCard>
         </div>
         <Link href="#comparision">

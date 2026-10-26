@@ -212,7 +212,7 @@ export function SectionHeaderWrapper({
   count?: number
 }) {
   return (
-    <SectionRowWrapper className="items-center">
+    <SectionRowWrapper small className="items-center">
       <RyogoIcon icon={icon} size="xs" color="light" thick />
       <RyogoCaption color="light">{label}</RyogoCaption>
       {count !== undefined && (

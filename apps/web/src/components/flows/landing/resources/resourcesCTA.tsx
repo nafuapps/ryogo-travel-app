@@ -1,19 +1,18 @@
+import {
+  RyogoOutlineButton,
+  RyogoWhiteButton,
+} from "@/components/buttons/ryogoButtons"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP } from "@/components/typography"
 import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import {
-  RyogoOutlineButton,
-  RyogoWhiteButton,
-} from "@/components/buttons/ryogoButtons"
-import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function ResourcesCTASection() {
   const t = await getTranslations("Landing.Resources.CTA")
@@ -31,22 +30,19 @@ export default async function ResourcesCTASection() {
           {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
         </RyogoP>
         <ScrollZoomIn className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          <ClickZoomOut>
-            <Link href="/pricing#roi">
-              <RyogoOutlineButton
-                size="lg"
-                labelColor="white"
-                label={t("SecondaryCTA")}
-              />
-            </Link>
-          </ClickZoomOut>
-          <ClickZoomOut>
-            <Link href="/onboarding">
-              <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
-                <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
-              </RyogoWhiteButton>
-            </Link>
-          </ClickZoomOut>
+          <Link href="/pricing#roi">
+            <RyogoOutlineButton
+              size="lg"
+              labelColor="white"
+              label={t("SecondaryCTA")}
+            />
+          </Link>
+
+          <Link href="/onboarding">
+            <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
+              <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
+            </RyogoWhiteButton>
+          </Link>
         </ScrollZoomIn>
       </LandingContentWrapper>
     </LandingSectionWrapper>

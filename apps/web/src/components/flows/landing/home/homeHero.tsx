@@ -1,20 +1,19 @@
-import { RyogoH1, RyogoP } from "@/components/typography"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
-import { ChevronRight, Video } from "lucide-react"
-import Image from "next/image"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
 import {
   RyogoBrandButton,
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
+import { RyogoH1, RyogoP } from "@/components/typography"
+import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
+import { ChevronRight, Video } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Image from "next/image"
+import Link from "next/link"
 
 export default async function HomeHeroSection() {
   const t = await getTranslations("Landing.Home.Hero")
@@ -40,17 +39,15 @@ export default async function HomeHeroSection() {
           {t("Subtitle")}
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <ClickZoomOut>
-            <Link href="/auth/signup">
-              <RyogoBrandButton
-                size="lg"
-                label={t("PrimaryCTA")}
-                className="w-full md:w-auto"
-              >
-                <RyogoIcon icon={ChevronRight} color="white" size="sm" thick />
-              </RyogoBrandButton>
-            </Link>
-          </ClickZoomOut>
+          <Link href="/auth/signup">
+            <RyogoBrandButton
+              size="lg"
+              label={t("PrimaryCTA")}
+              className="w-full md:w-auto"
+            >
+              <RyogoIcon icon={ChevronRight} color="white" size="sm" thick />
+            </RyogoBrandButton>
+          </Link>
           {/* // TODO: Demo video source */}
           <RyogoDialogVideo
             src="https://www.youtube.com/embed/1MobY_vR7-g"

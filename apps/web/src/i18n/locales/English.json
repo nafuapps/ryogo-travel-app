@@ -124,8 +124,8 @@
   "Onboarding": {
     "HomePage": {
       "Header": {
-        "Title": "Let's setup your agency account!",
-        "Subtitle": "ONBOARDING HOMEPAGE"
+        "Title": "Let's setup your account!",
+        "Subtitle": "We will guide you through the onboarding process.. so don't worry."
       },
       "BodySteps": {
         "Title": "Onboarding Journey",

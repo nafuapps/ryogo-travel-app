@@ -1,9 +1,10 @@
-import { getTranslations } from "next-intl/server"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import Link from "next/link"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
 import {
   RyogoCaption,
   RyogoH1,
@@ -11,11 +12,10 @@ import {
   RyogoP,
   RyogoSmall,
 } from "@/components/typography"
-import Image from "next/image"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { ChevronDown } from "lucide-react"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
-import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { getTranslations } from "next-intl/server"
+import Image from "next/image"
+import Link from "next/link"
 import { FeatureGrid } from "./featureWrappers"
 
 //TODO: Add product images
@@ -98,7 +98,7 @@ async function FeaturesMenuItem({
   return (
     <ScrollZoomIn>
       <Link
-        className="group flex flex-col w-full overflow-hidden max-w-2xl mx-auto h-full md:hover:bg-slate-50 md:dark:hover:bg-slate-700 rounded-lg py-2 md:p-5 transition-colors duration-300"
+        className="group flex flex-col w-full overflow-hidden max-w-2xl mx-auto h-full md:hover:bg-slate-100 md:dark:hover:bg-slate-700 rounded-lg py-2 md:p-5 transition-colors duration-300"
         href={href}
       >
         <SectionColWrapper small className="mb-3 md:mb-4">
@@ -116,7 +116,7 @@ async function FeaturesMenuItem({
             fill
             sizes="672px"
           />
-          <div className="absolute left-0 right-0 bottom-0 rounded-b-lg md:rounded-b-none opacity-90 p-2.5 md:p-3 flex items-center justify-center gap-1 md:gap-1.5 bg-slate-50 dark:bg-slate-700 transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
+          <div className="absolute left-0 right-0 bottom-0 rounded-b-lg md:rounded-b-none opacity-90 p-2.5 md:p-3 flex items-center justify-center gap-1 md:gap-1.5 bg-slate-100 dark:bg-slate-700 transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
             <RyogoSmall color="brand" weight="font-medium">
               {t("LearnMore")}
             </RyogoSmall>

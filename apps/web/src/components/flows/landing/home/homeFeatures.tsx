@@ -1,16 +1,15 @@
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 //TODO: Add product images
 export default async function HomeFeaturesSection() {
@@ -50,17 +49,15 @@ export default async function HomeFeaturesSection() {
             // imageSrc="/images/homeF4.png"
           />
         </div>
-        <ClickZoomOut>
-          <Link href="/features">
-            <RyogoDefaultButton
-              size="lg"
-              label={t("MoreCTA")}
-              className="w-full md:w-auto"
-            >
-              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-            </RyogoDefaultButton>
-          </Link>
-        </ClickZoomOut>
+        <Link href="/features">
+          <RyogoDefaultButton
+            size="lg"
+            label={t("MoreCTA")}
+            className="w-full md:w-auto"
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+          </RyogoDefaultButton>
+        </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

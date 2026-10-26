@@ -206,7 +206,7 @@ async function CustomerTransactions({
             </RyogoCaption>
           </SectionRowWrapper>
         ) : (
-          <SectionRowWrapper className="items-center justify-center p-2 lg:p-3 rounded-md bg-slate-50 dark:bg-slate-700">
+          <SectionRowWrapper className="items-center justify-center p-2 lg:p-3 rounded-md bg-slate-100 dark:bg-slate-700">
             <RyogoCaption color="slate" weight="font-bold">
               {t("RefundToCustomer")}
             </RyogoCaption>
@@ -351,7 +351,7 @@ async function DriverTransactions({
           <RyogoIcon icon={CircleCheckBig} size="xs" color="brand" thick />
         </SectionRowWrapper>
       ) : pendingAmount > 0 ? (
-        <SectionRowWrapper className="items-center justify-center p-2 lg:p-3 rounded-md bg-slate-50 dark:bg-slate-700">
+        <SectionRowWrapper className="items-center justify-center p-2 lg:p-3 rounded-md bg-slate-100 dark:bg-slate-700">
           <RyogoCaption color="dark" weight="font-bold">
             {t("PendingPayoutToDriver")}
           </RyogoCaption>

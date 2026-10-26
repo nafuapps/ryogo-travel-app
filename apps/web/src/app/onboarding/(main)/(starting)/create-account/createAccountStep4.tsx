@@ -1,29 +1,29 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import { RyogoInput } from "@/components/form/ryogoFormFields"
-import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { Separator } from "@/components/ui/separator"
-import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
-import { BadgeCheck, Check, LucideIcon } from "lucide-react"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { RyogoInput } from "@/components/form/ryogoFormFields"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   FormContentWrapper,
   FormWrapper,
   SectionColWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
+import { MIN_PASSWORD_LENGTH } from "@/lib/uiConfig"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { PREMIUM_TRIAL_DAYS } from "@ryogo-travel-app/api/apiConfig"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { SubscriptionPlanEnum } from "@ryogo-travel-app/db/schema"
+import { BadgeCheck, Check, LucideIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
+import { useForm } from "react-hook-form"
+import z from "zod"
 
 export function CreateAccountStep4({
   onNext,
@@ -175,7 +175,7 @@ function PlanSelectionCard({
       className={`flex border rounded-lg justify-between items-center p-3 lg:p-4 gap-2 lg:gap-3 w-full ${
         selected
           ? "bg-sky-100 dark:bg-sky-800 border-sky-200 dark:border-sky-700"
-          : "border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
+          : "border-slate-100 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700"
       }`}
     >
       <SectionColWrapper>

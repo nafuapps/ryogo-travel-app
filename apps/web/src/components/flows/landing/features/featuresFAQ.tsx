@@ -1,15 +1,14 @@
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoH1, RyogoP } from "@/components/typography"
-import { ChevronRight } from "lucide-react"
-import Link from "next/link"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { FAQItem, FAQWrapper } from "@/components/flows/landing/faqWrapper"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { FAQItem, FAQWrapper } from "@/components/flows/landing/faqWrapper"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoH1, RyogoP } from "@/components/typography"
+import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
+import Link from "next/link"
 
 export default async function FeaturesFAQSection() {
   const t = await getTranslations("Landing.Features.FAQ")
@@ -81,17 +80,15 @@ export default async function FeaturesFAQSection() {
             answer={t("DataPrivacy.Answer")}
           />
         </FAQWrapper>
-        <ClickZoomOut>
-          <Link href="/resources">
-            <RyogoDefaultButton
-              size="lg"
-              label={t("MoreCTA")}
-              className="w-full md:w-auto"
-            >
-              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-            </RyogoDefaultButton>
-          </Link>
-        </ClickZoomOut>
+        <Link href="/resources">
+          <RyogoDefaultButton
+            size="lg"
+            label={t("MoreCTA")}
+            className="w-full md:w-auto"
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+          </RyogoDefaultButton>
+        </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

@@ -1,11 +1,11 @@
 "use client"
 
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoCaption } from "@/components/typography"
 import { Search, Zap } from "lucide-react"
 import { useState } from "react"
 import useCommandCenter from "./useCommandCenter"
-import { RyogoCaption } from "@/components/typography"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function CommandCenter() {
   const [isOpen, setIsOpen] = useState(false)
@@ -34,7 +34,7 @@ export default function CommandCenter() {
         {/* Search Bar */}
         <div className={`flex items-center ${isOpen ? "pt-2" : ""} gap-2`}>
           <div
-            className={`flex-1 flex items-center bg-slate-50 dark:bg-slate-900 rounded-lg px-3 py-2 ${isOpen ? "" : "hidden"}`}
+            className={`flex-1 flex items-center bg-slate-100 dark:bg-slate-700 rounded-lg px-3 py-2 ${isOpen ? "" : "hidden"}`}
           >
             <Search className="w-4 h-4 text-sky-700 mr-2" />
             <input

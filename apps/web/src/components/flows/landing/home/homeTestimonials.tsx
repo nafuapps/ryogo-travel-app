@@ -1,24 +1,23 @@
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import {
+  RyogoCaption,
   RyogoH1,
   RyogoP,
   RyogoSmall,
-  RyogoCaption,
 } from "@/components/typography"
 import { ChevronRight, Quote } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default async function HomeTestimonialsSection() {
   const t = await getTranslations("Landing.Home.Testimonials")
@@ -54,17 +53,15 @@ export default async function HomeTestimonialsSection() {
             rating={5}
           />
         </div>
-        <ClickZoomOut>
-          <Link href="/resources">
-            <RyogoDefaultButton
-              size="lg"
-              label={t("MoreCTA")}
-              className="w-full md:w-auto"
-            >
-              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-            </RyogoDefaultButton>
-          </Link>
-        </ClickZoomOut>
+        <Link href="/resources">
+          <RyogoDefaultButton
+            size="lg"
+            label={t("MoreCTA")}
+            className="w-full md:w-auto"
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+          </RyogoDefaultButton>
+        </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

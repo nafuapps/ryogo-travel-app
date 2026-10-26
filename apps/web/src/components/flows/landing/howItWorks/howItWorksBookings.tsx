@@ -1,9 +1,19 @@
 "use client"
 
 import {
+  RyogoDefaultButton,
+  RyogoGhostButton,
+} from "@/components/buttons/ryogoButtons"
+import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import {
+  SlideshowItemType,
+  SlideshowWrapper,
+} from "@/components/flows/landing/slideshowWrapper"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import {
   BadgeInfo,
   ChevronDown,
@@ -14,19 +24,8 @@ import {
   Pin,
   ScanSearch,
 } from "lucide-react"
-import { RyogoH1, RyogoP } from "@/components/typography"
-import {
-  SlideshowItemType,
-  SlideshowWrapper,
-} from "@/components/flows/landing/slideshowWrapper"
 import { useTranslations } from "next-intl"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import Link from "next/link"
-import {
-  RyogoDefaultButton,
-  RyogoGhostButton,
-} from "@/components/buttons/ryogoButtons"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 
 export default function HowItWorksBookingsSection() {
   const t = useTranslations("Landing.HowItWorks.Bookings")
@@ -87,15 +86,13 @@ export default function HowItWorksBookingsSection() {
           {t("Subtitle")}
         </RyogoP>
         <SlideshowWrapper items={items} reverse />
-        <ClickZoomOut>
-          <Link href="/auth/signup">
-            <RyogoDefaultButton
-              size="lg"
-              label={t("MoreCTA")}
-              className="w-full md:w-auto"
-            />
-          </Link>
-        </ClickZoomOut>
+        <Link href="/auth/signup">
+          <RyogoDefaultButton
+            size="lg"
+            label={t("MoreCTA")}
+            className="w-full md:w-auto"
+          />
+        </Link>
         <Link href="#entities">
           <RyogoGhostButton
             size="lg"

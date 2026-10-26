@@ -1,5 +1,4 @@
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
@@ -217,17 +216,16 @@ export default async function PricingComparisionSection() {
             premiumItem={<BrandCheckIcon />}
           />
         </ComparisionGroup>
-        <ClickZoomOut>
-          <Link href="/features">
-            <RyogoDefaultButton
-              size="lg"
-              className="w-full md:w-auto"
-              label={t("MoreCTA")}
-            >
-              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-            </RyogoDefaultButton>
-          </Link>
-        </ClickZoomOut>
+
+        <Link href="/features">
+          <RyogoDefaultButton
+            size="lg"
+            className="w-full md:w-auto"
+            label={t("MoreCTA")}
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+          </RyogoDefaultButton>
+        </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

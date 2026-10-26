@@ -1,15 +1,14 @@
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
+import ROICard from "@/components/flows/landing/pricing/roiCard"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
-import ROICard from "@/components/flows/landing/pricing/roiCard"
 
 export default async function PricingROISection() {
   const t = await getTranslations("Landing.Pricing.ROI")
@@ -23,17 +22,16 @@ export default async function PricingROISection() {
           {t("Subtitle")}
         </RyogoP>
         <ROICard />
-        <ClickZoomOut>
-          <Link href="/onboarding">
-            <RyogoDefaultButton
-              size="lg"
-              label={t("PrimaryCTA")}
-              className="w-full md:w-auto"
-            >
-              <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
-            </RyogoDefaultButton>
-          </Link>
-        </ClickZoomOut>
+
+        <Link href="/onboarding">
+          <RyogoDefaultButton
+            size="lg"
+            label={t("PrimaryCTA")}
+            className="w-full md:w-auto"
+          >
+            <RyogoIcon icon={ChevronRight} size="sm" color="white" thick />
+          </RyogoDefaultButton>
+        </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>
   )

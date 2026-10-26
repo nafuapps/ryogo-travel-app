@@ -1,18 +1,17 @@
-import { RyogoH1, RyogoP } from "@/components/typography"
-import { getTranslations } from "next-intl/server"
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
-import Link from "next/link"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { ChevronDown } from "lucide-react"
-import Image from "next/image"
 import {
   RyogoDefaultButton,
   RyogoWhiteButton,
 } from "@/components/buttons/ryogoButtons"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
+import {
+  LandingContentWrapper,
+  LandingSectionWrapper,
+} from "@/components/flows/landing/landingWrappers"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoH1, RyogoP } from "@/components/typography"
+import { ChevronDown } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Image from "next/image"
+import Link from "next/link"
 
 export default async function FeaturesHeroSection() {
   const t = await getTranslations("Landing.Features.Hero")
@@ -38,16 +37,14 @@ export default async function FeaturesHeroSection() {
               <RyogoIcon icon={ChevronDown} color="white" size="sm" thick />
             </RyogoDefaultButton>
           </Link>
-          <ClickZoomOut>
-            <Link href="/auth/signup">
-              <RyogoWhiteButton
-                size="lg"
-                label={t("SecondaryCTA")}
-                labelColor="slate"
-                className="w-full gap-1 lg:gap-2 md:w-auto"
-              />
-            </Link>
-          </ClickZoomOut>
+          <Link href="/auth/signup">
+            <RyogoWhiteButton
+              size="lg"
+              label={t("SecondaryCTA")}
+              labelColor="slate"
+              className="w-full gap-1 lg:gap-2 md:w-auto"
+            />
+          </Link>
         </div>
         <div className="bg-white dark:bg-slate-800 mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
           <Image

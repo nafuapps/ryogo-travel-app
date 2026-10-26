@@ -1,18 +1,17 @@
-import { RyogoH1, RyogoP } from "@/components/typography"
-import { getTranslations } from "next-intl/server"
+import {
+  RyogoOutlineButton,
+  RyogoWhiteButton,
+} from "@/components/buttons/ryogoButtons"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import Link from "next/link"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { ChevronDown } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 import Image from "next/image"
-import {
-  RyogoWhiteButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { ClickZoomOut } from "@/components/flows/landing/clickZoomOut"
+import Link from "next/link"
 
 export default async function HowItWorksHeroSection() {
   const t = await getTranslations("Landing.HowItWorks.Hero")
@@ -38,16 +37,14 @@ export default async function HowItWorksHeroSection() {
               <RyogoIcon icon={ChevronDown} color="slate" size="sm" thick />
             </RyogoWhiteButton>
           </Link>
-          <ClickZoomOut>
-            <Link href="/resources#support">
-              <RyogoOutlineButton
-                size="lg"
-                label={t("SecondaryCTA")}
-                labelColor="white"
-                className="w-full md:w-auto"
-              />
-            </Link>
-          </ClickZoomOut>
+          <Link href="/resources#support">
+            <RyogoOutlineButton
+              size="lg"
+              label={t("SecondaryCTA")}
+              labelColor="white"
+              className="w-full md:w-auto"
+            />
+          </Link>
         </div>
         <div className="bg-white dark:bg-slate-800 mt-auto max-w-md sm:max-w-3xl relative w-full aspect-square sm:aspect-video rounded-t-2xl overflow-hidden">
           <Image

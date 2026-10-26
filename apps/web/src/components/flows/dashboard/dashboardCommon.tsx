@@ -1,6 +1,6 @@
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
-import { RyogoH4, RyogoCaption } from "@/components/typography"
+import { RyogoCaption, RyogoH4 } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 
@@ -41,7 +41,7 @@ export function DashboardRowHeader({
   count: number
 }) {
   return (
-    <div className="flex flex-row p-2 lg:p-3 bg-slate-50 dark:bg-slate-700 justify-between items-center">
+    <div className="flex flex-row p-2 lg:p-3 bg-slate-100 dark:bg-slate-700 justify-between items-center">
       <RyogoCaption color="light">{title}</RyogoCaption>
       <RyogoCaption color="light">{count}</RyogoCaption>
     </div>
@@ -55,7 +55,7 @@ export function DashboardChipItemWrapper({
 }) {
   return (
     <div
-      className={`flex flex-row items-center justify-between gap-1 lg:gap-1.5 w-full hover:bg-slate-50 dark:hover:bg-slate-700 p-2 lg:p-3`}
+      className={`flex flex-row items-center justify-between gap-1 lg:gap-1.5 w-full hover:bg-slate-100 dark:hover:bg-slate-700 p-2 lg:p-3`}
     >
       {children}
     </div>
@@ -71,7 +71,7 @@ export function DashboardBoxItemWrapper({
 }) {
   return (
     <div
-      className={`flex flex-col gap-1 lg:gap-1.5 w-full ${highlight ? "border-l-2 border-sky-700 dark:border-sky-300" : ""} hover:bg-slate-50 dark:hover:bg-slate-700 px-2 py-3 lg:px-3 lg:py-4`}
+      className={`flex flex-col gap-1 lg:gap-1.5 w-full ${highlight ? "border-l-2 border-sky-700 dark:border-sky-300" : ""} hover:bg-slate-100 dark:hover:bg-slate-700 px-2 py-3 lg:px-3 lg:py-4`}
     >
       {children}
     </div>

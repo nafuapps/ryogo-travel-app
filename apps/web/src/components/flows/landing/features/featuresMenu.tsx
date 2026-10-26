@@ -5,13 +5,7 @@ import {
 import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
-import {
-  RyogoCaption,
-  RyogoH1,
-  RyogoH4,
-  RyogoP,
-  RyogoSmall,
-} from "@/components/typography"
+import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
 import { ChevronDown } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
@@ -105,7 +99,7 @@ async function FeaturesMenuItem({
           <RyogoH4 weight="font-bold" color="brand">
             {title}
           </RyogoH4>
-          <RyogoCaption color="light">{subtitle}</RyogoCaption>
+          <RyogoSmall color="light">{subtitle}</RyogoSmall>
         </SectionColWrapper>
         <div className="relative mt-auto w-full max-w-2xl aspect-video rounded-lg overflow-hidden transition-transform duration-300 md:group-hover:scale-105">
           <Image

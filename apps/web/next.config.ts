@@ -1,6 +1,6 @@
+import withSerwistInit from "@serwist/next"
 import type { NextConfig } from "next"
 import createNextIntlPlugin from "next-intl/plugin"
-import withSerwistInit from "@serwist/next"
 
 const withNextIntl = createNextIntlPlugin()
 
@@ -14,6 +14,7 @@ const withSerwist = withSerwistInit({
 
 const nextConfig: NextConfig = {
   /* config options here */
+  devIndicators: false,
   allowedDevOrigins: ["192.168.29.143", "*.devtunnels.ms"],
   cacheComponents: false, //TODO
   partialPrefetching: false, //TODO

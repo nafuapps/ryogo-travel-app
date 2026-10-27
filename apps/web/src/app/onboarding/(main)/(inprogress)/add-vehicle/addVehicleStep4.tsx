@@ -13,6 +13,7 @@ import {
 import {
   MAX_PER_DAY_CHARGE,
   MAX_VEHICLE_RATE,
+  MIN_PER_DAY_CHARGE,
   MIN_VEHICLE_RATE,
 } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -45,7 +46,7 @@ export function AddVehicleStep4({
     hasAC: z.boolean(),
     defaultAcChargePerDay: z.coerce
       .number<number>(t("Field3.Error1"))
-      .min(MAX_PER_DAY_CHARGE, t("Field3.Error2"))
+      .min(MIN_PER_DAY_CHARGE, t("Field3.Error2"))
       .max(MAX_PER_DAY_CHARGE, t("Field3.Error3"))
       .nonnegative(t("Field3.Error4"))
       .multipleOf(1, t("Field3.Error5"))

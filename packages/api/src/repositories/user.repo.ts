@@ -262,7 +262,6 @@ export const userRepository = {
       .set({
         lastLogin: new Date(),
         lastSeen: new Date(),
-        verificationCode: null,
       })
       .where(eq(users.id, userId))
   },
@@ -292,7 +291,7 @@ export const userRepository = {
         password: passwordHash,
         status: status,
         isVerified: status ? true : undefined,
-        verificationCode: status ? null : undefined,
+        verificationCode: null,
       })
       .where(eq(users.id, userId))
       .returning({

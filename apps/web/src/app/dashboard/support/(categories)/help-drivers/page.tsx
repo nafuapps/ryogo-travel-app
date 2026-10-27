@@ -1,6 +1,4 @@
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
 } from "@/components/flows/support/supportContentHeader"
@@ -9,12 +7,26 @@ import {
   SupportFAQItemType,
   SupportFAQWrapper,
 } from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import SupportTableOfContentLinkButton, {
   SupportContentItemType,
 } from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableStatusRow,
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -22,35 +34,23 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
+import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import {
-  Telescope,
-  UserPlus,
-  SquarePen,
-  Plus,
-  ChevronRight,
-  Smartphone,
-  TreePalm,
-  ListTodo,
-  Tickets,
-} from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import { Metadata } from "next"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import {
-  SupportTableWrapper,
-  SupportTableStatusRow,
-  SupportTableTextRow,
-} from "@/components/flows/support/supportTableWrapper"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
-import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
+import {
+  ChevronRight,
+  ListTodo,
+  Plus,
+  Smartphone,
+  SquarePen,
+  Telescope,
+  Tickets,
+  TreePalm,
+  UserPlus,
+} from "lucide-react"
+import { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 
 /*
   - Overview
@@ -241,6 +241,22 @@ async function OverviewContent() {
         <SupportContentCTALinkButton
           href={"/dashboard/drivers"}
           label={t("KnowDriver.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("DriversSchedule.Title")}>
+        <RyogoCaption color="slate">
+          {t("DriversSchedule.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add drivers schedule page snapshot */}
+        <RyogoImage
+          alt="DriversSchedule"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/drivers/schedule"}
+          label={t("DriversSchedule.CTA")}
         />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("DriverDetails.Title")}>
@@ -474,12 +490,34 @@ async function LeavesContent() {
         <RyogoCaption color="slate">
           {t("EditingDriverLeave.Description")}
         </RyogoCaption>
-        <RyogoCaption color="slate">
-          {t("EditingDriverLeave.MarkCompleted")}
-        </RyogoCaption>
         {/* //TODO: Add EditingDriverLeave page snapshot */}
         <RyogoImage
           alt="EditingDriverLeave"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("StartingLeave.Title")}>
+        <RyogoCaption color="slate">
+          {t("StartingLeave.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add StartingLeave page snapshot */}
+        <RyogoImage
+          alt="StartingLeave"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportWarningWrapper text={t("StartingLeave.Warning")} />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("EndingLeave.Title")}>
+        <RyogoCaption color="slate">
+          {t("EndingLeave.Description")}
+        </RyogoCaption>
+        {/* //TODO: Add EndingLeave page snapshot */}
+        <RyogoImage
+          alt="EndingLeave"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"

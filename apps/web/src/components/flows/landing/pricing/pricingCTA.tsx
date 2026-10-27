@@ -37,7 +37,6 @@ export default async function PricingCTASection() {
                 <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
               </RyogoWhiteButton>
             </Link>
-
             {/* //TODO: Demo video source*/}
             <RyogoDialogVideo
               src="https://www.youtube.com/embed/1MobY_vR7-g"

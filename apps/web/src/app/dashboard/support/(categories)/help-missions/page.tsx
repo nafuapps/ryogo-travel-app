@@ -1,20 +1,30 @@
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
 } from "@/components/flows/support/supportContentHeader"
 import {
+  SupportFAQItem,
   SupportFAQItemType,
   SupportFAQWrapper,
-  SupportFAQItem,
 } from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import SupportTableOfContentLinkButton, {
   SupportContentItemType,
 } from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -25,6 +35,7 @@ import {
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import {
+  AlarmClock,
   BellPlus,
   ChevronRight,
   Megaphone,
@@ -32,18 +43,8 @@ import {
   SquarePen,
   Telescope,
 } from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import {
-  SupportTableWrapper,
-  SupportTableTextRow,
-} from "@/components/flows/support/supportTableWrapper"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
+import { getTranslations } from "next-intl/server"
 
 /*
   - Overview (What is mission?)
@@ -73,6 +74,12 @@ export default async function SupportHelpMissionsPage() {
       title: t("Managing.Title"),
       icon: SquarePen,
       content: <ManagingContent />,
+    },
+    {
+      id: "expiry",
+      title: t("DocumentExpiry.Title"),
+      icon: AlarmClock,
+      content: <ExpiryContent />,
     },
     {
       id: "custom",
@@ -267,15 +274,33 @@ async function ManagingContent() {
           {t("ActingMission.Description")}
         </RyogoCaption>
       </SupportContentSectionWrapper>
+    </>
+  )
+}
+
+async function ExpiryContent() {
+  const t = await getTranslations(
+    "Dashboard.SupportMissionsHelp.DocumentExpiry",
+  )
+  return (
+    <>
       <SupportContentSectionWrapper title={t("ExpiryAlerts.Title")}>
         <RyogoCaption color="slate">
           {t("ExpiryAlerts.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("ExpiryAlerts.Items")}</RyogoCaption>
+        {/* //TODO: Add ExpiryAlerts snapshot */}
+        <RyogoImage
+          alt="Document expiry alerts"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
       </SupportContentSectionWrapper>
     </>
   )
 }
+
 async function CustomContent() {
   const t = await getTranslations("Dashboard.SupportMissionsHelp.Custom")
   return (

@@ -3223,6 +3223,35 @@
           "Cancelled": "A booking that has been cancelled by the assigned agent. A booking which once started by the driver cannot be cancelled. (An old lead booking is automatically cancelled by the system if the trip date has passed.)"
         }
       },
+      "Managing": {
+        "Title": "MANAGING BOOKINGS",
+        "Ongoing": {
+          "Title": "Ongoing bookings",
+          "Description": "You can view all the ongoing (in-progress) bookings in your agency on the Bookings home page.",
+          "Schedule": "The schedule shows a calendar view of all the ongoing and upcoming bookings along with any planned leaves or scheduled repairs.",
+          "History": "History shows a view of all the recently completed or started bookings."
+        },
+        "Upcoming": {
+          "Title": "Upcoming bookings",
+          "Description": "All the upcoming (confirmed) bookings in your agency are listed on the Bookings home page.",
+          "CTA": "View upcoming bookings"
+        },
+        "Leads": {
+          "Title": "Leads",
+          "Description": "You can view and manage all your active customer leads from Leads tab in the bookings section.",
+          "CTA": "View lead bookings"
+        },
+        "Completed": {
+          "Title": "Completed",
+          "Description": "You can view recently completed bookings from Completed tab in the bookings section.",
+          "CTA": "View completed bookings"
+        },
+        "Cancelled": {
+          "Title": "Cancelled",
+          "Description": "You can view all cancelled bookings from Cancelled tab in the bookings section.",
+          "CTA": "View cancelled bookings"
+        }
+      },
       "Creation": {
         "Title": "CREATING A BOOKING",
         "HowToCreate": {
@@ -3296,18 +3325,30 @@
           "Share": "If a confirmed booking is cancelled, a cancellation message can be shared with the customer over Whatsapp."
         }
       },
+      "Closing": {
+        "Title": "CLOSING",
+        "Overview": {
+          "Title": "What is closing of a booking",
+          "Description": "Once a booking is completed, it must be closed so that an invoice can be generated adjusted with actual trip expenses. The generated invoice can then be shared with the customer to collect any pending payments.",
+          "Reopen": "Owner can reopen a booking so that expenses can be added/removed. This is helpful when you need to generate a new invoice."
+        },
+        "GeneratingInvoice": {
+          "Title": "How to close booking and generate invoice?",
+          "Step": "You should first approve all the required expenses. Only the approved expenses are considered in the final invoice. You can close a trip by going to the completed booking details page and clicking on 'Close Booking'."
+        }
+      },
       "Reconciling": {
         "Title": "RECONCILING",
         "WhyReconcile": {
           "Title": "Why reconcile a booking",
           "Description": "Once a booking is completed, it can be reconciled by the owner. This is an optional step to ensure the authenticity of the trip completion and the final amount.",
-          "Reason": "Reconciling helps make sure all the bills and expenses are added correctly for the booking and the final amount is calculated correctly. It also helps to get a complete picture of your revenue.",
+          "Reason": "Reconciling helps make sure all the bills and expenses are added correctly for the booking and the final amount is calculated correctly. It shows that the customer and driver payments are all settled. It also helps to get a complete picture of your revenue and commission.",
           "OnlyPremium": "This feature is available only in Premium plan."
         },
         "Reconciling": {
           "Title": "Reconciling process",
-          "Step": "You can reconcile a trip by going to the completed booking details page and clicking on 'Reconcile Trip'.",
-          "Process": "As part of reconciling, you can add any additional expenses incurred during the trip and mark the trip as reconciled. Once a trip is reconciled, it cannot be undone."
+          "Step": "You can reconcile a trip by going to the completed booking details page and clicking on 'Reconcile Trip'. This option is available only when the booking has been closed and invoice has been generated.",
+          "Process": "As part of reconciling, you can add/modify any additional transactions and mark the trip as reconciled. Once a trip is reconciled, it cannot be undone."
         }
       },
       "Assignment": {
@@ -3577,6 +3618,11 @@
           "AllDrivers": "You can view all the drivers in your agency by going to the drivers page.",
           "CTA": "View all drivers"
         },
+        "DriversSchedule": {
+          "Title": "Drivers schedule",
+          "Description": "You can view all the drivers schedule by going to the drivers schedule tab.",
+          "CTA": "View drivers schedule"
+        },
         "DriverDetails": {
           "Title": "Driver details",
           "Description": "A driver has various details associated with it.",
@@ -3680,8 +3726,16 @@
         },
         "EditingDriverLeave": {
           "Title": "Editing a driver leave",
-          "Description": "You can edit a driver leave details by selecting the leave and clicking on 'Edit'.",
-          "MarkCompleted": "Make sure to mark the leave as completed once the driver leave is over. You will receive reminder for this in missions."
+          "Description": "You can edit a driver leave details by selecting the leave and clicking on 'Edit'."
+        },
+        "StartingLeave": {
+          "Title": "Starting a leave",
+          "Description": "You can start a driver leave by going to the driver leaves page and clicking on 'Start Leave' for an upcoming leave.",
+          "Warning": "Make sure to mark the leave as completed once the driver leave is over. You will receive reminder for this in missions."
+        },
+        "EndingLeave": {
+          "Title": "Ending a leave",
+          "Description": "You can end a leave by going to the driver leaves page and clicking on 'End Leave' for an ongoing leave."
         }
       },
       "DriverApp": {
@@ -3746,7 +3800,7 @@
         "WhatAreMissions": {
           "Title": "Understanding missions",
           "Description": "Missions are basically alerts generated by the system for a user to act upon. These can be critical or non-critical missions.",
-          "AllMissions": "You can view all your missions on Missions page (Target button in the header).",
+          "AllMissions": "You can view all your missions on Missions page from the sidebar.",
           "CTA": "View missions"
         },
         "Elements": {
@@ -3774,11 +3828,14 @@
         "ActingMission": {
           "Title": "Acting on a mission",
           "Description": "You can take actions on a mission by clicking on the action link. For example, you can click on the link to view booking details and status."
-        },
+        }
+      },
+      "DocumentExpiry": {
+        "Title": "DOCUMENT EXPIRY ALERTS",
         "ExpiryAlerts": {
-          "Title": "Get expiry alerts",
-          "Description": "You will also receive alerts for expiry. For example, if a driver's license is about to expire, or a vehicle's insurance.",
-          "Items": "System will generate alerts for the following items: Driver license, Driver leaves, Vehicle insurance, PUC, RC, repairs."
+          "Title": "What are document expiry alerts?",
+          "Description": "You will also receive alerts for document related expiry. For example, if a driver's license is about to expire, or a vehicle's insurance.",
+          "Items": "System will generate alerts for the following items: Driver license, Vehicle insurance, PUC, RC."
         }
       },
       "Custom": {
@@ -4230,6 +4287,11 @@
           "AllVehicles": "You can view all the vehicles in your agency by going to the vehicles page.",
           "CTA": "View all vehicles"
         },
+        "VehiclesSchedule": {
+          "Title": "Vehicle schedule",
+          "Description": "The schedule shows a calendar view of all the vehicles along with their assigned trips or scheduled repairs.",
+          "CTA": "View vehicle schedule"
+        },
         "VehicleDetails": {
           "Title": "Vehicle details",
           "Description": "A Vehicle has various details associated with it.",
@@ -4335,6 +4397,15 @@
         "EditingVehicleRepair": {
           "Title": "Editing a vehicle repair",
           "Description": "You can edit a vehicle repair details by selecting the repair and clicking on 'Edit'."
+        },
+        "StartingVehicleRepair": {
+          "Title": "Starting a vehicle repair",
+          "Description": "You can start a vehicle repair clicking on 'Start repair' for an upcoming repair.",
+          "Warning": "Make sure to mark the repair as completed once the repair is over. You will receive reminder for this in missions."
+        },
+        "EndingVehicleRepair": {
+          "Title": "Ending a vehicle repair",
+          "Description": "You can end a vehicle repair by selecting the ongoing repair and clicking on 'End repair'."
         }
       },
       "Documents": {
@@ -6714,8 +6785,8 @@
           "Description": "Real-time status monitoring and availability tracking for your entire vehicle fleet, from cars to buses."
         },
         "F4": {
-          "Title": "Smart Analytics",
-          "Description": "Get deep insights into your revenue, fleet and driver efficiency, and peak travel periods with automated charts and reports."
+          "Title": "Mission Control",
+          "Description": "Get real-time alerts and notifications for your fleet, drivers and bookings."
         },
         "MoreCTA": "Explore All Features"
       },

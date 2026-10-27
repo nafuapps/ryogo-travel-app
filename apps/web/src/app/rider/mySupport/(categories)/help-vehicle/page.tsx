@@ -1,3 +1,30 @@
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
+import {
+  SupportFAQItem,
+  SupportFAQItemType,
+  SupportFAQWrapper,
+} from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
+import SupportTableOfContentLinkButton, {
+  SupportContentItemType,
+} from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import RiderHeader from "@/components/header/riderHeader"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -5,38 +32,11 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import RiderHeader from "@/components/header/riderHeader"
-import { ChevronRight, StickyNotes, Telescope } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
-import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader, {
-  SupportContentSectionWrapper,
-} from "@/components/flows/support/supportContentHeader"
-import {
-  SupportFAQItemType,
-  SupportFAQWrapper,
-  SupportFAQItem,
-} from "@/components/flows/support/supportFAQWrapper"
-import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import SupportTableOfContentLinkButton, {
-  SupportContentItemType,
-} from "@/components/flows/support/supportTableOfContentLink"
-import { getTranslations } from "next-intl/server"
 import { RyogoCaption } from "@/components/typography"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Separator } from "@/components/ui/separator"
+import { ChevronRight, StickyNotes, Telescope } from "lucide-react"
 import { Metadata } from "next"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import {
-  SupportTableWrapper,
-  SupportTableTextRow,
-} from "@/components/flows/support/supportTableWrapper"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
+import { getTranslations } from "next-intl/server"
 
 /*
   - Overview
@@ -190,13 +190,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("VehicleDetails.Description")}
         </RyogoCaption>
-        {/* //TODO: Add VehicleDetails page snapshot */}
-        <RyogoImage
-          alt="VehicleDetails"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+
         <SupportTableWrapper label={t("VehicleDetails.Caption")}>
           <SupportTableTextRow
             label={t("VehicleDetails.Basic")}

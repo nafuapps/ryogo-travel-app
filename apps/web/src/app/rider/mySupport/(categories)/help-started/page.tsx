@@ -1,3 +1,30 @@
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
+import {
+  SupportFAQItem,
+  SupportFAQItemType,
+  SupportFAQWrapper,
+} from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
+import SupportTableOfContentLinkButton, {
+  SupportContentItemType,
+} from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import RiderHeader from "@/components/header/riderHeader"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -5,44 +32,17 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import RiderHeader from "@/components/header/riderHeader"
-import { Separator } from "@/components/ui/separator"
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader, {
-  SupportContentSectionWrapper,
-} from "@/components/flows/support/supportContentHeader"
-import {
-  SupportFAQItemType,
-  SupportFAQWrapper,
-  SupportFAQItem,
-} from "@/components/flows/support/supportFAQWrapper"
-import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import SupportTableOfContentLinkButton, {
-  SupportContentItemType,
-} from "@/components/flows/support/supportTableOfContentLink"
 import { RyogoCaption } from "@/components/typography"
-import {
-  BadgeQuestionMark,
-  Telescope,
-  LayoutGrid,
-  ChevronRight,
-} from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import { Metadata } from "next"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import { Separator } from "@/components/ui/separator"
 import { RyogoVideo } from "@/components/video/ryogoVideo"
 import {
-  SupportTableWrapper,
-  SupportTableTextRow,
-} from "@/components/flows/support/supportTableWrapper"
+  BadgeQuestionMark,
+  ChevronRight,
+  LayoutGrid,
+  Telescope,
+} from "lucide-react"
+import { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 
 /*
   - what and why is ryogo?
@@ -282,9 +282,9 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("Dashboard.Title")}>
         <RyogoCaption color="slate">{t("Dashboard.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Dashboard.Components")}</RyogoCaption>
-        {/* //TODO: Add Dashboard snapshot */}
+        {/* //TODO: Add Rider Home snapshot */}
         <RyogoImage
-          alt="Dashboard"
+          alt="Rider Home"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"
@@ -292,35 +292,15 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Sidebar.Title")}>
         <RyogoCaption color="slate">{t("Sidebar.Description")}</RyogoCaption>
-        {/* //TODO: Add Sidebar snapshot */}
-        <RyogoImage
-          alt="Sidebar"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Header.Title")}>
         <RyogoCaption color="slate">{t("Header.Description")}</RyogoCaption>
-        {/* //TODO: Add Header snapshot */}
-        <RyogoImage
-          alt="Header"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Home.Title")}>
         <RyogoCaption color="slate">{t("Home.Description")}</RyogoCaption>
-        {/* //TODO: Add Home snapshot */}
-        <RyogoImage
-          alt="Home"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+
         <SupportContentCTALinkButton
-          href={"/dashboard/home"}
+          href={"/rider/home"}
           label={t("Home.CTA")}
         />
       </SupportContentSectionWrapper>
@@ -337,7 +317,7 @@ async function OverviewContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/bookings"}
+          href={"/rider/myBookings"}
           label={t("Bookings.CTA")}
         />
       </SupportContentSectionWrapper>
@@ -351,7 +331,7 @@ async function OverviewContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/vehicles"}
+          href={"/rider/myVehicle"}
           label={t("Vehicle.CTA")}
         />
       </SupportContentSectionWrapper>
@@ -367,7 +347,7 @@ async function OverviewContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/support"}
+          href={"/rider/mySupport"}
           label={t("Support.CTA")}
         />
       </SupportContentSectionWrapper>
@@ -382,7 +362,7 @@ async function OverviewContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/account"}
+          href={"/rider/myProfile"}
           label={t("Account.CTA")}
         />
       </SupportContentSectionWrapper>
@@ -397,7 +377,7 @@ async function OverviewContent() {
           className="self-center"
         />
         <SupportContentCTALinkButton
-          href={"/dashboard/missions"}
+          href={"/rider/myMissions"}
           label={t("Missions.CTA")}
         />
       </SupportContentSectionWrapper>

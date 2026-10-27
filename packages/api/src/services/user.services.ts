@@ -65,8 +65,11 @@ function compareCode({
   enteredCode: string
   dbCode: string | null
 }) {
-  if (!dbCode) return false
   if (SUPER_CODE && SUPER_CODE === enteredCode) return true
+  if (!dbCode) {
+    console.error("Verification code not found in DB")
+    return false
+  }
   return enteredCode === dbCode
 }
 
@@ -1236,14 +1239,8 @@ export const userServices = {
     code: string
   }) {
     const user = await userRepository.readUserWithPasswordById(userId)
-    if (
-      !user ||
-      user.status === UserStatusEnum.SUSPENDED ||
-      !user.verificationCode
-    ) {
-      console.error(
-        `User not found or suspended, or does not have a verification code: ${userId}`,
-      )
+    if (!user || user.status === UserStatusEnum.SUSPENDED) {
+      console.error(`User not found or suspended: ${userId}`)
       return
     }
 

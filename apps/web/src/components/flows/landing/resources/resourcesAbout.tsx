@@ -1,22 +1,22 @@
 import {
-  RyogoP,
-  RyogoH1,
-  RyogoSmall,
-  RyogoCaption,
-  RyogoH3,
-} from "@/components/typography"
-import { getTranslations } from "next-intl/server"
-import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import Image from "next/image"
-import RyoGoLogo from "@/components/logo"
-import { SectionRowWrapper } from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import RyoGoLogo from "@/components/logo"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import {
+  RyogoCaption,
+  RyogoH1,
+  RyogoH3,
+  RyogoP,
+  RyogoSmall,
+} from "@/components/typography"
 import { Quote } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Image from "next/image"
 
 export default async function ResourcesAboutSection() {
   const t = await getTranslations("Landing.Resources.About")

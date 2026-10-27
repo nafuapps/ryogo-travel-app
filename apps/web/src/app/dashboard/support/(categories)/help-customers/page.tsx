@@ -1,6 +1,4 @@
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
 import SupportContentHeader, {
   SupportContentSectionWrapper,
 } from "@/components/flows/support/supportContentHeader"
@@ -9,12 +7,24 @@ import {
   SupportFAQItemType,
   SupportFAQWrapper,
 } from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
 import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
 import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
 import SupportTableOfContentLinkButton, {
   SupportContentItemType,
 } from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableStatusRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -22,8 +32,10 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
+import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   ChevronRight,
   PhoneCall,
@@ -34,20 +46,8 @@ import {
   UserPlus,
   UserSearch,
 } from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import {
-  SupportTableWrapper,
-  SupportTableStatusRow,
-} from "@/components/flows/support/supportTableWrapper"
-import { CustomerStatusPill } from "@/components/pills/ryogoPills"
-import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
+import { getTranslations } from "next-intl/server"
 
 /*
   - Details
@@ -292,13 +292,6 @@ async function AddingContent() {
         <RyogoCaption color="slate">
           {t("AddingInBooking.Required")}
         </RyogoCaption>
-        {/* //TODO: Add New booking - new customer page snapshot */}
-        <RyogoImage
-          alt="Create Customer - New booking"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
       </SupportContentSectionWrapper>
     </>
   )
@@ -363,7 +356,7 @@ async function CommunicationContent() {
       <RyogoCaption color="slate">
         {t("ContactingCustomer.Contact")}
       </RyogoCaption>
-      {/* //TODO: Add Connect with customer page snapshot */}
+      {/* //TODO: Add Contact customer page snapshot */}
       <RyogoImage
         alt="Contact Customer"
         imageSize="xl"

@@ -356,34 +356,13 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Sidebar.Title")}>
         <RyogoCaption color="slate">{t("Sidebar.Description")}</RyogoCaption>
-        {/* //TODO: Add Sidebar snapshot */}
-        <RyogoImage
-          alt="Sidebar"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Header.Title")}>
         <RyogoCaption color="slate">{t("Header.Description")}</RyogoCaption>
-        {/* //TODO: Add Header snapshot */}
-        <RyogoImage
-          alt="Header"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Home.Title")}>
         <RyogoCaption color="slate">{t("Home.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Home.Actions")}</RyogoCaption>
-        {/* //TODO: Add Home snapshot */}
-        <RyogoImage
-          alt="Home"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
         <SupportContentCTALinkButton
           href={"/dashboard/home"}
           label={t("Home.CTA")}

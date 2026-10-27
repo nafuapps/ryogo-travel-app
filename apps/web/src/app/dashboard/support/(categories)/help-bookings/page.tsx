@@ -60,12 +60,14 @@ import {
   CalendarX,
   ChevronRight,
   IndianRupee,
+  ListChecks,
   ListTodo,
   Logs,
   MapPlus,
   PhoneCall,
   Plus,
   ScanEye,
+  SquareGanttChart,
   StickyNotes,
   Tickets,
 } from "lucide-react"
@@ -73,6 +75,7 @@ import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 /*
   - Overview
+  - Managing
   - Creation
   - Price & Commission
   - Confirmation
@@ -104,7 +107,12 @@ export default async function SupportHelpBookingsPage() {
       icon: Tickets,
       content: <OverviewContent />,
     },
-    //TODO: List of all bookings (leads,  ongoing, completed, cancelled, etc)
+    {
+      id: "managing",
+      title: t("Managing.Title"),
+      icon: SquareGanttChart,
+      content: <ManagingContent />,
+    },
     {
       id: "creation",
       title: t("Creation.Title"),
@@ -128,6 +136,12 @@ export default async function SupportHelpBookingsPage() {
       title: t("Cancellation.Title"),
       icon: CalendarX,
       content: <CancellationContent />,
+    },
+    {
+      id: "closing",
+      title: t("Closing.Title"),
+      icon: ListChecks,
+      content: <ClosingContent />,
     },
     {
       id: "reconciling",
@@ -305,7 +319,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("WhatIsBooking.AllBookings")}
         </RyogoCaption>
-        {/* //TODO: Add all bookings page snapshot */}
+        {/* //TODO: Add bookings home page snapshot */}
         <RyogoImage
           alt="All Bookings"
           imageSize="xl"
@@ -388,6 +402,82 @@ async function OverviewContent() {
             <BookingStatusPill status={BookingStatusEnum.CANCELLED} />
           </SupportTableStatusRow>
         </SupportTableWrapper>
+      </SupportContentSectionWrapper>
+    </>
+  )
+}
+
+async function ManagingContent() {
+  const t = await getTranslations("Dashboard.SupportBookingsHelp.Managing")
+  return (
+    <>
+      <SupportContentSectionWrapper title={t("Ongoing.Title")}>
+        <RyogoCaption color="slate">{t("Ongoing.Description")}</RyogoCaption>
+        {/* //TODO: Add bookings home page snapshot */}
+        <RyogoImage
+          alt="Ongoing"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <RyogoCaption color="slate">{t("Ongoing.Schedule")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Ongoing.History")}</RyogoCaption>
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Upcoming.Title")}>
+        <RyogoCaption color="slate">{t("Upcoming.Description")}</RyogoCaption>
+        {/* //TODO: Add upcoming bookings page snapshot */}
+        <RyogoImage
+          alt="Upcoming"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/bookings"}
+          label={t("Upcoming.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Leads.Title")}>
+        <RyogoCaption color="slate">{t("Leads.Description")}</RyogoCaption>
+        {/* //TODO: Add Leads bookings page snapshot */}
+        <RyogoImage
+          alt="Leads"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/bookings/leads"}
+          label={t("Leads.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Completed.Title")}>
+        <RyogoCaption color="slate">{t("Completed.Description")}</RyogoCaption>
+        {/* //TODO: Add completed bookings page snapshot */}
+        <RyogoImage
+          alt="Completed"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/bookings/completed"}
+          label={t("Completed.CTA")}
+        />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("Cancelled.Title")}>
+        <RyogoCaption color="slate">{t("Cancelled.Description")}</RyogoCaption>
+        {/* //TODO: Add Cancelled bookings page snapshot */}
+        <RyogoImage
+          alt="Cancelled"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/dashboard/bookings/cancelled"}
+          label={t("Cancelled.CTA")}
+        />
       </SupportContentSectionWrapper>
     </>
   )
@@ -528,6 +618,27 @@ async function CancellationContent() {
   )
 }
 
+async function ClosingContent() {
+  const t = await getTranslations("Dashboard.SupportBookingsHelp.Closing")
+  return (
+    <>
+      <SupportContentSectionWrapper title={t("Overview.Title")}>
+        <RyogoCaption color="slate">{t("Overview.Description")}</RyogoCaption>
+        <SupportWarningWrapper text={t("Overview.Reopen")} />
+      </SupportContentSectionWrapper>
+      <SupportContentSectionWrapper title={t("GeneratingInvoice.Title")}>
+        <RyogoCaption color="slate">{t("GeneratingInvoice.Step")}</RyogoCaption>
+        {/* //TODO: Add Close booking page snapshot */}
+        <RyogoImage
+          alt="GeneratingInvoice"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+      </SupportContentSectionWrapper>
+    </>
+  )
+}
 async function ReconcilingContent({ isOwner }: { isOwner: boolean }) {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Reconciling")
   return (
@@ -615,7 +726,7 @@ async function TransactionsContent() {
         <RyogoCaption color="slate">
           {t("WhatIsTransaction.Description")}
         </RyogoCaption>
-        {/* //TODO: Add All Transactions snapshot */}
+        {/* //TODO: All Transactions snapshot */}
         <RyogoImage
           alt="Transactions"
           imageSize="xl"
@@ -630,7 +741,7 @@ async function TransactionsContent() {
         <RyogoCaption color="slate">
           {t("AddingTransaction.Process")}
         </RyogoCaption>
-        {/* //TODO: Add New Transaction snapshot */}
+        {/* //TODO: New Transaction snapshot */}
         <RyogoImage
           alt="New Transaction"
           imageSize="xl"
@@ -642,7 +753,7 @@ async function TransactionsContent() {
         <RyogoCaption color="slate">
           {t("ModifyingTransaction.Description")}
         </RyogoCaption>
-        {/* //TODO: Add New Transaction snapshot */}
+        {/* //TODO: Modify Transaction snapshot */}
         <RyogoImage
           alt="Modify Transaction"
           imageSize="xl"
@@ -654,7 +765,7 @@ async function TransactionsContent() {
         <RyogoCaption color="slate">
           {t("ApprovingTransaction.Description")}
         </RyogoCaption>
-        {/* //TODO: Add Approving Transaction snapshot */}
+        {/* //TODO: Approving Transaction snapshot */}
         <RyogoImage
           alt="Approving Transaction"
           imageSize="xl"
@@ -702,7 +813,7 @@ async function ExpensesContent() {
         <RyogoCaption color="slate">
           {t("ModifyingExpense.Description")}
         </RyogoCaption>
-        {/* //TODO: Add New expense snapshot */}
+        {/* //TODO: Add Modify expense snapshot */}
         <RyogoImage
           alt="Modify expense"
           imageSize="xl"

@@ -1,3 +1,37 @@
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
+import {
+  SupportFAQItem,
+  SupportFAQItemType,
+  SupportFAQWrapper,
+} from "@/components/flows/support/supportFAQWrapper"
+import {
+  SupportListItem,
+  SupportListWrapper,
+} from "@/components/flows/support/supportListWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
+import SupportTableOfContentLinkButton, {
+  SupportContentItemType,
+} from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableStatusRow,
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
+import RiderHeader from "@/components/header/riderHeader"
+import ExpenseIcon from "@/components/icons/expenseIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -5,7 +39,17 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import RiderHeader from "@/components/header/riderHeader"
+import {
+  BookingStatusPill,
+  TripLogStatusPill,
+} from "@/components/pills/ryogoPills"
+import { RyogoCaption } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
+import {
+  BookingStatusEnum,
+  ExpenseTypesEnum,
+  TripLogTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import {
   BanknoteArrowDown,
   CalendarCheck,
@@ -15,52 +59,8 @@ import {
   Tickets,
   Waypoints,
 } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader, {
-  SupportContentSectionWrapper,
-} from "@/components/flows/support/supportContentHeader"
-import {
-  SupportFAQItemType,
-  SupportFAQWrapper,
-  SupportFAQItem,
-} from "@/components/flows/support/supportFAQWrapper"
-import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import SupportTableOfContentLinkButton, {
-  SupportContentItemType,
-} from "@/components/flows/support/supportTableOfContentLink"
-import { RyogoCaption } from "@/components/typography"
-import { getTranslations } from "next-intl/server"
-import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import {
-  SupportTableWrapper,
-  SupportTableTextRow,
-  SupportTableStatusRow,
-} from "@/components/flows/support/supportTableWrapper"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import {
-  BookingStatusPill,
-  TripLogStatusPill,
-} from "@/components/pills/ryogoPills"
-import {
-  BookingStatusEnum,
-  ExpenseTypesEnum,
-  TripLogTypesEnum,
-} from "@ryogo-travel-app/db/schema"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
 import { Metadata } from "next"
-import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
-import {
-  SupportListWrapper,
-  SupportListItem,
-} from "@/components/flows/support/supportListWrapper"
-import ExpenseIcon from "@/components/icons/expenseIcon"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
+import { getTranslations } from "next-intl/server"
 
 /*
   - Booking Overview
@@ -315,9 +315,9 @@ async function AssignmentContent() {
         <RyogoCaption color="slate">
           {t("BookingAssignment.Description")}
         </RyogoCaption>
-        {/* //TODO: Add booking assignment snapshot */}
+        {/* //TODO: Add upcoming Bookings snapshot */}
         <RyogoImage
-          alt="Booking Assignment"
+          alt="Current"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"
@@ -327,25 +327,11 @@ async function AssignmentContent() {
         <RyogoCaption color="slate">
           {t("CurrentBooking.Description")}
         </RyogoCaption>
-        {/* //TODO: Add Current Booking snapshot */}
-        <RyogoImage
-          alt="Current"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("UpcomingBookings.Title")}>
         <RyogoCaption color="slate">
           {t("UpcomingBookings.Description")}
         </RyogoCaption>
-        {/* //TODO: Add Upcoming Bookings snapshot */}
-        <RyogoImage
-          alt="Upcoming"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
       </SupportContentSectionWrapper>
     </>
   )
@@ -358,13 +344,6 @@ async function ExecutionContent() {
         <RyogoCaption color="slate">
           {t("AccessingCurrent.Description")}
         </RyogoCaption>
-        {/* //TODO: Add Accessing Current snapshot */}
-        <RyogoImage
-          alt="Accessing Current"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Steps.Title")}>
         <RyogoCaption color="slate">{t("Steps.Description")}</RyogoCaption>
@@ -507,7 +486,7 @@ async function ExpensesContent() {
         <RyogoCaption color="slate">
           {t("ModifyingExpense.Description")}
         </RyogoCaption>
-        {/* //TODO: Add New expense snapshot */}
+        {/* //TODO: Add modify expense snapshot */}
         <RyogoImage
           alt="Modify expense"
           imageSize="xl"

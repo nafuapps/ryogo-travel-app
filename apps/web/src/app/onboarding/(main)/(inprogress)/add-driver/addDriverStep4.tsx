@@ -1,26 +1,28 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import { RyogoCaption, RyogoP } from "@/components/typography"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import PreviewImage from "@/components/images/previewImage"
 import {
   DetailsBorderWrapper,
   DetailsContentWrapper,
   DetailsHeaderWrapper,
   DetailsLineItem,
+  DetailsLineWrapper,
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY } from "@/lib/uiConfig"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 export function AddDriverConfirm({
   onNext,
@@ -85,6 +87,11 @@ export function AddDriverConfirm({
                 value={finalData.address}
               />
             )}
+            {finalData.userPhotos && (
+              <DetailsLineWrapper label={t("DriverPhoto")}>
+                <PreviewImage file={finalData.userPhotos} />
+              </DetailsLineWrapper>
+            )}
           </DetailsContentWrapper>
         </DetailsBorderWrapper>
         <DetailsBorderWrapper>
@@ -103,6 +110,11 @@ export function AddDriverConfirm({
                 label={t("LicenseExpiresOn")}
                 value={finalData.licenseExpiresOn.toDateString()}
               />
+            )}
+            {finalData.licensePhotos && (
+              <DetailsLineWrapper label={t("LicensePhoto")}>
+                <PreviewImage file={finalData.licensePhotos} />
+              </DetailsLineWrapper>
             )}
           </DetailsContentWrapper>
         </DetailsBorderWrapper>

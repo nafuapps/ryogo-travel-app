@@ -1,33 +1,35 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import FormStepHeader from "@/components/form/formStepHeader"
+import PreviewImage from "@/components/images/previewImage"
 import {
-  PageWrapper,
-  StickyActionWrapper,
-  FormContentWrapper,
-  FormWrapper,
   DetailsBorderWrapper,
   DetailsContentWrapper,
   DetailsHeaderWrapper,
   DetailsLineItem,
+  DetailsLineWrapper,
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 import {
   AddVehicleTotalSteps,
   NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
   NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
 } from "@/lib/uiConfig"
-import FormStepHeader from "@/components/form/formStepHeader"
-import { RyogoCaption } from "@/components/typography"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import moment from "moment"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 export function NewVehicleConfirm({
   onPrev,
@@ -119,6 +121,10 @@ export function NewVehicleConfirm({
                 label={t("Color")}
                 value={newVehicleFormData.color}
               />
+              <DetailsLineItem
+                label={t("HasAC")}
+                value={newVehicleFormData.hasAC ? "Yes" : "No"}
+              />
               {newVehicleFormData.capacity && (
                 <DetailsLineItem
                   label={t("Capacity")}
@@ -131,10 +137,11 @@ export function NewVehicleConfirm({
                   value={`${newVehicleFormData.odometerReading}`}
                 />
               )}
-              <DetailsLineItem
-                label={t("HasAC")}
-                value={newVehicleFormData.hasAC ? "Yes" : "No"}
-              />
+              {newVehicleFormData.vehiclePhotos && (
+                <DetailsLineWrapper label={t("VehiclePhoto")}>
+                  <PreviewImage file={newVehicleFormData.vehiclePhotos} />
+                </DetailsLineWrapper>
+              )}
             </DetailsContentWrapper>
           </DetailsBorderWrapper>
           <DetailsBorderWrapper>
@@ -150,13 +157,10 @@ export function NewVehicleConfirm({
                   )}
                 />
               )}
-              {newVehicleFormData.insuranceExpiresOn && (
-                <DetailsLineItem
-                  label={t("InsuranceExpiresOn")}
-                  value={moment(newVehicleFormData.insuranceExpiresOn).format(
-                    "DD MMM YYYY",
-                  )}
-                />
+              {newVehicleFormData.rcPhotos && (
+                <DetailsLineWrapper label={t("RCPhoto")}>
+                  <PreviewImage file={newVehicleFormData.rcPhotos} />
+                </DetailsLineWrapper>
               )}
               {newVehicleFormData.pucExpiresOn && (
                 <DetailsLineItem
@@ -165,6 +169,24 @@ export function NewVehicleConfirm({
                     "DD MMM YYYY",
                   )}
                 />
+              )}
+              {newVehicleFormData.pucPhotos && (
+                <DetailsLineWrapper label={t("PUCPhoto")}>
+                  <PreviewImage file={newVehicleFormData.pucPhotos} />
+                </DetailsLineWrapper>
+              )}
+              {newVehicleFormData.insuranceExpiresOn && (
+                <DetailsLineItem
+                  label={t("InsuranceExpiresOn")}
+                  value={moment(newVehicleFormData.insuranceExpiresOn).format(
+                    "DD MMM YYYY",
+                  )}
+                />
+              )}
+              {newVehicleFormData.insurancePhotos && (
+                <DetailsLineWrapper label={t("InsurancePhoto")}>
+                  <PreviewImage file={newVehicleFormData.insurancePhotos} />
+                </DetailsLineWrapper>
               )}
             </DetailsContentWrapper>
           </DetailsBorderWrapper>

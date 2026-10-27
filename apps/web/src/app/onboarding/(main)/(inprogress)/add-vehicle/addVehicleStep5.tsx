@@ -1,30 +1,32 @@
 "use client"
 
-import { RyogoCaption, RyogoP } from "@/components/typography"
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
 import { addVehicleAction } from "@/app/actions/vehicles/addVehicleAction"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import PreviewImage from "@/components/images/previewImage"
 import {
   DetailsBorderWrapper,
   DetailsContentWrapper,
   DetailsHeaderWrapper,
   DetailsLineItem,
+  DetailsLineWrapper,
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import moment from "moment"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import {
   NEW_BOOKING_DEFAULT_VEHICLE_AC_CHARGE_PER_DAY,
   NEW_BOOKING_DEFAULT_VEHICLE_RATE_PER_KM,
 } from "@/lib/uiConfig"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
+import moment from "moment"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 export function AddVehicleConfirm({
   onNext,
@@ -109,6 +111,11 @@ export function AddVehicleConfirm({
                 value={`${finalData.odometerReading}`}
               />
             )}
+            {finalData.vehiclePhotos && (
+              <DetailsLineWrapper label={t("VehiclePhoto")}>
+                <PreviewImage file={finalData.vehiclePhotos} />
+              </DetailsLineWrapper>
+            )}
           </DetailsContentWrapper>
         </DetailsBorderWrapper>
         <DetailsBorderWrapper>
@@ -122,6 +129,22 @@ export function AddVehicleConfirm({
                 value={moment(finalData.rcExpiresOn).format("DD MMM YYYY")}
               />
             )}
+            {finalData.rcPhotos && (
+              <DetailsLineWrapper label={t("RCPhoto")}>
+                <PreviewImage file={finalData.rcPhotos} />
+              </DetailsLineWrapper>
+            )}
+            {finalData.pucExpiresOn && (
+              <DetailsLineItem
+                label={t("PUCExpiresOn")}
+                value={moment(finalData.pucExpiresOn).format("DD MMM YYYY")}
+              />
+            )}
+            {finalData.pucPhotos && (
+              <DetailsLineWrapper label={t("PUCPhoto")}>
+                <PreviewImage file={finalData.pucPhotos} />
+              </DetailsLineWrapper>
+            )}
             {finalData.insuranceExpiresOn && (
               <DetailsLineItem
                 label={t("InsuranceExpiresOn")}
@@ -130,11 +153,10 @@ export function AddVehicleConfirm({
                 )}
               />
             )}
-            {finalData.pucExpiresOn && (
-              <DetailsLineItem
-                label={t("PUCExpiresOn")}
-                value={moment(finalData.pucExpiresOn).format("DD MMM YYYY")}
-              />
+            {finalData.insurancePhotos && (
+              <DetailsLineWrapper label={t("InsurancePhoto")}>
+                <PreviewImage file={finalData.insurancePhotos} />
+              </DetailsLineWrapper>
             )}
           </DetailsContentWrapper>
         </DetailsBorderWrapper>

@@ -122,7 +122,7 @@ export function AddAgentStep1({
           description={t("Field3.Description")}
         />
         <RyogoFileInput
-          name={"agenctPhotos"}
+          name={"agentPhotos"}
           register={formData.register("agentPhotos")}
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}

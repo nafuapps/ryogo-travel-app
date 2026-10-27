@@ -1,31 +1,33 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { addDriverAction } from "@/app/actions/drivers/addDriverAction"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import FormStepHeader from "@/components/form/formStepHeader"
+import PreviewImage from "@/components/images/previewImage"
 import {
-  StickyActionWrapper,
-  FormContentWrapper,
-  FormWrapper,
-  PageWrapper,
   DetailsBorderWrapper,
   DetailsContentWrapper,
   DetailsHeaderWrapper,
   DetailsLineItem,
+  DetailsLineWrapper,
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import FormStepHeader from "@/components/form/formStepHeader"
+import { RyogoCaption } from "@/components/typography"
 import {
   AddDriverTotalSteps,
   NEW_BOOKING_DEFAULT_DRIVER_ALLOWANCE_PER_DAY,
 } from "@/lib/uiConfig"
-import { RyogoCaption } from "@/components/typography"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 export function NewDriverConfirm({
   onPrev,
@@ -119,6 +121,11 @@ export function NewDriverConfirm({
                   value={newDriverFormData.address}
                 />
               )}
+              {newDriverFormData.userPhotos && (
+                <DetailsLineWrapper label={t("DriverPhoto")}>
+                  <PreviewImage file={newDriverFormData.userPhotos} />
+                </DetailsLineWrapper>
+              )}
             </DetailsContentWrapper>
           </DetailsBorderWrapper>
           <DetailsBorderWrapper>
@@ -137,6 +144,11 @@ export function NewDriverConfirm({
                   label={t("LicenseExpiresOn")}
                   value={newDriverFormData.licenseExpiresOn.toDateString()}
                 />
+              )}
+              {newDriverFormData.licensePhotos && (
+                <DetailsLineWrapper label={t("LicensePhoto")}>
+                  <PreviewImage file={newDriverFormData.licensePhotos} />
+                </DetailsLineWrapper>
               )}
             </DetailsContentWrapper>
           </DetailsBorderWrapper>

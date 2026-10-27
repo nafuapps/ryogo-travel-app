@@ -6,11 +6,13 @@ import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import PreviewImage from "@/components/images/previewImage"
 import {
   DetailsBorderWrapper,
   DetailsContentWrapper,
   DetailsHeaderWrapper,
   DetailsLineItem,
+  DetailsLineWrapper,
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
@@ -72,6 +74,11 @@ export function AddAgentConfirm({
             <DetailsLineItem label={t("AgentName")} value={finalData.name} />
             <DetailsLineItem label={t("AgentPhone")} value={finalData.phone} />
             <DetailsLineItem label={t("AgentEmail")} value={finalData.email} />
+            {finalData.photos && (
+              <DetailsLineWrapper label={t("AgentPhoto")}>
+                <PreviewImage file={finalData.photos} />
+              </DetailsLineWrapper>
+            )}
           </DetailsContentWrapper>
         </DetailsBorderWrapper>
       </FormContentWrapper>

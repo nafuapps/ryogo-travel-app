@@ -22,7 +22,7 @@ export function OnboardingPageWrapper({
   return (
     <div
       id={id}
-      className="flex flex-col gap-4 lg:gap-5 w-full h-full overflow-y-scroll no-scrollbar px-6 py-8 md:px-8 md:py-10"
+      className="flex flex-col gap-4 lg:gap-5 w-full h-full px-6 py-8 md:px-8 md:py-10"
     >
       {children}
     </div>
@@ -104,7 +104,7 @@ export function FormWrapper<T extends FieldValues>({
       <form
         id={id}
         onSubmit={onSubmit}
-        className={`flex flex-col gap-3 lg:gap-4 w-full h-full ${justifyCenter ? "justify-center" : ""} ${className ?? ""}`}
+        className={`flex flex-col gap-3 lg:gap-4 overflow-y-scroll no-scrollbar w-full h-full ${justifyCenter ? "justify-center" : ""} ${className ?? ""}`}
       >
         {children}
       </form>
@@ -301,7 +301,7 @@ export function StickyActionWrapper({
 }) {
   return (
     <div
-      className={`empty:hidden flex flex-col gap-2 lg:gap-3 py-2 lg:py-3 sticky mt-auto bottom-0 ${bgTransparent ? "bg-transparent" : "bg-slate-50 dark:bg-slate-900 border-t"}`}
+      className={`empty:hidden flex flex-col gap-2 lg:gap-3 py-2 lg:py-3 sticky mt-auto bottom-0 border-t ${bgTransparent ? "bg-white dark:bg-slate-800" : "bg-slate-50 dark:bg-slate-900"}`}
     >
       {children}
     </div>

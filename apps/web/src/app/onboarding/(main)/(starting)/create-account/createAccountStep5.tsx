@@ -1,27 +1,29 @@
 "use client"
 
-import { RyogoP, RyogoCaption, RyogoTiny } from "@/components/typography"
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 import { createOwnerAccountAction } from "@/app/actions/users/createOwnerAccountAction"
-import { Dispatch, SetStateAction, useState } from "react"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
+import CreateAccountTCDialog from "@/components/flows/onboarding/createAccountTCDialog"
+import PreviewImage from "@/components/images/previewImage"
 import {
   DetailsBorderWrapper,
   DetailsContentWrapper,
   DetailsHeaderWrapper,
   DetailsLineItem,
+  DetailsLineWrapper,
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import CreateAccountTCDialog from "@/components/flows/onboarding/createAccountTCDialog"
+import { RyogoCaption, RyogoP, RyogoTiny } from "@/components/typography"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { Dispatch, SetStateAction, useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 export function CreateAccountConfirm({
   onNext,
@@ -119,6 +121,16 @@ export function CreateAccountConfirm({
                 value={`${finalData.agency.commissionRate}`}
               />
             )}
+            {finalData.agency.logo && (
+              <DetailsLineWrapper label={t("Logo")}>
+                <PreviewImage file={finalData.agency.logo} />
+              </DetailsLineWrapper>
+            )}
+            {finalData.agency.qrCode && (
+              <DetailsLineWrapper label={t("QRCode")}>
+                <PreviewImage file={finalData.agency.qrCode} />
+              </DetailsLineWrapper>
+            )}
           </DetailsContentWrapper>
         </DetailsBorderWrapper>
         <DetailsBorderWrapper>
@@ -138,6 +150,11 @@ export function CreateAccountConfirm({
               label={t("OwnerEmail")}
               value={finalData.owner.email}
             />
+            {finalData.owner.photos && (
+              <DetailsLineWrapper label={t("OwnerPhoto")}>
+                <PreviewImage file={finalData.owner.photos} />
+              </DetailsLineWrapper>
+            )}
           </DetailsContentWrapper>
         </DetailsBorderWrapper>
       </FormContentWrapper>

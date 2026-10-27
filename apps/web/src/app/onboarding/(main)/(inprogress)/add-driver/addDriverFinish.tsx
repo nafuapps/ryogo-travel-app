@@ -94,6 +94,7 @@ export function AddDriverFinish({
             type="button"
             label={t("PrimaryCTA")}
             size={"lg"}
+            className="w-full"
           />
         </Link>
         <RyogoOutlineButton

@@ -1,24 +1,24 @@
 "use client"
 
-import { RyogoH4, RyogoSmall } from "@/components/typography"
-import { useTranslations } from "next-intl"
-import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoH4, RyogoSmall } from "@/components/typography"
+import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
 import { Check, MessageSquareShare } from "lucide-react"
+import { useTranslations } from "next-intl"
 // import { onboardingCompleteAction } from "@/app/actions/users/onboardingCompleteAction"
 // import { useRouter } from "next/navigation"
-import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import { useForm } from "react-hook-form"
 import {
   FormContentWrapper,
   FormWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import Link from "next/link"
+import { useForm } from "react-hook-form"
 
 export function AddAgentFinish({
   finalData,
@@ -86,12 +86,13 @@ export function AddAgentFinish({
         </RyogoOutlineButton>
       </FormContentWrapper>
       <StickyActionWrapper bgTransparent>
-        <Link href="/dashboard/home?feedback=true">
+        <Link href="/dashboard/home?feedback=true" className="w-full">
           <RyogoDefaultButton
             size={"lg"}
             disabled={form.formState.isSubmitting}
             type="submit"
             label={t("PrimaryCTA")}
+            className="w-full"
           />
         </Link>
       </StickyActionWrapper>

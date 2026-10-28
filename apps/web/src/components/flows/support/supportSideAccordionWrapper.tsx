@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import {
@@ -19,8 +19,18 @@ export default function SupportSideAccordionWrapper({
   children: React.ReactNode
 }) {
   const t = useTranslations("Components.SupportAccordion")
-  const isLargeScreen = window.innerWidth >= 1024
+  const [isLargeScreen, setIsLargeScreen] = useState(false)
   const accordionItemRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)")
+    const updateScreenSize = () => setIsLargeScreen(mediaQuery.matches)
+
+    updateScreenSize()
+    mediaQuery.addEventListener("change", updateScreenSize)
+
+    return () => mediaQuery.removeEventListener("change", updateScreenSize)
+  }, [])
   const labelString = t(label)
 
   return (

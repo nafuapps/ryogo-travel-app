@@ -25,7 +25,6 @@ import {
 } from "@/components/flows/support/supportTableWrapper"
 import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
@@ -37,6 +36,7 @@ import {
 import { AgencyStatusPill, UserStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
 import { readPermissions } from "@/lib/permissions"
 import {
   PREMIUM_TRIAL_DAYS,
@@ -253,13 +253,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("ViewDetails.Description")}
         </RyogoCaption>
-        {/* //TODO: Add details page snapshot */}
-        <RyogoImage
-          alt="View Details"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/account/details.mp4" className="self-center" />
         <SupportContentCTALinkButton
           href={"/dashboard/account"}
           label={t("ViewDetails.CTA")}
@@ -299,11 +293,8 @@ async function SecurityContent({ isOwner }: { isOwner: boolean }) {
         <RyogoCaption color="slate">
           {t("ChangePassword.Description")}
         </RyogoCaption>
-        {/* //TODO: Add change password page snapshot */}
-        <RyogoImage
-          alt="Change Password"
-          imageSize="xl"
-          src="/logoPWA.png"
+        <RyogoSupportVideo
+          src="/account/change_password.mp4"
           className="self-center"
         />
         <SupportContentCTALinkButton
@@ -339,13 +330,7 @@ async function SettingsContent() {
       <RyogoCaption color="slate">
         {t("ChangePreferences.Description")}
       </RyogoCaption>
-      {/* //TODO: Add settings page snapshot */}
-      <RyogoImage
-        alt="Change Preferences"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
+      <RyogoSupportVideo src="/account/settings.mp4" className="self-center" />
       <SupportContentCTALinkButton
         href={"/dashboard/account/settings"}
         label={t("ChangePreferences.CTA")}
@@ -365,13 +350,7 @@ async function AgencyContent({ isOwner }: { isOwner: boolean }) {
         {isOwner && (
           <RyogoCaption color="slate">{t("AgencyDetails.Change")}</RyogoCaption>
         )}
-        {/* //TODO: Add agency details page snapshot */}
-        <RyogoImage
-          alt="Agency Details"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/account/agency.mp4" className="self-center" />
         <SupportContentCTALinkButton
           href={"/dashboard/account/agency"}
           label={t("AgencyDetails.CTA")}
@@ -410,11 +389,8 @@ async function SubscriptionContent({ isOwner }: { isOwner: boolean }) {
         <RyogoCaption color="slate">
           {t("PlanDetails.Description")}
         </RyogoCaption>
-        {/* //TODO: Add subscription page snapshot */}
-        <RyogoImage
-          alt="Subscription Details"
-          imageSize="xl"
-          src="/logoPWA.png"
+        <RyogoSupportVideo
+          src="/account/subscription.mp4"
           className="self-center"
         />
         <SupportContentCTALinkButton
@@ -446,11 +422,8 @@ async function SubscriptionContent({ isOwner }: { isOwner: boolean }) {
           <RyogoCaption color="slate">
             {t("GettingSubscription.Trial", { trialDays: PREMIUM_TRIAL_DAYS })}
           </RyogoCaption>
-          {/* //TODO: Add subscription buy page snapshot */}
-          <RyogoImage
-            alt="Subscription Details"
-            imageSize="xl"
-            src="/logoPWA.png"
+          <RyogoSupportVideo
+            src="/account/buy_subscription.mp4"
             className="self-center"
           />
           <SupportContentCTALinkButton

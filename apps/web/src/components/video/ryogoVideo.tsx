@@ -1,6 +1,6 @@
-import { Suspense } from "react"
-import { Skeleton } from "@/components/ui/skeleton"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Suspense } from "react"
 
 export function RyogoVideo({
   src,
@@ -23,6 +23,26 @@ export function RyogoVideo({
         className={`rounded overflow-hidden ${className ?? ""}`}
       />
     </Suspense>
+  )
+}
+
+export function RyogoSupportVideo({
+  src,
+  className,
+}: {
+  src: string
+  title?: string
+  className?: string
+}) {
+  return (
+    <video
+      src={src}
+      autoPlay
+      muted
+      loop
+      playsInline
+      className={`rounded overflow-hidden aspect-video ${className ?? ""}`}
+    />
   )
 }
 

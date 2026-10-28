@@ -4,7 +4,6 @@ import { GetCanDriveIcons } from "@/components/icons/vehicleIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
-  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
   TileGridWrapper,
@@ -16,7 +15,7 @@ import { getAverageRating } from "@/lib/utils"
 import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import { FindDriversByAgencyType } from "@ryogo-travel-app/api/services/driver.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { BadgeIndianRupee, Rows3, Star, User } from "lucide-react"
+import { BadgeIndianRupee, Star, User } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
@@ -32,24 +31,17 @@ export default async function AllDriversListComponent({
   const t = await getTranslations("Dashboard.Drivers.All")
 
   return (
-    <>
-      <SectionHeaderWrapper
-        icon={Rows3}
-        label={t("Title")}
-        count={allDrivers.length}
-      />
-      <TileGridWrapper>
-        {allDrivers.map((driver) => (
-          <DriverItemComponent key={driver.id} driver={driver} />
-        ))}
-        {!isSubscribed && allDrivers.length >= BASIC_PLAN_DRIVER_LIMIT && (
-          <SubscriptionWarningCard
-            warningText={t("Warning")}
-            ctaText={hasTriedSubscription ? t("BuyCTA") : t("TryCTA")}
-          />
-        )}
-      </TileGridWrapper>
-    </>
+    <TileGridWrapper>
+      {allDrivers.map((driver) => (
+        <DriverItemComponent key={driver.id} driver={driver} />
+      ))}
+      {!isSubscribed && allDrivers.length >= BASIC_PLAN_DRIVER_LIMIT && (
+        <SubscriptionWarningCard
+          warningText={t("Warning")}
+          ctaText={hasTriedSubscription ? t("BuyCTA") : t("TryCTA")}
+        />
+      )}
+    </TileGridWrapper>
   )
 }
 
@@ -62,10 +54,7 @@ async function DriverItemComponent({
 
   return (
     <Link href={`/dashboard/drivers/${driver.id}`}>
-      <SectionWrapper
-        id={driver.id}
-        className="transition hover:bg-slate-100 dark:hover:bg-slate-700"
-      >
+      <SectionWrapper id={driver.id} className="transition hover:opacity-70">
         <SectionRowWrapper className="items-center justify-between">
           {driver.user.photoUrl ? (
             <RyogoImage

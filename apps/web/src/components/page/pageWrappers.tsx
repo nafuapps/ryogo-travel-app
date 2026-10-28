@@ -50,7 +50,7 @@ export function PageWrapper({
     <Suspense fallback={<PageSkeleton />}>
       <div
         id={id}
-        className={`w-full flex flex-col gap-3 lg:gap-4 lg:max-w-5xl ${disableScrollInMobile ? "lg:overflow-y-scroll" : "h-full overflow-y-scroll mt-3 lg:mt-4 self-center"} no-scrollbar`}
+        className={`w-full flex flex-col gap-3 lg:gap-4 lg:max-w-5xl ${disableScrollInMobile ? "lg:overflow-y-scroll" : "h-full overflow-y-scroll mt-3 lg:mt-4 self-center"} overflow-x-visible no-scrollbar`}
       >
         {children}
       </div>
@@ -60,7 +60,7 @@ export function PageWrapper({
 
 export function SideWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col w-full lg:w-2/5 2xl:max-w-sm lg:max-w-xs lg:min-w-2xs gap-3 lg:gap-4 lg:overflow-y-scroll no-scrollbar">
+    <div className="flex flex-col w-full lg:w-2/5 2xl:max-w-sm lg:max-w-xs lg:min-w-2xs gap-3 lg:gap-4 lg:overflow-y-scroll overflow-x-visible no-scrollbar">
       {children}
     </div>
   )
@@ -76,7 +76,7 @@ export function DoubleContentWrapper({
   return (
     <Suspense fallback={<PageSkeleton />}>
       <div
-        className={`flex flex-col ${sideOnTop ? "[&>*:first-child]:order-2 [&>*:last-child]:order-1 lg:[&>*:first-child]:order-0 lg:[&>*:last-child]:order-0" : ""} lg:flex-row gap-5 lg:gap-6 mt-3 lg:mt-4 py-1 w-full self-center lg:justify-center overflow-y-scroll no-scrollbar`}
+        className={`flex flex-col ${sideOnTop ? "[&>*:first-child]:order-2 [&>*:last-child]:order-1 lg:[&>*:first-child]:order-0 lg:[&>*:last-child]:order-0" : ""} lg:flex-row gap-5 lg:gap-6 mt-3 lg:mt-4 py-1 w-full self-center lg:justify-center overflow-y-scroll overflow-x-visible no-scrollbar`}
       >
         {children}
       </div>
@@ -104,7 +104,7 @@ export function FormWrapper<T extends FieldValues>({
       <form
         id={id}
         onSubmit={onSubmit}
-        className={`flex flex-col gap-3 lg:gap-4 overflow-y-scroll no-scrollbar w-full h-full ${justifyCenter ? "justify-center" : ""} ${className ?? ""}`}
+        className={`flex flex-col gap-3 lg:gap-4 overflow-y-scroll overflow-x-visible no-scrollbar w-full h-full ${justifyCenter ? "justify-center" : ""} ${className ?? ""}`}
       >
         {children}
       </form>
@@ -158,7 +158,7 @@ export function GridWrapper({
   return (
     <div
       id={id}
-      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-800"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-4 lg:gap-5 p-4 lg:p-5 ${className ?? ""} ${overflowScroll ? "overflow-y-scroll no-scrollbar" : ""}`}
+      className={`empty:hidden ${bgColor ?? "bg-white dark:bg-slate-800"} rounded-lg shadow grid grid-cols-1 lg:grid-cols-2 w-full gap-4 lg:gap-5 p-4 lg:p-5 ${className ?? ""} ${overflowScroll ? "overflow-y-scroll overflow-x-visible no-scrollbar" : ""}`}
     >
       {children}
     </div>

@@ -4,7 +4,6 @@ import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
-  SectionHeaderWrapper,
   SectionRowWrapper,
   SectionWrapper,
   TileGridWrapper,
@@ -21,7 +20,6 @@ import {
   Armchair,
   BadgeIndianRupee,
   CircleGauge,
-  Rows3,
   Star,
 } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -39,24 +37,17 @@ export default async function AllVehiclesListComponent({
   const t = await getTranslations("Dashboard.Vehicles.All")
 
   return (
-    <>
-      <SectionHeaderWrapper
-        icon={Rows3}
-        label={t("Title")}
-        count={allVehicles.length}
-      />
-      <TileGridWrapper>
-        {allVehicles.map((vehicle) => (
-          <VehicleItemComponent key={vehicle.id} vehicle={vehicle} />
-        ))}
-        {!isSubscribed && allVehicles.length >= BASIC_PLAN_VEHICLE_LIMIT && (
-          <SubscriptionWarningCard
-            warningText={t("Warning")}
-            ctaText={hasTriedSubscription ? t("BuyCTA") : t("TryCTA")}
-          />
-        )}
-      </TileGridWrapper>
-    </>
+    <TileGridWrapper>
+      {allVehicles.map((vehicle) => (
+        <VehicleItemComponent key={vehicle.id} vehicle={vehicle} />
+      ))}
+      {!isSubscribed && allVehicles.length >= BASIC_PLAN_VEHICLE_LIMIT && (
+        <SubscriptionWarningCard
+          warningText={t("Warning")}
+          ctaText={hasTriedSubscription ? t("BuyCTA") : t("TryCTA")}
+        />
+      )}
+    </TileGridWrapper>
   )
 }
 
@@ -69,10 +60,7 @@ async function VehicleItemComponent({
 
   return (
     <Link href={`/dashboard/vehicles/${vehicle.id}`}>
-      <SectionWrapper
-        id={vehicle.id}
-        className="transition hover:bg-slate-100 dark:hover:bg-slate-700"
-      >
+      <SectionWrapper id={vehicle.id} className="transition hover:opacity-70">
         <SectionRowWrapper className="items-center justify-between">
           {vehicle.vehiclePhotoUrl ? (
             <RyogoImage

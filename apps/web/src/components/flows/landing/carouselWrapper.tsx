@@ -1,14 +1,14 @@
-import { RyogoSmall, RyogoP } from "@/components/typography"
-import { RyogoVideo } from "@/components/video/ryogoVideo"
-import { CarouselItem } from "@/components/ui/carousel"
-import Image from "next/image"
-import { RyogoPill } from "@/components/pills/ryogoPills"
-import Link from "next/link"
 import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoPill } from "@/components/pills/ryogoPills"
+import { RyogoP, RyogoSmall } from "@/components/typography"
+import { CarouselItem } from "@/components/ui/carousel"
+import { RyogoVideo } from "@/components/video/ryogoVideo"
 import { Route } from "next"
+import Image from "next/image"
+import Link from "next/link"
 
 export type VideoCarouselItemType = {
   src: string
@@ -58,7 +58,7 @@ export function BlogCarouselItem({
     <CarouselItem className="group px-2 md:px-2.5 w-full md:w-1/2 lg:w-1/3">
       <Link
         href={`/resources/blog/${blogId}` as Route}
-        className="flex flex-col gap-2 md:gap-3 hover:opacity-80"
+        className="flex flex-col gap-2 md:gap-3 hover:opacity-70"
       >
         <div className="border-8 md:border-10 border-slate-100/50 dark:border-slate-700/50 w-full max-w-2xl relative rounded-lg aspect-video overflow-hidden">
           <Image

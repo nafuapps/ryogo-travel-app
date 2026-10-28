@@ -3654,7 +3654,7 @@
           "Caption": "A list of driver status",
           "Available": "The driver is available right now. He is not on a trip.",
           "OnTrip": "The driver is currently working on a trip.",
-          "Leave": "The driver is on leave.",
+          "Leave": "The driver is on leave. Any assigned booking cannot be started during this period.",
           "Inactive": "The driver has been inactivated by the agency and cannot be assigned to any booking.",
           "Suspended": "The driver has been banned by us and cannot login to the platform."
         }
@@ -4325,7 +4325,7 @@
           "Caption": "A list of vehicle status",
           "Available": "The vehicle is available right now. It is not on a trip.",
           "OnTrip": "The vehicle is currently being used in a trip.",
-          "Repair": "The vehicle is in repair.",
+          "Repair": "The vehicle is in repair. Any assigned booking cannot be started during this period.",
           "Inactive": "The vehicle has been inactivated by the agency and cannot be assigned to any booking.",
           "Suspended": "The vehicle has been banned by us and cannot be used on the platform."
         }

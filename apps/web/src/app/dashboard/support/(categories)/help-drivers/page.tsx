@@ -37,6 +37,7 @@ import {
 import { DriverStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
 import { DriverStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   ChevronRight,
@@ -231,13 +232,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("KnowDriver.Title")}>
         <RyogoCaption color="slate">{t("KnowDriver.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("KnowDriver.AllDrivers")}</RyogoCaption>
-        {/* //TODO: Add all drivers page snapshot */}
-        <RyogoImage
-          alt="Drivers"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/all.mp4" />
         <SupportContentCTALinkButton
           href={"/dashboard/drivers"}
           label={t("KnowDriver.CTA")}
@@ -248,12 +243,7 @@ async function OverviewContent() {
           {t("DriversSchedule.Description")}
         </RyogoCaption>
         {/* //TODO: Add drivers schedule page snapshot */}
-        <RyogoImage
-          alt="DriversSchedule"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoImage alt="DriversSchedule" imageSize="xl" src="/logoPWA.png" />
         <SupportContentCTALinkButton
           href={"/dashboard/drivers/schedule"}
           label={t("DriversSchedule.CTA")}
@@ -263,13 +253,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("DriverDetails.Description")}
         </RyogoCaption>
-        {/* //TODO: Add driver details page snapshot */}
-        <RyogoImage
-          alt="Driver details"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/details.mp4" />
         <SupportTableWrapper label={t("DriverDetails.Caption")}>
           <SupportTableTextRow
             label={t("DriverDetails.Basic")}
@@ -331,43 +315,19 @@ async function AddingContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step1.Title")}>
         <RyogoCaption color="slate">{t("Step1.Description")}</RyogoCaption>
-        {/* //TODO: Add driver step1 page snapshot */}
-        <RyogoImage
-          alt="driver step1"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/add1.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step2.Title")}>
         <RyogoCaption color="slate">{t("Step2.Description")}</RyogoCaption>
-        {/* //TODO: Add driver step2 page snapshot */}
-        <RyogoImage
-          alt="driver step2"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/add2.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step3.Title")}>
         <RyogoCaption color="slate">{t("Step3.Description")}</RyogoCaption>
-        {/* //TODO: Add driver step3 page snapshot */}
-        <RyogoImage
-          alt="driver step3"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/add3.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step4.Title")}>
         <RyogoCaption color="slate">{t("Step4.Description")}</RyogoCaption>
-        {/* //TODO: Add driver step4 page snapshot */}
-        <RyogoImage
-          alt="driver step4"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/add4.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("DriverInvite.Title")}>
         <RyogoCaption color="slate">
@@ -385,12 +345,7 @@ async function EditingContent() {
         {t("ModifyingDriver.Description")}
       </RyogoCaption>
       {/* //TODO: Add ModifyingDriver page snapshot */}
-      <RyogoImage
-        alt="ModifyingDriver"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
+      <RyogoImage alt="ModifyingDriver" imageSize="xl" src="/logoPWA.png" />
     </SupportContentSectionWrapper>
   )
 }
@@ -403,12 +358,7 @@ async function AssignmentContent() {
           {t("BookingAssignment.Description")}
         </RyogoCaption>
         {/* //TODO: Add driver assignment page snapshot */}
-        <RyogoImage
-          alt="Assign Driver"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoImage alt="Assign Driver" imageSize="xl" src="/logoPWA.png" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Selection.Title")}>
         <RyogoCaption color="slate">{t("Selection.Description")}</RyogoCaption>
@@ -432,24 +382,14 @@ async function BookingsContent() {
           {t("UpcomingBookings.Description")}
         </RyogoCaption>
         {/* //TODO: Add Upcoming Bookings page snapshot */}
-        <RyogoImage
-          alt="UpcomingBookings"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoImage alt="UpcomingBookings" imageSize="xl" src="/logoPWA.png" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
         <RyogoCaption color="slate">
           {t("CompletedBookings.Description")}
         </RyogoCaption>
         {/* //TODO: Add CompletedBookings page snapshot */}
-        <RyogoImage
-          alt="CompletedBookings"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoImage alt="CompletedBookings" imageSize="xl" src="/logoPWA.png" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -463,13 +403,7 @@ async function LeavesContent() {
           {t("WhatIsLeave.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("WhatIsLeave.AllLeaves")}</RyogoCaption>
-        {/* //TODO: Add All Driver leaves page snapshot */}
-        <RyogoImage
-          alt="AllDriverLeaves"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/leaves.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("AddingDriverLeave.Title")}>
         <RyogoCaption color="slate">
@@ -478,50 +412,27 @@ async function LeavesContent() {
         <RyogoCaption color="slate">
           {t("AddingDriverLeave.Fields")}
         </RyogoCaption>
-        {/* //TODO: Add AddingDriverLeave page snapshot */}
-        <RyogoImage
-          alt="AddingDriverLeave"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/add_leave.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("EditingDriverLeave.Title")}>
         <RyogoCaption color="slate">
           {t("EditingDriverLeave.Description")}
         </RyogoCaption>
-        {/* //TODO: Add EditingDriverLeave page snapshot */}
-        <RyogoImage
-          alt="EditingDriverLeave"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/edit_leave.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("StartingLeave.Title")}>
         <RyogoCaption color="slate">
           {t("StartingLeave.Description")}
         </RyogoCaption>
-        {/* //TODO: Add StartingLeave page snapshot */}
-        <RyogoImage
-          alt="StartingLeave"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/start_leave.mp4" />
+
         <SupportWarningWrapper text={t("StartingLeave.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("EndingLeave.Title")}>
         <RyogoCaption color="slate">
           {t("EndingLeave.Description")}
         </RyogoCaption>
-        {/* //TODO: Add EndingLeave page snapshot */}
-        <RyogoImage
-          alt="EndingLeave"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/drivers/end_leave.mp4" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -539,12 +450,7 @@ async function DriverAppContent() {
           {t("WhatIsDriverApp.Download")}
         </RyogoCaption>
         {/* //TODO: Add driver app snapshot */}
-        <RyogoImage
-          alt="DriverApp"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoImage alt="DriverApp" imageSize="xl" src="/logoPWA.png" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Features.Title")}>
         <RyogoCaption color="slate">{t("Features.Description")}</RyogoCaption>

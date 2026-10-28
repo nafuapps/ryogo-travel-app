@@ -1,10 +1,32 @@
 "use client"
 
+import { addAgentAction } from "@/app/actions/users/addAgentAction"
 import {
-  RyogoInput,
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
   RyogoFileInput,
+  RyogoInput,
   RyogoOTPInput,
 } from "@/components/form/ryogoFormFields"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoH3 } from "@/components/typography"
+import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_NAME_LENGTH,
+  MIN_NAME_LENGTH,
+  PHONE_LENGTH,
+} from "@/lib/uiConfig"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { useTranslations } from "next-intl"
@@ -12,28 +34,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import { addAgentAction } from "@/app/actions/users/addAgentAction"
-import {
-  FormContentWrapper,
-  FormWrapper,
-  SectionRowWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import {
-  MAX_EMAIL_LENGTH,
-  MAX_NAME_LENGTH,
-  MIN_NAME_LENGTH,
-  PHONE_LENGTH,
-} from "@/lib/uiConfig"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { RyogoH3 } from "@/components/typography"
-import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
 
 export default function NewAgentForm({
   agencyId,
@@ -152,7 +152,7 @@ export default function NewAgentForm({
           description={t("Field3.Description")}
         />
         <RyogoFileInput
-          name={"agenctPhotos"}
+          name={"agentPhotos"}
           register={form.register("agentPhotos")}
           label={t("Field4.Title")}
           placeholder={t("Field4.Placeholder")}

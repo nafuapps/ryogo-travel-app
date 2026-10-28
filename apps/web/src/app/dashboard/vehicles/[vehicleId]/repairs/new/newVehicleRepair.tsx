@@ -22,6 +22,7 @@ import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { MAX_AMOUNT_LIMIT, MIN_AMOUNT_LIMIT } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { VehicleRepairStatusEnum } from "@ryogo-travel-app/db/schema"
+import { differenceInDays } from "date-fns"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -78,7 +79,7 @@ export default function NewVehicleRepairPageComponent({
       startDate: values.startDate,
       endDate: values.endDate,
       status:
-        values.endDate < new Date()
+        differenceInDays(new Date(), values.endDate) < 0
           ? VehicleRepairStatusEnum.COMPLETED
           : VehicleRepairStatusEnum.PENDING,
       remarks: values.remarks,

@@ -37,6 +37,7 @@ import {
 import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   ChevronRight,
@@ -236,13 +237,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("KnowVehicle.AllVehicles")}
         </RyogoCaption>
-        {/* //TODO: Add all vehicles page snapshot */}
-        <RyogoImage
-          alt="Vehicles"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/all.mp4" />
         <SupportContentCTALinkButton
           href={"/dashboard/vehicles"}
           label={t("KnowVehicle.CTA")}
@@ -268,13 +263,8 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("VehicleDetails.Description")}
         </RyogoCaption>
-        {/* //TODO: Add VehicleDetails page snapshot */}
-        <RyogoImage
-          alt="VehicleDetails"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/details.mp4" />
+
         <SupportTableWrapper label={t("VehicleDetails.Caption")}>
           <SupportTableTextRow
             label={t("VehicleDetails.Basic")}
@@ -340,53 +330,23 @@ async function AddingContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step1.Title")}>
         <RyogoCaption color="slate">{t("Step1.Description")}</RyogoCaption>
-        {/* //TODO: Add vehicle step1 page snapshot */}
-        <RyogoImage
-          alt="vehicle step1"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/add1.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step2.Title")}>
         <RyogoCaption color="slate">{t("Step2.Description")}</RyogoCaption>
-        {/* //TODO: Add vehicle step2 page snapshot */}
-        <RyogoImage
-          alt="vehicle step2"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/add2.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step3.Title")}>
         <RyogoCaption color="slate">{t("Step3.Description")}</RyogoCaption>
-        {/* //TODO: Add vehicle step3 page snapshot */}
-        <RyogoImage
-          alt="vehicle step3"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/add3.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step4.Title")}>
         <RyogoCaption color="slate">{t("Step4.Description")}</RyogoCaption>
-        {/* //TODO: Add vehicle step4 page snapshot */}
-        <RyogoImage
-          alt="vehicle step4"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/add4.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step5.Title")}>
         <RyogoCaption color="slate">{t("Step5.Description")}</RyogoCaption>
-        {/* //TODO: Add vehicle step5 page snapshot */}
-        <RyogoImage
-          alt="vehicle step5"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/add5.mp4" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -471,13 +431,7 @@ async function RepairsContent() {
         <RyogoCaption color="slate">
           {t("WhatIsRepair.AllRepairs")}
         </RyogoCaption>
-        {/* //TODO: Add All Vehicle repairs page snapshot */}
-        <RyogoImage
-          alt="AllVehicleRepairs"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/repairs.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("AddingVehicleRepair.Title")}>
         <RyogoCaption color="slate">
@@ -486,50 +440,27 @@ async function RepairsContent() {
         <RyogoCaption color="slate">
           {t("AddingVehicleRepair.Fields")}
         </RyogoCaption>
-        {/* //TODO: Add AddingVehicleRepair page snapshot */}
-        <RyogoImage
-          alt="AddingVehicleRepair"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/add_repair.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("EditingVehicleRepair.Title")}>
         <RyogoCaption color="slate">
           {t("EditingVehicleRepair.Description")}
         </RyogoCaption>
-        {/* //TODO: Add EditingVehicleRepair page snapshot */}
-        <RyogoImage
-          alt="EditingVehicleRepair"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/edit_repair.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("StartingVehicleRepair.Title")}>
         <RyogoCaption color="slate">
           {t("StartingVehicleRepair.Description")}
         </RyogoCaption>
-        {/* //TODO: Add StartingVehicleRepair page snapshot */}
-        <RyogoImage
-          alt="StartingVehicleRepair"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/start_repair.mp4" />
+
         <SupportWarningWrapper text={t("StartingVehicleRepair.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("EndingVehicleRepair.Title")}>
         <RyogoCaption color="slate">
           {t("EndingVehicleRepair.Description")}
         </RyogoCaption>
-        {/* //TODO: Add EndingVehicleRepair page snapshot */}
-        <RyogoImage
-          alt="EndingVehicleRepair"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/end-repair.mp4" />
       </SupportContentSectionWrapper>
     </>
   )

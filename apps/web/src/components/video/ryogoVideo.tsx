@@ -42,7 +42,7 @@ export function RyogoSupportVideo({
       loop
       preload="metadata"
       playsInline
-      className={`rounded overflow-hidden aspect-video ${className ?? ""}`}
+      className={`rounded overflow-hidden aspect-auto self-center ${className ?? ""}`}
     />
   )
 }

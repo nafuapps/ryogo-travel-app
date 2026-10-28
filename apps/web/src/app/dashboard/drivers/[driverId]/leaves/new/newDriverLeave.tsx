@@ -20,6 +20,7 @@ import {
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DriverLeaveStatusEnum } from "@ryogo-travel-app/db/schema"
+import { differenceInDays } from "date-fns"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -70,7 +71,7 @@ export default function NewDriverLeavePageComponent({
         startDate: values.startDate,
         endDate: values.endDate,
         status:
-          values.endDate < new Date()
+          differenceInDays(new Date(), values.endDate) < 0
             ? DriverLeaveStatusEnum.COMPLETED
             : DriverLeaveStatusEnum.PENDING,
         remarks: values.remarks,

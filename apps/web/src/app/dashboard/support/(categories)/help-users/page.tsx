@@ -37,6 +37,7 @@ import {
 import { UserStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
 import { readPermissions } from "@/lib/permissions"
 import { UserRolesEnum, UserStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
@@ -234,13 +235,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("KnowUser.Title")}>
         <RyogoCaption color="slate">{t("KnowUser.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("KnowUser.AllUsers")}</RyogoCaption>
-        {/* //TODO: Add all users page snapshot */}
-        <RyogoImage
-          alt="Users"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/users/all.mp4" />
         <SupportContentCTALinkButton
           href={"/dashboard/users"}
           label={t("KnowUser.CTA")}
@@ -310,13 +305,8 @@ async function ManagingContent() {
         </RyogoCaption>
         <RyogoCaption color="slate">{t("AddingOwner.Fields")}</RyogoCaption>
         <SupportWarningWrapper text={t("AddingOwner.Warning")} />
-        {/* //TODO: Add add owner page snapshot */}
-        <RyogoImage
-          alt="AddOwner"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/users/add_owner.mp4" />
+
         <SupportContentCTALinkButton
           href={"/dashboard/users/add-owner"}
           label={t("AddingOwner.CTA")}
@@ -327,13 +317,8 @@ async function ManagingContent() {
           {t("AddingAgent.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("AddingAgent.Fields")}</RyogoCaption>
-        {/* //TODO: Add add agent page snapshot */}
-        <RyogoImage
-          alt="AddAgent"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/users/new_agent.mp4" />
+
         <SupportContentCTALinkButton
           href={"/dashboard/users/new"}
           label={t("AddingAgent.CTA")}
@@ -343,13 +328,6 @@ async function ManagingContent() {
         <RyogoCaption color="slate">
           {t("AddingDriver.Description")}
         </RyogoCaption>
-        {/* //TODO: Add AddingDriver page snapshot */}
-        <RyogoImage
-          alt="AddingDriver"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
         <SupportContentCTALinkButton
           href={"/dashboard/drivers/new"}
           label={t("AddingDriver.CTA")}

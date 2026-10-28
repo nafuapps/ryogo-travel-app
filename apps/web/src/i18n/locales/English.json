@@ -4229,7 +4229,7 @@
         },
         "UserInvite": {
           "Title": "User invitation",
-          "Description": "As soon as you add an agent or driver, they receive an invite link on the provided email to login and join the agency."
+          "Description": "As soon as you add an agent or driver, they receive an email with an invite link and a system-generated password to login and join the agency."
         },
         "ModifyingUser": {
           "Title": "Modifying user details",

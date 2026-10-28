@@ -2052,9 +2052,6 @@
         "Title": "Repair End Date",
         "Placeholder": "Select a date"
       },
-      "Field3": {
-        "Title": "Repair already completed?"
-      },
       "Field4": {
         "Title": "Remarks (optional)",
         "Placeholder": "Add any special note about the repair"
@@ -2370,9 +2367,6 @@
         "Error2": "End date cannot be before start date",
         "Title": "Leave End Date",
         "Placeholder": "Select a date"
-      },
-      "Field3": {
-        "Title": "Leave status"
       },
       "Field4": {
         "Title": "Remarks (optional)",

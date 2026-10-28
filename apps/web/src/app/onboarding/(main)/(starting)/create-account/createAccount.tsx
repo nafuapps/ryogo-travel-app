@@ -1,22 +1,22 @@
 /* eslint-disable react-hooks/immutability */
 "use client"
 
-import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
+import { CreateAccountTotalSteps } from "@/lib/uiConfig"
+import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 import { CreateAccountFinish } from "./createAccountFinish"
 import { CreateAccountStep1 } from "./createAccountStep1"
 import { CreateAccountStep2 } from "./createAccountStep2"
 import { CreateAccountStep3 } from "./createAccountStep3"
 import { CreateAccountStep4 } from "./createAccountStep4"
 import { CreateAccountConfirm } from "./createAccountStep5"
-import { useState } from "react"
-import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { FindAllAgenciesType } from "@ryogo-travel-app/api/services/agency.services"
-import { CreateOwnerAccountRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
-import { CreateAccountTotalSteps } from "@/lib/uiConfig"
-import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export default function CreateAccountPageComponent({
   allOwners,
@@ -119,7 +119,7 @@ export default function CreateAccountPageComponent({
                   total: CreateAccountTotalSteps,
                 })
           }
-          href={""} //TODO: update onboarding video link
+          href={"https://www.youtube.com/watch?v=teL9ixqn6BQ"}
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

@@ -1,18 +1,15 @@
 "use client"
 
+import { newDriverLeaveAction } from "@/app/actions/drivers/newDriverLeaveAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import {
   RyogoDatePicker,
-  RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { DriverLeaveStatusEnum } from "@ryogo-travel-app/db/schema"
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import z from "zod"
-import { newDriverLeaveAction } from "@/app/actions/drivers/newDriverLeaveAction"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -21,11 +18,13 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoH3 } from "@/components/typography"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { DriverLeaveStatusEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function NewDriverLeavePageComponent({
   userId,
@@ -43,7 +42,6 @@ export default function NewDriverLeavePageComponent({
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
       endDate: z.date(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
-      status: z.boolean(),
       remarks: z.string().optional(),
     })
     .superRefine((data, ctx) => {
@@ -61,9 +59,6 @@ export default function NewDriverLeavePageComponent({
 
   const form = useForm<NewDriverLeaveType>({
     resolver: zodResolver(newDriverLeaveSchema),
-    defaultValues: {
-      status: false,
-    },
   })
 
   async function onSubmit(values: NewDriverLeaveType) {
@@ -74,9 +69,10 @@ export default function NewDriverLeavePageComponent({
         addedByUserId: userId,
         startDate: values.startDate,
         endDate: values.endDate,
-        status: values.status
-          ? DriverLeaveStatusEnum.COMPLETED
-          : DriverLeaveStatusEnum.PENDING,
+        status:
+          values.endDate < new Date()
+            ? DriverLeaveStatusEnum.COMPLETED
+            : DriverLeaveStatusEnum.PENDING,
         remarks: values.remarks,
       },
     })
@@ -114,7 +110,6 @@ export default function NewDriverLeavePageComponent({
             placeholder={t("Field2.Placeholder")}
             pastAllowed
           />
-          <RyogoSwitch label={t("Field3.Title")} name="status" />
           <RyogoTextarea
             name="remarks"
             label={t("Field4.Title")}

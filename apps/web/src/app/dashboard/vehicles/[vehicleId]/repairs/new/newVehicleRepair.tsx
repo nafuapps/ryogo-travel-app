@@ -1,19 +1,16 @@
 "use client"
 
-import { useTranslations } from "next-intl"
+import { newVehicleRepairAction } from "@/app/actions/vehicles/newVehicleRepairAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import {
   RyogoDatePicker,
   RyogoInput,
-  RyogoSwitch,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { VehicleRepairStatusEnum } from "@ryogo-travel-app/db/schema"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import z from "zod"
-import { newVehicleRepairAction } from "@/app/actions/vehicles/newVehicleRepairAction"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -21,13 +18,15 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoCaption, RyogoH3 } from "@/components/typography"
 import { MAX_AMOUNT_LIMIT, MIN_AMOUNT_LIMIT } from "@/lib/uiConfig"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { RyogoH3, RyogoCaption } from "@/components/typography"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { VehicleRepairStatusEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function NewVehicleRepairPageComponent({
   userId,
@@ -45,7 +44,6 @@ export default function NewVehicleRepairPageComponent({
     .object({
       startDate: z.date(t("Field1.Error1")).nonoptional(t("Field1.Error1")),
       endDate: z.date(t("Field2.Error1")).nonoptional(t("Field2.Error1")),
-      status: z.boolean(),
       remarks: z.string().optional(),
       cost: z.coerce
         .number<number>(t("Field5.Error1"))
@@ -70,9 +68,6 @@ export default function NewVehicleRepairPageComponent({
 
   const form = useForm<NewVehicleRepairType>({
     resolver: zodResolver(newVehicleRepairSchema),
-    defaultValues: {
-      status: false,
-    },
   })
 
   async function onSubmit(values: NewVehicleRepairType) {
@@ -82,9 +77,10 @@ export default function NewVehicleRepairPageComponent({
       addedByUserId: userId,
       startDate: values.startDate,
       endDate: values.endDate,
-      status: values.status
-        ? VehicleRepairStatusEnum.COMPLETED
-        : VehicleRepairStatusEnum.PENDING,
+      status:
+        values.endDate < new Date()
+          ? VehicleRepairStatusEnum.COMPLETED
+          : VehicleRepairStatusEnum.PENDING,
       remarks: values.remarks,
       cost: values.cost,
     })
@@ -121,7 +117,6 @@ export default function NewVehicleRepairPageComponent({
             placeholder={t("Field2.Placeholder")}
             pastAllowed
           />
-          <RyogoSwitch label={t("Field3.Title")} name="status" />
           <RyogoTextarea
             name="remarks"
             label={t("Field4.Title")}

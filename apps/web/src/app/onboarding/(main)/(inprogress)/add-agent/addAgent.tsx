@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/immutability */
 "use client"
 
-import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import { useState } from "react"
-import { AddAgentStep1 } from "./addAgentStep1"
-import { AddAgentFinish } from "./addAgentFinish"
-import { AddAgentConfirm } from "./addAgentStep2"
+import { AddAgentTotalSteps } from "@/lib/uiConfig"
 import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
 import { AddUserRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
-import { AddAgentTotalSteps } from "@/lib/uiConfig"
-import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
+import { AddAgentFinish } from "./addAgentFinish"
+import { AddAgentStep1 } from "./addAgentStep1"
+import { AddAgentConfirm } from "./addAgentStep2"
 
 export default function AddAgentPageComponent({
   agencyId,
@@ -74,7 +74,7 @@ export default function AddAgentPageComponent({
                   total: AddAgentTotalSteps,
                 })
           }
-          href={""} //TODO: update onboarding video link
+          href={"https://www.youtube.com/watch?v=Mr4v_5ZfjTA"}
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

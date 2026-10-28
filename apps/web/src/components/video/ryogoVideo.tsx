@@ -40,6 +40,7 @@ export function RyogoSupportVideo({
       autoPlay
       muted
       loop
+      preload="metadata"
       playsInline
       className={`rounded overflow-hidden aspect-video ${className ?? ""}`}
     />

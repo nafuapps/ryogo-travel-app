@@ -44,24 +44,24 @@ export default async function AllVehiclesPage() {
           isSubscribed={isSubscribed}
           hasTriedSubscription={currentUser.hasTriedSubscription}
         />
+        <StickyActionWrapper>
+          {(isSubscribed ||
+            APP_TRIAL_MODE ||
+            allVehicles.length < BASIC_PLAN_VEHICLE_LIMIT) && (
+            <Link href={`/dashboard/vehicles/new`} className="w-full">
+              <RyogoDefaultButton
+                size="lg"
+                label={t("AddVehicle")}
+                className="w-full"
+              />
+            </Link>
+          )}
+          <HelpIconButton
+            href={"/dashboard/support/help-vehicles"}
+            showLabelSmall
+          />
+        </StickyActionWrapper>
       </PageWrapper>
-      <StickyActionWrapper>
-        {(isSubscribed ||
-          APP_TRIAL_MODE ||
-          allVehicles.length < BASIC_PLAN_VEHICLE_LIMIT) && (
-          <Link href={`/dashboard/vehicles/new`} className="w-full">
-            <RyogoDefaultButton
-              size="lg"
-              label={t("AddVehicle")}
-              className="w-full"
-            />
-          </Link>
-        )}
-        <HelpIconButton
-          href={"/dashboard/support/help-vehicles"}
-          showLabelSmall
-        />
-      </StickyActionWrapper>
     </MainWrapper>
   )
 }

@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/immutability */
 "use client"
 
-import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
+import { AddDriverTotalSteps } from "@/lib/uiConfig"
+import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
+import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
-import { AddDriverStep1 } from "./addDriverStep1"
 import { AddDriverFinish } from "./addDriverFinish"
+import { AddDriverStep1 } from "./addDriverStep1"
 import { AddDriverStep2 } from "./addDriverStep2"
 import { AddDriverStep3 } from "./addDriverStep3"
 import { AddDriverConfirm } from "./addDriverStep4"
-import { FindAllUsersByRoleType } from "@ryogo-travel-app/api/services/user.services"
-import { AddDriverRequestType } from "@ryogo-travel-app/api/types/user.types"
-import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
-import { AddDriverTotalSteps } from "@/lib/uiConfig"
-import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
 
 export default function AddDriverPageComponent({
   agencyId,
@@ -99,7 +99,7 @@ export default function AddDriverPageComponent({
                   total: AddDriverTotalSteps,
                 })
           }
-          href={""} //TODO: update onboarding video link
+          href={"https://www.youtube.com/watch?v=q7kVqmNS648"}
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

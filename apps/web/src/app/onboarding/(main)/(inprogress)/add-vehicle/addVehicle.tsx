@@ -1,25 +1,25 @@
 /* eslint-disable react-hooks/immutability */
 "use client"
 
-import { useTranslations } from "next-intl"
 import OnboardingSidebar from "@/components/flows/onboarding/onboardingSidebar"
+import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
+import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
 import { useMultiStepForm } from "@/hooks/useMultiStepForm"
-import { useState } from "react"
-import { AddVehicleStep1 } from "./addVehicleStep1"
-import { AddVehicleFinish } from "./addVehicleFinish"
-import { AddVehicleStep2 } from "./addVehicleStep2"
-import { AddVehicleStep3 } from "./addVehicleStep3"
-import { AddVehicleStep4 } from "./addVehicleStep4"
-import { AddVehicleConfirm } from "./addVehicleStep5"
+import { AddVehicleTotalSteps } from "@/lib/uiConfig"
+import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
 import {
   VehicleBrandEnum,
   VehicleColorEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { AddVehicleRequestType } from "@ryogo-travel-app/api/types/vehicle.types"
-import { OnboardingPageWrapper } from "@/components/page/pageWrappers"
-import { AddVehicleTotalSteps } from "@/lib/uiConfig"
-import OnboardingStepHeader from "@/components/flows/onboarding/onboardingStepHeader"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
+import { AddVehicleFinish } from "./addVehicleFinish"
+import { AddVehicleStep1 } from "./addVehicleStep1"
+import { AddVehicleStep2 } from "./addVehicleStep2"
+import { AddVehicleStep3 } from "./addVehicleStep3"
+import { AddVehicleStep4 } from "./addVehicleStep4"
+import { AddVehicleConfirm } from "./addVehicleStep5"
 
 export default function AddVehiclePageComponent({
   agencyId,
@@ -112,7 +112,7 @@ export default function AddVehiclePageComponent({
                   total: AddVehicleTotalSteps,
                 })
           }
-          href={""} //TODO: update onboarding video link
+          href={"https://www.youtube.com/watch?v=kU_kllOAMx4"}
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

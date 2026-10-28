@@ -51,7 +51,7 @@ export default function VerifyAccountPageComponent({
                   total: VerifyAccountTotalSteps,
                 })
           }
-          href={""} //TODO: update onboarding video link
+          href={"https://www.youtube.com/watch?v=puhlxcmDclo"}
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

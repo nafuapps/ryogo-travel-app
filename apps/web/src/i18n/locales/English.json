@@ -3240,15 +3240,12 @@
       },
       "Managing": {
         "Title": "MANAGING BOOKINGS",
-        "Ongoing": {
-          "Title": "Ongoing bookings",
-          "Description": "You can view all the ongoing (in-progress) bookings in your agency on the Bookings home page.",
+        "Home": {
+          "Title": "Home page",
+          "Ongoing": "You can view all the ongoing (in-progress) bookings in your agency on the Bookings home page.",
+          "Upcoming": "All the upcoming (confirmed) bookings in your agency are also listed on the Bookings home page.",
           "Schedule": "The schedule shows a calendar view of all the ongoing and upcoming bookings along with any planned leaves or scheduled repairs.",
-          "History": "History shows a view of all the recently completed or started bookings."
-        },
-        "Upcoming": {
-          "Title": "Upcoming bookings",
-          "Description": "All the upcoming (confirmed) bookings in your agency are listed on the Bookings home page.",
+          "History": "History shows a view of all the recently completed or started bookings.",
           "CTA": "View upcoming bookings"
         },
         "Leads": {
@@ -3271,31 +3268,32 @@
         "Title": "CREATING A BOOKING",
         "HowToCreate": {
           "Title": "How to create a booking?",
-          "Description": "You can create a booking by going to the 'New Booking' page and filling in the required details like customer, vehicle, driver, trip details and more."
+          "Description": "You can create a booking by going to the 'New Booking' page and filling in the required details like customer, vehicle, driver, trip details and more. Most of the details are prefilled based on agency defaults."
         },
         "Step1": {
-          "Title": "Step1: Customer details",
-          "Description": "Find and select a customer using phone number. If not found, you can add a new customer",
+          "Title": "Step1: Select Customer",
+          "Description": "Find and select a customer using phone number. You need to enter atleast 3 digits of the phone number to search a customer.",
+          "AddCustomer": "If you cannot find an existing customer by phone number, you can add a new customer.",
           "CTA": "Create a new booking"
         },
         "Step2": {
-          "Title": "Step2: Trip details",
-          "Description": "Provide the trip details like source, destination, type, number of passengers, dates, etc."
+          "Title": "Step2: Provide basic trip details",
+          "Description": "Provide the trip details like source, destination, type, number of passengers, dates, etc. These details cannot be changed later."
         },
         "Step3": {
-          "Title": "Step3: Assignment",
-          "Description": "Choose a vehicle and driver for the trip (This is optional during creation)."
+          "Title": "Step3: Assign vehicle and driver",
+          "Description": "Choose a vehicle and driver for the trip. This is optional during creation. You can assign later if needed."
         },
         "Step4": {
-          "Title": "Step4: Variables",
-          "Description": "Enter the variable details like vehicle fare, driver allowance and commission rate to calculate the final price."
+          "Title": "Step4: Input cost",
+          "Description": "Enter the variable details like vehicle fare, driver allowance and commission rate to calculate the final price. These details cannot be changed later."
         },
         "Step5": {
           "Title": "Step5: Finalize & Create",
-          "Description": "Review the booking details and create the booking. If you want, you can go back to previous steps and change any details. Once booking is created, details cannot be changed."
+          "Description": "In the final step, you must review the details and create the booking. If you want, you can go back to previous steps and change any details."
         },
         "Lead": "Upon creation the booking will still be a Lead and will have to be confirmed by the assigned agent with pickup time and address from the customer.",
-        "ShareQuote": "A booking quotation for a created lead booking (pdf) can be shared with the customer over Whatsapp. So that the customer can review the details and confirm the trip.",
+        "ShareQuote": "A booking quotation (pdf) for the created lead can be shared with the customer over Whatsapp and email. So that the customer can review the details and confirm the trip.",
         "Default": "The system will automatically calculate the final price based on distance and default variables set in your agency details. However, you can change these variables while creating a booking in Step 4."
       },
       "Price": {

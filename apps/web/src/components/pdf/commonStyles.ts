@@ -7,7 +7,7 @@ const fontSource = (fileName: string) => {
   ) {
     return `/fonts/${fileName}`
   }
-  return `${process.cwd()}/apps/web/public/fonts/${fileName}`
+  return `${process.cwd()}/public/fonts/${fileName}`
 }
 
 const sourceRegular = fontSource("NotoSans-Regular.ttf")

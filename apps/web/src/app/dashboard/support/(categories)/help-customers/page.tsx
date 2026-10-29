@@ -35,6 +35,7 @@ import {
 import { CustomerStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
 import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   ChevronRight,
@@ -221,13 +222,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("KnowCustomer.AllCustomers")}
         </RyogoCaption>
-        {/* //TODO: Add all customers page snapshot */}
-        <RyogoImage
-          alt="Customers overview"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/customers/all.mp4" />
         <SupportContentCTALinkButton
           href={"/dashboard/customers"}
           label={t("KnowCustomer.CTA")}
@@ -240,13 +235,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("CustomerDetails.Elements")}
         </RyogoCaption>
-        {/* //TODO: Add customer details page snapshot */}
-        <RyogoImage
-          alt="Customer details"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/customers/details.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("StatusList.Title")}>
         <RyogoCaption color="slate">{t("StatusList.Description")}</RyogoCaption>
@@ -273,13 +262,7 @@ async function AddingContent() {
         <RyogoCaption color="slate">
           {t("AddingCustomer.Description")}
         </RyogoCaption>
-        {/* //TODO: Add New customer page snapshot */}
-        <RyogoImage
-          alt="Add Customer"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/customers/new.mp4" />
         <SupportContentCTALinkButton
           href={"/dashboard/customers/new"}
           label={t("AddingCustomer.CTA")}
@@ -303,13 +286,7 @@ async function EditingContent() {
       <RyogoCaption color="slate">
         {t("EditingCustomer.Description")}
       </RyogoCaption>
-      {/* //TODO: Add Modify customer page snapshot */}
-      <RyogoImage
-        alt="Edit Customer"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
+      <RyogoSupportVideo src="/customers/edit.mp4" />
     </SupportContentSectionWrapper>
   )
 }
@@ -356,13 +333,6 @@ async function CommunicationContent() {
       <RyogoCaption color="slate">
         {t("ContactingCustomer.Contact")}
       </RyogoCaption>
-      {/* //TODO: Add Contact customer page snapshot */}
-      <RyogoImage
-        alt="Contact Customer"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
     </SupportContentSectionWrapper>
   )
 }
@@ -373,13 +343,7 @@ async function SearchContent() {
       <RyogoCaption color="slate">
         {t("SearchingCustomer.Description")}
       </RyogoCaption>
-      {/* //TODO: Add Search customer page snapshot */}
-      <RyogoImage
-        alt="Search Customer"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
+      <RyogoSupportVideo src="/customers/search.mp4" />
     </SupportContentSectionWrapper>
   )
 }

@@ -411,30 +411,21 @@ async function ManagingContent() {
   const t = await getTranslations("Dashboard.SupportBookingsHelp.Managing")
   return (
     <>
-      <SupportContentSectionWrapper title={t("Ongoing.Title")}>
-        <RyogoCaption color="slate">{t("Ongoing.Description")}</RyogoCaption>
-        {/* //TODO: Add bookings home page snapshot */}
+      <SupportContentSectionWrapper title={t("Home.Title")}>
+        <RyogoCaption color="slate">{t("Home.Ongoing")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Home.Upcoming")}</RyogoCaption>
+        {/* //TODO: Add ongoing bookings page snapshot */}
         <RyogoImage
-          alt="Ongoing"
+          alt="Home"
           imageSize="xl"
           src="/logoPWA.png"
           className="self-center"
         />
-        <RyogoCaption color="slate">{t("Ongoing.Schedule")}</RyogoCaption>
-        <RyogoCaption color="slate">{t("Ongoing.History")}</RyogoCaption>
-      </SupportContentSectionWrapper>
-      <SupportContentSectionWrapper title={t("Upcoming.Title")}>
-        <RyogoCaption color="slate">{t("Upcoming.Description")}</RyogoCaption>
-        {/* //TODO: Add upcoming bookings page snapshot */}
-        <RyogoImage
-          alt="Upcoming"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoCaption color="slate">{t("Home.Schedule")}</RyogoCaption>
+        <RyogoCaption color="slate">{t("Home.History")}</RyogoCaption>
         <SupportContentCTALinkButton
           href={"/dashboard/bookings"}
-          label={t("Upcoming.CTA")}
+          label={t("Home.CTA")}
         />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Leads.Title")}>
@@ -494,7 +485,14 @@ async function CreationContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step1.Title")}>
         <RyogoCaption color="slate">{t("Step1.Description")}</RyogoCaption>
-        {/* //TODO: Add booking step1 page snapshot */}
+        {/* //TODO: Add booking find customer page snapshot */}
+        <RyogoImage
+          alt="Booking step1"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        {/* //TODO: Add booking add customer page snapshot */}
         <RyogoImage
           alt="Booking step1"
           imageSize="xl"

@@ -1,7 +1,6 @@
 "use server"
 
-import { LeadBookingEmailTemplate } from "@/components/email/leadBookingEmailTemplate"
-import sendEmail from "@/components/email/sendEmail"
+import sendBookingQuoteEmail from "@/components/email/sendBookingQuoteEmail"
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
 import { writePermissions } from "@/lib/permissions"
 import { generateBookingQuotePathName } from "@/lib/utils"
@@ -11,7 +10,6 @@ import { notificationServices } from "@ryogo-travel-app/api/services/notificatio
 import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
 import { BookingStatusEnum, EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
-import { format } from "date-fns"
 
 export async function newBookingAction({
   data,
@@ -37,31 +35,22 @@ export async function newBookingAction({
 
   //Generate and upload quote
   const quoteFile = await getLeadQuotePDF(bookingDetails)
+  const fileName = generateBookingQuotePathName(bookingDetails.id)
 
-  const quoteUrl = (
-    await uploadFile(quoteFile, generateBookingQuotePathName(bookingDetails.id))
-  ).path
+  const quoteUrl = (await uploadFile(quoteFile, fileName)).path
 
   //Update quote url in DB
-  await bookingServices.addQuoteUrl({
+  await bookingServices.addBookingQuoteSent({
     bookingId: bookingDetails.id,
     quoteUrl,
   })
 
-  // Share quote over email to customer
-  if (bookingDetails.customer.email) {
-    await sendEmail({
-      receipientEmail: [bookingDetails.customer.email],
-      subject: "Booking Quotation | RyoGo",
-      element: LeadBookingEmailTemplate({
-        name: bookingDetails.customer.name,
-        bookingId: bookingDetails.id,
-        downloadUrl: getFileUrl(quoteUrl),
-        route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
-        date: format(bookingDetails.startDate, "dd MMM"),
-      }),
-    })
-  }
+  // Share quote pdf over email to customer
+  await sendBookingQuoteEmail({
+    bookingDetails,
+    url: getFileUrl(quoteUrl),
+    fileName,
+  })
 
   //Add mission to confirm this new booking
   await missionServices.addMission({

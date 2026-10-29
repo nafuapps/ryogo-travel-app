@@ -1,7 +1,6 @@
 "use server"
 
-import { BookingCompletedInvoiceEmailTemplate } from "@/components/email/bookingCompletedInvoiceEmailTemplate"
-import sendEmail from "@/components/email/sendEmail"
+import sendBookingInvoiceEmail from "@/components/email/sendBookingInvoiceEmail"
 import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
 import { writePermissions } from "@/lib/permissions"
 import { generateBookingInvoicePathName } from "@/lib/utils"
@@ -10,7 +9,6 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { BookingStatusEnum, EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
-import { headers } from "next/headers"
 
 export async function closeBookingAction({
   bookingId,
@@ -46,33 +44,16 @@ export async function closeBookingAction({
   const invoiceFile = await getBookingInvoicePDF(bookingDetails)
   const fileName = generateBookingInvoicePathName(bookingId)
   const invoiceUrl = (await uploadFile(invoiceFile, fileName)).path
-  await bookingServices.addInvoiceUrl({ bookingId, invoiceUrl })
+  await bookingServices.addBookingInvoiceSent({ bookingId, invoiceUrl })
 
-  //Send invoice over email to customer
-  if (bookingDetails.customer.email) {
-    const headerList = await headers()
-    const host = headerList.get("host")
-    const protocol = headerList.get("x-forwarded-proto") || "http"
-    const trackingUrl = `${protocol}://${host}/track/booking/${bookingDetails.id}`
-
-    const fileUrl = getFileUrl(invoiceUrl)
-    //Send invoice over email to the customer
-    const result = await sendEmail({
-      receipientEmail: [bookingDetails.customer.email],
-      subject: "Booking Completed - Invoice | RyoGo",
-      element: BookingCompletedInvoiceEmailTemplate({
-        name: bookingDetails.customer.name,
-        bookingId: updatedBooking.id,
-        downloadUrl: fileUrl,
-        route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
-        trackUrl: trackingUrl,
-        code: bookingDetails.secretCode,
-      }),
-      attachments: [{ filename: fileName, path: fileUrl }],
-    })
-    if (result.data) {
-      await bookingServices.changeSecretCodeSentOn(bookingId)
-    }
+  //Send invoice pdf over email to customer
+  const result = await sendBookingInvoiceEmail({
+    bookingDetails,
+    url: getFileUrl(invoiceUrl),
+    fileName,
+  })
+  if (result && result.data) {
+    await bookingServices.changeSecretCodeSentOn(bookingId)
   }
 
   //Add notification

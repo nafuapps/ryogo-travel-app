@@ -1,5 +1,6 @@
 "use server"
 
+import sendBookingInvoiceEmail from "@/components/email/sendBookingInvoiceEmail"
 import getBookingInvoicePDF from "@/components/pdf/getBookingInvoicePDF"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { writePermissions } from "@/lib/permissions"
@@ -38,17 +39,26 @@ export async function sendInvoiceAction({
   }
 
   let invoiceUrl = bookingDetails.invoiceUrl
+  const fileName = generateBookingInvoicePathName(bookingId)
 
   if (!invoiceUrl) {
     //If no invoice url exists, generate and store invoice pdf file
     const invoiceFile = await getBookingInvoicePDF(bookingDetails)
-    invoiceUrl = (
-      await uploadFile(invoiceFile, generateBookingInvoicePathName(bookingId))
-    ).path
-    await bookingServices.addInvoiceUrl({ bookingId, invoiceUrl })
+    invoiceUrl = (await uploadFile(invoiceFile, fileName)).path
+    await bookingServices.addBookingInvoiceSent({ bookingId, invoiceUrl })
   } else {
     //Else, just update invoice sent time
-    await bookingServices.changeInvoiceSent(bookingId)
+    await bookingServices.addBookingInvoiceSent({ bookingId })
+  }
+
+  //Send invoice pdf over email to customer
+  const result = await sendBookingInvoiceEmail({
+    bookingDetails,
+    url: getFileUrl(invoiceUrl),
+    fileName,
+  })
+  if (result && result.data) {
+    await bookingServices.changeSecretCodeSentOn(bookingId)
   }
 
   // Send invoice pdf to customer over whatsapp

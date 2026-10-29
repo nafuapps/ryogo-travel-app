@@ -1,7 +1,6 @@
 "use server"
 
-import { LeadBookingEmailTemplate } from "@/components/email/leadBookingEmailTemplate"
-import sendEmail from "@/components/email/sendEmail"
+import sendBookingQuoteEmail from "@/components/email/sendBookingQuoteEmail"
 import getLeadQuotePDF from "@/components/pdf/getLeadQuotePDF"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { writePermissions } from "@/lib/permissions"
@@ -36,38 +35,29 @@ export async function sendQuoteAction({
   }
 
   let quoteUrl = bookingDetails.quoteUrl
+  const fileName = generateBookingQuotePathName(bookingId)
 
   if (!quoteUrl) {
     //If no url, generate quote pdf file
     const quoteFile = await getLeadQuotePDF(bookingDetails)
 
     //Upload file and get storage url
-    quoteUrl = (
-      await uploadFile(quoteFile, generateBookingQuotePathName(bookingId))
-    ).path
+    quoteUrl = (await uploadFile(quoteFile, fileName)).path
     if (!quoteUrl) return
 
     //Update quote url in DB
-    await bookingServices.addQuoteUrl({ bookingId, quoteUrl })
+    await bookingServices.addBookingQuoteSent({ bookingId, quoteUrl })
   } else {
     //Else, just update quote sent time in DB
-    await bookingServices.changeQuoteSent(bookingId)
+    await bookingServices.addBookingQuoteSent({ bookingId })
   }
 
-  // Share quote over email to customer
-  if (bookingDetails.customer.email) {
-    await sendEmail({
-      receipientEmail: [bookingDetails.customer.email],
-      subject: "Booking Quotation | RyoGo",
-      element: LeadBookingEmailTemplate({
-        name: bookingDetails.customer.name,
-        bookingId: bookingDetails.id,
-        downloadUrl: getFileUrl(quoteUrl),
-        route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
-        date: format(bookingDetails.startDate, "dd MMM"),
-      }),
-    })
-  }
+  // Share quote pdf over email to customer
+  await sendBookingQuoteEmail({
+    bookingDetails,
+    url: getFileUrl(quoteUrl),
+    fileName,
+  })
 
   //Send quote pdf to customer over whatsapp
   const t = await getTranslations("Dashboard.Whatsapp")

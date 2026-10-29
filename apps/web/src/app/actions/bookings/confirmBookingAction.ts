@@ -1,7 +1,6 @@
 "use server"
 
-import { ConfirmBookingEmailTemplate } from "@/components/email/confirmBookingEmailTemplate"
-import sendEmail from "@/components/email/sendEmail"
+import sendBookingConfirmationEmail from "@/components/email/sendBookingConfirmationEmail"
 import getBookingConfirmationPDF from "@/components/pdf/getBookingConfirmationPDF"
 import getWhatsappMessageLink from "@/components/whatsapp/getWhatsappMessageLink"
 import { writePermissions } from "@/lib/permissions"
@@ -14,7 +13,6 @@ import { BookingStatusEnum, EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { getFileUrl, uploadFile } from "@ryogo-travel-app/db/storage"
 import { format } from "date-fns"
 import { getTranslations } from "next-intl/server"
-import { headers } from "next/headers"
 
 export async function confirmBookingAction({
   data,
@@ -81,43 +79,23 @@ export async function confirmBookingAction({
 
   //Generate confirmation pdf file
   const confirmationFile = await getBookingConfirmationPDF(bookingDetails)
+  const fileName = generateBookingConfirmationPathName(bookingDetails.id)
 
   //Upload file and get storage url
-  const confirmationUrl = (
-    await uploadFile(
-      confirmationFile,
-      generateBookingConfirmationPathName(bookingDetails.id),
-    )
-  ).path
+  const confirmationUrl = (await uploadFile(confirmationFile, fileName)).path
 
   //Update confirmation url in DB
-  await bookingServices.addConfirmationUrl({
+  await bookingServices.addBookingConfirmationSent({
     bookingId: bookingDetails.id,
     confirmationUrl,
   })
 
-  //Share confirmation over email to customer
-  if (bookingDetails.customer.email) {
-    const headerList = await headers()
-    const host = headerList.get("host")
-    const protocol = headerList.get("x-forwarded-proto") || "http"
-    const trackingUrl = `${protocol}://${host}/track/booking/${bookingDetails.id}`
-
-    await sendEmail({
-      receipientEmail: [bookingDetails.customer.email],
-      subject: "Booking Confirmation | RyoGo",
-      element: ConfirmBookingEmailTemplate({
-        name: bookingDetails.customer.name,
-        bookingId: bookingDetails.id,
-        downloadUrl: getFileUrl(confirmationUrl),
-        trackingUrl: trackingUrl,
-        route: `${bookingDetails.source.city} - ${bookingDetails.destination.city}`,
-        date: format(bookingDetails.startDate, "dd MMM"),
-        assignedDriver: bookingDetails.assignedDriver?.name,
-        assignedVehicle: bookingDetails.assignedVehicle?.vehicleNumber,
-      }),
-    })
-  }
+  //Share confirmation pdf over email to customer
+  await sendBookingConfirmationEmail({
+    bookingDetails,
+    url: getFileUrl(confirmationUrl),
+    fileName,
+  })
 
   //Get booking confirmation pdf link so that it can be shared with customer over whatsapp
   const t = await getTranslations("Dashboard.Whatsapp")

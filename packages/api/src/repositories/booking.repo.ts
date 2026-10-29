@@ -2053,7 +2053,7 @@ export const bookingRepository = {
     quoteUrl,
   }: {
     bookingId: string
-    quoteUrl: string
+    quoteUrl?: string
   }) {
     return await db
       .update(bookings)
@@ -2069,25 +2069,12 @@ export const bookingRepository = {
       })
   },
 
-  async updateQuoteSent(bookingId: string) {
-    return await db
-      .update(bookings)
-      .set({
-        quoteSentOn: new Date(),
-      })
-      .where(eq(bookings.id, bookingId))
-      .returning({
-        id: bookings.id,
-        quoteSent: bookings.quoteSentOn,
-      })
-  },
-
   async updateConfirmationUrl({
     bookingId,
     confirmationUrl,
   }: {
     bookingId: string
-    confirmationUrl: string
+    confirmationUrl?: string
   }) {
     return await db
       .update(bookings)
@@ -2103,25 +2090,12 @@ export const bookingRepository = {
       })
   },
 
-  async updateConfirmationSent(bookingId: string) {
-    return await db
-      .update(bookings)
-      .set({
-        confirmationSentOn: new Date(),
-      })
-      .where(eq(bookings.id, bookingId))
-      .returning({
-        id: bookings.id,
-        confirmationSent: bookings.confirmationSentOn,
-      })
-  },
-
   async updateInvoiceUrl({
     bookingId,
     invoiceUrl,
   }: {
     bookingId: string
-    invoiceUrl: string
+    invoiceUrl?: string
   }) {
     return await db
       .update(bookings)
@@ -2134,19 +2108,6 @@ export const bookingRepository = {
         id: bookings.id,
         invoiceSent: bookings.invoiceSentOn,
         invoiceUrl: bookings.invoiceUrl,
-      })
-  },
-
-  async updateInvoiceSent(bookingId: string) {
-    return await db
-      .update(bookings)
-      .set({
-        invoiceSentOn: new Date(),
-      })
-      .where(eq(bookings.id, bookingId))
-      .returning({
-        id: bookings.id,
-        invoiceSentOn: bookings.invoiceSentOn,
       })
   },
 

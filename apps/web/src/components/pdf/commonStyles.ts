@@ -1,5 +1,5 @@
 import { Font, StyleSheet } from "@react-pdf/renderer"
-// import path from "path"
+import { HOST_URL } from "@ryogo-travel-app/api/apiConfig"
 
 const fontSource = (fileName: string) => {
   if (
@@ -9,7 +9,7 @@ const fontSource = (fileName: string) => {
   ) {
     return `/fonts/${fileName}`
   }
-  return `./fonts/${fileName}`
+  return `${HOST_URL}/fonts/${fileName}`
 }
 
 const sourceRegular = fontSource("NotoSans-Regular.ttf")

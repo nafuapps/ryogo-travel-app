@@ -1,20 +1,22 @@
-import { FindCustomerDetailsByIdType } from "@ryogo-travel-app/api/services/customer.services"
-import { getTranslations } from "next-intl/server"
-import { CalendarPlus, Camera, SquarePen } from "lucide-react"
-import Link from "next/link"
-import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
-import InactivateCustomerAlertButton from "@/components/buttons/alert/inactivateCustomerAlertButton"
 import ActivateCustomerAlertButton from "@/components/buttons/alert/activateCustomerAlertButton"
-import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoSheet"
+import InactivateCustomerAlertButton from "@/components/buttons/alert/inactivateCustomerAlertButton"
+import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
+import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import CustomerDetailsComponent from "@/components/flows/customers/details/customerDetailsComponent"
+import CustomerInfoComponent from "@/components/flows/customers/details/customerInfoComponent"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import {
-  PageWrapper,
   GridWrapper,
+  PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import CustomerInfoComponent from "@/components/flows/customers/details/customerInfoComponent"
-import CustomerDetailsComponent from "@/components/flows/customers/details/customerDetailsComponent"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import ChangeCustomerPhotoSheet from "@/components/sheets/changeCustomerPhotoSheet"
+import { FindCustomerDetailsByIdType } from "@ryogo-travel-app/api/services/customer.services"
+import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
+import { CalendarPlus, Camera, SquarePen } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function CustomerDetailsPageComponent({
   customer,
@@ -49,6 +51,14 @@ export default async function CustomerDetailsPageComponent({
           address={customer.address}
           remarks={customer.remarks}
           ratings={customer.driverRatings}
+        />
+      </GridWrapper>
+      <GridWrapper id="CustomerActionsWrapper">
+        <RyogoPhoneButton label={t("CallCustomer")} phone={customer.phone} />
+        <RyogoChatButton
+          label={t("ChatCustomer.Title")}
+          phone={customer.phone}
+          subtitle={t("ChatCustomer.Subtitle")}
         />
       </GridWrapper>
       {canChangeDetails && (

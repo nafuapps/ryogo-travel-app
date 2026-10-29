@@ -34,6 +34,7 @@ export function RyogoSupportVideo({
   title?: string
   className?: string
 }) {
+  // In future, can set a different mobile src with <source> inside <video>
   return (
     <video
       src={src}
@@ -46,6 +47,26 @@ export function RyogoSupportVideo({
     />
   )
 }
+
+// export function RyogoSupportYTVideo({
+//   src,
+//   className,
+// }: {
+//   src: string
+//   title?: string
+//   className?: string
+// }) {
+//   return (
+//     <iframe
+//       src={
+//         "https://www.youtube.com/embed/" +
+//         src +
+//         `?autoplay=1&mute=1&loop=1&controls=0&rel=0&iv_load_policy=3&playsinline=1`
+//       }
+//       className={`rounded overflow-hidden w-full aspect-video self-center ${className ?? ""}`}
+//     />
+//   )
+// }
 
 export function RyogoDialogVideo({
   src,

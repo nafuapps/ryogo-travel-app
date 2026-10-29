@@ -254,6 +254,7 @@ async function OverviewContent() {
           {t("ViewDetails.Description")}
         </RyogoCaption>
         <RyogoSupportVideo src="/account/details.mp4" />
+        {/* <RyogoSupportYTVideo src="VHx9u4dFULs" /> */}
         <SupportContentCTALinkButton
           href={"/dashboard/account"}
           label={t("ViewDetails.CTA")}

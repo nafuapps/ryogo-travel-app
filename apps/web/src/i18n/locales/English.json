@@ -2525,6 +2525,11 @@
       "CreateBooking": {
         "Title": "Create Booking",
         "Subtitle": "Add a new booking for this customer"
+      },
+      "CallCustomer": "Call Customer",
+      "ChatCustomer": {
+        "Title": "Chat with Customer",
+        "Subtitle": "Start a Whatsapp chat with customer"
       }
     },
     "CustomerDetailsHeaderTabs": {

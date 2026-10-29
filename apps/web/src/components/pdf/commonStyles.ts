@@ -1,13 +1,15 @@
 import { Font, StyleSheet } from "@react-pdf/renderer"
+// import path from "path"
 
 const fontSource = (fileName: string) => {
-  if (
-    typeof process === "undefined" ||
-    (process.env.NEXT_RUNTIME !== "nodejs" && process.release?.name !== "node")
-  ) {
-    return `/fonts/${fileName}`
-  }
-  return `${process.cwd()}/public/fonts/${fileName}`
+  // if (
+  //   typeof process === "undefined" ||
+  //   (process.env.NEXT_RUNTIME !== "nodejs" && process.release?.name !== "node")
+  // ) {
+  return `/fonts/${fileName}`
+  // }
+  // const fontDirectory = path.join(process.cwd(), "public", "fonts")
+  // return `${fontDirectory}/${fileName}`
 }
 
 const sourceRegular = fontSource("NotoSans-Regular.ttf")

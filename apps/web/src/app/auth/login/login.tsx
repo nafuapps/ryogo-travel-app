@@ -4,7 +4,7 @@ import { findLoginUsersAction } from "@/app/actions/users/findLoginUsersAction"
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import {
-  AuthPageWrapper,
+  AuthContentWrapper,
   FormWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
@@ -81,20 +81,18 @@ export default function LoginPageComponent() {
   }
 
   return (
-    <AuthPageWrapper
-      className={`${formSuccess === true && "animate-zoom-out"}`}
+    <FormWrapper<SchemaType>
+      id="LoginForm"
+      form={form}
+      className={`${formSuccess === true ? "animate-zoom-out" : formSuccess === false ? "animate-shake" : "animate-zoom-in"}`}
     >
-      <SectionColWrapper>
-        <RyogoH3 color="slate" weight="font-bold">
-          {t("PageTitle")}
-        </RyogoH3>
-        <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
-      </SectionColWrapper>
-      <FormWrapper<SchemaType>
-        id="LoginForm"
-        form={form}
-        className={`${formSuccess === false && "animate-shake"}`}
-      >
+      <AuthContentWrapper>
+        <SectionColWrapper>
+          <RyogoH3 color="slate" weight="font-bold">
+            {t("PageTitle")}
+          </RyogoH3>
+          <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
+        </SectionColWrapper>
         <RyogoOTPInput
           name={"phoneNumber"}
           label={t("Input.Title")}
@@ -105,14 +103,14 @@ export default function LoginPageComponent() {
         {form.formState.isSubmitting && (
           <RyogoCaption color="light">{t("Input.Loading")}</RyogoCaption>
         )}
-      </FormWrapper>
-      <Separator />
-      <SectionColWrapper>
-        <RyogoCaption color="light">{t("SignupTitle")}</RyogoCaption>
-        <Link href={"/auth/signup"}>
-          <RyogoOutlineButton label={t("SignupCTA")} labelColor="slate" />
-        </Link>
-      </SectionColWrapper>
-    </AuthPageWrapper>
+        <Separator />
+        <SectionColWrapper>
+          <RyogoCaption color="light">{t("SignupTitle")}</RyogoCaption>
+          <Link href={"/auth/signup"}>
+            <RyogoOutlineButton label={t("SignupCTA")} labelColor="slate" />
+          </Link>
+        </SectionColWrapper>
+      </AuthContentWrapper>
+    </FormWrapper>
   )
 }

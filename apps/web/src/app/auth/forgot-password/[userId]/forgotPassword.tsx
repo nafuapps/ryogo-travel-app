@@ -10,7 +10,7 @@ import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import { RyogoInput } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
-  AuthPageWrapper,
+  AuthContentWrapper,
   FormWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
@@ -84,20 +84,20 @@ export default function ForgotPasswordPageComponent({
   }
 
   return (
-    <AuthPageWrapper>
-      <SectionColWrapper>
-        <RyogoH3 color="slate" weight="font-bold">
-          {t("PageTitle")}
-        </RyogoH3>
-        <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
-      </SectionColWrapper>
-      <AuthAccountCard user={user} />
-      <FormWrapper<SchemaType>
-        id="ForgorPasswordForm"
-        onSubmit={form.handleSubmit(onSubmit)}
-        form={form}
-        className={`${formSuccess === false && "animate-shake"}`}
-      >
+    <FormWrapper<SchemaType>
+      id="ForgorPasswordForm"
+      onSubmit={form.handleSubmit(onSubmit)}
+      form={form}
+      className={`${formSuccess === true ? "animate-zoom-out" : formSuccess === false ? "animate-shake" : "animate-zoom-in"}`}
+    >
+      <AuthContentWrapper>
+        <SectionColWrapper>
+          <RyogoH3 color="slate" weight="font-bold">
+            {t("PageTitle")}
+          </RyogoH3>
+          <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
+        </SectionColWrapper>
+        <AuthAccountCard user={user} />
         <RyogoInput
           name={"email"}
           type="email"
@@ -147,8 +147,8 @@ export default function ForgotPasswordPageComponent({
             </Link>
           </>
         )}
-      </FormWrapper>
-    </AuthPageWrapper>
+      </AuthContentWrapper>
+    </FormWrapper>
   )
 }
 

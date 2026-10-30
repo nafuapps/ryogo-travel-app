@@ -184,6 +184,7 @@ function BookingCardAssignedWrapper({
           label={assignedDriver.name}
           url={assignedDriver.user.photoUrl}
           icon={IdCard}
+          className="flex-row-reverse"
         />
       ) : showReminder ? (
         <RyogoEnclosedIcon icon={IdCard} size="sm" color="red" bgColor="red" />

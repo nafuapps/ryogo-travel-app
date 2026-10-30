@@ -1,25 +1,25 @@
 "use client"
 
-import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
-import Link from "next/link"
-import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
-import { useTranslations } from "next-intl"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { SUPPORT_EMAIL } from "@/lib/uiConfig"
-import { Separator } from "@/components/ui/separator"
 import {
   RyogoGhostButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import AuthAccountCard from "@/components/flows/auth/authAccountCard"
-import { ChevronRight } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
+  AuthContentWrapper,
   SectionColWrapper,
-  AuthPageWrapper,
 } from "@/components/page/pageWrappers"
-import { useState } from "react"
+import { RyogoCaption, RyogoH3, RyogoSmall } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
+import { SUPPORT_EMAIL } from "@/lib/uiConfig"
+import { FindUserAccountsByPhoneType } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { ChevronRight } from "lucide-react"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 /*
   If no owner account found, show account details and nudge user to login (but also an extra option to create account)
@@ -35,14 +35,16 @@ export default function SignupExistingPageComponent({
 }) {
   const t = useTranslations("Auth.SignupPage.Step2")
   const router = useRouter()
-  const [clicked, setClicked] = useState<string | null>(null)
+  const [clicked, setClicked] = useState<boolean>(false)
 
   const hasOwnerAccount = accounts.some(
     (p) => p.userRole === UserRolesEnum.OWNER,
   )
 
   return (
-    <AuthPageWrapper>
+    <AuthContentWrapper
+      className={`${clicked ? "animate-zoom-out" : "animate-zoom-in"}`}
+    >
       <SectionColWrapper>
         <RyogoH3 color="slate" weight="font-bold">
           {t("PageTitle")}
@@ -58,8 +60,7 @@ export default function SignupExistingPageComponent({
           <Link
             href={`/auth/login/password/${account.id}`}
             key={account.id}
-            onClick={() => setClicked(account.id)}
-            className={`${clicked === account.id && "animate-zoom-out"}`}
+            onClick={() => setClicked(true)}
           >
             <AuthAccountCard user={account} isLink />
           </Link>
@@ -97,6 +98,6 @@ export default function SignupExistingPageComponent({
           </RyogoGhostButton>
         </Link>
       )}
-    </AuthPageWrapper>
+    </AuthContentWrapper>
   )
 }

@@ -11,8 +11,7 @@ import AuthAccountCard from "@/components/flows/auth/authAccountCard"
 import { RyogoInput, RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
-  AuthPageWrapper,
-  FormContentWrapper,
+  AuthContentWrapper,
   FormWrapper,
   SectionColWrapper,
   SectionRowWrapper,
@@ -119,64 +118,54 @@ export default function ResetWithCodePageComponent({
       toast.success(t("Success"))
     } else {
       toast.error(t("Error"))
+      router.refresh()
     }
   }
 
   return (
-    <AuthPageWrapper
+    <FormWrapper<SchemaType>
+      id="ForgotPasswordForm"
+      onSubmit={form.handleSubmit(onSubmit)}
+      form={form}
       className={`${formSuccess === true && "animate-zoom-out"}`}
     >
-      <SectionColWrapper>
-        <RyogoH3 color="slate" weight="font-bold">
-          {t("PageTitle")}
-        </RyogoH3>
-        <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
-      </SectionColWrapper>
-      <AuthAccountCard user={user} />
-      <FormWrapper<SchemaType>
-        id="ForgorPasswordForm"
-        onSubmit={form.handleSubmit(onSubmit)}
-        form={form}
+      <AuthContentWrapper
+        className={`${codeSuccess === true ? "hidden" : codeSuccess === false ? "animate-shake" : "animate-zoom-in"}`}
       >
-        <FormContentWrapper
-          asCard={false}
-          className={`p-1 overflow-hidden transition-transform duration-500 ease-in-out ${
-            codeSuccess === true
-              ? "-translate-x-full absolute top-0 left-0 size-0"
-              : codeSuccess === false
-                ? "animate-shake"
-                : "translate-x-0"
-          }`}
-        >
-          <RyogoOTPInput
-            name={"code"}
-            label={t("Field1.Title")}
-            length={6}
-            onSubmit={() => verifyCode(form.getValues("code"))}
-          />
-        </FormContentWrapper>
-        {!codeSuccess && (
-          <>
-            <Separator />
-            <RyogoGhostButton
-              label={t("DidnotReceiveCode")}
-              labelColor="light"
-              type="button"
-              disabled={isPending}
-              onClick={() => {
-                router.push(`/auth/forgot-password/${user.id}`)
-              }}
-            />
-          </>
-        )}
-        <FormContentWrapper
-          asCard={false}
-          className={`px-1 overflow-hidden transition-transform duration-500 ease-in-out ${
-            codeSuccess === true
-              ? "translate-x-0"
-              : "translate-x-full absolute top-0 left-0 size-0"
-          }`}
-        >
+        <SectionColWrapper>
+          <RyogoH3 color="slate" weight="font-bold">
+            {t("PageTitle")}
+          </RyogoH3>
+          <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
+        </SectionColWrapper>
+        <AuthAccountCard user={user} />
+        <RyogoOTPInput
+          name={"code"}
+          label={t("Field1.Title")}
+          length={6}
+          onSubmit={() => verifyCode(form.getValues("code"))}
+        />
+        <Separator />
+        <RyogoGhostButton
+          label={t("DidnotReceiveCode")}
+          labelColor="light"
+          type="button"
+          disabled={isPending}
+          onClick={() => {
+            router.push(`/auth/forgot-password/${user.id}`)
+          }}
+        />
+      </AuthContentWrapper>
+      {codeSuccess && (
+        <AuthContentWrapper className="animate-zoom-in">
+          <SectionColWrapper>
+            <RyogoH3 color="slate" weight="font-bold">
+              {t("PageTitle")}
+            </RyogoH3>
+            <RyogoSmall color="light">{t("Subtitle")} </RyogoSmall>
+          </SectionColWrapper>
+          <AuthAccountCard user={user} />
+
           <SectionRowWrapper className="border border-green-500 dark:border-green-500 flex items-center justify-center p-3 lg:p-4 rounded-md">
             <RyogoIcon icon={CheckCircle} size="sm" color="green" thick />
             <RyogoSmall color="green">{t("CodeVerified")}</RyogoSmall>
@@ -201,8 +190,8 @@ export default function ResetWithCodePageComponent({
             type="submit"
             disabled={form.formState.isSubmitting || isBot}
           />
-        </FormContentWrapper>
-      </FormWrapper>
-    </AuthPageWrapper>
+        </AuthContentWrapper>
+      )}
+    </FormWrapper>
   )
 }

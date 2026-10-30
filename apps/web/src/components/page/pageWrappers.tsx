@@ -104,7 +104,7 @@ export function FormWrapper<T extends FieldValues>({
       <form
         id={id}
         onSubmit={onSubmit}
-        className={`flex flex-col gap-3 lg:gap-4 overflow-y-scroll overflow-x-visible no-scrollbar w-full h-full ${justifyCenter ? "justify-center" : ""} ${className ?? ""}`}
+        className={`flex flex-col gap-3 lg:gap-4 overflow-y-scroll no-scrollbar w-full h-full ${justifyCenter ? "justify-center" : ""} ${className ?? ""}`}
       >
         {children}
       </form>
@@ -165,7 +165,7 @@ export function GridWrapper({
   )
 }
 
-export function AuthPageWrapper({
+export function AuthContentWrapper({
   children,
   className,
 }: {
@@ -173,11 +173,12 @@ export function AuthPageWrapper({
   className?: string
 }) {
   return (
-    <div
-      className={`flex flex-col justify-center sm:max-w-lg lg:max-w-xl m-auto w-full rounded-lg shadow-lg bg-white dark:bg-slate-800 p-6 md:p-8 gap-5 lg:gap-6 ${className ?? ""}`}
+    <FormContentWrapper
+      asCard={false}
+      className={`bg-white dark:bg-slate-800 rounded-lg shadow-lg w-full sm:max-w-lg lg:max-w-xl m-auto p-5 md:p-6 ${className ?? ""}`}
     >
       {children}
-    </div>
+    </FormContentWrapper>
   )
 }
 

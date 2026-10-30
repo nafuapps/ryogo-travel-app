@@ -5,7 +5,7 @@ import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
 import { RyogoOTPInput } from "@/components/form/ryogoFormFields"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
-  AuthPageWrapper,
+  AuthContentWrapper,
   FormWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
@@ -60,16 +60,18 @@ export default function SignupPageComponent() {
   }
 
   return (
-    <AuthPageWrapper
-      className={`${form.formState.isSubmitted && "animate-zoom-out"}`}
+    <FormWrapper<SchemaType>
+      id="SignupForm"
+      form={form}
+      className={`${form.formState.isSubmitted ? "animate-zoom-out" : "animate-zoom-in"}`}
     >
-      <SectionColWrapper>
-        <RyogoH3 color="slate" weight="font-bold">
-          {t("PageTitle")}
-        </RyogoH3>
-        <RyogoSmall color="light">{t("PageSubtitle")} </RyogoSmall>
-      </SectionColWrapper>
-      <FormWrapper<SchemaType> id="SignupForm" form={form}>
+      <AuthContentWrapper>
+        <SectionColWrapper>
+          <RyogoH3 color="slate" weight="font-bold">
+            {t("PageTitle")}
+          </RyogoH3>
+          <RyogoSmall color="light">{t("PageSubtitle")} </RyogoSmall>
+        </SectionColWrapper>
         <RyogoOTPInput
           name={"phoneNumber"}
           label={t("Input.Title")}
@@ -80,23 +82,23 @@ export default function SignupPageComponent() {
         {form.formState.isSubmitting && (
           <RyogoCaption color="light">{t("Input.Loading")}</RyogoCaption>
         )}
-      </FormWrapper>
-      <SectionColWrapper>
-        <PropItem label={t("Prop1")} />
-        <PropItem label={t("Prop2")} />
-        <PropItem label={t("Prop3")} />
-      </SectionColWrapper>
-      <Separator />
-      <SectionColWrapper>
-        <Link href={"/auth/login"}>
-          <RyogoGhostButton
-            label={t("LoginTitle")}
-            labelColor="light"
-            className="w-full"
-          />
-        </Link>
-      </SectionColWrapper>
-    </AuthPageWrapper>
+        <SectionColWrapper>
+          <PropItem label={t("Prop1")} />
+          <PropItem label={t("Prop2")} />
+          <PropItem label={t("Prop3")} />
+        </SectionColWrapper>
+        <Separator />
+        <SectionColWrapper>
+          <Link href={"/auth/login"}>
+            <RyogoGhostButton
+              label={t("LoginTitle")}
+              labelColor="light"
+              className="w-full"
+            />
+          </Link>
+        </SectionColWrapper>
+      </AuthContentWrapper>
+    </FormWrapper>
   )
 }
 

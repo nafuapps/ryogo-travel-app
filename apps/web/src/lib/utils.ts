@@ -13,14 +13,14 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { clsx, type ClassValue } from "clsx"
 import { addDays, differenceInDays, differenceInMinutes } from "date-fns"
+import moment from "moment"
 import { twMerge } from "tailwind-merge"
+import { SupportedImageFormats } from "./regex"
 import {
   DASHBOARD_USER_AWAY_MINUTES,
   DASHBOARD_USER_ONLINE_MINUTES,
   MAX_FILE_UPLOAD_SIZE,
 } from "./uiConfig"
-import moment from "moment"
-import { SupportedImageFormats } from "./regex"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -56,11 +56,13 @@ export function getLangDisplay(locale: UserLangEnum) {
   }
 }
 
-export function checkImageFileSize(file: FileList) {
+export function checkImageFileSize(file: FileList, optional?: boolean) {
+  if (optional && file.length < 1) return true
   return file[0] && file[0].size < MAX_FILE_UPLOAD_SIZE
 }
 
-export function checkImageFileType(file: FileList) {
+export function checkImageFileType(file: FileList, optional?: boolean) {
+  if (optional && file.length < 1) return true
   return file[0] && SupportedImageFormats.includes(file[0].type)
 }
 

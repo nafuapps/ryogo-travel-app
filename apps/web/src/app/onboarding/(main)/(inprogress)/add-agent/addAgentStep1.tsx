@@ -50,12 +50,10 @@ export function AddAgentStep1({
       .email(t("Field3.Error1"))
       .max(MAX_EMAIL_LENGTH, t("Field3.Error2")),
     agentPhotos: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field4.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field4.Error2"))
       .optional(),
   })

@@ -79,7 +79,7 @@ export default function NewVehicleRepairPageComponent({
       startDate: values.startDate,
       endDate: values.endDate,
       status:
-        differenceInDays(new Date(), values.endDate) < 0
+        differenceInDays(new Date(), values.endDate) > 0
           ? VehicleRepairStatusEnum.COMPLETED
           : VehicleRepairStatusEnum.PENDING,
       remarks: values.remarks,

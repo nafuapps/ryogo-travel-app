@@ -1,14 +1,38 @@
 "use client"
 
+import { modifyTransactionAction } from "@/app/actions/transactions/modifyTransactionAction"
+import DeleteTransactionAlertButton from "@/components/buttons/alert/deleteTransactionAlertButton"
 import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
+  RyogoDatePicker,
+  RyogoFileInput,
   RyogoInput,
   RyogoSelect,
-  RyogoTextarea,
-  RyogoFileInput,
-  RyogoDatePicker,
   RyogoSwitch,
+  RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoH3 } from "@/components/typography"
+import compressImage from "@/lib/imageCompression"
+import { FileRegex } from "@/lib/regex"
+import {
+  MAX_AMOUNT_LIMIT,
+  MAX_FIELD_DESC_LENGTH,
+  MIN_AMOUNT_LIMIT,
+} from "@/lib/uiConfig"
+import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { FindTransactionDetailsByIdType } from "@ryogo-travel-app/api/services/transaction.services"
 import {
   TransactionModesEnum,
   TransactionTypesEnum,
@@ -18,30 +42,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
-import DeleteTransactionAlertButton from "@/components/buttons/alert/deleteTransactionAlertButton"
-import { modifyTransactionAction } from "@/app/actions/transactions/modifyTransactionAction"
-import { FindTransactionDetailsByIdType } from "@ryogo-travel-app/api/services/transaction.services"
-import {
-  FormContentWrapper,
-  FormWrapper,
-  PageWrapper,
-  SectionRowWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import {
-  MAX_AMOUNT_LIMIT,
-  MAX_FIELD_DESC_LENGTH,
-  MIN_AMOUNT_LIMIT,
-} from "@/lib/uiConfig"
-import { RyogoH3 } from "@/components/typography"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
 
 export default function ModifyTransactionPageComponent({
   transactionDetails,
@@ -68,12 +68,10 @@ export default function ModifyTransactionPageComponent({
       .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error1"))
       .optional(),
     txnPhoto: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field6.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field6.Error2"))
       .optional(),
     transactionDate: z.date(),

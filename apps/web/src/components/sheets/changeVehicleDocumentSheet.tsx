@@ -58,12 +58,10 @@ export default function ChangeVehiclePhotoSheet({
       .min(expiresOn ?? new Date(), t("Field1.Error2"))
       .nonoptional(t("Field1.Error1")),
     documentPhoto: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field2.Error2"))
       .refine((file) => {
-        if (file.length < 1) return true
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field2.Error3"))
       .optional(),
   })

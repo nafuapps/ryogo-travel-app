@@ -57,8 +57,7 @@ export default function ModifyAgencyPageForm({
       .min(MIN_COMMISSION_RATE, t("Field3.Error2"))
       .max(MAX_COMMISSION_RATE, t("Field3.Error3"))
       .positive(t("Field3.Error4"))
-      .multipleOf(1, t("Field3.Error5"))
-      .optional(),
+      .multipleOf(1, t("Field3.Error5")),
     agencyState: z.string().nonoptional(t("Field4.Error1")),
     agencyCity: z.string().nonoptional(t("Field5.Error1")),
   })

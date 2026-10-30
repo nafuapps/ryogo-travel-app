@@ -63,12 +63,10 @@ export default function MidTripSheet({
       .nonnegative(t("Field1.Error5"))
       .nonoptional(t("Field1.Error1")),
     tripLogPhoto: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field2.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field2.Error2"))
       .optional(),
     remarks: z

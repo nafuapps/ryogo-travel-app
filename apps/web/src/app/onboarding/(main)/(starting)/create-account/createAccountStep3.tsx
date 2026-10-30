@@ -40,12 +40,10 @@ export function CreateAccountStep3({
   const t = useTranslations("Onboarding.CreateAccountPage.Step3")
   const step3Schema = z.object({
     agencyLogo: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field1.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field1.Error2"))
       .optional(),
     commissionRate: z.coerce
@@ -66,12 +64,10 @@ export function CreateAccountStep3({
       .min(1, t("Field4.Error1"))
       .nonoptional(t("Field4.Error1")),
     qrCode: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field5.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field5.Error2"))
       .optional(),
   })

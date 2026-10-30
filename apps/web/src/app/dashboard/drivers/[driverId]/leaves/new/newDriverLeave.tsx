@@ -71,7 +71,7 @@ export default function NewDriverLeavePageComponent({
         startDate: values.startDate,
         endDate: values.endDate,
         status:
-          differenceInDays(new Date(), values.endDate) < 0
+          differenceInDays(new Date(), values.endDate) > 0
             ? DriverLeaveStatusEnum.COMPLETED
             : DriverLeaveStatusEnum.PENDING,
         remarks: values.remarks,

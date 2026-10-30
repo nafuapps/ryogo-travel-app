@@ -1,27 +1,27 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { useState } from "react"
-import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import {
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/flows/bookings/cards/bookingCards"
+import { RepairPopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import DashboardScheduleDayAxis, {
   DashboardScheduleChart,
   DashboardScheduleContent,
   DashboardScheduleHeader,
   DashboardScheduleItem,
-  DashboardScheduleItemID,
   DashboardScheduleItemBar,
-  SelectableDays,
   DashboardScheduleItemGrid,
+  DashboardScheduleItemID,
+  SelectableDays,
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
-import { RepairPopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
-import { SectionWrapper } from "@/components/page/pageWrappers"
 import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
+import { SectionWrapper } from "@/components/page/pageWrappers"
+import { FindVehiclesScheduleNextDaysType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
-import {
-  OngoingBookingCard,
-  UpcomingBookingCard,
-} from "@/components/flows/bookings/cards/bookingCards"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 export default function VehiclesScheduleChartComponent({
   vehicleSchedule14Days,
@@ -90,8 +90,8 @@ export default function VehiclesScheduleChartComponent({
                               b.startDate < new Date()) ||
                             (b.status === BookingStatusEnum.IN_PROGRESS &&
                               b.endDate < new Date())
-                              ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600"
-                              : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
+                              ? "bg-red-700 dark:bg-red-300 opacity-80 hover:opacity-70"
+                              : "bg-slate-700 dark:bg-slate-300 opacity-80 hover:opacity-70"
                           }
                         >
                           {b.status === BookingStatusEnum.CONFIRMED ? (
@@ -116,7 +116,7 @@ export default function VehiclesScheduleChartComponent({
                           id={r.id}
                           selectedDays={selectedDays}
                           className={
-                            "bg-yellow-300 dark:bg-yellow-700 hover:bg-yellow-400 dark:hover:bg-yellow-600"
+                            "bg-yellow-700 dark:bg-yellow-300 opacity-80 hover:opacity-70"
                           }
                         >
                           <RepairPopoverCard {...r} />

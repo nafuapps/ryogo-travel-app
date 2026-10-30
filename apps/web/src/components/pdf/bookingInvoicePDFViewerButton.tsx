@@ -1,9 +1,8 @@
 "use client"
 
-import { BookingInvoiceDocument } from "./getBookingInvoicePDF"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { BookingInvoiceDocument } from "./getBookingInvoicePDF"
 import RyogoPDFViewerButton from "./ryogoPDFViewerButton"
-import { Eye } from "lucide-react"
 
 export default function BookingInvoicePDFViewerButton({
   booking,
@@ -17,7 +16,6 @@ export default function BookingInvoicePDFViewerButton({
       document={<BookingInvoiceDocument booking={booking} />}
       fileName={`${booking.id}-invoice.pdf`}
       label={label}
-      icon={Eye}
     />
   )
 }

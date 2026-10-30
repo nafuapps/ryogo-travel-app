@@ -8,6 +8,7 @@ const options: Options = {
 
 export default async function compressImage(file?: FileList) {
   if (!file || !file[0]) return
+  if (file[0].size < 200000) return file[0]
   try {
     const compressedImage = await imageCompression(file[0], options)
     return compressedImage

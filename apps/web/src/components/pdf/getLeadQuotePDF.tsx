@@ -1,18 +1,18 @@
 /* eslint-disable jsx-a11y/alt-text */
+import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
+import { formatIndianCurrency, getBookingTrackingLink } from "@/lib/utils"
 import ReactPDF, {
   Document,
-  Page,
   Image,
+  Link,
+  Page,
   Text,
   View,
-  Link,
 } from "@react-pdf/renderer"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { styles } from "./commonStyles"
-import { HOMEPAGE_URL, RyogoLogoSrc } from "@/lib/uiConfig"
-import { formatIndianCurrency, getBookingTrackingLink } from "@/lib/utils"
 import { format } from "date-fns"
+import { styles } from "./commonStyles"
 
 export function LeadQuoteDocument({
   booking,
@@ -26,10 +26,13 @@ export function LeadQuoteDocument({
     <Document>
       <Page size="A4" style={styles.page}>
         <View id="header" style={styles.header} wrap={false}>
-          {agencyLogoUrl && (
-            <Image src={getFileUrl(agencyLogoUrl)} style={styles.agencyLogo} />
-          )}
           <View id="headerLeft" style={styles.headerLeft}>
+            {agencyLogoUrl && (
+              <Image
+                src={getFileUrl(agencyLogoUrl)}
+                style={styles.agencyLogo}
+              />
+            )}
             <Text id="AgencyName" style={styles.h2}>
               {booking.agency.businessName}
             </Text>

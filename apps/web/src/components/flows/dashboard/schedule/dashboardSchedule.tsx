@@ -1,28 +1,28 @@
-import { RyogoCaption } from "@/components/typography"
+import { RyogoImage } from "@/components/images/ryogoImage"
 import {
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  Select,
-} from "@/components/ui/select"
-import { CalendarDays, CalendarSync } from "lucide-react"
-import { Dispatch, SetStateAction } from "react"
-import { useTranslations } from "next-intl"
-import moment from "moment"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
+  SectionHeaderWrapper,
+  SectionRowWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
 import {
-  SectionHeaderWrapper,
-  SectionRowWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { addDays, differenceInDays, subDays } from "date-fns"
+import { CalendarDays, CalendarSync } from "lucide-react"
+import moment from "moment"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
 
 export enum SelectableDays {
   SEVEN = "7Days",
@@ -284,7 +284,7 @@ export function DashboardScheduleItemBar({
           } as React.CSSProperties
         }
       >
-        <RyogoCaption color="slate">{id}</RyogoCaption>
+        <RyogoCaption color="white">{id}</RyogoCaption>
       </PopoverTrigger>
       <PopoverContent className="w-auto">{children}</PopoverContent>
     </Popover>

@@ -2817,7 +2817,7 @@
     "AccountSubscriptionOrders": {
       "History": "PAST ORDERS",
       "StatusFilter": "Status Filter",
-      "DownloadInvoice": "Download Invoice"
+      "ViewInvoice": "View Invoice"
     },
     "Support": {
       "Title": "Help & Support Center",
@@ -5098,7 +5098,7 @@
       },
       "SendQuote": {
         "Label": "Share booking quotation with Customer",
-        "Subtitle": "Send booking quotation to the customer on Whatsapp and Email",
+        "Subtitle": "Send booking quotation to customer on Whatsapp and Email",
         "Disabled": "Wait {count} minutes to resend quotation",
         "Title": "Are you sure you want to send booking quotation to customer?",
         "Desc": "If you have sent a quote already, refrain from sending it again.. It might look like spam to the customer",

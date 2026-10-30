@@ -1,27 +1,27 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { useState } from "react"
-import { FindBookingScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
+import {
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/flows/bookings/cards/bookingCards"
 import DashboardScheduleDayAxis, {
   DashboardScheduleChart,
   DashboardScheduleContent,
   DashboardScheduleHeader,
   DashboardScheduleItem,
-  DashboardScheduleItemID,
-  SelectableDays,
   DashboardScheduleItemBar,
   DashboardScheduleItemGrid,
+  DashboardScheduleItemID,
+  SelectableDays,
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
-import { User } from "lucide-react"
-import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { differenceInDays } from "date-fns"
-import {
-  OngoingBookingCard,
-  UpcomingBookingCard,
-} from "@/components/flows/bookings/cards/bookingCards"
+import { SectionWrapper } from "@/components/page/pageWrappers"
+import { FindBookingScheduleNextDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import { differenceInDays } from "date-fns"
+import { User } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 export default function BookingScheduleChartComponent({
   bookingsSchedule14Days,
@@ -75,8 +75,8 @@ export default function BookingScheduleChartComponent({
                         !b.assignedDriver ||
                         !b.assignedVehicle ||
                         b.endDate < new Date()
-                          ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600"
-                          : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
+                          ? "bg-red-700 dark:bg-red-300 opacity-80 hover:opacity-70"
+                          : "bg-slate-700 dark:bg-slate-300 opacity-80 hover:opacity-70"
                       }
                     >
                       {b.status === BookingStatusEnum.CONFIRMED ? (

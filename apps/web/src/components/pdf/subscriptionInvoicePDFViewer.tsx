@@ -1,17 +1,21 @@
 "use client"
 
-import { PDFViewer } from "@react-pdf/renderer"
-import { SubscriptionInvoiceDocument } from "./generateSubscriptionInvoicePDF"
+import RyogoPDFViewerButton from "@/components/pdf/ryogoPDFViewerButton"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
+import { SubscriptionInvoiceDocument } from "./generateSubscriptionInvoicePDF"
 
-export default function SubscriptionInvoicePDFViewer({
+export default function SubscriptionInvoicePDFViewerButton({
   order,
+  label,
 }: {
   order: FindAllOrdersByAgencyIdType[number]
+  label: string
 }) {
   return (
-    <PDFViewer className="lg:col-span-2 w-full h-screen">
-      <SubscriptionInvoiceDocument order={order} />
-    </PDFViewer>
+    <RyogoPDFViewerButton
+      document={<SubscriptionInvoiceDocument order={order} />}
+      fileName={`${order.id}-ryogo-invoice`}
+      label={label}
+    />
   )
 }

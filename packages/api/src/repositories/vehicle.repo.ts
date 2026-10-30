@@ -8,7 +8,7 @@ import {
   vehicles,
   VehicleStatusEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, notInArray, inArray, or, lte, not, gte } from "drizzle-orm"
+import { and, eq, gte, inArray, lte, not, notInArray, or } from "drizzle-orm"
 import { ModifyVehicleRequestType } from "../types/vehicle.types"
 
 export const vehicleRepository = {
@@ -206,6 +206,8 @@ export const vehicleRepository = {
             startDate: true,
             endDate: true,
             vehicleId: true,
+            status: true,
+            remarks: true,
           },
           with: {
             addedByUser: {
@@ -216,6 +218,8 @@ export const vehicleRepository = {
             vehicle: {
               columns: {
                 vehicleNumber: true,
+                vehiclePhotoUrl: true,
+                type: true,
               },
             },
           },

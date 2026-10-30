@@ -70,10 +70,10 @@ export default function NewTransactionPageComponent({
       .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error1"))
       .optional(),
     txnPhoto: FileRegex.refine((file) => {
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field6.Error1"))
       .refine((file) => {
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field6.Error2"))
       .optional(),
     transactionDate: z.date(),

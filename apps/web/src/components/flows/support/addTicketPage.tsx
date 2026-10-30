@@ -2,10 +2,15 @@
 
 import { addSupportTicketAction } from "@/app/actions/support/addSupportTicketAction"
 import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import {
   RyogoFileInput,
   RyogoInput,
   RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
+import { getEntityType } from "@/components/missions/missionCommons"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -13,18 +18,8 @@ import {
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoH3 } from "@/components/typography"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import z from "zod"
+import compressImage from "@/lib/imageCompression"
 import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
 import {
   MAX_ENTITY_ID_LENGTH,
   MAX_FIELD_DESC_LENGTH,
@@ -34,8 +29,13 @@ import {
   MIN_FIELD_TITLE_LENGTH,
 } from "@/lib/uiConfig"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import { getEntityType } from "@/components/missions/missionCommons"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function AddSupportTicketPageComponent({
   userId,
@@ -65,12 +65,10 @@ export default function AddSupportTicketPageComponent({
       .max(MAX_FIELD_DESC_LENGTH, t("Field4.Error1"))
       .optional(),
     photo: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field5.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field5.Error2"))
       .optional(),
   })

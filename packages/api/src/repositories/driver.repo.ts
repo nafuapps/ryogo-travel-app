@@ -8,7 +8,7 @@ import {
   tripLogs,
   TripLogTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { eq, and, notInArray, or, lte, not, gte } from "drizzle-orm"
+import { and, eq, gte, lte, not, notInArray, or } from "drizzle-orm"
 import {
   ChangeDriverLicenseRequestType,
   ModifyDriverRequestType,
@@ -220,6 +220,8 @@ export const driverRepository = {
             startDate: true,
             endDate: true,
             driverId: true,
+            status: true,
+            remarks: true,
           },
           with: {
             addedByUser: {
@@ -230,6 +232,13 @@ export const driverRepository = {
             driver: {
               columns: {
                 name: true,
+              },
+              with: {
+                user: {
+                  columns: {
+                    photoUrl: true,
+                  },
+                },
               },
             },
           },

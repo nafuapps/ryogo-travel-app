@@ -1,27 +1,27 @@
 "use client"
 
-import { useTranslations } from "next-intl"
-import { useState } from "react"
+import {
+  CompletedBookingCard,
+  OngoingBookingCard,
+} from "@/components/flows/bookings/cards/bookingCards"
 import DashboardScheduleDayAxis, {
   DashboardScheduleChart,
   DashboardScheduleContent,
   DashboardScheduleHeader,
   DashboardScheduleItem,
-  DashboardScheduleItemID,
-  SelectableDays,
   DashboardScheduleItemBar,
   DashboardScheduleItemGrid,
+  DashboardScheduleItemID,
+  SelectableDays,
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
-import { User } from "lucide-react"
-import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { SectionWrapper } from "@/components/page/pageWrappers"
 import { FindBookingHistoryLastDaysType } from "@ryogo-travel-app/api/services/booking.services"
 import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
-import {
-  CompletedBookingCard,
-  OngoingBookingCard,
-} from "@/components/flows/bookings/cards/bookingCards"
+import { User } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 export default function BookingHistoryChartComponent({
   bookingsHistory14Days,
@@ -73,8 +73,8 @@ export default function BookingHistoryChartComponent({
                       className={
                         b.endDate < new Date() &&
                         b.status === BookingStatusEnum.IN_PROGRESS
-                          ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600"
-                          : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
+                          ? "bg-red-700 dark:bg-red-300 opacity-80 hover:opacity-70"
+                          : "bg-slate-700 dark:bg-slate-300 opacity-80 hover:opacity-70"
                       }
                       isHistory
                     >

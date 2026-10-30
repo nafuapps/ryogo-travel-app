@@ -2,27 +2,25 @@
 
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
-  SectionWrapper,
-  SectionRowWrapper,
   SectionColWrapper,
+  SectionRowWrapper,
+  SectionWrapper,
 } from "@/components/page/pageWrappers"
+import SubscriptionInvoicePDFViewerButton from "@/components/pdf/subscriptionInvoicePDFViewer"
 import { OrderStatusPill } from "@/components/pills/ryogoPills"
 import {
-  RyogoSmall,
-  RyogoH4,
   RyogoCaption,
+  RyogoH4,
+  RyogoSmall,
   RyogoTiny,
 } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
 import { FindAllOrdersByAgencyIdType } from "@ryogo-travel-app/api/services/order.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { ChevronDown, Download } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import moment from "moment"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
-import { Separator } from "@/components/ui/separator"
 import PaymentCard from "./paymentCard"
-import ViewInvoiceDialog from "./viewInvoiceDialog"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 
 export default function OrderCard({
   order,
@@ -50,31 +48,25 @@ export default function OrderCard({
             <RyogoH4 color="brand" weight="font-bold">
               {"₹" + order.amount}
             </RyogoH4>
-            <RyogoCaption color="light">{order.orderType}</RyogoCaption>
-          </SectionColWrapper>
-          <SectionColWrapper small className="items-end">
-            <OrderStatusPill status={order.status} />
-            <RyogoSmall color="slate">{order.user.name}</RyogoSmall>
             <RyogoTiny color="light">
               {moment(order.updatedAt).format("lll")}
             </RyogoTiny>
+          </SectionColWrapper>
+          <SectionColWrapper small className="items-end">
+            <OrderStatusPill status={order.status} />
+            <RyogoSmall color="slate" weight="font-bold">
+              {order.user.name}
+            </RyogoSmall>
+            <RyogoCaption color="light">{order.orderType}</RyogoCaption>
           </SectionColWrapper>
         </SectionRowWrapper>
       </SectionRowWrapper>
       <SectionColWrapper className={`${collapsed ? "hidden" : ""}`}>
         {order.orderInvoiceUrl && (
-          <SectionRowWrapper small className="items-center justify-end">
-            <a href={getFileUrl(order.orderInvoiceUrl) + "?download"} download>
-              <RyogoOutlineButton
-                label={t("DownloadInvoice")}
-                labelColor="light"
-                className="w-full"
-              >
-                <RyogoIcon size="sm" icon={Download} color="slate" />
-              </RyogoOutlineButton>
-            </a>
-            <ViewInvoiceDialog order={order} />
-          </SectionRowWrapper>
+          <SubscriptionInvoicePDFViewerButton
+            order={order}
+            label={t("ViewInvoice")}
+          />
         )}
         {order.payments.length > 0 && (
           <>

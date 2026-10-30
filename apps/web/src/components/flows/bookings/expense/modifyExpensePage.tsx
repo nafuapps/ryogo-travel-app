@@ -1,23 +1,20 @@
 "use client"
 
+import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
+import DeleteExpenseAlertButton from "@/components/buttons/alert/deleteExpenseAlertButton"
 import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
+  RyogoDatePicker,
+  RyogoFileInput,
   RyogoInput,
   RyogoSelect,
-  RyogoTextarea,
-  RyogoFileInput,
-  RyogoDatePicker,
   RyogoSwitch,
+  RyogoTextarea,
 } from "@/components/form/ryogoFormFields"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import z from "zod"
-import DeleteExpenseAlertButton from "@/components/buttons/alert/deleteExpenseAlertButton"
-import { modifyExpenseAction } from "@/app/actions/expenses/modifyExpenseAction"
-import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -25,20 +22,23 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoH3 } from "@/components/typography"
+import compressImage from "@/lib/imageCompression"
 import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
 import {
   MAX_AMOUNT_LIMIT,
   MAX_FIELD_DESC_LENGTH,
   MIN_AMOUNT_LIMIT,
 } from "@/lib/uiConfig"
-import { RyogoH3 } from "@/components/typography"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindExpenseDetailsByIdType } from "@ryogo-travel-app/api/services/expense.services"
+import { ExpenseTypesEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function ModifyExpensePageComponent({
   expenseDetails,
@@ -65,12 +65,10 @@ export default function ModifyExpensePageComponent({
       .max(MAX_FIELD_DESC_LENGTH, t("Field3.Error1"))
       .optional(),
     expensePhoto: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field4.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field4.Error2"))
       .optional(),
     expenseDate: z.date(),

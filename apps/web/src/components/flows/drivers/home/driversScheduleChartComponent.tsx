@@ -1,29 +1,29 @@
 "use client"
 
-import { User } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { useState } from "react"
-import { FindDriversScheduleNextDaysType } from "@ryogo-travel-app/api/services/driver.services"
-import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
+import {
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/flows/bookings/cards/bookingCards"
+import { LeavePopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
 import DashboardScheduleDayAxis, {
   DashboardScheduleChart,
   DashboardScheduleContent,
   DashboardScheduleHeader,
   DashboardScheduleItem,
-  DashboardScheduleItemID,
   DashboardScheduleItemBar,
+  DashboardScheduleItemGrid,
+  DashboardScheduleItemID,
   SelectableDays,
   getSelectedDays,
-  DashboardScheduleItemGrid,
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
-import { LeavePopoverCard } from "@/components/flows/dashboard/schedule/dashboardPopoverCards"
-import { SectionWrapper } from "@/components/page/pageWrappers"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
+import { SectionWrapper } from "@/components/page/pageWrappers"
+import { FindDriversScheduleNextDaysType } from "@ryogo-travel-app/api/services/driver.services"
+import { BookingStatusEnum } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
-import {
-  OngoingBookingCard,
-  UpcomingBookingCard,
-} from "@/components/flows/bookings/cards/bookingCards"
+import { User } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 export default function DriversScheduleChartComponent({
   driverSchedule14Days,
@@ -87,8 +87,8 @@ export default function DriversScheduleChartComponent({
                               b.startDate < new Date()) ||
                             (b.status === BookingStatusEnum.IN_PROGRESS &&
                               b.endDate < new Date())
-                              ? "bg-red-300 dark:bg-red-700 hover:bg-red-400 dark:hover:bg-red-600"
-                              : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
+                              ? "bg-red-700 dark:bg-red-300 opacity-80 hover:opacity-70"
+                              : "bg-slate-700 dark:bg-slate-300 opacity-80 hover:opacity-70"
                           }
                         >
                           {b.status === BookingStatusEnum.CONFIRMED ? (
@@ -113,7 +113,7 @@ export default function DriversScheduleChartComponent({
                           id={l.id}
                           selectedDays={selectedDays}
                           className={
-                            "bg-yellow-300 dark:bg-yellow-700 hover:bg-yellow-400 dark:hover:bg-yellow-600 opacity-50"
+                            "bg-yellow-700 dark:bg-yellow-300 opacity-80 hover:opacity-70"
                           }
                         >
                           <LeavePopoverCard {...l} />

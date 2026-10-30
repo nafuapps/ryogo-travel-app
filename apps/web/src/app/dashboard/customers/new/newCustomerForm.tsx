@@ -1,21 +1,18 @@
 "use client"
 
-import {
-  RyogoInput,
-  RyogoTextarea,
-  RyogoFileInput,
-  RyogoCombobox,
-  RyogoOTPInput,
-} from "@/components/form/ryogoFormFields"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { useForm, useWatch } from "react-hook-form"
-import { toast } from "sonner"
-import z from "zod"
-import stateCityData from "@/lib/states_cities.json"
 import { newCustomerAction } from "@/app/actions/customers/newCustomerAction"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
+  RyogoCombobox,
+  RyogoFileInput,
+  RyogoInput,
+  RyogoOTPInput,
+  RyogoTextarea,
+} from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
   FormWrapper,
@@ -23,11 +20,10 @@ import {
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import { RyogoH3 } from "@/components/typography"
+import compressImage from "@/lib/imageCompression"
 import { FileRegex } from "@/lib/regex"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
+import stateCityData from "@/lib/states_cities.json"
 import {
   MAX_EMAIL_LENGTH,
   MAX_FIELD_DESC_LENGTH,
@@ -36,10 +32,14 @@ import {
   MIN_NAME_LENGTH,
   PHONE_LENGTH,
 } from "@/lib/uiConfig"
-import { RyogoH3 } from "@/components/typography"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
 import { checkImageFileSize, checkImageFileType } from "@/lib/utils"
-import compressImage from "@/lib/imageCompression"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm, useWatch } from "react-hook-form"
+import { toast } from "sonner"
+import z from "zod"
 
 export default function NewCustomerForm({
   agencyId,
@@ -74,12 +74,10 @@ export default function NewCustomerForm({
       .max(MAX_EMAIL_LENGTH, t("Field3.Error2"))
       .optional(),
     photo: FileRegex.refine((file) => {
-      if (file.length < 1) return true
-      return checkImageFileSize(file)
+      return checkImageFileSize(file, true)
     }, t("Field4.Error1"))
       .refine((file) => {
-        if (file.length < 1) return true
-        return checkImageFileType(file)
+        return checkImageFileType(file, true)
       }, t("Field4.Error2"))
       .optional(),
     address: z

@@ -3,7 +3,6 @@
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { LeadQuoteDocument } from "./getLeadQuotePDF"
 import RyogoPDFViewerButton from "./ryogoPDFViewerButton"
-import { Eye } from "lucide-react"
 
 export default function BookingQuotePDFViewerButton({
   booking,
@@ -17,7 +16,6 @@ export default function BookingQuotePDFViewerButton({
       document={<LeadQuoteDocument booking={booking} />}
       fileName={`${booking.id}-quote.pdf`}
       label={label}
-      icon={Eye}
     />
   )
 }

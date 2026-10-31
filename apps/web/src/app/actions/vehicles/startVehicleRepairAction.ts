@@ -5,6 +5,7 @@ import { missionServices } from "@ryogo-travel-app/api/services/mission.services
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
+import { format } from "date-fns"
 
 export async function startVehicleRepairAction({
   userId,
@@ -56,8 +57,11 @@ export async function startVehicleRepairAction({
     },
     messageKey: "VehicleRepairStarted.Message",
     messageObject: {
-      startDate: startedRepair.actualStartDate,
-      endDate: startedRepair.endDate,
+      startDate: format(
+        startedRepair.actualStartDate ?? startedRepair.startDate,
+        "dd MMM yyyy",
+      ),
+      endDate: format(startedRepair.endDate, "dd MMM yyyy"),
     },
     dueDate: startedRepair.endDate,
     link: `/dashboard/vehicles/${startedRepair.vehicleId}/repairs`,

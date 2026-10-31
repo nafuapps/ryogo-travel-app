@@ -9,6 +9,7 @@ import {
   EntityTypeEnum,
   VehicleRepairStatusEnum,
 } from "@ryogo-travel-app/db/schema"
+import { format } from "date-fns"
 
 export async function modifyVehicleRepairAction(
   data: ModifyVehicleRepairRequestType,
@@ -46,8 +47,8 @@ export async function modifyVehicleRepairAction(
       },
       messageKey: "VehicleRepairAdded.Message",
       messageObject: {
-        startDate: modifiedRepair.startDate,
-        endDate: modifiedRepair.endDate,
+        startDate: format(modifiedRepair.startDate, "dd MMM yyyy"),
+        endDate: format(modifiedRepair.endDate, "dd MMM yyyy"),
       },
       dueDate: modifiedRepair.startDate,
       link: `/dashboard/vehicles/${modifiedRepair.vehicleId}/repairs`,

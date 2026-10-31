@@ -9,6 +9,7 @@ import {
   InsertVehicleRepairType,
   VehicleRepairStatusEnum,
 } from "@ryogo-travel-app/db/schema"
+import { format } from "date-fns"
 
 export async function newVehicleRepairAction(data: InsertVehicleRepairType) {
   const currentUser = await writePermissions.allowDashboardUser(data.agencyId)
@@ -45,8 +46,8 @@ export async function newVehicleRepairAction(data: InsertVehicleRepairType) {
         },
         messageKey: "VehicleRepairAdded.Message",
         messageObject: {
-          startDate: addedRepair.startDate,
-          endDate: addedRepair.endDate,
+          startDate: format(addedRepair.startDate, "dd MMM yyyy"),
+          endDate: format(addedRepair.endDate, "dd MMM yyyy"),
         },
         dueDate: addedRepair.startDate,
         link: `/dashboard/vehicles/${addedRepair.vehicleId}/repairs`,

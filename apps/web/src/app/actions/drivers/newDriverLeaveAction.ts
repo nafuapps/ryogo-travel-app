@@ -9,6 +9,7 @@ import {
   EntityTypeEnum,
   InsertDriverLeaveType,
 } from "@ryogo-travel-app/db/schema"
+import { format } from "date-fns"
 
 export async function newDriverLeaveAction({
   data,
@@ -49,8 +50,8 @@ export async function newDriverLeaveAction({
         },
         messageKey: "DriverLeaveAdded.Message",
         messageObject: {
-          startDate: addedLeave.startDate,
-          endDate: addedLeave.endDate,
+          startDate: format(addedLeave.startDate, "dd MMM yyyy"),
+          endDate: format(addedLeave.endDate, "dd MMM yyyy"),
         },
         dueDate: addedLeave.startDate,
         link: `/dashboard/drivers/${addedLeave.driverId}/leaves`,

@@ -9,6 +9,7 @@ import {
   DriverLeaveStatusEnum,
   EntityTypeEnum,
 } from "@ryogo-travel-app/db/schema"
+import { format } from "date-fns"
 
 export async function modifyDriverLeaveAction({
   data,
@@ -47,12 +48,12 @@ export async function modifyDriverLeaveAction({
       entityId: modifiedLeave.id,
       titleKey: "DriverLeaveAdded.Title",
       titleObject: {
-        driverId: modifiedLeave.driverId,
+        driverName: modifiedLeave.driverName,
       },
       messageKey: "DriverLeaveAdded.Message",
       messageObject: {
-        startDate: modifiedLeave.startDate,
-        endDate: modifiedLeave.endDate,
+        startDate: format(modifiedLeave.startDate, "dd MMM yyyy"),
+        endDate: format(modifiedLeave.endDate, "dd MMM yyyy"),
       },
       dueDate: modifiedLeave.startDate,
       link: `/dashboard/drivers/${modifiedLeave.driverId}/leaves`,

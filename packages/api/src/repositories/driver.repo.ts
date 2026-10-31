@@ -218,6 +218,7 @@ export const driverRepository = {
           columns: {
             id: true,
             startDate: true,
+            actualStartDate: true,
             endDate: true,
             driverId: true,
             status: true,

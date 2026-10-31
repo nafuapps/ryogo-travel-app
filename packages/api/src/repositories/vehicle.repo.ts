@@ -204,6 +204,7 @@ export const vehicleRepository = {
           columns: {
             id: true,
             startDate: true,
+            actualStartDate: true,
             endDate: true,
             vehicleId: true,
             status: true,

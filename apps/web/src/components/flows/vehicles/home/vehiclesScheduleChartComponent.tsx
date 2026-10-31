@@ -35,19 +35,9 @@ export default function VehiclesScheduleChartComponent({
   const t = useTranslations("Dashboard.Vehicles")
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
-  const vehicleSchedule7Days = vehicleSchedule14Days.filter((v) => {
-    const assignedBookings = v.assignedBookings.filter((b) => {
-      differenceInDays(b.actualStartDate ?? b.startDate, new Date()) < 7
-    })
-    const vehicleRepairs = v.vehicleRepairs.filter(
-      (r) => differenceInDays(r.startDate, new Date()) < 7,
-    )
-    return { ...v, assignedBookings, vehicleRepairs }
-  })
-
   const chartData =
     selectedTab === SelectableDays.SEVEN
-      ? vehicleSchedule7Days
+      ? filterVehicleSchedule(vehicleSchedule14Days, 7)
       : vehicleSchedule14Days
   const selectedDays: number = selectedTab === SelectableDays.SEVEN ? 7 : 14
 
@@ -132,4 +122,25 @@ export default function VehiclesScheduleChartComponent({
       )}
     </SectionWrapper>
   )
+}
+
+function filterVehicleSchedule(
+  schedule: FindVehiclesScheduleNextDaysType,
+  filterDays: number,
+) {
+  return schedule
+    .map((v) => {
+      const assignedBookings = v.assignedBookings.filter(
+        (b) =>
+          differenceInDays(b.actualStartDate ?? b.startDate, new Date()) <
+          filterDays,
+      )
+      const vehicleRepairs = v.vehicleRepairs.filter(
+        (r) =>
+          differenceInDays(r.actualStartDate ?? r.startDate, new Date()) <
+          filterDays,
+      )
+      return { ...v, assignedBookings, vehicleRepairs }
+    })
+    .filter((v) => v.assignedBookings.length > 0 || v.vehicleRepairs.length > 0)
 }

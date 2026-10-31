@@ -749,8 +749,8 @@ export const userServices = {
   //Logout in DB
   async logOutInDB({ sessionId }: { sessionId: string }) {
     const session = await sessionRepository.readSessionById(sessionId)
-    if (!session || session.expiresAt < new Date()) {
-      console.error(`Session not found or already expired: ${sessionId}`)
+    if (!session) {
+      console.error(`Session not found: ${sessionId}`)
       return
     }
 
@@ -767,7 +767,6 @@ export const userServices = {
       console.error(
         `User logout could not be updated: ${sessionDeleted.userId}`,
       )
-      return
     }
     return updatedUser
   },

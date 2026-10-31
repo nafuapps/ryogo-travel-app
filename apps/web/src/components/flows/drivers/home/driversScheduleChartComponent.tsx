@@ -37,19 +37,9 @@ export default function DriversScheduleChartComponent({
   const t = useTranslations("Dashboard.Drivers")
   const [selectedTab, setSelectedTab] = useState(SelectableDays.SEVEN)
 
-  const driverSchedule7Days = driverSchedule14Days.filter((d) => {
-    const assignedBookings = d.assignedBookings.filter((b) => {
-      differenceInDays(b.actualStartDate ?? b.startDate, new Date()) < 7
-    })
-    const driverLeaves = d.driverLeaves.filter(
-      (l) => differenceInDays(l.startDate, new Date()) < 7,
-    )
-    return { ...d, assignedBookings, driverLeaves }
-  })
-
   const chartData =
     selectedTab === SelectableDays.SEVEN
-      ? driverSchedule7Days
+      ? filterDriverSchedule(driverSchedule14Days, 7)
       : driverSchedule14Days
   const selectedDays = getSelectedDays(selectedTab)
 
@@ -129,4 +119,25 @@ export default function DriversScheduleChartComponent({
       )}
     </SectionWrapper>
   )
+}
+
+function filterDriverSchedule(
+  schedule: FindDriversScheduleNextDaysType,
+  filterDays: number,
+) {
+  return schedule
+    .map((d) => {
+      const assignedBookings = d.assignedBookings.filter(
+        (b) =>
+          differenceInDays(b.actualStartDate ?? b.startDate, new Date()) <
+          filterDays,
+      )
+      const driverLeaves = d.driverLeaves.filter(
+        (l) =>
+          differenceInDays(l.actualStartDate ?? l.startDate, new Date()) <
+          filterDays,
+      )
+      return { ...d, assignedBookings, driverLeaves }
+    })
+    .filter((d) => d.assignedBookings.length > 0 || d.driverLeaves.length > 0)
 }

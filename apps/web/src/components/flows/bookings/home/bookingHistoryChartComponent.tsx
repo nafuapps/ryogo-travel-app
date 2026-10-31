@@ -12,6 +12,7 @@ import DashboardScheduleDayAxis, {
   DashboardScheduleItemBar,
   DashboardScheduleItemGrid,
   DashboardScheduleItemID,
+  getSelectedDays,
   SelectableDays,
 } from "@/components/flows/dashboard/schedule/dashboardSchedule"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
@@ -41,7 +42,7 @@ export default function BookingHistoryChartComponent({
     selectedTab === SelectableDays.SEVEN
       ? bookingsHistory7Days
       : bookingsHistory14Days
-  const selectedDays: number = selectedTab === SelectableDays.SEVEN ? 7 : 14
+  const selectedDays: number = getSelectedDays(selectedTab)
 
   return (
     <SectionWrapper id="BookingHistorySection">

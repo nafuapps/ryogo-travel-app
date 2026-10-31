@@ -1,11 +1,12 @@
 "use client"
 
 import FilterCheckboxGroup from "@/components/filter/filterCheckboxGroup"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import NotificationCard from "@/components/notifications/notificationCard"
 import { PageWrapper, SectionColWrapper } from "@/components/page/pageWrappers"
-import { RyogoSmall } from "@/components/typography"
 import { FindFeedNotificationsByAgencyIdType } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
+import { MegaphoneOff } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
@@ -28,15 +29,15 @@ export default function NotificationFeedPageComponent({
         selectedFilters={selectedFilters}
         setSelectedFilters={setSelectedFilters}
       />
-      <SectionColWrapper className="overflow-y-scroll no-scrollbar">
-        {filteredNotifications.length === 0 ? (
-          <RyogoSmall color="slate">{t("NoFeed")}</RyogoSmall>
-        ) : (
-          filteredNotifications.map((n) => (
+      {filteredNotifications.length === 0 ? (
+        <EmptyStateIcon label={t("NoFeed")} icon={MegaphoneOff} />
+      ) : (
+        <SectionColWrapper className="overflow-y-scroll no-scrollbar">
+          {filteredNotifications.map((n) => (
             <NotificationCard key={n.id} notification={n} />
-          ))
-        )}
-      </SectionColWrapper>
+          ))}
+        </SectionColWrapper>
+      )}
     </PageWrapper>
   )
 }

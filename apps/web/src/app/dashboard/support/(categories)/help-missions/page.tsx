@@ -315,13 +315,20 @@ async function CustomContent() {
         <RyogoCaption color="slate">
           {t("WhatIsCustomMission.ViewCustomMissions")}
         </RyogoCaption>
+        {/* //TODO: Add Reminders snapshot */}
+        <RyogoImage
+          alt="CreatingCustom"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CreatingCustom.Title")}>
         <RyogoCaption color="slate">
           {t("CreatingCustom.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("CreatingCustom.Fields")}</RyogoCaption>
-        {/* //TODO: Add CreatingCustom snapshot */}
+        {/* //TODO: Add Creating Reminder snapshot */}
         <RyogoImage
           alt="CreatingCustom"
           imageSize="xl"
@@ -338,7 +345,7 @@ async function CustomContent() {
           {t("ModifyingCustom.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("ModifyingCustom.Fields")}</RyogoCaption>
-        {/* //TODO: Add ModifyingCustom snapshot */}
+        {/* //TODO: Add Modifying Reminder snapshot */}
         <RyogoImage
           alt="ModifyingCustom"
           imageSize="xl"

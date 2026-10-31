@@ -7,7 +7,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { SupportTicketStatusPill } from "@/components/pills/ryogoPills"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
-import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoCaption, RyogoP, RyogoTiny } from "@/components/typography"
 import {
   FindSupportTicketsByAgencyIdType,
   FindSupportTicketsByUserIdType,
@@ -33,14 +33,7 @@ export default function SupportTicketItem({
       }
     >
       <SectionWrapper id={ticket.id}>
-        <SectionRowWrapper className="items-center">
-          <RyogoSmall weight="font-bold" color="light">
-            {"# " + ticket.id}
-          </RyogoSmall>
-          <SupportTicketStatusPill status={ticket.status} />
-        </SectionRowWrapper>
-        <RyogoP weight="font-bold">{ticket.issue}</RyogoP>
-        <SectionRowWrapper className="items-center">
+        <SectionRowWrapper className="items-center justify-between">
           <SectionRowWrapper className="items-center justify-start">
             <RyogoEnclosedIcon
               icon={getEntityIcon(ticket.entityType)}
@@ -59,16 +52,25 @@ export default function SupportTicketItem({
               )}
             </SectionColWrapper>
           </SectionRowWrapper>
-          <RyogoCaption color="slate">
-            {moment(ticket.createdAt).format("DD MMM")}
-          </RyogoCaption>
+          <SectionRowWrapper className="items-center justify-end">
+            <RyogoCaption weight="font-bold" color="light">
+              {"# " + ticket.id}
+            </RyogoCaption>
+            <SupportTicketStatusPill status={ticket.status} />
+          </SectionRowWrapper>
         </SectionRowWrapper>
-        {"user" in ticket && (
-          <RyogoImageIconTag
-            url={ticket.user.photoUrl}
-            label={ticket.user.name}
-          />
-        )}
+        <RyogoP weight="font-bold">{ticket.issue}</RyogoP>
+        <SectionRowWrapper className="items-center justify-between">
+          {"user" in ticket && (
+            <RyogoImageIconTag
+              url={ticket.user.photoUrl}
+              label={ticket.user.name}
+            />
+          )}
+          <RyogoTiny color="slate">
+            {moment(ticket.createdAt).format("DD MMM")}
+          </RyogoTiny>
+        </SectionRowWrapper>
       </SectionWrapper>
     </Link>
   )

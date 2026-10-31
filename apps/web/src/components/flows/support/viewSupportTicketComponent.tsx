@@ -41,9 +41,9 @@ export default async function ViewSupportTicketPageComponent({
   return (
     <PageWrapper id="ViewSupportTicketPage">
       <SectionWrapper id="TicketDataSection">
-        <SectionRowWrapper className="items-center">
-          <SupportTicketStatusPill status={ticket.status} size="lg" />
+        <SectionRowWrapper className="items-center justify-between">
           <IdCopyPill id={ticket.id} />
+          <SupportTicketStatusPill status={ticket.status} size="lg" />
         </SectionRowWrapper>
         <Separator />
         <TicketRow label={t("Created")}>
@@ -100,7 +100,7 @@ export default async function ViewSupportTicketPageComponent({
           </RyogoCaption>
           {ticket.commentsByUser?.map((comment, index) => (
             <SectionColWrapper key={index}>
-              <SectionRowWrapper className="justify-start">
+              <SectionRowWrapper className="justify-start items-center">
                 <RyogoIcon icon={MessageSquare} size="sm" />
                 <RyogoSmall>{comment}</RyogoSmall>
               </SectionRowWrapper>
@@ -114,7 +114,7 @@ export default async function ViewSupportTicketPageComponent({
           <RyogoCaption weight="font-bold" color="light">
             {t("CommentBySupport")}
           </RyogoCaption>
-          <SectionRowWrapper className="justify-start">
+          <SectionRowWrapper className="justify-start items-center">
             <RyogoIcon icon={MessageSquareReply} size="sm" />
             <RyogoSmall>{ticket.commentBySupport}</RyogoSmall>
           </SectionRowWrapper>
@@ -163,7 +163,7 @@ function TicketRow({
   children: React.ReactNode
 }) {
   return (
-    <SectionRowWrapper className="items-center">
+    <SectionRowWrapper className="items-center justify-between">
       <RyogoCaption weight="font-bold" color="light">
         {label}
       </RyogoCaption>

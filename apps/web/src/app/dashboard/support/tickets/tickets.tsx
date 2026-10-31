@@ -1,18 +1,23 @@
 "use client"
 
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import FilterCheckboxGroup from "@/components/filter/filterCheckboxGroup"
 import SupportTicketItem from "@/components/flows/support/supportTicketItem"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { PageWrapper, SectionRowWrapper } from "@/components/page/pageWrappers"
-import { RyogoSmall } from "@/components/typography"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import {
+  PageWrapper,
+  SectionColWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 import { Switch } from "@/components/ui/switch"
 import {
   FindSupportTicketsByAgencyIdType,
   FindSupportTicketsByUserIdType,
 } from "@ryogo-travel-app/api/services/support.services"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
-import { Plus } from "lucide-react"
+import { TicketSlash } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
@@ -44,41 +49,41 @@ export default function SupportTicketsPageComponent({
 
   return (
     <PageWrapper id="SupportTicketsPage">
-      <Link
-        href={`/dashboard/support/tickets/add`}
-        className="w-full md:w-1/2 self-center"
-      >
-        <RyogoOutlineButton label={t("AddTicket")} className="w-full">
-          <RyogoIcon icon={Plus} size="sm" color="slate" />
-        </RyogoOutlineButton>
-      </Link>
       <FilterCheckboxGroup
         allFilters={allFilters}
         title={t("TicketStatusFilters")}
         selectedFilters={selectedFilters}
         setSelectedFilters={setSelectedFilters}
       />
-      {isOwner && (
-        <SectionRowWrapper className="items-center justify-end">
-          <RyogoSmall color="light">{t("ShowAgencyTickets")}</RyogoSmall>
-          <Switch
-            id="agencyTickets"
-            checked={showAgencyTickets}
-            onCheckedChange={setShowAgencyTickets}
-          />
-        </SectionRowWrapper>
-      )}
+      <SectionRowWrapper className="w-full items-center justify-between">
+        <RyogoCaption color="light">
+          {t("FilteredTickets") + " (" + filteredTickets.length + ")"}
+        </RyogoCaption>
+        {isOwner && (
+          <SectionRowWrapper className="items-center justify-end">
+            <RyogoCaption color="light">{t("ShowAgencyTickets")}</RyogoCaption>
+            <Switch
+              id="agencyTickets"
+              checked={showAgencyTickets}
+              onCheckedChange={setShowAgencyTickets}
+            />
+          </SectionRowWrapper>
+        )}
+      </SectionRowWrapper>
       {filteredTickets.length === 0 ? (
-        <RyogoSmall color="light" className="mx-auto">
-          {t("NoTickets")}
-        </RyogoSmall>
+        <EmptyStateIcon label={t("NoTickets")} icon={TicketSlash} />
       ) : (
-        <div className="flex flex-col gap-3 lg:gap-4">
+        <SectionColWrapper className="overflow-y-scroll no-scrollbar">
           {filteredTickets.map((ticket) => (
             <SupportTicketItem key={ticket.id} ticket={ticket} />
           ))}
-        </div>
+        </SectionColWrapper>
       )}
+      <StickyActionWrapper>
+        <Link href={`/dashboard/support/tickets/add`}>
+          <RyogoDefaultButton label={t("AddTicket")} className="w-full" />
+        </Link>
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

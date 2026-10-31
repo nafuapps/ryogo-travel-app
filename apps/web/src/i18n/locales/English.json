@@ -2942,8 +2942,9 @@
       "RenewCTA": "Renew Subscription",
       "AddTicket": "Add Support Ticket",
       "TicketStatusFilters": "TICKET STATUS FILTERS",
+      "FilteredTickets": "Filtered Tickets",
       "NoTickets": "No support tickets found. Try changing the filter options",
-      "ShowAgencyTickets": "Show All Agency Tickets"
+      "ShowAgencyTickets": "Show agency-wide tickets"
     },
     "AddSupportTicket": {
       "Title": "Add New Support Ticket",
@@ -6439,6 +6440,7 @@
       "TicketsExpiredAction": "To get full access to our support tickets feature, please renew Premium plan.",
       "AddTicket": "Add Support Ticket",
       "TicketStatusFilters": "TICKET STATUS FILTERS",
+      "FilteredTickets": "Filtered Tickets",
       "NoTickets": "No support tickets found. Try changing the filter options"
     }
   },
@@ -6630,6 +6632,10 @@
       "Error": "Error generating preview",
       "Open": "Open PDF in new tab",
       "Download": "Download PDF"
+    },
+    "FilterCheckbox": {
+      "SelectAll": "Select All",
+      "ClearAll": "Clear All"
     }
   },
   "TermsAndConditions": {

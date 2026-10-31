@@ -1,13 +1,17 @@
-import { useState } from "react"
+"use client"
+
+import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { Field, FieldGroup, FieldSet } from "@/components/ui/field"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ChevronUp, ChevronDown } from "lucide-react"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Field, FieldGroup, FieldSet } from "@/components/ui/field"
+import { ChevronDown, ChevronUp } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 export default function FilterCheckboxGroup({
   title,
@@ -20,6 +24,7 @@ export default function FilterCheckboxGroup({
   setSelectedFilters: (filters: string[]) => void
   allFilters: string[]
 }) {
+  const t = useTranslations("Components.FilterCheckbox")
   const [open, setOpen] = useState(false)
 
   return (
@@ -38,7 +43,7 @@ export default function FilterCheckboxGroup({
           />
         </SectionRowWrapper>
         <FieldGroup
-          className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 ${open ? "" : "hidden"}`}
+          className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 ${open ? "" : "hidden"}`}
         >
           {allFilters.map((item) => (
             <Field
@@ -61,6 +66,22 @@ export default function FilterCheckboxGroup({
             </Field>
           ))}
         </FieldGroup>
+        <SectionRowWrapper
+          className={`items-center w-full ${open ? "" : "hidden"}`}
+        >
+          <RyogoGhostButton
+            label={t("SelectAll")}
+            labelColor="light"
+            onClick={() => setSelectedFilters(allFilters)}
+            className="flex-1"
+          />
+          <RyogoGhostButton
+            label={t("ClearAll")}
+            labelColor="light"
+            onClick={() => setSelectedFilters([])}
+            className="flex-1"
+          />
+        </SectionRowWrapper>
       </FieldSet>
     </SectionWrapper>
   )

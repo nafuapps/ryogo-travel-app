@@ -1,14 +1,19 @@
 "use client"
 
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import FilterCheckboxGroup from "@/components/filter/filterCheckboxGroup"
 import SupportTicketItem from "@/components/flows/support/supportTicketItem"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { PageWrapper } from "@/components/page/pageWrappers"
-import { RyogoSmall } from "@/components/typography"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import {
+  PageWrapper,
+  SectionColWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 import { FindSupportTicketsByUserIdType } from "@ryogo-travel-app/api/services/support.services"
 import { TicketStatusEnum } from "@ryogo-travel-app/db/schema"
-import { Plus } from "lucide-react"
+import { TicketSlash } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
@@ -30,31 +35,31 @@ export default function MySupportTicketsPageComponent({
 
   return (
     <PageWrapper id="MySupportTicketsPage">
-      <Link
-        href={`/rider/mySupport/tickets/add`}
-        className="w-full md:w-1/2 self-center"
-      >
-        <RyogoOutlineButton label={t("AddTicket")} className="w-full">
-          <RyogoIcon icon={Plus} size="sm" color="slate" />
-        </RyogoOutlineButton>
-      </Link>
       <FilterCheckboxGroup
         allFilters={allFilters}
         title={t("TicketStatusFilters")}
         selectedFilters={selectedFilters}
         setSelectedFilters={setSelectedFilters}
       />
+      <SectionRowWrapper className="w-full items-center justify-between">
+        <RyogoCaption color="light">
+          {t("FilteredTickets") + " (" + filteredTickets.length + ")"}
+        </RyogoCaption>
+      </SectionRowWrapper>
       {filteredTickets.length === 0 ? (
-        <RyogoSmall color="light" className="mx-auto">
-          {t("NoTickets")}
-        </RyogoSmall>
+        <EmptyStateIcon label={t("NoTickets")} icon={TicketSlash} />
       ) : (
-        <div className="flex flex-col gap-3 lg:gap-4">
+        <SectionColWrapper className="overflow-y-scroll no-scrollbar">
           {filteredTickets.map((ticket) => (
             <SupportTicketItem key={ticket.id} ticket={ticket} />
           ))}
-        </div>
+        </SectionColWrapper>
       )}
+      <StickyActionWrapper>
+        <Link href={`/rider/mySupport/tickets/add`}>
+          <RyogoDefaultButton label={t("AddTicket")} className="w-full" />
+        </Link>
+      </StickyActionWrapper>
     </PageWrapper>
   )
 }

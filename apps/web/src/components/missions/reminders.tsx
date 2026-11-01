@@ -1,22 +1,22 @@
 "use client"
 
-import {
-  SectionColWrapper,
-  SectionRowWrapper,
-} from "@/components/page/pageWrappers"
-import { FindRemindersByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
 import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
+import RemindersFiltersCard from "@/components/filter/remindersFiltersCard"
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import {
+  SectionRowWrapper,
+  TileGridWrapper,
+} from "@/components/page/pageWrappers"
+import { PaginationControls } from "@/components/pagination/paginationControls"
 import { RyogoCaption } from "@/components/typography"
+import { usePagination } from "@/hooks/usePagination"
+import { FindRemindersByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
+import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 import { AlarmClockMinus } from "lucide-react"
 import { Route } from "next"
 import { useTranslations } from "next-intl"
-import { useRouter, usePathname, useSearchParams } from "next/navigation"
-import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
-import { usePagination } from "@/hooks/usePagination"
-import { PaginationControls } from "@/components/pagination/paginationControls"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import ReminderCard from "./reminderCard"
-import RemindersFiltersCard from "@/components/filter/remindersFiltersCard"
 
 const REMINDERS_PER_PAGE = 5
 
@@ -68,7 +68,7 @@ export default async function RemindersPageComponent({
           disabled={searchParams.size === 0}
         />
       </SectionRowWrapper>
-      <SectionColWrapper className="h-full">
+      <TileGridWrapper>
         {currentItems.length > 0 ? (
           currentItems.map((reminder) => (
             <ReminderCard
@@ -80,7 +80,7 @@ export default async function RemindersPageComponent({
         ) : (
           <EmptyStateIcon icon={AlarmClockMinus} label={t("NoReminders")} />
         )}
-      </SectionColWrapper>
+      </TileGridWrapper>
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}

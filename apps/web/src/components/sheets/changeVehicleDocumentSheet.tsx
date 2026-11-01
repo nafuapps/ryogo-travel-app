@@ -29,7 +29,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 
-export default function ChangeVehiclePhotoSheet({
+export default function ChangeVehicleDocumentSheet({
   vehicleId,
   agencyId,
   addedByUserId,
@@ -55,7 +55,7 @@ export default function ChangeVehiclePhotoSheet({
   const modifyVehicleSchema = z.object({
     documentExpiresOn: z
       .date(t("Field1.Error1"))
-      .min(expiresOn ?? new Date(), t("Field1.Error2"))
+      .min(new Date(), t("Field1.Error2"))
       .nonoptional(t("Field1.Error1")),
     documentPhoto: FileRegex.refine((file) => {
       return checkImageFileSize(file, true)

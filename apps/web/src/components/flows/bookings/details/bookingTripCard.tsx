@@ -1,15 +1,15 @@
-import { RyogoP, RyogoCaption } from "@/components/typography"
-import { AirVent, Users } from "lucide-react"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   DateWrapper,
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoPill } from "@/components/pills/ryogoPills"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import RyogoRoundedDashedTag from "@/components/tags/ryogoRoundedDashedTag"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { getDisplayEndDate } from "@/lib/utils"
 import { BookingTypeEnum } from "@ryogo-travel-app/db/schema"
+import { AirVent, Users } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 export default function BookingTripCard({
@@ -96,7 +96,7 @@ function LocationWrapper({
   end?: boolean
 }) {
   return (
-    <SectionColWrapper small className={`${end ? "items-end" : ""}`}>
+    <SectionColWrapper small className={`${end ? "items-end text-end" : ""}`}>
       <RyogoP weight="font-bold">{city}</RyogoP>
       <RyogoCaption color="slate">{state}</RyogoCaption>
     </SectionColWrapper>

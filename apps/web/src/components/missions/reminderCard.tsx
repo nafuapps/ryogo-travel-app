@@ -1,6 +1,7 @@
 "use client"
 
 import { changeIsReadMissionAction } from "@/app/actions/missions/changeIsReadMissionAction"
+import { deleteReminderAction } from "@/app/actions/missions/deleteReminderAction"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
@@ -14,7 +15,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall, RyogoTiny } from "@/components/typography"
 import { FindRemindersByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
-import { ChevronRight, CircleCheckBig } from "lucide-react"
+import { ChevronRight, CircleCheckBig, Trash } from "lucide-react"
 import moment from "moment"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -65,6 +66,22 @@ export default function ReminderCard({
     })
   }
 
+  async function deleteReminder() {
+    startTransition(async () => {
+      if (
+        await deleteReminderAction({
+          missionId: reminder.id,
+          assignedUserId: reminder.userId,
+          agencyId: reminder.agencyId,
+        })
+      ) {
+        router.refresh()
+      } else {
+        toast.error(t("DeleteError"))
+      }
+    })
+  }
+
   return (
     <SectionWrapper
       id={reminder.id}
@@ -102,40 +119,45 @@ export default function ReminderCard({
       </SectionColWrapper>
       <SectionRowWrapper>
         {isRead ? (
-          <RyogoOutlineButton
-            onClick={markUnread}
-            disabled={isPending}
-            label={t("Card.Done")}
-            labelColor="light"
-            className="grow"
-          >
-            <RyogoIcon icon={CircleCheckBig} size="xs" color="light" />
-          </RyogoOutlineButton>
+          <>
+            <RyogoOutlineButton
+              onClick={markUnread}
+              disabled={isPending}
+              label={t("Card.Done")}
+              labelColor="light"
+              className="grow"
+            >
+              <RyogoIcon icon={CircleCheckBig} size="xs" color="light" />
+            </RyogoOutlineButton>
+            <RyogoOutlineButton>
+              <RyogoIcon icon={Trash} size="sm" onClick={deleteReminder} />
+            </RyogoOutlineButton>
+          </>
         ) : (
-          <RyogoDefaultButton
-            label={t("Card.MarkDone")}
-            onClick={markRead}
-            className="grow"
-            disabled={isPending}
-          />
-        )}
-        {!isRead && (
-          <RyogoOutlineButton
-            disabled={isPending || isRead}
-            onClick={() =>
-              isRider
-                ? router.push(
-                    `/rider/myMissions/myReminders/${reminder.id}/modify`,
-                  )
-                : router.push(
-                    `/dashboard/missions/reminders/${reminder.id}/modify`,
-                  )
-            }
-            className="grow"
-            label={t("Card.EditReminder")}
-          >
-            <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
-          </RyogoOutlineButton>
+          <>
+            <RyogoDefaultButton
+              label={t("Card.MarkDone")}
+              onClick={markRead}
+              className="grow"
+              disabled={isPending}
+            />
+            <RyogoOutlineButton
+              disabled={isPending || isRead}
+              onClick={() =>
+                isRider
+                  ? router.push(
+                      `/rider/myMissions/myReminders/${reminder.id}/modify`,
+                    )
+                  : router.push(
+                      `/dashboard/missions/reminders/${reminder.id}/modify`,
+                    )
+              }
+              className="grow"
+              label={t("Card.EditReminder")}
+            >
+              <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
+            </RyogoOutlineButton>
+          </>
         )}
       </SectionRowWrapper>
     </SectionWrapper>

@@ -5,7 +5,7 @@ export function HeaderSkeleton() {
 }
 
 export function PageSkeleton() {
-  return <Skeleton className="my-2 h-full w-full" />
+  return <Skeleton className="my-2 h-full w-full rounded-lg" />
 }
 
 export function SectionSkeleton({ className }: { className: string }) {

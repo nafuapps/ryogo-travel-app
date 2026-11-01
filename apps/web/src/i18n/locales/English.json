@@ -4833,8 +4833,8 @@
       "TryCTA": "Try Premium",
       "RenewCTA": "Renew Subscription",
       "AddReminder": "Set a new reminder",
-      "AllReminders": "All Reminders",
-      "FilteredReminders": "Filtered Reminders",
+      "AllReminders": "All Reminders ({count})",
+      "FilteredReminders": "Filtered Reminders ({count})",
       "Filters": "REMINDER FILTERS",
       "CriticalFilter": "Critical",
       "DoneFilter": "Done",
@@ -4842,6 +4842,7 @@
       "TypeFilter": "Entity type",
       "ClearFilters": "Clear Filters",
       "NoReminders": "No reminders found.. Try changing the filters.",
+      "DeleteError": "Failed to delete reminder.. please try again later",
       "Card": {
         "Due": "Due ",
         "MarkDone": "Mark as Done",

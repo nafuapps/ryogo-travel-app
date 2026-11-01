@@ -63,7 +63,7 @@ export default function ChangeDriverPhotoSheet({
       .optional(),
     licenseExpiresOn: z
       .date(t("Field2.Error1"))
-      .min(lExpiresOn ?? new Date(), t("Field2.Error2"))
+      .min(new Date(), t("Field2.Error2"))
       .nonoptional(t("Field2.Error1")),
     licensePhotos: FileRegex.refine((file) => {
       return checkImageFileSize(file, true)

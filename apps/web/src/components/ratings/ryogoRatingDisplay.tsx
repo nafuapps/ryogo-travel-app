@@ -1,13 +1,13 @@
-import { Star } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoCaption } from "@/components/typography"
-import { getAverageRating } from "@/lib/utils"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import { RyogoCaption } from "@/components/typography"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { getAverageRating } from "@/lib/utils"
+import { Star } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 export default function RyogoAverageRatingDisplay({
@@ -45,6 +45,7 @@ export function RyogoSingleRatingDisplay({
             icon={Star}
             size="sm"
             color={`${rating > index ? "yellow" : "slate"}`}
+            fill
           />
         )
       })}

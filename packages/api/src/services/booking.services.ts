@@ -578,7 +578,7 @@ export const bookingServices = {
       startLog.odometerReading && endLog.odometerReading
         ? endLog.odometerReading - startLog.odometerReading
         : 0,
-      booking.estimatedTotalDistance * UPDATE_PRICE_DISTANCE_FACTOR,
+      Math.round(booking.estimatedTotalDistance * UPDATE_PRICE_DISTANCE_FACTOR),
     )
 
     //Calculate actual total price based on actual distance and trip duration for driver allowance and ac charge

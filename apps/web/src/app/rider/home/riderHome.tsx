@@ -1,27 +1,25 @@
 import {
-  FindAllDriverLeavesByDriverIdType,
-  FindDriverAssignedBookingsByIdType,
-  FindDriverByUserIdType,
-} from "@ryogo-travel-app/api/services/driver.services"
-import { getTranslations } from "next-intl/server"
-import {
-  BookingStatusEnum,
-  DriverLeaveStatusEnum,
-  DriverStatusEnum,
-} from "@ryogo-travel-app/db/schema"
+  OngoingBookingCard,
+  UpcomingBookingCard,
+} from "@/components/flows/bookings/cards/bookingCards"
+import DriverLeaveComponent from "@/components/flows/drivers/leaves/driverLeaveComponent"
+import NotificationCard from "@/components/notifications/notificationCard"
 import {
   PageWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
 import {
-  OngoingBookingCard,
-  UpcomingBookingCard,
-} from "@/components/flows/bookings/cards/bookingCards"
-import DriverLeaveComponent from "@/components/flows/drivers/leaves/driverLeaveComponent"
+  FindAllDriverLeavesByDriverIdType,
+  FindDriverAssignedBookingsByIdType,
+  FindDriverByUserIdType,
+} from "@ryogo-travel-app/api/services/driver.services"
 import { FindNotificationsByUserIdType } from "@ryogo-travel-app/api/services/notification.services"
-import NotificationCard from "@/components/notifications/notificationCard"
-
-//TODO: Revamp home page for rider with a floating ongoing booking nudge
+import {
+  BookingStatusEnum,
+  DriverLeaveStatusEnum,
+  DriverStatusEnum,
+} from "@ryogo-travel-app/db/schema"
+import { getTranslations } from "next-intl/server"
 
 export default async function RiderHomePageComponent({
   assignedBookings,

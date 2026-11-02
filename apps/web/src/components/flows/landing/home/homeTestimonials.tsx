@@ -15,7 +15,7 @@ import {
   RyogoP,
   RyogoSmall,
 } from "@/components/typography"
-import { ChevronRight, Quote } from "lucide-react"
+import { ChevronRight, Quote, Star } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
@@ -86,9 +86,14 @@ function TestimonialCard({
         <SectionRowWrapper className="justify-between">
           <div className="flex gap-1">
             {Array.from({ length: rating }).map((_, i) => (
-              <span key={i} className="text-yellow-400">
-                ⭐
-              </span>
+              <RyogoIcon
+                key={i}
+                icon={Star}
+                size="xs"
+                color={"yellow"}
+                thick
+                fill
+              />
             ))}
           </div>
           <RyogoIcon icon={Quote} size="md" color="light" />

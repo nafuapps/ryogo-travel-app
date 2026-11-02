@@ -257,7 +257,7 @@ export function RyogoFileInput({
                 {previewUrl && (
                   <RyogoImage src={previewUrl} alt={label} imageSize="sm" />
                 )}
-                <RyogoCaption color="light" className="w-full">
+                <RyogoCaption color="light" className="w-full truncate">
                   {previewFile.name +
                     " (" +
                     (previewFile.size / 1000).toFixed(0) +
@@ -730,7 +730,7 @@ export function RyogoRatingInput({
                       ? () => setSelectedStars(index + 1)
                       : () => setSelectedStars(0)
                   }
-                  thick={selectedStars > index}
+                  fill={selectedStars > index}
                 />
               )
             })}

@@ -107,6 +107,7 @@ export default function StartTripSheet({
     })
     if (result) {
       setOpen(false)
+      toast.success(t("Success"))
       router.refresh()
     } else {
       toast.error(t("Error"))

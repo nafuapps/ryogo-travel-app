@@ -108,6 +108,7 @@ export default function MidTripSheet({
     if (result) {
       router.refresh()
       setOpen(false)
+      toast.success(t("Success", { type: nextStep }))
     } else {
       toast.error(t("Error", { type: nextStep }))
       router.replace("/rider/myBookings")

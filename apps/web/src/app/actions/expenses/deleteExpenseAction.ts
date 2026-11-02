@@ -9,17 +9,19 @@ import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
 export async function deleteExpenseAction({
   expenseId,
   agencyId,
+  assignedUserId,
   bookingAssignedUserId,
   isRider,
 }: {
   expenseId: string
   agencyId: string
+  assignedUserId: string
   bookingAssignedUserId: string
   isRider?: boolean
 }) {
   const currentUser = await writePermissions.allowAssignedUserOrOwner({
     agencyId,
-    assignedUserId: bookingAssignedUserId,
+    assignedUserId,
   })
   if (!currentUser) return
 

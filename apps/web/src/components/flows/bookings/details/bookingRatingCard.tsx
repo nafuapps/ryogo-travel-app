@@ -59,7 +59,7 @@ function BookingRatingCard({
                 icon={Star}
                 size="xs"
                 color={index < rating ? "yellow" : "light"}
-                thick
+                fill
               />
             )
           })}

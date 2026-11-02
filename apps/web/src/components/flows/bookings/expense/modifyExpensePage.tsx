@@ -99,7 +99,7 @@ export default function ModifyExpensePageComponent({
         bookingId: expenseDetails.bookingId,
       },
       agencyId: expenseDetails.agencyId,
-      assignedUserId: bookingAssignedUserId,
+      assignedUserId: expenseDetails.addedByUserId,
       isRider,
     })
     if (updatedExpense) {
@@ -188,6 +188,7 @@ export default function ModifyExpensePageComponent({
             expenseId={expenseDetails.id}
             agencyId={expenseDetails.agencyId}
             bookingAssignedUserId={bookingAssignedUserId}
+            addedByUserId={expenseDetails.addedByUserId}
             disabled={form.formState.isSubmitting}
             isRider={isRider}
           />

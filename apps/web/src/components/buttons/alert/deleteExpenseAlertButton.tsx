@@ -1,20 +1,21 @@
 "use client"
 
-import { useTransition } from "react"
 import { deleteExpenseAction } from "@/app/actions/expenses/deleteExpenseAction"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
-import RyogoAlertDialog from "./ryogoAlertDialog"
 import {
-  RyogoGhostButton,
   RyogoDestructiveButton,
+  RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { toast } from "sonner"
+import RyogoAlertDialog from "./ryogoAlertDialog"
 
 export default function DeleteExpenseAlertButton({
   bookingId,
   expenseId,
   agencyId,
+  addedByUserId,
   bookingAssignedUserId,
   disabled,
   isRider,
@@ -22,6 +23,7 @@ export default function DeleteExpenseAlertButton({
   bookingId: string
   expenseId: string
   agencyId: string
+  addedByUserId: string
   bookingAssignedUserId: string
   disabled: boolean
   isRider?: boolean
@@ -39,6 +41,7 @@ export default function DeleteExpenseAlertButton({
         await deleteExpenseAction({
           expenseId,
           agencyId,
+          assignedUserId: addedByUserId,
           bookingAssignedUserId,
           isRider,
         })

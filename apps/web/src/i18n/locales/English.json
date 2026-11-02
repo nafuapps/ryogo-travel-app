@@ -5510,6 +5510,7 @@
         "Start": "Confirm and Start Trip",
         "Close": "Cancel",
         "Loading": "Loading",
+        "Success": "Trip started successfully!",
         "Error": "Cannot start trip now.. please try again later"
       },
       "EndTrip": {
@@ -5548,11 +5549,12 @@
         "Close": "Cancel",
         "Loading": "Loading",
         "AddExpense": "Add Expense",
+        "Success": "Trip ended successfully!",
         "Error": "Cannot end trip now.. please try again later"
       },
       "MidTrip": {
         "Title": {
-          "Arrived": "Reached pickup address",
+          "Arrived": "Arrived at pickup address",
           "PickedUp": "Picked up customer",
           "Dropped": "Dropped customer"
         },
@@ -5585,6 +5587,7 @@
         },
         "Close": "Cancel",
         "Loading": "Loading",
+        "Success": "{type} confirmed!",
         "Error": "Cannot mark {type} now.. please try again later"
       },
       "TripLog": {

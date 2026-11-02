@@ -1,5 +1,6 @@
 "use client"
 
+import { RyogoCaption } from "@/components/typography"
 import {
   Pagination,
   PaginationContent,
@@ -7,7 +8,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
-import { RyogoCaption } from "@/components/typography"
 import { useTranslations } from "next-intl"
 
 interface PaginationControlsProps {
@@ -36,7 +36,7 @@ export function PaginationControls({
   }
   return (
     <Pagination>
-      <PaginationContent className="mt-3 lg:mt-4">
+      <PaginationContent className="mt-auto">
         <PaginationItem>
           <PaginationPrevious
             href="#"

@@ -104,12 +104,13 @@ export type RyogoIconType = {
   size: RyogoIconSizeType
   color?: RyogoIconColorType
   thick?: boolean
+  fill?: boolean
   onClick?: () => void
   className?: string
 }
 
 export function RyogoIcon(props: RyogoIconType) {
-  const className = `shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${getIconSize(props.size)} ${getIconColor(props.color)} ${props.className ?? ""}`
+  const className = `shrink-0 ${props.thick ? "stroke-2" : "stroke-1"} ${props.fill ? "fill-current" : ""} ${getIconSize(props.size)} ${getIconColor(props.color)} ${props.className ?? ""}`
   return <props.icon onClick={props.onClick} className={className} />
 }
 

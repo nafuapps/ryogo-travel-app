@@ -25,7 +25,6 @@ import {
 } from "@/components/flows/support/supportTableWrapper"
 import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
@@ -361,25 +360,13 @@ async function BookingsContent() {
         <RyogoCaption color="slate">
           {t("AssignedBookings.Description")}
         </RyogoCaption>
-        {/* //TODO: Add AssignedBookings page snapshot */}
-        <RyogoImage
-          alt="AssignedBookings"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/users/assigned.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
         <RyogoCaption color="slate">
           {t("CompletedBookings.Description")}
         </RyogoCaption>
-        {/* //TODO: Add CompletedBookings page snapshot */}
-        <RyogoImage
-          alt="CompletedBookings"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/users/completed.mp4" />
       </SupportContentSectionWrapper>
     </>
   )

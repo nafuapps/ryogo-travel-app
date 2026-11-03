@@ -44,7 +44,7 @@ export default async function RiderLayout({
         } as React.CSSProperties
       }
     >
-      <LayoutWrapper id="RiderLayout">
+      <LayoutWrapper id="RiderLayout" screen>
         <RiderSidebar />
         <LayoutSectionWrapper id="RiderMainSection">
           {children}

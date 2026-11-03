@@ -37,7 +37,7 @@ function DetailsHeaderTabItem({
   href: string
 }) {
   return (
-    <Link href={href as Route} className="w-full">
+    <Link href={href as Route} className="grow md:w-full">
       <div
         className={`flex w-full items-center rounded transition justify-center p-2 lg:p-2.5 ${
           selected

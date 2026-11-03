@@ -1,23 +1,22 @@
-import ReactPDF, {
-  Document,
-  Page,
-  Image,
-  Text,
-  View,
-  Link,
-} from "@react-pdf/renderer"
-import { styles } from "./commonStyles"
 import {
   HOMEPAGE_URL,
   RyogoLogoSrc,
   SUPPORT_EMAIL,
   SUPPORT_HELPLINE_NUMBER,
 } from "@/lib/uiConfig"
-import { format } from "date-fns"
+import ReactPDF, {
+  Document,
+  Image,
+  Link,
+  Page,
+  Text,
+  View,
+} from "@react-pdf/renderer"
 import { ROIReportType } from "@ryogo-travel-app/api/types/agency.types"
+import { format } from "date-fns"
+import { styles } from "./commonStyles"
 
 function ROIReportDocument({ report }: { report: ROIReportType }) {
-  console.log(report.monthlyWage)
   return (
     <Document>
       <Page size="A4" style={styles.page}>

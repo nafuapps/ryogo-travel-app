@@ -1,3 +1,26 @@
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
+import {
+  SupportFAQItem,
+  SupportFAQItemType,
+  SupportFAQWrapper,
+} from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
+import SupportTableOfContentLinkButton, {
+  SupportContentItemType,
+} from "@/components/flows/support/supportTableOfContentLink"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
+import RiderHeader from "@/components/header/riderHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -5,35 +28,12 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import RiderHeader from "@/components/header/riderHeader"
-import { ChevronRight, TreePalm, Telescope } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
-import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader, {
-  SupportContentSectionWrapper,
-} from "@/components/flows/support/supportContentHeader"
-import {
-  SupportFAQItemType,
-  SupportFAQWrapper,
-  SupportFAQItem,
-} from "@/components/flows/support/supportFAQWrapper"
-import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import SupportTableOfContentLinkButton, {
-  SupportContentItemType,
-} from "@/components/flows/support/supportTableOfContentLink"
-import { getTranslations } from "next-intl/server"
 import { RyogoCaption } from "@/components/typography"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
+import { ChevronRight, Telescope, TreePalm } from "lucide-react"
 import { Metadata } from "next"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
-import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import { getTranslations } from "next-intl/server"
 
 /*
   - Overview
@@ -170,13 +170,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("KnowLeave.Title")}>
         <RyogoCaption color="slate">{t("KnowLeave.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("KnowLeave.AllLeaves")}</RyogoCaption>
-        {/* //TODO: All leaves page snapshot */}
-        <RyogoImage
-          alt="Leaves"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/leaves.mp4" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myLeaves"}
           label={t("KnowLeave.CTA")}
@@ -204,13 +198,7 @@ async function MarkingContent() {
           {t("GoingOnLeave.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("GoingOnLeave.Process")}</RyogoCaption>
-        {/* //TODO: Add start leave snapshot */}
-        <RyogoImage
-          alt="GoingOnLeave"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/start_leave.mp4" mobile />
         <SupportWarningWrapper text={t("GoingOnLeave.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("BackFromLeave.Title")}>
@@ -218,13 +206,7 @@ async function MarkingContent() {
           {t("BackFromLeave.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("BackFromLeave.Process")}</RyogoCaption>
-        {/* //TODO: Add end leave snapshot */}
-        <RyogoImage
-          alt="BackFromLeave"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/end_leave.mp4" mobile />
         <SupportWarningWrapper text={t("BackFromLeave.Warning")} />
       </SupportContentSectionWrapper>
     </>

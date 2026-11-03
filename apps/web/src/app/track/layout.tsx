@@ -29,7 +29,7 @@ export default async function TrackingLayout({
         } as React.CSSProperties
       }
     >
-      <LayoutWrapper id="TrackLayout">
+      <LayoutWrapper id="TrackLayout" screen>
         <TrackSidebar />
         <LayoutSectionWrapper id="TrackMainSection">
           {children}

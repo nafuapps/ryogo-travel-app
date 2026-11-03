@@ -55,7 +55,7 @@ export const tripLogServices = {
       })
     }
     if (!tripLog) {
-      console.error(`Could not add trip log: ${data}`)
+      console.error("Could not add trip log", data)
       return
     }
     return tripLog

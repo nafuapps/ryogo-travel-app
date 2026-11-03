@@ -19,9 +19,7 @@ export const routeServices = {
     destinationState: string
   }) {
     if (sourceCity === destinationCity && sourceState === destinationState) {
-      console.error(
-        `Same source and destination location provided: ${sourceCity},${sourceState}`,
-      )
+      console.error("Same source and destination location provided", sourceCity, sourceState)
       return
     }
     const source = await locationRepository.readLocationByCityState({
@@ -29,7 +27,7 @@ export const routeServices = {
       state: sourceState,
     })
     if (!source) {
-      console.error(`Source not found: ${sourceCity},${sourceState}`)
+      console.error("Source not found", sourceCity, sourceState)
       return
     }
     const destination = await locationRepository.readLocationByCityState({
@@ -38,9 +36,7 @@ export const routeServices = {
     })
 
     if (!destination) {
-      console.error(
-        `Destination not found: ${destinationCity},${destinationState}`,
-      )
+      console.error("Destination not found", destinationCity, destinationState)
       return
     }
 
@@ -58,9 +54,7 @@ export const routeServices = {
       destinationId: destination.id,
     })
     if (!newDistance || newDistance < 1) {
-      console.error(
-        `Could not get distance or distance < 1 for new route: ${source.id} - ${destination.id}`,
-      )
+      console.error("Could not get distance or distance \u003c 1 for new route", source.id, destination.id)
       return
     }
 
@@ -73,7 +67,7 @@ export const routeServices = {
     }
     const [newRoute] = await routeRepository.createRoute(newRouteData)
     if (!newRoute) {
-      console.error(`Route could not be added: ${newRouteData}`)
+      console.error("Route could not be added", newRouteData)
       return
     }
     return newRoute
@@ -89,9 +83,7 @@ export const routeServices = {
     distance: number
   }) {
     if (sourceId === destinationId) {
-      console.error(
-        `Same source and destination Id provided: ${sourceId} ${destinationId}`,
-      )
+      console.error("Same source and destination Id provided", sourceId, destinationId)
       return
     }
 

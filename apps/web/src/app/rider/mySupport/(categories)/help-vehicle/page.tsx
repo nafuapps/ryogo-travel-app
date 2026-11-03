@@ -23,7 +23,6 @@ import {
   SupportTableWrapper,
 } from "@/components/flows/support/supportTableWrapper"
 import RiderHeader from "@/components/header/riderHeader"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
@@ -34,6 +33,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
 import { ChevronRight, StickyNotes, Telescope } from "lucide-react"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
@@ -174,13 +174,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("KnowVehicle.AllVehicles")}
         </RyogoCaption>
-        {/* //TODO: Add my vehicle page snapshot */}
-        <RyogoImage
-          alt="Vehicles"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/vehicle.mp4" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myVehicle"}
           label={t("KnowVehicle.CTA")}
@@ -231,15 +225,10 @@ async function DocumentsContent() {
       <RyogoCaption color="slate">
         {t("WhatIsDocument.ExpiryAlerts")}
       </RyogoCaption>
-      {/* //TODO: Add expiry alert snapshot */}
-      <RyogoImage
-        alt="ExpiryAlert"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
+      {/* //TODO: Expiry alerts */}
+      <RyogoSupportVideo src="/rider/expiry_alerts.mp4" mobile />
       <SupportContentCTALinkButton
-        href={"/rider/myMissions"}
+        href={"/rider/myMissions/myExpiryAlerts"}
         label={t("WhatIsDocument.CTA")}
       />
     </SupportContentSectionWrapper>

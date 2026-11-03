@@ -61,7 +61,9 @@ export const customerServices = {
       })
     if (existingCustomer.length > 0) {
       console.error(
-        `Customer already exists with this phone: ${data.agencyId} ${data.phone}`,
+        "Customer already exists with this phone",
+        data.agencyId,
+        data.phone,
       )
       return
     }
@@ -71,9 +73,7 @@ export const customerServices = {
       state: data.state,
     })
     if (!location) {
-      console.error(
-        `Location not found: ${data.agencyId} ${data.city},${data.state}`,
-      )
+      console.error("Location not found", data.agencyId, data.city, data.state)
       return
     }
     const newCustomerData: InsertCustomerType = {
@@ -90,7 +90,7 @@ export const customerServices = {
     const [newCustomer] =
       await customerRepository.createCustomer(newCustomerData)
     if (!newCustomer) {
-      console.error(`Customer could not be added: ${newCustomerData}`)
+      console.error("Customer could not be added", newCustomerData)
       return
     }
     return newCustomer
@@ -100,7 +100,7 @@ export const customerServices = {
   async modifyCustomer(data: ModifyCustomerRequestType) {
     const customer = await customerRepository.readCustomerById(data.customerId)
     if (!customer || customer.status === CustomerStatusEnum.SUSPENDED) {
-      console.error(`Customer not found or suspended: ${data.customerId}`)
+      console.error("Customer not found or suspended", data.customerId)
       return
     }
 
@@ -111,7 +111,10 @@ export const customerServices = {
     })
     if (!location) {
       console.error(
-        `Location not found: ${data.customerId} ${data.city},${data.state}`,
+        "Location not found",
+        data.customerId,
+        data.city,
+        data.state,
       )
       return
     }
@@ -121,7 +124,7 @@ export const customerServices = {
       locationId: location.id,
     })
     if (!updatedCustomer) {
-      console.error(`Customer details could not be updated: ${data}`)
+      console.error("Customer details could not be updated", data)
       return
     }
     return updatedCustomer
@@ -135,7 +138,9 @@ export const customerServices = {
     })
     if (!updatedCustomer) {
       console.error(
-        `Customer photo url not be updated: ${customerId} ${photoUrl}`,
+        "Customer photo url could not be updated",
+        customerId,
+        photoUrl,
       )
       return
     }
@@ -146,7 +151,7 @@ export const customerServices = {
   async activateCustomer(customerId: string) {
     const customer = await customerRepository.readCustomerById(customerId)
     if (!customer || customer.status !== CustomerStatusEnum.INACTIVE) {
-      console.error(`Customer not found or not inactive: ${customerId}`)
+      console.error("Customer not found or not inactive", customerId)
       return
     }
 
@@ -155,7 +160,7 @@ export const customerServices = {
       status: CustomerStatusEnum.ACTIVE,
     })
     if (!updatedCustomer) {
-      console.error(`Customer could not be activated: ${customerId}`)
+      console.error("Customer could not be activated", customerId)
       return
     }
     return updatedCustomer
@@ -165,7 +170,7 @@ export const customerServices = {
   async inactivateCustomer(customerId: string) {
     const customer = await customerRepository.readCustomerById(customerId)
     if (!customer || customer.status !== CustomerStatusEnum.ACTIVE) {
-      console.error(`Customer not found or not active: ${customerId}`)
+      console.error("Customer not found or not active", customerId)
       return
     }
 
@@ -174,7 +179,7 @@ export const customerServices = {
       status: CustomerStatusEnum.INACTIVE,
     })
     if (!updatedCustomer) {
-      console.error(`Customer could not be inactivated: ${customerId}`)
+      console.error("Customer could not be inactivated", customerId)
       return
     }
     return updatedCustomer

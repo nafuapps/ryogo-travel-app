@@ -41,7 +41,10 @@ export async function startDriverLeaveAction({
         ? "StartedDriverLeave"
         : "DriverLeaveStarted",
     textObject: {
-      startDate: startedLeave.actualStartDate,
+      startDate: format(
+        startedLeave.actualStartDate ?? startedLeave.startDate,
+        "dd MMM yyyy",
+      ),
       userName: currentUser.name,
       driverName: startedLeave.driver.name,
     },

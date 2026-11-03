@@ -59,7 +59,7 @@ export default async function ChangePasswordPage() {
           stepLabel={t("Subtitle")}
           totalSteps={1}
           currentStepIndex={0}
-          href={"https://www.youtube.com/watch?v=VHx9u4dFULs"}
+          href={"https://www.youtube.com/embed/VHx9u4dFULs"}
         />
         <ChangePasswordStepComponent
           userId={currentUser.userId}

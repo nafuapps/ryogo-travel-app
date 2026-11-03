@@ -100,7 +100,7 @@ export const vehicleServices = {
       booking =
         await bookingRepository.readFirstAssignedBookingByDriverId(driverId)
       if (!booking || booking.assignedVehicleId === null) {
-        console.error(`No assigned vehicle found for the driver: ${driverId}`)
+        console.error("No assigned vehicle found for the driver", driverId)
         return
       }
     }
@@ -135,7 +135,7 @@ export const vehicleServices = {
   async addVehicle(data: AddVehicleRequestType) {
     const agency = await agencyRepository.readAgencyById(data.agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-      console.error(`Agency not found or suspended: ${data.agencyId}`)
+      console.error("Agency not found or suspended", data.agencyId)
       return
     }
 
@@ -149,7 +149,7 @@ export const vehicleServices = {
         data.agencyId,
       )
       if (vehicles.length >= BASIC_PLAN_VEHICLE_LIMIT) {
-        console.error(`Basic plan vehicle limit reached: ${data.agencyId}`)
+        console.error("Basic plan vehicle limit reached", data.agencyId)
         return
       }
     }
@@ -161,9 +161,7 @@ export const vehicleServices = {
         vehicleNumber: data.vehicleNumber.toUpperCase(),
       })
     if (existingVehicleInAgency) {
-      console.error(
-        `Existing vehicle number in the agency: ${data.agencyId} ${data.vehicleNumber}`,
-      )
+      console.error("Existing vehicle number in the agency", data.agencyId, data.vehicleNumber)
       return
     }
 
@@ -188,7 +186,7 @@ export const vehicleServices = {
     //Step3: Create vehicle in DB
     const [newVehicle] = await vehicleRepository.createVehicle(newVehicleData)
     if (!newVehicle) {
-      console.error(`Vehicle could not be added: ${data}`)
+      console.error("Vehicle could not be added", data)
       return
     }
     return newVehicle
@@ -198,13 +196,13 @@ export const vehicleServices = {
   async addVehicleRepair(data: InsertVehicleRepairType) {
     const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
     if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
-      console.error(`Vehicle not found or suspended: ${data.vehicleId}`)
+      console.error("Vehicle not found or suspended", data.vehicleId)
       return
     }
 
     const [repair] = await vehicleRepairRepository.createRepair(data)
     if (!repair) {
-      console.error(`Vehicle repair could not be created: ${data}`)
+      console.error("Vehicle repair could not be created", data)
       return
     }
 
@@ -215,13 +213,13 @@ export const vehicleServices = {
   async modifyVehicleRepair(data: ModifyVehicleRepairRequestType) {
     const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
     if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
-      console.error(`Vehicle not found or suspended: ${data.vehicleId}`)
+      console.error("Vehicle not found or suspended", data.vehicleId)
       return
     }
 
     const [repair] = await vehicleRepairRepository.updateRepairDetails(data)
     if (!repair) {
-      console.error(`Vehicle repair could not be updated: ${data}`)
+      console.error("Vehicle repair could not be updated", data)
       return
     }
 
@@ -232,7 +230,7 @@ export const vehicleServices = {
   async removeVehicleRepair(repairId: string) {
     const [deletedRepair] = await vehicleRepairRepository.deleteRepair(repairId)
     if (!deletedRepair) {
-      console.error(`Vehicle repair could not be removed: ${repairId}`)
+      console.error("Vehicle repair could not be removed", repairId)
       return
     }
     return deletedRepair
@@ -248,15 +246,13 @@ export const vehicleServices = {
   }) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
     if (!vehicle || vehicle.status !== VehicleStatusEnum.AVAILABLE) {
-      console.error(
-        `Vehicle not found or not available to start repair: ${vehicleId}`,
-      )
+      console.error("Vehicle not found or not available to start repair", vehicleId)
       return
     }
 
     const repair = await vehicleRepairRepository.readRepairById(repairId)
     if (!repair || repair.status !== VehicleRepairStatusEnum.PENDING) {
-      console.error(`Vehicle repair not found or not pending: ${repairId}`)
+      console.error("Vehicle repair not found or not pending", repairId)
       return
     }
 
@@ -265,9 +261,7 @@ export const vehicleServices = {
       vehicleId,
     })
     if (!startedRepair) {
-      console.error(
-        `Vehicle repair could not be started: ${vehicleId} ${repairId}`,
-      )
+      console.error("Vehicle repair could not be started", vehicleId, repairId)
       return
     }
     return startedRepair
@@ -283,13 +277,13 @@ export const vehicleServices = {
   }) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
     if (!vehicle || vehicle.status !== VehicleStatusEnum.REPAIR) {
-      console.error(`Vehicle not found or not in repair to end: ${vehicleId}`)
+      console.error("Vehicle not found or not in repair to end", vehicleId)
       return
     }
 
     const repair = await vehicleRepairRepository.readRepairById(repairId)
     if (!repair || repair.status !== VehicleRepairStatusEnum.ONGOING) {
-      console.error(`Vehicle repair not found or not ongoing: ${repairId}`)
+      console.error("Vehicle repair not found or not ongoing", repairId)
       return
     }
 
@@ -298,9 +292,7 @@ export const vehicleServices = {
       vehicleId,
     })
     if (!endedRepair) {
-      console.error(
-        `Vehicle repair could not be ended: ${vehicleId} ${repairId}`,
-      )
+      console.error("Vehicle repair could not be ended", vehicleId, repairId)
       return
     }
     return endedRepair
@@ -316,7 +308,7 @@ export const vehicleServices = {
   }) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
     if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
-      console.error(`Vehicle not found or suspended: ${vehicleId}`)
+      console.error("Vehicle not found or suspended", vehicleId)
       return
     }
 
@@ -327,9 +319,7 @@ export const vehicleServices = {
       },
     )
     if (existingVehicle) {
-      console.error(
-        `Existing vehicle number in the agency: ${vehicle.agencyId} ${vehicleNumber}`,
-      )
+      console.error("Existing vehicle number in the agency", vehicle.agencyId, vehicleNumber)
       return
     }
 
@@ -338,9 +328,7 @@ export const vehicleServices = {
       vehicleNumber,
     })
     if (!updatedVehicle) {
-      console.error(
-        `Vehicle number could not be updated: ${vehicleId} ${vehicleNumber}`,
-      )
+      console.error("Vehicle number could not be updated", vehicleId, vehicleNumber)
       return
     }
     return updatedVehicle
@@ -350,13 +338,13 @@ export const vehicleServices = {
   async modifyVehicle(data: ModifyVehicleRequestType) {
     const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
     if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
-      console.error(`Vehicle not found or suspended: ${data.vehicleId}`)
+      console.error("Vehicle not found or suspended", data.vehicleId)
       return
     }
 
     const [updatedVehicle] = await vehicleRepository.updateVehicleDetails(data)
     if (!updatedVehicle) {
-      console.error(`Vehicle details could not be modified: ${data}`)
+      console.error("Vehicle details could not be modified", data)
       return
     }
     return updatedVehicle
@@ -419,7 +407,7 @@ export const vehicleServices = {
       updatedVehicle = v
     }
     if (!updatedVehicle) {
-      console.error(`Vehicle document could not be updated: ${data}`)
+      console.error("Vehicle document could not be updated", data)
       return
     }
     return updatedVehicle
@@ -438,9 +426,7 @@ export const vehicleServices = {
       vehiclePhotoUrl,
     })
     if (!updatedVehicle) {
-      console.error(
-        `Vehicle photo url could not be activated: ${vehicleId} ${vehiclePhotoUrl}`,
-      )
+      console.error("Vehicle photo url could not be activated", vehicleId, vehiclePhotoUrl)
       return
     }
     return updatedVehicle
@@ -461,7 +447,7 @@ export const vehicleServices = {
       status: VehicleStatusEnum.AVAILABLE,
     })
     if (!updatedVehicle) {
-      console.error(`Vehicle could not be activated: ${vehicleId}`)
+      console.error("Vehicle could not be activated", vehicleId)
       return
     }
     return updatedVehicle
@@ -482,7 +468,7 @@ export const vehicleServices = {
       status: VehicleStatusEnum.INACTIVE,
     })
     if (!updatedVehicle) {
-      console.error(`Vehicle could not be inactivated: ${vehicleId}`)
+      console.error("Vehicle could not be inactivated", vehicleId)
       return
     }
     return updatedVehicle

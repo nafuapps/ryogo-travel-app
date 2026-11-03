@@ -1,18 +1,18 @@
 "use client"
 
-import Script from "next/script"
 import { createOrderAction } from "@/app/actions/orders/createOrderAction"
 import { verifyOrderAction } from "@/app/actions/orders/verifyOrderAction"
-import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
-import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
-import { useTransition } from "react"
-import { toast } from "sonner"
+import RyogoAlertDialog from "@/components/buttons/alert/ryogoAlertDialog"
 import {
   RyogoBrandButton,
   RyogoDefaultButton,
 } from "@/components/buttons/ryogoButtons"
-import RyogoAlertDialog from "@/components/buttons/alert/ryogoAlertDialog"
+import { OrderTypeEnum } from "@ryogo-travel-app/db/schema"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import Script from "next/script"
+import { useTransition } from "react"
+import { toast } from "sonner"
 
 export default function PaymentButton({
   agencyId,
@@ -88,7 +88,7 @@ export default function PaymentButton({
           } catch (err) {
             //Payment verification failed
             toast.error(t("Error"))
-            console.log(err)
+            console.error("Payment Button - Verify Order failed", err)
           }
         },
         prefill: {

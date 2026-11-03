@@ -17,7 +17,7 @@ export const getCurrentUser = cache(async () => {
 export const verifyCurrentUser = cache(async () => {
   const payload = await getSessionPayloadFromCookie()
   if (!payload) {
-    console.error(`No payload found in session cookie`)
+    console.error("No payload found in session cookie")
     return
   }
 

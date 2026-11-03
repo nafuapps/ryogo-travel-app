@@ -99,7 +99,7 @@ export default function AddDriverPageComponent({
                   total: AddDriverTotalSteps,
                 })
           }
-          href={"https://www.youtube.com/watch?v=q7kVqmNS648"}
+          href={"https://www.youtube.com/embed/q7kVqmNS648"}
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

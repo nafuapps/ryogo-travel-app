@@ -14,7 +14,7 @@ export const supportServices = {
   async addSupportQuery(query: InsertSupportQueryType) {
     const [newQuery] = await supportQueryRepository.createSupportQuery(query)
     if (!newQuery) {
-      console.error(`Support query could not be added: ${query}`)
+      console.error("Support query could not be added", query)
       return
     }
     return newQuery
@@ -23,7 +23,7 @@ export const supportServices = {
   async addSupportTicket(ticket: InsertSupportTicketType) {
     const agency = await agencyRepository.readAgencyById(ticket.agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-      console.error(`Agency not found or suspended: ${ticket.agencyId}`)
+      console.error("Agency not found or suspended", ticket.agencyId)
       return
     }
     //SUBSCRIPTION CHECK: Only premium agency can create custom reminders
@@ -32,16 +32,14 @@ export const supportServices = {
       (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
         agency.subscriptionExpiresOn < new Date())
     ) {
-      console.error(
-        `Basic plan cannot create support tickets: ${ticket.agencyId}`,
-      )
+      console.error("Basic plan cannot create support tickets", ticket.agencyId)
       return
     }
 
     const [newTicket] =
       await supportTicketRepository.createSupportTicket(ticket)
     if (!newTicket) {
-      console.error(`Ticket could not be created: ${ticket}`)
+      console.error("Ticket could not be created", ticket)
       return
     }
     return newTicket
@@ -76,9 +74,7 @@ export const supportServices = {
       photoUrl,
     })
     if (!updatedTicket) {
-      console.error(
-        `Ticket photo url could not be updated: ${ticketId} ${photoUrl}`,
-      )
+      console.error("Ticket photo url could not be updated", ticketId, photoUrl)
       return
     }
     return updatedTicket
@@ -93,13 +89,13 @@ export const supportServices = {
   }) {
     const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
     if (!ticket || ticket.status !== TicketStatusEnum.RESOLVED) {
-      console.error(`Ticket not found or not resolved: ${ticketId}`)
+      console.error("Ticket not found or not resolved", ticketId)
       return
     }
 
     const agency = await agencyRepository.readAgencyById(ticket.agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-      console.error(`Agency not found or suspended: ${ticket.agencyId}`)
+      console.error("Agency not found or suspended", ticket.agencyId)
       return
     }
     //SUBSCRIPTION CHECK: Only premium agency can close ticket
@@ -108,9 +104,7 @@ export const supportServices = {
       (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
         agency.subscriptionExpiresOn < new Date())
     ) {
-      console.error(
-        `Basic plan cannot update support tickets: ${ticket.agencyId} ${ticketId}`,
-      )
+      console.error("Basic plan cannot update support tickets", ticket.agencyId, ticketId)
       return
     }
 
@@ -121,7 +115,7 @@ export const supportServices = {
         resolutionRating,
       })
     if (!closedTicket) {
-      console.error(`Ticket could not be closed: ${ticketId}`)
+      console.error("Ticket could not be closed", ticketId)
       return
     }
     return closedTicket
@@ -136,7 +130,7 @@ export const supportServices = {
   }) {
     const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
     if (!ticket || ticket.status === TicketStatusEnum.CLOSED) {
-      console.error(`Ticket not found or closed: ${ticketId}`)
+      console.error("Ticket not found or closed", ticketId)
       return
     }
 
@@ -146,7 +140,7 @@ export const supportServices = {
         comment,
       })
     if (!updatedTicket) {
-      console.error(`Ticket comment could not be added: ${ticketId} ${comment}`)
+      console.error("Ticket comment could not be added", ticketId, comment)
       return
     }
     return updatedTicket
@@ -155,14 +149,14 @@ export const supportServices = {
   async removeTicket(ticketId: string) {
     const ticket = await supportTicketRepository.readSupportTicketById(ticketId)
     if (!ticket || ticket.status !== TicketStatusEnum.OPEN) {
-      console.error(`Ticket not found or not open: ${ticketId}`)
+      console.error("Ticket not found or not open", ticketId)
       return
     }
 
     const [removedTicket] =
       await supportTicketRepository.deleteSupportTicket(ticketId)
     if (!removedTicket) {
-      console.error(`Ticket could not be removed: ${ticketId}`)
+      console.error("Ticket could not be removed", ticketId)
       return
     }
     return removedTicket

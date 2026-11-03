@@ -5,6 +5,7 @@ import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { missionServices } from "@ryogo-travel-app/api/services/mission.services"
 import { notificationServices } from "@ryogo-travel-app/api/services/notification.services"
 import { EntityTypeEnum, UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { format } from "date-fns"
 
 export async function finishDriverLeaveAction({
   userId,
@@ -37,7 +38,10 @@ export async function finishDriverLeaveAction({
         ? "EndedDriverLeave"
         : "DriverLeaveEnded",
     textObject: {
-      endDate: endedLeave.actualEndDate,
+      endDate: format(
+        endedLeave.actualEndDate ?? endedLeave.endDate,
+        "dd MMM yyyy",
+      ),
       userName: currentUser.name,
       driverName: endedLeave.driver.name,
     },

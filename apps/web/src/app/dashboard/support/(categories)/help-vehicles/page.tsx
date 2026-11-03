@@ -25,7 +25,6 @@ import {
 } from "@/components/flows/support/supportTableWrapper"
 import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
@@ -38,6 +37,7 @@ import { VehicleStatusPill } from "@/components/pills/ryogoPills"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
 import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
+import { BASIC_PLAN_VEHICLE_LIMIT } from "@ryogo-travel-app/api/apiConfig"
 import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   ChevronRight,
@@ -120,7 +120,7 @@ export default async function SupportHelpVehiclesPage() {
   const faqItems: SupportFAQItemType[] = [
     {
       question: t("FAQs.HowMany.Question"),
-      answer: t("FAQs.HowMany.Answer"),
+      answer: t("FAQs.HowMany.Answer", { limit: BASIC_PLAN_VEHICLE_LIMIT }),
     },
     {
       question: t("FAQs.Alerts.Question"),
@@ -247,13 +247,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("VehiclesSchedule.Description")}
         </RyogoCaption>
-        {/* //TODO: Add VehiclesSchedule page snapshot */}
-        <RyogoImage
-          alt="VehiclesSchedule"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/schedule.mp4" />
         <SupportContentCTALinkButton
           href={"/dashboard/vehicles/schedule"}
           label={t("VehiclesSchedule.CTA")}
@@ -369,13 +363,7 @@ async function AssignmentContent() {
         <RyogoCaption color="slate">
           {t("BookingAssignment.Description")}
         </RyogoCaption>
-        {/* //TODO: Add vehicle assignment page snapshot */}
-        <RyogoImage
-          alt="Assign Vehicle"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/bookings/assign_vehicle.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Selection.Title")}>
         <RyogoCaption color="slate">{t("Selection.Description")}</RyogoCaption>
@@ -397,25 +385,13 @@ async function BookingsContent() {
         <RyogoCaption color="slate">
           {t("UpcomingBookings.Description")}
         </RyogoCaption>
-        {/* //TODO: Add Upcoming Bookings page snapshot */}
-        <RyogoImage
-          alt="UpcomingBookings"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/assigned.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
         <RyogoCaption color="slate">
           {t("CompletedBookings.Description")}
         </RyogoCaption>
-        {/* //TODO: Add CompletedBookings page snapshot */}
-        <RyogoImage
-          alt="CompletedBookings"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/vehicles/completed.mp4" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -460,7 +436,7 @@ async function RepairsContent() {
         <RyogoCaption color="slate">
           {t("EndingVehicleRepair.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/end-repair.mp4" />
+        <RyogoSupportVideo src="/vehicles/end_repair.mp4" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -475,13 +451,7 @@ async function DocumentsContent() {
       <RyogoCaption color="slate">
         {t("WhatIsDocument.ExpiryAlerts")}
       </RyogoCaption>
-      {/* //TODO: Add expiry alert snapshot */}
-      <RyogoImage
-        alt="ExpiryAlert"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
+      <RyogoSupportVideo src="/missions/expiry_alerts.mp4" />
       <SupportContentCTALinkButton
         href={"/dashboard/missions"}
         label={t("WhatIsDocument.CTA")}

@@ -28,11 +28,8 @@ export default async function sendEmail({
     attachments: attachments,
   })
 
-  if (data) {
-    console.log(data)
-  }
   if (error) {
-    console.log(error)
+    console.error("Send Email error", error)
   }
   return { data, error }
 }

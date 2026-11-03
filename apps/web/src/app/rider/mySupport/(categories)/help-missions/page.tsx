@@ -1,3 +1,30 @@
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
+import {
+  SupportFAQItem,
+  SupportFAQItemType,
+  SupportFAQWrapper,
+} from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
+import SupportTableOfContentLinkButton, {
+  SupportContentItemType,
+} from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableTextRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import RiderHeader from "@/components/header/riderHeader"
+import { RyogoImage } from "@/components/images/ryogoImage"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -5,44 +32,17 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import RiderHeader from "@/components/header/riderHeader"
-import { Separator } from "@/components/ui/separator"
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader, {
-  SupportContentSectionWrapper,
-} from "@/components/flows/support/supportContentHeader"
-import {
-  SupportFAQItemType,
-  SupportFAQWrapper,
-  SupportFAQItem,
-} from "@/components/flows/support/supportFAQWrapper"
-import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import SupportTableOfContentLinkButton, {
-  SupportContentItemType,
-} from "@/components/flows/support/supportTableOfContentLink"
-import {
-  Telescope,
-  SquarePen,
-  BellPlus,
-  Plus,
-  ChevronRight,
-} from "lucide-react"
-import { getTranslations } from "next-intl/server"
 import { RyogoCaption } from "@/components/typography"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
-import { Metadata } from "next"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import { Separator } from "@/components/ui/separator"
 import {
-  SupportTableWrapper,
-  SupportTableTextRow,
-} from "@/components/flows/support/supportTableWrapper"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
+  BellPlus,
+  ChevronRight,
+  Plus,
+  SquarePen,
+  Telescope,
+} from "lucide-react"
+import { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 
 /*
   - Overview What is mission?
@@ -269,9 +269,17 @@ async function CustomContent() {
         <RyogoCaption color="slate">
           {t("WhatIsCustomMission.Need")}
         </RyogoCaption>
-        <RyogoCaption color="slate">
-          {t("WhatIsCustomMission.ViewCustomMissions")}
-        </RyogoCaption>
+        {/* //TODO: Add CreatingCustom snapshot */}
+        <RyogoImage
+          alt="CreatingCustom"
+          imageSize="xl"
+          src="/logoPWA.png"
+          className="self-center"
+        />
+        <SupportContentCTALinkButton
+          href={"/rider/myMissions/myReminders"}
+          label={t("WhatIsCustomMission.CTA")}
+        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CreatingCustom.Title")}>
         <RyogoCaption color="slate">

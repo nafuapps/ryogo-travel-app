@@ -23,7 +23,6 @@ import {
   SupportTableWrapper,
 } from "@/components/flows/support/supportTableWrapper"
 import DashboardHeader from "@/components/header/dashboardHeader"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
@@ -34,6 +33,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
 import {
   AlarmClock,
   BellPlus,
@@ -220,13 +220,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("WhatAreMissions.AllMissions")}
         </RyogoCaption>
-        {/* //TODO: Add Missions snapshot */}
-        <RyogoImage
-          alt="Missions"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/missions/missions.mp4" />
         <SupportContentCTALinkButton
           href={"/dashboard/missions"}
           label={t("WhatAreMissions.CTA")}
@@ -289,13 +283,7 @@ async function ExpiryContent() {
           {t("ExpiryAlerts.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("ExpiryAlerts.Items")}</RyogoCaption>
-        {/* //TODO: Add ExpiryAlerts snapshot */}
-        <RyogoImage
-          alt="Document expiry alerts"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/missions/expiry_alerts.mp4" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -315,26 +303,14 @@ async function CustomContent() {
         <RyogoCaption color="slate">
           {t("WhatIsCustomMission.ViewCustomMissions")}
         </RyogoCaption>
-        {/* //TODO: Add Reminders snapshot */}
-        <RyogoImage
-          alt="CreatingCustom"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/missions/reminders.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CreatingCustom.Title")}>
         <RyogoCaption color="slate">
           {t("CreatingCustom.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("CreatingCustom.Fields")}</RyogoCaption>
-        {/* //TODO: Add Creating Reminder snapshot */}
-        <RyogoImage
-          alt="CreatingCustom"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/missions/reminder_add.mp4" />
         <SupportContentCTALinkButton
           href={"/dashboard/missions/reminders/add"}
           label={t("CreatingCustom.CTA")}
@@ -345,13 +321,7 @@ async function CustomContent() {
           {t("ModifyingCustom.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("ModifyingCustom.Fields")}</RyogoCaption>
-        {/* //TODO: Add Modifying Reminder snapshot */}
-        <RyogoImage
-          alt="ModifyingCustom"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/missions/reminder_edit.mp4" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -365,13 +335,7 @@ async function FeedContent() {
         <RyogoCaption color="slate">{t("WhatIsFeed.ViewFeed")}</RyogoCaption>
         <RyogoCaption color="slate">{t("WhatIsFeed.FilterFeed")}</RyogoCaption>
         <RyogoCaption color="slate">{t("WhatIsFeed.Link")}</RyogoCaption>
-        {/* //TODO: Add Feed snapshot */}
-        <RyogoImage
-          alt="Feed"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/missions/feed.mp4" />
         <SupportContentCTALinkButton
           href={"/dashboard/feed"}
           label={t("WhatIsFeed.CTA")}

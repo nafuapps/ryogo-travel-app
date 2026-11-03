@@ -1,7 +1,4 @@
-import {
-  LandingContentWrapper,
-  LandingSectionWrapper,
-} from "@/components/flows/landing/landingWrappers"
+import { LandingContentWrapper } from "@/components/flows/landing/landingWrappers"
 import { UserIdRegex } from "@/lib/regex"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { redirect, RedirectType } from "next/navigation"
@@ -25,10 +22,8 @@ export default async function LoginLayout({
   }
 
   return (
-    <LandingSectionWrapper id="hero" hero>
-      <LandingContentWrapper className="h-full px-4 sm:px-8 md:px-10 py-20 md:py-24 rounded-lg bg-linear-to-b from-sky-700 dark:from-sky-300 via-emerald-500 dark:via-emerald-500 to-sky-300 dark:to-sky-700">
-        {children}
-      </LandingContentWrapper>
-    </LandingSectionWrapper>
+    <LandingContentWrapper className="h-full px-4 sm:px-8 md:px-10 py-20 md:py-24 rounded-lg bg-linear-to-b from-sky-700 dark:from-sky-300 via-emerald-500 dark:via-emerald-500 to-sky-300 dark:to-sky-700">
+      {children}
+    </LandingContentWrapper>
   )
 }

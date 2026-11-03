@@ -1,3 +1,30 @@
+import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
+import SupportContentHeader, {
+  SupportContentSectionWrapper,
+} from "@/components/flows/support/supportContentHeader"
+import {
+  SupportFAQItem,
+  SupportFAQItemType,
+  SupportFAQWrapper,
+} from "@/components/flows/support/supportFAQWrapper"
+import SupportQuickActionLinkButton, {
+  SupportQuickActionType,
+} from "@/components/flows/support/supportQuickActionLink"
+import SupportRelatedArticleLinkButton, {
+  SupportRelatedArticleType,
+} from "@/components/flows/support/supportRelatedArticleType"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
+import SupportTableOfContentLinkButton, {
+  SupportContentItemType,
+} from "@/components/flows/support/supportTableOfContentLink"
+import {
+  SupportTableStatusRow,
+  SupportTableWrapper,
+} from "@/components/flows/support/supportTableWrapper"
+import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
+import RiderHeader from "@/components/header/riderHeader"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
   MainWrapper,
@@ -5,51 +32,24 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import RiderHeader from "@/components/header/riderHeader"
-import SupportQuickActionLinkButton, {
-  SupportQuickActionType,
-} from "@/components/flows/support/supportQuickActionLink"
-import SupportContentHeader, {
-  SupportContentSectionWrapper,
-} from "@/components/flows/support/supportContentHeader"
-import SupportContentCTALinkButton from "@/components/flows/support/supportContentCTALink"
-import {
-  SupportFAQItemType,
-  SupportFAQWrapper,
-  SupportFAQItem,
-} from "@/components/flows/support/supportFAQWrapper"
-import SupportSideAccordionWrapper from "@/components/flows/support/supportSideAccordionWrapper"
-import SupportTableOfContentLinkButton, {
-  SupportContentItemType,
-} from "@/components/flows/support/supportTableOfContentLink"
-import { RyogoCaption } from "@/components/typography"
-import { SESSION_COOKIE_EXPIRATION_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import {
-  ReceiptText,
-  BrickWallShield,
-  Settings,
-  Building,
-  Mail,
-  KeyRound,
-  UserCog,
-  ChevronRight,
-} from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import { Separator } from "@/components/ui/separator"
-import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import {
-  SupportTableWrapper,
-  SupportTableStatusRow,
-} from "@/components/flows/support/supportTableWrapper"
 import { UserStatusPill } from "@/components/pills/ryogoPills"
+import { RyogoCaption } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
+import { SESSION_COOKIE_EXPIRATION_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { UserStatusEnum } from "@ryogo-travel-app/db/schema"
-import { SupportWarningWrapper } from "@/components/flows/support/supportWarningWrapper"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import {
+  BrickWallShield,
+  Building,
+  ChevronRight,
+  KeyRound,
+  Mail,
+  ReceiptText,
+  Settings,
+  UserCog,
+} from "lucide-react"
 import { Metadata } from "next"
-import SupportRelatedArticleLinkButton, {
-  SupportRelatedArticleType,
-} from "@/components/flows/support/supportRelatedArticleType"
+import { getTranslations } from "next-intl/server"
 
 /*
   - Account Overview (Name, Email, Pwd)
@@ -219,13 +219,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("ViewDetails.Description")}
         </RyogoCaption>
-        {/* //TODO: Add rider myProfile page snapshot */}
-        <RyogoImage
-          alt="View Details"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/profile.mp4" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myProfile"}
           label={t("ViewDetails.CTA")}
@@ -265,13 +259,7 @@ async function SecurityContent() {
         <RyogoCaption color="slate">
           {t("ChangePassword.Description")}
         </RyogoCaption>
-        {/* //TODO: Add change password page snapshot */}
-        <RyogoImage
-          alt="Change Password"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/change_password.mp4" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myProfile/change-password"}
           label={t("ChangePassword.CTA")}
@@ -303,13 +291,7 @@ async function SettingsContent() {
       <RyogoCaption color="slate">
         {t("ChangePreferences.Description")}
       </RyogoCaption>
-      {/* //TODO: Add settings page snapshot */}
-      <RyogoImage
-        alt="Change Preferences"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
+      <RyogoSupportVideo src="/rider/settings.mp4" mobile />
       <SupportContentCTALinkButton
         href={"/rider/myProfile/settings"}
         label={t("ChangePreferences.CTA")}
@@ -325,13 +307,7 @@ async function AgencyContent() {
       <RyogoCaption color="slate">
         {t("AgencyDetails.Description")}
       </RyogoCaption>
-      {/* //TODO: Add agency details page snapshot */}
-      <RyogoImage
-        alt="Agency Details"
-        imageSize="xl"
-        src="/logoPWA.png"
-        className="self-center"
-      />
+      <RyogoSupportVideo src="/rider/agency.mp4" mobile />
       <SupportContentCTALinkButton
         href={"/rider/myProfile/agency"}
         label={t("AgencyDetails.CTA")}

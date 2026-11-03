@@ -41,7 +41,7 @@ export const agencyServices = {
   async findAgencyById(agencyId: string) {
     const agency = await agencyRepository.readAgencyById(agencyId)
     if (!agency) {
-      console.error(`Agency not found: ${agencyId}`)
+      console.error("Agency not found", agencyId)
       return
     }
     return agency
@@ -51,7 +51,7 @@ export const agencyServices = {
   async findAgencyData(agencyId: string) {
     const agency = await agencyRepository.readAgencyById(agencyId)
     if (!agency) {
-      console.error(`Agency not found: ${agencyId}`)
+      console.error("Agency not found", agencyId)
       return
     }
     const vehicles = await vehicleRepository.readVehiclesByAgencyId(agencyId)
@@ -153,7 +153,7 @@ export const agencyServices = {
       locationId: locationId,
     })
     if (!updatedAgency) {
-      console.error(`Could not update agency details: ${data}`)
+      console.error("Could not update agency details", data)
       return
     }
     return updatedAgency
@@ -168,7 +168,8 @@ export const agencyServices = {
       agency.status === AgencyStatusEnum.ACTIVE
     ) {
       console.error(
-        `Agency doesn't exist, suspended or already active: ${agencyId}`,
+        "Agency doesn't exist, suspended or already active",
+        agencyId,
       )
       return
     }
@@ -181,7 +182,7 @@ export const agencyServices = {
         : undefined,
     })
     if (!updatedAgency) {
-      console.error(`Could not update agency status to active: ${agencyId}`)
+      console.error("Could not update agency status to active", agencyId)
       return
     }
     return updatedAgency
@@ -196,7 +197,8 @@ export const agencyServices = {
       agency.status === AgencyStatusEnum.INACTIVE
     ) {
       console.error(
-        `Agency doesn't exist, suspended or already inactive: ${agencyId}`,
+        "Agency doesn't exist, suspended or already inactive",
+        agencyId,
       )
       return
     }
@@ -206,7 +208,7 @@ export const agencyServices = {
       status: AgencyStatusEnum.INACTIVE,
     })
     if (!updatedAgency) {
-      console.error(`Could not update agency to inactive: ${agencyId}`)
+      console.error("Could not update agency to inactive", agencyId)
       return
     }
     return updatedAgency
@@ -224,7 +226,7 @@ export const agencyServices = {
       logoUrl,
     })
     if (!updatedAgency) {
-      console.error(`Could not update agency logo: ${agencyId} ${logoUrl}`)
+      console.error("Could not update agency logo", agencyId, logoUrl)
       return
     }
     return updatedAgency
@@ -242,7 +244,7 @@ export const agencyServices = {
       qrCodeUrl,
     })
     if (!updatedAgency) {
-      console.error(`Could not update agency QR code: ${agencyId} ${qrCodeUrl}`)
+      console.error("Could not update agency QR code", agencyId, qrCodeUrl)
       return
     }
     return updatedAgency
@@ -258,7 +260,7 @@ export const agencyServices = {
   }) {
     const agency = await agencyRepository.readAgencyById(agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-      console.error(`Agency doesn't exist or suspended: ${agencyId}`)
+      console.error("Agency doesn't exist or suspended", agencyId)
       return
     }
     const existingAgencyWithPhoneEmail =
@@ -268,7 +270,9 @@ export const agencyServices = {
       })
     if (existingAgencyWithPhoneEmail) {
       console.error(
-        `Agency already exists with same phone and email: ${businessPhone} ${agency.businessEmail}`,
+        "Agency already exists with same phone and email",
+        businessPhone,
+        agency.businessEmail,
       )
       return
     }
@@ -278,9 +282,7 @@ export const agencyServices = {
       businessPhone,
     })
     if (!updatedAgency) {
-      console.error(
-        `Could not update agency phone: ${agencyId} ${businessPhone}`,
-      )
+      console.error("Could not update agency phone", agencyId, businessPhone)
       return
     }
     return updatedAgency
@@ -296,7 +298,7 @@ export const agencyServices = {
   }) {
     const agency = await agencyRepository.readAgencyById(agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-      console.error(`Agency doesn't exist or suspended: ${agencyId}`)
+      console.error("Agency doesn't exist or suspended", agencyId)
       return
     }
     const existingAgencyWithPhoneEmail =
@@ -306,7 +308,9 @@ export const agencyServices = {
       })
     if (existingAgencyWithPhoneEmail) {
       console.error(
-        `Agency already exists with same phone and email: ${agency.businessPhone} ${businessEmail}`,
+        "Agency already exists with same phone and email",
+        agency.businessPhone,
+        businessEmail,
       )
       return
     }
@@ -316,9 +320,7 @@ export const agencyServices = {
       businessEmail,
     })
     if (!updatedAgency) {
-      console.error(
-        `Could not update agency email: ${agencyId} ${businessEmail}`,
-      )
+      console.error("Could not update agency email", agencyId, businessEmail)
     }
     return updatedAgency
   },
@@ -331,7 +333,8 @@ export const agencyServices = {
       agency.subscriptionPlan === SubscriptionPlanEnum.BASIC
     ) {
       console.error(
-        `Agency doesn't exist, suspended or is already Basic: ${agencyId}`,
+        "Agency doesn't exist, suspended or is already Basic",
+        agencyId,
       )
       return
     }
@@ -345,7 +348,8 @@ export const agencyServices = {
     )
     if (!updatedAgency) {
       console.error(
-        `Could not update agency subscription plan downgrade to Basic: ${agencyId}`,
+        "Could not update agency subscription plan downgrade to Basic",
+        agencyId,
       )
       return
     }
@@ -360,7 +364,8 @@ export const agencyServices = {
       agency.hasTriedSubscription
     ) {
       console.error(
-        `Agency doesn't exist, suspended, or has already tried Premium: ${agencyId}`,
+        "Agency doesn't exist, suspended, or has already tried Premium",
+        agencyId,
       )
       return
     }
@@ -373,9 +378,7 @@ export const agencyServices = {
       },
     )
     if (!updatedAgency) {
-      console.error(
-        `Could not update agency trial subscription plan: ${agencyId}`,
-      )
+      console.error("Could not update agency trial subscription plan", agencyId)
       return
     }
     return updatedAgency

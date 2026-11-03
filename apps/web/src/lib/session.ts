@@ -69,7 +69,9 @@ export async function verifyWebSessionInDB(token: string, userId: string) {
     sessionDB.userId !== userId
   ) {
     console.error(
-      `Session not found or already expired or userId mismatch: ${token} ${userId}`,
+      "Session not found or already expired or userId mismatch",
+      token,
+      userId,
     )
     return
   }
@@ -81,14 +83,14 @@ export async function verifyWebSessionInDB(token: string, userId: string) {
     user.status === UserStatusEnum.SUSPENDED ||
     user.status === UserStatusEnum.INACTIVE
   ) {
-    console.error(`User not found or not active: ${userId}`)
+    console.error("User not found or not active", userId)
     return
   }
 
   //Check if current user's agency exists in DB and is not suspended
   const agency = await agencyServices.findAgencyById(user.agencyId)
   if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-    console.error(`Agency not found or suspended: ${user.agencyId}`)
+    console.error("Agency not found or suspended", user.agencyId)
     return
   }
 
@@ -189,13 +191,13 @@ export async function createWebSession({
 export async function refreshWebSessionFromDB(payload: SessionPayloadType) {
   const user = await userServices.changeUserLastSeen(payload.userId)
   if (!user || user.status === UserStatusEnum.SUSPENDED) {
-    console.error(`User not found or suspended: ${payload.userId}`)
+    console.error("User not found or suspended", payload.userId)
     return
   }
 
   const agency = await agencyServices.findAgencyById(payload.agencyId)
   if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-    console.error(`Agency not found or suspended: ${payload.agencyId}`)
+    console.error("Agency not found or suspended", payload.agencyId)
     return
   }
 
@@ -225,7 +227,7 @@ export async function updateUserStatusInWebSession(newStatus: UserStatusEnum) {
   // Get session payload from cookie
   const payload = await getSessionPayloadFromCookie()
   if (!payload) {
-    console.error(`No payload found in session cookie`)
+    console.error("No payload found in session cookie")
     return
   }
 
@@ -250,7 +252,7 @@ export async function updateUserVerificationInWebSession(isVerified: boolean) {
   // Get session payload from cookie
   const payload = await getSessionPayloadFromCookie()
   if (!payload) {
-    console.error(`No payload found in session cookie`)
+    console.error("No payload found in session cookie")
     return
   }
 
@@ -275,7 +277,7 @@ export async function updateUserAdminInWebSession(isAdmin: boolean) {
   // Get session payload from cookie
   const payload = await getSessionPayloadFromCookie()
   if (!payload) {
-    console.error(`No payload found in session cookie`)
+    console.error("No payload found in session cookie")
     return
   }
 
@@ -299,7 +301,7 @@ export async function updateUserAdminInWebSession(isAdmin: boolean) {
 export async function updateUserNameInWebSession(name: string) {
   const payload = await getSessionPayloadFromCookie()
   if (!payload) {
-    console.error(`No payload found in session cookie`)
+    console.error("No payload found in session cookie")
     return
   }
 
@@ -321,7 +323,7 @@ export async function updateUserNameInWebSession(name: string) {
 export async function updateUserLocatedAtInWebSession(locatedAt: Date) {
   const payload = await getSessionPayloadFromCookie()
   if (!payload) {
-    console.error(`No payload found in session cookie`)
+    console.error("No payload found in session cookie")
     return
   }
 
@@ -344,7 +346,7 @@ export async function deleteWebSession() {
   // 1. Get session payload from cookie
   const payload = await getSessionPayloadFromCookie()
   if (!payload) {
-    console.error(`No payload found in session cookie`)
+    console.error("No payload found in session cookie")
     return
   }
 
@@ -354,7 +356,7 @@ export async function deleteWebSession() {
   })
 
   if (!user) {
-    console.error(`User session could not be deleted in DB`)
+    console.error("User session could not be deleted in DB", payload.sessionId)
     return
   }
 

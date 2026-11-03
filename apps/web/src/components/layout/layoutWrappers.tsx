@@ -1,14 +1,16 @@
 export function LayoutWrapper({
   id,
   children,
+  screen,
 }: {
   id: string
   children: React.ReactNode
+  screen?: boolean
 }) {
   return (
     <main
       id={id}
-      className="flex flex-row w-screen h-dvh bg-white dark:bg-slate-800"
+      className={`flex ${screen ? "w-screen h-dvh flex-row" : "h-full flex-col"} bg-white dark:bg-slate-800`}
     >
       {children}
     </main>

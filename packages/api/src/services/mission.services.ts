@@ -40,7 +40,7 @@ export const missionServices = {
   ) {
     const agency = await agencyRepository.readAgencyById(mission.agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-      console.error(`Agency not found or suspended: ${mission.agencyId}`)
+      console.error("Agency not found or suspended", mission.agencyId)
       return
     }
     //SUBSCRIPTION CHECK: Only premium agency can create custom reminders
@@ -50,7 +50,7 @@ export const missionServices = {
         (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
           agency.subscriptionExpiresOn < new Date())
       ) {
-        console.error(`Basic plan cannot create custom reminders: ${agency.id}`)
+        console.error("Basic plan cannot create custom reminders", agency.id)
         return
       }
     }
@@ -64,7 +64,7 @@ export const missionServices = {
     }
     const [newMission] = await missionRepository.createMission(mission)
     if (!newMission) {
-      console.error(`Mission could not be added: ${mission}`)
+      console.error("Mission could not be added", mission)
       return
     }
     return newMission
@@ -73,7 +73,7 @@ export const missionServices = {
   async modifyMission(data: ModifyMissionRequestType) {
     const agency = await agencyRepository.readAgencyById(data.agencyId)
     if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
-      console.error(`Agency not found or suspended: ${data.agencyId}`)
+      console.error("Agency not found or suspended", data.agencyId)
       return
     }
 
@@ -83,13 +83,13 @@ export const missionServices = {
       (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
         agency.subscriptionExpiresOn < new Date())
     ) {
-      console.error(`Basic plan cannot modify custom reminders: ${agency.id}`)
+      console.error("Basic plan cannot modify custom reminders", agency.id)
       return
     }
 
     const [updatedMission] = await missionRepository.updateMission(data)
     if (!updatedMission) {
-      console.error(`Mission could not be updated: ${data}`)
+      console.error("Mission could not be updated", data)
       return
     }
     return updatedMission
@@ -99,7 +99,7 @@ export const missionServices = {
     const [deletedMission] =
       await missionRepository.deleteMissionById(missionId)
     if (!deletedMission) {
-      console.error(`Mission could not be removed: ${missionId}`)
+      console.error("Mission could not be removed", missionId)
       return
     }
     return deletedMission
@@ -156,9 +156,7 @@ export const missionServices = {
       isRead,
     })
     if (!updatedMission) {
-      console.error(
-        `Mission read status could not be updated: ${missionId} ${isRead}`,
-      )
+      console.error("Mission read status could not be updated", missionId, isRead)
       return
     }
     return updatedMission

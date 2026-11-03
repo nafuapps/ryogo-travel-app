@@ -19,7 +19,9 @@ export default async function OnboardingLayout({
         } as React.CSSProperties
       }
     >
-      <LayoutWrapper id="OnboardingLayout">{children}</LayoutWrapper>
+      <LayoutWrapper id="OnboardingLayout" screen>
+        {children}
+      </LayoutWrapper>
     </SidebarProvider>
   )
 }

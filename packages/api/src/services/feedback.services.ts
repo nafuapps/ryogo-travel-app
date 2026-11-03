@@ -5,7 +5,7 @@ export const feedbackServices = {
   async addProductFeedback(data: InsertProductFeedbackType) {
     const [addedFeedback] = await feedbackRepository.createProductFeedback(data)
     if (!addedFeedback) {
-      console.error(`Feedback could not be added: ${data}`)
+      console.error("Feedback could not be added", data)
       return
     }
     return addedFeedback

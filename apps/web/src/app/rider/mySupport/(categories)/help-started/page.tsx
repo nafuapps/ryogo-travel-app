@@ -23,7 +23,6 @@ import {
   SupportTableWrapper,
 } from "@/components/flows/support/supportTableWrapper"
 import RiderHeader from "@/components/header/riderHeader"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
@@ -34,7 +33,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
-import { RyogoVideo } from "@/components/video/ryogoVideo"
+import { RyogoSupportVideo, RyogoVideo } from "@/components/video/ryogoVideo"
 import {
   BadgeQuestionMark,
   ChevronRight,
@@ -282,13 +281,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("Dashboard.Title")}>
         <RyogoCaption color="slate">{t("Dashboard.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Dashboard.Components")}</RyogoCaption>
-        {/* //TODO: Add Rider Home snapshot */}
-        <RyogoImage
-          alt="Rider Home"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/home.mp4" mobile />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Sidebar.Title")}>
         <RyogoCaption color="slate">{t("Sidebar.Description")}</RyogoCaption>
@@ -298,7 +291,6 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Home.Title")}>
         <RyogoCaption color="slate">{t("Home.Description")}</RyogoCaption>
-
         <SupportContentCTALinkButton
           href={"/rider/home"}
           label={t("Home.CTA")}
@@ -306,16 +298,9 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Bookings.Title")}>
         <RyogoCaption color="slate">{t("Bookings.Description")}</RyogoCaption>
-        <RyogoCaption color="slate">{t("Bookings.Ongoing")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Bookings.Upcoming")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Bookings.Completed")}</RyogoCaption>
-        {/* //TODO: Add Bookings snapshot */}
-        <RyogoImage
-          alt="Bookings"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/upcoming.mp4" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myBookings"}
           label={t("Bookings.CTA")}
@@ -323,13 +308,8 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Vehicle.Title")}>
         <RyogoCaption color="slate">{t("Vehicle.Description")}</RyogoCaption>
-        {/* //TODO: Add Vehicles snapshot */}
-        <RyogoImage
-          alt="Vehicles"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/vehicle.mp4" mobile />
+
         <SupportContentCTALinkButton
           href={"/rider/myVehicle"}
           label={t("Vehicle.CTA")}
@@ -340,12 +320,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">{t("Support.Contact")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Support.Tickets")}</RyogoCaption>
         {/* //TODO: Add Support snapshot */}
-        <RyogoImage
-          alt="Support"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/support.mp4" mobile />
         <SupportContentCTALinkButton
           href={"/rider/mySupport"}
           label={t("Support.CTA")}
@@ -354,13 +329,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("Account.Title")}>
         <RyogoCaption color="slate">{t("Account.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Account.Other")}</RyogoCaption>
-        {/* //TODO: Add Account snapshot */}
-        <RyogoImage
-          alt="Account"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/profile.mp4" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myProfile"}
           label={t("Account.CTA")}
@@ -370,12 +339,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">{t("Missions.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Missions.Custom")}</RyogoCaption>
         {/* //TODO: Add Missions snapshot */}
-        <RyogoImage
-          alt="Missions"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/missions.mp4" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myMissions"}
           label={t("Missions.CTA")}

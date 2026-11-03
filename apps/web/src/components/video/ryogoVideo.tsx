@@ -28,11 +28,10 @@ export function RyogoVideo({
 
 export function RyogoSupportVideo({
   src,
-  className,
+  mobile,
 }: {
   src: string
-  title?: string
-  className?: string
+  mobile?: boolean
 }) {
   // In future, can set a different mobile src with <source> inside <video>
   return (
@@ -43,7 +42,8 @@ export function RyogoSupportVideo({
       loop
       preload="metadata"
       playsInline
-      className={`rounded overflow-hidden aspect-auto self-center ${className ?? ""}`}
+      controls
+      className={`rounded-lg overflow-hidden aspect-auto self-center w-full ${mobile ? "max-w-xs" : ""}`}
     />
   )
 }

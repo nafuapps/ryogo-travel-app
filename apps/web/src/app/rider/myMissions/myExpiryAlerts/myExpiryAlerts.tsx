@@ -1,6 +1,6 @@
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import ExpiryAlertCard from "@/components/missions/expiryAlertCard"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { TileGridWrapper } from "@/components/page/pageWrappers"
 import { EXPIRATION_ALERT_WINDOW_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { FindDriverByUserIdType } from "@ryogo-travel-app/api/services/driver.services"
 import { FindAssignedVehicleByDriverIdType } from "@ryogo-travel-app/api/services/vehicle.services"
@@ -34,7 +34,7 @@ export default async function MyExpiryAlertsPageComponent({
   }
 
   return alertCount > 0 ? (
-    <SectionColWrapper>
+    <TileGridWrapper>
       {showLicenseAlert && driver.licenseExpiresOn && (
         <ExpiryAlertCard
           dueDate={driver.licenseExpiresOn}
@@ -71,7 +71,7 @@ export default async function MyExpiryAlertsPageComponent({
           isDriver
         />
       )}
-    </SectionColWrapper>
+    </TileGridWrapper>
   ) : (
     <EmptyStateIcon icon={AlarmClockMinus} label={t("NoAlerts")} />
   )

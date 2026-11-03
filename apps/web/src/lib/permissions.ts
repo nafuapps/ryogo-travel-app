@@ -35,11 +35,11 @@ export const writePermissions = {
       currentUser.userRole !== UserRolesEnum.OWNER ||
       currentUser.agencyId !== agencyId
     ) {
-      console.error(`Current User not found or is not owner: ${currentUser}`)
+      console.error("Current User not found or is not owner", currentUser)
       return
     }
     if (!(await verifyCurrentUser())) {
-      console.error(`Current User not verified: ${currentUser}`)
+      console.error("Current User not verified", currentUser)
       return
     }
     return currentUser
@@ -56,12 +56,13 @@ export const writePermissions = {
       currentUser.agencyId !== agencyId
     ) {
       console.error(
-        `Current User not found or is not dashboard user: ${currentUser}`,
+        "Current User not found or is not dashboard user",
+        currentUser,
       )
       return
     }
     if (!(await verifyCurrentUser())) {
-      console.error(`Current User not verified: ${currentUser}`)
+      console.error("Current User not verified", currentUser)
       return
     }
     return currentUser
@@ -83,12 +84,13 @@ export const writePermissions = {
       currentUser.agencyId !== agencyId
     ) {
       console.error(
-        `Current User not found or is not assigned user or owner: ${currentUser}`,
+        "Current User not found or is not assigned user or owner",
+        currentUser,
       )
       return
     }
     if (!(await verifyCurrentUser())) {
-      console.error(`Current User not verified: ${currentUser}`)
+      console.error("Current User not verified", currentUser)
       return
     }
     return currentUser
@@ -110,12 +112,13 @@ export const writePermissions = {
       currentUser.agencyId !== agencyId
     ) {
       console.error(
-        `Current User not found or is not assigned driver: ${currentUser}`,
+        "Current User not found or is not assigned driver",
+        currentUser,
       )
       return
     }
     if (!(await verifyCurrentUser())) {
-      console.error(`Current User not verified: ${currentUser}`)
+      console.error("Current User not verified", currentUser)
       return
     }
     return currentUser
@@ -125,15 +128,15 @@ export const writePermissions = {
   async allowAllUsers(agencyId?: string) {
     const currentUser = await getCurrentUser()
     if (!currentUser) {
-      console.error(`Current User not found`)
+      console.error("Current User not found")
       return
     }
     if (agencyId && currentUser.agencyId !== agencyId) {
-      console.error(`Agency mismatch: ${currentUser} ${agencyId}`)
+      console.error("Agency mismatch", currentUser, agencyId)
       return
     }
     if (!(await verifyCurrentUser())) {
-      console.error(`Current User not verified: ${currentUser}`)
+      console.error("Current User not verified", currentUser)
       return
     }
     return currentUser
@@ -154,12 +157,13 @@ export const writePermissions = {
       currentUser.userId !== assignedUserId
     ) {
       console.error(
-        `Current User not found or agency/user mismatch: ${currentUser}`,
+        "Current User not found or agency/user mismatch",
+        currentUser,
       )
       return
     }
     if (!(await verifyCurrentUser())) {
-      console.error(`Current User not verified: ${currentUser}`)
+      console.error("Current User not verified", currentUser)
       return
     }
     return currentUser
@@ -183,12 +187,13 @@ export const writePermissions = {
       currentUser.agencyId !== agencyId
     ) {
       console.error(
-        `Current User not found or is not dashboard or assigned user: ${currentUser}`,
+        "Current User not found or is not dashboard or assigned user",
+        currentUser,
       )
       return
     }
     if (!(await verifyCurrentUser())) {
-      console.error(`Current User not verified: ${currentUser}`)
+      console.error("Current User not verified", currentUser)
       return
     }
     return currentUser

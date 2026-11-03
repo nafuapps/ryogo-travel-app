@@ -42,7 +42,11 @@ export async function verifyOrderAction({
   // 2. Compare signatures
   if (generated_signature !== rpSignature) {
     console.error(
-      `Payment verification failed: Invalid signature: ${rpOrderId} ${rpPaymentId} ${rpSignature} ${userId}`,
+      "Payment verification failed: Invalid signature",
+      rpOrderId,
+      rpPaymentId,
+      rpSignature,
+      userId,
     )
     return
   }

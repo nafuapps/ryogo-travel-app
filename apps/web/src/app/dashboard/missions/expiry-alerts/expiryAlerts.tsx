@@ -9,6 +9,7 @@ import {
   PageWrapper,
   SectionRowWrapper,
   StickyActionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { FindAgencyExpiryAlertsType } from "@ryogo-travel-app/api/services/agency.services"
@@ -85,7 +86,7 @@ export default function ExpiryAlertsPageComponent({
         />
       </SectionRowWrapper>
       {expiryAlerts && expiryAlertsCount > 0 ? (
-        <>
+        <TileGridWrapper>
           {filteredRCExpiring.map(
             (rc) =>
               rc.rcExpiresOn && (
@@ -134,7 +135,7 @@ export default function ExpiryAlertsPageComponent({
                 />
               ),
           )}
-        </>
+        </TileGridWrapper>
       ) : (
         <EmptyStateIcon icon={AlarmClockMinus} label={t("NoAlerts")} />
       )}

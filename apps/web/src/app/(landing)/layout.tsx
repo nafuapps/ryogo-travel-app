@@ -1,5 +1,6 @@
 import Footer from "@/components/flows/landing/footer"
 import Navbar from "@/components/flows/landing/nav"
+import { LayoutWrapper } from "@/components/layout/layoutWrappers"
 import { readPermissions } from "@/lib/permissions"
 import {
   DARK_MODE_COOKIE_NAME,
@@ -19,13 +20,10 @@ export default async function LandingLayout({
   const locale = cookieStore.get(LOCALE_COOKIE_NAME)?.value
 
   return (
-    <main
-      id="LandingLayout"
-      className="flex flex-col bg-white dark:bg-slate-800 h-full"
-    >
+    <LayoutWrapper id="LandingLayout">
       <Navbar isDarkMode={isDarkMode} locale={locale} />
       {children}
       <Footer />
-    </main>
+    </LayoutWrapper>
   )
 }

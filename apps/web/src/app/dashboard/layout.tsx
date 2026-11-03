@@ -61,7 +61,7 @@ export default async function DashboardLayout({
         } as React.CSSProperties
       }
     >
-      <LayoutWrapper id="DashboardLayout">
+      <LayoutWrapper id="DashboardLayout" screen>
         <DashboardSidebar isOwner={isOwner} />
         <LayoutSectionWrapper id="DashboardMainSection">
           {children}

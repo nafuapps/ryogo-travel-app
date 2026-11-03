@@ -1,22 +1,22 @@
 "use client"
 
-import { useTranslations } from "next-intl"
 import { RyogoGhostButton } from "@/components/buttons/ryogoButtons"
+import MissionsFiltersCard from "@/components/filter/missionsFiltersCard"
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
 import MissionCard from "@/components/missions/missionCard"
 import {
-  SectionColWrapper,
   SectionRowWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
-import { FlagOff } from "lucide-react"
-import { RyogoCaption } from "@/components/typography"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import MissionsFiltersCard from "@/components/filter/missionsFiltersCard"
-import { Route } from "next"
-import { usePagination } from "@/hooks/usePagination"
 import { PaginationControls } from "@/components/pagination/paginationControls"
+import { RyogoCaption } from "@/components/typography"
+import { usePagination } from "@/hooks/usePagination"
+import { FindMissionsByUserIdType } from "@ryogo-travel-app/api/services/mission.services"
 import { EntityTypeEnum } from "@ryogo-travel-app/db/schema"
+import { FlagOff } from "lucide-react"
+import { Route } from "next"
+import { useTranslations } from "next-intl"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 const MISSIONS_PER_PAGE = 5
 
@@ -65,7 +65,7 @@ export default function MissionsPageComponent({
           disabled={searchParams.size === 0}
         />
       </SectionRowWrapper>
-      <SectionColWrapper className="h-full">
+      <TileGridWrapper>
         {currentItems.length > 0 ? (
           currentItems.map((mission) => (
             <MissionCard key={mission.id} mission={mission} />
@@ -73,7 +73,7 @@ export default function MissionsPageComponent({
         ) : (
           <EmptyStateIcon icon={FlagOff} label={t("NoMissions")} />
         )}
-      </SectionColWrapper>
+      </TileGridWrapper>
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}

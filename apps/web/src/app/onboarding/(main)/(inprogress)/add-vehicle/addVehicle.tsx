@@ -112,7 +112,7 @@ export default function AddVehiclePageComponent({
                   total: AddVehicleTotalSteps,
                 })
           }
-          href={"https://www.youtube.com/watch?v=kU_kllOAMx4"}
+          href={"https://www.youtube.com/embed/kU_kllOAMx4"}
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

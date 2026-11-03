@@ -1,5 +1,7 @@
 import Footer from "@/components/flows/landing/footer"
+import { LandingSectionWrapper } from "@/components/flows/landing/landingWrappers"
 import Navbar from "@/components/flows/landing/nav"
+import { LayoutWrapper } from "@/components/layout/layoutWrappers"
 import { readPermissions } from "@/lib/permissions"
 import {
   DARK_MODE_COOKIE_NAME,
@@ -19,13 +21,12 @@ export default async function AuthLayout({
   const locale = cookieStore.get(LOCALE_COOKIE_NAME)?.value
 
   return (
-    <main
-      id="AuthLayout"
-      className="flex flex-col bg-white dark:bg-slate-800 h-full"
-    >
+    <LayoutWrapper id="AuthLayout">
       <Navbar isDarkMode={isDarkMode} locale={locale} />
-      {children}
+      <LandingSectionWrapper id="hero" hero>
+        {children}
+      </LandingSectionWrapper>
       <Footer />
-    </main>
+    </LayoutWrapper>
   )
 }

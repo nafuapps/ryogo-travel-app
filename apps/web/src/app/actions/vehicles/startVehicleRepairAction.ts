@@ -38,7 +38,10 @@ export async function startVehicleRepairAction({
     isFeed: true,
     textKey: "VehicleRepairStarted",
     textObject: {
-      startDate: startedRepair.actualStartDate,
+      startDate: format(
+        startedRepair.actualStartDate ?? startedRepair.startDate,
+        "dd MMM yyyy",
+      ),
       userName: currentUser.name,
       vehicleNumber: startedRepair.vehicle.vehicleNumber,
     },

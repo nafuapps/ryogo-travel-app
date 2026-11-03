@@ -8,6 +8,7 @@ import {
 } from "@/components/flows/landing/landingWrappers"
 import Navbar from "@/components/flows/landing/nav"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { LayoutWrapper } from "@/components/layout/layoutWrappers"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   SectionColWrapper,
@@ -67,10 +68,7 @@ export default async function OnboardingHomePage({
 
   const t = await getTranslations("Onboarding.HomePage")
   return (
-    <main
-      id="OnboardingHomeMain"
-      className="flex flex-col bg-white dark:bg-slate-800 h-full"
-    >
+    <LayoutWrapper id="OnboardingHomeMain">
       <Navbar isDarkMode={isDarkMode} locale={locale} />
       <LandingSectionWrapper id="hero" hero>
         <LandingContentWrapper
@@ -171,7 +169,7 @@ export default async function OnboardingHomePage({
         </LandingContentWrapper>
       </LandingSectionWrapper>
       <Footer />
-    </main>
+    </LayoutWrapper>
   )
 }
 

@@ -74,7 +74,7 @@ export default function AddAgentPageComponent({
                   total: AddAgentTotalSteps,
                 })
           }
-          href={"https://www.youtube.com/watch?v=Mr4v_5ZfjTA"}
+          href={"https://www.youtube.com/embed/Mr4v_5ZfjTA"}
         />
         {steps[currentStepIndex]}
       </OnboardingPageWrapper>

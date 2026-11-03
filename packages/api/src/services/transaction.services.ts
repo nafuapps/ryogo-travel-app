@@ -41,15 +41,13 @@ export const transactionServices = {
       ) ||
       booking.reconciledAt
     ) {
-      console.error(
-        `Booking not found, is lead or cancelled or already reconciled: ${data.bookingId}`,
-      )
+      console.error("Booking not found, is lead or cancelled or already reconciled", data.bookingId)
       return
     }
     const [addedTransaction] =
       await transactionRepository.createTransaction(data)
     if (!addedTransaction) {
-      console.error(`Transaction could not be created: ${data}`)
+      console.error("Transaction could not be created", data)
       return
     }
     return addedTransaction
@@ -67,16 +65,14 @@ export const transactionServices = {
       ) ||
       booking.reconciledAt
     ) {
-      console.error(
-        `Booking not found, is lead or cancelled or already reconciled: ${data.bookingId} ${data.transactionId}`,
-      )
+      console.error("Booking not found, is lead or cancelled or already reconciled", data.bookingId, data.transactionId)
       return
     }
 
     const [updatedTransaction] =
       await transactionRepository.updateTransactionDetails(data)
     if (!updatedTransaction) {
-      console.error(`Transaction could not be updated: ${data}`)
+      console.error("Transaction could not be updated", data)
       return
     }
     return updatedTransaction
@@ -93,9 +89,7 @@ export const transactionServices = {
     const transaction =
       await transactionRepository.readTransactionById(transactionId)
     if (!transaction || transaction.isApproved === isApproved) {
-      console.error(
-        `Transaction not found or already has the same approval status: ${transactionId} ${isApproved}`,
-      )
+      console.error("Transaction not found or already has the same approval status", transactionId, isApproved)
       return
     }
 
@@ -109,9 +103,7 @@ export const transactionServices = {
       ) ||
       booking.reconciledAt
     ) {
-      console.error(
-        `Booking not found, is lead or cancelled or already reconciled: ${transaction.bookingId} ${transactionId}`,
-      )
+      console.error("Booking not found, is lead or cancelled or already reconciled", transaction.bookingId, transactionId)
       return
     }
 
@@ -121,9 +113,7 @@ export const transactionServices = {
         isApproved,
       })
     if (!updatedTransaction) {
-      console.error(
-        `Transaction approval status could not be updated: ${transactionId} ${isApproved}`,
-      )
+      console.error("Transaction approval status could not be updated", transactionId, isApproved)
       return
     }
     return updatedTransaction
@@ -150,7 +140,7 @@ export const transactionServices = {
     const transaction =
       await transactionRepository.readTransactionById(transactionId)
     if (!transaction) {
-      console.error(`Transaction not found: ${transactionId}`)
+      console.error("Transaction not found", transactionId)
 
       return
     }
@@ -165,16 +155,14 @@ export const transactionServices = {
       ) ||
       booking.reconciledAt
     ) {
-      console.error(
-        `Booking not found, is lead or cancelled or already reconciled: ${transaction.bookingId} ${transactionId}`,
-      )
+      console.error("Booking not found, is lead or cancelled or already reconciled", transaction.bookingId, transactionId)
       return
     }
 
     const [removedTransaction] =
       await transactionRepository.deleteTransaction(transactionId)
     if (!removedTransaction) {
-      console.error(`Transaction could not be removed: ${transactionId}`)
+      console.error("Transaction could not be removed", transactionId)
       return
     }
     return removedTransaction

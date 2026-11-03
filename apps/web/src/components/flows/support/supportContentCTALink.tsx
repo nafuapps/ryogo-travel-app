@@ -13,7 +13,7 @@ export default function SupportContentCTALinkButton({
   return (
     <Link href={href} className="self-center">
       <RyogoGhostButton label={label} labelColor="brand">
-        <RyogoIcon icon={ChevronRight} size="sm" color="brand" thick />
+        <RyogoIcon icon={ChevronRight} size="xs" color="brand" thick />
       </RyogoGhostButton>
     </Link>
   )

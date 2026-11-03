@@ -242,12 +242,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("DriversSchedule.Description")}
         </RyogoCaption>
-        {/* //TODO: Add drivers schedule page snapshot */}
-        <RyogoImage alt="DriversSchedule" imageSize="xl" src="/logoPWA.png" />
-        <SupportContentCTALinkButton
-          href={"/dashboard/drivers/schedule"}
-          label={t("DriversSchedule.CTA")}
-        />
+        <RyogoSupportVideo src="/drivers/schedule.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("DriverDetails.Title")}>
         <RyogoCaption color="slate">
@@ -344,8 +339,7 @@ async function EditingContent() {
       <RyogoCaption color="slate">
         {t("ModifyingDriver.Description")}
       </RyogoCaption>
-      {/* //TODO: Add ModifyingDriver page snapshot */}
-      <RyogoImage alt="ModifyingDriver" imageSize="xl" src="/logoPWA.png" />
+      <RyogoSupportVideo src="/drivers/edit.mp4" />
     </SupportContentSectionWrapper>
   )
 }
@@ -357,8 +351,7 @@ async function AssignmentContent() {
         <RyogoCaption color="slate">
           {t("BookingAssignment.Description")}
         </RyogoCaption>
-        {/* //TODO: Add driver assignment page snapshot */}
-        <RyogoImage alt="Assign Driver" imageSize="xl" src="/logoPWA.png" />
+        <RyogoSupportVideo src="/bookings/assign_driver.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Selection.Title")}>
         <RyogoCaption color="slate">{t("Selection.Description")}</RyogoCaption>
@@ -381,15 +374,13 @@ async function BookingsContent() {
         <RyogoCaption color="slate">
           {t("UpcomingBookings.Description")}
         </RyogoCaption>
-        {/* //TODO: Add Upcoming Bookings page snapshot */}
-        <RyogoImage alt="UpcomingBookings" imageSize="xl" src="/logoPWA.png" />
+        <RyogoSupportVideo src="/drivers/assigned.mp4" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
         <RyogoCaption color="slate">
           {t("CompletedBookings.Description")}
         </RyogoCaption>
-        {/* //TODO: Add CompletedBookings page snapshot */}
-        <RyogoImage alt="CompletedBookings" imageSize="xl" src="/logoPWA.png" />
+        <RyogoSupportVideo src="/drivers/completed.mp4" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -425,7 +416,6 @@ async function LeavesContent() {
           {t("StartingLeave.Description")}
         </RyogoCaption>
         <RyogoSupportVideo src="/drivers/start_leave.mp4" />
-
         <SupportWarningWrapper text={t("StartingLeave.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("EndingLeave.Title")}>

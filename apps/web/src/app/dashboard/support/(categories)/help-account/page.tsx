@@ -253,7 +253,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("ViewDetails.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/account/details.mp4" />
+        <RyogoSupportVideo src="/account/details.webm" />
         {/* <RyogoSupportYTVideo src="VHx9u4dFULs" /> */}
         <SupportContentCTALinkButton
           href={"/dashboard/account"}
@@ -294,7 +294,7 @@ async function SecurityContent({ isOwner }: { isOwner: boolean }) {
         <RyogoCaption color="slate">
           {t("ChangePassword.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/account/change_password.mp4" />
+        <RyogoSupportVideo src="/account/change_password.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/account/change-password"}
           label={t("ChangePassword.CTA")}
@@ -328,7 +328,7 @@ async function SettingsContent() {
       <RyogoCaption color="slate">
         {t("ChangePreferences.Description")}
       </RyogoCaption>
-      <RyogoSupportVideo src="/account/settings.mp4" />
+      <RyogoSupportVideo src="/account/settings.webm" />
       <SupportContentCTALinkButton
         href={"/dashboard/account/settings"}
         label={t("ChangePreferences.CTA")}
@@ -348,7 +348,7 @@ async function AgencyContent({ isOwner }: { isOwner: boolean }) {
         {isOwner && (
           <RyogoCaption color="slate">{t("AgencyDetails.Change")}</RyogoCaption>
         )}
-        <RyogoSupportVideo src="/account/agency.mp4" />
+        <RyogoSupportVideo src="/account/agency.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/account/agency"}
           label={t("AgencyDetails.CTA")}
@@ -387,7 +387,7 @@ async function SubscriptionContent({ isOwner }: { isOwner: boolean }) {
         <RyogoCaption color="slate">
           {t("PlanDetails.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/account/subscription.mp4" />
+        <RyogoSupportVideo src="/account/subscription.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/account/subscription"}
           label={t("PlanDetails.CTA")}
@@ -417,7 +417,7 @@ async function SubscriptionContent({ isOwner }: { isOwner: boolean }) {
           <RyogoCaption color="slate">
             {t("GettingSubscription.Trial", { trialDays: PREMIUM_TRIAL_DAYS })}
           </RyogoCaption>
-          <RyogoSupportVideo src="/account/buy_subscription.mp4" />
+          <RyogoSupportVideo src="/account/buy_subscription.webm" />
           <SupportContentCTALinkButton
             href={"/dashboard/account/subscription#getPremium"}
             label={t("GettingSubscription.CTA")}

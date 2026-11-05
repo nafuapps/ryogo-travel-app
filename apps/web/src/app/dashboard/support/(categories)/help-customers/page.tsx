@@ -221,7 +221,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("KnowCustomer.AllCustomers")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/customers/all.mp4" />
+        <RyogoSupportVideo src="/customers/all.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/customers"}
           label={t("KnowCustomer.CTA")}
@@ -234,7 +234,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("CustomerDetails.Elements")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/customers/details.mp4" />
+        <RyogoSupportVideo src="/customers/details.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("StatusList.Title")}>
         <RyogoCaption color="slate">{t("StatusList.Description")}</RyogoCaption>
@@ -261,7 +261,7 @@ async function AddingContent() {
         <RyogoCaption color="slate">
           {t("AddingCustomer.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/customers/new.mp4" />
+        <RyogoSupportVideo src="/customers/new.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/customers/new"}
           label={t("AddingCustomer.CTA")}
@@ -285,7 +285,7 @@ async function EditingContent() {
       <RyogoCaption color="slate">
         {t("EditingCustomer.Description")}
       </RyogoCaption>
-      <RyogoSupportVideo src="/customers/edit.mp4" />
+      <RyogoSupportVideo src="/customers/edit.webm" />
     </SupportContentSectionWrapper>
   )
 }
@@ -297,13 +297,13 @@ async function BookingsContent() {
         <RyogoCaption color="slate">
           {t("UpcomingBookings.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/customers/upcoming.mp4" />
+        <RyogoSupportVideo src="/customers/upcoming.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
         <RyogoCaption color="slate">
           {t("CompletedBookings.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/customers/completed.mp4" />
+        <RyogoSupportVideo src="/customers/completed.webm" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -330,7 +330,7 @@ async function SearchContent() {
       <RyogoCaption color="slate">
         {t("SearchingCustomer.Description")}
       </RyogoCaption>
-      <RyogoSupportVideo src="/customers/search.mp4" />
+      <RyogoSupportVideo src="/customers/search.webm" />
     </SupportContentSectionWrapper>
   )
 }

@@ -23,7 +23,6 @@ import {
   SupportTableWrapper,
 } from "@/components/flows/support/supportTableWrapper"
 import RiderHeader from "@/components/header/riderHeader"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import {
   DoubleContentWrapper,
@@ -34,6 +33,7 @@ import {
 } from "@/components/page/pageWrappers"
 import { RyogoCaption } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
+import { RyogoSupportVideo } from "@/components/video/ryogoVideo"
 import {
   BellPlus,
   ChevronRight,
@@ -195,13 +195,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("WhatAreMissions.AllMissions")}
         </RyogoCaption>
-        {/* //TODO: Add Missions snapshot */}
-        <RyogoImage
-          alt="Missions"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/missions.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myMissions"}
           label={t("WhatAreMissions.CTA")}
@@ -235,6 +229,7 @@ async function OverviewContent() {
     </>
   )
 }
+
 async function ManagingContent() {
   const t = await getTranslations("Rider.MySupportMissionsHelp.Managing")
   return (
@@ -258,6 +253,7 @@ async function ManagingContent() {
     </>
   )
 }
+
 async function CustomContent() {
   const t = await getTranslations("Rider.MySupportMissionsHelp.Custom")
   return (
@@ -269,13 +265,7 @@ async function CustomContent() {
         <RyogoCaption color="slate">
           {t("WhatIsCustomMission.Need")}
         </RyogoCaption>
-        {/* //TODO: Add CreatingCustom snapshot */}
-        <RyogoImage
-          alt="CreatingCustom"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/reminders.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myMissions/myReminders"}
           label={t("WhatIsCustomMission.CTA")}
@@ -286,13 +276,7 @@ async function CustomContent() {
           {t("CreatingCustom.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("CreatingCustom.Fields")}</RyogoCaption>
-        {/* //TODO: Add CreatingCustom snapshot */}
-        <RyogoImage
-          alt="CreatingCustom"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/add_reminder.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myMissions/myReminders/add"}
           label={t("CreatingCustom.CTA")}
@@ -303,13 +287,7 @@ async function CustomContent() {
           {t("ModifyingCustom.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("ModifyingCustom.Fields")}</RyogoCaption>
-        {/* //TODO: Add ModifyingCustom snapshot */}
-        <RyogoImage
-          alt="ModifyingCustom"
-          imageSize="xl"
-          src="/logoPWA.png"
-          className="self-center"
-        />
+        <RyogoSupportVideo src="/rider/reminder_edit.webm" mobile />
       </SupportContentSectionWrapper>
     </>
   )

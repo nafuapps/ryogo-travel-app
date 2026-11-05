@@ -327,7 +327,7 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Elements.Title")}>
         <RyogoCaption color="slate">{t("Elements.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/details.mp4" />
+        <RyogoSupportVideo src="/bookings/details.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Elements.Title")}>
         <SupportTableWrapper label={t("Elements.Caption")}>
@@ -404,7 +404,7 @@ async function ManagingContent() {
       <SupportContentSectionWrapper title={t("Home.Title")}>
         <RyogoCaption color="slate">{t("Home.Ongoing")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Home.Upcoming")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/home.mp4" />
+        <RyogoSupportVideo src="/bookings/home.webm" />
         <RyogoCaption color="slate">{t("Home.Schedule")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Home.History")}</RyogoCaption>
         <SupportContentCTALinkButton
@@ -414,7 +414,7 @@ async function ManagingContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Leads.Title")}>
         <RyogoCaption color="slate">{t("Leads.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/leads.mp4" />
+        <RyogoSupportVideo src="/bookings/leads.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/bookings/leads"}
           label={t("Leads.CTA")}
@@ -422,7 +422,7 @@ async function ManagingContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Completed.Title")}>
         <RyogoCaption color="slate">{t("Completed.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/completed.mp4" />
+        <RyogoSupportVideo src="/bookings/completed.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/bookings/completed"}
           label={t("Completed.CTA")}
@@ -430,7 +430,7 @@ async function ManagingContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Cancelled.Title")}>
         <RyogoCaption color="slate">{t("Cancelled.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/cancelled.mp4" />
+        <RyogoSupportVideo src="/bookings/cancelled.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/bookings/cancelled"}
           label={t("Cancelled.CTA")}
@@ -451,9 +451,9 @@ async function CreationContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step1.Title")}>
         <RyogoCaption color="slate">{t("Step1.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/new_booking_find_customer.mp4" />
+        <RyogoSupportVideo src="/bookings/new_booking_find_customer.webm" />
         <RyogoCaption color="slate">{t("Step1.AddCustomer")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/new_booking_add_customer.mp4" />
+        <RyogoSupportVideo src="/bookings/new_booking_add_customer.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/bookings/new"}
           label={t("Step1.CTA")}
@@ -461,20 +461,20 @@ async function CreationContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step2.Title")}>
         <RyogoCaption color="slate">{t("Step2.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/new_booking_step1.mp4" />
+        <RyogoSupportVideo src="/bookings/new_booking_step1.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step3.Title")}>
         <RyogoCaption color="slate">{t("Step3.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/new_booking_step2.mp4" />
-        <RyogoSupportVideo src="/bookings/new_booking_step3.mp4" />
+        <RyogoSupportVideo src="/bookings/new_booking_step2.webm" />
+        <RyogoSupportVideo src="/bookings/new_booking_step3.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step4.Title")}>
         <RyogoCaption color="slate">{t("Step4.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/new_booking_step4.mp4" />
+        <RyogoSupportVideo src="/bookings/new_booking_step4.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step5.Title")}>
         <RyogoCaption color="slate">{t("Step5.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/new_booking_step5.mp4" />
+        <RyogoSupportVideo src="/bookings/new_booking_step5.webm" />
       </SupportContentSectionWrapper>
       <SupportWarningWrapper text={t("Lead")} />
       <SupportWarningWrapper text={t("ShareQuote")} />
@@ -524,7 +524,7 @@ async function ConfirmationContent() {
       <RyogoCaption color="slate">{t("Confirming.Description")}</RyogoCaption>
       <RyogoCaption color="slate">{t("Confirming.Step1")}</RyogoCaption>
       <RyogoCaption color="slate">{t("Confirming.Step2")}</RyogoCaption>
-      <RyogoSupportVideo src="/bookings/confirm.mp4" />
+      <RyogoSupportVideo src="/bookings/confirm.webm" />
       <SupportWarningWrapper text={t("Confirming.Share")} />
     </SupportContentSectionWrapper>
   )
@@ -552,7 +552,7 @@ async function ClosingContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("GeneratingInvoice.Title")}>
         <RyogoCaption color="slate">{t("GeneratingInvoice.Step")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/close.mp4" />
+        <RyogoSupportVideo src="/bookings/close.webm" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -572,7 +572,7 @@ async function ReconcilingContent({ isOwner }: { isOwner: boolean }) {
         <SupportContentSectionWrapper title={t("Reconciling.Title")}>
           <RyogoCaption color="slate">{t("Reconciling.Step")}</RyogoCaption>
           <RyogoCaption color="slate">{t("Reconciling.Process")}</RyogoCaption>
-          <RyogoSupportVideo src="/bookings/reconcile.mp4" />
+          <RyogoSupportVideo src="/bookings/reconcile.webm" />
         </SupportContentSectionWrapper>
       )}
     </>
@@ -588,21 +588,21 @@ async function AssignmentContent({ isOwner }: { isOwner: boolean }) {
           {t("AssignVehicle.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("AssignVehicle.Reassign")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/assign_vehicle.mp4" />
+        <RyogoSupportVideo src="/bookings/assign_vehicle.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("AssignDriver.Title")}>
         <RyogoCaption color="slate">
           {t("AssignDriver.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("AssignDriver.Reassign")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/assign_driver.mp4" />
+        <RyogoSupportVideo src="/bookings/assign_driver.webm" />
       </SupportContentSectionWrapper>
       {isOwner && (
         <SupportContentSectionWrapper title={t("ReassignUser.Title")}>
           <RyogoCaption color="slate">
             {t("ReassignUser.Description")}
           </RyogoCaption>
-          <RyogoSupportVideo src="/bookings/assign_user.mp4" />
+          <RyogoSupportVideo src="/bookings/assign_user.webm" />
         </SupportContentSectionWrapper>
       )}
     </>
@@ -620,7 +620,7 @@ async function TransactionsContent() {
         <RyogoCaption color="slate">
           {t("WhatIsTransaction.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/transactions.mp4" />
+        <RyogoSupportVideo src="/bookings/transactions.webm" />
       </SupportContentSectionWrapper>
 
       <SupportContentSectionWrapper title={t("AddingTransaction.Title")}>
@@ -630,19 +630,19 @@ async function TransactionsContent() {
         <RyogoCaption color="slate">
           {t("AddingTransaction.Process")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/add_transaction.mp4" />
+        <RyogoSupportVideo src="/bookings/add_transaction.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("ModifyingTransaction.Title")}>
         <RyogoCaption color="slate">
           {t("ModifyingTransaction.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/edit_transaction.mp4" />
+        <RyogoSupportVideo src="/bookings/edit_transaction.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("ApprovingTransaction.Title")}>
         <RyogoCaption color="slate">
           {t("ApprovingTransaction.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/transaction_approval.mp4" />
+        <RyogoSupportVideo src="/bookings/transaction_approval.webm" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -659,26 +659,26 @@ async function ExpensesContent() {
         <RyogoCaption color="slate">
           {t("WhatIsExpense.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/expenses.mp4" />
+        <RyogoSupportVideo src="/bookings/expenses.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("AddingExpense.Title")}>
         <RyogoCaption color="slate">
           {t("AddingExpense.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("AddingExpense.Process")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/add_expense.mp4" />
+        <RyogoSupportVideo src="/bookings/add_expense.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("ModifyingExpense.Title")}>
         <RyogoCaption color="slate">
           {t("ModifyingExpense.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/edit_expense.mp4" />
+        <RyogoSupportVideo src="/bookings/edit_expense.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("ApprovingExpense.Title")}>
         <RyogoCaption color="slate">
           {t("ApprovingExpense.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/expense_approval.mp4" />
+        <RyogoSupportVideo src="/bookings/expense_approval.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("ExpenseTypes.Title")}>
         <RyogoCaption color="slate">
@@ -723,7 +723,7 @@ async function TripLogsContent() {
         <RyogoCaption color="slate">
           {t("WhatIsTripLog.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/tripLogs.mp4" />
+        <RyogoSupportVideo src="/bookings/tripLogs.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("TypeList.Title")}>
         <RyogoCaption color="slate">{t("TypeList.Description")}</RyogoCaption>
@@ -791,19 +791,19 @@ async function DocumentsContent() {
         <RyogoCaption color="slate">
           {t("BookingQuote.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/send_quote.mp4" />
+        <RyogoSupportVideo src="/bookings/send_quote.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("BookingConfirm.Title")}>
         <RyogoCaption color="slate">
           {t("BookingConfirm.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/send_confirmation.mp4" />
+        <RyogoSupportVideo src="/bookings/send_confirmation.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("BookingInvoice.Title")}>
         <RyogoCaption color="slate">
           {t("BookingInvoice.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/send_invoice.mp4" />
+        <RyogoSupportVideo src="/bookings/send_invoice.webm" />
       </SupportContentSectionWrapper>
     </>
   )

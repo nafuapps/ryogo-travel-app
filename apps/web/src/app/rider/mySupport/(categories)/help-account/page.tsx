@@ -219,7 +219,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("ViewDetails.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/rider/profile.mp4" mobile />
+        <RyogoSupportVideo src="/rider/profile.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myProfile"}
           label={t("ViewDetails.CTA")}
@@ -259,7 +259,7 @@ async function SecurityContent() {
         <RyogoCaption color="slate">
           {t("ChangePassword.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/rider/change_password.mp4" mobile />
+        <RyogoSupportVideo src="/rider/change_password.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myProfile/change-password"}
           label={t("ChangePassword.CTA")}
@@ -291,7 +291,7 @@ async function SettingsContent() {
       <RyogoCaption color="slate">
         {t("ChangePreferences.Description")}
       </RyogoCaption>
-      <RyogoSupportVideo src="/rider/settings.mp4" mobile />
+      <RyogoSupportVideo src="/rider/settings.webm" mobile />
       <SupportContentCTALinkButton
         href={"/rider/myProfile/settings"}
         label={t("ChangePreferences.CTA")}
@@ -307,7 +307,7 @@ async function AgencyContent() {
       <RyogoCaption color="slate">
         {t("AgencyDetails.Description")}
       </RyogoCaption>
-      <RyogoSupportVideo src="/rider/agency.mp4" mobile />
+      <RyogoSupportVideo src="/rider/agency.webm" mobile />
       <SupportContentCTALinkButton
         href={"/rider/myProfile/agency"}
         label={t("AgencyDetails.CTA")}

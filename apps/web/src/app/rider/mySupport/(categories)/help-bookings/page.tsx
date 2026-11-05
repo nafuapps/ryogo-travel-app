@@ -235,7 +235,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("WhatIsBooking.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/rider/booking_details.mp4" mobile />
+        <RyogoSupportVideo src="/rider/booking_details.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myBookings"}
           label={t("WhatIsBooking.CTA")}
@@ -318,7 +318,7 @@ async function AssignmentContent() {
         <RyogoCaption color="slate">
           {t("BookingAssignment.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/rider/upcoming.mp4" mobile />
+        <RyogoSupportVideo src="/rider/upcoming.webm" mobile />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CurrentBooking.Title")}>
         <RyogoCaption color="slate">
@@ -368,28 +368,28 @@ async function ExecutionContent() {
       <SupportContentSectionWrapper title={t("StartTrip.Title")}>
         <RyogoCaption color="slate">{t("StartTrip.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("StartTrip.Input")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/start_trip.mp4" mobile />
+        <RyogoSupportVideo src="/rider/start_trip.webm" mobile />
 
         <SupportWarningWrapper text={t("StartTrip.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Arrived.Title")}>
         <RyogoCaption color="slate">{t("Arrived.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Arrived.Input")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/arrived.mp4" mobile />
+        <RyogoSupportVideo src="/rider/arrived.webm" mobile />
 
         <SupportWarningWrapper text={t("Arrived.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("PickedUp.Title")}>
         <RyogoCaption color="slate">{t("PickedUp.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("PickedUp.Input")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/pickedUp.mp4" mobile />
+        <RyogoSupportVideo src="/rider/pickedUp.webm" mobile />
 
         <SupportWarningWrapper text={t("PickedUp.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Dropped.Title")}>
         <RyogoCaption color="slate">{t("Dropped.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Dropped.Input")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/dropped.mp4" mobile />
+        <RyogoSupportVideo src="/rider/dropped.webm" mobile />
 
         <SupportWarningWrapper text={t("Dropped.Warning")} />
       </SupportContentSectionWrapper>
@@ -397,7 +397,7 @@ async function ExecutionContent() {
         <RyogoCaption color="slate">{t("Ended.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Ended.Input")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Ended.Rating")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/end_trip.mp4" mobile />
+        <RyogoSupportVideo src="/rider/end_trip.webm" mobile />
 
         <SupportWarningWrapper text={t("Ended.Warning")} />
       </SupportContentSectionWrapper>
@@ -411,7 +411,7 @@ async function CompletedContent() {
       <RyogoCaption color="slate">
         {t("CompletedBookings.Description")}
       </RyogoCaption>
-      <RyogoSupportVideo src="/rider/completed.mp4" mobile />
+      <RyogoSupportVideo src="/rider/completed.webm" mobile />
     </SupportContentSectionWrapper>
   )
 }
@@ -426,14 +426,14 @@ async function ExpensesContent() {
         <RyogoCaption color="slate">
           {t("WhatIsExpense.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/rider/expenses.mp4" mobile />
+        <RyogoSupportVideo src="/rider/expenses.webm" mobile />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("AddingExpense.Title")}>
         <RyogoCaption color="slate">
           {t("AddingExpense.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("AddingExpense.Process")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/add_expense.mp4" mobile />
+        <RyogoSupportVideo src="/rider/add_expense.webm" mobile />
 
         <SupportWarningWrapper text={t("AddingExpense.Warning")} />
       </SupportContentSectionWrapper>
@@ -441,7 +441,7 @@ async function ExpensesContent() {
         <RyogoCaption color="slate">
           {t("ModifyingExpense.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/rider/expense_edit.mp4" mobile />
+        <RyogoSupportVideo src="/rider/expense_edit.webm" mobile />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("ExpenseTypes.Title")}>
         <RyogoCaption color="slate">
@@ -486,7 +486,7 @@ async function TripLogsContent() {
         <RyogoCaption color="slate">
           {t("WhatIsTripLog.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/rider/tripLogs.mp4" mobile />
+        <RyogoSupportVideo src="/rider/tripLogs.webm" mobile />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("TypeList.Title")}>
         <RyogoCaption color="slate">{t("TypeList.Description")}</RyogoCaption>

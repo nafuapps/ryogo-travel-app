@@ -27,7 +27,10 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    remotePatterns: [new URL("https://uxlvdjfgmmorufabopzd.supabase.co/**")],
+    remotePatterns: [
+      new URL("https://uxlvdjfgmmorufabopzd.supabase.co/**"),
+      new URL("https://pryxypem4olqwelx.public.blob.vercel-storage.com/**"),
+    ],
   },
   async redirects() {
     return [

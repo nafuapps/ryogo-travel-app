@@ -237,7 +237,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("KnowVehicle.AllVehicles")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/all.mp4" />
+        <RyogoSupportVideo src="/vehicles/all.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/vehicles"}
           label={t("KnowVehicle.CTA")}
@@ -247,7 +247,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("VehiclesSchedule.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/schedule.mp4" />
+        <RyogoSupportVideo src="/vehicles/schedule.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/vehicles/schedule"}
           label={t("VehiclesSchedule.CTA")}
@@ -257,7 +257,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("VehicleDetails.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/details.mp4" />
+        <RyogoSupportVideo src="/vehicles/details.webm" />
 
         <SupportTableWrapper label={t("VehicleDetails.Caption")}>
           <SupportTableTextRow
@@ -324,23 +324,23 @@ async function AddingContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step1.Title")}>
         <RyogoCaption color="slate">{t("Step1.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/add1.mp4" />
+        <RyogoSupportVideo src="/vehicles/add1.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step2.Title")}>
         <RyogoCaption color="slate">{t("Step2.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/add2.mp4" />
+        <RyogoSupportVideo src="/vehicles/add2.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step3.Title")}>
         <RyogoCaption color="slate">{t("Step3.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/add3.mp4" />
+        <RyogoSupportVideo src="/vehicles/add3.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step4.Title")}>
         <RyogoCaption color="slate">{t("Step4.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/add4.mp4" />
+        <RyogoSupportVideo src="/vehicles/add4.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step5.Title")}>
         <RyogoCaption color="slate">{t("Step5.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/add5.mp4" />
+        <RyogoSupportVideo src="/vehicles/add5.webm" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -363,7 +363,7 @@ async function AssignmentContent() {
         <RyogoCaption color="slate">
           {t("BookingAssignment.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/assign_vehicle.mp4" />
+        <RyogoSupportVideo src="/bookings/assign_vehicle.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Selection.Title")}>
         <RyogoCaption color="slate">{t("Selection.Description")}</RyogoCaption>
@@ -385,13 +385,13 @@ async function BookingsContent() {
         <RyogoCaption color="slate">
           {t("UpcomingBookings.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/assigned.mp4" />
+        <RyogoSupportVideo src="/vehicles/assigned.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
         <RyogoCaption color="slate">
           {t("CompletedBookings.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/completed.mp4" />
+        <RyogoSupportVideo src="/vehicles/completed.webm" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -407,7 +407,7 @@ async function RepairsContent() {
         <RyogoCaption color="slate">
           {t("WhatIsRepair.AllRepairs")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/repairs.mp4" />
+        <RyogoSupportVideo src="/vehicles/repairs.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("AddingVehicleRepair.Title")}>
         <RyogoCaption color="slate">
@@ -416,19 +416,19 @@ async function RepairsContent() {
         <RyogoCaption color="slate">
           {t("AddingVehicleRepair.Fields")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/add_repair.mp4" />
+        <RyogoSupportVideo src="/vehicles/add_repair.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("EditingVehicleRepair.Title")}>
         <RyogoCaption color="slate">
           {t("EditingVehicleRepair.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/edit_repair.mp4" />
+        <RyogoSupportVideo src="/vehicles/edit_repair.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("StartingVehicleRepair.Title")}>
         <RyogoCaption color="slate">
           {t("StartingVehicleRepair.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/start_repair.mp4" />
+        <RyogoSupportVideo src="/vehicles/start_repair.webm" />
 
         <SupportWarningWrapper text={t("StartingVehicleRepair.Warning")} />
       </SupportContentSectionWrapper>
@@ -436,7 +436,7 @@ async function RepairsContent() {
         <RyogoCaption color="slate">
           {t("EndingVehicleRepair.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/end_repair.mp4" />
+        <RyogoSupportVideo src="/vehicles/end_repair.webm" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -451,7 +451,7 @@ async function DocumentsContent() {
       <RyogoCaption color="slate">
         {t("WhatIsDocument.ExpiryAlerts")}
       </RyogoCaption>
-      <RyogoSupportVideo src="/missions/expiry_alerts.mp4" />
+      <RyogoSupportVideo src="/missions/expiry_alerts.webm" />
       <SupportContentCTALinkButton
         href={"/dashboard/missions"}
         label={t("WhatIsDocument.CTA")}

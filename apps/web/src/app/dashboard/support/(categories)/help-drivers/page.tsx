@@ -232,7 +232,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("KnowDriver.Title")}>
         <RyogoCaption color="slate">{t("KnowDriver.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("KnowDriver.AllDrivers")}</RyogoCaption>
-        <RyogoSupportVideo src="/drivers/all.mp4" />
+        <RyogoSupportVideo src="/drivers/all.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/drivers"}
           label={t("KnowDriver.CTA")}
@@ -242,13 +242,13 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("DriversSchedule.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/drivers/schedule.mp4" />
+        <RyogoSupportVideo src="/drivers/schedule.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("DriverDetails.Title")}>
         <RyogoCaption color="slate">
           {t("DriverDetails.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/drivers/details.mp4" />
+        <RyogoSupportVideo src="/drivers/details.webm" />
         <SupportTableWrapper label={t("DriverDetails.Caption")}>
           <SupportTableTextRow
             label={t("DriverDetails.Basic")}
@@ -310,19 +310,19 @@ async function AddingContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step1.Title")}>
         <RyogoCaption color="slate">{t("Step1.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/drivers/add1.mp4" />
+        <RyogoSupportVideo src="/drivers/add1.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step2.Title")}>
         <RyogoCaption color="slate">{t("Step2.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/drivers/add2.mp4" />
+        <RyogoSupportVideo src="/drivers/add2.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step3.Title")}>
         <RyogoCaption color="slate">{t("Step3.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/drivers/add3.mp4" />
+        <RyogoSupportVideo src="/drivers/add3.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Step4.Title")}>
         <RyogoCaption color="slate">{t("Step4.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/drivers/add4.mp4" />
+        <RyogoSupportVideo src="/drivers/add4.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("DriverInvite.Title")}>
         <RyogoCaption color="slate">
@@ -339,7 +339,7 @@ async function EditingContent() {
       <RyogoCaption color="slate">
         {t("ModifyingDriver.Description")}
       </RyogoCaption>
-      <RyogoSupportVideo src="/drivers/edit.mp4" />
+      <RyogoSupportVideo src="/drivers/edit.webm" />
     </SupportContentSectionWrapper>
   )
 }
@@ -351,7 +351,7 @@ async function AssignmentContent() {
         <RyogoCaption color="slate">
           {t("BookingAssignment.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/bookings/assign_driver.mp4" />
+        <RyogoSupportVideo src="/bookings/assign_driver.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Selection.Title")}>
         <RyogoCaption color="slate">{t("Selection.Description")}</RyogoCaption>
@@ -374,13 +374,13 @@ async function BookingsContent() {
         <RyogoCaption color="slate">
           {t("UpcomingBookings.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/drivers/assigned.mp4" />
+        <RyogoSupportVideo src="/drivers/assigned.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CompletedBookings.Title")}>
         <RyogoCaption color="slate">
           {t("CompletedBookings.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/drivers/completed.mp4" />
+        <RyogoSupportVideo src="/drivers/completed.webm" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -394,7 +394,7 @@ async function LeavesContent() {
           {t("WhatIsLeave.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("WhatIsLeave.AllLeaves")}</RyogoCaption>
-        <RyogoSupportVideo src="/drivers/leaves.mp4" />
+        <RyogoSupportVideo src="/drivers/leaves.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("AddingDriverLeave.Title")}>
         <RyogoCaption color="slate">
@@ -403,26 +403,26 @@ async function LeavesContent() {
         <RyogoCaption color="slate">
           {t("AddingDriverLeave.Fields")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/drivers/add_leave.mp4" />
+        <RyogoSupportVideo src="/drivers/add_leave.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("EditingDriverLeave.Title")}>
         <RyogoCaption color="slate">
           {t("EditingDriverLeave.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/drivers/edit_leave.mp4" />
+        <RyogoSupportVideo src="/drivers/edit_leave.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("StartingLeave.Title")}>
         <RyogoCaption color="slate">
           {t("StartingLeave.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/drivers/start_leave.mp4" />
+        <RyogoSupportVideo src="/drivers/start_leave.webm" />
         <SupportWarningWrapper text={t("StartingLeave.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("EndingLeave.Title")}>
         <RyogoCaption color="slate">
           {t("EndingLeave.Description")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/drivers/end_leave.mp4" />
+        <RyogoSupportVideo src="/drivers/end_leave.webm" />
       </SupportContentSectionWrapper>
     </>
   )

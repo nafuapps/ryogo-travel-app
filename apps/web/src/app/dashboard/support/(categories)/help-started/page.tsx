@@ -346,7 +346,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       <SupportContentSectionWrapper title={t("Dashboard.Title")}>
         <RyogoCaption color="slate">{t("Dashboard.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Dashboard.Components")}</RyogoCaption>
-        <RyogoSupportVideo src="/started/dashboard.mp4" />
+        <RyogoSupportVideo src="/started/dashboard.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Sidebar.Title")}>
         <RyogoCaption color="slate">{t("Sidebar.Description")}</RyogoCaption>
@@ -371,7 +371,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
         <RyogoCaption color="slate">{t("Bookings.Completed")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Bookings.Cancelled")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Bookings.Details")}</RyogoCaption>
-        <RyogoSupportVideo src="/bookings/home.mp4" />
+        <RyogoSupportVideo src="/bookings/home.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/bookings"}
           label={t("Bookings.CTA")}
@@ -382,7 +382,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
         <RyogoCaption color="slate">{t("Vehicles.Vehicles")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Vehicles.Schedule")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Vehicles.Details")}</RyogoCaption>
-        <RyogoSupportVideo src="/vehicles/all.mp4" />
+        <RyogoSupportVideo src="/vehicles/all.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/vehicles"}
           label={t("Vehicles.CTA")}
@@ -393,7 +393,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
         <RyogoCaption color="slate">{t("Drivers.Drivers")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Drivers.Schedule")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Drivers.Details")}</RyogoCaption>
-        <RyogoSupportVideo src="/drivers/all.mp4" />
+        <RyogoSupportVideo src="/drivers/all.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/drivers"}
           label={t("Drivers.CTA")}
@@ -402,7 +402,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       <SupportContentSectionWrapper title={t("Customers.Title")}>
         <RyogoCaption color="slate">{t("Customers.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Customers.Details")}</RyogoCaption>
-        <RyogoSupportVideo src="/customers/all.mp4" />
+        <RyogoSupportVideo src="/customers/all.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/customers"}
           label={t("Customers.CTA")}
@@ -412,7 +412,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
         <SupportContentSectionWrapper title={t("Users.Title")}>
           <RyogoCaption color="slate">{t("Users.Description")}</RyogoCaption>
           <RyogoCaption color="slate">{t("Users.Details")}</RyogoCaption>
-          <RyogoSupportVideo src="/users/all.mp4" />
+          <RyogoSupportVideo src="/users/all.webm" />
           <SupportContentCTALinkButton
             href={"/dashboard/users"}
             label={t("Users.CTA")}
@@ -446,7 +446,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
         <RyogoCaption color="slate">{t("Search.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Search.Keyword")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Search.Data")}</RyogoCaption>
-        <RyogoSupportVideo src="/started/search.mp4" />
+        <RyogoSupportVideo src="/started/search.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/search"}
           label={t("Search.CTA")}
@@ -455,7 +455,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       <SupportContentSectionWrapper title={t("Feed.Title")}>
         <RyogoCaption color="slate">{t("Feed.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Feed.Filters")}</RyogoCaption>
-        <RyogoSupportVideo src="/missions/feed.mp4" />
+        <RyogoSupportVideo src="/missions/feed.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/feed"}
           label={t("Feed.CTA")}
@@ -465,7 +465,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
         <RyogoCaption color="slate">{t("Support.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Support.Contact")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Support.Tickets")}</RyogoCaption>
-        <RyogoSupportVideo src="/started/support.mp4" />
+        <RyogoSupportVideo src="/started/support.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/support"}
           label={t("Support.CTA")}
@@ -474,7 +474,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       <SupportContentSectionWrapper title={t("Account.Title")}>
         <RyogoCaption color="slate">{t("Account.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Account.Other")}</RyogoCaption>
-        <RyogoSupportVideo src="/account/details.mp4" />
+        <RyogoSupportVideo src="/account/details.webm" />
 
         <SupportContentCTALinkButton
           href={"/dashboard/account"}
@@ -484,7 +484,7 @@ async function OverviewContent({ isOwner }: { isOwner: boolean }) {
       <SupportContentSectionWrapper title={t("Missions.Title")}>
         <RyogoCaption color="slate">{t("Missions.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Missions.Custom")}</RyogoCaption>
-        <RyogoSupportVideo src="/missions/missions.mp4" />
+        <RyogoSupportVideo src="/missions/missions.webm" />
 
         <SupportContentCTALinkButton
           href={"/dashboard/missions"}

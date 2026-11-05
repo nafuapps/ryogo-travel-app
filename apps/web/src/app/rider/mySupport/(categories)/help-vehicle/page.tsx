@@ -174,7 +174,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("KnowVehicle.AllVehicles")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/rider/vehicle.mp4" mobile />
+        <RyogoSupportVideo src="/rider/vehicle.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myVehicle"}
           label={t("KnowVehicle.CTA")}
@@ -225,8 +225,7 @@ async function DocumentsContent() {
       <RyogoCaption color="slate">
         {t("WhatIsDocument.ExpiryAlerts")}
       </RyogoCaption>
-      {/* //TODO: Expiry alerts */}
-      <RyogoSupportVideo src="/rider/expiry_alerts.mp4" mobile />
+      <RyogoSupportVideo src="/rider/expiry_alerts.webm" mobile />
       <SupportContentCTALinkButton
         href={"/rider/myMissions/myExpiryAlerts"}
         label={t("WhatIsDocument.CTA")}

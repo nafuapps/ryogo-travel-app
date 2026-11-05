@@ -170,7 +170,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("KnowLeave.Title")}>
         <RyogoCaption color="slate">{t("KnowLeave.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("KnowLeave.AllLeaves")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/leaves.mp4" mobile />
+        <RyogoSupportVideo src="/rider/leaves.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myLeaves"}
           label={t("KnowLeave.CTA")}
@@ -198,7 +198,7 @@ async function MarkingContent() {
           {t("GoingOnLeave.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("GoingOnLeave.Process")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/start_leave.mp4" mobile />
+        <RyogoSupportVideo src="/rider/start_leave.webm" mobile />
         <SupportWarningWrapper text={t("GoingOnLeave.Warning")} />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("BackFromLeave.Title")}>
@@ -206,7 +206,7 @@ async function MarkingContent() {
           {t("BackFromLeave.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("BackFromLeave.Process")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/end_leave.mp4" mobile />
+        <RyogoSupportVideo src="/rider/end_leave.webm" mobile />
         <SupportWarningWrapper text={t("BackFromLeave.Warning")} />
       </SupportContentSectionWrapper>
     </>

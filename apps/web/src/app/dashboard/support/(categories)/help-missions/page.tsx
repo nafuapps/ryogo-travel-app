@@ -220,7 +220,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">
           {t("WhatAreMissions.AllMissions")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/missions/missions.mp4" />
+        <RyogoSupportVideo src="/missions/missions.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/missions"}
           label={t("WhatAreMissions.CTA")}
@@ -283,7 +283,7 @@ async function ExpiryContent() {
           {t("ExpiryAlerts.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("ExpiryAlerts.Items")}</RyogoCaption>
-        <RyogoSupportVideo src="/missions/expiry_alerts.mp4" />
+        <RyogoSupportVideo src="/missions/expiry_alerts.webm" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -303,14 +303,14 @@ async function CustomContent() {
         <RyogoCaption color="slate">
           {t("WhatIsCustomMission.ViewCustomMissions")}
         </RyogoCaption>
-        <RyogoSupportVideo src="/missions/reminders.mp4" />
+        <RyogoSupportVideo src="/missions/reminders.webm" />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("CreatingCustom.Title")}>
         <RyogoCaption color="slate">
           {t("CreatingCustom.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("CreatingCustom.Fields")}</RyogoCaption>
-        <RyogoSupportVideo src="/missions/reminder_add.mp4" />
+        <RyogoSupportVideo src="/missions/reminder_add.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/missions/reminders/add"}
           label={t("CreatingCustom.CTA")}
@@ -321,7 +321,7 @@ async function CustomContent() {
           {t("ModifyingCustom.Description")}
         </RyogoCaption>
         <RyogoCaption color="slate">{t("ModifyingCustom.Fields")}</RyogoCaption>
-        <RyogoSupportVideo src="/missions/reminder_edit.mp4" />
+        <RyogoSupportVideo src="/missions/reminder_edit.webm" />
       </SupportContentSectionWrapper>
     </>
   )
@@ -335,7 +335,7 @@ async function FeedContent() {
         <RyogoCaption color="slate">{t("WhatIsFeed.ViewFeed")}</RyogoCaption>
         <RyogoCaption color="slate">{t("WhatIsFeed.FilterFeed")}</RyogoCaption>
         <RyogoCaption color="slate">{t("WhatIsFeed.Link")}</RyogoCaption>
-        <RyogoSupportVideo src="/missions/feed.mp4" />
+        <RyogoSupportVideo src="/missions/feed.webm" />
         <SupportContentCTALinkButton
           href={"/dashboard/feed"}
           label={t("WhatIsFeed.CTA")}

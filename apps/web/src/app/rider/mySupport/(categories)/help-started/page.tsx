@@ -281,7 +281,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("Dashboard.Title")}>
         <RyogoCaption color="slate">{t("Dashboard.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Dashboard.Components")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/home.mp4" mobile />
+        <RyogoSupportVideo src="/rider/home.webm" mobile />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Sidebar.Title")}>
         <RyogoCaption color="slate">{t("Sidebar.Description")}</RyogoCaption>
@@ -300,7 +300,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">{t("Bookings.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Bookings.Upcoming")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Bookings.Completed")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/upcoming.mp4" mobile />
+        <RyogoSupportVideo src="/rider/upcoming.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myBookings"}
           label={t("Bookings.CTA")}
@@ -308,7 +308,7 @@ async function OverviewContent() {
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("Vehicle.Title")}>
         <RyogoCaption color="slate">{t("Vehicle.Description")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/vehicle.mp4" mobile />
+        <RyogoSupportVideo src="/rider/vehicle.webm" mobile />
 
         <SupportContentCTALinkButton
           href={"/rider/myVehicle"}
@@ -319,8 +319,7 @@ async function OverviewContent() {
         <RyogoCaption color="slate">{t("Support.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Support.Contact")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Support.Tickets")}</RyogoCaption>
-        {/* //TODO: Add Support snapshot */}
-        <RyogoSupportVideo src="/rider/support.mp4" mobile />
+        <RyogoSupportVideo src="/rider/support.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/mySupport"}
           label={t("Support.CTA")}
@@ -329,7 +328,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("Account.Title")}>
         <RyogoCaption color="slate">{t("Account.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Account.Other")}</RyogoCaption>
-        <RyogoSupportVideo src="/rider/profile.mp4" mobile />
+        <RyogoSupportVideo src="/rider/profile.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myProfile"}
           label={t("Account.CTA")}
@@ -338,8 +337,7 @@ async function OverviewContent() {
       <SupportContentSectionWrapper title={t("Missions.Title")}>
         <RyogoCaption color="slate">{t("Missions.Description")}</RyogoCaption>
         <RyogoCaption color="slate">{t("Missions.Custom")}</RyogoCaption>
-        {/* //TODO: Add Missions snapshot */}
-        <RyogoSupportVideo src="/rider/missions.mp4" mobile />
+        <RyogoSupportVideo src="/rider/missions.webm" mobile />
         <SupportContentCTALinkButton
           href={"/rider/myMissions"}
           label={t("Missions.CTA")}

@@ -1,12 +1,12 @@
 "use client"
 
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH3, RyogoP, RyogoSmall } from "@/components/typography"
 import { useSlideshow } from "@/hooks/useSlideshow"
 import { SLIDESHOW_TIMER_MS } from "@/lib/uiConfig"
 import { LucideIcon } from "lucide-react"
 import Image from "next/image"
-import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 
 export type SlideshowItemType = {
   src: string
@@ -28,8 +28,9 @@ export function SlideshowWrapper({
     <ScrollZoomIn
       className={`mt-4 flex flex-col items-center gap-6 w-full ${reverse ? "md:flex-row-reverse" : "md:flex-row"}`}
     >
-      <SlideshowSideImageWrapper
+      <SlideshowImageWrapper
         imageSrc={items[activeIndex]?.src ?? "/logoPWA.png"}
+        side
       />
       <SlideshowCardList
         items={items}
@@ -101,9 +102,7 @@ function SlideshowCard({
         className={`flex flex-col gap-3 lg:gap-4 transition duration-500 ${active ? "" : "hidden"}`}
       >
         <RyogoSmall color="slate">{item.description}</RyogoSmall>
-        <div className="flex md:hidden aspect-4/5 rounded-lg overflow-hidden relative">
-          <SlideshowImage imageSrc={item.src} />
-        </div>
+        <SlideshowImageWrapper imageSrc={item.src} />
       </div>
       {active ? (
         <div className="rounded w-full h-0.5 lg:h-1 bg-white dark:bg-slate-800">
@@ -119,9 +118,17 @@ function SlideshowCard({
   )
 }
 
-function SlideshowSideImageWrapper({ imageSrc }: { imageSrc: string }) {
+function SlideshowImageWrapper({
+  imageSrc,
+  side,
+}: {
+  imageSrc: string
+  side?: boolean
+}) {
   return (
-    <div className="hidden md:flex w-full aspect-4/5 rounded-lg overflow-hidden relative">
+    <div
+      className={`${side ? "hidden md:flex" : "flex md:hidden"} w-full aspect-4/5 rounded-lg overflow-hidden relative`}
+    >
       <SlideshowImage imageSrc={imageSrc} />
     </div>
   )

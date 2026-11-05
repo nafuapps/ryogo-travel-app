@@ -50,8 +50,8 @@ export default async function HowItWorksHeroSection() {
           <Image
             className="object-cover"
             loading="eager"
-            src="/forgotPasswordBG.png"
-            alt=""
+            src="/logoPWA.png"
+            alt={t("Title")}
             fill
             sizes="(max-width: 640px) 448px,768px"
           />

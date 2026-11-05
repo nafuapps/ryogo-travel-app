@@ -28,10 +28,13 @@ export function SlideshowWrapper({
     <ScrollZoomIn
       className={`mt-4 flex flex-col items-center gap-6 w-full ${reverse ? "md:flex-row-reverse" : "md:flex-row"}`}
     >
-      <SlideshowImageWrapper
-        imageSrc={items[activeIndex]?.src ?? "/logoPWA.png"}
-        side
-      />
+      {items[activeIndex] && (
+        <SlideshowImageWrapper
+          imageSrc={items[activeIndex].src}
+          desc={items[activeIndex].title}
+          side
+        />
+      )}
       <SlideshowCardList
         items={items}
         timeLeft={timeLeft}
@@ -102,7 +105,7 @@ function SlideshowCard({
         className={`flex flex-col gap-3 lg:gap-4 transition duration-500 ${active ? "" : "hidden"}`}
       >
         <RyogoSmall color="slate">{item.description}</RyogoSmall>
-        <SlideshowImageWrapper imageSrc={item.src} />
+        <SlideshowImageWrapper imageSrc={item.src} desc={item.title} />
       </div>
       {active ? (
         <div className="rounded w-full h-0.5 lg:h-1 bg-white dark:bg-slate-800">
@@ -120,29 +123,25 @@ function SlideshowCard({
 
 function SlideshowImageWrapper({
   imageSrc,
+  desc,
   side,
 }: {
   imageSrc: string
+  desc: string
   side?: boolean
 }) {
   return (
     <div
-      className={`${side ? "hidden md:flex" : "flex md:hidden"} w-full aspect-4/5 rounded-lg overflow-hidden relative`}
+      className={`${side ? "hidden md:flex" : "flex md:hidden"} w-full aspect-square rounded-lg overflow-hidden relative`}
     >
-      <SlideshowImage imageSrc={imageSrc} />
+      <Image
+        className="object-cover w-full"
+        loading="eager"
+        src={imageSrc}
+        alt={desc}
+        fill
+        sizes="768px"
+      />
     </div>
-  )
-}
-
-function SlideshowImage({ imageSrc }: { imageSrc: string }) {
-  return (
-    <Image
-      className="object-cover w-full"
-      loading="eager"
-      src={imageSrc}
-      alt=""
-      fill
-      sizes="768px"
-    />
   )
 }

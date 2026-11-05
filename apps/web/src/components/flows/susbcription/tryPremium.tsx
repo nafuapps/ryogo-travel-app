@@ -66,7 +66,7 @@ export default async function TryPremiumComponent({
           className="object-cover"
           loading="eager"
           src="/logoPWA.png"
-          alt=""
+          alt={t("Title")}
           fill
           sizes="384px"
         />

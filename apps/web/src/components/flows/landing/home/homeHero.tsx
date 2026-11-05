@@ -69,8 +69,8 @@ export default async function HomeHeroSection() {
             <Image
               className="object-cover"
               loading="eager"
-              src="/signupBG.png"
-              alt=""
+              src="/logoPWA.png"
+              alt={t("Title2")}
               fill
               sizes="176px"
             />
@@ -79,8 +79,8 @@ export default async function HomeHeroSection() {
             <Image
               className="object-cover"
               loading="eager"
-              src="/forgotPasswordBG.png"
-              alt=""
+              src="/logoPWA.png"
+              alt={t("Title1")}
               fill
               sizes="(max-width: 640px) 448px,672px"
             />
@@ -89,8 +89,8 @@ export default async function HomeHeroSection() {
             <Image
               className="object-cover"
               loading="eager"
-              src="/loginBG.png"
-              alt=""
+              src="/logoPWA.png"
+              alt={t("Title2")}
               fill
               sizes="176px"
             />

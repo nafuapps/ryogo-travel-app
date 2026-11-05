@@ -92,7 +92,7 @@ async function FeaturesMenuItem({
   return (
     <ScrollZoomIn>
       <Link
-        className="group flex flex-col w-full overflow-hidden max-w-2xl mx-auto h-full md:hover:bg-slate-100 md:dark:hover:bg-slate-700 rounded-lg py-2 md:p-5 transition-colors duration-300"
+        className="relative group flex flex-col w-full overflow-hidden max-w-2xl mx-auto h-full md:hover:bg-slate-100 md:dark:hover:bg-slate-700 rounded-lg md:p-5 transition-colors duration-300"
         href={href}
       >
         <SectionColWrapper small className="mb-3 md:mb-4">
@@ -101,7 +101,7 @@ async function FeaturesMenuItem({
           </RyogoH4>
           <RyogoSmall color="light">{subtitle}</RyogoSmall>
         </SectionColWrapper>
-        <div className="relative mt-auto w-full max-w-2xl aspect-video rounded-lg overflow-hidden transition-transform duration-300 md:group-hover:scale-105">
+        <div className="relative mt-auto w-full max-w-2xl aspect-video rounded-lg overflow-hidden transition-transform duration-300 md:group-hover:scale-103">
           <Image
             className="object-cover"
             loading="eager"
@@ -110,12 +110,12 @@ async function FeaturesMenuItem({
             fill
             sizes="672px"
           />
-          <div className="absolute left-0 right-0 bottom-0 rounded-b-lg md:rounded-b-none opacity-90 p-2.5 md:p-3 flex items-center justify-center gap-1 md:gap-1.5 bg-slate-100 dark:bg-slate-700 transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
-            <RyogoSmall color="brand" weight="font-medium">
-              {t("LearnMore")}
-            </RyogoSmall>
-            <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
-          </div>
+        </div>
+        <div className="absolute left-0 right-0 bottom-0 rounded-b-lg opacity-95 p-2.5 md:p-3 flex items-center justify-center gap-1 md:gap-1.5 bg-slate-100 dark:bg-slate-700 transform translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
+          <RyogoSmall color="brand" weight="font-medium">
+            {t("LearnMore")}
+          </RyogoSmall>
+          <RyogoIcon icon={ChevronDown} color="brand" size="sm" thick />
         </div>
       </Link>
     </ScrollZoomIn>

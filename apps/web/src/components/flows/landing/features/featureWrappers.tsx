@@ -1,6 +1,6 @@
-import { RyogoSmall, RyogoH4 } from "@/components/typography"
-import Image from "next/image"
 import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
+import { RyogoH4, RyogoSmall } from "@/components/typography"
+import Image from "next/image"
 
 export function FeatureGrid({ children }: { children: React.ReactNode }) {
   return (
@@ -33,12 +33,12 @@ export function FeatureItem({
         <RyogoH4 weight="font-bold">{title}</RyogoH4>
         <RyogoSmall color="slate">{description}</RyogoSmall>
       </div>
-      <div className="border-8 md:border-10 mt-auto border-slate-100/50 dark:border-slate-700/50 w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
+      <div className="mt-auto w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
         <Image
           className="object-cover rounded-md md:transition-transform md:duration-300 md:group-hover:scale-105"
           loading="eager"
           src={src}
-          alt=""
+          alt={title}
           fill
           sizes="672px"
         />

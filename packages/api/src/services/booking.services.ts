@@ -73,11 +73,6 @@ export const bookingServices = {
       await bookingRepository.readPendingPaymentBookings(agencyId)
 
     return bookings
-      .filter(
-        (booking) =>
-          booking.finalInvoiceAmount !== null ||
-          booking.actualTotalAmount !== null,
-      )
       .map((booking) => {
         const totalAmount =
           booking.finalInvoiceAmount ??
@@ -102,12 +97,14 @@ export const bookingServices = {
           }
           return acc
         }, 0)
-
         return {
           ...booking,
           totalAmount: totalAmount,
           pendingAmount: totalAmount - customerPaidAmount,
         }
+      })
+      .filter((booking) => {
+        booking.pendingAmount > 0
       })
   },
 

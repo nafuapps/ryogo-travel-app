@@ -1,4 +1,6 @@
 export const HOST_URL = "https://ryogo.in"
+export const vercelBlobStorageUrl =
+  "https://pryxypem4olqwelx.public.blob.vercel-storage.com"
 
 //Cookies
 export const LOCALE_COOKIE_NAME = "locale"

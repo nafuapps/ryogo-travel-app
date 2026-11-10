@@ -29,26 +29,22 @@ export default async function HomeFeaturesSection() {
           <FeatureItem
             title={t("F1.Title")}
             description={t("F1.Description")}
-            src="/logoPWA.png"
-            // imageSrc="/images/homeF1.png"
+            src="/home/features/booking.png"
           />
           <FeatureItem
             title={t("F2.Title")}
             description={t("F2.Description")}
-            src="/logoPWA.png"
-            // imageSrc="/images/homeF2.png"
+            src="/home/features/driver.png"
           />
           <FeatureItem
             title={t("F3.Title")}
             description={t("F3.Description")}
-            src="/logoPWA.png"
-            // imageSrc="/images/homeF3.png"
+            src="/home/features/fleet.png"
           />
           <FeatureItem
             title={t("F4.Title")}
             description={t("F4.Description")}
-            src="/logoPWA.png"
-            // imageSrc="/images/homeF4.png"
+            src="/home/features/mission.png"
           />
         </FeatureGrid>
         <Link href="/features" prefetch={false}>

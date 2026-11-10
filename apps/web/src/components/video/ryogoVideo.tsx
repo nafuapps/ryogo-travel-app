@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
+import { vercelBlobStorageUrl } from "@ryogo-travel-app/api/apiConfig"
 import { Suspense } from "react"
 
 export function RyogoVideo({
@@ -25,9 +26,6 @@ export function RyogoVideo({
     </Suspense>
   )
 }
-
-const vercelBlobStorageUrl =
-  "https://pryxypem4olqwelx.public.blob.vercel-storage.com"
 
 export function RyogoSupportVideo({
   src,

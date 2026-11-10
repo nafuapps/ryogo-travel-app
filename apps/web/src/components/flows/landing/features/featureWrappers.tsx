@@ -1,5 +1,6 @@
 import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoH4, RyogoSmall } from "@/components/typography"
+import { vercelBlobStorageUrl } from "@ryogo-travel-app/api/apiConfig"
 import Image from "next/image"
 
 export function FeatureGrid({ children }: { children: React.ReactNode }) {
@@ -37,7 +38,7 @@ export function FeatureItem({
         <Image
           className="object-cover rounded-md md:transition-transform md:duration-300 md:group-hover:scale-105"
           loading="eager"
-          src={src}
+          src={vercelBlobStorageUrl + src}
           alt={title}
           fill
           sizes="672px"

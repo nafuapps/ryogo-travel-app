@@ -31,6 +31,7 @@ export default function SupportTicketItem({
           ? `/rider/mySupport/tickets/${ticket.id}`
           : `/dashboard/support/tickets/${ticket.id}`
       }
+      prefetch={false}
     >
       <SectionWrapper id={ticket.id}>
         <SectionRowWrapper className="items-center justify-between">

@@ -126,7 +126,11 @@ export function VerifyAccountStep1({
                   })
           }
         />
-        <Link href={`mailto:${SUPPORT_EMAIL}`} className="w-full">
+        <Link
+          href={`mailto:${SUPPORT_EMAIL}`}
+          className="w-full"
+          prefetch={false}
+        >
           <RyogoGhostButton
             label={t("Help")}
             labelColor="light"

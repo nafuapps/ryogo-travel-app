@@ -17,7 +17,7 @@ export async function DashboardSectionHeader({
         {title}
       </RyogoH4>
       {href && (
-        <Link href={href}>
+        <Link href={href} prefetch={false}>
           <RyogoEnclosedIcon icon={ChevronRight} size="sm" />
         </Link>
       )}

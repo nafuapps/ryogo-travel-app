@@ -1,11 +1,11 @@
-import { UserStatusPill } from "@/components/pills/ryogoPills"
-import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.services"
-import { DashboardChipItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
-import Link from "next/link"
 import UserOnlineStatusComponent from "@/components/flows/account/userOnlineStatusComponent"
+import { DashboardChipItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
+import { UserStatusPill } from "@/components/pills/ryogoPills"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { UserKey, UserCog, IdCard } from "lucide-react"
+import { IdCard, UserCog, UserKey } from "lucide-react"
+import Link from "next/link"
 
 export default function DashboardUserChipComponent({
   user,
@@ -15,7 +15,7 @@ export default function DashboardUserChipComponent({
   const userImageUrl = user.photoUrl
 
   return (
-    <Link href={`/dashboard/users/${user.id}`}>
+    <Link href={`/dashboard/users/${user.id}`} prefetch={false}>
       <DashboardChipItemWrapper>
         <RyogoImageIconTag
           url={userImageUrl}

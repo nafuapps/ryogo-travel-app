@@ -59,7 +59,7 @@ async function VehicleItemComponent({
   const t = await getTranslations("Dashboard.Vehicles.All")
 
   return (
-    <Link href={`/dashboard/vehicles/${vehicle.id}`}>
+    <Link href={`/dashboard/vehicles/${vehicle.id}`} prefetch={false}>
       <SectionWrapper id={vehicle.id} className="transition hover:opacity-70">
         <SectionRowWrapper className="items-center justify-between">
           {vehicle.vehiclePhotoUrl ? (

@@ -37,7 +37,7 @@ export default async function HowItWorksHeroSection() {
               <RyogoIcon icon={ChevronDown} color="slate" size="sm" thick />
             </RyogoWhiteButton>
           </Link>
-          <Link href="/resources#support">
+          <Link href="/resources#support" prefetch={false}>
             <RyogoOutlineButton
               size="lg"
               label={t("SecondaryCTA")}

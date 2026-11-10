@@ -1,32 +1,32 @@
 import {
-  RyogoP,
-  RyogoH1,
-  RyogoSmall,
-  RyogoH4,
-  RyogoCaption,
-  RyogoTiny,
-} from "@/components/typography"
-import { getTranslations } from "next-intl/server"
+  RyogoOutlineButton,
+  RyogoWhiteButton,
+} from "@/components/buttons/ryogoButtons"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
+import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { CheckCircle, Mail, Phone, MessageSquare } from "lucide-react"
-import QueryForm from "./queryForm"
-import Link from "next/link"
+import { SectionColWrapper } from "@/components/page/pageWrappers"
+import {
+  RyogoCaption,
+  RyogoH1,
+  RyogoH4,
+  RyogoP,
+  RyogoSmall,
+  RyogoTiny,
+} from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
 import {
   SUPPORT_CHAT_NUMBER,
   SUPPORT_EMAIL,
   SUPPORT_HELPLINE_NUMBER,
 } from "@/lib/uiConfig"
-import {
-  RyogoOutlineButton,
-  RyogoWhiteButton,
-} from "@/components/buttons/ryogoButtons"
-import { Separator } from "@/components/ui/separator"
-import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
-import { SectionColWrapper } from "@/components/page/pageWrappers"
+import { CheckCircle, Mail, MessageSquare, Phone } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
+import QueryForm from "./queryForm"
 
 export default async function ResourcesSupportSection() {
   const t = await getTranslations("Landing.Resources.Support")
@@ -64,7 +64,7 @@ async function HelpBlock() {
       <HelpItem label={t("Help3")} />
       <HelpItem label={t("Help4")} />
       <SectionColWrapper className="mt-4 md:mt-auto">
-        <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`}>
+        <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`} prefetch={false}>
           <RyogoWhiteButton label={t("CallCTA")} className="w-full">
             <RyogoIcon icon={Phone} size="xs" color="slate" thick />
           </RyogoWhiteButton>
@@ -84,6 +84,7 @@ async function HelpBlock() {
           className="w-full"
           target="_blank"
           rel="noopener noreferrer"
+          prefetch={false}
         >
           <RyogoOutlineButton
             // size="lg"

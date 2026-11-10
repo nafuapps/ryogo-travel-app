@@ -1,7 +1,7 @@
 import { RyogoBrandButton } from "@/components/buttons/ryogoButtons"
 import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import { SectionWrapper } from "@/components/page/pageWrappers"
-import { RyogoSmall, RyogoP } from "@/components/typography"
+import { RyogoP, RyogoSmall } from "@/components/typography"
 import { Hourglass } from "lucide-react"
 import Link from "next/link"
 
@@ -29,7 +29,7 @@ export default function SubscriptionBlockerSection({
       </RyogoSmall>
       <RyogoP className="text-center">{actionText}</RyogoP>
       {isOwner && ctaLabel && (
-        <Link href="/dashboard/account/subscription">
+        <Link href="/dashboard/account/subscription" prefetch={false}>
           <RyogoBrandButton size="lg" label={ctaLabel} />
         </Link>
       )}

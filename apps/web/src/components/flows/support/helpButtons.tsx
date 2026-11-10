@@ -17,7 +17,7 @@ export function HelpIconButton({
 }) {
   const t = useTranslations("Components.Help")
   return (
-    <Link {...props} className="mt-auto">
+    <Link {...props} className="mt-auto" prefetch={false}>
       <RyogoOutlineButton
         label={label ?? t("Title")}
         labelColor="light"
@@ -40,7 +40,7 @@ export function HelpIconButton({
 // }) {
 //   const t = useTranslations("Help")
 //   return (
-//     <Link href={href}>
+//     <Link href={href} prefetch={false}>
 //       <RyogoGhostButton label={label ?? t("Title")} />
 //     </Link>
 //   )

@@ -11,7 +11,7 @@ export default function SupportRelatedArticleLinkButton({
   label,
 }: SupportRelatedArticleType) {
   return (
-    <Link href={href} className="my-1 hover:underline">
+    <Link href={href} className="my-1 hover:underline" prefetch={false}>
       <RyogoCaption color="slate" weight="font-medium">
         {label}
       </RyogoCaption>

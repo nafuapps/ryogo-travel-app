@@ -94,6 +94,7 @@ async function FeaturesMenuItem({
       <Link
         className="relative group flex flex-col w-full overflow-hidden max-w-2xl mx-auto h-full md:hover:bg-slate-100 md:dark:hover:bg-slate-700 rounded-lg md:p-5 transition-colors duration-300"
         href={href}
+        prefetch={false}
       >
         <SectionColWrapper small className="mb-3 md:mb-4">
           <RyogoH4 weight="font-bold" color="brand">

@@ -1,15 +1,14 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
-import { Menu, Moon, Sun, X } from "lucide-react"
-import { RyoGoLandingLogo } from "@/components/logo"
-import { useTranslations } from "next-intl"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { UserLangEnum } from "@ryogo-travel-app/db/schema"
-import { setLocaleAction } from "@/app/actions/setLocaleAction"
 import { setDarkModeAction } from "@/app/actions/setDarkModeAction"
+import { setLocaleAction } from "@/app/actions/setLocaleAction"
+import {
+  RyogoBrandButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyoGoLandingLogo } from "@/components/logo"
+import { RyogoCaption, RyogoSmall } from "@/components/typography"
 import {
   Select,
   SelectContent,
@@ -17,12 +16,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { usePathname } from "next/navigation"
-import {
-  RyogoOutlineButton,
-  RyogoBrandButton,
-} from "@/components/buttons/ryogoButtons"
 import { getLangDisplay } from "@/lib/utils"
+import { UserLangEnum } from "@ryogo-travel-app/db/schema"
+import { Menu, Moon, Sun, X } from "lucide-react"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useState } from "react"
 
 type NavbarItemType =
   | "home"
@@ -60,7 +60,7 @@ export default function Navbar({
       <div className="w-full max-w-5xl bg-white dark:bg-slate-800 border-2 border-slate-50 dark:border-slate-700 opacity-98 shadow-lg rounded-lg px-3 md:px-4 lg:px-5">
         <div className="flex flex-wrap justify-between items-center py-3 w-full gap-2.5 lg:gap-3">
           {/* Logo */}
-          <Link href="/">
+          <Link href="/" prefetch={false}>
             <RyoGoLandingLogo alt={t("Logo")} />
           </Link>
 
@@ -71,6 +71,7 @@ export default function Navbar({
                 key={link.navId}
                 href={link.href}
                 className={`${path !== link.href ? "hover:bg-slate-100 dark:hover:bg-slate-700" : "bg-sky-100 dark:bg-sky-900"} py-2 px-3 rounded-lg transition-all duration-300`}
+                prefetch={false}
               >
                 <RyogoSmall
                   color={path !== link.href ? "slate" : "brand"}
@@ -93,10 +94,10 @@ export default function Navbar({
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex lg:items-center lg:gap-2">
-            <Link href="/auth/login">
+            <Link href="/auth/login" prefetch={false}>
               <RyogoOutlineButton label={t("Login")} />
             </Link>
-            <Link href="/auth/signup">
+            <Link href="/auth/signup" prefetch={false}>
               <RyogoBrandButton label={t("Signup")} />
             </Link>
           </div>
@@ -122,6 +123,7 @@ export default function Navbar({
                 href={link.href}
                 className="px-2 font-semibold transition"
                 onClick={() => setIsOpen(false)}
+                prefetch={false}
               >
                 <RyogoSmall color={path !== link.href ? "slate" : "brand"}>
                   {link.label}
@@ -129,10 +131,18 @@ export default function Navbar({
               </Link>
             ))}
             <div className="flex flex-col gap-2 pt-4 border-t">
-              <Link href="/auth/login" onClick={() => setIsOpen(false)}>
+              <Link
+                href="/auth/login"
+                onClick={() => setIsOpen(false)}
+                prefetch={false}
+              >
                 <RyogoOutlineButton label={t("Login")} className="w-full" />
               </Link>
-              <Link href="/auth/signup" onClick={() => setIsOpen(false)}>
+              <Link
+                href="/auth/signup"
+                onClick={() => setIsOpen(false)}
+                prefetch={false}
+              >
                 <RyogoBrandButton label={t("Signup")} className="w-full" />
               </Link>
             </div>

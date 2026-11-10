@@ -1,25 +1,25 @@
-import { RyogoP, RyogoCaption, RyogoTiny } from "@/components/typography"
-import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import {
-  ChevronRight,
-  User,
-  Lock as LockIcon,
-  MessageSquareQuote,
-} from "lucide-react"
-import { RyogoImage } from "@/components/images/ryogoImage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
 import { CustomerStatusPill } from "@/components/pills/ryogoPills"
-import Link from "next/link"
-import { toast } from "sonner"
-import { useTranslations } from "next-intl"
 import RyogoAverageRatingDisplay from "@/components/ratings/ryogoRatingDisplay"
 import RyogoTag from "@/components/tags/ryogoTag"
+import { RyogoCaption, RyogoP, RyogoTiny } from "@/components/typography"
+import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
+import { CustomerStatusEnum } from "@ryogo-travel-app/db/schema"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import {
+  ChevronRight,
+  Lock as LockIcon,
+  MessageSquareQuote,
+  User,
+} from "lucide-react"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { toast } from "sonner"
 
 export default function ExistingCutomerCard({
   existingCustomer,
@@ -40,6 +40,7 @@ export default function ExistingCutomerCard({
       }}
       href={`/dashboard/bookings/new/${existingCustomer.id}`}
       className={`flex items-center gap-3 lg:gap-4 border ${!isActive ? "hover:bg-yellow-50 hover:dark:bg-yellow-950 opacity-50 cursor-not-allowed" : "hover:bg-slate-100 dark:hover:bg-slate-700"} rounded-lg p-3 lg:p-4`}
+      prefetch={false}
     >
       <SectionColWrapper className="w-full">
         <SectionRowWrapper className="items-center justify-start">

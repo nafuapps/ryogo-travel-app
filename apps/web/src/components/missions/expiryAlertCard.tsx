@@ -1,19 +1,24 @@
 "use client"
 
-import { useTranslations } from "next-intl"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import moment from "moment"
 import { RyogoCaption, RyogoSmall, RyogoTiny } from "@/components/typography"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import Link from "next/link"
-import { differenceInDays } from "date-fns"
-import { AlarmSmoke, Ambulance, IdCard, IdCardLanyard } from "lucide-react"
 import { EXPIRY_WARNING_DAYS } from "@/lib/uiConfig"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { ChevronRight } from "lucide-react"
+import { differenceInDays } from "date-fns"
+import {
+  AlarmSmoke,
+  Ambulance,
+  ChevronRight,
+  IdCard,
+  IdCardLanyard,
+} from "lucide-react"
+import moment from "moment"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
 
 type ExpiryType = "License" | "PUC" | "RC" | "Insurance"
 
@@ -74,6 +79,7 @@ export default function ExpiryAlertCard({
           >["href"]
         }
         className="mt-auto"
+        prefetch={false}
       >
         <RyogoOutlineButton className="w-full" label={t("CheckNow")}>
           <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />

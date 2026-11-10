@@ -1,11 +1,11 @@
-import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
-import Link from "next/link"
-import { RyogoCaption } from "@/components/typography"
-import { format } from "date-fns"
-import { DriverLeaveIdRegex, VehicleRepairIdRegex } from "@/lib/regex"
-import { Route } from "next"
+import { SectionRowWrapper } from "@/components/page/pageWrappers"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import { RyogoCaption } from "@/components/typography"
+import { DriverLeaveIdRegex, VehicleRepairIdRegex } from "@/lib/regex"
+import { format } from "date-fns"
+import { Route } from "next"
+import Link from "next/link"
 
 export type DashboardScheduleConflictItemType = {
   entity: {
@@ -91,6 +91,7 @@ function ConflictItemRow({
     <Link
       href={href as Route}
       className={`flex items-center justify-between p-1.5 lg:p-2 rounded-md ${highlight ? "bg-yellow-100 dark:bg-yellow-800 hover:bg-yellow-200 dark:hover:bg-yellow-700" : "bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600"}`}
+      prefetch={false}
     >
       <RyogoCaption color="slate">{format(startDate, "dd MMM")}</RyogoCaption>
       <RyogoCaption color="slate" weight="font-bold">

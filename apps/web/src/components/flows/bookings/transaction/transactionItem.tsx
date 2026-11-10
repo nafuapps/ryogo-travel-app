@@ -1,7 +1,20 @@
 "use client"
 
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoDialogImage } from "@/components/images/ryogoImage"
+import {
+  SectionColWrapper,
+  SectionRowWrapper,
+  SectionWrapper,
+} from "@/components/page/pageWrappers"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import RyogoTag from "@/components/tags/ryogoTag"
 import { RyogoCaption, RyogoH3, RyogoTiny } from "@/components/typography"
+import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { TransactionTypesEnum } from "@ryogo-travel-app/db/schema"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { format } from "date-fns"
 import {
   ChevronDown,
   ChevronRight,
@@ -11,23 +24,10 @@ import {
   CreditCardPlus,
   MessageSquareQuote,
 } from "lucide-react"
-import { format } from "date-fns"
-import { FindBookingTransactionsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { TransactionApprovalButton } from "./transactionApprovalButton"
-import { RyogoDialogImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import {
-  SectionColWrapper,
-  SectionRowWrapper,
-  SectionWrapper,
-} from "@/components/page/pageWrappers"
 import { useState } from "react"
-import RyogoTag from "@/components/tags/ryogoTag"
-import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
+import { TransactionApprovalButton } from "./transactionApprovalButton"
 
 export default function TransactionItem({
   transaction,
@@ -126,6 +126,7 @@ export default function TransactionItem({
             <Link
               href={`/dashboard/bookings/${transaction.bookingId}/transactions/modify/${transaction.id}`}
               className="grow"
+              prefetch={false}
             >
               <RyogoOutlineButton label={t("Modify")} className="w-full">
                 <RyogoIcon icon={ChevronRight} size="xs" color="slate" />

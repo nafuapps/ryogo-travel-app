@@ -1,22 +1,22 @@
-import { getTranslations } from "next-intl/server"
-import { Camera, KeyRound, MailPen } from "lucide-react"
-import Link from "next/link"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
-import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
-import {
-  PageWrapper,
-  GridWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import { FindUserDetailsWithDriverByIdType } from "@ryogo-travel-app/api/services/user.services"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import AccountInfoComponent from "@/components/flows/account/accountInfoComponent"
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
 import UserDriverDetailsComponent from "@/components/flows/account/userDriverDetailsComponent"
 import UserDriverLicenseInfoComponent from "@/components/flows/account/userDriverLicenseInfoComponent"
 import UserLoginTimeComponent from "@/components/flows/account/userLoginTimeComponent"
-import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
+  GridWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
+import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
+import { FindUserDetailsWithDriverByIdType } from "@ryogo-travel-app/api/services/user.services"
+import { Camera, KeyRound, MailPen } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function RiderProfilePageComponent({
   account,
@@ -80,14 +80,14 @@ export default async function RiderProfilePageComponent({
           userRole={account.userRole}
           agencyId={account.agencyId}
         />
-        <Link href="/rider/myProfile/change-email">
+        <Link href="/rider/myProfile/change-email" prefetch={false}>
           <RyogoDetailedIconButton
             label={t("ChangeEmail.Title")}
             icon={MailPen}
             subtitle={t("ChangeEmail.Subtitle")}
           />
         </Link>
-        <Link href="/rider/myProfile/change-password">
+        <Link href="/rider/myProfile/change-password" prefetch={false}>
           <RyogoDetailedIconButton
             label={t("ChangePassword.Title")}
             icon={KeyRound}

@@ -135,6 +135,7 @@ export default function MissionCard({
           <Link
             href={mission.link as React.ComponentProps<typeof Link>["href"]}
             className="grow"
+            prefetch={false}
           >
             <RyogoDefaultButton
               label={t("Card.CheckNow")}

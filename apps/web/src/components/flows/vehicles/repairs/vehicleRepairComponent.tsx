@@ -5,9 +5,9 @@ import StartVehicleRepairAlertButton from "@/components/buttons/alert/startVehic
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
+  DateWrapper,
   SectionColWrapper,
   SectionRowWrapper,
-  DateWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RepairStatusPill } from "@/components/pills/ryogoPills"
@@ -26,10 +26,10 @@ import {
 } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 import {
-  MessageSquareQuote,
-  ChevronRight,
   ChevronDown,
+  ChevronRight,
   ChevronUp,
+  MessageSquareQuote,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
@@ -144,6 +144,7 @@ export default function VehicleRepairComponent({
           {canModify && repair.status !== VehicleRepairStatusEnum.ONGOING && (
             <Link
               href={`/dashboard/vehicles/${repair.vehicleId}/repairs/modify/${repair.id}`}
+              prefetch={false}
             >
               <RyogoOutlineButton label={t("Edit")} className="w-full">
                 <RyogoIcon icon={ChevronRight} size="sm" />

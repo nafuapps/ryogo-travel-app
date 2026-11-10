@@ -86,7 +86,7 @@ export default function HowItWorksBookingsSection() {
           {t("Subtitle")}
         </RyogoP>
         <SlideshowWrapper items={items} reverse />
-        <Link href="/auth/signup">
+        <Link href="/auth/signup" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             label={t("MoreCTA")}

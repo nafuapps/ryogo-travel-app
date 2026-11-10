@@ -1,18 +1,9 @@
-import { RyogoCaption, RyogoP } from "@/components/typography"
-import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.services"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import {
-  User,
-  Plus,
-  IdCard,
-  UserKey,
-  UserCog,
-  ChevronRight,
-} from "lucide-react"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { UserStatusPill } from "@/components/pills/ryogoPills"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import UserOnlineStatusComponent from "@/components/flows/account/userOnlineStatusComponent"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   PageWrapper,
   SectionColWrapper,
@@ -22,14 +13,25 @@ import {
   StickyActionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import UserOnlineStatusComponent from "@/components/flows/account/userOnlineStatusComponent"
-import { BASIC_PLAN_AGENT_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import { BASIC_PLAN_DRIVER_LIMIT } from "@ryogo-travel-app/api/apiConfig"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
+import { UserStatusPill } from "@/components/pills/ryogoPills"
+import { RyogoCaption, RyogoP } from "@/components/typography"
+import {
+  BASIC_PLAN_AGENT_LIMIT,
+  BASIC_PLAN_DRIVER_LIMIT,
+} from "@ryogo-travel-app/api/apiConfig"
+import { FindAllUsersInAgencyType } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import {
+  ChevronRight,
+  IdCard,
+  Plus,
+  User,
+  UserCog,
+  UserKey,
+} from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function UsersPageComponent({
   allUsers,
@@ -71,7 +73,11 @@ export default async function UsersPageComponent({
           ))}
         </TileGridWrapper>
         {isPremium && (
-          <Link href={`/dashboard/users/add-owner`} className="w-full">
+          <Link
+            href={`/dashboard/users/add-owner`}
+            className="w-full"
+            prefetch={false}
+          >
             <RyogoOutlineButton
               label={t("Owners.AddOwner")}
               labelColor="light"
@@ -94,7 +100,11 @@ export default async function UsersPageComponent({
           ))}
         </TileGridWrapper>
         {(isPremium || agents.length < BASIC_PLAN_AGENT_LIMIT) && (
-          <Link href={`/dashboard/users/new`} className="w-full">
+          <Link
+            href={`/dashboard/users/new`}
+            className="w-full"
+            prefetch={false}
+          >
             <RyogoOutlineButton
               label={t("Agents.AddAgent")}
               labelColor="light"
@@ -117,7 +127,11 @@ export default async function UsersPageComponent({
           ))}
         </TileGridWrapper>
         {(isPremium || drivers.length < BASIC_PLAN_DRIVER_LIMIT) && (
-          <Link href={`/dashboard/drivers/new`} className="w-full">
+          <Link
+            href={`/dashboard/drivers/new`}
+            className="w-full"
+            prefetch={false}
+          >
             <RyogoOutlineButton
               label={t("Drivers.AddDriver")}
               labelColor="light"
@@ -141,7 +155,7 @@ async function UserItemComponent({
   user: FindAllUsersInAgencyType[number]
 }) {
   return (
-    <Link href={`/dashboard/users/${user.id}`}>
+    <Link href={`/dashboard/users/${user.id}`} prefetch={false}>
       <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md">
         {user.photoUrl ? (
           <RyogoImage

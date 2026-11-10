@@ -38,7 +38,10 @@ export function RepairPopoverCard(
         <RyogoCaption color="light">{repair.remarks}</RyogoCaption>
       )}
       <RepairStatusPill status={repair.status} />
-      <Link href={`/dashboard/vehicles/${repair.vehicleId}/repairs`}>
+      <Link
+        href={`/dashboard/vehicles/${repair.vehicleId}/repairs`}
+        prefetch={false}
+      >
         <RyogoOutlineButton label={t("ViewDetails")} className="w-full">
           <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
         </RyogoOutlineButton>
@@ -70,7 +73,10 @@ export function LeavePopoverCard(
         <RyogoCaption color="light">{leave.remarks}</RyogoCaption>
       )}
       <LeaveStatusPill status={leave.status} />
-      <Link href={`/dashboard/drivers/${leave.driverId}/leaves`}>
+      <Link
+        href={`/dashboard/drivers/${leave.driverId}/leaves`}
+        prefetch={false}
+      >
         <RyogoOutlineButton label={t("ViewDetails")} className="w-full">
           <RyogoIcon icon={ChevronRight} size="xs" color="light" thick />
         </RyogoOutlineButton>

@@ -1,16 +1,16 @@
 import {
-  RyogoOutlineButton,
   RyogoDefaultButton,
+  RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
 import {
-  BlogSection,
-  BlogHeading,
-  BlogParagraph,
-  BlogParagraphBold,
   BlogCategories,
-  BlogSubTitle,
+  BlogHeading,
   BlogImage,
   BlogLine,
+  BlogParagraph,
+  BlogParagraphBold,
+  BlogSection,
+  BlogSubTitle,
 } from "@/components/flows/landing/blogWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoP } from "@/components/typography"
@@ -112,7 +112,7 @@ export default async function Blog2Component({
           <RyogoP color="slate" className="italic">
             {t("CTA.Title")}
           </RyogoP>
-          <Link href="/how-it-works">
+          <Link href="/how-it-works" prefetch={false}>
             <RyogoDefaultButton size="lg" label={t("CTA.Label")} />
           </Link>
         </>

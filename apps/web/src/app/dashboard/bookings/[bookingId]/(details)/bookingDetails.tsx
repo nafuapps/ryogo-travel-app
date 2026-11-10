@@ -1,14 +1,47 @@
+import CancelBookingAlertButton from "@/components/buttons/alert/cancelBookingAlertButton"
+import CloseBookingAlertButton from "@/components/buttons/alert/closeBookingAlertButton"
+import ReopenBookingAlertButton from "@/components/buttons/alert/reopenBookingAlertButton"
+import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirmationAlertButton"
+import SendInvoiceAlertButton from "@/components/buttons/alert/sendInvoiceAlertButton"
+import SendQuoteAlertButton from "@/components/buttons/alert/sendQuoteAlertButton"
+import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
+import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import ShareTrackBookingLinkButton from "@/components/buttons/track/shareTrackBookingLinkButton"
+import BookingActionWrapper from "@/components/flows/bookings/details/bookingActionWrapper"
+import BookingAssignedUserCard from "@/components/flows/bookings/details/bookingAssignedUserCard"
+import BookingCustomerCard from "@/components/flows/bookings/details/bookingCustomerCard"
+import BookingDriverCard from "@/components/flows/bookings/details/bookingDriverCard"
+import BookingDropAddressCard from "@/components/flows/bookings/details/bookingDropAddressCard"
+import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
+import BookingIDWrapper from "@/components/flows/bookings/details/bookingIDWrapper"
+import BookingPickupAddressCard from "@/components/flows/bookings/details/bookingPickupAddressCard"
+import BookingPriceItem from "@/components/flows/bookings/details/bookingPriceItem"
+import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
+import BookingRemarksCard from "@/components/flows/bookings/details/bookingRemarksCard"
+import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
+import BookingSection from "@/components/flows/bookings/details/bookingSection"
+import BookingStartTimeCard from "@/components/flows/bookings/details/bookingStartTimeCard"
+import BookingTimeline from "@/components/flows/bookings/details/bookingTimeline"
+import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
+import BookingVehicleCard from "@/components/flows/bookings/details/bookingVehicleCard"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
+  PageWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewerButton"
+import BookingInvoicePDFViewerButton from "@/components/pdf/bookingInvoicePDFViewerButton"
+import BookingQuotePDFViewerButton from "@/components/pdf/bookingQuotePDFViewerButton"
+import { RyogoCaption, RyogoP } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 import {
   BookingStatusEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import CancelBookingAlertButton from "@/components/buttons/alert/cancelBookingAlertButton"
-import SendInvoiceAlertButton from "@/components/buttons/alert/sendInvoiceAlertButton"
-import BookingPriceItem from "@/components/flows/bookings/details/bookingPriceItem"
-import BookingSection from "@/components/flows/bookings/details/bookingSection"
 import {
   BriefcaseBusiness,
   CalendarPlus,
@@ -16,47 +49,14 @@ import {
   ClipboardCopy,
   Contact,
   IdCard,
+  Map as MapIcon,
   ReceiptIndianRupee,
   Replace,
   Route,
   UserKey,
-  Map as MapIcon,
 } from "lucide-react"
-import SendConfirmationAlertButton from "@/components/buttons/alert/sendConfirmationAlertButton"
-import {
-  PageWrapper,
-  SectionRowWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
-import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
-import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
-import ShareTrackBookingLinkButton from "@/components/buttons/track/shareTrackBookingLinkButton"
-import CloseBookingAlertButton from "@/components/buttons/alert/closeBookingAlertButton"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import BookingVehicleCard from "@/components/flows/bookings/details/bookingVehicleCard"
-import BookingDriverCard from "@/components/flows/bookings/details/bookingDriverCard"
-import BookingActionWrapper from "@/components/flows/bookings/details/bookingActionWrapper"
-import BookingCustomerCard from "@/components/flows/bookings/details/bookingCustomerCard"
-import BookingAssignedUserCard from "@/components/flows/bookings/details/bookingAssignedUserCard"
-import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
-import BookingStartTimeCard from "@/components/flows/bookings/details/bookingStartTimeCard"
-import BookingDropAddressCard from "@/components/flows/bookings/details/bookingDropAddressCard"
-import BookingPickupAddressCard from "@/components/flows/bookings/details/bookingPickupAddressCard"
-import BookingRemarksCard from "@/components/flows/bookings/details/bookingRemarksCard"
-import BookingIDWrapper from "@/components/flows/bookings/details/bookingIDWrapper"
-import SendQuoteAlertButton from "@/components/buttons/alert/sendQuoteAlertButton"
-import BookingRatingWrapper from "@/components/flows/bookings/details/bookingRatingCard"
-import BookingRouteMapCard from "@/components/flows/bookings/details/bookingRouteMapCard"
-import ReopenBookingAlertButton from "@/components/buttons/alert/reopenBookingAlertButton"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
-import { Separator } from "@/components/ui/separator"
-import { RyogoCaption, RyogoP } from "@/components/typography"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
-import BookingInvoicePDFViewerButton from "@/components/pdf/bookingInvoicePDFViewerButton"
-import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewerButton"
-import BookingQuotePDFViewerButton from "@/components/pdf/bookingQuotePDFViewerButton"
-import BookingTimeline from "@/components/flows/bookings/details/bookingTimeline"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function BookingDetailsPageComponent({
   bookingDetails,
@@ -196,6 +196,7 @@ export default async function BookingDetailsPageComponent({
             {isCancelled && (
               <Link
                 href={`/dashboard/bookings/new/${bookingDetails.customerId}`}
+                prefetch={false}
               >
                 <RyogoDetailedIconButton
                   label={t("CreateAnotherBooking.Title")}
@@ -406,6 +407,7 @@ export default async function BookingDetailsPageComponent({
               )}
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-user`}
+                prefetch={false}
               >
                 <RyogoDetailedIconButton
                   label={t("AssignAgent.Title")}
@@ -425,6 +427,7 @@ export default async function BookingDetailsPageComponent({
             <BookingActionWrapper>
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-vehicle`}
+                prefetch={false}
               >
                 {bookingDetails.assignedVehicle ? (
                   <RyogoDetailedIconButton
@@ -462,6 +465,7 @@ export default async function BookingDetailsPageComponent({
               )}
               <Link
                 href={`/dashboard/bookings/${bookingDetails.id}/assign-driver`}
+                prefetch={false}
               >
                 {bookingDetails.assignedDriver ? (
                   <RyogoDetailedIconButton

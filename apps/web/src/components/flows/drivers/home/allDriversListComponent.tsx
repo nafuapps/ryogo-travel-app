@@ -53,7 +53,7 @@ async function DriverItemComponent({
   const t = await getTranslations("Dashboard.Drivers.All")
 
   return (
-    <Link href={`/dashboard/drivers/${driver.id}`}>
+    <Link href={`/dashboard/drivers/${driver.id}`} prefetch={false}>
       <SectionWrapper id={driver.id} className="transition hover:opacity-70">
         <SectionRowWrapper className="items-center justify-between">
           {driver.user.photoUrl ? (

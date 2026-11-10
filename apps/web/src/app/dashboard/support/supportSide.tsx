@@ -9,11 +9,11 @@ import {
   SectionWrapper,
   SideWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoP, RyogoCaption } from "@/components/typography"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import {
-  SUPPORT_HELPLINE_NUMBER,
   SUPPORT_CHAT_NUMBER,
   SUPPORT_EMAIL,
+  SUPPORT_HELPLINE_NUMBER,
 } from "@/lib/uiConfig"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -67,7 +67,7 @@ export default async function SupportSideComponent({
             <RyogoCaption color="white" className="text-center">
               {t("Tickets.Description")}
             </RyogoCaption>
-            <Link href="/dashboard/support/tickets">
+            <Link href="/dashboard/support/tickets" prefetch={false}>
               <RyogoWhiteButton label={t("Tickets.ViewCTA")}>
                 <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
               </RyogoWhiteButton>
@@ -82,7 +82,7 @@ export default async function SupportSideComponent({
               {t("Tickets.Premium.Description")}
             </RyogoCaption>
             {isOwner && (
-              <Link href="/dashboard/account/subscription">
+              <Link href="/dashboard/account/subscription" prefetch={false}>
                 <RyogoWhiteButton label={t("Tickets.Premium.CTA")}>
                   <RyogoIcon
                     icon={ChevronRight}

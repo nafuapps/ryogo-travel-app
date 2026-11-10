@@ -39,7 +39,7 @@ export default async function HomeHeroSection() {
           {t("Subtitle")}
         </RyogoP>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <Link href="/auth/signup">
+          <Link href="/auth/signup" prefetch={false}>
             <RyogoBrandButton
               size="lg"
               label={t("PrimaryCTA")}

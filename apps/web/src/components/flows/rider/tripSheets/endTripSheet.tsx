@@ -200,7 +200,10 @@ export default function EndTripSheet({
             disabled={form.formState.isSubmitting}
             onClick={() => setOpen(false)}
           />
-          <Link href={`/rider/myBookings/${booking.id}/expenses/add`}>
+          <Link
+            href={`/rider/myBookings/${booking.id}/expenses/add`}
+            prefetch={false}
+          >
             <RyogoGhostButton
               type="button"
               disabled={form.formState.isSubmitting}

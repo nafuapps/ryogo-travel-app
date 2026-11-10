@@ -1,11 +1,11 @@
+import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDashboardLeadsType } from "@ryogo-travel-app/api/services/booking.services"
-import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
-import Link from "next/link"
-import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import { format } from "date-fns"
+import Link from "next/link"
 
 export default async function DashboardLeadItemComponent({
   trip,
@@ -21,7 +21,7 @@ export default async function DashboardLeadItemComponent({
   const customerImageUrl = trip.customer.photoUrl
 
   return (
-    <Link href={`/dashboard/bookings/${trip.id}`}>
+    <Link href={`/dashboard/bookings/${trip.id}`} prefetch={false}>
       <DashboardBoxItemWrapper highlight={highlight}>
         <SectionRowWrapper small className="items-center justify-between">
           <RyogoCaption color="light" weight="font-bold">

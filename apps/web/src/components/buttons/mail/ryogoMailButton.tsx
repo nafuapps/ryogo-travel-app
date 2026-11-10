@@ -1,6 +1,6 @@
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { Mail } from "lucide-react"
 import Link from "next/link"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function RyogoMailButton({
   label,
@@ -12,7 +12,7 @@ export default function RyogoMailButton({
   subtitle?: string
 }) {
   return (
-    <Link href={`mailto:${email}`}>
+    <Link href={`mailto:${email}`} prefetch={false}>
       <RyogoDetailedIconButton label={label} icon={Mail} subtitle={subtitle} />
     </Link>
   )

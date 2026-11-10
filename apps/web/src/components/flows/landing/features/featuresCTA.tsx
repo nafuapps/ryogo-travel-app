@@ -32,7 +32,7 @@ export default async function FeaturesCTASection() {
           </RyogoP>
         </SectionColWrapper>
         <ScrollZoomIn className="flex flex-col lg:flex-row gap-4 lg:gap-5 justify-center items-center">
-          <Link href="/onboarding">
+          <Link href="/onboarding" prefetch={false}>
             <RyogoWhiteButton
               size="lg"
               label={t("PrimaryCTA")}
@@ -41,7 +41,7 @@ export default async function FeaturesCTASection() {
               <RyogoIcon icon={ChevronRight} color="slate" size="sm" thick />
             </RyogoWhiteButton>
           </Link>
-          <Link href="/how-it-works">
+          <Link href="/how-it-works" prefetch={false}>
             <RyogoOutlineButton
               size="lg"
               label={t("SecondaryCTA")}

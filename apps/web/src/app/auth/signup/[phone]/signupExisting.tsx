@@ -61,6 +61,7 @@ export default function SignupExistingPageComponent({
             href={`/auth/login/password/${account.id}`}
             key={account.id}
             onClick={() => setClicked(true)}
+            prefetch={false}
           >
             <AuthAccountCard user={account} isLink />
           </Link>
@@ -77,7 +78,7 @@ export default function SignupExistingPageComponent({
           <RyogoCaption color="light" className="text-center">
             {t("Description")}
           </RyogoCaption>
-          <Link href={`mailto:${SUPPORT_EMAIL}`}>
+          <Link href={`mailto:${SUPPORT_EMAIL}`} prefetch={false}>
             <RyogoGhostButton
               className="w-full"
               label={t("SecondaryCTAYes")}
@@ -88,7 +89,7 @@ export default function SignupExistingPageComponent({
           </Link>
         </>
       ) : (
-        <Link href={`/onboarding?phone=${phone}`}>
+        <Link href={`/onboarding?phone=${phone}`} prefetch={false}>
           <RyogoGhostButton
             className="w-full"
             label={t("SecondaryCTANo")}

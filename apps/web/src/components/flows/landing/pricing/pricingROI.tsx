@@ -23,7 +23,7 @@ export default async function PricingROISection() {
         </RyogoP>
         <ROICard />
 
-        <Link href="/onboarding">
+        <Link href="/onboarding" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             label={t("PrimaryCTA")}

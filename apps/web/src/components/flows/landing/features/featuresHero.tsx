@@ -37,7 +37,7 @@ export default async function FeaturesHeroSection() {
               <RyogoIcon icon={ChevronDown} color="white" size="sm" thick />
             </RyogoDefaultButton>
           </Link>
-          <Link href="/auth/signup">
+          <Link href="/auth/signup" prefetch={false}>
             <RyogoWhiteButton
               size="lg"
               label={t("SecondaryCTA")}

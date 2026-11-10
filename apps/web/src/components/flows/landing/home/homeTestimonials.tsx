@@ -53,7 +53,7 @@ export default async function HomeTestimonialsSection() {
             rating={5}
           />
         </div>
-        <Link href="/resources">
+        <Link href="/resources" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             label={t("MoreCTA")}

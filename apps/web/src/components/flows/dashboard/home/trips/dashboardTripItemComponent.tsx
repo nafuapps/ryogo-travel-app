@@ -1,13 +1,13 @@
+import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
+import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
+import { getVehicleIcon } from "@/components/icons/vehicleIcon"
 import { SectionRowWrapper } from "@/components/page/pageWrappers"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindDashboardTripsType } from "@ryogo-travel-app/api/services/booking.services"
-import { DashboardBoxItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
-import { getVehicleIcon } from "@/components/icons/vehicleIcon"
-import { IdCard } from "lucide-react"
-import GetTripTypeIcon from "@/components/icons/tripTypeIcon"
-import Link from "next/link"
-import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import { format } from "date-fns"
+import { IdCard } from "lucide-react"
+import Link from "next/link"
 
 export default async function DashboardTripItemComponent({
   trip,
@@ -26,7 +26,7 @@ export default async function DashboardTripItemComponent({
   const vehicleImageUrl = trip.assignedVehicle?.vehiclePhotoUrl
 
   return (
-    <Link href={`/dashboard/bookings/${trip.id}`}>
+    <Link href={`/dashboard/bookings/${trip.id}`} prefetch={false}>
       <DashboardBoxItemWrapper highlight={highlight}>
         <SectionRowWrapper small className="items-center justify-between">
           <RyogoCaption color="light" weight="font-bold">

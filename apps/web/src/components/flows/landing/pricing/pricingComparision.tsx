@@ -217,7 +217,7 @@ export default async function PricingComparisionSection() {
           />
         </ComparisionGroup>
 
-        <Link href="/features">
+        <Link href="/features" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             className="w-full md:w-auto"

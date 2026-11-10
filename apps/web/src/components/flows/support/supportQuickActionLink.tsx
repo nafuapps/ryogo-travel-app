@@ -15,7 +15,7 @@ export default function SupportQuickActionLinkButton({
   icon,
 }: SupportQuickActionType) {
   return (
-    <Link href={href}>
+    <Link href={href} prefetch={false}>
       <RyogoOutlineButton label={label} className="w-full justify-between">
         <RyogoIcon icon={icon} size="sm" color="slate" />
       </RyogoOutlineButton>

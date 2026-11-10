@@ -121,7 +121,7 @@ export default async function DriverDetailsPageComponent({
               subtitle={t("ChangeLicense.Subtitle")}
             />
           </ChangeDriverLicenseSheet>
-          <Link href={`/dashboard/drivers/${driver.id}/modify`}>
+          <Link href={`/dashboard/drivers/${driver.id}/modify`} prefetch={false}>
             <RyogoDetailedIconButton
               label={t("EditDetails.Title")}
               icon={SquarePen}

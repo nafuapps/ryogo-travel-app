@@ -1,22 +1,22 @@
 // import AccountDetailHeaderTabs from "@/components/header/detailHeaderTabs/accountDetailHeaderTabs"
-import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
-import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 import LogoutAlertButton from "@/components/buttons/alert/logoutAlertButton"
-import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
-import {
-  PageWrapper,
-  GridWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import { MailPen, KeyRound, Phone, Camera } from "lucide-react"
 import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
 import AccountInfoComponent from "@/components/flows/account/accountInfoComponent"
 import UserDetailsComponent from "@/components/flows/account/userDetailsComponent"
 import UserLoginTimeComponent from "@/components/flows/account/userLoginTimeComponent"
-import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
 import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
+  GridWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import ChangeUserNameSheet from "@/components/sheets/changeUserNameSheet"
+import ChangeUserPhotoSheet from "@/components/sheets/changeUserPhotoSheet"
+import { FindUserDetailsByIdType } from "@ryogo-travel-app/api/services/user.services"
+import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
+import { Camera, KeyRound, MailPen, Phone } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function AccountPageComponent({
   account,
@@ -67,6 +67,7 @@ export default async function AccountPageComponent({
         <Link
           href="/dashboard/account/change-email"
           className="flex items-center w-full gap-2 lg:gap-3"
+          prefetch={false}
         >
           <RyogoDetailedIconButton
             label={t("ChangeEmail.Title")}
@@ -78,6 +79,7 @@ export default async function AccountPageComponent({
           <Link
             href={`/dashboard/users/${account.id}/change-phone`}
             className="flex items-center w-full gap-2 lg:gap-3"
+            prefetch={false}
           >
             <RyogoDetailedIconButton
               label={t("ChangePhone.Title")}
@@ -86,7 +88,7 @@ export default async function AccountPageComponent({
             />
           </Link>
         )}
-        <Link href="/dashboard/account/change-password">
+        <Link href="/dashboard/account/change-password" prefetch={false}>
           <RyogoDetailedIconButton
             label={t("ChangePassword.Title")}
             icon={KeyRound}

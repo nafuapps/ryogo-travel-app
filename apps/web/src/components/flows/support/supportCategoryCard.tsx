@@ -1,11 +1,11 @@
-import Link from "next/link"
-import { Dot, LucideIcon } from "lucide-react"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { Dot, LucideIcon } from "lucide-react"
+import Link from "next/link"
 
 export default function SupportCategoryCard({
   title,
@@ -21,7 +21,7 @@ export default function SupportCategoryCard({
   highlight?: boolean
 }) {
   return (
-    <Link href={link} className="flex">
+    <Link href={link} className="flex" prefetch={false}>
       <SectionWrapper id={title}>
         <SectionRowWrapper className="items-center justify-start">
           <RyogoEnclosedIcon icon={icon} size="sm" />

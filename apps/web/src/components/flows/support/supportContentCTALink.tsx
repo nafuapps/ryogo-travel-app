@@ -11,7 +11,7 @@ export default function SupportContentCTALinkButton({
   href: React.ComponentProps<typeof Link>["href"]
 }) {
   return (
-    <Link href={href} className="self-center">
+    <Link href={href} className="self-center" prefetch={false}>
       <RyogoGhostButton label={label} labelColor="brand">
         <RyogoIcon icon={ChevronRight} size="xs" color="brand" thick />
       </RyogoGhostButton>

@@ -1,9 +1,9 @@
+import { DashboardChipItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 import { getVehicleIcon } from "@/components/icons/vehicleIcon"
+import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import { RyogoCaption } from "@/components/typography"
 import { FindDashboardVehiclesType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { DashboardChipItemWrapper } from "@/components/flows/dashboard/dashboardCommon"
 import Link from "next/link"
-import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 
 export default function DashboardVehicleChipComponent({
   vehicle,
@@ -13,7 +13,7 @@ export default function DashboardVehicleChipComponent({
   const vehicleImageUrl = vehicle.vehiclePhotoUrl
 
   return (
-    <Link href={`/dashboard/vehicles/${vehicle.id}`}>
+    <Link href={`/dashboard/vehicles/${vehicle.id}`} prefetch={false}>
       <DashboardChipItemWrapper>
         <RyogoImageIconTag
           url={vehicleImageUrl}

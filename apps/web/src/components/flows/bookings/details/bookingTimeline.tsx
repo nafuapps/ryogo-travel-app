@@ -9,10 +9,10 @@ import {
   Ban,
   Check,
   Flag,
-  SquarePlus,
   ListChecks,
   LucideIcon,
   Play,
+  SquarePlus,
   Summary,
 } from "lucide-react"
 import moment from "moment"
@@ -98,7 +98,7 @@ function TimelineRow({
   return (
     <>
       {!hideSeparator && (
-        <div className="h-2 lg:h-2.5 w-px border border-dashed ml-1.75 lg:ml-2" />
+        <div className="h-1.5 lg:h-2 w-px border border-dashed ml-1.75 lg:ml-2" />
       )}
       <SectionRowWrapper className="items-center">
         <RyogoIcon icon={icon} size="xs" color="light" thick />

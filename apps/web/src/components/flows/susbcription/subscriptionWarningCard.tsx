@@ -15,7 +15,7 @@ export default function SubscriptionWarningCard({
       <RyogoCaption color="yellow" className="text-center lg:max-w-3/4">
         {warningText}
       </RyogoCaption>
-      <Link href="/dashboard/account/subscription">
+      <Link href="/dashboard/account/subscription" prefetch={false}>
         <RyogoBrandButton label={ctaText} />
       </Link>
     </SectionColWrapper>

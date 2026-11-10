@@ -1,7 +1,7 @@
-import HeaderButton from "./headerButton"
-import Link from "next/link"
-import RyogoHeader from "./ryogoHeader"
 import { getTranslations } from "next-intl/server"
+import Link from "next/link"
+import HeaderButton from "./headerButton"
+import RyogoHeader from "./ryogoHeader"
 
 export default async function DashboardHeader({
   pathName,
@@ -18,7 +18,7 @@ export default async function DashboardHeader({
   return (
     <RyogoHeader title={title}>
       {pathName !== "/dashboard/bookings/new" && (
-        <Link href="/dashboard/bookings/new">
+        <Link href="/dashboard/bookings/new" prefetch={false}>
           <HeaderButton label={t("NewBooking")} type="newBooking" />
         </Link>
       )}

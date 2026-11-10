@@ -1,16 +1,16 @@
-import { FindFeedNotificationsByAgencyIdType } from "@ryogo-travel-app/api/services/notification.services"
+import getEntityIcon from "@/components/icons/entityIcon"
+import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
 import {
   SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { ChevronRight } from "lucide-react"
-import { RyogoEnclosedIcon } from "@/components/icons/ryogoIcon"
-import { useTranslations } from "next-intl"
 import { RyogoCaption, RyogoTiny } from "@/components/typography"
-import Link from "next/link"
+import { FindFeedNotificationsByAgencyIdType } from "@ryogo-travel-app/api/services/notification.services"
+import { ChevronRight } from "lucide-react"
 import moment from "moment"
-import getEntityIcon from "@/components/icons/entityIcon"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
 
 export default function NotificationCard({
   notification,
@@ -46,6 +46,7 @@ export default function NotificationCard({
             href={
               notification.link as React.ComponentProps<typeof Link>["href"]
             }
+            prefetch={false}
           >
             <RyogoEnclosedIcon icon={ChevronRight} size="sm" color="slate" />
           </Link>

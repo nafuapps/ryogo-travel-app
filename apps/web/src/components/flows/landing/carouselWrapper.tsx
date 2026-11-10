@@ -59,6 +59,7 @@ export function BlogCarouselItem({
       <Link
         href={`/resources/blog/${blogId}` as Route}
         className="flex flex-col gap-2 md:gap-3 hover:opacity-70"
+        prefetch={false}
       >
         <div className="border-8 md:border-10 border-slate-100/50 dark:border-slate-700/50 w-full max-w-2xl relative rounded-lg aspect-video overflow-hidden">
           <Image

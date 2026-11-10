@@ -79,14 +79,14 @@ export default async function UserDetailsPageComponent({
             userRole={user.userRole}
             agencyId={user.agencyId}
           />
-          <Link href={`/dashboard/users/${user.id}/change-email`}>
+          <Link href={`/dashboard/users/${user.id}/change-email`} prefetch={false}>
             <RyogoDetailedIconButton
               label={t("ChangeEmail.Title")}
               icon={MailPen}
               subtitle={t("ChangeEmail.Subtitle")}
             />
           </Link>
-          <Link href={`/dashboard/users/${user.id}/change-phone`}>
+          <Link href={`/dashboard/users/${user.id}/change-phone`} prefetch={false}>
             <RyogoDetailedIconButton
               label={t("ChangePhone.Title")}
               icon={Phone}

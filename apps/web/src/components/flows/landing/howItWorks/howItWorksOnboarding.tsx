@@ -80,7 +80,7 @@ export default function HowItWorksOnboardingSection() {
         </RyogoP>
         <SlideshowWrapper items={items} />
 
-        <Link href="/auth/signup">
+        <Link href="/auth/signup" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             className="w-full md:w-auto"

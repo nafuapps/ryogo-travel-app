@@ -1,12 +1,12 @@
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
-  BlogSection,
   BlogCategories,
   BlogHeading,
-  BlogSubTitle,
   BlogImage,
   BlogParagraph,
   BlogParagraphBold,
+  BlogSection,
+  BlogSubTitle,
 } from "@/components/flows/landing/blogWrappers"
 import { RyogoP } from "@/components/typography"
 import { Separator } from "@/components/ui/separator"
@@ -71,7 +71,7 @@ export default async function Blog1Component({
           <RyogoP color="slate" className="italic">
             {t("CTA.Title")}
           </RyogoP>
-          <Link href="/pricing#roi">
+          <Link href="/pricing#roi" prefetch={false}>
             <RyogoDefaultButton size="lg" label={t("CTA.Label")} />
           </Link>
         </>

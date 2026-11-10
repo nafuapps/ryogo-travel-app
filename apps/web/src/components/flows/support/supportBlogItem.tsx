@@ -1,8 +1,8 @@
-import { RyogoP } from "@/components/typography"
 import { SectionWrapper } from "@/components/page/pageWrappers"
-import Link from "next/link"
-import Image from "next/image"
 import { RyogoPill } from "@/components/pills/ryogoPills"
+import { RyogoP } from "@/components/typography"
+import Image from "next/image"
+import Link from "next/link"
 
 export type SupportBlogItemType = {
   blogId: string
@@ -22,6 +22,7 @@ export function SupportBlogItem({
       <Link
         href={`/dashboard/support/help-blogs/${blogId}`}
         className="flex flex-col gap-1.5 md:gap-2 items-center"
+        prefetch={false}
       >
         <div className="w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
           <Image

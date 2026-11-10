@@ -91,6 +91,7 @@ function BookingCardWrapper({
               ? `/rider/myBookings/${bookingId}`
               : `/dashboard/bookings/${bookingId}`
           }
+          prefetch={false}
         >
           {customCta ?? (
             <RyogoOutlineButton
@@ -270,7 +271,7 @@ export function OngoingBookingCard({
     const customerName = booking.customer.name
     const tripLog = booking.tripLogs[0]
     return (
-      <Link href={`/rider/myBookings/${booking.id}`}>
+      <Link href={`/rider/myBookings/${booking.id}`} prefetch={false}>
         <SectionWrapper id="OngoingBookingCard">
           <SectionRowWrapper className="items-center justify-between">
             {customerUrl ? (

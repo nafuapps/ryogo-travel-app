@@ -38,6 +38,7 @@ export default function LoginAccountsPageComponent({
             href={`/auth/login/password/${account.id}`}
             key={account.id}
             onClick={() => setClicked(true)}
+            prefetch={false}
           >
             <AuthAccountCard user={account} isLink />
           </Link>

@@ -31,6 +31,7 @@ export default function BookingDriverCard({
       <Link
         href={`/dashboard/drivers/${driver.id}`}
         className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg lg:transition lg:duration-300"
+        prefetch={false}
       >
         <DriverCard driver={driver} />
       </Link>

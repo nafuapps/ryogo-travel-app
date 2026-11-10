@@ -1,4 +1,16 @@
-import { getTranslations } from "next-intl/server"
+import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
+import InstallPWAButton from "@/components/buttons/installPWAButton"
+import RyogoMailButton from "@/components/buttons/mail/ryogoMailButton"
+import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import { RyogoWhiteButton } from "@/components/buttons/ryogoButtons"
+import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
+import {
+  SupportFAQItem,
+  SupportFAQItemType,
+  SupportFAQWrapper,
+} from "@/components/flows/support/supportFAQWrapper"
+import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   DoubleContentWrapper,
   PageWrapper,
@@ -7,7 +19,12 @@ import {
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoP } from "@/components/typography"
-import SupportCategoryCard from "@/components/flows/support/supportCategoryCard"
+import { Separator } from "@/components/ui/separator"
+import {
+  SUPPORT_CHAT_NUMBER,
+  SUPPORT_EMAIL,
+  SUPPORT_HELPLINE_NUMBER,
+} from "@/lib/uiConfig"
 import {
   Car,
   ChevronRight,
@@ -17,25 +34,8 @@ import {
   TreePalm,
   User,
 } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
-import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
-import {
-  SUPPORT_CHAT_NUMBER,
-  SUPPORT_EMAIL,
-  SUPPORT_HELPLINE_NUMBER,
-} from "@/lib/uiConfig"
-import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
-import RyogoMailButton from "@/components/buttons/mail/ryogoMailButton"
+import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import SupportSectionHeader from "@/components/flows/support/supportSectionHeader"
-import {
-  SupportFAQWrapper,
-  SupportFAQItem,
-  SupportFAQItemType,
-} from "@/components/flows/support/supportFAQWrapper"
-import { RyogoWhiteButton } from "@/components/buttons/ryogoButtons"
-import InstallPWAButton from "@/components/buttons/installPWAButton"
 
 export default async function MySupportPageComponent({
   isPremium,
@@ -179,7 +179,7 @@ export default async function MySupportPageComponent({
               <RyogoCaption color="light" className="text-center">
                 {t("Tickets.Description")}
               </RyogoCaption>
-              <Link href="/rider/mySupport/tickets">
+              <Link href="/rider/mySupport/tickets" prefetch={false}>
                 <RyogoWhiteButton label={t("Tickets.ViewCTA")}>
                   <RyogoIcon icon={ChevronRight} size="sm" color="slate" />
                 </RyogoWhiteButton>

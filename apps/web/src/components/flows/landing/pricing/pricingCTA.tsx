@@ -32,7 +32,7 @@ export default async function PricingCTASection() {
             {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
           </RyogoP>
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center w-full">
-            <Link href="/onboarding">
+            <Link href="/onboarding" prefetch={false}>
               <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
                 <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
               </RyogoWhiteButton>

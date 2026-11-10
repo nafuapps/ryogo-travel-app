@@ -106,7 +106,7 @@ export default function LoginPageComponent() {
         <Separator />
         <SectionColWrapper>
           <RyogoCaption color="light">{t("SignupTitle")}</RyogoCaption>
-          <Link href={"/auth/signup"}>
+          <Link href={"/auth/signup"} prefetch={false}>
             <RyogoOutlineButton label={t("SignupCTA")} labelColor="slate" />
           </Link>
         </SectionColWrapper>

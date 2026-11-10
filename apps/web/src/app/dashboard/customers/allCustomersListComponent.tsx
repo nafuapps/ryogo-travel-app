@@ -1,19 +1,12 @@
 "use client"
 
-import { RyogoCaption, RyogoP } from "@/components/typography"
-import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
-import { User, Rows3, ChevronRight, TagX } from "lucide-react"
-import { useTranslations } from "next-intl"
-import Link from "next/link"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { Input } from "@/components/ui/input"
-import { Field } from "@/components/ui/field"
-import { ButtonGroup } from "@/components/ui/button-group"
-import { useState } from "react"
-import { PhoneRegex } from "@/lib/regex"
-import { PaginationControls } from "@/components/pagination/paginationControls"
-import { usePagination } from "@/hooks/usePagination"
-import { CustomerStatusPill } from "@/components/pills/ryogoPills"
+import {
+  RyogoDefaultButton,
+  RyogoOutlineButton,
+} from "@/components/buttons/ryogoButtons"
+import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionHeaderWrapper,
@@ -21,13 +14,20 @@ import {
   SectionWrapper,
   TileGridWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoImage } from "@/components/images/ryogoImage"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  RyogoDefaultButton,
-  RyogoOutlineButton,
-} from "@/components/buttons/ryogoButtons"
-import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import { PaginationControls } from "@/components/pagination/paginationControls"
+import { CustomerStatusPill } from "@/components/pills/ryogoPills"
+import { RyogoCaption, RyogoP } from "@/components/typography"
+import { ButtonGroup } from "@/components/ui/button-group"
+import { Field } from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import { usePagination } from "@/hooks/usePagination"
+import { PhoneRegex } from "@/lib/regex"
+import { FindCustomersInAgencyType } from "@ryogo-travel-app/api/services/customer.services"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { ChevronRight, Rows3, TagX, User } from "lucide-react"
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+import { useState } from "react"
 
 const CUSTOMERS_PER_PAGE = 4
 
@@ -132,7 +132,7 @@ function CustomerItemComponent({
   customer: FindCustomersInAgencyType[number]
 }) {
   return (
-    <Link href={`/dashboard/customers/${customer.id}`}>
+    <Link href={`/dashboard/customers/${customer.id}`} prefetch={false}>
       <SectionRowWrapper className="items-center h-full p-4 lg:p-5 border transition hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md">
         {customer.photoUrl ? (
           <RyogoImage

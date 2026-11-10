@@ -53,7 +53,7 @@ export default async function PricingPlansSection() {
               t("Basic.F6"),
             ]}
           >
-            <Link href="/auth/signup" className="w-full">
+            <Link href="/auth/signup" className="w-full" prefetch={false}>
               <RyogoDefaultButton
                 size="lg"
                 className="w-full"

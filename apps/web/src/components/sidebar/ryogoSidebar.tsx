@@ -1,5 +1,8 @@
 "use client"
 
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyoGoSidebarLogo } from "@/components/logo"
+import { RyogoSmall } from "@/components/typography"
 import {
   Sidebar,
   SidebarContent,
@@ -7,17 +10,14 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { usePathname } from "next/navigation"
-import { RyoGoSidebarLogo } from "@/components/logo"
-import { RyogoSmall } from "@/components/typography"
 import {
+  Tooltip,
   TooltipContent,
   TooltipTrigger,
-  Tooltip,
 } from "@/components/ui/tooltip"
 import { LucideIcon } from "lucide-react"
 import Link from "next/link"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { usePathname } from "next/navigation"
 
 export type MenuItemType = {
   title: string
@@ -95,7 +95,7 @@ function MenuButton({
   const { setOpenMobile } = useSidebar()
 
   return (
-    <Link href={url} onClick={() => setOpenMobile(false)}>
+    <Link href={url} onClick={() => setOpenMobile(false)} prefetch={false}>
       <Tooltip disableHoverableContent>
         <TooltipTrigger className="w-full">
           <div

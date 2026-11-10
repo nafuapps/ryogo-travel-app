@@ -26,12 +26,12 @@ export default async function HowItWorksCTASection() {
           {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
         </RyogoP>
         <ScrollZoomIn className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          <Link href="/onboarding">
+          <Link href="/onboarding" prefetch={false}>
             <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
               <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
             </RyogoWhiteButton>
           </Link>
-          <Link href="/resources#videos">
+          <Link href="/resources#videos" prefetch={false}>
             <RyogoOutlineButton
               size="lg"
               label={t("SecondaryCTA")}

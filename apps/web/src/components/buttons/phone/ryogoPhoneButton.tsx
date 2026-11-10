@@ -1,6 +1,6 @@
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 import { Phone } from "lucide-react"
 import Link from "next/link"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
 
 export default function RyogoPhoneButton({
   label,
@@ -12,7 +12,7 @@ export default function RyogoPhoneButton({
   subtitle?: string
 }) {
   return (
-    <Link href={`tel:${phone}`}>
+    <Link href={`tel:${phone}`} prefetch={false}>
       <RyogoDetailedIconButton label={label} icon={Phone} subtitle={subtitle} />
     </Link>
   )

@@ -24,6 +24,7 @@ export default function BookingCustomerCard({
       <Link
         href={`/dashboard/customers/${customer.id}`}
         className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg lg:transition lg:duration-300"
+        prefetch={false}
       >
         <CustomerCard customer={customer} />
       </Link>

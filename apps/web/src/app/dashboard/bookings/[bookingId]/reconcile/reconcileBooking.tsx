@@ -52,7 +52,10 @@ export default async function ReconcileBookingPageComponent({
           bookingId={booking.id}
           agencyId={booking.agencyId}
         />
-        <Link href={`/dashboard/bookings/${booking.id}/transactions/new`}>
+        <Link
+          href={`/dashboard/bookings/${booking.id}/transactions/new`}
+          prefetch={false}
+        >
           <RyogoOutlineButton label={t("AddTransaction")} className="w-full" />
         </Link>
         <Link href={`/dashboard/bookings/${booking.id}/transactions`}>

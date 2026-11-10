@@ -39,7 +39,7 @@ export default async function CurrentPlanDetails({
         bgColor={isSubscribed ? "black" : "light"}
       />
       {isOwner && lastPaidPlan && (
-        <Link href="/dashboard/account/subscription/orders">
+        <Link href="/dashboard/account/subscription/orders" prefetch={false}>
           <RyogoOutlineButton
             label={t("ViewOrders")}
             labelColor="light"

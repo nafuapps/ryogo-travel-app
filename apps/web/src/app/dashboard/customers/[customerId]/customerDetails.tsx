@@ -64,7 +64,10 @@ export default async function CustomerDetailsPageComponent({
       {canChangeDetails && (
         <GridWrapper id={"CustomerActions"}>
           {customer.status === CustomerStatusEnum.ACTIVE && (
-            <Link href={`/dashboard/bookings/new/${customer.id}`}>
+            <Link
+              href={`/dashboard/bookings/new/${customer.id}`}
+              prefetch={false}
+            >
               <RyogoDetailedIconButton
                 label={t("CreateBooking.Title")}
                 icon={CalendarPlus}
@@ -83,7 +86,10 @@ export default async function CustomerDetailsPageComponent({
               subtitle={t("ChangeCustomerPhoto.Subtitle")}
             />
           </ChangeCustomerPhotoSheet>
-          <Link href={`/dashboard/customers/${customer.id}/modify`}>
+          <Link
+            href={`/dashboard/customers/${customer.id}/modify`}
+            prefetch={false}
+          >
             <RyogoDetailedIconButton
               label={t("EditDetails.Title")}
               icon={SquarePen}

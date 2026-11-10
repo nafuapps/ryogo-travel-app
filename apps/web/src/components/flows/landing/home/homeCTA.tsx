@@ -36,14 +36,14 @@ export default async function HomeCTASection() {
           </RyogoP>
         </SectionColWrapper>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <Link href="/onboarding">
+          <Link href="/onboarding" prefetch={false}>
             <RyogoWhiteButton
               size="lg"
               label={t("PrimaryCTA")}
               className="w-full md:w-auto"
             />
           </Link>
-          <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`}>
+          <Link href={`tel:${SUPPORT_HELPLINE_NUMBER}`} prefetch={false}>
             <RyogoOutlineButton
               size="lg"
               label={t("SecondaryCTA")}

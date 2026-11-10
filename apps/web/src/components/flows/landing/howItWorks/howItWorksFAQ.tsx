@@ -55,7 +55,7 @@ export default async function HowItWorksFAQSection() {
             answer={t("NewBooking.Answer")}
           />
         </FAQWrapper>
-        <Link href="/resources">
+        <Link href="/resources" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             className="w-full md:w-auto"

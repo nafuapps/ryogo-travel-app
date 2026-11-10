@@ -465,7 +465,7 @@ function BookingSearchResultItem({
   booking: SearchDataType["bookings"][number]
 }) {
   return (
-    <Link href={`/dashboard/bookings/${booking.id}`}>
+    <Link href={`/dashboard/bookings/${booking.id}`} prefetch={false}>
       <HoverGridWrapper>
         <GridItemWrapper>
           <RyogoCaption color="slate">{booking.id}</RyogoCaption>
@@ -497,7 +497,7 @@ function DriverSearchResultItem({
   driver: SearchDataType["drivers"][number]
 }) {
   return (
-    <Link href={`/dashboard/drivers/${driver.id}`}>
+    <Link href={`/dashboard/drivers/${driver.id}`} prefetch={false}>
       <HoverGridWrapper>
         <GridItemWrapper>
           {driver.user.photoUrl ? (
@@ -534,7 +534,7 @@ function CustomerSearchResultItem({
   customer: SearchDataType["customers"][number]
 }) {
   return (
-    <Link href={`/dashboard/customers/${customer.id}`}>
+    <Link href={`/dashboard/customers/${customer.id}`} prefetch={false}>
       <HoverGridWrapper>
         <GridItemWrapper>
           {customer.photoUrl ? (
@@ -573,7 +573,7 @@ function VehicleSearchResultItem({
   vehicle: SearchDataType["vehicles"][number]
 }) {
   return (
-    <Link href={`/dashboard/vehicles/${vehicle.id}`}>
+    <Link href={`/dashboard/vehicles/${vehicle.id}`} prefetch={false}>
       <HoverGridWrapper>
         <GridItemWrapper>
           {vehicle.vehiclePhotoUrl ? (

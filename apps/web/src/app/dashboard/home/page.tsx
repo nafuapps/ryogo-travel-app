@@ -105,7 +105,7 @@ async function SubscriptionReminderStrip({
         {days < 0 ? t("Expired") : t("NotExpired", { days: days })}
       </RyogoCaption>
       {isOwner && (
-        <Link href="/dashboard/account/subscription">
+        <Link href="/dashboard/account/subscription" prefetch={false}>
           <RyogoOutlineButton label={t("RenewCTA")} labelColor="white" />
         </Link>
       )}
@@ -124,7 +124,7 @@ async function SubscriptionTrialStrip({ isOwner }: { isOwner: boolean }) {
         {t("TryPremium", { days: PREMIUM_TRIAL_DAYS })}
       </RyogoCaption>
       {isOwner && (
-        <Link href="/dashboard/account/subscription">
+        <Link href="/dashboard/account/subscription" prefetch={false}>
           <RyogoOutlineButton label={t("TryCTA")} labelColor="white" />
         </Link>
       )}

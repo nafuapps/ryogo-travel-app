@@ -1,3 +1,4 @@
+import InstallPWAButton from "@/components/buttons/installPWAButton"
 import { RyoGoLightLogo } from "@/components/logo"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { RyogoCaption, RyogoSmall } from "@/components/typography"
@@ -13,7 +14,6 @@ import {
 } from "@/lib/uiConfig"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import InstallPWAButton from "@/components/buttons/installPWAButton"
 
 export default async function Footer() {
   const t = await getTranslations("Landing.Footer")
@@ -80,6 +80,7 @@ export default async function Footer() {
             href={NAFUAPPS_LINK}
             target="_blank"
             className="hover:opacity-70 transition"
+            prefetch={false}
           >
             <RyogoCaption color="light">{t("Developer")}</RyogoCaption>
           </Link>
@@ -111,6 +112,7 @@ function FooterLink({
       href={href}
       className="self-center hover:opacity-70 transition"
       target={otherTab ? "_blank" : "_self"}
+      prefetch={false}
     >
       <RyogoSmall color="white">{label}</RyogoSmall>
     </Link>

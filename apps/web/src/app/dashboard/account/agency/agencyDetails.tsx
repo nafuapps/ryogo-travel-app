@@ -1,22 +1,22 @@
+import ActivateAgencyAlertButton from "@/components/buttons/alert/activateAgencyAlertButton"
+import InactivateAgencyAlertButton from "@/components/buttons/alert/inactivateAgencyAlertButton"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import AgencyDetailsComponent from "@/components/flows/account/agencyDetailsComponent"
+import AgencyInfoComponent from "@/components/flows/account/agencyInfoComponent"
+import AgencyQRCodeComponent from "@/components/flows/account/agencyQRCodeComponent"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import {
+  GridWrapper,
+  PageWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
+import ChangeQRCodeSheet from "@/components/sheets/changeQRCodeSheet"
 import { FindAgencyByIdType } from "@ryogo-travel-app/api/services/agency.services"
+import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
 import { AtSign, Building2, MailPen, Phone, QrCode } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import {
-  PageWrapper,
-  GridWrapper,
-  StickyActionWrapper,
-} from "@/components/page/pageWrappers"
-import ActivateAgencyAlertButton from "@/components/buttons/alert/activateAgencyAlertButton"
-import InactivateAgencyAlertButton from "@/components/buttons/alert/inactivateAgencyAlertButton"
-import { AgencyStatusEnum } from "@ryogo-travel-app/db/schema"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
-import AgencyInfoComponent from "@/components/flows/account/agencyInfoComponent"
-import AgencyDetailsComponent from "@/components/flows/account/agencyDetailsComponent"
-import AgencyQRCodeComponent from "@/components/flows/account/agencyQRCodeComponent"
-import ChangeAgencyLogoSheet from "@/components/sheets/changeAgencyLogoSheet"
-import ChangeQRCodeSheet from "@/components/sheets/changeQRCodeSheet"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
 
 export default async function AgencyDetailsPageComponent({
   agency,
@@ -72,21 +72,27 @@ export default async function AgencyDetailsPageComponent({
               subtitle={t("ChangeQRCode.Subtitle")}
             />
           </ChangeQRCodeSheet>
-          <Link href={`/dashboard/account/agency/change-email`}>
+          <Link
+            href={`/dashboard/account/agency/change-email`}
+            prefetch={false}
+          >
             <RyogoDetailedIconButton
               label={t("ChangeEmail.Title")}
               icon={MailPen}
               subtitle={t("ChangeEmail.Subtitle")}
             />
           </Link>
-          <Link href={`/dashboard/account/agency/change-phone`}>
+          <Link
+            href={`/dashboard/account/agency/change-phone`}
+            prefetch={false}
+          >
             <RyogoDetailedIconButton
               label={t("ChangePhone.Title")}
               icon={Phone}
               subtitle={t("ChangePhone.Subtitle")}
             />
           </Link>
-          <Link href="/dashboard/account/agency/modify">
+          <Link href="/dashboard/account/agency/modify" prefetch={false}>
             <RyogoDetailedIconButton
               label={t("Edit.Title")}
               icon={Building2}

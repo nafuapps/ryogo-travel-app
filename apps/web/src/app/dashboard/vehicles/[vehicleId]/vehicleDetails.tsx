@@ -1,16 +1,21 @@
-import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
-import { getTranslations } from "next-intl/server"
-import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import ActivateVehicleAlertButton from "@/components/buttons/alert/activateVehicleAlertButton"
 import InactivateVehicleAlertButton from "@/components/buttons/alert/inactivateVehicleAlertButton"
-import Link from "next/link"
+import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import VehicleDetailsComponent from "@/components/flows/vehicles/details/vehicleDetailsComponent"
+import VehicleDocumentInfoComponent from "@/components/flows/vehicles/details/vehicleDocumentInfoComponent"
+import VehicleInfoComponent from "@/components/flows/vehicles/details/vehicleInfoComponent"
+import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
 import {
-  SectionWrapper,
-  PageWrapper,
   GridWrapper,
+  PageWrapper,
+  SectionWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
-import RyogoDetailedIconButton from "@/components/buttons/ryogoDetailedIconButton"
+import ChangeVehicleDocumentSheet from "@/components/sheets/changeVehicleDocumentSheet"
+import ChangeVehiclePhotoSheet from "@/components/sheets/changeVehiclePhotoSheet"
+import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehicle.services"
+import { VehicleStatusEnum } from "@ryogo-travel-app/db/schema"
 import {
   Camera,
   FileDigit,
@@ -19,13 +24,8 @@ import {
   Umbrella,
   WavesVertical,
 } from "lucide-react"
-import VehicleInfoComponent from "@/components/flows/vehicles/details/vehicleInfoComponent"
-import VehicleDetailsComponent from "@/components/flows/vehicles/details/vehicleDetailsComponent"
-import VehicleDocumentInfoComponent from "@/components/flows/vehicles/details/vehicleDocumentInfoComponent"
-import ChangeVehiclePhotoSheet from "@/components/sheets/changeVehiclePhotoSheet"
-import ChangeVehicleDocumentSheet from "@/components/sheets/changeVehicleDocumentSheet"
-import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
-import { HelpIconButton } from "@/components/flows/support/helpButtons"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function VehicleDetailsPageComponent({
   vehicle,
@@ -124,7 +124,10 @@ export default async function VehicleDetailsPageComponent({
               subtitle={t("ChangeVehiclePhoto.Subtitle")}
             />
           </ChangeVehiclePhotoSheet>
-          <Link href={`/dashboard/vehicles/${vehicle.id}/change-number`}>
+          <Link
+            href={`/dashboard/vehicles/${vehicle.id}/change-number`}
+            prefetch={false}
+          >
             <RyogoDetailedIconButton
               label={t("ChangeVehicleNumber.Title")}
               icon={Hash}
@@ -173,7 +176,10 @@ export default async function VehicleDetailsPageComponent({
               subtitle={t("ChangeDocument.SubtitleInsurance")}
             />
           </ChangeVehicleDocumentSheet>
-          <Link href={`/dashboard/vehicles/${vehicle.id}/modify`}>
+          <Link
+            href={`/dashboard/vehicles/${vehicle.id}/modify`}
+            prefetch={false}
+          >
             <RyogoDetailedIconButton
               label={t("EditDetails.Title")}
               icon={SquarePen}

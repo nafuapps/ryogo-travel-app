@@ -1,8 +1,11 @@
 import RyogoChatButton from "@/components/buttons/chat/ryogoChatButton"
 import RyogoPhoneButton from "@/components/buttons/phone/ryogoPhoneButton"
+import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import BookingActionWrapper from "@/components/flows/bookings/details/bookingActionWrapper"
+import BookingAgencyCard from "@/components/flows/bookings/details/bookingAgencyCard"
 import BookingAssignedUserCard from "@/components/flows/bookings/details/bookingAssignedUserCard"
 import BookingCustomerCard from "@/components/flows/bookings/details/bookingCustomerCard"
+import BookingDriverCard from "@/components/flows/bookings/details/bookingDriverCard"
 import BookingDropAddressCard from "@/components/flows/bookings/details/bookingDropAddressCard"
 import BookingGrid from "@/components/flows/bookings/details/bookingGrid"
 import BookingIDWrapper from "@/components/flows/bookings/details/bookingIDWrapper"
@@ -15,18 +18,23 @@ import BookingSection from "@/components/flows/bookings/details/bookingSection"
 import BookingStartTimeCard from "@/components/flows/bookings/details/bookingStartTimeCard"
 import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
 import BookingVehicleCard from "@/components/flows/bookings/details/bookingVehicleCard"
+import RateBookingByCustomerDialog from "@/components/flows/bookings/track/rateBookingByCustomerDialog"
 import {
   PageWrapper,
   SectionRowWrapper,
   StickyActionWrapper,
 } from "@/components/page/pageWrappers"
+import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewerButton"
+import BookingInvoicePDFViewerButton from "@/components/pdf/bookingInvoicePDFViewerButton"
 import { RyogoCaption, RyogoP } from "@/components/typography"
+import { Separator } from "@/components/ui/separator"
+import { BOOKING_RATING_LIMIT_DAYS } from "@ryogo-travel-app/api/apiConfig"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import {
   BookingStatusEnum,
   TransactionTypesEnum,
 } from "@ryogo-travel-app/db/schema"
-import { getTranslations } from "next-intl/server"
+import { differenceInDays } from "date-fns"
 import {
   BriefcaseBusiness,
   Car,
@@ -37,16 +45,8 @@ import {
   Route,
   UserKey,
 } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
-import BookingDriverCard from "@/components/flows/bookings/details/bookingDriverCard"
-import RateBookingByCustomerDialog from "@/components/flows/bookings/track/rateBookingByCustomerDialog"
-import BookingAgencyCard from "@/components/flows/bookings/details/bookingAgencyCard"
-import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
+import { getTranslations } from "next-intl/server"
 import Link from "next/link"
-import { differenceInDays } from "date-fns"
-import { BOOKING_RATING_LIMIT_DAYS } from "@ryogo-travel-app/api/apiConfig"
-import BookingConfirmationPDFViewerButton from "@/components/pdf/bookingConfirmationPDFViewerButton"
-import BookingInvoicePDFViewerButton from "@/components/pdf/bookingInvoicePDFViewerButton"
 
 // A page to display booking details for tracking by customer
 export default async function TrackBookingDetailsPageComponent({
@@ -293,7 +293,7 @@ export default async function TrackBookingDetailsPageComponent({
               codeSentOn={bookingDetails.codeSentOn}
             />
           )}
-        <Link href="/track/booking">
+        <Link href="/track/booking" prefetch={false}>
           <RyogoOutlineButton
             label={t("TrackAnother")}
             labelColor="light"

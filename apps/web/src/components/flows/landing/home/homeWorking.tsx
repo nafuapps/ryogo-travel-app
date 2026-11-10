@@ -73,7 +73,7 @@ export default function HomeWorkingSection() {
           {t("Subtitle")}
         </RyogoP>
         <SlideshowWrapper items={items} />
-        <Link href="/how-it-works">
+        <Link href="/how-it-works" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             label={t("MoreCTA")}

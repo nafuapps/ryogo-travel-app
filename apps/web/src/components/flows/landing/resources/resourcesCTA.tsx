@@ -30,7 +30,7 @@ export default async function ResourcesCTASection() {
           {t("Subtitle", { days: PREMIUM_TRIAL_DAYS })}
         </RyogoP>
         <ScrollZoomIn className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          <Link href="/pricing#roi">
+          <Link href="/pricing#roi" prefetch={false}>
             <RyogoOutlineButton
               size="lg"
               labelColor="white"
@@ -38,7 +38,7 @@ export default async function ResourcesCTASection() {
             />
           </Link>
 
-          <Link href="/onboarding">
+          <Link href="/onboarding" prefetch={false}>
             <RyogoWhiteButton size="lg" label={t("PrimaryCTA")}>
               <RyogoIcon icon={ChevronRight} color="black" size="sm" thick />
             </RyogoWhiteButton>

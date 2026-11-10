@@ -5,9 +5,9 @@ import StartDriverLeaveAlertButton from "@/components/buttons/alert/startDriverL
 import { RyogoOutlineButton } from "@/components/buttons/ryogoButtons"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
+  DateWrapper,
   SectionColWrapper,
   SectionRowWrapper,
-  DateWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
 import { LeaveStatusPill } from "@/components/pills/ryogoPills"
@@ -21,15 +21,15 @@ import {
   FindDriverDetailsByIdType,
 } from "@ryogo-travel-app/api/services/driver.services"
 import {
-  DriverStatusEnum,
   DriverLeaveStatusEnum,
+  DriverStatusEnum,
 } from "@ryogo-travel-app/db/schema"
 import { differenceInDays } from "date-fns"
 import {
-  MessageSquareQuote,
-  ChevronRight,
   ChevronDown,
+  ChevronRight,
   ChevronUp,
+  MessageSquareQuote,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
@@ -143,6 +143,7 @@ export default function DriverLeaveComponent({
           {canModify && leave.status !== DriverLeaveStatusEnum.ONGOING && (
             <Link
               href={`/dashboard/drivers/${leave.driverId}/leaves/modify/${leave.id}`}
+              prefetch={false}
             >
               <RyogoOutlineButton label={t("Edit")}>
                 <RyogoIcon icon={ChevronRight} size="sm" />

@@ -34,6 +34,7 @@ export default function BookingVehicleCard({
           isRider ? `/rider/myVehicle` : `/dashboard/vehicles/${vehicle.id}`
         }
         className="hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg lg:transition lg:duration-300"
+        prefetch={false}
       >
         <VehicleCard vehicle={vehicle} />
       </Link>

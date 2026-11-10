@@ -144,7 +144,7 @@ export default function LoginPasswordPageComponent({
           }}
         />
         <Separator />
-        <Link href={`/auth/forgot-password/${user.id}`}>
+        <Link href={`/auth/forgot-password/${user.id}`} prefetch={false}>
           <RyogoGhostButton
             label={t("ForgotCTA")}
             type="button"

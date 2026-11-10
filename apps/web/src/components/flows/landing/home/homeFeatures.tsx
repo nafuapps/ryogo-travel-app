@@ -1,14 +1,16 @@
 import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
+  FeatureGrid,
+  FeatureItem,
+} from "@/components/flows/landing/features/featureWrappers"
+import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import Image from "next/image"
 import Link from "next/link"
 
 //TODO: Add product images
@@ -23,33 +25,33 @@ export default async function HomeFeaturesSection() {
         <RyogoP color="light" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          <FeatureCard
+        <FeatureGrid>
+          <FeatureItem
             title={t("F1.Title")}
             description={t("F1.Description")}
-            imageSrc="/logoPWA.png"
+            src="/logoPWA.png"
             // imageSrc="/images/homeF1.png"
           />
-          <FeatureCard
+          <FeatureItem
             title={t("F2.Title")}
             description={t("F2.Description")}
-            imageSrc="/logoPWA.png"
+            src="/logoPWA.png"
             // imageSrc="/images/homeF2.png"
           />
-          <FeatureCard
+          <FeatureItem
             title={t("F3.Title")}
             description={t("F3.Description")}
-            imageSrc="/logoPWA.png"
+            src="/logoPWA.png"
             // imageSrc="/images/homeF3.png"
           />
-          <FeatureCard
+          <FeatureItem
             title={t("F4.Title")}
             description={t("F4.Description")}
-            imageSrc="/logoPWA.png"
+            src="/logoPWA.png"
             // imageSrc="/images/homeF4.png"
           />
-        </div>
-        <Link href="/features">
+        </FeatureGrid>
+        <Link href="/features" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             label={t("MoreCTA")}
@@ -60,32 +62,5 @@ export default async function HomeFeaturesSection() {
         </Link>
       </LandingContentWrapper>
     </LandingSectionWrapper>
-  )
-}
-
-function FeatureCard({
-  title,
-  description,
-  imageSrc,
-}: {
-  title: string
-  description: string
-  imageSrc: string
-}) {
-  return (
-    <ScrollZoomIn className="flex flex-col gap-4 lg:gap-5 w-full rounded-lg bg-sky-50 dark:bg-sky-950 p-5 lg:p-6">
-      <div className="w-full aspect-video rounded overflow-hidden relative">
-        <Image
-          className="object-cover w-full"
-          loading="eager"
-          src={imageSrc}
-          alt={title}
-          fill
-          sizes="768px"
-        />
-      </div>
-      <RyogoH4 weight="font-bold">{title}</RyogoH4>
-      <RyogoSmall color="slate">{description}</RyogoSmall>
-    </ScrollZoomIn>
   )
 }

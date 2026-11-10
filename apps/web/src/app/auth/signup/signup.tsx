@@ -89,7 +89,7 @@ export default function SignupPageComponent() {
         </SectionColWrapper>
         <Separator />
         <SectionColWrapper>
-          <Link href={"/auth/login"}>
+          <Link href={"/auth/login"} prefetch={false}>
             <RyogoGhostButton
               label={t("LoginTitle")}
               labelColor="light"

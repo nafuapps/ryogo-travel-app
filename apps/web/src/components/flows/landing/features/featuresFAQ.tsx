@@ -80,7 +80,7 @@ export default async function FeaturesFAQSection() {
             answer={t("DataPrivacy.Answer")}
           />
         </FAQWrapper>
-        <Link href="/resources">
+        <Link href="/resources" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             label={t("MoreCTA")}

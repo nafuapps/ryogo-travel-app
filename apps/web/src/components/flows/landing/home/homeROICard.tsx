@@ -32,7 +32,7 @@ export default async function HomeROICard() {
             sizes="576px"
           />
         </div>
-        <Link href="/pricing#roi">
+        <Link href="/pricing#roi" prefetch={false}>
           <RyogoDefaultButton
             size="lg"
             label={t("PrimaryCTA")}

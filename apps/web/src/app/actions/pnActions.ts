@@ -1,9 +1,9 @@
 "use server"
 
 import { SUPPORT_EMAIL } from "@/lib/uiConfig"
-import webpush from "web-push"
+import { sendNotification, setVapidDetails } from "web-push"
 
-webpush.setVapidDetails(
+setVapidDetails(
   `mailto:${SUPPORT_EMAIL}`,
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
   process.env.VAPID_PRIVATE_KEY!,
@@ -31,7 +31,7 @@ export async function sendNotificationAction(message: string) {
   }
 
   try {
-    await webpush.sendNotification(
+    await sendNotification(
       subscription as any,
       JSON.stringify({
         title: "Test Notification",

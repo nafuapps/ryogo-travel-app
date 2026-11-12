@@ -1,14 +1,16 @@
 import EmptyStateIcon from "@/components/icons/emptyStateIcon"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import GetVehicleEnclosedIcon from "@/components/icons/vehicleIcon"
 import { RyogoImage } from "@/components/images/ryogoImage"
 import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoP, RyogoSmall } from "@/components/typography"
+import RyogoTag from "@/components/tags/ryogoTag"
+import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { ClipboardX } from "lucide-react"
+import { AirVent, ClipboardX, User } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 
@@ -72,8 +74,8 @@ function VehicleCard({
         <RyogoCaption color="light" weight="font-bold">
           {vehicle.type}
         </RyogoCaption>
-        <RyogoSmall weight="font-bold">{vehicle.capacity}</RyogoSmall>
-        <RyogoSmall weight="font-bold">{vehicle.hasAC}</RyogoSmall>
+        <RyogoTag icon={User} label={vehicle.capacity.toString()} />
+        {vehicle.hasAC && <RyogoIcon size="xs" icon={AirVent} color="light" />}
       </SectionColWrapper>
     </SectionRowWrapper>
   )

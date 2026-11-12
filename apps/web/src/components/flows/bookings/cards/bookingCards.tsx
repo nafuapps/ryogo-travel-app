@@ -397,7 +397,7 @@ export function UpcomingBookingCard({
           <RyogoTag
             label={getDisplayTime(booking.startTime)}
             icon={Clock}
-            className="flex-row-reverse"
+            className="flex-row-reverse text-end"
           />
         )}
       </BookingCardLineWrapper>

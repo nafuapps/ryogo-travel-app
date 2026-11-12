@@ -2,14 +2,14 @@ import { Font, StyleSheet } from "@react-pdf/renderer"
 import { HOST_URL } from "@ryogo-travel-app/api/apiConfig"
 
 const fontSource = (fileName: string) => {
-  if (
-    process.env.NODE_ENV !== "production" ||
-    typeof process === "undefined" ||
-    (process.env.NEXT_RUNTIME !== "nodejs" && process.release?.name !== "node")
-  ) {
+  if (process.env.NODE_ENV === "production") {
+    return `${HOST_URL}/fonts/${fileName}`
+  }
+  if (typeof window !== "undefined") {
     return `/fonts/${fileName}`
   }
-  return `${HOST_URL}/fonts/${fileName}`
+
+  return `${process.cwd().replace(/\\/g, "/")}/public/fonts/${fileName}`
 }
 
 const sourceRegular = fontSource("NotoSans-Regular.ttf")

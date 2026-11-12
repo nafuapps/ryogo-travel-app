@@ -1,32 +1,32 @@
 "use client"
 
-import { RyogoH3, RyogoCaption } from "@/components/typography"
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
-import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
-import { Info } from "lucide-react"
-import { Alert } from "@/components/ui/alert"
 import { newBookingAction } from "@/app/actions/bookings/newBookingAction"
-import {
-  SectionRowWrapper,
-  PageWrapper,
-  StickyActionWrapper,
-  FormContentWrapper,
-  FormWrapper,
-} from "@/components/page/pageWrappers"
-import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { getEstimatedTotalPrice } from "@/lib/utils"
 import {
   RyogoDefaultButton,
   RyogoOutlineButton,
 } from "@/components/buttons/ryogoButtons"
-import FormStepHeader from "@/components/form/formStepHeader"
-import { NewBookingTotalSteps } from "@/lib/uiConfig"
-import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
 import BookingPriceItem from "@/components/flows/bookings/details/bookingPriceItem"
+import BookingTripCard from "@/components/flows/bookings/details/bookingTripCard"
+import FormStepHeader from "@/components/form/formStepHeader"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import {
+  FormContentWrapper,
+  FormWrapper,
+  PageWrapper,
+  SectionRowWrapper,
+  StickyActionWrapper,
+} from "@/components/page/pageWrappers"
+import { RyogoCaption, RyogoH3, RyogoP } from "@/components/typography"
+import { Alert } from "@/components/ui/alert"
 import { Separator } from "@/components/ui/separator"
+import { NewBookingTotalSteps } from "@/lib/uiConfig"
+import { getEstimatedTotalPrice } from "@/lib/utils"
+import { NewBookingRequestDataType } from "@ryogo-travel-app/api/types/booking.types"
+import { Info } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 export default function NewBookingFinal({
   onPrev,
@@ -112,7 +112,7 @@ export default function NewBookingFinal({
           />
           <Separator />
           <SectionRowWrapper className="items-center justify-between">
-            <RyogoH3 color="light">{t("TotalAmount")}</RyogoH3>
+            <RyogoP color="light">{t("TotalAmount")}</RyogoP>
             <RyogoH3 weight="font-bold">
               {"₹" + finalAmount.totalAmount}
             </RyogoH3>

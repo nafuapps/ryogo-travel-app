@@ -19,7 +19,6 @@ export function BookingConfirmationDocument({
 }: {
   booking: NonNullable<FindBookingDetailsByIdType>
 }) {
-  const agencyLogoUrl = booking.agency.logoUrl
   const bookingLink = getBookingTrackingLink(booking.id)
 
   return (
@@ -27,9 +26,9 @@ export function BookingConfirmationDocument({
       <Page size="A4" style={styles.page}>
         <View id="header" style={styles.header} wrap={false}>
           <View id="headerLeft" style={styles.headerLeft}>
-            {agencyLogoUrl && (
+            {booking.agency.logoUrl && (
               <Image
-                src={getFileUrl(agencyLogoUrl)}
+                src={getFileUrl(booking.agency.logoUrl)}
                 style={styles.agencyLogo}
               />
             )}

@@ -13,7 +13,6 @@ import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 
-//TODO: Add product images
 export default async function HomeFeaturesSection() {
   const t = await getTranslations("Landing.Home.Features")
   return (
@@ -29,22 +28,22 @@ export default async function HomeFeaturesSection() {
           <FeatureItem
             title={t("F1.Title")}
             description={t("F1.Description")}
-            src="/home/features/booking.png"
+            src="/home/features/booking_management.png"
           />
           <FeatureItem
             title={t("F2.Title")}
             description={t("F2.Description")}
-            src="/home/features/driver.png"
+            src="/home/features/driver_communication.png"
           />
           <FeatureItem
             title={t("F3.Title")}
             description={t("F3.Description")}
-            src="/home/features/fleet.png"
+            src="/home/features/fleet_scheduling.png"
           />
           <FeatureItem
             title={t("F4.Title")}
             description={t("F4.Description")}
-            src="/home/features/mission.png"
+            src="/home/features/mission_control.png"
           />
         </FeatureGrid>
         <Link href="/features" prefetch={false}>

@@ -57,7 +57,7 @@ export default function Navbar({
 
   return (
     <nav className="w-full flex flex-col items-center fixed top-6 md:top-8 lg:top-10 z-50 px-6 md:px-8 lg:px-10">
-      <div className="w-full max-w-5xl bg-white dark:bg-slate-800 border-2 border-slate-50 dark:border-slate-700 opacity-98 shadow-lg rounded-lg px-3 md:px-4 lg:px-5">
+      <div className="w-full max-w-5xl bg-white dark:bg-slate-800 border-2 border-slate-50 dark:border-slate-700 opacity-99 shadow-lg rounded-lg px-3 md:px-4 lg:px-5">
         <div className="flex flex-wrap justify-between items-center py-3 w-full gap-2.5 lg:gap-3">
           {/* Logo */}
           <Link href="/" prefetch={false}>
@@ -194,7 +194,7 @@ function DarkModeSwitch({ isDarkMode }: { isDarkMode: boolean }) {
   return (
     <switch
       onClick={toggleDarkMode}
-      className={`flex items-center gap-1 ${isDarkModeState ? "dark:bg-slate-900 justify-end" : "bg-slate-50 justify-start"} border-2 rounded-full h-6 lg:h-7 w-12 lg:w-14`}
+      className={`flex items-center gap-1 ${isDarkModeState ? "dark:bg-slate-900 justify-end" : "bg-slate-50 justify-start"} border-2 rounded-full h-6 lg:h-7 w-12 lg:w-14 hover:cursor-pointer`}
     >
       <RyogoEnclosedIcon
         icon={isDarkModeState ? Moon : Sun}

@@ -1,9 +1,9 @@
-import { getTranslations } from "next-intl/server"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoH1, RyogoP } from "@/components/typography"
+import { getTranslations } from "next-intl/server"
 import { FeatureGrid, FeatureItem } from "./featureWrappers"
 
 export default async function FeaturesCommunicationSection() {
@@ -24,23 +24,23 @@ export default async function FeaturesCommunicationSection() {
           <FeatureItem
             title={t("C1.Title")}
             description={t("C1.Description")}
-            src="/logoPWA.png"
+            src="/features/communication/connected.png"
             long
           />
           <FeatureItem
             title={t("C2.Title")}
             description={t("C2.Description")}
-            src="/logoPWA.png"
+            src="/features/communication/whatsapp.png"
           />
           <FeatureItem
             title={t("C3.Title")}
             description={t("C3.Description")}
-            src="/logoPWA.png"
+            src="/features/communication/driver.png"
           />
           <FeatureItem
             title={t("C4.Title")}
             description={t("C4.Description")}
-            src="/logoPWA.png"
+            src="/features/communication/customer.png"
             longReverse
           />
         </FeatureGrid>

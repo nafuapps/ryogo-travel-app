@@ -1,9 +1,9 @@
-import { getTranslations } from "next-intl/server"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoH1, RyogoP } from "@/components/typography"
+import { getTranslations } from "next-intl/server"
 import { FeatureGrid, FeatureItem } from "./featureWrappers"
 
 export default async function FeaturesAlertsSection() {
@@ -21,25 +21,25 @@ export default async function FeaturesAlertsSection() {
           <FeatureItem
             title={t("A1.Title")}
             description={t("A1.Description")}
-            src="/logoPWA.png"
+            src="/features/alerts/mission.png"
             long
           />
           <FeatureItem
             title={t("A2.Title")}
             description={t("A2.Description")}
-            src="/logoPWA.png"
+            src="/features/alerts/feed.png"
             longReverse
           />
           <FeatureItem
             title={t("A3.Title")}
             description={t("A3.Description")}
-            src="/logoPWA.png"
+            src="/features/alerts/record.png"
             long
           />
           <FeatureItem
             title={t("A4.Title")}
             description={t("A4.Description")}
-            src="/logoPWA.png"
+            src="/features/alerts/control.png"
             longReverse
           />
         </FeatureGrid>

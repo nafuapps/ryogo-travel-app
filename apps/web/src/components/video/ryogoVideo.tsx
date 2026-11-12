@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
-import { vercelBlobStorageUrl } from "@ryogo-travel-app/api/apiConfig"
+import { VERCEL_BLOB_STORAGE_URL } from "@ryogo-travel-app/api/apiConfig"
 import { Suspense } from "react"
 
 export function RyogoVideo({
@@ -37,7 +37,7 @@ export function RyogoSupportVideo({
   // In future, can set a different mobile src with <source> inside <video>
   return (
     <video
-      src={vercelBlobStorageUrl + src} //Vercel blob storage URL
+      src={VERCEL_BLOB_STORAGE_URL + src} //Vercel blob storage URL
       autoPlay
       muted
       loop

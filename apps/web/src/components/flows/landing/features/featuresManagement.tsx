@@ -1,14 +1,14 @@
-import { getTranslations } from "next-intl/server"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { RyogoH1, RyogoP } from "@/components/typography"
-import { FeatureGrid, FeatureItem } from "./featureWrappers"
-import { Video } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { Video } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import { FeatureGrid, FeatureItem } from "./featureWrappers"
 
 export default async function FeaturesManagementSection() {
   const t = await getTranslations("Landing.Features.Management")
@@ -42,32 +42,32 @@ export default async function FeaturesManagementSection() {
           <FeatureItem
             title={t("M1.Title")}
             description={t("M1.Description")}
-            src="/logoPWA.png"
+            src="/features/management/control.png"
           />
           <FeatureItem
             title={t("M2.Title")}
             description={t("M2.Description")}
-            src="/logoPWA.png"
+            src="/features/management/delegate.png"
           />
           <FeatureItem
             title={t("M3.Title")}
             description={t("M3.Description")}
-            src="/logoPWA.png"
+            src="/features/management/loop.png"
           />
           <FeatureItem
             title={t("M4.Title")}
             description={t("M4.Description")}
-            src="/logoPWA.png"
+            src="/features/management/automated.png"
           />
           <FeatureItem
             title={t("M5.Title")}
             description={t("M5.Description")}
-            src="/logoPWA.png"
+            src="/features/management/customer.png"
           />
           <FeatureItem
             title={t("M6.Title")}
             description={t("M6.Description")}
-            src="/logoPWA.png"
+            src="/features/management/whiteboard.png"
           />
         </FeatureGrid>
       </LandingContentWrapper>

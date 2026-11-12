@@ -1,14 +1,14 @@
-import { getTranslations } from "next-intl/server"
+import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { RyogoH1, RyogoP } from "@/components/typography"
-import { FeatureGrid, FeatureItem } from "./featureWrappers"
-import { Video } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { RyogoDialogVideo } from "@/components/video/ryogoVideo"
-import { RyogoDefaultButton } from "@/components/buttons/ryogoButtons"
+import { Video } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import { FeatureGrid, FeatureItem } from "./featureWrappers"
 
 export default async function FeaturesSchedulingSection() {
   const t = await getTranslations("Landing.Features.Scheduling")
@@ -42,31 +42,31 @@ export default async function FeaturesSchedulingSection() {
           <FeatureItem
             title={t("S1.Title")}
             description={t("S1.Description")}
-            src="/logoPWA.png"
+            src="/features/scheduling/booking.png"
             long
           />
           <FeatureItem
             title={t("S2.Title")}
             description={t("S2.Description")}
-            src="/logoPWA.png"
+            src="/features/scheduling/conflict.png"
             longReverse
           />
           <FeatureItem
             title={t("S3.Title")}
             description={t("S3.Description")}
-            src="/logoPWA.png"
+            src="/features/scheduling/creation.png"
             long
           />
           <FeatureItem
             title={t("S4.Title")}
             description={t("S4.Description")}
-            src="/logoPWA.png"
+            src="/features/scheduling/flexibility.png"
             longReverse
           />
           <FeatureItem
             title={t("S5.Title")}
             description={t("S5.Description")}
-            src="/logoPWA.png"
+            src="/features/scheduling/assistant.png"
             long
           />
         </FeatureGrid>

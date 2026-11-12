@@ -6,6 +6,7 @@ import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { SectionColWrapper } from "@/components/page/pageWrappers"
 import { RyogoH1, RyogoH4, RyogoP, RyogoSmall } from "@/components/typography"
+import { VERCEL_BLOB_STORAGE_URL } from "@ryogo-travel-app/api/apiConfig"
 import { ChevronDown } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
@@ -27,49 +28,37 @@ export default async function FeaturesMenuSection() {
             title={t("M1")}
             subtitle={t("M1Subtitle")}
             href="#management"
-            imageSrc="/logoPWA.png"
-
-            // imageSrc="/featureMenu1.png"
+            imageSrc="/features/menu/management.png"
           />
           <FeaturesMenuItem
             title={t("M2")}
             subtitle={t("M2Subtitle")}
             href="#scheduling"
-            imageSrc="/logoPWA.png"
-
-            // imageSrc="/featureMenu2.png"
+            imageSrc="/features/menu/scheduling.png"
           />
           <FeaturesMenuItem
             title={t("M3")}
             subtitle={t("M3Subtitle")}
             href="#communication"
-            imageSrc="/logoPWA.png"
-
-            // imageSrc="/featureMenu3.png"
+            imageSrc="/features/menu/communication.png"
           />
           <FeaturesMenuItem
             title={t("M4")}
             subtitle={t("M4Subtitle")}
             href="#analytics"
-            imageSrc="/logoPWA.png"
-
-            // imageSrc="/featureMenu4.png"
+            imageSrc="/features/menu/analytics.png"
           />
           <FeaturesMenuItem
             title={t("M5")}
             subtitle={t("M5Subtitle")}
             href="#alerts"
-            imageSrc="/logoPWA.png"
-
-            // imageSrc="/featureMenu5.png"
+            imageSrc="/features/menu/alerts.png"
           />
           <FeaturesMenuItem
             title={t("M6")}
             subtitle={t("M6Subtitle")}
             href="#security"
-            imageSrc="/logoPWA.png"
-
-            // imageSrc="/featureMenu6.png"
+            imageSrc="/features/menu/security.png"
           />
         </FeatureGrid>
       </LandingContentWrapper>
@@ -106,7 +95,7 @@ async function FeaturesMenuItem({
           <Image
             className="object-cover"
             loading="eager"
-            src={imageSrc}
+            src={VERCEL_BLOB_STORAGE_URL + imageSrc}
             alt={title}
             fill
             sizes="672px"

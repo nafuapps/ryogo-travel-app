@@ -1,11 +1,11 @@
 import { ScrollZoomIn } from "@/components/flows/landing/scrollZoomIn"
 import { RyogoH4, RyogoSmall } from "@/components/typography"
-import { vercelBlobStorageUrl } from "@ryogo-travel-app/api/apiConfig"
+import { VERCEL_BLOB_STORAGE_URL } from "@ryogo-travel-app/api/apiConfig"
 import Image from "next/image"
 
 export function FeatureGrid({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
       {children}
     </div>
   )
@@ -28,17 +28,17 @@ export function FeatureItem({
 }) {
   return (
     <ScrollZoomIn
-      className={`w-full group flex flex-col ${long ? "md:flex-row md:col-span-2 md:items-center" : ""} ${longReverse ? "md:flex-row-reverse md:col-span-2 md:items-center" : ""} border rounded-lg p-6 md:p-8 bg-white dark:bg-slate-800 gap-5 lg:gap-6 ${className ?? ""}`}
+      className={`w-full group flex flex-col p-4 lg:p-5 gap-4 lg:gap-5 ${long ? "md:flex-row md:col-span-2 md:items-center" : ""} ${longReverse ? "md:flex-row-reverse md:col-span-2 md:items-center" : ""} ${className ?? ""}`}
     >
       <div className="flex flex-col gap-3 lg:gap-4 w-full">
         <RyogoH4 weight="font-bold">{title}</RyogoH4>
         <RyogoSmall color="slate">{description}</RyogoSmall>
       </div>
-      <div className="mt-auto w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
+      <div className="mt-auto w-full max-w-2xl relative rounded-xl aspect-4/3 overflow-hidden">
         <Image
           className="object-cover rounded-md md:transition-transform md:duration-300 md:group-hover:scale-105"
           loading="eager"
-          src={vercelBlobStorageUrl + src}
+          src={VERCEL_BLOB_STORAGE_URL + src}
           alt={title}
           fill
           sizes="672px"

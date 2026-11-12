@@ -1,15 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { RyogoCaption } from "@/components/typography"
-import { CheckCheck, Copy } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import { useTranslations } from "next-intl"
+import { RyogoCaption } from "@/components/typography"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { CheckCheck, Copy } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
 
 export default function IdCopyPill({ id }: { id: string }) {
   const t = useTranslations("Components.IdCopyPill")
@@ -34,7 +34,7 @@ export default function IdCopyPill({ id }: { id: string }) {
       <TooltipTrigger asChild>
         <div
           onClick={() => handleCopy()}
-          className={`${isCopied ? "animate-ping scale-75" : ""} border rounded-md shrink-0 gap-1.5 lg:gap-2 px-3 py-1.5 lg:px-4 lg:py-2 w-28 lg:w-32 flex items-center justify-center cursor-pointer bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700`}
+          className={`${isCopied ? "animate-ping scale-75" : ""} border rounded-md shrink-0 gap-1.5 lg:gap-2 px-3 py-1.5 lg:px-4 lg:py-2 w-28 lg:w-32 flex items-center justify-center hover:cursor-pointer bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700`}
         >
           <RyogoCaption color={"light"} weight="font-bold">
             {isCopied ? t("Copied") : id}

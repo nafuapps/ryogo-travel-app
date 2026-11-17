@@ -30,7 +30,7 @@ export default async function FeaturesCommunicationSection() {
           <FeatureItem
             title={t("C2.Title")}
             description={t("C2.Description")}
-            src="/features/communication/whatsapp.png"
+            src="/features/communication/integration.png"
           />
           <FeatureItem
             title={t("C3.Title")}
@@ -40,7 +40,7 @@ export default async function FeaturesCommunicationSection() {
           <FeatureItem
             title={t("C4.Title")}
             description={t("C4.Description")}
-            src="/features/communication/customer.png"
+            src="/features/communication/engage.png"
             longReverse
           />
         </FeatureGrid>

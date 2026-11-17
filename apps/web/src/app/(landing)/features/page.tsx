@@ -1,14 +1,14 @@
-import FeaturesAnalyticsSection from "@/components/flows/landing/features/featuresAnalytics"
+// import FeaturesAnalyticsSection from "@/components/flows/landing/features/featuresAnalytics"
+import FeaturesAlertsSection from "@/components/flows/landing/features/featuresAlerts"
 import FeaturesCommunicationSection from "@/components/flows/landing/features/featuresCommunication"
 import FeaturesCTASection from "@/components/flows/landing/features/featuresCTA"
+import FeaturesFAQSection from "@/components/flows/landing/features/featuresFAQ"
 import FeaturesHeroSection from "@/components/flows/landing/features/featuresHero"
 import FeaturesManagementSection from "@/components/flows/landing/features/featuresManagement"
 import FeaturesMenuSection from "@/components/flows/landing/features/featuresMenu"
-import FeaturesAlertsSection from "@/components/flows/landing/features/featuresAlerts"
 import FeaturesSchedulingSection from "@/components/flows/landing/features/featuresScheduling"
 import FeaturesSecuritySection from "@/components/flows/landing/features/featuresSecurity"
-import FeaturesFAQSection from "@/components/flows/landing/features/featuresFAQ"
-import { pageTitle, pageDescription } from "@/components/page/pageCommons"
+import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   description: pageDescription,
 }
 
+//TODO: Analytics section
 export default async function FeaturesPage() {
   return (
     <>
@@ -24,7 +25,7 @@ export default async function FeaturesPage() {
       <FeaturesManagementSection />
       <FeaturesSchedulingSection />
       <FeaturesCommunicationSection />
-      <FeaturesAnalyticsSection />
+      {/* <FeaturesAnalyticsSection /> */}
       <FeaturesAlertsSection />
       <FeaturesSecuritySection />
       <FeaturesFAQSection />

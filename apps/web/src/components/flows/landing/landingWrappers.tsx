@@ -34,7 +34,7 @@ export function LandingContentWrapper({
 }) {
   return (
     <ScrollZoomIn
-      className={`flex-1 max-w-6xl w-full flex flex-col items-center ${justifyStart ? "justify-start" : "justify-center"} mx-auto gap-8 md:gap-10 ${className ?? ""}`}
+      className={`flex-1 max-w-7xl w-full flex flex-col items-center ${justifyStart ? "justify-start" : "justify-center"} mx-auto gap-8 md:gap-10 ${className ?? ""}`}
     >
       {children}
     </ScrollZoomIn>

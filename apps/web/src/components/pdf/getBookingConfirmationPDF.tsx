@@ -21,6 +21,8 @@ export function BookingConfirmationDocument({
 }) {
   const bookingLink = getBookingTrackingLink(booking.id)
 
+  //TODO: Webp image is not supported in react-pdf, so we need to convert it to png or jpg
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>

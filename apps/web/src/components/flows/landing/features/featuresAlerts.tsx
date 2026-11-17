@@ -39,7 +39,7 @@ export default async function FeaturesAlertsSection() {
           <FeatureItem
             title={t("A4.Title")}
             description={t("A4.Description")}
-            src="/features/alerts/control.png"
+            src="/features/alerts/detail.png"
             longReverse
           />
         </FeatureGrid>

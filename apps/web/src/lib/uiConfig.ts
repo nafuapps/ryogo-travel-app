@@ -70,9 +70,10 @@ export const LEGAL_EMAIL = "ryogo.in@gmail.com"
 export const LEGAL_ADDRESS =
   "Ryogo Travel App, 451, Sector 9, Avas vikas colony, Sikandra, Agra, 282007"
 export const LEGAL_PHONE = "9840774089"
+
 //RyoGo logo in email and pdf footer
 export const RyogoLogoSrc =
-  "https://uxlvdjfgmmorufabopzd.supabase.co/storage/v1/object/public/ryogoDocs/ryogo/logo/logo.png" //To be used in email and pdf
+  "https://uxlvdjfgmmorufabopzd.supabase.co/storage/v1/object/public/ryogoDocs/ryogo/logo/logo.png"
 
 //Social Media Links
 export const YT_LINK = "https://www.youtube.com/@RyoGoTravelApp"

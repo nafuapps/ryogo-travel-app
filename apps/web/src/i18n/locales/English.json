@@ -6939,15 +6939,15 @@
         },
         "M4": {
           "Title": "Automated workflows",
-          "Description": "Focus on the essential things like high-level business decisions and let RyoGo handle the daily chores."
+          "Description": "Focus on the essential high-level business decisions and let RyoGo handle the daily chores and tasks."
         },
         "M5": {
           "Title": "Centralize customer database",
-          "Description": "Find customer's history or add new customers easily. Retrieve customer details with just a phone number at the time of booking."
+          "Description": "Find customer's history or add new customers easily. Retrieve customer details with just a phone number to create a new booking."
         },
         "M6": {
           "Title": "Status whiteboard in a glance",
-          "Description": "Instantly see which vehicle or driver is on trip, idle, or in the workshop or on leave. All automatically updated."
+          "Description": "Instantly see which vehicle or driver is on trip, available, or in the workshop or on leave. All updated in real-time."
         },
         "WatchDemo": "Watch Demo Video"
       },

@@ -6,7 +6,7 @@ import {
   SectionColWrapper,
   SectionRowWrapper,
 } from "@/components/page/pageWrappers"
-import RyogoTag from "@/components/tags/ryogoTag"
+import { RyogoTagWithoutBG } from "@/components/tags/ryogoTag"
 import { RyogoCaption, RyogoP } from "@/components/typography"
 import { FindBookingDetailsByIdType } from "@ryogo-travel-app/api/services/booking.services"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
@@ -74,7 +74,7 @@ function VehicleCard({
         <RyogoCaption color="light" weight="font-bold">
           {vehicle.type}
         </RyogoCaption>
-        <RyogoTag icon={User} label={vehicle.capacity.toString()} />
+        <RyogoTagWithoutBG icon={User} label={vehicle.capacity.toString()} />
         {vehicle.hasAC && <RyogoIcon size="xs" icon={AirVent} color="light" />}
       </SectionColWrapper>
     </SectionRowWrapper>

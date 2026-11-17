@@ -44,9 +44,6 @@ export default function ChangeUserPhonePageComponent({
 
   const form = useForm<ModifyUserType>({
     resolver: zodResolver(modifyUserSchema),
-    defaultValues: {
-      newPhone: user.phone,
-    },
   })
 
   async function onSubmit(values: ModifyUserType) {

@@ -13,7 +13,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { FeatureGrid } from "./featureWrappers"
 
-//TODO: Add product images
+//TODO: Analytics section
 export default async function FeaturesMenuSection() {
   const t = await getTranslations("Landing.Features.Menu")
   return (
@@ -42,12 +42,12 @@ export default async function FeaturesMenuSection() {
             href="#communication"
             imageSrc="/features/menu/communication.png"
           />
-          <FeaturesMenuItem
+          {/* <FeaturesMenuItem
             title={t("M4")}
             subtitle={t("M4Subtitle")}
             href="#analytics"
             imageSrc="/features/menu/analytics.png"
-          />
+          /> */}
           <FeaturesMenuItem
             title={t("M5")}
             subtitle={t("M5Subtitle")}
@@ -91,7 +91,7 @@ async function FeaturesMenuItem({
           </RyogoH4>
           <RyogoSmall color="light">{subtitle}</RyogoSmall>
         </SectionColWrapper>
-        <div className="relative mt-auto w-full max-w-2xl aspect-video rounded-lg overflow-hidden transition-transform duration-300 md:group-hover:scale-103">
+        <div className="relative mt-auto w-full max-w-2xl aspect-4/3 rounded-lg overflow-hidden transition-transform duration-300 md:group-hover:scale-103">
           <Image
             className="object-cover"
             loading="eager"

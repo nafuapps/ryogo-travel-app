@@ -11,7 +11,10 @@ import {
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { TripLogStatusPill } from "@/components/pills/ryogoPills"
+import {
+  BookingStatusPill,
+  TripLogStatusPill,
+} from "@/components/pills/ryogoPills"
 import RyogoImageIconTag from "@/components/tags/ryogoImageIconTag"
 import RyogoTag from "@/components/tags/ryogoTag"
 import {
@@ -21,6 +24,7 @@ import {
   RyogoSmall,
 } from "@/components/typography"
 import { getDisplayTime } from "@/lib/utils"
+import { FindAgencySearchDataType } from "@ryogo-travel-app/api/services/agency.services"
 import {
   FindBookingHistoryLastDaysType,
   FindBookingScheduleNextDaysType,
@@ -48,7 +52,11 @@ import {
   FindVehicleCompletedBookingsByIdType,
   FindVehiclesScheduleNextDaysType,
 } from "@ryogo-travel-app/api/services/vehicle.services"
-import { BookingTypeEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import {
+  BookingStatusEnum,
+  BookingTypeEnum,
+  VehicleTypesEnum,
+} from "@ryogo-travel-app/db/schema"
 import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import {
   Ban,
@@ -483,5 +491,43 @@ export function LeadBookingCard({
         </RyogoSmall>
       </BookingCardLineWrapper>
     </BookingCardWrapper>
+  )
+}
+
+export function SearchBookingCard({
+  booking,
+}: {
+  booking: FindAgencySearchDataType["bookings"][number]
+}) {
+  return (
+    <Link href={`/dashboard/bookings/${booking.id}`} prefetch={false}>
+      <SectionColWrapper className="bg-white dark:bg-slate-800 rounded">
+        <BookingCardHeaderWrapper bookingId={booking.id}>
+          <RyogoCaption
+            color={booking.startDate < new Date() ? "red" : "light"}
+          >
+            {moment(booking.startDate).format("DD MMM") +
+              " - " +
+              moment(booking.endDate).format("DD MMM")}
+          </RyogoCaption>
+        </BookingCardHeaderWrapper>
+        <BookingCardRouteWrapper
+          source={booking.source.city}
+          destination={booking.destination.city}
+          type={booking.type}
+        />
+        <BookingCardAssignedWrapper
+          assignedDriver={booking.assignedDriver}
+          assignedVehicle={booking.assignedVehicle}
+          showReminder={
+            booking.startDate < new Date() &&
+            booking.status !== BookingStatusEnum.CANCELLED
+          }
+        />
+        <div className="px-3 lg:px-4 pb-2 lg:pb-3">
+          <BookingStatusPill status={booking.status} />
+        </div>
+      </SectionColWrapper>
+    </Link>
   )
 }

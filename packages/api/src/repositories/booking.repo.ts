@@ -275,21 +275,31 @@ export const bookingRepository = {
             state: true,
           },
         },
-        assignedDriver: {
-          columns: {
-            name: true,
-            phone: true,
-          },
-        },
+
         assignedUser: {
           columns: {
             name: true,
             phone: true,
           },
         },
+        assignedDriver: {
+          columns: {
+            name: true,
+            phone: true,
+          },
+          with: {
+            user: {
+              columns: {
+                photoUrl: true,
+              },
+            },
+          },
+        },
         assignedVehicle: {
           columns: {
             vehicleNumber: true,
+            vehiclePhotoUrl: true,
+            type: true,
           },
         },
         bookedByUser: {

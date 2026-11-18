@@ -97,7 +97,7 @@ export default async function ResourcesAboutSection() {
             {/* //TODO: Add founder image */}
             <Image
               src={"/logoPWA.png"}
-              className="object-cover md:transition-transform md:duration-300 md:group-hover:scale-105"
+              className="object-cover md:transition-transform md:duration-300 md:group-hover:scale-103"
               alt={"Founder"}
               fill
               sizes="448px"

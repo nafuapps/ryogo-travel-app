@@ -89,7 +89,7 @@ export default async function OnboardingHomePage({
                 ? `/onboarding/create-account?phone=${phone}`
                 : "/onboarding/create-account"
             }
-            className="w-full max-w-xl"
+            className="w-full max-w-2xl"
           >
             <RyogoBrandButton
               size={"lg"}
@@ -102,7 +102,7 @@ export default async function OnboardingHomePage({
           <TileGridWrapper>
             <SectionWrapper
               id="OnboardingHomeSteps"
-              className="animate-zoom-in max-w-xl mx-auto lg:ml-auto lg:mr-0"
+              className="animate-zoom-in max-w-2xl mx-auto lg:ml-auto lg:mr-0"
             >
               <RyogoH4 color="light" weight="font-bold">
                 {t("BodySteps.Title")}
@@ -136,7 +136,7 @@ export default async function OnboardingHomePage({
             </SectionWrapper>
             <SectionWrapper
               id="OnboardingHomeChecklist"
-              className="animate-zoom-in max-w-xl mx-auto lg:mr-auto lg:ml-0"
+              className="animate-zoom-in max-w-2xl mx-auto lg:mr-auto lg:ml-0"
             >
               <RyogoH4 color="light" weight="font-bold">
                 {t("BodyChecklist.Title")}

@@ -22,14 +22,14 @@ export default async function HomeROICard() {
         <RyogoP color="light" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
-        <div className="w-full max-w-xl aspect-video rounded overflow-hidden relative">
+        <div className="w-full max-w-2xl aspect-video rounded overflow-hidden relative">
           <Image
             className="object-cover w-full"
             loading="eager"
             src={"/logoPWA.png"}
             alt={t("Title")}
             fill
-            sizes="576px"
+            sizes="672px"
           />
         </div>
         <Link href="/pricing#roi" prefetch={false}>

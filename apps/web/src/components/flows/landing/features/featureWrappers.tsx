@@ -36,7 +36,7 @@ export function FeatureItem({
       </div>
       <div className="mt-auto w-full max-w-2xl relative rounded-xl aspect-4/3 overflow-hidden">
         <Image
-          className="object-cover rounded-md md:transition-transform md:duration-300 md:group-hover:scale-105"
+          className="object-cover rounded-md md:transition-transform md:duration-300 md:group-hover:scale-103"
           loading="eager"
           src={VERCEL_BLOB_STORAGE_URL + src}
           alt={title}

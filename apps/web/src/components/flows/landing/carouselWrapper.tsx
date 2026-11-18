@@ -64,7 +64,7 @@ export function BlogCarouselItem({
         <div className="border-8 md:border-10 border-slate-100/50 dark:border-slate-700/50 w-full max-w-2xl relative rounded-lg aspect-video overflow-hidden">
           <Image
             src={imageSrc}
-            className="object-cover rounded-lg md:transition-transform md:duration-300 md:group-hover:scale-105"
+            className="object-cover rounded-lg md:transition-transform md:duration-300 md:group-hover:scale-103"
             alt={title}
             fill
             sizes="672px"

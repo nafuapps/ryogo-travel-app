@@ -27,7 +27,7 @@ export function SupportBlogItem({
         <div className="w-full max-w-2xl relative rounded-xl aspect-video overflow-hidden">
           <Image
             src={imageSrc}
-            className="object-cover md:transition-transform md:duration-300 md:group-hover:scale-105"
+            className="object-cover md:transition-transform md:duration-300 md:group-hover:scale-103"
             alt={title}
             fill
             sizes="672px"

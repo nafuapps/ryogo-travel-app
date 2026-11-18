@@ -1,30 +1,24 @@
 "use client"
 
+import CustomerItemComponent from "@/app/dashboard/customers/customerItemComponent"
 import {
   RyogoDefaultButton,
   RyogoGhostButton,
 } from "@/components/buttons/ryogoButtons"
+import { SearchBookingCard } from "@/components/flows/bookings/cards/bookingCards"
+import DriverItemComponent from "@/components/flows/drivers/home/driverItemComponent"
 import SubscriptionReminderButton from "@/components/flows/susbcription/subscriptionReminderButton"
-import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
-import GetVehicleEnclosedIcon, {
-  GetCanDriveIcons,
-} from "@/components/icons/vehicleIcon"
-import { RyogoImage } from "@/components/images/ryogoImage"
+import VehicleItemComponent from "@/components/flows/vehicles/home/vehicleItemComponent"
+import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import {
   FormWrapper,
-  GridItemWrapper,
-  HoverGridWrapper,
   PageWrapper,
+  SectionColWrapper,
   SectionWrapper,
+  TileGridWrapper,
 } from "@/components/page/pageWrappers"
 import { PaginationControls } from "@/components/pagination/paginationControls"
-import {
-  BookingStatusPill,
-  CustomerStatusPill,
-  DriverStatusPill,
-  VehicleStatusPill,
-} from "@/components/pills/ryogoPills"
-import { RyogoCaption, RyogoSmall } from "@/components/typography"
+import { RyogoCaption } from "@/components/typography"
 import { FormField, FormItem, FormMessage } from "@/components/ui/form"
 import {
   InputGroup,
@@ -44,10 +38,8 @@ import {
   PREMIUM_SEARCH_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
 import { FindAgencySearchDataType } from "@ryogo-travel-app/api/services/agency.services"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
-import { History, Search, User } from "lucide-react"
+import { History, Search } from "lucide-react"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
@@ -358,68 +350,81 @@ export default function SearchPageComponent({
           </div>
         )}
       </SectionWrapper>
-      {searchResultType && (
-        <SectionWrapper id="SearchResults">
-          {searchResultType === SearchTypeEnum.Bookings ? (
-            // Paginated booking search result
+      {searchResultType === SearchTypeEnum.Bookings && (
+        // Paginated booking search result
+        <SectionColWrapper>
+          <RyogoCaption weight="font-bold">
+            {t("ResultsFound", {
+              count: bookingSearchResultSet.length,
+              type: "booking",
+            })}
+          </RyogoCaption>
+          {bookingSearchResultSet.length > 0 && (
             <>
-              <RyogoCaption weight="font-bold">
-                {t("ResultsFound", {
-                  count: bookingSearchResultSet.length,
-                  type: "booking",
+              <TileGridWrapper>
+                {currentItems.map((b) => {
+                  return <SearchBookingCard key={b.id} booking={b} />
                 })}
-              </RyogoCaption>
-              {bookingSearchResultSet.length > 0 && (
-                <>
-                  {currentItems.map((b) => {
-                    return <BookingSearchResultItem key={b.id} booking={b} />
-                  })}
-                  <PaginationControls
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                  />
-                </>
-              )}
-            </>
-          ) : searchResultType === SearchTypeEnum.Customers ? (
-            <>
-              <RyogoCaption weight="font-bold">
-                {t("ResultsFound", {
-                  count: customerSearchResultSet.length,
-                  type: "customer",
-                })}
-              </RyogoCaption>
-              {customerSearchResultSet.map((c) => {
-                return <CustomerSearchResultItem key={c.id} customer={c} />
-              })}
-            </>
-          ) : searchResultType === SearchTypeEnum.Vehicles ? (
-            <>
-              <RyogoCaption weight="font-bold">
-                {t("ResultsFound", {
-                  count: vehicleSearchResultSet.length,
-                  type: "vehicle",
-                })}
-              </RyogoCaption>
-              {vehicleSearchResultSet.map((v) => {
-                return <VehicleSearchResultItem key={v.id} vehicle={v} />
-              })}
-            </>
-          ) : (
-            <>
-              <RyogoCaption weight="font-bold">
-                {t("ResultsFound", {
-                  count: driverSearchResultSet.length,
-                  type: "driver",
-                })}
-              </RyogoCaption>
-              {driverSearchResultSet.map((d) => {
-                return <DriverSearchResultItem key={d.id} driver={d} />
-              })}
+              </TileGridWrapper>
+              <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </>
           )}
-        </SectionWrapper>
+        </SectionColWrapper>
+      )}
+      {searchResultType === SearchTypeEnum.Customers && (
+        <SectionColWrapper>
+          <RyogoCaption weight="font-bold">
+            {t("ResultsFound", {
+              count: customerSearchResultSet.length,
+              type: "customer",
+            })}
+          </RyogoCaption>
+          {customerSearchResultSet.length > 0 && (
+            <TileGridWrapper>
+              {customerSearchResultSet.map((c) => {
+                return <CustomerItemComponent key={c.id} customer={c} />
+              })}
+            </TileGridWrapper>
+          )}
+        </SectionColWrapper>
+      )}
+      {searchResultType === SearchTypeEnum.Vehicles && (
+        <SectionColWrapper>
+          <RyogoCaption weight="font-bold">
+            {t("ResultsFound", {
+              count: vehicleSearchResultSet.length,
+              type: "vehicle",
+            })}
+          </RyogoCaption>
+          {vehicleSearchResultSet.length > 0 && (
+            <TileGridWrapper>
+              {vehicleSearchResultSet.map((v) => {
+                return <VehicleItemComponent key={v.id} vehicle={v} />
+              })}
+            </TileGridWrapper>
+          )}
+        </SectionColWrapper>
+      )}
+      {searchResultType === SearchTypeEnum.Drivers && (
+        <SectionColWrapper>
+          <RyogoCaption weight="font-bold">
+            {t("ResultsFound", {
+              count: driverSearchResultSet.length,
+              type: "driver",
+            })}
+          </RyogoCaption>
+          {driverSearchResultSet.length > 0 && (
+            <TileGridWrapper>
+              {driverSearchResultSet.map((d) => {
+                return <DriverItemComponent key={d.id} driver={d} />
+              })}
+            </TileGridWrapper>
+          )}
+        </SectionColWrapper>
       )}
     </PageWrapper>
   )
@@ -456,152 +461,6 @@ function SearchOption({
         {searchType}
       </RyogoCaption>
     </div>
-  )
-}
-
-function BookingSearchResultItem({
-  booking,
-}: {
-  booking: SearchDataType["bookings"][number]
-}) {
-  return (
-    <Link href={`/dashboard/bookings/${booking.id}`} prefetch={false}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{booking.id}</RyogoCaption>
-          <RyogoSmall>{booking.customer.name}</RyogoSmall>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">{booking.type}</RyogoCaption>
-          <RyogoSmall>
-            {booking.source.city + " - " + booking.destination.city}
-          </RyogoSmall>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="slate">
-            {booking.assignedVehicle?.vehicleNumber}
-          </RyogoCaption>
-          <RyogoSmall>{booking.assignedDriver?.name}</RyogoSmall>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <BookingStatusPill status={booking.status} />
-        </GridItemWrapper>
-      </HoverGridWrapper>
-    </Link>
-  )
-}
-
-function DriverSearchResultItem({
-  driver,
-}: {
-  driver: SearchDataType["drivers"][number]
-}) {
-  return (
-    <Link href={`/dashboard/drivers/${driver.id}`} prefetch={false}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          {driver.user.photoUrl ? (
-            <RyogoImage
-              src={getFileUrl(driver.user.photoUrl)}
-              alt={driver.name}
-              imageSize="sm"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={User} size="md" />
-          )}
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="light">{driver.id}</RyogoCaption>
-          <RyogoCaption color="slate">{driver.phone}</RyogoCaption>
-          <RyogoSmall>{driver.name}</RyogoSmall>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <GetCanDriveIcons canDrive={driver.canDriveVehicleTypes} />
-          <RyogoCaption color="slate">{driver.address}</RyogoCaption>
-          <RyogoCaption color="light">{driver.licenseNumber}</RyogoCaption>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <DriverStatusPill status={driver.status} />
-        </GridItemWrapper>
-      </HoverGridWrapper>
-    </Link>
-  )
-}
-
-function CustomerSearchResultItem({
-  customer,
-}: {
-  customer: SearchDataType["customers"][number]
-}) {
-  return (
-    <Link href={`/dashboard/customers/${customer.id}`} prefetch={false}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          {customer.photoUrl ? (
-            <RyogoImage
-              src={getFileUrl(customer.photoUrl)}
-              alt={customer.name}
-              imageSize="sm"
-            />
-          ) : (
-            <RyogoEnclosedIcon icon={User} size="md" />
-          )}
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="light">{customer.id}</RyogoCaption>
-          <RyogoCaption color="slate">{customer.phone}</RyogoCaption>
-          <RyogoSmall>{customer.name}</RyogoSmall>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          {customer.email && (
-            <RyogoCaption color="light">{customer.email}</RyogoCaption>
-          )}
-          <RyogoCaption color="slate">{customer.location.state}</RyogoCaption>
-          <RyogoSmall>{customer.location.city}</RyogoSmall>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <CustomerStatusPill status={customer.status} />
-        </GridItemWrapper>
-      </HoverGridWrapper>
-    </Link>
-  )
-}
-
-function VehicleSearchResultItem({
-  vehicle,
-}: {
-  vehicle: SearchDataType["vehicles"][number]
-}) {
-  return (
-    <Link href={`/dashboard/vehicles/${vehicle.id}`} prefetch={false}>
-      <HoverGridWrapper>
-        <GridItemWrapper>
-          {vehicle.vehiclePhotoUrl ? (
-            <RyogoImage
-              src={getFileUrl(vehicle.vehiclePhotoUrl)}
-              alt={vehicle.vehicleNumber}
-              imageSize="sm"
-            />
-          ) : (
-            <GetVehicleEnclosedIcon vehicleType={vehicle.type} size="md" />
-          )}
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="light">{vehicle.id}</RyogoCaption>
-          <RyogoSmall>{vehicle.vehicleNumber}</RyogoSmall>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <RyogoCaption color="light">{vehicle.color}</RyogoCaption>
-          <RyogoCaption color="slate">
-            {vehicle.brand + " " + vehicle.model}
-          </RyogoCaption>
-          <RyogoSmall>{vehicle.type}</RyogoSmall>
-        </GridItemWrapper>
-        <GridItemWrapper>
-          <VehicleStatusPill status={vehicle.status} />
-        </GridItemWrapper>
-      </HoverGridWrapper>
-    </Link>
   )
 }
 

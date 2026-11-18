@@ -4976,7 +4976,7 @@
         "VehicleRepairAdded": "New vehicle repair added for {vehicleNumber} by {userName}",
         "VehicleRepairModified": "Vehicle repair details edited for {vehicleNumber} by {userName}",
         "VehicleRepairStarted": "Vehicle repair for {vehicleNumber} has been started on {startDate} by {userName}",
-        "VehicleRepairEnded": "Vehcile repair for {vehicleNumber} has been ended on {endDate} by {userName}",
+        "VehicleRepairEnded": "Vehicle repair for {vehicleNumber} has been ended on {endDate} by {userName}",
         "SubscriptionPurchased": "{plan} Premium subscription plan has been activated by {userName}",
         "AgentAdded": "New agent {agentName} has been added by {userName}",
         "UserPhotoChanged": "{userName} photo has changed",
@@ -7029,11 +7029,11 @@
         },
         "A3": {
           "Title": "Record every detail",
-          "Description": "Review and reconcile every booking with the help of transactions, expenses and trip logs to confirm and close the loop for every journey."
+          "Description": "Review and reconcile every booking detail with the help of transactions, expenses and trip logs to confirm and close the loop for every journey."
         },
         "A4": {
-          "Title": "Finer controls for every detail",
-          "Description": "Add driver leave or vehicle repair reminders. Or just create custom reminders for any task."
+          "Title": "Finer controls for your assets",
+          "Description": "Add driver leave or vehicle repair planning. Or just create custom reminders for any task."
         }
       },
       "Security": {
@@ -7117,7 +7117,7 @@
         },
         "DataPrivacy": {
           "Question": "Will my agency or customer data be shared with other businesses?",
-          "Answer": "Absolutely not. All your data is kept secured and private in RyoGo. We will not share your data with any third party or other businesses. Now or in the future."
+          "Answer": "Absolutely not. All your data is kept secured and private in RyoGo. We will not share your data with any third party or other businesses.. now or in the future."
         },
         "MoreCTA": "Explore More Resources"
       },
@@ -7544,7 +7544,7 @@
         },
         "DriverActions": {
           "Question": "What all can a driver do in RyoGo?",
-          "Answer": "Driver can view assigned bookings, call customer, update trip status in single clicks (like arrived at location, customer picked up, dropped, etc), add expenses, view past bookings, view assigned vehcile details, initiate chat with agent, etc. All actions are review by the system for fraud or malpractice."
+          "Answer": "Driver can view assigned bookings, call customer, update trip status in single clicks (like arrived at location, customer picked up, dropped, etc), add expenses, view past bookings, view assigned vehicle details, initiate chat with agent, etc. All actions are review by the system for fraud or malpractice."
         },
         "AgentActions": {
           "Question": "What all can an agent do in RyoGo?",
@@ -7552,7 +7552,7 @@
         },
         "NewBooking": {
           "Question": "How is a new booking created? Explain in detail.",
-          "Answer": "New booking is created in 5 easy steps and it takes less than a minute with system guidance. First, the customer is selected or added using a phone number. Second, trip details (location, date, type, etc.) are selected. Third, driver and vehicle are assigned (optional). Fourth, trip costs (vehicle rate, driver allowance, agency commission, etc.) are input, if not already prefilled. Finally, overall trip summary can be reviewed to create the booking. Please note that, a bew booking is created as a lead and must be confirmed by the agent."
+          "Answer": "New booking is created in 5 easy steps and it takes less than a minute with system guidance. First, the customer is selected or added using a phone number. Second, trip details (location, date, type, etc.) are selected. Third, driver and vehicle are assigned (optional). Fourth, trip costs (vehicle rate, driver allowance, agency commission, etc.) are input, if not already prefilled. Finally, overall trip summary can be reviewed to create the booking. Please note that, a new booking is created as a lead and must be confirmed by the agent."
         },
         "MoreCTA": "Explore More Resources"
       },

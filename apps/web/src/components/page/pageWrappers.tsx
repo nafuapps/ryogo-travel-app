@@ -174,7 +174,7 @@ export function AuthContentWrapper({
 }) {
   return (
     <div
-      className={`empty:hidden flex flex-col relative gap-5 md:gap-6 bg-white dark:bg-slate-800 rounded-lg shadow-lg w-full sm:max-w-lg lg:max-w-xl m-auto p-5 md:p-6 ${className ?? ""}`}
+      className={`empty:hidden flex flex-col relative gap-5 md:gap-6 bg-white dark:bg-slate-800 rounded-lg shadow-lg w-full sm:max-w-lg m-auto p-5 md:p-6 ${className ?? ""}`}
     >
       {children}
     </div>

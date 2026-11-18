@@ -1,18 +1,18 @@
-import { RyogoH1, RyogoP } from "@/components/typography"
-import { getTranslations } from "next-intl/server"
+import {
+  RyogoGhostButton,
+  RyogoOutlineButton,
+  RyogoWhiteButton,
+} from "@/components/buttons/ryogoButtons"
 import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import Link from "next/link"
-import { ChevronDown } from "lucide-react"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
-import {
-  RyogoWhiteButton,
-  RyogoOutlineButton,
-  RyogoGhostButton,
-} from "@/components/buttons/ryogoButtons"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import { RyogoVideo } from "@/components/video/ryogoVideo"
+import { ChevronDown } from "lucide-react"
+import { getTranslations } from "next-intl/server"
+import Link from "next/link"
 
 export default async function ResourcesHeroSection() {
   const t = await getTranslations("Landing.Resources.Hero")
@@ -53,7 +53,7 @@ export default async function ResourcesHeroSection() {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col max-w-xl mt-8 lg:mt-0 gap-4 lg:gap-5 items-center justify-center w-full">
+        <div className="flex flex-col lg:max-w-1/2 mt-8 lg:mt-0 gap-4 lg:gap-5 items-center justify-center w-full">
           {/* //TODO: Add video source */}
           <RyogoVideo
             src="https://www.youtube.com/embed/1MobY_vR7-g"

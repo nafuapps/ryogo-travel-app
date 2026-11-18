@@ -1,6 +1,6 @@
-import { ChevronRight, LucideIcon } from "lucide-react"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoCaption } from "@/components/typography"
+import { ChevronRight, LucideIcon } from "lucide-react"
 
 export default function RyogoDetailedIconButton({
   label,
@@ -22,7 +22,7 @@ export default function RyogoDetailedIconButton({
       onClick={onClick}
       disabled={disabled}
       className={`p-2 lg:p-3 gap-2 lg:gap-3 items-center flex hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition w-full ${className ?? ""} ${
-        disabled ? "opacity-50 cursor-not-allowed" : ""
+        disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
       }`}
     >
       <RyogoEnclosedIcon icon={icon} size="sm" color="black" />

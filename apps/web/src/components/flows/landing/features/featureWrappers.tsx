@@ -5,7 +5,7 @@ import Image from "next/image"
 
 export function FeatureGrid({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
       {children}
     </div>
   )
@@ -28,7 +28,7 @@ export function FeatureItem({
 }) {
   return (
     <ScrollZoomIn
-      className={`w-full group flex flex-col lg:p-3 rounded-lg gap-4 lg:gap-5 ${long ? "md:flex-row md:col-span-2 md:items-center" : ""} ${longReverse ? "md:flex-row-reverse md:col-span-2 md:items-center" : ""} ${className ?? ""}`}
+      className={`w-full group flex flex-col py-3 lg:p-3 rounded-lg gap-4 lg:gap-5 ${long ? "md:flex-row md:col-span-2 md:items-center" : ""} ${longReverse ? "md:flex-row-reverse md:col-span-2 md:items-center" : ""} ${className ?? ""}`}
     >
       <div className="flex flex-col gap-3 lg:gap-4 w-full">
         <RyogoH4 weight="font-bold">{title}</RyogoH4>

@@ -17,6 +17,7 @@ import {
   RyogoH4,
   RyogoP,
   RyogoSmall,
+  RyogoTiny,
 } from "@/components/typography"
 import {
   Accordion,
@@ -33,6 +34,7 @@ import {
 import { Slider } from "@/components/ui/slider"
 import { formatIndianCurrency } from "@/lib/utils"
 import {
+  BASIC_PLAN_VEHICLE_LIMIT,
   MONTHLY_SUBSCRIPTION_DAYS,
   MONTHLY_SUBSCRIPTION_FINAL_PRICE,
 } from "@ryogo-travel-app/api/apiConfig"
@@ -213,7 +215,7 @@ export default function ROICard() {
             <AccordionTrigger>
               <RyogoSmall color="light">{t("Input.Advanced")}</RyogoSmall>
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col w-full gap-4 lg:gap-5">
+            <AccordionContent className="flex flex-col w-full gap-4 md:gap-5">
               <ROISlider
                 label={t("Input.MonthlyWage")}
                 min={MONTHLY_WAGE_MIN}
@@ -264,7 +266,7 @@ export default function ROICard() {
             {formatIndianCurrency(totalSavings)}
           </RyogoH1>
         </SectionColWrapper>
-        <div className="w-full lg:w-3/4 flex flex-col rounded-md gap-2 lg:gap-3 bg-white dark:bg-slate-800 p-3 md:p-4">
+        <div className="w-full md:w-3/4 flex flex-col rounded-md gap-2 md:gap-3 bg-white dark:bg-slate-800 p-3 md:p-4">
           <OutputRow
             label={t("Output.TimeSaved.Label")}
             value={t("Output.TimeSaved.Value", {
@@ -287,19 +289,24 @@ export default function ROICard() {
             label={t("Output.TotalMoneySavings")}
             value={formatIndianCurrency(totalMoneySavings)}
           />
-          {roiDays <= MONTHLY_SUBSCRIPTION_DAYS && (
-            <OutputRow
-              label={t("Output.Return")}
-              value={t("Output.ReturnDays", { days: roiDays.toFixed(0) })}
-            />
-          )}
         </div>
+        {roiDays <= MONTHLY_SUBSCRIPTION_DAYS && (
+          <SectionRowWrapper small>
+            <RyogoSmall color="slate">{t("Output.Return")}</RyogoSmall>
+            <RyogoSmall weight="font-bold">
+              {t("Output.ReturnDays", { days: roiDays.toFixed(0) })}
+            </RyogoSmall>
+          </SectionRowWrapper>
+        )}
         {totalSavings > 0 && roiDays <= MONTHLY_SUBSCRIPTION_DAYS && (
           <ROIReportPDFDownloadButton
             label={t("Output.DownloadCTA")}
             report={report}
           />
         )}
+        <RyogoTiny color="light" className="text-center">
+          {t("Output.Footnote", { limit: BASIC_PLAN_VEHICLE_LIMIT })}
+        </RyogoTiny>
       </div>
     </ScrollZoomIn>
   )
@@ -407,12 +414,12 @@ function TabSelect({
       <RyogoCaption color="light" weight="font-bold">
         {label}
       </RyogoCaption>
-      <div className="flex items-center w-full rounded-lg border bg-white dark:bg-slate-800 gap-1.5 lg:gap-2 p-1 lg:p-1.5 self-center">
+      <div className="flex items-center w-full rounded-lg border bg-white dark:bg-slate-800 gap-1.5 md:gap-2 p-1 md:p-1.5 self-center">
         {tabs.map((tab) => (
           <div
             key={tab}
             onClick={() => setSelected(tab)}
-            className={`flex w-full items-center rounded transition justify-center p-1.5 lg:p-2 ${
+            className={`flex w-full items-center rounded transition justify-center p-1.5 md:p-2 ${
               selected === tab
                 ? "bg-slate-900 dark:bg-slate-50 shadow"
                 : "hover:bg-slate-100 dark:hover:bg-slate-700 hover:shadow-xs"

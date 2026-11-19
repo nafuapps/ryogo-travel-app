@@ -501,7 +501,7 @@ export function SearchBookingCard({
 }) {
   return (
     <Link href={`/dashboard/bookings/${booking.id}`} prefetch={false}>
-      <SectionColWrapper className="bg-white dark:bg-slate-800 rounded">
+      <SectionColWrapper className="bg-white dark:bg-slate-800 rounded-lg shadow hover:opacity-70">
         <BookingCardHeaderWrapper bookingId={booking.id}>
           <RyogoCaption
             color={booking.startDate < new Date() ? "red" : "light"}

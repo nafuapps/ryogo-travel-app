@@ -14,6 +14,7 @@ import {
   RyogoP,
   RyogoSmall,
 } from "@/components/typography"
+import { VERCEL_BLOB_STORAGE_URL } from "@ryogo-travel-app/api/apiConfig"
 import { Quote } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
@@ -32,7 +33,7 @@ export default async function ResourcesAboutSection() {
         <RyogoP color="light" className="max-w-4xl text-center">
           {t("Subtitle")}
         </RyogoP>
-        <ScrollZoomIn className="bg-white dark:bg-sky-950 relative shadow w-full max-w-4xl rounded-lg p-6 md:p-8 my-3 md:my-4 flex flex-col items-center gap-4 md:gap-6 overflow-hidden">
+        <ScrollZoomIn className="bg-white dark:bg-sky-950 relative shadow w-full max-w-4xl rounded-lg px-8 md:px-10 py-12 md:py-16 my-3 md:my-4 flex flex-col items-center gap-4 md:gap-6 overflow-hidden">
           <div className="bg-linear-to-b from-sky-900 dark:from-sky-50 to-sky-700 dark:to-sky-200 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -top-10 md:-left-14 md:-top-14 lg:-left-16 lg:-top-16"></div>
           <div className="bg-linear-to-b from-sky-900 dark:from-sky-50 to-sky-700 dark:to-sky-200 rounded-full size-20 md:size-28 lg:size-32 absolute -right-10 -top-10 md:-right-14 md:-top-14 lg:-right-16 lg:-top-16"></div>
           <div className="bg-linear-to-b from-sky-700 dark:from-sky-200 to-sky-500 dark:to-sky-400 rounded-full size-20 md:size-28 lg:size-32 absolute -left-10 -bottom-10 md:-left-14 md:-bottom-14 lg:-left-16 lg:-bottom-16"></div>
@@ -93,14 +94,13 @@ export default async function ResourcesAboutSection() {
               />
             </SectionRowWrapper>
           </div>
-          <div className="mx-auto w-full max-w-md relative rounded-xl aspect-square overflow-hidden">
-            {/* //TODO: Add founder image */}
+          <div className="mx-auto w-full max-w-xs relative rounded-xl aspect-square overflow-hidden">
             <Image
-              src={"/logoPWA.png"}
-              className="object-cover md:transition-transform md:duration-300 md:group-hover:scale-103"
+              src={VERCEL_BLOB_STORAGE_URL + "/resources/founder.webp"}
+              className="object-cover md:transition-transform md:duration-300 md:hover:scale-103"
               alt={"Founder"}
               fill
-              sizes="448px"
+              sizes="384px"
             />
           </div>
         </div>

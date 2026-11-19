@@ -22,7 +22,6 @@ export default async function PricingROISection() {
           {t("Subtitle")}
         </RyogoP>
         <ROICard />
-
         <Link href="/onboarding" prefetch={false}>
           <RyogoDefaultButton
             size="lg"

@@ -7049,7 +7049,7 @@
         },
         "S3": {
           "Title": "Total Auditability",
-          "Description": "Never be afraid of data corruption. Track every single action, edit, adjustment, or override back to the specific user."
+          "Description": "24x7 data availability on cloud with no chance of data corruption. Track every single action, edit, adjustment, or override back to the specific user."
         },
         "S4": {
           "Title": "Easy to signup and login",
@@ -7232,7 +7232,8 @@
           "TotalMoneySavings": "Money saved",
           "Return": "Return on investment in",
           "ReturnDays": "{days, plural, =1 {1 day} other {# days}}",
-          "DownloadCTA": "Download Report"
+          "DownloadCTA": "Download Report",
+          "Footnote": "(RyoGo is free for agencies with less than {limit} vehicles, drivers or agents)"
         },
         "Dialog": {
           "Help": "How are these values calculated?",

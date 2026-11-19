@@ -22,7 +22,7 @@ import { Rows3, TagX } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-const CUSTOMERS_PER_PAGE = 4
+const CUSTOMERS_PER_PAGE = 6
 
 export default function AllCustomersListComponent({
   allCustomers,
@@ -64,43 +64,45 @@ export default function AllCustomersListComponent({
   }
 
   return (
-    <SectionWrapper id="AllCustomersSection">
-      <SectionHeaderWrapper
-        icon={Rows3}
-        label={t("Title")}
-        count={allCustomers.length}
-      />
-      <Field>
-        <ButtonGroup>
-          <Input
-            id="input-button-group"
-            placeholder={t("Type")}
-            value={searchTerm}
-            onChange={(e) => {
-              if (e.target.value === "") {
+    <>
+      <SectionWrapper id="AllCustomersSection">
+        <SectionHeaderWrapper
+          icon={Rows3}
+          label={t("Title")}
+          count={allCustomers.length}
+        />
+        <Field>
+          <ButtonGroup>
+            <Input
+              id="input-button-group"
+              placeholder={t("Type")}
+              value={searchTerm}
+              onChange={(e) => {
+                if (e.target.value === "") {
+                  searchCustomer("")
+                }
+                setSearchTerm(e.target.value)
+              }}
+            />
+            <RyogoOutlineButton
+              type="button"
+              aria-label="Clear"
+              onClick={() => {
+                setSearchTerm("")
                 searchCustomer("")
-              }
-              setSearchTerm(e.target.value)
-            }}
-          />
-          <RyogoOutlineButton
-            type="button"
-            aria-label="Clear"
-            onClick={() => {
-              setSearchTerm("")
-              searchCustomer("")
-            }}
-            disabled={searchTerm.length < 0}
-            label={t("Clear")}
-            labelColor={searchTerm.length < 0 ? "light" : "slate"}
-          />
-          <RyogoDefaultButton
-            aria-label="Search"
-            onClick={() => searchCustomer(searchTerm)}
-            label={t("Search")}
-          />
-        </ButtonGroup>
-      </Field>
+              }}
+              disabled={searchTerm.length < 0}
+              label={t("Clear")}
+              labelColor={searchTerm.length < 0 ? "light" : "slate"}
+            />
+            <RyogoDefaultButton
+              aria-label="Search"
+              onClick={() => searchCustomer(searchTerm)}
+              label={t("Search")}
+            />
+          </ButtonGroup>
+        </Field>
+      </SectionWrapper>
       {currentItems.length > 0 ? (
         <TileGridWrapper>
           {currentItems.map((customer) => (
@@ -115,6 +117,6 @@ export default function AllCustomersListComponent({
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
-    </SectionWrapper>
+    </>
   )
 }

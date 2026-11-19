@@ -5,12 +5,12 @@ import {
 } from "@/components/flows/landing/landingWrappers"
 import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH1, RyogoP } from "@/components/typography"
+import { VERCEL_BLOB_STORAGE_URL } from "@ryogo-travel-app/api/apiConfig"
 import { ChevronRight } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import Link from "next/link"
 
-//TODO: Add ROI Calculator and report image
 export default async function HomeROICard() {
   const t = await getTranslations("Landing.Home.ROICard")
   return (
@@ -22,14 +22,14 @@ export default async function HomeROICard() {
         <RyogoP color="light" className="text-center max-w-4xl">
           {t("Subtitle")}
         </RyogoP>
-        <div className="w-full max-w-2xl aspect-video rounded overflow-hidden relative">
+        <div className="w-full max-w-3xl aspect-4/3 rounded-xl overflow-hidden relative">
           <Image
-            className="object-cover w-full"
+            className="object-cover rounded-md md:transition-transform md:duration-300 md:hover:scale-103"
             loading="eager"
-            src={"/logoPWA.png"}
+            src={VERCEL_BLOB_STORAGE_URL + "/home/roi.png"}
             alt={t("Title")}
             fill
-            sizes="672px"
+            sizes="768px"
           />
         </div>
         <Link href="/pricing#roi" prefetch={false}>

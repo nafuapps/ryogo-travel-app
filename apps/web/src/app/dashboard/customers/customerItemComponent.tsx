@@ -37,7 +37,7 @@ export default function CustomerItemComponent({
           ) : (
             <RyogoEnclosedIcon icon={User} size="lg" />
           )}
-          <SectionColWrapper small className="w-full">
+          <SectionColWrapper className="w-full">
             <RyogoP weight="font-bold"> {customer.name}</RyogoP>
             <RyogoCaption color="light" weight="font-medium">
               {customer.phone}

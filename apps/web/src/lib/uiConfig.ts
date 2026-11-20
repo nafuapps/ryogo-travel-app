@@ -1,6 +1,6 @@
 //Landing
 export const HOMEPAGE_URL = "https://ryogo.in"
-export const SLIDESHOW_TIMER_MS = 10000 //10 seconds
+export const SLIDESHOW_TIMER_MS = 8000 //8 seconds
 
 //Regex constants
 export const MIN_PASSWORD_LENGTH = 8

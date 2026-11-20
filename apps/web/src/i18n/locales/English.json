@@ -3090,7 +3090,7 @@
           "Support": "Support",
           "SupportDesc": "Priority 24x7 support over phone and ability to raise support tickets",
           "Analytics": "Analytics",
-          "AnalyticsDesc": "Get advanced analytics and AI suggestions to maximize your growth",
+          "AnalyticsDesc": "Get advanced analytics and smart suggestions to maximize your growth",
           "AppAccess": "App Access",
           "AppAccessDesc": "Full and unrestricted app access and priority access to new features.",
           "FinerControl": "Finer Control",
@@ -6839,7 +6839,7 @@
         },
         "W1": {
           "Title": "Create bookings",
-          "Description": "Easily add new customer bookings. Assign vehicles and drivers with the help of our AI suggestions."
+          "Description": "Easily add new customer bookings. Assign vehicles and drivers with the help of our smart suggestions."
         },
         "W2": {
           "Title": "Connect with drivers",
@@ -7153,7 +7153,7 @@
           "F1": "Unlimited bookings",
           "F2": "Unlimited vehicles, drivers and agents",
           "F3": "Priority 24x7 support over phone and tickets",
-          "F4": "Advanced analytics and AI suggestions",
+          "F4": "Advanced analytics and smart suggestions",
           "F5": "Reconcile transactions and expenses",
           "F6": "Full and unrestricted app access",
           "F7": "Priority access to new features",
@@ -7188,7 +7188,7 @@
         "Analytics": "ANALYTICS",
         "BasicAnalytics": "Basic analytics and insights",
         "AdvancedAnalytics": "Access to advanced analytics",
-        "AIRecommendations": "AI recommendations and tips to optimize operations",
+        "SmartRecommendations": "Smart recommendations and tips to optimize operations",
         "AgencyControl": "AGENCY CONTROL",
         "GetAlerts": "Get real-time actionable alerts",
         "Feed": "Receive agency-wide activity notifications",

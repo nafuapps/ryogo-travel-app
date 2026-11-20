@@ -142,7 +142,7 @@ export default async function PricingComparisionSection() {
             premiumItem={<BrandCheckIcon />}
           />
           <ComparisionRow
-            title={<RyogoSmall>{t("AIRecommendations")}</RyogoSmall>}
+            title={<RyogoSmall>{t("SmartRecommendations")}</RyogoSmall>}
             basicItem={<BlackCrossIcon />}
             premiumItem={<BrandCheckIcon />}
           />

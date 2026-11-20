@@ -5,8 +5,8 @@ import { RyogoIcon } from "@/components/icons/ryogoIcon"
 import { RyogoH3, RyogoP, RyogoSmall } from "@/components/typography"
 import { useSlideshow } from "@/hooks/useSlideshow"
 import { SLIDESHOW_TIMER_MS } from "@/lib/uiConfig"
+import { VERCEL_BLOB_STORAGE_URL } from "@ryogo-travel-app/api/apiConfig"
 import { LucideIcon } from "lucide-react"
-import Image from "next/image"
 
 export type SlideshowItemType = {
   src: string
@@ -26,11 +26,11 @@ export function SlideshowWrapper({
 
   return (
     <ScrollZoomIn
-      className={`mt-4 flex flex-col items-center gap-6 w-full ${reverse ? "md:flex-row-reverse" : "md:flex-row"}`}
+      className={`mt-4 flex flex-col items-center gap-6 w-full md:max-w-5xl ${reverse ? "md:flex-row-reverse" : "md:flex-row"}`}
     >
       {items[activeIndex] && (
         <SlideshowImageWrapper
-          imageSrc={items[activeIndex].src}
+          src={items[activeIndex].src}
           desc={items[activeIndex].title}
           side
         />
@@ -105,10 +105,10 @@ function SlideshowCard({
         className={`flex flex-col gap-3 lg:gap-4 transition duration-500 ${active ? "" : "hidden"}`}
       >
         <RyogoSmall color="slate">{item.description}</RyogoSmall>
-        <SlideshowImageWrapper imageSrc={item.src} desc={item.title} />
+        <SlideshowImageWrapper src={item.src} desc={item.title} />
       </div>
       {active ? (
-        <div className="rounded w-full h-0.5 lg:h-1 bg-white dark:bg-slate-800">
+        <div className="rounded w-full h-0.5 lg:h-1">
           <div
             className="h-full rounded bg-sky-700 dark:bg-sky-300"
             style={{ width: `${(timeLeft / SLIDESHOW_TIMER_MS) * 100}%` }}
@@ -122,26 +122,25 @@ function SlideshowCard({
 }
 
 function SlideshowImageWrapper({
-  imageSrc,
+  src,
   desc,
   side,
 }: {
-  imageSrc: string
+  src: string
   desc: string
   side?: boolean
 }) {
   return (
-    <div
-      className={`${side ? "hidden md:flex" : "flex md:hidden"} w-full aspect-square rounded-lg overflow-hidden relative`}
-    >
-      <Image
-        className="object-cover w-full"
-        loading="eager"
-        src={imageSrc}
-        alt={desc}
-        fill
-        sizes="768px"
-      />
-    </div>
+    <video
+      src={VERCEL_BLOB_STORAGE_URL + src} //Vercel blob storage URL
+      title={desc}
+      autoPlay
+      muted
+      loop
+      preload="metadata"
+      playsInline
+      controls
+      className={`${side ? "hidden md:flex" : "flex md:hidden"} rounded-lg overflow-hidden aspect-auto self-center w-full max-w-md md:max-w-full`}
+    />
   )
 }

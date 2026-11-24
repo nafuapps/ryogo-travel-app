@@ -26,40 +26,39 @@ import Link from "next/link"
 export default function HomeWorkingSection() {
   const t = useTranslations("Landing.Home.Working")
 
-  //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
-      src: "/home/fleet.png",
+      src: "/home/working/fleet.webm",
       icon: Car,
       title: t("W0.Title"),
       description: t("W0.Description"),
     },
     {
-      src: "/home/booking.png",
+      src: "/home/working/booking.webm",
       icon: Tickets,
       title: t("W1.Title"),
       description: t("W1.Description"),
     },
     {
-      src: "/home/connect.png",
+      src: "/home/working/connect.webm",
       icon: Workflow,
       title: t("W2.Title"),
       description: t("W2.Description"),
     },
     {
-      src: "/home/share.png",
+      src: "/home/working/share.webm",
       icon: Share2,
       title: t("W3.Title"),
       description: t("W3.Description"),
     },
     {
-      src: "/home/reconcile.png",
+      src: "/home/working/reconcile.webm",
       icon: Blocks,
       title: t("W4.Title"),
       description: t("W4.Description"),
     },
     {
-      src: "/home/control.png",
+      src: "/home/working/control.webm",
       icon: Settings2,
       title: t("W5.Title"),
       description: t("W5.Description"),

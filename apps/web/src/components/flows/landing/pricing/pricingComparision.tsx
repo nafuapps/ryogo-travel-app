@@ -84,6 +84,17 @@ export default async function PricingComparisionSection() {
         </ComparisionGroup>
         <ComparisionGroup title={t("Bookings")}>
           <ComparisionRow
+            title={<RyogoSmall>{t("CreateBookings")}</RyogoSmall>}
+            basicItem={
+              <RyogoSmall weight="font-bold">{t("Unlimited")}</RyogoSmall>
+            }
+            premiumItem={
+              <RyogoSmall weight="font-bold" color="brand">
+                {t("Unlimited")}
+              </RyogoSmall>
+            }
+          />
+          <ComparisionRow
             title={
               <RyogoSmall>
                 {t("ConfirmedBookings", {

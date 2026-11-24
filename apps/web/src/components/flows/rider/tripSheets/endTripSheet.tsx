@@ -125,8 +125,9 @@ export default function EndTripSheet({
       },
     })
     if (result) {
-      router.refresh()
       setOpen(false)
+      router.refresh()
+      toast.success(t("Success"))
     } else {
       toast.error(t("Error"))
       router.replace("/rider/myBookings")

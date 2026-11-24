@@ -243,6 +243,10 @@ async function OverviewContent() {
           {t("DriversSchedule.Description")}
         </RyogoCaption>
         <RyogoSupportVideo src="/drivers/schedule.webm" />
+        <SupportContentCTALinkButton
+          href={"/dashboard/drivers/schedule"}
+          label={t("DriversSchedule.CTA")}
+        />
       </SupportContentSectionWrapper>
       <SupportContentSectionWrapper title={t("DriverDetails.Title")}>
         <RyogoCaption color="slate">

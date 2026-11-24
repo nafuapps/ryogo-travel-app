@@ -8,14 +8,6 @@ import ResourcesVideosSection from "@/components/flows/landing/resources/resourc
 import { pageDescription, pageTitle } from "@/components/page/pageCommons"
 import { Metadata } from "next"
 
-//Hero (with main demo)
-//Videos
-//Support
-//Blog
-//About us
-//FAQs
-//CTA
-
 export const metadata: Metadata = {
   title: `Resources - ${pageTitle}`,
   description: pageDescription,

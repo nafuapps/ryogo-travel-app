@@ -1008,10 +1008,6 @@
       }
     },
     "NewBookingWithCustomer": {
-      "BookingTrialWarning": "You have reached the monthly booking limit for basic plan.",
-      "BookingExpiredWarning": "Your subscription plan has expired and you have reached the monthly booking limit.",
-      "BookingTrialAction": "Please upgrade your subscription plan to create bookings!",
-      "BookingExpiredAction": "Please renew your subscription plan to create bookings!",
       "AgentTrialWarning": "You have reached the agent limit for basic plan.",
       "AgentExpiredWarning": "Your subscription plan has expired and you have reached the agent limit.",
       "AgentTrialAction": "Please upgrade your subscription plan to create bookings!",
@@ -1189,6 +1185,13 @@
       }
     },
     "ConfirmBooking": {
+      "BookingTrialWarning": "You have reached the monthly confirmed booking limit for basic plan.",
+      "BookingExpiredWarning": "Your subscription plan has expired and you have reached the monthly confirmed booking limit.",
+      "BookingTrialAction": "Please upgrade your subscription plan to confirm bookings!",
+      "BookingExpiredAction": "Please renew your subscription plan to confirm bookings!",
+      "BuyCTA": "Buy Premium",
+      "TryCTA": "Try Premium",
+      "RenewCTA": "Renew Subscription",
       "Title": "Confirm Lead Booking",
       "Subtitle": "Add pickup details and confirm the booking",
       "PickupAddress": "Pickup Address",
@@ -1648,7 +1651,6 @@
     },
     "Vehicles": {
       "All": {
-        "Title": "ALL VEHICLES",
         "Km": " Km",
         "RatePerKm": "{rate}/Km",
         "AC": "AC",
@@ -2109,7 +2111,6 @@
     },
     "Drivers": {
       "All": {
-        "Title": "ALL DRIVERS",
         "AllowancePerDay": "{allowance}/day",
         "AddDriver": "Add Driver",
         "Warning": "You have reached the driver limit for basic plan. Subscribe to add and assign more drivers!",
@@ -7165,7 +7166,7 @@
         "Title": "Trusted by 40+ travel agencies and tour operators countrywide",
         "Testimonial": "\"RyoGo is easy enough for new users, and powerful enough to meet the needs of large travel agencies\"",
         "Author": "- Priyank Kumar",
-        "Role": "(OWNER, NORTHEAST TOURS)"
+        "Role": "(Owner, NorthEast Tours)"
       },
       "Comparision": {
         "Title": "Compare our plans",
@@ -7178,7 +7179,8 @@
         "OnboardDrivers": "Add and manage drivers",
         "OnboardAgents": "Add and manage agents",
         "Bookings": "BOOKINGS",
-        "ConfirmedBookings": "Create and manage bookings (in last {days} days)",
+        "CreateBookings": "Create leads",
+        "ConfirmedBookings": "Manage confirmed bookings (in last {days} days)",
         "AssignmentSuggestions": "Get vehicle and driver assignment suggestion",
         "SendMessages": "Send timely messages and share invoices with customers via WhatsApp",
         "ReconcileBookings": "Reconcile expenses and transactions for completed bookings",

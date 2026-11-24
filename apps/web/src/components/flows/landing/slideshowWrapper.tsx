@@ -139,7 +139,6 @@ function SlideshowImageWrapper({
       loop
       preload="metadata"
       playsInline
-      controls
       className={`${side ? "hidden md:flex" : "flex md:hidden"} rounded-lg overflow-hidden aspect-auto self-center w-full max-w-md md:max-w-full`}
     />
   )

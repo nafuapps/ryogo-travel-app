@@ -344,37 +344,6 @@ export const bookingServices = {
       return
     }
 
-    //SUBSCRIPTION CHECK: Check if basic plan has reached weekly confirmed bookings limit
-    if (
-      !APP_TRIAL_MODE &&
-      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
-        //Check if premium expired more than X days ago
-        differenceInDays(new Date(), agency.subscriptionExpiresOn) >
-          BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS)
-    ) {
-      const confirmedBookings =
-        await bookingRepository.readCreatedBookingsByStatusDateRange({
-          agencyId: data.agencyId,
-          queryStartDate: subDays(
-            new Date(),
-            BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
-          ),
-          queryEndDate: new Date(),
-          status: [
-            BookingStatusEnum.CONFIRMED,
-            BookingStatusEnum.IN_PROGRESS,
-            BookingStatusEnum.COMPLETED,
-          ],
-        })
-
-      if (
-        confirmedBookings.length >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT
-      ) {
-        console.error("Basic plan booking limit reached", agency.id)
-        return
-      }
-    }
-
     //Step1: Get trip sourceId and destinationId from city & state
     let sourceId = data.sourceId
     if (!sourceId) {
@@ -472,6 +441,43 @@ export const bookingServices = {
 
   //Confirm a booking
   async confirmBooking(data: ConfirmBookingRequestType) {
+    const agency = await agencyRepository.readAgencyById(data.agencyId)
+    if (!agency || agency.status === AgencyStatusEnum.SUSPENDED) {
+      console.error("Agency doesn't exist or suspended", data.agencyId)
+      return
+    }
+
+    //SUBSCRIPTION CHECK: Check if basic plan has reached weekly confirmed bookings limit
+    if (
+      !APP_TRIAL_MODE &&
+      (agency.subscriptionPlan === SubscriptionPlanEnum.BASIC ||
+        //Check if premium expired more than X days ago
+        differenceInDays(new Date(), agency.subscriptionExpiresOn) >
+          BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS)
+    ) {
+      const confirmedBookings =
+        await bookingRepository.readCreatedBookingsByStatusDateRange({
+          agencyId: data.agencyId,
+          queryStartDate: subDays(
+            new Date(),
+            BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
+          ),
+          queryEndDate: new Date(),
+          status: [
+            BookingStatusEnum.CONFIRMED,
+            BookingStatusEnum.IN_PROGRESS,
+            BookingStatusEnum.COMPLETED,
+          ],
+        })
+
+      if (
+        confirmedBookings.length >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT
+      ) {
+        console.error("Basic plan booking limit reached", agency.id)
+        return
+      }
+    }
+
     const booking = await bookingRepository.readBookingStatusById(
       data.bookingId,
     )

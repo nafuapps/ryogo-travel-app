@@ -5,15 +5,12 @@ import {
   BASIC_PLAN_AGENT_LIMIT,
   BASIC_PLAN_DRIVER_LIMIT,
   BASIC_PLAN_VEHICLE_LIMIT,
-  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT,
-  BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS,
 } from "@ryogo-travel-app/api/apiConfig"
 import { agencyServices } from "@ryogo-travel-app/api/services/agency.services"
 import { driverServices } from "@ryogo-travel-app/api/services/driver.services"
 import { userServices } from "@ryogo-travel-app/api/services/user.services"
 import { vehicleServices } from "@ryogo-travel-app/api/services/vehicle.services"
 import { UserRolesEnum } from "@ryogo-travel-app/db/schema"
-import { differenceInDays } from "date-fns"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import NewBookingForm from "./newBookingForm"
@@ -21,7 +18,6 @@ import NewBookingForm from "./newBookingForm"
 export default async function NewBookingWithCustomerPageComponent({
   userId,
   agencyId,
-  confirmedBookingsLength,
   isOwner,
   customerId,
   isSubscribed,
@@ -30,7 +26,6 @@ export default async function NewBookingWithCustomerPageComponent({
 }: {
   userId: string
   agencyId: string
-  confirmedBookingsLength: number
   isOwner: boolean
   customerId: string
   isSubscribed: boolean
@@ -38,37 +33,6 @@ export default async function NewBookingWithCustomerPageComponent({
   subscriptionExpiresOn: Date
 }) {
   const t = await getTranslations("Dashboard.NewBookingWithCustomer")
-
-  //SUBSCRIPTION BLOCKER: Monthly booking limit reached
-  if (
-    !APP_TRIAL_MODE &&
-    confirmedBookingsLength >= BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_LIMIT &&
-    (!isSubscribed ||
-      //Check if premium expired more than X days ago
-      differenceInDays(new Date(), subscriptionExpiresOn) >
-        BASIC_PLAN_WEEKLY_CONFIRMED_BOOKINGS_ROLLOVER_WINDOW_DAYS)
-  ) {
-    return (
-      <PageWrapper id="NewBookingLimitBlockerPage">
-        <SubscriptionBlockerSection
-          warningText={
-            isSubscribed ? t("BookingExpiredWarning") : t("BookingTrialWarning")
-          }
-          actionText={
-            isSubscribed ? t("BookingExpiredAction") : t("BookingTrialAction")
-          }
-          isOwner={isOwner}
-          ctaLabel={
-            isSubscribed
-              ? t("RenewCTA")
-              : hasTriedSubscription
-                ? t("BuyCTA")
-                : t("TryCTA")
-          }
-        />
-      </PageWrapper>
-    )
-  }
 
   //Get vehicle Data with their bookings and repairs
   let vehicles = await vehicleServices.findVehiclesByAgency(agencyId)
@@ -120,7 +84,7 @@ export default async function NewBookingWithCustomerPageComponent({
       }
     }
 
-    //SUBSCRIPTION BLOCKER: Limited vehicles and drivers available for assignment
+    //SUBSCRIPTION BLOCKER: Limited vehicles and drivers available for new booking assignment
     limited = true
     vehicles = vehicles
       .sort((v1, v2) => v2.createdAt.getTime() - v1.createdAt.getTime())

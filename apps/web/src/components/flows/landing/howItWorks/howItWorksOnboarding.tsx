@@ -32,37 +32,37 @@ export default function HowItWorksOnboardingSection() {
   //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
-      src: "/Onboarding0.png",
+      src: "/how_it_works/onboarding/create_account.webm",
       icon: Building2,
       title: t("O0.Title"),
       description: t("O0.Description"),
     },
     {
-      src: "/Onboarding1.png",
+      src: "/how_it_works/onboarding/verify_account.webm",
       icon: ShieldCheck,
       title: t("O1.Title"),
       description: t("O1.Description"),
     },
     {
-      src: "/Onboarding2.png",
+      src: "/how_it_works/onboarding/add_vehicle.webm",
       icon: Car,
       title: t("O2.Title"),
       description: t("O2.Description"),
     },
     {
-      src: "/Onboarding3.png",
+      src: "/how_it_works/onboarding/add_driver.webm",
       icon: IdCard,
       title: t("O3.Title"),
       description: t("O3.Description"),
     },
     {
-      src: "/Onboarding4.png",
+      src: "/how_it_works/onboarding/add_agent.webm",
       icon: UserKey,
       title: t("O4.Title"),
       description: t("O4.Description"),
     },
     {
-      src: "/Onboarding5.png",
+      src: "/how_it_works/onboarding/aboard.webm",
       icon: MonitorPlay,
       title: t("O5.Title"),
       description: t("O5.Description"),

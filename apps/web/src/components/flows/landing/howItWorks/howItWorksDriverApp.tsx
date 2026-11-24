@@ -4,11 +4,11 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { useTranslations } from "next-intl"
 import {
   SlideshowItemType,
   SlideshowWrapper,
 } from "@/components/flows/landing/slideshowWrapper"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import {
   BrickWallShield,
   IdCard,
@@ -17,7 +17,7 @@ import {
   TicketPlus,
   Zap,
 } from "lucide-react"
-import { RyogoH1, RyogoP } from "@/components/typography"
+import { useTranslations } from "next-intl"
 
 export default function HowItWorksDriverAppSection() {
   const t = useTranslations("Landing.HowItWorks.DriverApp")
@@ -25,37 +25,37 @@ export default function HowItWorksDriverAppSection() {
   //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
-      src: "/DriverApp0.png",
+      src: "/how_it_works/drivers/invite.webm",
       icon: MailPlus,
       title: t("D0.Title"),
       description: t("D0.Description"),
     },
     {
-      src: "/DriverApp1.png",
+      src: "/how_it_works/drivers/easy.webm",
       icon: Zap,
       title: t("D1.Title"),
       description: t("D1.Description"),
     },
     {
-      src: "/DriverApp2.png",
+      src: "/how_it_works/drivers/expenses.webm",
       icon: TicketPlus,
       title: t("D2.Title"),
       description: t("D2.Description"),
     },
     {
-      src: "/DriverApp3.png",
+      src: "/how_it_works/drivers/vehicle.webm",
       icon: IdCard,
       title: t("D3.Title"),
       description: t("D3.Description"),
     },
     {
-      src: "/DriverApp4.png",
+      src: "/how_it_works/drivers/update.webm",
       icon: MapPlus,
       title: t("D4.Title"),
       description: t("D4.Description"),
     },
     {
-      src: "/DriverApp5.png",
+      src: "/how_it_works/drivers/fraud.webm",
       icon: BrickWallShield,
       title: t("D5.Title"),
       description: t("D5.Description"),

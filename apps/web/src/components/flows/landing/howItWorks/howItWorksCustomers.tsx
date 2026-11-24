@@ -4,19 +4,19 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { useTranslations } from "next-intl"
 import {
   SlideshowItemType,
   SlideshowWrapper,
 } from "@/components/flows/landing/slideshowWrapper"
+import { RyogoCaption, RyogoH1, RyogoP } from "@/components/typography"
 import {
-  CalendarSync,
   BanknoteArrowUp,
+  CalendarSync,
   ListPlus,
   QrCode,
   SquareArrowOutUpRight,
 } from "lucide-react"
-import { RyogoCaption, RyogoH1, RyogoP } from "@/components/typography"
+import { useTranslations } from "next-intl"
 
 export default function HowItWorksCustomersSection() {
   const t = useTranslations("Landing.HowItWorks.Customers")
@@ -24,31 +24,31 @@ export default function HowItWorksCustomersSection() {
   //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
-      src: "/Customers0.png",
+      src: "/how_it_works/customers/manage.webm",
       icon: ListPlus,
       title: t("C0.Title"),
       description: t("C0.Description"),
     },
     {
-      src: "/Customers1.png",
+      src: "/how_it_works/customers/update.webm",
       icon: CalendarSync,
       title: t("C1.Title"),
       description: t("C1.Description"),
     },
     {
-      src: "/Customers2.png",
+      src: "/how_it_works/customers/share.webm",
       icon: SquareArrowOutUpRight,
       title: t("C2.Title"),
       description: t("C2.Description"),
     },
     {
-      src: "/Customers3.png",
+      src: "/how_it_works/customers/paid.webm",
       icon: QrCode,
       title: t("C3.Title"),
       description: t("C3.Description"),
     },
     {
-      src: "/Customers4.png",
+      src: "/how_it_works/customers/track.webm",
       icon: BanknoteArrowUp,
       title: t("C4.Title"),
       description: t("C4.Description"),

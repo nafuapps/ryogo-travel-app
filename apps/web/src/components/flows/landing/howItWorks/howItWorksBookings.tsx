@@ -33,43 +33,43 @@ export default function HowItWorksBookingsSection() {
   //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
-      src: "/Bookings0.png",
+      src: "/how_it_works/bookings/creation.webm",
       icon: PackagePlus,
       title: t("B0.Title"),
       description: t("B0.Description"),
     },
     {
-      src: "/Bookings1.png",
+      src: "/how_it_works/bookings/assignment.webm",
       icon: Pin,
       title: t("B1.Title"),
       description: t("B1.Description"),
     },
     {
-      src: "/Bookings2.png",
+      src: "/how_it_works/bookings/recommendations.webm",
       icon: BadgeInfo,
       title: t("B2.Title"),
       description: t("B2.Description"),
     },
     {
-      src: "/Bookings3.png",
+      src: "/how_it_works/bookings/send.webm",
       icon: MessageSquareShare,
       title: t("B3.Title"),
       description: t("B3.Description"),
     },
     {
-      src: "/Bookings4.png",
+      src: "/how_it_works/bookings/manage.webm",
       icon: MapPinPen,
       title: t("B4.Title"),
       description: t("B4.Description"),
     },
     {
-      src: "/Bookings5.png",
+      src: "/how_it_works/bookings/add.webm",
       icon: Coins,
       title: t("B5.Title"),
       description: t("B5.Description"),
     },
     {
-      src: "/Bookings6.png",
+      src: "/how_it_works/bookings/reconcile.webm",
       icon: ScanSearch,
       title: t("B6.Title"),
       description: t("B6.Description"),

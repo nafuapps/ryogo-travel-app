@@ -4,11 +4,11 @@ import {
   LandingContentWrapper,
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
-import { RyogoH1, RyogoP } from "@/components/typography"
 import {
   SlideshowItemType,
   SlideshowWrapper,
 } from "@/components/flows/landing/slideshowWrapper"
+import { RyogoH1, RyogoP } from "@/components/typography"
 import {
   BellPlus,
   CalendarClock,
@@ -24,31 +24,31 @@ export default function HowItWorksMissionsSection() {
   //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
-      src: "/Missions0.png",
+      src: "/how_it_works/missions/receive.webm",
       icon: MessageCircleWarning,
       title: t("M0.Title"),
       description: t("M0.Description"),
     },
     {
-      src: "/Missions1.png",
+      src: "/how_it_works/missions/expiry.webm",
       icon: CalendarClock,
       title: t("M1.Title"),
       description: t("M1.Description"),
     },
     {
-      src: "/Missions2.png",
+      src: "/how_it_works/missions/custom.webm",
       icon: BellPlus,
       title: t("M2.Title"),
       description: t("M2.Description"),
     },
     {
-      src: "/Missions3.png",
+      src: "/how_it_works/missions/notifications.webm",
       icon: Megaphone,
       title: t("M3.Title"),
       description: t("M3.Description"),
     },
     {
-      src: "/Missions4.png",
+      src: "/how_it_works/missions/search.webm",
       icon: Search,
       title: t("M4.Title"),
       description: t("M4.Description"),

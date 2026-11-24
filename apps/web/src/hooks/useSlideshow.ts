@@ -22,8 +22,8 @@ export function useSlideshow(length: number) {
 
     // Setup interval to tick down every 50ms
     const timerId = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 50)
-    }, 50)
+      setTimeLeft((prevTime) => prevTime - 25)
+    }, 25)
 
     // Clear interval on component unmount or re-render
     return () => clearInterval(timerId)

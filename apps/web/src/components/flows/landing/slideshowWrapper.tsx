@@ -29,45 +29,24 @@ export function SlideshowWrapper({
       className={`mt-4 flex flex-col items-center gap-6 w-full md:max-w-5xl ${reverse ? "md:flex-row-reverse" : "md:flex-row"}`}
     >
       {items[activeIndex] && (
-        <SlideshowImageWrapper
+        <SlideshowVideo
           src={items[activeIndex].src}
           desc={items[activeIndex].title}
           side
         />
       )}
-      <SlideshowCardList
-        items={items}
-        timeLeft={timeLeft}
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
-      />
+      <div className="flex flex-col w-full">
+        {items.map((item, index) => (
+          <SlideshowCard
+            key={index}
+            item={item}
+            timeLeft={timeLeft}
+            active={index === activeIndex}
+            onClick={() => setActiveIndex(index)}
+          />
+        ))}
+      </div>
     </ScrollZoomIn>
-  )
-}
-
-function SlideshowCardList({
-  items,
-  timeLeft,
-  activeIndex,
-  setActiveIndex,
-}: {
-  items: SlideshowItemType[]
-  timeLeft: number
-  activeIndex: number
-  setActiveIndex: (index: number) => void
-}) {
-  return (
-    <div className="flex flex-col w-full">
-      {items.map((item, index) => (
-        <SlideshowCard
-          key={index}
-          item={item}
-          timeLeft={timeLeft}
-          active={index === activeIndex}
-          onClick={() => setActiveIndex(index)}
-        />
-      ))}
-    </div>
   )
 }
 
@@ -87,14 +66,17 @@ function SlideshowCard({
       className="flex flex-col px-2 lg:px-3 pt-1 lg:pt-2 pb-4 lg:pb-5 gap-4 lg:gap-5 w-full transition duration-500"
       onClick={onClick}
     >
-      <div className="flex gap-3 lg:gap-4 items-center">
+      <div className="flex gap-3 lg:gap-4 items-center cursor-pointer">
         <RyogoIcon
           icon={item.icon}
           size={active ? "lg" : "md"}
           color={active ? "brand" : "light"}
+          thick={active}
         />
         {active ? (
-          <RyogoH3 weight="font-bold">{item.title}</RyogoH3>
+          <RyogoH3 weight="font-bold" color="brand">
+            {item.title}
+          </RyogoH3>
         ) : (
           <RyogoP weight="font-bold" color="light">
             {item.title}
@@ -105,7 +87,7 @@ function SlideshowCard({
         className={`flex flex-col gap-3 lg:gap-4 transition duration-500 ${active ? "" : "hidden"}`}
       >
         <RyogoSmall color="slate">{item.description}</RyogoSmall>
-        <SlideshowImageWrapper src={item.src} desc={item.title} />
+        <SlideshowVideo src={item.src} desc={item.title} />
       </div>
       {active ? (
         <div className="rounded w-full h-0.5 lg:h-1">
@@ -121,7 +103,7 @@ function SlideshowCard({
   )
 }
 
-function SlideshowImageWrapper({
+function SlideshowVideo({
   src,
   desc,
   side,

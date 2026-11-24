@@ -5,6 +5,11 @@ import {
   LandingSectionWrapper,
 } from "@/components/flows/landing/landingWrappers"
 import {
+  SlideshowItemType,
+  SlideshowWrapper,
+} from "@/components/flows/landing/slideshowWrapper"
+import { RyogoH1, RyogoP } from "@/components/typography"
+import {
   BellCheck,
   ClipboardCheck,
   FolderBookmark,
@@ -12,11 +17,6 @@ import {
   UserCog,
   Wrench,
 } from "lucide-react"
-import { RyogoH1, RyogoP } from "@/components/typography"
-import {
-  SlideshowItemType,
-  SlideshowWrapper,
-} from "@/components/flows/landing/slideshowWrapper"
 import { useTranslations } from "next-intl"
 
 export default function HowItWorksEntitiesSection() {
@@ -25,37 +25,37 @@ export default function HowItWorksEntitiesSection() {
   //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
-      src: "/Entities0.png",
+      src: "/how_it_works/entities/manage.webm",
       icon: UserCog,
       title: t("E0.Title"),
       description: t("E0.Description"),
     },
     {
-      src: "/Entities1.png",
+      src: "/how_it_works/entities/compliant.webm",
       icon: ClipboardCheck,
       title: t("E1.Title"),
       description: t("E1.Description"),
     },
     {
-      src: "/Entities2.png",
+      src: "/how_it_works/entities/expiry.webm",
       icon: BellCheck,
       title: t("E2.Title"),
       description: t("E2.Description"),
     },
     {
-      src: "/Entities3.png",
+      src: "/how_it_works/entities/storage.webm",
       icon: FolderBookmark,
       title: t("E3.Title"),
       description: t("E3.Description"),
     },
     {
-      src: "/Entities4.png",
+      src: "/how_it_works/entities/leaves.webm",
       icon: TreePalm,
       title: t("E4.Title"),
       description: t("E4.Description"),
     },
     {
-      src: "/Entities5.png",
+      src: "/how_it_works/entities/repairs.webm",
       icon: Wrench,
       title: t("E5.Title"),
       description: t("E5.Description"),

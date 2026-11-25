@@ -2,7 +2,7 @@ import {
   DetailsLineWrapper,
   SectionColWrapper,
 } from "@/components/page/pageWrappers"
-import { RyogoCaption, RyogoP } from "@/components/typography"
+import { RyogoP, RyogoTiny } from "@/components/typography"
 
 export default function BookingPriceItem({
   title,
@@ -17,7 +17,7 @@ export default function BookingPriceItem({
     <DetailsLineWrapper label={title}>
       <SectionColWrapper small className="items-end">
         <RyogoP>{value}</RyogoP>
-        {subtitle && <RyogoCaption color="light">{subtitle}</RyogoCaption>}
+        {subtitle && <RyogoTiny color="light">{subtitle}</RyogoTiny>}
       </SectionColWrapper>
     </DetailsLineWrapper>
   )

@@ -99,13 +99,13 @@ export function AddVehicleConfirm({
               label={t("HasAC")}
               value={finalData.hasAC ? "Yes" : "No"}
             />
-            {finalData.capacity && (
+            {finalData.capacity !== undefined && (
               <DetailsLineItem
                 label={t("Capacity")}
                 value={`${finalData.capacity}`}
               />
             )}
-            {finalData.odometerReading && (
+            {finalData.odometerReading !== undefined && (
               <DetailsLineItem
                 label={t("OdometerReading")}
                 value={`${finalData.odometerReading}`}

@@ -223,7 +223,7 @@ export function BookingInvoiceDocument({
               )}
             </Text>
           </View>
-          {booking.actualExpensesAmount && (
+          {booking.actualExpensesAmount !== null && (
             <View id="ExpensesRow" style={styles.tableRow}>
               <Text style={styles.p}>Added Trip Expenses</Text>
               <Text style={styles.p}>

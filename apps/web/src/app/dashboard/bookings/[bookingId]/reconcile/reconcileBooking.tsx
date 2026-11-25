@@ -130,16 +130,14 @@ async function CustomerTransactions({
             </RyogoCaption>
           </SectionRowWrapper>
         )}
-        {finalInvoiceAmount && (
-          <SectionRowWrapper className="items-center justify-between">
-            <RyogoCaption color="light" weight="font-bold">
-              {t("FinalInvoiceAmount")}
-            </RyogoCaption>
-            <RyogoCaption color="dark" weight="font-bold">
-              {formatIndianCurrency(finalInvoiceAmount)}
-            </RyogoCaption>
-          </SectionRowWrapper>
-        )}
+        <SectionRowWrapper className="items-center justify-between">
+          <RyogoCaption color="light" weight="font-bold">
+            {t("FinalInvoiceAmount")}
+          </RyogoCaption>
+          <RyogoCaption color="dark" weight="font-bold">
+            {formatIndianCurrency(finalInvoiceAmount)}
+          </RyogoCaption>
+        </SectionRowWrapper>
       </SectionColWrapper>
       <Separator />
       <SectionColWrapper>

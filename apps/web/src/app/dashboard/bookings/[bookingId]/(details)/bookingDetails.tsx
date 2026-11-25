@@ -308,12 +308,13 @@ export default async function BookingDetailsPageComponent({
               rate: bookingDetails.commissionRate,
             })}
           />
-          {bookingDetails.actualExpensesAmount && bookingDetails.closedAt && (
-            <BookingPriceItem
-              title={t("ActualExpenses")}
-              value={"₹" + bookingDetails.actualExpensesAmount}
-            />
-          )}
+          {bookingDetails.actualExpensesAmount !== null &&
+            bookingDetails.closedAt && (
+              <BookingPriceItem
+                title={t("ActualExpenses")}
+                value={"₹" + bookingDetails.actualExpensesAmount}
+              />
+            )}
           <Separator />
           <BookingPriceItem
             title={t("TotalAmount")}

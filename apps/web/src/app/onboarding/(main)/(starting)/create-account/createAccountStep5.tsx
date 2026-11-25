@@ -115,7 +115,7 @@ export function CreateAccountConfirm({
               label={t("Location")}
               value={`${finalData.agency.agencyCity}, ${finalData.agency.agencyState}`}
             />
-            {finalData.agency.commissionRate && (
+            {finalData.agency.commissionRate !== undefined && (
               <DetailsLineItem
                 label={t("CommissionRate")}
                 value={`${finalData.agency.commissionRate}`}

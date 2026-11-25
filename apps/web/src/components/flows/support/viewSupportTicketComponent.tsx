@@ -57,7 +57,7 @@ export default async function ViewSupportTicketPageComponent({
             <RyogoSmall>{ticket.entityId}</RyogoSmall>
           </TicketRow>
         )}
-        {ticket.resolutionRating &&
+        {ticket.resolutionRating !== null &&
           ticket.status === TicketStatusEnum.CLOSED && (
             <TicketRow label={t("ResolutionRating")}>
               <RyogoSingleRatingDisplay

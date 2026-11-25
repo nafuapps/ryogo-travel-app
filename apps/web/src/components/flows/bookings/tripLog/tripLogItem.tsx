@@ -1,23 +1,23 @@
 "use client"
 
-import { RyogoSmall, RyogoTiny } from "@/components/typography"
-import { format } from "date-fns"
-import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
-import { useTranslations } from "next-intl"
-import { getFileUrl } from "@ryogo-travel-app/db/storage"
 import { RyogoEnclosedIcon, RyogoIcon } from "@/components/icons/ryogoIcon"
 import getTripLogIcon from "@/components/icons/tripLogIcon"
+import { RyogoDialogImage } from "@/components/images/ryogoImage"
+import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
 import {
   SectionColWrapper,
   SectionRowWrapper,
   SectionWrapper,
 } from "@/components/page/pageWrappers"
-import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
-import { GoogleMapsEmbedPlaceComponent } from "@/components/maps/googleMapsEmbed"
-import { ChevronDown, ChevronUp, MessageSquareQuote } from "lucide-react"
-import { RyogoDialogImage } from "@/components/images/ryogoImage"
-import { useState } from "react"
 import RyogoTag from "@/components/tags/ryogoTag"
+import { RyogoSmall, RyogoTiny } from "@/components/typography"
+import { FindBookingTripLogsByIdType } from "@ryogo-travel-app/api/services/booking.services"
+import { TripLogTypesEnum } from "@ryogo-travel-app/db/schema"
+import { getFileUrl } from "@ryogo-travel-app/db/storage"
+import { format } from "date-fns"
+import { ChevronDown, ChevronUp, MessageSquareQuote } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 export default function TripLogItem({
   tripLog,
@@ -44,7 +44,7 @@ export default function TripLogItem({
               <RyogoSmall color="slate" weight="font-bold">
                 {tripLog.type}
               </RyogoSmall>
-              {tripLog.odometerReading && (
+              {tripLog.odometerReading !== null && (
                 <RyogoSmall color="light">
                   {t("Km", { km: tripLog.odometerReading })}
                 </RyogoSmall>

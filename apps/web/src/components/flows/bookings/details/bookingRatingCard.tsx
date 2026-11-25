@@ -19,13 +19,13 @@ export default async function BookingRatingWrapper({
   const t = await getTranslations("Dashboard.BookingDetails")
   return (
     <SectionRowWrapper className="justify-items-stretch">
-      {ratingByCustomer && (
+      {ratingByCustomer !== null && (
         <BookingRatingCard
           label={t("CustomerRating")}
           rating={ratingByCustomer}
         />
       )}
-      {ratingByDriver && (
+      {ratingByDriver !== null && ratingByDriver !== undefined && (
         <BookingRatingCard label={t("DriverRating")} rating={ratingByDriver} />
       )}
     </SectionRowWrapper>

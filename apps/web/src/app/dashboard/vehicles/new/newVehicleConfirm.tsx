@@ -125,13 +125,13 @@ export function NewVehicleConfirm({
                 label={t("HasAC")}
                 value={newVehicleFormData.hasAC ? "Yes" : "No"}
               />
-              {newVehicleFormData.capacity && (
+              {newVehicleFormData.capacity !== undefined && (
                 <DetailsLineItem
                   label={t("Capacity")}
                   value={`${newVehicleFormData.capacity}`}
                 />
               )}
-              {newVehicleFormData.odometerReading && (
+              {newVehicleFormData.odometerReading !== undefined && (
                 <DetailsLineItem
                   label={t("OdometerReading")}
                   value={`${newVehicleFormData.odometerReading}`}

@@ -269,7 +269,7 @@ export const driverRepository = {
 
   //Update driver
   async updateDriverDetails({
-    id,
+    driverId,
     canDriveVehicleTypes,
     address,
     defaultAllowancePerDay,
@@ -281,7 +281,7 @@ export const driverRepository = {
         address,
         defaultAllowancePerDay,
       })
-      .where(eq(drivers.id, id))
+      .where(eq(drivers.id, driverId))
       .returning({
         id: drivers.id,
         address: drivers.address,
@@ -293,7 +293,7 @@ export const driverRepository = {
   },
 
   async updateDriverLicenseDetails({
-    id,
+    driverId,
     licenseNumber,
     licenseExpiresOn,
     licensePhotoUrl,
@@ -305,7 +305,7 @@ export const driverRepository = {
         licenseExpiresOn,
         licensePhotoUrl,
       })
-      .where(eq(drivers.id, id))
+      .where(eq(drivers.id, driverId))
       .returning({
         id: drivers.id,
         licenseNumber: drivers.licenseNumber,

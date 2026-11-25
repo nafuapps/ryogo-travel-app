@@ -161,7 +161,11 @@ export const vehicleServices = {
         vehicleNumber: data.vehicleNumber.toUpperCase(),
       })
     if (existingVehicleInAgency) {
-      console.error("Existing vehicle number in the agency", data.agencyId, data.vehicleNumber)
+      console.error(
+        "Existing vehicle number in the agency",
+        data.agencyId,
+        data.vehicleNumber,
+      )
       return
     }
 
@@ -246,7 +250,10 @@ export const vehicleServices = {
   }) {
     const vehicle = await vehicleRepository.readVehicleById(vehicleId)
     if (!vehicle || vehicle.status !== VehicleStatusEnum.AVAILABLE) {
-      console.error("Vehicle not found or not available to start repair", vehicleId)
+      console.error(
+        "Vehicle not found or not available to start repair",
+        vehicleId,
+      )
       return
     }
 
@@ -319,7 +326,11 @@ export const vehicleServices = {
       },
     )
     if (existingVehicle) {
-      console.error("Existing vehicle number in the agency", vehicle.agencyId, vehicleNumber)
+      console.error(
+        "Existing vehicle number in the agency",
+        vehicle.agencyId,
+        vehicleNumber,
+      )
       return
     }
 
@@ -328,7 +339,11 @@ export const vehicleServices = {
       vehicleNumber,
     })
     if (!updatedVehicle) {
-      console.error("Vehicle number could not be updated", vehicleId, vehicleNumber)
+      console.error(
+        "Vehicle number could not be updated",
+        vehicleId,
+        vehicleNumber,
+      )
       return
     }
     return updatedVehicle
@@ -339,6 +354,20 @@ export const vehicleServices = {
     const vehicle = await vehicleRepository.readVehicleById(data.vehicleId)
     if (!vehicle || vehicle.status === VehicleStatusEnum.SUSPENDED) {
       console.error("Vehicle not found or suspended", data.vehicleId)
+      return
+    }
+
+    if (
+      vehicle.status === VehicleStatusEnum.ON_TRIP &&
+      (data.capacity ||
+        data.hasAC !== undefined ||
+        data.defaultRatePerKm ||
+        data.defaultAcChargePerDay)
+    ) {
+      console.error(
+        "Vehicle details cannot be changed while on trip",
+        data.vehicleId,
+      )
       return
     }
 
@@ -426,7 +455,11 @@ export const vehicleServices = {
       vehiclePhotoUrl,
     })
     if (!updatedVehicle) {
-      console.error("Vehicle photo url could not be activated", vehicleId, vehiclePhotoUrl)
+      console.error(
+        "Vehicle photo url could not be activated",
+        vehicleId,
+        vehiclePhotoUrl,
+      )
       return
     }
     return updatedVehicle

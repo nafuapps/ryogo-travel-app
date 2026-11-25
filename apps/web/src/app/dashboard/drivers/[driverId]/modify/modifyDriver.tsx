@@ -27,7 +27,7 @@ import {
 } from "@/lib/uiConfig"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FindDriverDetailsByIdType } from "@ryogo-travel-app/api/services/driver.services"
-import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
+import { DriverStatusEnum, VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -41,6 +41,8 @@ export default function ModifyDriverPageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyDriver")
   const router = useRouter()
+
+  const isOnTrip = driver.status === DriverStatusEnum.ON_TRIP
 
   const modifyDriverSchema = z.object({
     address: z
@@ -73,7 +75,7 @@ export default function ModifyDriverPageComponent({
   async function onSubmit(values: ModifyDriverType) {
     const updatedDriver = await modifyDriverAction({
       data: {
-        id: driver.id,
+        driverId: driver.id,
         agencyId: driver.agencyId,
         addedByUserId: driver.addedByUserId,
         address: values.address,
@@ -117,6 +119,7 @@ export default function ModifyDriverPageComponent({
             label={t("Field3.Title")}
             placeholder={t("Field3.Placeholder")}
             description={t("Field3.Description")}
+            disabled={isOnTrip}
           />
         </FormContentWrapper>
         <StickyActionWrapper>

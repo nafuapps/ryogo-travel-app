@@ -30,7 +30,6 @@ import Link from "next/link"
 export default function HowItWorksBookingsSection() {
   const t = useTranslations("Landing.HowItWorks.Bookings")
 
-  //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
       src: "/how_it_works/bookings/creation.webm",

@@ -7,6 +7,7 @@ export const expenseRepository = {
   //Get expenses by booking id
   async readExpensesByBookingId(bookingId: string) {
     return await db.query.expenses.findMany({
+      orderBy: (expenses, { desc }) => [desc(expenses.createdAt)],
       where: eq(expenses.bookingId, bookingId),
       with: {
         addedByUser: {

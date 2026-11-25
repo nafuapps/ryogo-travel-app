@@ -36,6 +36,7 @@ import { FindVehicleDetailsByIdType } from "@ryogo-travel-app/api/services/vehic
 import {
   VehicleBrandEnum,
   VehicleColorEnum,
+  VehicleStatusEnum,
   VehicleTypesEnum,
 } from "@ryogo-travel-app/db/schema"
 import { useTranslations } from "next-intl"
@@ -51,6 +52,8 @@ export default function ModifyVehiclePageComponent({
 }) {
   const t = useTranslations("Dashboard.ModifyVehicle")
   const router = useRouter()
+
+  const isOnTrip = vehicle.status === VehicleStatusEnum.ON_TRIP
 
   const modifyVehicleSchema = z.object({
     type: z.enum(VehicleTypesEnum).nonoptional(t("Field1.Error1")),
@@ -188,26 +191,29 @@ export default function ModifyVehiclePageComponent({
             label={t("Field6.Title")}
             placeholder={t("Field6.Placeholder")}
             description={t("Field6.Description")}
+            disabled={isOnTrip}
           />
         </FormContentWrapper>
-        <FormContentWrapper>
-          <RyogoInput
-            name={"defaultRatePerKm"}
-            type="tel"
-            label={t("Field7.Title")}
-            placeholder={t("Field7.Placeholder")}
-            description={t("Field7.Description")}
-          />
-          <RyogoSwitch name={"hasAC"} label={t("Field8.Title")} />
-          <RyogoInput
-            name={"defaultAcChargePerDay"}
-            type="tel"
-            label={t("Field9.Title")}
-            placeholder={t("Field9.Placeholder")}
-            description={t("Field9.Description")}
-            disabled={!acWatch}
-          />
-        </FormContentWrapper>
+        {!isOnTrip && (
+          <FormContentWrapper>
+            <RyogoInput
+              name={"defaultRatePerKm"}
+              type="tel"
+              label={t("Field7.Title")}
+              placeholder={t("Field7.Placeholder")}
+              description={t("Field7.Description")}
+            />
+            <RyogoSwitch name={"hasAC"} label={t("Field8.Title")} />
+            <RyogoInput
+              name={"defaultAcChargePerDay"}
+              type="tel"
+              label={t("Field9.Title")}
+              placeholder={t("Field9.Placeholder")}
+              description={t("Field9.Description")}
+              disabled={!acWatch}
+            />
+          </FormContentWrapper>
+        )}
         <StickyActionWrapper>
           <RyogoDefaultButton
             size={"lg"}

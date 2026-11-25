@@ -1,7 +1,7 @@
 import { VehicleTypesEnum } from "@ryogo-travel-app/db/schema"
 
 export type ModifyDriverRequestType = {
-  id: string
+  driverId: string
   agencyId: string
   addedByUserId: string
   canDriveVehicleTypes: VehicleTypesEnum[]
@@ -10,7 +10,7 @@ export type ModifyDriverRequestType = {
 }
 
 export type ChangeDriverLicenseRequestType = {
-  id: string
+  driverId: string
   agencyId: string
   addedByUserId: string
   licenseNumber?: string

@@ -117,9 +117,20 @@ export const driverServices = {
 
   //Modify driver details
   async modifyDriver(data: ModifyDriverRequestType) {
-    const driver = await driverRepository.readDriverById(data.id)
+    const driver = await driverRepository.readDriverById(data.driverId)
     if (!driver || driver.status === DriverStatusEnum.SUSPENDED) {
-      console.error("Driver not found or suspended", data.id)
+      console.error("Driver not found or suspended", data.driverId)
+      return
+    }
+
+    if (
+      driver.status === DriverStatusEnum.ON_TRIP &&
+      data.defaultAllowancePerDay
+    ) {
+      console.error(
+        "Driver details cannot be changed while on trip",
+        data.driverId,
+      )
       return
     }
 
@@ -133,9 +144,9 @@ export const driverServices = {
 
   //Change driver license details
   async changeDriverLicense(data: ChangeDriverLicenseRequestType) {
-    const driver = await driverRepository.readDriverById(data.id)
+    const driver = await driverRepository.readDriverById(data.driverId)
     if (!driver || driver.status === DriverStatusEnum.SUSPENDED) {
-      console.error("Driver not found or suspended", data.id)
+      console.error("Driver not found or suspended", data.driverId)
       return
     }
 
@@ -289,7 +300,11 @@ export const driverServices = {
       user.status === UserStatusEnum.INACTIVE ||
       user.status === UserStatusEnum.SUSPENDED
     ) {
-      console.error("Driver user not found or inactive or suspended", driverId, userId)
+      console.error(
+        "Driver user not found or inactive or suspended",
+        driverId,
+        userId,
+      )
       return
     }
 
@@ -299,7 +314,10 @@ export const driverServices = {
       driver.status === DriverStatusEnum.SUSPENDED ||
       driver.status === DriverStatusEnum.AVAILABLE
     ) {
-      console.error("Driver not found or suspended or already available", driverId)
+      console.error(
+        "Driver not found or suspended or already available",
+        driverId,
+      )
       return
     }
 
@@ -333,7 +351,10 @@ export const driverServices = {
       driver.status === DriverStatusEnum.SUSPENDED ||
       driver.status === DriverStatusEnum.INACTIVE
     ) {
-      console.error("Driver not found or suspended or already inactive", driverId)
+      console.error(
+        "Driver not found or suspended or already inactive",
+        driverId,
+      )
       return
     }
 

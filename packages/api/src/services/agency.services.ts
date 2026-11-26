@@ -121,11 +121,12 @@ export const agencyServices = {
     )
 
     const drivers = await driverRepository.readDriversByAgencyId(agencyId)
-    const licenseExpiring = drivers.filter((driver) => {
-      driver.licenseExpiresOn &&
+    const licenseExpiring = drivers.filter(
+      (driver) =>
+        driver.licenseExpiresOn &&
         differenceInDays(driver.licenseExpiresOn, new Date()) <=
-          EXPIRATION_ALERT_WINDOW_DAYS
-    })
+          EXPIRATION_ALERT_WINDOW_DAYS,
+    )
 
     return {
       rcExpiring,

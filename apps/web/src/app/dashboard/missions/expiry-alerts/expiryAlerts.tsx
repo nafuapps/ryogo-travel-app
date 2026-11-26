@@ -62,12 +62,11 @@ export default function ExpiryAlertsPageComponent({
     },
   )
 
-  const expiryAlertsCount = expiryAlerts
-    ? filteredLicenseExpiring.length +
-      filteredPUCExpiring.length +
-      filteredRCExpiring.length +
-      filteredInsuranceExpiring.length
-    : 0
+  const expiryAlertsCount =
+    filteredLicenseExpiring.length +
+    filteredPUCExpiring.length +
+    filteredRCExpiring.length +
+    filteredInsuranceExpiring.length
 
   return (
     <PageWrapper id="ExpiryAlertsPage">
@@ -150,7 +149,7 @@ export default function ExpiryAlertsPageComponent({
 }
 
 function checkFilteredItem(
-  itemType: string,
+  itemType: "License" | "PUC" | "RC" | "Insurance",
   itemExpiryDate: Date | null,
   type: string | null,
   expired: string | null,

@@ -71,10 +71,9 @@ function SlideshowCard({
           icon={item.icon}
           size={active ? "lg" : "md"}
           color={active ? "brand" : "light"}
-          thick={active}
         />
         {active ? (
-          <RyogoH3 weight="font-bold" color="brand">
+          <RyogoH3 weight="font-medium" color="brand">
             {item.title}
           </RyogoH3>
         ) : (

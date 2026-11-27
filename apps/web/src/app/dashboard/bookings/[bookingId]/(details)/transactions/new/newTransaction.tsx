@@ -11,8 +11,7 @@ import {
   RyogoFileInput,
   RyogoInput,
   RyogoSelect,
-  RyogoSwitch,
-  RyogoTextarea,
+  RyogoTextarea
 } from "@/components/form/ryogoFormFields"
 import {
   FormContentWrapper,
@@ -46,11 +45,13 @@ export default function NewTransactionPageComponent({
   userId,
   agencyId,
   assignedUserId,
+  isOwner
 }: {
   bookingId: string
   userId: string
   agencyId: string
   assignedUserId: string
+  isOwner: boolean
 }) {
   const t = useTranslations("Dashboard.NewTransaction")
   const router = useRouter()
@@ -64,7 +65,6 @@ export default function NewTransactionPageComponent({
       .multipleOf(1, t("Field2.Error4"))
       .positive(t("Field2.Error5")),
     mode: z.enum(TransactionModesEnum).nonoptional(t("Field3.Error1")),
-    isApproved: z.boolean(),
     remarks: z
       .string()
       .max(MAX_FIELD_DESC_LENGTH, t("Field5.Error1"))
@@ -86,7 +86,6 @@ export default function NewTransactionPageComponent({
     defaultValues: {
       type: TransactionTypesEnum.RECEIVED_PAYMENT_FROM_CUSTOMER,
       mode: TransactionModesEnum.CASH,
-      isApproved: true,
       transactionDate: new Date(),
     },
   })
@@ -100,6 +99,7 @@ export default function NewTransactionPageComponent({
       bookingId,
       addedByUserId: userId,
       assignedUserId,
+      isApproved:isOwner
     })
     if (addedTransaction) {
       toast.success(t("Success"))
@@ -142,7 +142,6 @@ export default function NewTransactionPageComponent({
             array={Object.values(TransactionModesEnum)}
             placeholder={t("Field3.Placeholder")}
           />
-          <RyogoSwitch name="isApproved" label={t("Field4.Title")} />
           <RyogoTextarea
             name="remarks"
             label={t("Field5.Title")}

@@ -46,9 +46,11 @@ import z from "zod"
 export default function ModifyTransactionPageComponent({
   transactionDetails,
   assignedUserId,
+  isOwner,
 }: {
   transactionDetails: NonNullable<FindTransactionDetailsByIdType>
   assignedUserId: string
+  isOwner: boolean
 }) {
   const t = useTranslations("Dashboard.ModifyTransaction")
   const router = useRouter()
@@ -144,7 +146,9 @@ export default function ModifyTransactionPageComponent({
             array={Object.values(TransactionModesEnum)}
             placeholder={t("Field3.Placeholder")}
           />
-          <RyogoSwitch name="isApproved" label={t("Field4.Title")} />
+          {isOwner && (
+            <RyogoSwitch name="isApproved" label={t("Field4.Title")} />
+          )}
           <RyogoTextarea
             name="remarks"
             label={t("Field5.Title")}

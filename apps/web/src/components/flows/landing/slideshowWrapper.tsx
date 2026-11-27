@@ -73,7 +73,7 @@ function SlideshowCard({
           color={active ? "brand" : "light"}
         />
         {active ? (
-          <RyogoH3 weight="font-medium" color="brand">
+          <RyogoH3 weight="font-bold" color="brand">
             {item.title}
           </RyogoH3>
         ) : (

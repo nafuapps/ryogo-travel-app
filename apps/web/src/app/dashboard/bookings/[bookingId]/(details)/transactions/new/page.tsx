@@ -19,6 +19,7 @@ export default async function NewTransactionPage({
   params: Promise<{ bookingId: string }>
 }) {
   const currentUser = await readPermissions.getAuthenticatedUser()
+  const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   const { bookingId } = await params
 
@@ -35,8 +36,7 @@ export default async function NewTransactionPage({
       BookingStatusEnum.IN_PROGRESS,
       BookingStatusEnum.COMPLETED,
     ].includes(booking.status) ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== booking.assignedUserId) ||
+    (!isOwner && currentUser.userId !== booking.assignedUserId) ||
     booking.reconciledAt
   ) {
     redirect(
@@ -53,6 +53,7 @@ export default async function NewTransactionPage({
         userId={currentUser.userId}
         agencyId={currentUser.agencyId}
         assignedUserId={booking.assignedUserId}
+        isOwner={isOwner}
       />
     </MainWrapper>
   )

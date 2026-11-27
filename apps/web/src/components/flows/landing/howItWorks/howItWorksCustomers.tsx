@@ -21,7 +21,6 @@ import { useTranslations } from "next-intl"
 export default function HowItWorksCustomersSection() {
   const t = useTranslations("Landing.HowItWorks.Customers")
 
-  //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
       src: "/how_it_works/customers/manage.webm",
@@ -48,7 +47,7 @@ export default function HowItWorksCustomersSection() {
       description: t("C3.Description"),
     },
     {
-      src: "/how_it_works/customers/track.webm",
+      src: "/how_it_works/customers/transactions.webm",
       icon: BanknoteArrowUp,
       title: t("C4.Title"),
       description: t("C4.Description"),

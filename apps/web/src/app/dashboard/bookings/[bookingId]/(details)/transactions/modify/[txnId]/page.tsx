@@ -21,6 +21,7 @@ export default async function ModifyTransactionPage({
   params: Promise<{ bookingId: string; txnId: string }>
 }) {
   const currentUser = await readPermissions.getAuthenticatedUser()
+  const isOwner = currentUser.userRole === UserRolesEnum.OWNER
 
   const { bookingId, txnId } = await params
 
@@ -61,8 +62,7 @@ export default async function ModifyTransactionPage({
       BookingStatusEnum.IN_PROGRESS,
       BookingStatusEnum.COMPLETED,
     ].includes(booking.status) ||
-    (currentUser.userRole !== UserRolesEnum.OWNER &&
-      currentUser.userId !== booking.assignedUserId) ||
+    (!isOwner && currentUser.userId !== booking.assignedUserId) ||
     booking.reconciledAt
   ) {
     redirect(
@@ -79,6 +79,7 @@ export default async function ModifyTransactionPage({
       <ModifyTransactionPageComponent
         transactionDetails={transactionDetails}
         assignedUserId={booking.assignedUserId}
+        isOwner={isOwner}
       />
     </MainWrapper>
   )

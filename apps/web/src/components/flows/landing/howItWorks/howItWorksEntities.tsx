@@ -22,7 +22,6 @@ import { useTranslations } from "next-intl"
 export default function HowItWorksEntitiesSection() {
   const t = useTranslations("Landing.HowItWorks.Entities")
 
-  //TODO: Add product images
   const items: SlideshowItemType[] = [
     {
       src: "/how_it_works/entities/manage.webm",
